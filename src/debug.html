@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug 2248</title>
+</head>
+<body style="background: #1a1a2e; color: white; font-family: monospace; padding: 20px;">
+    <h1>2248 Debug</h1>
+    <div id="output"></div>
+    <script src="game.js"></script>
+    <script>
+        const out = document.getElementById('output');
+        function log(msg) {
+            out.innerHTML += msg + '<br>';
+            console.log(msg);
+        }
+
+        try {
+            log('Game object: ' + (typeof game));
+            log('Grid: ' + (game.grid ? 'exists' : 'null'));
+            log('Grid length: ' + (game.grid ? game.grid.length : 'N/A'));
+
+            if (game.grid && game.grid[0]) {
+                log('First row length: ' + game.grid[0].length);
+                log('First tile: ' + JSON.stringify(game.grid[0][0]));
+
+                // Check a few tiles
+                for (let r = 0; r < 3; r++) {
+                    for (let c = 0; c < 3; c++) {
+                        const t = game.grid[r][c];
+                        log('Tile[' + r + '][' + c + ']: value=' + (t ? t.value : 'null'));
+                    }
+                }
+            }
+
+            log('Canvas: ' + document.getElementById('gameCanvas'));
+            log('tileSize: ' + game.tileSize);
+            log('tilePadding: ' + game.tilePadding);
+
+        } catch(e) {
+            log('ERROR: ' + e.message);
+            log('Stack: ' + e.stack);
+        }
+    </script>
+</body>
+</html>

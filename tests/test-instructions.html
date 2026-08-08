@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2248 Challenge - UAT Test Instructions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+        .step {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+        }
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 10px 10px 0;
+            font-weight: bold;
+        }
+        .button:hover {
+            background: #45a049;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        ol {
+            line-height: 1.8;
+        }
+        li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 2248 Challenge - Bomb Defuse UAT Test</h1>
+
+        <div class="success">
+            <strong>Test Objective:</strong> Verify that bomb tiles are properly defused (removed) when included in a merge chain.
+        </div>
+
+        <h2>📋 Quick Start</h2>
+        <a href="index.html" target="_blank" class="button">🎮 Open Game</a>
+        <a href="#" onclick="copyTestScript(); return false;" class="button">📋 Copy Test Script</a>
+
+        <h2>🔧 Manual Test Steps</h2>
+
+        <div class="step">
+            <strong>Step 1: Open the Game</strong>
+            <p>Click the "Open Game" button above or navigate to index.html</p>
+        </div>
+
+        <div class="step">
+            <strong>Step 2: Open Browser Console</strong>
+            <ul>
+                <li><strong>Chrome/Edge:</strong> Press F12 or Cmd+Option+J (Mac) / Ctrl+Shift+J (Windows)</li>
+                <li><strong>Firefox:</strong> Press F12 or Cmd+Option+K (Mac) / Ctrl+Shift+K (Windows)</li>
+                <li><strong>Safari:</strong> Press Cmd+Option+C (you may need to enable Developer menu first)</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <strong>Step 3: Run the Test Script</strong>
+            <p>Copy and paste this code into the console:</p>
+            <div class="code" id="testScript">// Unlock all levels
+localStorage.setItem('unlockedLevel', '50');
+
+// Load level 40
+game.loadLevel(40);
+
+// Wait for level to load, then inspect
+setTimeout(() => {
+    console.log('=== Bomb Tile Inspection ===');
+    let bombsFound = [];
+
+    for (let row = 0; row < game.grid.length; row++) {
+        for (let col = 0; col < game.grid[row].length; col++) {
+            const tile = game.grid[row][col];
+            if (tile && tile.isBomb) {
+                bombsFound.push({
+                    position: `[${row}, ${col}]`,
+                    timer: tile.bombTimer,
+                    value: tile.value
+                });
+                console.log(`Bomb found at [${row}, ${col}], timer: ${tile.bombTimer}, value: ${tile.value}`);
+            }
+        }
+    }
+
+    console.log(`Total bombs found: ${bombsFound.length}`);
+}, 1000);</div>
+        </div>
+
+        <div class="step">
+            <strong>Step 4: Take Initial Screenshot</strong>
+            <p>Capture the game showing level 40 with bomb tiles visible (look for 💣 icon)</p>
+        </div>
+
+        <div class="step">
+            <strong>Step 5: Test Bomb Defuse</strong>
+            <ol>
+                <li>Identify a bomb tile on the grid (marked with 💣)</li>
+                <li>Note its current timer value</li>
+                <li>Create a merge chain that INCLUDES the bomb tile</li>
+                <li>Complete the merge</li>
+                <li><strong>Expected Result:</strong> The bomb tile should be REMOVED from the grid (defused)</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <strong>Step 6: Take After Screenshot</strong>
+            <p>Capture the game after the merge to show the bomb has been removed</p>
+        </div>
+
+        <h2>🧪 Advanced Testing</h2>
+
+        <div class="warning">
+            <strong>Test Scenario 1:</strong> Bomb NOT in merge chain<br>
+            - Create a merge that does NOT include a bomb<br>
+            - Expected: Bomb timer should decrease by 1<br>
+            - Expected: Bomb should remain on grid
+        </div>
+
+        <div class="success">
+            <strong>Test Scenario 2:</strong> Bomb IN merge chain<br>
+            - Create a merge that INCLUDES a bomb<br>
+            - Expected: Bomb should be REMOVED (defused)<br>
+            - Expected: isBomb flag should be set to false
+        </div>
+
+        <h2>📊 Expected Console Output</h2>
+        <div class="code">Bomb found at [X, Y], timer: N, value: M
+Total bombs found: Z
+
+// After merging a bomb:
+// The tile at that position should either be:
+// 1. Removed completely (null)
+// 2. Have isBomb = false</div>
+
+        <h2>📸 Required Screenshots</h2>
+        <ol>
+            <li>Initial game state showing level 40</li>
+            <li>Console output showing bomb positions</li>
+            <li>Before merge: Grid showing bomb tile with timer</li>
+            <li>After merge: Grid showing bomb has been removed/defused</li>
+        </ol>
+
+        <h2>✅ Pass/Fail Criteria</h2>
+        <div class="success">
+            <strong>PASS:</strong> Bomb tile is removed from grid after being included in a merge
+        </div>
+        <div class="warning">
+            <strong>FAIL:</strong> Bomb remains on grid after merge (only timer decreases)
+        </div>
+
+        <h2>🐛 Bug Reference</h2>
+        <p><strong>Issue:</strong> Bombs were not being defused when included in merges</p>
+        <p><strong>Fix:</strong> Added proper defuseBomb logic in handleTileClick method</p>
+        <p><strong>File:</strong> game.js (handleTileClick and defuseBomb methods)</p>
+
+    </div>
+
+    <script>
+        function copyTestScript() {
+            const script = document.getElementById('testScript').textContent;
+            navigator.clipboard.writeText(script).then(() => {
+                alert('Test script copied to clipboard! Paste it in the browser console.');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2248 Bomb Test Helper</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #16213e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        h1 {
+            color: #4ade80;
+            border-bottom: 2px solid #4ade80;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #f59563;
+            margin-top: 30px;
+        }
+        .command-box {
+            background: #0f0f23;
+            border: 1px solid #4ade80;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+        }
+        .command-box pre {
+            margin: 0;
+            color: #4ade80;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4ade80;
+            color: #0f0f23;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .copy-btn:hover {
+            background: #22c55e;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+        .status.info {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+        .status.success {
+            background: rgba(74, 222, 128, 0.1);
+            border-color: #4ade80;
+        }
+        .status.warning {
+            background: rgba(251, 191, 36, 0.1);
+            border-color: #fbbf24;
+        }
+        .status.error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
+        }
+        .btn-group {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background: #4ade80;
+            color: #0f0f23;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .btn:hover {
+            background: #22c55e;
+        }
+        .btn.secondary {
+            background: #3b82f6;
+        }
+        .btn.secondary:hover {
+            background: #2563eb;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px;
+            margin: 5px 0;
+            background: rgba(74, 222, 128, 0.05);
+            border-left: 3px solid #4ade80;
+            border-radius: 3px;
+        }
+        .checklist li::before {
+            content: "☐ ";
+            color: #4ade80;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        code {
+            background: rgba(74, 222, 128, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #4ade80;
+            font-size: 0.9em;
+        }
+        .bomb-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .bomb-level {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #ef4444;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .bomb-level:hover {
+            background: rgba(239, 68, 68, 0.4);
+            transform: scale(1.05);
+        }
+        .bomb-level .level-num {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ef4444;
+        }
+        .bomb-level .timer {
+            font-size: 12px;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💣 2248 Bomb Defuse Test Helper</h1>
+
+        <div class="status info">
+            <strong>Instructions:</strong> Open this page alongside the game. Use the commands below to test the bomb defuse feature.
+        </div>
+
+        <h2>Step 1: Open the Game</h2>
+        <div class="btn-group">
+            <button class="btn" onclick="openGame()">🎮 Open Game</button>
+            <button class="btn secondary" onclick="openInstructions()">📖 Open Full Instructions</button>
+        </div>
+
+        <h2>Step 2: Quick Setup Commands</h2>
+
+        <div class="command-box">
+            <button class="copy-btn" onclick="copy('setup')">Copy</button>
+            <pre id="setup">// Unlock all levels and load level 40
+localStorage.setItem('unlockedLevel', '50');
+game.loadLevel(40);</pre>
+        </div>
+
+        <h2>Step 3: Inspect Bombs on Grid</h2>
+
+        <div class="command-box">
+            <button class="copy-btn" onclick="copy('inspect')">Copy</button>
+            <pre id="inspect">// Find all bombs on current level
+setTimeout(() => {
+    console.log('=== Bomb Inspection ===');
+    let found = 0;
+    for (let row = 0; row < game.grid.length; row++) {
+        for (let col = 0; col < game.grid[row].length; col++) {
+            const tile = game.grid[row][col];
+            if (tile && tile.isBomb()) {
+                found++;
+                console.log(`💣 Bomb ${found}:`);
+                console.log(`   Position: Row ${row}, Col ${col}`);
+                console.log(`   Timer: ${tile.bombTimer}`);
+                console.log(`   Value: ${tile.value}`);
+            }
+        }
+    }
+    console.log(`Total: ${found} bomb(s) found`);
+}, 1000);</pre>
+        </div>
+
+        <h2>Step 4: Levels with Bombs</h2>
+        <div class="status warning">
+            Click any level below to copy the load command
+        </div>
+        <div class="bomb-levels">
+            <div class="bomb-level" onclick="loadLevel(40)">
+                <div class="level-num">40</div>
+                <div class="timer">⏱️ 8</div>
+            </div>
+            <div class="bomb-level" onclick="loadLevel(41)">
+                <div class="level-num">41</div>
+                <div class="timer">⏱️ 7</div>
+            </div>
+            <div class="bomb-level" onclick="loadLevel(42)">
+                <div class="level-num">42</div>
+                <div class="timer">⏱️ 8</div>
+            </div>
+            <div class="bomb-level" onclick="loadLevel(43)">
+                <div class="level-num">43</div>
+                <div class="timer">⏱️ 7</div>
+            </div>
+            <div class="bomb-level" onclick="loadLevel(44)">
+                <div class="level-num">44</div>
+                <div class="timer">⏱️ 6</div>
+            </div>
+            <div class="bomb-level" onclick="loadLevel(45)">
+                <div class="level-num">45</div>
+                <div class="timer">⏱️ 8</div>
+            </div>
+            <div class="bomb-level" onclick="loadLevel(47)">
+                <div class="level-num">47</div>
+                <div class="timer">⏱️ 6</div>
+            </div>
+            <div class="bomb-level" onclick="loadLevel(49)">
+                <div class="level-num">49</div>
+                <div class="timer">⏱️ 7</div>
+            </div>
+            <div class="bomb-level" onclick="loadLevel(50)" style="border-color: #fbbf24; background: rgba(251, 191, 36, 0.2);">
+                <div class="level-num" style="color: #fbbf24;">50</div>
+                <div class="timer">💣💣 2 bombs!</div>
+            </div>
+        </div>
+
+        <h2>Step 5: Testing Checklist</h2>
+        <ul class="checklist">
+            <li>Open game in browser</li>
+            <li>Open browser console (F12 or Cmd+Option+J)</li>
+            <li>Run setup command to unlock levels</li>
+            <li>Load level 40 (or any bomb level)</li>
+            <li>Run inspection command to find bombs</li>
+            <li>Take screenshot of initial state</li>
+            <li>Create a merge chain that INCLUDES a bomb</li>
+            <li>Verify bomb is REMOVED after merge</li>
+            <li>Take screenshot of result</li>
+            <li>Create a merge that does NOT include bomb</li>
+            <li>Verify bomb timer decreased by 1</li>
+        </ul>
+
+        <h2>Step 6: Advanced Tests</h2>
+
+        <div class="command-box">
+            <button class="copy-btn" onclick="copy('test-defuse')">Copy</button>
+            <pre id="test-defuse">// Simulate bomb defuse (find first bomb and show its state)
+setTimeout(() => {
+    for (let row = 0; row < game.grid.length; row++) {
+        for (let col = 0; col < game.grid[row].length; col++) {
+            const tile = game.grid[row][col];
+            if (tile && tile.isBomb()) {
+                console.log('Before merge:');
+                console.log('  isBomb:', tile.isBomb());
+                console.log('  bombTimer:', tile.bombTimer);
+                console.log('  blocker:', tile.blocker);
+                console.log('');
+                console.log('Now merge this bomb in a chain and run this again!');
+                return;
+            }
+        }
+    }
+    console.log('No bombs found on grid');
+}, 1000);</pre>
+        </div>
+
+        <div class="command-box">
+            <button class="copy-btn" onclick="copy('visual-grid')">Copy</button>
+            <pre id="visual-grid">// Display visual grid in console
+setTimeout(() => {
+    console.log('=== Current Grid ===');
+    for (let row = 0; row < game.grid.length; row++) {
+        let line = '';
+        for (let col = 0; col < game.grid[row].length; col++) {
+            const tile = game.grid[row][col];
+            if (tile) {
+                if (tile.isBomb()) {
+                    line += `[💣${tile.bombTimer}]`.padEnd(7);
+                } else if (tile.blocker === 'stone') {
+                    line += '[STONE]'.padEnd(7);
+                } else if (tile.blocker === 'ice') {
+                    line += `[ICE${tile.blockerDuration}]`.padEnd(7);
+                } else {
+                    line += `[${tile.value}]`.padEnd(7);
+                }
+            } else {
+                line += '[ - ]  ';
+            }
+        }
+        console.log(line);
+    }
+}, 1000);</pre>
+        </div>
+
+        <h2>Expected Results</h2>
+
+        <div class="status success">
+            <strong>✅ PASS Criteria:</strong><br>
+            • Bomb tile shows bomb icon (💣) and timer<br>
+            • When merged in chain, bomb disappears completely<br>
+            • Tile at bomb position shows merged value, no bomb indicator<br>
+            • Other bombs not in chain have timer decrease by 1
+        </div>
+
+        <div class="status error">
+            <strong>❌ FAIL Criteria:</strong><br>
+            • Bomb remains after being merged<br>
+            • Bomb timer doesn't decrease when not merged<br>
+            • Game crashes when merging bomb<br>
+            • Bomb doesn't trigger game over when timer reaches 0
+        </div>
+
+        <h2>Screenshot Checklist</h2>
+        <div class="status info">
+            Take screenshots of:<br>
+            1️⃣ Level 40 initial state with bomb visible<br>
+            2️⃣ Console output showing bomb inspection<br>
+            3️⃣ Before merging: chain selection including bomb<br>
+            4️⃣ After merging: bomb removed from grid<br>
+            5️⃣ Timer decrease: bomb not in chain, timer reduced
+        </div>
+
+        <h2>Troubleshooting</h2>
+        <div class="command-box">
+            <button class="copy-btn" onclick="copy('troubleshoot')">Copy</button>
+            <pre id="troubleshoot">// Check if game is loaded
+if (typeof game === 'undefined') {
+    console.error('❌ Game not loaded! Make sure you opened index.html');
+} else {
+    console.log('✅ Game loaded');
+    console.log('Current level:', game.currentLevel);
+    console.log('Grid size:', game.grid.length, 'x', game.grid[0].length);
+    console.log('Unlocked level:', localStorage.getItem('unlockedLevel'));
+}</pre>
+        </div>
+
+    </div>
+
+    <script>
+        function copy(id) {
+            const text = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ Copied to clipboard! Paste in browser console.');
+            }).catch(err => {
+                console.error('Copy failed:', err);
+            });
+        }
+
+        function openGame() {
+            window.open('index.html', '_blank');
+        }
+
+        function openInstructions() {
+            window.open('test-instructions.html', '_blank');
+        }
+
+        function loadLevel(num) {
+            const cmd = `game.loadLevel(${num});`;
+            navigator.clipboard.writeText(cmd).then(() => {
+                alert(`✅ Copied: ${cmd}\nPaste in browser console to load level ${num}`);
+            });
+        }
+    </script>
+</body>
+</html>

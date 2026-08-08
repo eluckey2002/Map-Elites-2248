@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2248 Challenge - UAT Tests</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+        }
+        .game-frame {
+            flex: 1;
+            border: none;
+            min-height: 100vh;
+        }
+        .test-panel {
+            width: 400px;
+            background: #16213e;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        h1 { font-size: 20px; margin-bottom: 15px; color: #f2b179; }
+        h2 { font-size: 16px; margin: 20px 0 10px; color: #4ade80; }
+        .test-result {
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .pass { background: rgba(74, 222, 128, 0.2); border-left: 3px solid #4ade80; }
+        .fail { background: rgba(246, 124, 95, 0.2); border-left: 3px solid #f67c5f; }
+        .info { background: rgba(255, 255, 255, 0.1); border-left: 3px solid #888; }
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .summary.all-pass { background: rgba(74, 222, 128, 0.3); }
+        .summary.has-fail { background: rgba(246, 124, 95, 0.3); }
+        button {
+            background: linear-gradient(135deg, #f2b179, #f67c5f);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 10px 0;
+        }
+        button:hover { opacity: 0.9; }
+        .status { font-size: 24px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <iframe id="gameFrame" class="game-frame" src="index.html"></iframe>
+    <div class="test-panel">
+        <h1>🧪 2248 Challenge UAT</h1>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <div id="results"></div>
+        <div id="summary"></div>
+    </div>
+
+    <script>
+        let passCount = 0;
+        let failCount = 0;
+        let game;
+
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = 'test-result ' + type;
+            div.textContent = message;
+            document.getElementById('results').appendChild(div);
+            if (type === 'pass') passCount++;
+            if (type === 'fail') failCount++;
+        }
+
+        function test(name, condition) {
+            if (condition) {
+                log('✅ ' + name, 'pass');
+            } else {
+                log('❌ ' + name, 'fail');
+            }
+        }
+
+        function section(name) {
+            const h2 = document.createElement('h2');
+            h2.textContent = name;
+            document.getElementById('results').appendChild(h2);
+        }
+
+        function runAllTests() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('summary').innerHTML = '';
+            passCount = 0;
+            failCount = 0;
+
+            const iframe = document.getElementById('gameFrame');
+            game = iframe.contentWindow.game;
+
+            if (!game) {
+                log('❌ Game not loaded! Refresh and try again.', 'fail');
+                return;
+            }
+
+            // ========== CORE TESTS ==========
+            section('Core Game State');
+            test('Game object exists', typeof game !== 'undefined');
+            test('Grid has 8 rows', game.grid && game.grid.length === 8);
+            test('Grid width is 5', game.gridWidth === 5);
+            test('Initial score is 0', game.score === 0);
+            test('Initial moves is 0', game.moves === 0);
+            test('Current level is 1', game.currentLevel === 1);
+            test('Target score is 1000', game.targetScore === 1000);
+            test('Min chain is 2', game.minChain === 2);
+
+            // ========== UI TESTS ==========
+            section('UI Elements');
+            const doc = iframe.contentDocument;
+            test('Canvas exists', !!doc.getElementById('gameCanvas'));
+            test('Score display shows 0', doc.getElementById('score').textContent === '0');
+            test('Moves display shows 25', doc.getElementById('movesLeft').textContent === '25');
+            test('Undo button disabled on start', doc.getElementById('undoBtn').disabled === true);
+
+            // ========== MULTIPLIER TESTS ==========
+            section('Chain Multipliers');
+            const origChain = game.chain;
+            game.chain = [{}, {}];
+            test('2 tiles = 1x multiplier', game.getChainMultiplier() === 1);
+            game.chain = [{}, {}, {}];
+            test('3 tiles = 1.5x multiplier', game.getChainMultiplier() === 1.5);
+            game.chain = [{}, {}, {}, {}, {}];
+            test('5 tiles = 2x multiplier', game.getChainMultiplier() === 2);
+            game.chain = [{}, {}, {}, {}, {}, {}, {}];
+            test('7 tiles = 3x multiplier', game.getChainMultiplier() === 3);
+            game.chain = [{}, {}, {}, {}, {}, {}, {}, {}, {}];
+            test('9 tiles = 5x multiplier', game.getChainMultiplier() === 5);
+            game.chain = origChain;
+
+            // ========== BLOCKER TESTS ==========
+            section('Blocker System');
+            const Tile = iframe.contentWindow.Tile;
+            const testTile = new Tile(0, 0, 4);
+
+            testTile.setBlocker('stone');
+            test('Stone tile isBlocked() = true', testTile.isBlocked() === true);
+            test('Stone tile isBomb() = false', testTile.isBomb() === false);
+
+            testTile.blocker = 'ice';
+            testTile.blockerDuration = 3;
+            test('Ice tile isBlocked() = true', testTile.isBlocked() === true);
+            testTile.tickBlocker();
+            test('Ice duration decrements', testTile.blockerDuration === 2);
+
+            testTile.blocker = 'bomb';
+            testTile.bombTimer = 5;
+            test('Bomb tile isBomb() = true', testTile.isBomb() === true);
+            test('Bomb tile isBlocked() = false', testTile.isBlocked() === false);
+            testTile.tickBlocker();
+            test('Bomb timer decrements', testTile.bombTimer === 4);
+
+            // ========== UNDO SYSTEM TESTS ==========
+            section('Undo System');
+            game.loadLevel(1);
+            test('History empty after loadLevel', game.history.length === 0);
+            test('Undo button disabled after loadLevel', doc.getElementById('undoBtn').disabled === true);
+
+            game.saveState();
+            test('History has 1 entry after saveState', game.history.length === 1);
+            test('Undo button enabled after saveState', doc.getElementById('undoBtn').disabled === false);
+
+            // ========== LEVEL LOADING TESTS ==========
+            section('Level Loading');
+            game.loadLevel(15);
+            test('Level 15 loaded', game.currentLevel === 15);
+            test('Level 15 has minChain 3', game.minChain === 3);
+
+            // Check for stone blocker at position (2,3)
+            const stoneCheck = game.grid[3] && game.grid[3][2] && game.grid[3][2].blocker === 'stone';
+            test('Level 15 has stone at (2,3)', stoneCheck);
+
+            game.loadLevel(40);
+            test('Level 40 loaded', game.currentLevel === 40);
+
+            // Find bomb
+            let bombFound = false;
+            for (let row of game.grid) {
+                for (let tile of row) {
+                    if (tile && tile.isBomb()) {
+                        bombFound = true;
+                        log('  Bomb found at (' + tile.x + ',' + tile.y + ') timer=' + tile.bombTimer, 'info');
+                    }
+                }
+            }
+            test('Level 40 has bomb tile', bombFound);
+
+            // Reset to level 1
+            game.loadLevel(1);
+
+            // ========== SUMMARY ==========
+            const summary = document.getElementById('summary');
+            const total = passCount + failCount;
+            const allPass = failCount === 0;
+            summary.className = 'summary ' + (allPass ? 'all-pass' : 'has-fail');
+            summary.innerHTML = `
+                <div class="status">${allPass ? '✅' : '❌'}</div>
+                <strong>${passCount}/${total} tests passed</strong><br>
+                ${allPass ? 'All tests passing! Ready for release.' : failCount + ' test(s) failed. Review above.'}
+            `;
+        }
+
+        // Auto-run tests after iframe loads
+        document.getElementById('gameFrame').onload = function() {
+            setTimeout(runAllTests, 500);
+        };
+    </script>
+</body>
+</html>

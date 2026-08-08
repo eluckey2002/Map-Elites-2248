@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>2248 Challenge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .game-header {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 15px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .level-info {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .score-display {
+            text-align: right;
+        }
+
+        .score-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #f2b179;
+        }
+
+        .score-label {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f2b179, #f67c5f);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat-icon {
+            opacity: 0.7;
+        }
+
+        .stat-value {
+            font-weight: 600;
+        }
+
+        .min-chain-warning {
+            color: #f67c5f;
+        }
+
+        .game-container {
+            position: relative;
+            touch-action: none;
+        }
+
+        #gameCanvas {
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f2b179, #f67c5f);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .multiplier-popup {
+            position: absolute;
+            font-size: 48px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            pointer-events: none;
+            animation: popUp 0.8s ease-out forwards;
+            z-index: 100;
+        }
+
+        @keyframes popUp {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(0);
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1.2) translateY(-10px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1) translateY(-60px);
+            }
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2a2a4a, #1a1a2e);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 320px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .modal-subtitle {
+            font-size: 16px;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .modal-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+        }
+
+        .modal-stat {
+            text-align: center;
+        }
+
+        .modal-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f2b179;
+        }
+
+        .modal-stat-label {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .stars {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .star {
+            color: #333;
+            margin: 0 5px;
+        }
+
+        .star.earned {
+            color: #f2b179;
+        }
+
+        .level-select {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .level-btn {
+            aspect-ratio: 1;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .level-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .level-btn.current {
+            background: linear-gradient(135deg, #f2b179, #f67c5f);
+        }
+
+        .level-btn.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .chain-indicator {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .chain-valid {
+            color: #4ade80;
+        }
+
+        .chain-invalid {
+            color: #f67c5f;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-header">
+        <div class="header-top">
+            <div class="level-info">Level <span id="levelNum">1</span></div>
+            <div class="score-display">
+                <div class="score-value" id="score">0</div>
+                <div class="score-label">SCORE</div>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <div class="stats-row">
+            <div class="stat">
+                <span class="stat-icon">⬡</span>
+                <span>Moves: <span class="stat-value" id="movesLeft">25</span>/<span id="movesTotal">25</span></span>
+            </div>
+            <div class="stat">
+                <span class="stat-icon">🎯</span>
+                <span>Target: <span class="stat-value" id="targetScore">1000</span></span>
+            </div>
+            <div class="stat" id="minChainDisplay">
+                <span class="stat-icon">🔗</span>
+                <span>Min: <span class="stat-value" id="minChain">2</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div class="chain-indicator" id="chainIndicator" style="display: none;">
+            <span id="chainText"></span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn btn-secondary" id="undoBtn" disabled>↩ Undo</button>
+        <button class="btn btn-secondary" id="restartBtn">↻ Restart</button>
+        <button class="btn btn-primary" id="menuBtn">☰ Levels</button>
+    </div>
+
+    <!-- Level Complete Modal -->
+    <div class="modal" id="completeModal">
+        <div class="modal-content">
+            <div class="modal-title" id="completeTitle">Level Complete!</div>
+            <div class="stars" id="starsDisplay">
+                <span class="star">★</span>
+                <span class="star">★</span>
+                <span class="star">★</span>
+            </div>
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="finalScore">0</div>
+                    <div class="modal-stat-label">Score</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="movesUsed">0</div>
+                    <div class="modal-stat-label">Moves</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="bestChain">0</div>
+                    <div class="modal-stat-label">Best Chain</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="nextLevelBtn" style="width: 100%;">Next Level →</button>
+        </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div class="modal" id="gameOverModal">
+        <div class="modal-content">
+            <div class="modal-title">Game Over</div>
+            <div class="modal-subtitle" id="gameOverReason">Out of moves!</div>
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="gameOverScore">0</div>
+                    <div class="modal-stat-label">Score</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="gameOverTarget">0</div>
+                    <div class="modal-stat-label">Target</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="retryBtn" style="width: 100%; margin-bottom: 10px;">Try Again</button>
+            <button class="btn btn-secondary" id="gameOverMenuBtn" style="width: 100%;">Level Select</button>
+        </div>
+    </div>
+
+    <!-- Level Select Modal -->
+    <div class="modal" id="levelSelectModal">
+        <div class="modal-content">
+            <div class="modal-title">Select Level</div>
+            <div class="level-select" id="levelSelect"></div>
+            <button class="btn btn-secondary" id="closeLevelSelect" style="width: 100%; margin-top: 15px;">Close</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

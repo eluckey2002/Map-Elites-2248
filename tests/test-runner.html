@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2248 Challenge - UAT Test Runner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+        }
+
+        .game-panel {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .control-panel {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            height: fit-content;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #f2b179;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #f2b179;
+        }
+
+        iframe {
+            width: 100%;
+            height: 900px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: white;
+        }
+
+        .test-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .test-button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+            background: linear-gradient(135deg, #f2b179, #f67c5f);
+            color: white;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .test-button:active {
+            transform: scale(0.95);
+        }
+
+        .test-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .test-button.success {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+        }
+
+        .test-button.danger {
+            background: linear-gradient(135deg, #f67c5f, #dc2626);
+        }
+
+        .status {
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 13px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .status.success {
+            border-left: 4px solid #4ade80;
+        }
+
+        .status.error {
+            border-left: 4px solid #f67c5f;
+        }
+
+        .status.info {
+            border-left: 4px solid #f2b179;
+        }
+
+        .instructions {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .instructions li {
+            margin: 5px 0;
+        }
+
+        code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .screenshot-hint {
+            background: rgba(242, 177, 121, 0.1);
+            border: 2px dashed #f2b179;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .log-output {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 11px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .log-output .log-line {
+            margin: 2px 0;
+        }
+
+        .log-output .pass {
+            color: #4ade80;
+        }
+
+        .log-output .fail {
+            color: #f67c5f;
+        }
+
+        .log-output .info {
+            color: #f2b179;
+        }
+    </style>
+</head>
+<body>
+    <h1>2248 Challenge - UAT Test Runner</h1>
+
+    <div class="container">
+        <div class="game-panel">
+            <h2>Game Window</h2>
+            <iframe id="gameFrame" src="index.html"></iframe>
+        </div>
+
+        <div class="control-panel">
+            <h2>Test Controls</h2>
+
+            <div class="instructions">
+                <strong>How to use:</strong>
+                <ol>
+                    <li>Click test buttons below to set up scenarios</li>
+                    <li>Take screenshots when prompted</li>
+                    <li>Screenshots should show the game in the iframe</li>
+                    <li>Use Cmd+Shift+4 (Mac) to capture specific area</li>
+                </ol>
+            </div>
+
+            <!-- Test 1: Initial State -->
+            <div class="test-section">
+                <h2>Test 1: Initial State</h2>
+                <button class="test-button" onclick="test1()">1. Load Fresh Level</button>
+                <div id="status1"></div>
+                <div id="screenshot1"></div>
+            </div>
+
+            <!-- Test 2: Make Move -->
+            <div class="test-section">
+                <h2>Test 2: After Move</h2>
+                <button class="test-button secondary" onclick="test2()">2. Make Programmatic Move</button>
+                <div id="status2"></div>
+                <div id="screenshot2"></div>
+            </div>
+
+            <!-- Test 3: Undo -->
+            <div class="test-section">
+                <h2>Test 3: Undo</h2>
+                <button class="test-button success" onclick="test3()">3. Click Undo</button>
+                <div id="status3"></div>
+                <div id="screenshot3"></div>
+            </div>
+
+            <!-- Test 4: Level Complete -->
+            <div class="test-section">
+                <h2>Test 4: Level Complete</h2>
+                <button class="test-button" onclick="test4()">4. Show Level Complete</button>
+                <button class="test-button secondary" onclick="test4b()">4b. Hide Modal</button>
+                <div id="status4"></div>
+                <div id="screenshot4"></div>
+            </div>
+
+            <!-- Test 5: Game Over -->
+            <div class="test-section">
+                <h2>Test 5: Game Over</h2>
+                <button class="test-button danger" onclick="test5()">5. Show Game Over</button>
+                <button class="test-button success" onclick="test5b()">5b. Undo from Game Over</button>
+                <div id="status5"></div>
+                <div id="screenshot5"></div>
+            </div>
+
+            <!-- Run All Tests -->
+            <div class="test-section">
+                <h2>Automated Tests</h2>
+                <button class="test-button" onclick="runAutomatedTests()">Run All Automated Tests</button>
+                <div id="testLog" class="log-output" style="display: none;"></div>
+            </div>
+
+            <!-- Game State Info -->
+            <div class="test-section">
+                <h2>Current Game State</h2>
+                <button class="test-button secondary" onclick="showGameState()">Show Game State</button>
+                <div id="gameState"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let gameWindow;
+
+        // Wait for iframe to load
+        document.getElementById('gameFrame').addEventListener('load', function() {
+            gameWindow = this.contentWindow;
+            console.log('Game loaded successfully');
+        });
+
+        function getGame() {
+            if (!gameWindow || !gameWindow.game) {
+                alert('Game not loaded yet. Please wait...');
+                return null;
+            }
+            return gameWindow.game;
+        }
+
+        function showStatus(id, message, type = 'info') {
+            const el = document.getElementById(id);
+            el.className = `status ${type}`;
+            el.innerHTML = message;
+        }
+
+        function showScreenshotPrompt(id, message) {
+            const el = document.getElementById(id);
+            el.className = 'screenshot-hint';
+            el.innerHTML = '📸 ' + message;
+        }
+
+        // Test 1: Initial State - Undo Disabled
+        function test1() {
+            const game = getGame();
+            if (!game) return;
+
+            game.loadLevel(1);
+
+            setTimeout(() => {
+                const undoBtn = gameWindow.document.getElementById('undoBtn');
+                const isDisabled = undoBtn.disabled;
+                const historyLen = game.history.length;
+
+                showStatus('status1',
+                    `✓ Level loaded<br>` +
+                    `Undo disabled: <strong>${isDisabled}</strong><br>` +
+                    `History length: <strong>${historyLen}</strong><br>` +
+                    `Score: <strong>${game.score}</strong><br>` +
+                    `Moves: <strong>${game.moves}/${game.maxMoves}</strong>`,
+                    isDisabled ? 'success' : 'error'
+                );
+
+                if (isDisabled) {
+                    showScreenshotPrompt('screenshot1', 'TAKE SCREENSHOT: Undo button DISABLED');
+                }
+            }, 200);
+        }
+
+        // Test 2: Make Move - Undo Enabled
+        function test2() {
+            const game = getGame();
+            if (!game) return;
+
+            // Find matching tiles
+            function findMatchingTiles() {
+                for (let row = 0; row < game.gridHeight; row++) {
+                    for (let col = 0; col < game.gridWidth; col++) {
+                        const tile = game.grid[row][col];
+                        if (!tile || tile.isBlocked()) continue;
+
+                        const directions = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+                        for (const [dy, dx] of directions) {
+                            const newRow = row + dy;
+                            const newCol = col + dx;
+
+                            if (newRow >= 0 && newRow < game.gridHeight &&
+                                newCol >= 0 && newCol < game.gridWidth) {
+                                const neighbor = game.grid[newRow][newCol];
+                                if (neighbor && !neighbor.isBlocked() && neighbor.value === tile.value) {
+                                    return { tile1: tile, tile2: neighbor };
+                                }
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
+
+            const match = findMatchingTiles();
+            if (!match) {
+                showStatus('status2', '✗ No matching tiles found!', 'error');
+                return;
+            }
+
+            // Execute move
+            game.chain = [match.tile1, match.tile2];
+            match.tile1.selected = true;
+            match.tile2.selected = true;
+
+            if (game.isValidChain()) {
+                game.executeChain();
+
+                setTimeout(() => {
+                    const undoBtn = gameWindow.document.getElementById('undoBtn');
+                    const isEnabled = !undoBtn.disabled;
+
+                    showStatus('status2',
+                        `✓ Move executed<br>` +
+                        `Undo enabled: <strong>${isEnabled}</strong><br>` +
+                        `History length: <strong>${game.history.length}</strong><br>` +
+                        `Score: <strong>${game.score}</strong><br>` +
+                        `Moves: <strong>${game.moves}/${game.maxMoves}</strong>`,
+                        isEnabled ? 'success' : 'error'
+                    );
+
+                    if (isEnabled) {
+                        showScreenshotPrompt('screenshot2', 'TAKE SCREENSHOT: Undo button ENABLED');
+                    }
+                }, 600);
+            } else {
+                showStatus('status2', '✗ Chain invalid', 'error');
+            }
+        }
+
+        // Test 3: Undo
+        function test3() {
+            const game = getGame();
+            if (!game) return;
+
+            const scoreBefore = game.score;
+            const movesBefore = game.moves;
+            const historyBefore = game.history.length;
+
+            game.undo();
+
+            setTimeout(() => {
+                const undoBtn = gameWindow.document.getElementById('undoBtn');
+                const scoreReverted = game.score < scoreBefore;
+                const movesReverted = game.moves < movesBefore;
+
+                showStatus('status3',
+                    `✓ Undo executed<br>` +
+                    `Score: ${scoreBefore} → <strong>${game.score}</strong> ${scoreReverted ? '✓' : '✗'}<br>` +
+                    `Moves: ${movesBefore} → <strong>${game.moves}</strong> ${movesReverted ? '✓' : '✗'}<br>` +
+                    `History: ${historyBefore} → <strong>${game.history.length}</strong><br>` +
+                    `Undo disabled: <strong>${undoBtn.disabled}</strong>`,
+                    scoreReverted && movesReverted ? 'success' : 'error'
+                );
+
+                showScreenshotPrompt('screenshot3', 'TAKE SCREENSHOT: After undo (state reverted)');
+            }, 200);
+        }
+
+        // Test 4: Level Complete
+        function test4() {
+            const game = getGame();
+            if (!game) return;
+
+            game.score = game.targetScore;
+            game.levelComplete = true;
+            game.showLevelComplete();
+
+            setTimeout(() => {
+                const modal = gameWindow.document.getElementById('completeModal');
+                const isVisible = modal.classList.contains('active');
+
+                showStatus('status4',
+                    `✓ Level complete triggered<br>` +
+                    `Modal visible: <strong>${isVisible}</strong><br>` +
+                    `levelComplete flag: <strong>${game.levelComplete}</strong>`,
+                    isVisible ? 'success' : 'error'
+                );
+
+                if (isVisible) {
+                    showScreenshotPrompt('screenshot4', 'TAKE SCREENSHOT: Level complete modal');
+                }
+            }, 500);
+        }
+
+        function test4b() {
+            const game = getGame();
+            if (!game) return;
+
+            game.hideModal('completeModal');
+
+            setTimeout(() => {
+                const modal = gameWindow.document.getElementById('completeModal');
+                const isHidden = !modal.classList.contains('active');
+
+                showStatus('status4',
+                    `✓ Modal hidden<br>` +
+                    `Modal hidden: <strong>${isHidden}</strong>`,
+                    isHidden ? 'success' : 'error'
+                );
+            }, 200);
+        }
+
+        // Test 5: Game Over
+        function test5() {
+            const game = getGame();
+            if (!game) return;
+
+            game.loadLevel(1);
+
+            setTimeout(() => {
+                // Make one move first
+                test2();
+
+                setTimeout(() => {
+                    game.moves = game.maxMoves;
+                    game.gameOver = true;
+                    game.showGameOver('Out of moves!');
+
+                    setTimeout(() => {
+                        const modal = gameWindow.document.getElementById('gameOverModal');
+                        const isVisible = modal.classList.contains('active');
+
+                        showStatus('status5',
+                            `✓ Game over triggered<br>` +
+                            `Modal visible: <strong>${isVisible}</strong><br>` +
+                            `gameOver flag: <strong>${game.gameOver}</strong>`,
+                            isVisible ? 'success' : 'error'
+                        );
+
+                        if (isVisible) {
+                            showScreenshotPrompt('screenshot5', 'TAKE SCREENSHOT: Game over modal');
+                        }
+                    }, 500);
+                }, 1000);
+            }, 200);
+        }
+
+        function test5b() {
+            const game = getGame();
+            if (!game) return;
+
+            game.undo();
+
+            setTimeout(() => {
+                const modal = gameWindow.document.getElementById('gameOverModal');
+                const isHidden = !modal.classList.contains('active');
+                const gameOverCleared = !game.gameOver;
+
+                showStatus('status5',
+                    `✓ Undo from game over<br>` +
+                    `Modal hidden: <strong>${isHidden}</strong><br>` +
+                    `gameOver cleared: <strong>${gameOverCleared}</strong><br>` +
+                    `Game playable: <strong>${!game.gameOver && !game.levelComplete}</strong>`,
+                    isHidden && gameOverCleared ? 'success' : 'error'
+                );
+            }, 200);
+        }
+
+        // Show current game state
+        function showGameState() {
+            const game = getGame();
+            if (!game) return;
+
+            const undoBtn = gameWindow.document.getElementById('undoBtn');
+            const state = {
+                level: game.currentLevel,
+                score: game.score,
+                targetScore: game.targetScore,
+                moves: game.moves,
+                maxMoves: game.maxMoves,
+                minChain: game.minChain,
+                bestChain: game.bestChain,
+                historyLength: game.history.length,
+                undoDisabled: undoBtn.disabled,
+                gameOver: game.gameOver,
+                levelComplete: game.levelComplete,
+                animating: game.animating,
+                chainLength: game.chain.length
+            };
+
+            let html = '<div class="status info">';
+            for (const [key, value] of Object.entries(state)) {
+                html += `<strong>${key}:</strong> ${value}<br>`;
+            }
+            html += '</div>';
+
+            document.getElementById('gameState').innerHTML = html;
+        }
+
+        // Run automated tests
+        async function runAutomatedTests() {
+            const logEl = document.getElementById('testLog');
+            logEl.style.display = 'block';
+            logEl.innerHTML = '<div class="log-line info">Starting automated tests...</div>';
+
+            const game = getGame();
+            if (!game) return;
+
+            function log(message, type = 'info') {
+                logEl.innerHTML += `<div class="log-line ${type}">${message}</div>`;
+                logEl.scrollTop = logEl.scrollHeight;
+            }
+
+            function wait(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            try {
+                // Test 1: Initial state
+                log('Test 1: Loading fresh level...', 'info');
+                game.loadLevel(1);
+                await wait(200);
+
+                const undoBtn = gameWindow.document.getElementById('undoBtn');
+                const test1Pass = undoBtn.disabled === true && game.history.length === 0;
+                log(test1Pass ? '✓ PASS: Undo disabled on load' : '✗ FAIL: Undo should be disabled', test1Pass ? 'pass' : 'fail');
+
+                // Test 2: Make move
+                log('Test 2: Executing move...', 'info');
+                // Trigger test2 function
+                test2();
+                await wait(800);
+
+                const test2Pass = !undoBtn.disabled && game.history.length > 0 && game.score > 0;
+                log(test2Pass ? '✓ PASS: Move executed, undo enabled' : '✗ FAIL: Undo should be enabled', test2Pass ? 'pass' : 'fail');
+
+                // Test 3: Undo
+                log('Test 3: Executing undo...', 'info');
+                const scoreBefore = game.score;
+                game.undo();
+                await wait(200);
+
+                const test3Pass = game.score === 0 && undoBtn.disabled === true;
+                log(test3Pass ? '✓ PASS: Undo reverted state' : '✗ FAIL: State should revert', test3Pass ? 'pass' : 'fail');
+
+                // Test 4: Level complete
+                log('Test 4: Testing level complete modal...', 'info');
+                game.score = game.targetScore;
+                game.levelComplete = true;
+                game.showLevelComplete();
+                await wait(500);
+
+                const modal = gameWindow.document.getElementById('completeModal');
+                const test4Pass = modal.classList.contains('active');
+                log(test4Pass ? '✓ PASS: Modal displayed' : '✗ FAIL: Modal should be visible', test4Pass ? 'pass' : 'fail');
+
+                game.hideModal('completeModal');
+                await wait(200);
+
+                // Test 5: Game over
+                log('Test 5: Testing game over...', 'info');
+                game.loadLevel(1);
+                await wait(200);
+                game.moves = game.maxMoves;
+                game.checkWinLose();
+                await wait(200);
+
+                const gameOverModal = gameWindow.document.getElementById('gameOverModal');
+                const test5Pass = gameOverModal.classList.contains('active');
+                log(test5Pass ? '✓ PASS: Game over modal displayed' : '✗ FAIL: Game over should show', test5Pass ? 'pass' : 'fail');
+
+                log('=== All automated tests complete ===', 'info');
+
+            } catch (error) {
+                log('✗ ERROR: ' + error.message, 'fail');
+            }
+        }
+    </script>
+</body>
+</html>
