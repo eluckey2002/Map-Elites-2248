@@ -50,26 +50,55 @@ function mapChainToClone(chain, cloned) {
   return chain.map((tile) => cloned.grid[tile.y][tile.x]);
 }
 
-// Simulates executing `candidate.chain`, then gravity + a spawn draw from a
-// fresh rng, and returns the best chain points achievable on the result (0 if
-// the bomb exploded or no chain exists). Doesn't mutate `state`.
-function rolloutValue(state, candidate, lookaheadRngFactory) {
+// Simulates the game's execute -> gravity -> spawn sequence without mutating
+// `state`. Keeping the cloned survivor object lets placement evaluation follow
+// it when gravity changes its coordinates instead of inspecting the cell where
+// it used to be.
+function simulateCandidate(state, candidate, lookaheadRngFactory) {
   const sim = cloneState(state);
-  executeChain(sim, mapChainToClone(candidate.chain, sim));
+  const mappedChain = mapChainToClone(candidate.chain, sim);
+  const survivor = mappedChain[mappedChain.length - 1];
+  executeChain(sim, mappedChain);
   applyGravity(sim);
   spawnNewTiles(sim, lookaheadRngFactory());
-  if (checkBombs(sim)) return 0;
-  const next = findGreedyChains(sim, { limit: 1 })[0];
+  return { sim, survivor };
+}
+
+// Returns the best chain points achievable anywhere on an already-simulated
+// result (0 if the bomb exploded or no chain exists).
+function rolloutValue(outcome) {
+  if (checkBombs(outcome.sim)) return 0;
+  const next = findGreedyChains(outcome.sim, { limit: 1 })[0];
   return next ? next.points : 0;
+}
+
+// Scores only a legal future chain that begins at the merge survivor after
+// execute -> gravity -> spawn. A valid longer chain necessarily has a valid
+// minChain prefix, so the depth cap proves chainability without turning this
+// placement signal into an exhaustive endpoint search. Its natural unit is
+// points, matching the other ranking terms without introducing a tuned weight.
+function remnantPlacementValueFromOutcome(outcome) {
+  if (checkBombs(outcome.sim)) return 0;
+  const next = findBestChain(outcome.sim, {
+    mustStartAt: outcome.survivor,
+    maxLength: outcome.sim.minChain,
+  });
+  return next ? next.points : 0;
+}
+
+function remnantPlacementValue(state, candidate, lookaheadRngFactory) {
+  const outcome = simulateCandidate(state, candidate, lookaheadRngFactory);
+  return remnantPlacementValueFromOutcome(outcome);
 }
 
 // Heuristic: defuse the most urgent reachable bomb (lowest timer) first;
 // otherwise take the chain maximizing (this move's points + best next-move
-// points on the resulting board + the turnover value of the cells it empties),
-// a 2-ply lookahead over greedy-walk candidates. The turnover term is a
-// forecast of value arriving after the horizon, so it sits with the rollout
-// term, not with the immediate score. Without lookaheadRngFactory this falls
-// back to plain 1-ply (highest immediate score) and neither forecast applies.
+// points on the resulting board + a legal chain beginning at the survivor +
+// the turnover value of the cells it empties), a 2-ply lookahead over
+// greedy-walk candidates. The turnover term is a forecast of value arriving
+// after the horizon, so it sits with the rollout terms, not with the immediate
+// score. Without lookaheadRngFactory this falls back to plain 1-ply (highest
+// immediate score) and none of the forecasts applies.
 // Returns null if the board has no legal move.
 function chooseMove(state, options = {}) {
   const { lookaheadRngFactory } = options;
@@ -88,8 +117,10 @@ function chooseMove(state, options = {}) {
   let bestTotal = -Infinity;
   for (const candidate of candidates) {
     const emptiedCells = candidate.chain.length - 1; // the last tile survives
+    const outcome = simulateCandidate(state, candidate, lookaheadRngFactory);
     const total = candidate.points
-      + rolloutValue(state, candidate, lookaheadRngFactory)
+      + rolloutValue(outcome)
+      + remnantPlacementValueFromOutcome(outcome)
       + TURNOVER_BONUS_PER_TILE * emptiedCells;
     if (total > bestTotal) {
       bestTotal = total;
@@ -99,4 +130,4 @@ function chooseMove(state, options = {}) {
   return bestCandidate.chain;
 }
 
-module.exports = { chooseMove };
+module.exports = { chooseMove, remnantPlacementValue };

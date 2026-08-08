@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { chooseMove } = require('../bot');
+const { chooseMove, remnantPlacementValue } = require('../bot');
 
 function makeTile(x, y, value, blocker = null, bombTimer = 0) {
   return { x, y, value, blocker, blockerDuration: 0, bombTimer };
@@ -141,4 +141,55 @@ test('chooseMove: considers candidates ranked below the top few on immediate poi
 
   assert.equal(chain.length, 8);
   assert.ok(chain.every((t) => t.value === 2));
+});
+
+test('remnantPlacementValue: evaluates the survivor after gravity moves it', () => {
+  const survivor = makeTile(0, 0, 2);
+  const consumed = makeTile(1, 0, 2);
+  const landingNeighbor = makeTile(1, 2, 4);
+  const state = makeState([
+    [survivor, consumed],
+    [null, null],
+    [null, landingNeighbor],
+  ]);
+  const candidate = { chain: [consumed, survivor], points: 4 };
+  const constantRng = () => 0; // -> spawn value 2
+
+  const value = remnantPlacementValue(state, candidate, () => constantRng);
+
+  // The merged 4 falls from (0,0) to (0,2), beside landingNeighbor. Looking
+  // at its old coordinate after spawning would inspect a new 2 instead.
+  assert.equal(value, 8);
+});
+
+test('remnantPlacementValue: rewards a survivor that can begin a future chain', () => {
+  const fixedEight = makeTile(0, 0, 8);
+  const twos = [1, 2, 3, 4].map((x) => makeTile(x, 0, 2));
+  const state = makeState([[fixedEight, ...twos]]);
+  const besideMatch = { chain: [...twos].reverse(), points: 12 };
+  const stranded = { chain: twos, points: 12 };
+  const constantRng = () => 0; // -> spawn value 2
+
+  const chainableValue = remnantPlacementValue(state, besideMatch, () => constantRng);
+  const strandedValue = remnantPlacementValue(state, stranded, () => constantRng);
+
+  assert.ok(chainableValue > strandedValue);
+  assert.equal(chainableValue, 16);
+  assert.equal(strandedValue, 0);
+});
+
+test('chooseMove: placement signal breaks an ordinary-candidate tie toward a chainable survivor', () => {
+  const fixedSixteen = makeTile(0, 0, 16);
+  const twos = Array.from({ length: 8 }, (_, index) => makeTile(index + 1, 0, 2));
+  const separator = makeTile(9, 0, 6);
+  const unrelatedPair = [makeTile(10, 0, 16), makeTile(11, 0, 16)];
+  const state = makeState([[fixedSixteen, ...twos, separator, ...unrelatedPair]]);
+  const constantRng = () => 0; // -> spawn value 2
+
+  const chain = chooseMove(state, { lookaheadRngFactory: () => constantRng });
+
+  // Both endpoint variants score 48 now, empty seven cells, and have the same
+  // 32-point ordinary rollout via unrelatedPair. Only the reverse endpoint
+  // leaves its merged 16 beside fixedSixteen for another legal 32-point chain.
+  assert.deepEqual(chain, [...twos].reverse());
 });
