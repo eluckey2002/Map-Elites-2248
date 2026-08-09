@@ -79,7 +79,8 @@ Level 26 target check is still red; that is not a solver-test failure.
 
 ## Repository state
 
-- `main` HEAD at handoff: `44c04ff Add design spec for the level-authoring loop`.
+- `main` includes the handoff commit after `44c04ff Add design spec for the
+  level-authoring loop`.
 - Relevant commits:
   - `d63fb29 Initial local snapshot`
   - `98e324e Add remnant placement signal`
