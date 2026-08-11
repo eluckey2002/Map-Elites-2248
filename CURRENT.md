@@ -4,27 +4,26 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Active milestone
 
-Resolve whether the frozen Level 26 seed-0 run can reach 13,000 within 32 moves. The accepted boundary remains a replayed lower bound of 12,336 and a non-decisive proven upper bound of 326,390; reachability and the exact maximum are unresolved. See the ledger's [current snapshot](EVIDENCE_LEDGER.md#current-snapshot) and [open questions](EVIDENCE_LEDGER.md#open-question-registry).
+Set the shipped levels' score targets from measured achievable score rather than a fixed 500-point step. Calibration across all 50 levels found that the current bot clears no level from 17 onward, and that targets grow linearly while achievable score stays flat or declines. See the ledger's [RESULT-0005](EVIDENCE_LEDGER.md#result-0005--level-26-is-not-a-tuning-outlier-the-whole-back-half-is-unbeaten).
 
-The milestone exits only with accepted evidence of at least one of these outcomes:
+The milestone exits when each level's target is set by a stated difficulty standard, and the calibration run shows the intended curve.
 
-- a replayed 13,000 witness;
-- an exact result; or
-- a proven upper bound below 13,000.
+## Parked
 
-Timeouts, heuristic misses, terminal boards, and `UNKNOWN` do not close it. See the ledger's [resume boundary](EVIDENCE_LEDGER.md#resume-boundary).
+The Level 26 exact-proof track. It is parked by [DECISION-0002](EVIDENCE_LEDGER.md#decision-0002--park-the-exact-proof-track-tune-levels-from-measured-calibration), not retracted: 13,000 reachability and the exact maximum stay open, all frozen receipts and verifiers remain committed and replayable, and no impossibility claim follows. It was parked because the shipped game seeds its board from `Math.random`, so a result about one frozen seed cannot decide whether a player can clear the level.
 
-## NEXT
-
-[BL-0001 — Test compact state signature](docs/backlog/BL-0001-test-compact-state-signature.md) is ready. It evaluates the ledger's provisional compact-state hypothesis against exact small-horizon positions without treating the hypothesis as fact.
-
-## Later
-
-[BL-0002 — Evaluate decisive proof formulation](docs/backlog/BL-0002-evaluate-decisive-proof-formulation.md) remains proposed and depends on BL-0001. It compares possible exact continuations without selecting one in advance.
+[BL-0001](docs/backlog/BL-0001-test-compact-state-signature.md) and [BL-0002](docs/backlog/BL-0002-evaluate-decisive-proof-formulation.md) belong to that track and are parked with it.
 
 ## Blockers and decisions needed
 
-- No decisive certificate currently resolves 13,000 reachability or the exact maximum.
-- Any formulation to pursue after BL-0001 requires an explicit owner decision; this page does not make it.
+- **Owner decision, blocking:** what difficulty standard should a target encode — what win rate, for which player? Targets cannot be set without it.
+- The current bot is a weak proxy for a skilled player. On the one board where both were measured, a dedicated search scored about 1.5x the bot (12,336 against 8,174). That single ratio is enough for coarse triage, not for setting exact targets.
+
+## Useful commands
+
+```bash
+node solver/target-calibration.js 200   # per-level target vs achievable score
+node --test solver/tests/*.test.js
+```
 
 Last reviewed: 2026-08-11

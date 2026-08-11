@@ -10,7 +10,9 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
-The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. Continue only with proof-oriented work that preserves the frozen scope. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
+The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
+
+That proof track is **parked** as of 2026-08-11 (`DECISION-0002`), and active work has moved to level tuning. Calibration across all 50 levels shows Level 26 was never the outlier it was treated as: its target is the *lowest* multiple of achievable score of any level from 19 to 50, while the current bot clears no level at all from 17 onward and demand rises to roughly six times achievable score by level 49 (`RESULT-0005`). Parking decides nothing about 13,000; `QUESTION-0001` and `QUESTION-0002` remain open. (`solver/target-calibration.js`)
 
 Repository baseline for this documentation run is `main` at `10a849d5336bdda89d2d3f5ed1f1ca87e536811d`, with pre-existing dirty work preserved. Recheck with `git status --short --branch` and `git log -1 --format='%H %s'`. (`.orch/runs/game-evidence-ledger-2026-08-11/worklog.md`, **State**)
 
@@ -239,12 +241,27 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 
+### RESULT-0005 — Level 26 is not a tuning outlier; the whole back half is unbeaten
+
+- **type:** result
+- **status:** accepted
+- **scope:** all 50 shipped levels, current `solver/bot.js` policy, 200 seeds per level
+- **statement:** Against the shipped targets, the current bot wins every level through 14, wins none from level 17 onward, and never once reaches a target between levels 17 and 50. Expressing each target as a multiple of the bot's median achievable score, Level 26 sits at **1.66** — the *lowest* demand of any level from 19 to 50, and below levels 24 (2.32), 28 (2.18), 29 (2.35), 30 (2.39), and 31 (2.22). Demand climbs to 6.24 by level 49. Targets rise in fixed 500-point steps while achievable score stays flat or declines as move budgets shrink, blockers accumulate, and the grid narrows from 5x8 to 5x7 at level 31. This is a heuristic observation about one policy; it bounds no optimal player.
+- **evidence:** `solver/target-calibration.js` (full-budget play with the target raised out of reach; `chooseMove` never reads `targetScore`, so removing the target does not change play); consistent with the 500-seed Level 26 sample recorded under `HANDOFF.md`, **Synopsis** (median 7,842, max 11,370).
+- **proof_class:** `heuristic_observation`
+- **as_of:** 2026-08-11
+- **reverify:** Run `node solver/target-calibration.js 200`; expect Level 26 demand near 1.66, zero bot wins from level 17 onward, and demand rising monotonically in trend toward roughly 6 by level 49.
+- **updated:** 2026-08-11
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Level 26 became the proof subject because it was studied first, not because it was the worst-tuned level. Thirty-four levels share its condition.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
 
 - **type:** decision
-- **status:** accepted
+- **status:** superseded
 - **scope:** current Level 26 feasibility study
 - **statement:** The feasibility study preserves the shipped rules and evaluates one Level 26 seed-0 sequence. Target changes, scoring changes, and generic bot tuning remain outside the proof question.
 - **evidence:** `.orch/runs/level26-certified-score-2026-08-10/worklog.md:3-9,34-39`; historical correction under `HANDOFF.md`, **Important correction**.
@@ -253,7 +270,22 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** not_applicable
 - **updated:** 2026-08-11
 - **supersedes:** []
+- **superseded_by:** [DECISION-0002]
+
+### DECISION-0002 — Park the exact-proof track; tune levels from measured calibration
+
+- **type:** decision
+- **status:** accepted
+- **scope:** level tuning and the Level 26 feasibility study
+- **statement:** The exact-proof track is parked, not retracted. `QUESTION-0001` and `QUESTION-0002` stay open and every accepted proof record keeps its standing; no impossibility claim follows from parking. The reason is scope, not difficulty: the shipped game seeds its board from `Math.random`, so a result about one frozen seed cannot decide whether a player can clear the level, which is the question the solver was built to answer. Level tuning now proceeds from measured calibration across seeds (`RESULT-0005`). This lifts DECISION-0001's exclusion of target changes.
+- **evidence:** owner instruction in session 2026-08-11; unseeded shipped randomizer noted in `solver/README.md`, **Level solver** opening; calibration evidence `RESULT-0005`.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-08-11
+- **reverify:** not_applicable
+- **updated:** 2026-08-11
+- **supersedes:** [DECISION-0001]
 - **superseded_by:** []
+- **notes:** Resuming the proof track requires only an owner decision; the frozen inputs, receipts, and verifiers remain committed and replayable.
 
 ## Hypothesis registry
 
@@ -338,4 +370,6 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 
 ## Resume boundary
 
-The project resumes from the unresolved **12,336–326,390** interval for frozen Level 26 seed 0. Closure requires an accepted replayed 13,000 witness, an exact result, or a proven upper bound below 13,000; heuristic misses, terminal boards, timeouts, and `UNKNOWN` remain non-decisive.
+Active work resumes at level tuning: choose a difficulty standard for the shipped levels and set targets from measured achievable score (`DECISION-0002`, `RESULT-0005`). The open design question is what win rate a target should imply and for which player; the current bot is a weak proxy and understates a skilled player by an unquantified margin.
+
+The proof track is parked, not closed. It resumes from the unresolved **12,336–326,390** interval for frozen Level 26 seed 0. Closure still requires an accepted replayed 13,000 witness, an exact result, or a proven upper bound below 13,000; heuristic misses, terminal boards, timeouts, and `UNKNOWN` remain non-decisive.

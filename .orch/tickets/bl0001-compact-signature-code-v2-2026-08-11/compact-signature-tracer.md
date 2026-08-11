@@ -1,7 +1,7 @@
 ---
 id: compact-signature-tracer
 run: bl0001-compact-signature-code-v2-2026-08-11
-status: claimed
+status: failed
 executor: orch-tdd
 pack: orch-code-pack
 independence: gate
@@ -130,16 +130,20 @@ Acceptance criterion 6 is gate-owned: the downstream code gate renders the code-
 
 ## Result
 
-Pending execution.
+Rejected at the parent join on 2026-08-11T20:13:08Z with blame `caller`: the fixed workspace path was outside the patch tool's editable project root, so the executor could not create the first required red test with the mandated edit mechanism. Two absolute-path patch attempts were externally aborted; a relative patch briefly resolved into the live checkout, where the executor removed only its newly created file before any test or commit. Both the disposable repository and the live target path were then confirmed clean/absent. No deliverable artifact or result revision exists.
 
 ## Verification
 
-Pending execution.
+- Claim identity matched `/root/orch_worker_gpt_5_6_sol_high_5`.
+- Returned changes: none; the isolated repository remained at baseline `831cf3cf070ef261b0a20478e5175a7f442313a3` with empty `git status --short`.
+- Live `solver/compact-signature` and isolated `solver/compact-signature` were both absent at join.
+- Completion criteria AC-1 through AC-6 remain uncovered because execution never reached the first red test.
+- Disposition: `rejected(caller)`; the frozen workspace input was incompatible with the required editing mechanism.
 
 ## Feedback
 
-[]
+- A disposable repository under the authorized project root is required for patch-based TDD in this environment.
 
 ## Risks
 
-[]
+- Retrying against `/private/tmp` would repeat a verified tool-path failure.

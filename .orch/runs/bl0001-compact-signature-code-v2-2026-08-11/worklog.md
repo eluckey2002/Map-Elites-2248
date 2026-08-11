@@ -37,11 +37,12 @@ A deterministic, tested runner can exhaustively compare declared compact state s
 
 ## Blame classes
 
-[]
+- 2026-08-11T20:13:08Z — ticket `compact-signature-tracer`: `caller`. The fixed `/private/tmp` workspace was not writable by the required patch mechanism; the executor returned no changes and the parent rejected the result before any criterion could be covered.
 
 ## Failed approaches
 
 - The predecessor live-checkout/no-commit spec is preserved in its own terminal worklog and will not be retried.
+- This v2 `/private/tmp` workspace contract is preserved and will not be retried. Absolute patch calls were externally aborted, while relative patch resolution targeted the live root.
 
 ## Queued scope
 
@@ -50,4 +51,7 @@ A deterministic, tested runner can exhaustively compare declared compact state s
 
 ## Terminal
 
-[]
+- **status:** `failed`
+- **closed:** 2026-08-11T20:13:08Z
+- **reason:** caller-supplied workspace incompatible with the mandated edit mechanism; zero deliverable changes.
+- **successor condition:** re-enter `orch-spec` with an isolated committed baseline located under the authorized project root.
