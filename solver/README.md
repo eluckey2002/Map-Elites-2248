@@ -24,7 +24,16 @@ levels 40-50 (the bomb levels) by hand.
 - `verify-loop.js` — deterministic done-check for the `lockout-fix-2026-08-08`
   orch-loop run (see below): level 1/11 no-regression, level 26 win-rate
   target, bomb-exploded no-regression, all in one script/exit-code.
-- `tests/` — 53 tests, `node --test solver/tests/*.test.js`.
+- `exact-score.js` — position-aware exact search for small boards, a
+  position-relaxed upper-bound search, and frozen-sequence witness replay.
+- `certify-level26.py` — exact SMT decision procedure for the single frozen
+  Level 26 seed-0 `score >= 13000` query. SAT is independently replayed;
+  UNSAT is a proof; a timeout is printed as `UNKNOWN` and is not a result.
+- `alternative-certifier.py` — a genuinely separate exact OR-Tools CP-SAT
+  formulation of that query. It uses finite-domain path variables and an
+  explicit stable-compaction network rather than Z3 arrays; SAT is accepted
+  only after an independent concrete replay, while a time limit is `UNKNOWN`.
+- `tests/` — run all tests with `node --test solver/tests/*.test.js`.
 - `../.orch/runs/lockout-fix-2026-08-08/worklog.md` and
   `../.orch/tickets/lockout-fix-2026-08-08/` — the full record of the
   two-iteration tuning loop below: frozen goal, per-iteration diagnosis,
@@ -104,9 +113,214 @@ Current bot, for reference (final state):
 | 26 (minChain 4, no bombs) | 0% | lockout-free; pure score-pace ceiling (see above) |
 | 40-50 (bombs) | 0% | same ceiling, inherited; bombs ~0% of deaths |
 
+## Frozen Level 26 certifier
+
+Create an isolated environment and install the pinned solver:
+
+```sh
+python3 -m venv .venv-certifier
+.venv-certifier/bin/python -m pip install -r solver/requirements-certifier.txt
+```
+
+The fixed deterministic fixture command proves that its one-move maximum is
+18, rejects `score >= 19`, and checks column-major spawning:
+
+```sh
+.venv-certifier/bin/python solver/certify-level26.py --fixture
+```
+
+The frozen target query is:
+
+```sh
+.venv-certifier/bin/python solver/certify-level26.py --target --timeout-ms 120000
+```
+
+Only `SAT` with the emitted replay-checked witness or `UNSAT` is decisive.
+`UNKNOWN` exits 2 and leaves reachability, the exact maximum, and any upper
+bound unresolved. This command certifies only Level 26, seed 0; it makes no
+claim about other random sequences.
+
+## Deterministic Level 26 upper bound
+
+The JavaScript resource relaxation supplies a separate, always-terminating
+upper bound for the same frozen Level 26 seed-0 inputs:
+
+```sh
+node solver/upper-bound.js
+```
+
+It fully enumerates `(moves remaining, frozen spawn cursor)` states. For a
+relaxed chain length `L`, it awards the shipped multiplier against the entire
+current board value, even though a physical chain may contain less value, and
+then consumes exactly `L - 1` frozen spawn values. Merges conserve value, so
+the current board total is the initial total plus the consumed spawn prefix.
+Discarding geometry, value compatibility, blockers, and move existence can
+only add possibilities: every physical continuation maps into this finite
+relaxation. The reported number is therefore a certified upper bound, but it
+decides the target only when it is below 13,000. A result at or above the
+target is explicitly `non-decisive`; it is not a witness and does not prove
+reachability.
+
+## Alternative CP-SAT certifier
+
+Install its separately pinned engine into an isolated environment:
+
+```sh
+python3 -m venv .venv-alternative-certifier
+.venv-alternative-certifier/bin/python -m pip install -r solver/requirements-alternative-certifier.txt
+```
+
+Validate the exact max-18 fixture, rejection at 19, and the two-column
+column-major spawn fixture:
+
+```sh
+.venv-alternative-certifier/bin/python solver/alternative-certifier.py --fixture
+```
+
+Run the frozen Level 26 seed-0 decision query with an explicit finite bound:
+
+```sh
+.venv-alternative-certifier/bin/python solver/alternative-certifier.py --target --timeout-seconds 120
+```
+
+`SAT` includes a witness checked by a separate concrete transition replay;
+`UNSAT` proves `score >= 13000` unreachable for this frozen input. `UNKNOWN`
+exits 2 and is non-decisive. To exercise the Python-backed Node fixture tests,
+set `ALTERNATIVE_CERTIFIER_PYTHON` to the isolated environment's interpreter.
+
+The recorded 120-second run on 2026-08-10 returned `UNKNOWN` (exit 2) for
+frozen input SHA-256
+`edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`.
+It produced no score claim or bound and therefore did not decide the target.
+
+## Exact physical prefix with a value-compatible tail
+
+`physical-branch-bound/` is a fail-closed branch-and-bound decomposition for
+the same frozen Level 26 seed-0 query. Physical prefix nodes use the complete
+`enumerateLegalChains` action set. At each node, the tail first completely
+enumerates a declared number of count-relaxed actions while retaining the
+shipped equal-or-double value rule, exact sum survivor, and exact `L - 1`
+frozen-spawn consumption. It then switches to the complete mass/cursor outer
+relaxation. Forgetting positions and, later, compatibility only adds choices,
+so the returned tail is admissible. Either resource cap throws before a bound
+is returned; an unfinished calculation can never prune.
+
+Run its deterministic small exact oracles and negative control with:
+
+```sh
+node --test solver/physical-branch-bound/*.test.js
+```
+
+Run the explicitly bounded frozen target prefix with:
+
+```sh
+node solver/physical-branch-bound/target.js
+```
+
+Exit 0 means replay-checked `SAT` or complete `UNSAT`. Exit 2 means
+`NON_DECISIVE`; the JSON then reports searched nodes, certified prunes,
+expanded branches, and enumerated-but-unexpanded branches. A target prune is
+permitted only when its complete tail bound is strictly less than the
+remaining target. The recorded two-layer run is non-decisive: its root tail
+is 325,340, so it prunes no root branch; it exactly enumerates 1,868,975 root
+actions, expands one guided physical action, and leaves 1,868,974 explicit
+root branches unexpanded. This is coverage, not a score claim or upper bound
+for the physical optimum.
+
+## Frozen Level 26 target-witness search
+
+`target-witness-search/` is a deterministic, finite-budget heuristic search
+for a legal Level 26 seed-0 score of at least 13,000. It combines bounded
+self-avoiding path beams, seeded walk sampling, and a portfolio state beam.
+The search transition and the frozen witness replayer are separate gates;
+reported score, move count, spawn cursor, and target status must agree before
+the CLI emits a candidate.
+
+Run its known-optimum fixture and malformed-candidate negative control with:
+
+```sh
+node solver/target-witness-search/cli.js --fixture
+node --test solver/target-witness-search/*.test.js
+```
+
+Run the recorded fixed-compute frozen search with:
+
+```sh
+node solver/target-witness-search/cli.js --target \
+  --restarts 6 --width 256 --walk-samples 24 --candidate-limit 64
+node solver/target-witness-search/verify.js \
+  solver/target-witness-search/frozen-run.json
+```
+
+Exit 0 means an independently replayed target-reaching lower witness was
+found. Exit 2 and `NON_DECISIVE_MISS` mean only that the declared heuristic
+budget ended without one. Such a miss is not an upper bound, an exact maximum,
+or evidence that 13,000 is unreachable. The emitted JSON records the full
+budget, coverage counters, replay result, and machine-readable witness.
+
+## Near-target witness improvement
+
+`near-target-search/` starts from the hash-pinned 12,336-point witness above
+and performs deterministic large-neighborhood suffix replacement. Each
+neighborhood keeps the frozen prefix, then uses seeded path sampling and a
+diverse state beam for the remaining moves. A candidate becomes a retained
+best only after the independent frozen replayer agrees on its score, move
+count, and spawn cursor; the final output passes that replay gate again.
+
+Run the base replay, known-optimum improvement fixture, malformed-candidate
+negative control, and the recorded fixed-budget target search with:
+
+```sh
+node solver/near-target-search/cli.js --base-replay
+node solver/near-target-search/cli.js --fixture
+node --test solver/near-target-search/*.test.js
+node solver/near-target-search/cli.js --target \
+  --rounds 1 --cuts 31,30,29,28,27,26,24,22 \
+  --width 32 --walk-samples 12 --candidate-limit 24 --variants 1
+node solver/near-target-search/verify.js \
+  solver/near-target-search/frozen-run.json
+```
+
+A target hit is only a reachability witness, never an exact maximum. A target
+miss is only a fixed-budget replayed lower bound and does not constrain
+reachability or the maximum.
+
 **If this is ever revisited:** the one lever the loop didn't try is *remnant
 placement* — steering which cell a chain's survivor lands on (currently
 whatever the walk happens to end on) so successive remnants land adjacent
 and form their own `minChain: 4` chain, directly raising the recycling rate.
 Flagged by iteration-2 as "a real change, not a tweak" — likely doesn't fit
 one bounded iteration. See the worklog's `## queued_scope`.
+
+## Hinted CP-SAT threshold escalation
+
+`hinted-cp-sat/` is a separate wrapper around the read-only alternative
+CP-SAT transition model. It validates the frozen 12,336-point witness, adds a
+complete replay-derived starting hint, and runs a finite increasing threshold
+schedule. The starting rung fixes the already replayed witness so the model
+checks acceptance; higher rungs use it only as a search hint. Every emitted
+SAT witness must pass the separate Node/headless replay gate before it enters
+the result artifact.
+
+Install the pinned engine in a disposable environment, then run the fixture
+and schedule:
+
+```sh
+python3 -m venv /tmp/level26-hinted-cp-sat
+/tmp/level26-hinted-cp-sat/bin/python -m pip install \
+  -r solver/hinted-cp-sat/requirements.txt
+/tmp/level26-hinted-cp-sat/bin/python \
+  solver/hinted-cp-sat/runner.py --fixture --timeout-seconds 20
+/tmp/level26-hinted-cp-sat/bin/python \
+  solver/hinted-cp-sat/runner.py --run --timeout-seconds 30 \
+  --schedule 12336,12400,12600,12800,13000 \
+  --output solver/hinted-cp-sat/frozen-run.json
+node solver/hinted-cp-sat/verify-result.js \
+  solver/hinted-cp-sat/frozen-run.json
+```
+
+`SAT` is retained only with a replayed reachability witness for that threshold.
+`UNKNOWN` is a bounded timeout/miss with no score, maximum, upper-bound, or
+unreachability claim. The recorded run validates 12,336 as SAT, returns
+UNKNOWN at 12,400, 12,600, 12,800, and 13,000, and therefore does not decide
+whether the target is reachable.

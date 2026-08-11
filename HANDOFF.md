@@ -1,3 +1,5 @@
+> **Current authority:** This document is the historical snapshot stopped on August 8, 2026. It is preserved below without revision. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries. Follow the ledger's cited primary evidence for factual support.
+
 # 2248 Challenge — Handoff
 
 **Stopped:** 2026-08-08 at owner request. No solver run, agent lane, or score
