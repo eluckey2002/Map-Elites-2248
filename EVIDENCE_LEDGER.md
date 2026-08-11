@@ -14,6 +14,8 @@ The exact move-one maximum is **430**, but this does not identify the first move
 
 That proof track is **parked** as of 2026-08-11 (`DECISION-0002`), and active work has moved to level tuning. Calibration across all 50 levels shows Level 26 was never the outlier it was treated as: its target is the *lowest* multiple of achievable score of any level from 19 to 50, while the current bot clears no level at all from 17 onward and demand rises to roughly six times achievable score by level 49 (`RESULT-0005`). Parking decides nothing about 13,000; `QUESTION-0001` and `QUESTION-0002` remain open. (`solver/target-calibration.js`)
 
+Two candidate remedies were then priced and neither rescues the late levels. Enriching the spawn pool is the wrong lever — a 76% increase in spawned value buys 13% more score (`RESULT-0006`). Enlarging the move budget works in the mid game and saturates in the late game, where the board reaches a terminal state before extra moves can be spent (`RESULT-0007`). Levels past roughly 31 are short of their targets by two to four times with no parameter fix available, so their targets are the thing that has to move.
+
 Repository baseline for this documentation run is `main` at `10a849d5336bdda89d2d3f5ed1f1ca87e536811d`, with pre-existing dirty work preserved. Recheck with `git status --short --branch` and `git log -1 --format='%H %s'`. (`.orch/runs/game-evidence-ledger-2026-08-11/worklog.md`, **State**)
 
 ## Authority and navigation
@@ -255,6 +257,36 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** Level 26 became the proof subject because it was studied first, not because it was the worst-tuned level. Thirty-four levels share its condition.
+
+### RESULT-0006 — Spawning 16s does not lift the ceiling
+
+- **type:** result
+- **status:** accepted
+- **scope:** levels 11, 20, 26, 30, 40, 45, 50; current `solver/bot.js` policy; 200 seeds per level per variant
+- **statement:** Adding 16 to the refill pool was tested as a remedy for the recorded "hole at 16" and **fails as a fix**. Raising mean spawned value by 50% (16 at 10%) lifts Level 26's median from 7,832 to 8,416, about 7.5%. Raising it 76% (16 and 32) reaches 8,856, about 13%. Response is strongly sublinear, so input value is not the binding constraint; re-chaining of value already on the board is. Level 50 rises from 4,398 to 4,982 against a 25,000 target. This tests the remedy, not the diagnosis: the recorded value-conservation and recycling analysis stands.
+- **evidence:** `solver/spawn-experiment.js`; its baseline variant reproduces `solver/target-calibration.js` exactly (level 11 → 6,832; level 26 → 7,832 at 200 seeds), which is the correctness check on its replicated spawn step; original diagnosis in `solver/README.md`, **The score-pace ceiling, quantified**, iteration 2.
+- **proof_class:** `heuristic_observation`
+- **as_of:** 2026-08-11
+- **reverify:** Run `node solver/spawn-experiment.js 200`; expect the baseline column to match `target-calibration.js` and every variant to leave levels 20-50 at a 0% win rate.
+- **updated:** 2026-08-11
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** `src/game.js:607-611` already seeds the initial board with 16s while `src/game.js:460-463` omits them from refills. That asymmetry is real, but closing it does not make the targets reachable.
+
+### RESULT-0007 — More moves rescue the mid levels and saturate on the late ones
+
+- **type:** result
+- **status:** accepted
+- **scope:** levels 26, 40, 50; current `solver/bot.js` policy; 200 seeds per level per budget
+- **statement:** Scaling the move budget is the effective lever in the mid game and dies in the late game. Level 26 goes 7,832 → 11,078 → **13,443** → 14,888 at 1x, 1.5x, 2x, and 3x its 32 moves, so doubling moves clears its 13,000 target. Level 40 saturates near 10,000 against a 20,000 target, and Level 50 returns an identical 6,072 at both 2x and 3x against a 25,000 target — the board reaches a terminal state before the extra moves can be spent. No move budget makes the late targets reachable.
+- **evidence:** `solver/move-budget.js`; shipped budgets and targets in `src/game.js`, `LEVELS`.
+- **proof_class:** `heuristic_observation`
+- **as_of:** 2026-08-11
+- **reverify:** Run `node solver/move-budget.js`; expect Level 26 above 13,000 at 2x and Level 50 identical at 2x and 3x.
+- **updated:** 2026-08-11
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Identical scores at 2x and 3x are the signature of a terminal board, not of a scoring plateau.
 
 ## Decision registry
 

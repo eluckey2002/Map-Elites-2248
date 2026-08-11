@@ -14,15 +14,23 @@ The Level 26 exact-proof track. It is parked by [DECISION-0002](EVIDENCE_LEDGER.
 
 [BL-0001](docs/backlog/BL-0001-test-compact-state-signature.md) and [BL-0002](docs/backlog/BL-0002-evaluate-decisive-proof-formulation.md) belong to that track and are parked with it.
 
+## Remedies already priced — do not re-propose without new evidence
+
+- **Enrich the spawn pool.** Tested and rejected as a fix ([RESULT-0006](EVIDENCE_LEDGER.md#result-0006--spawning-16s-does-not-lift-the-ceiling)). Raising spawned value 76% buys 13% more score. Input value is not the constraint.
+- **Enlarge the move budget.** Works up to roughly level 31 and saturates after ([RESULT-0007](EVIDENCE_LEDGER.md#result-0007--more-moves-rescue-the-mid-levels-and-saturate-on-the-late-ones)). Level 26 clears 13,000 at double its moves; Level 50 scores the same at 2x and 3x because the board dies first.
+
 ## Blockers and decisions needed
 
 - **Owner decision, blocking:** what difficulty standard should a target encode — what win rate, for which player? Targets cannot be set without it.
+- Levels past roughly 31 are short of their targets by two to four times with no parameter fix available. Their targets have to move.
 - The current bot is a weak proxy for a skilled player. On the one board where both were measured, a dedicated search scored about 1.5x the bot (12,336 against 8,174). That single ratio is enough for coarse triage, not for setting exact targets.
 
 ## Useful commands
 
 ```bash
 node solver/target-calibration.js 200   # per-level target vs achievable score
+node solver/spawn-experiment.js 200     # spawn-pool variants (negative result)
+node solver/move-budget.js              # score against move budget
 node --test solver/tests/*.test.js
 ```
 
