@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 
 const {
   AuthoringCapture,
+  Game,
   createInitialGrid,
   customCandidateFromQuery,
   levelFromQuery,
@@ -46,6 +47,9 @@ test('seeded candidate initialization is repeatable and arbitrary-level validati
   assert.equal(first[0].length, 5);
   assert.throws(() => validatePlayableLevel({ ...LEVEL, gridW: 0 }), /gridW/);
   assert.throws(() => validatePlayableLevel({ ...LEVEL, blockers: [{ type: 'stone', x: 9, y: 0 }] }), /blocker/);
+  assert.throws(() => validatePlayableLevel({ ...LEVEL, tileScale: 0 }), /tileScale/);
+  assert.throws(() => validatePlayableLevel({ ...LEVEL, tileScale: NaN }), /tileScale/);
+  assert.throws(() => validatePlayableLevel({ ...LEVEL, tileScale: null }), /tileScale/);
 });
 
 test('authoring capture records each legal chain as ordered coordinates and values', () => {
@@ -98,4 +102,48 @@ test('authoring capture emits one terminal payload and ignores later terminal pa
     movesUsed: 1,
     chains: capture.chains,
   });
+});
+
+test('candidate undo restores capture length and seeded RNG state', () => {
+  const previousDocument = global.document;
+  const undoButton = { disabled: true };
+  global.document = { getElementById: () => undoButton };
+
+  try {
+    const capture = new AuthoringCapture({
+      candidateIdentity: 'b'.repeat(64), candidateLevel: 51, seed: 17,
+    });
+    const game = Object.assign(Object.create(Game.prototype), {
+      animating: false,
+      authoringCapture: capture,
+      bestChain: 0,
+      chain: [],
+      gameOver: false,
+      grid: [[{ x: 0, y: 0, value: 64, blocker: null, blockerDuration: 0, bombTimer: 0 }]],
+      history: [],
+      levelComplete: false,
+      maxHistory: 10,
+      moves: 0,
+      random: makeSeededRng(17),
+      score: 0,
+      hideModal() {},
+      render() {},
+      updateChainIndicator() {},
+      updateUI() {},
+    });
+    const expected = makeSeededRng(17);
+    assert.equal(game.random(), expected());
+    assert.equal(game.random(), expected());
+
+    game.saveState();
+    capture.recordChain([{ x: 0, y: 0, value: 64 }], 64);
+    game.random();
+    game.random();
+    game.undo();
+
+    assert.equal(capture.chains.length, 0);
+    assert.equal(game.random(), expected());
+  } finally {
+    global.document = previousDocument;
+  }
 });

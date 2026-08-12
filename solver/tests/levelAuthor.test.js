@@ -126,3 +126,41 @@ test('verifyCandidate passes a bound receipt and rejects tampering, invalid data
     inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
   }), /terminal total/);
 });
+
+test('verifyCandidate remeasures fitting evidence and enforces target and tile-scale derivation', () => {
+  const authored = deriveCandidate(SHAPE, {
+    play: measuredOutcome,
+    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+  });
+  const options = {
+    play: measuredOutcome,
+    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    gates: { minWinRate: 0, maxBombRate: 1, requireZeroLockouts: true },
+  };
+
+  let falseFitting = structuredClone(authored.receipt);
+  falseFitting.fitting.scoreQuantiles.median = 999999;
+  falseFitting = resign(falseFitting);
+  assert.throws(() => verifyCandidate(authored.store, falseFitting, options), /fitting measurement mismatch/i);
+
+  let falseMedian = structuredClone(authored.receipt);
+  falseMedian.targetDerivation.measuredMedian = 999999;
+  falseMedian = resign(falseMedian);
+  assert.throws(() => verifyCandidate(authored.store, falseMedian, options), /measured median/i);
+
+  const falseTargetStore = structuredClone(authored.store);
+  falseTargetStore.candidates[0].target += 10;
+  let falseTarget = structuredClone(authored.receipt);
+  falseTarget.candidateIdentity = identity(falseTargetStore.candidates[0]);
+  falseTarget.targetDerivation.roundedTarget = falseTargetStore.candidates[0].target;
+  falseTarget = resign(falseTarget);
+  assert.throws(() => verifyCandidate(falseTargetStore, falseTarget, options), /rounded target/i);
+
+  const falseScaleStore = structuredClone(authored.store);
+  falseScaleStore.candidates[0].tileScale = 16;
+  let falseScale = structuredClone(authored.receipt);
+  falseScale.candidateIdentity = identity(falseScaleStore.candidates[0]);
+  falseScale.targetDerivation.tileScale = 16;
+  falseScale = resign(falseScale);
+  assert.throws(() => verifyCandidate(falseScaleStore, falseScale, options), /tile scale/i);
+});

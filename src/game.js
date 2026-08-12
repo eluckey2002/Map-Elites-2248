@@ -143,13 +143,18 @@ class Tile {
 
 function makeSeededRng(seed) {
     let state = seed >>> 0;
-    return function () {
+    const rng = function () {
         state |= 0;
         state = (state + 0x6d2b79f5) | 0;
         let value = Math.imul(state ^ (state >>> 15), 1 | state);
         value = (value + Math.imul(value ^ (value >>> 7), 61 | value)) ^ value;
         return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
     };
+    rng.getState = () => state >>> 0;
+    rng.setState = (nextState) => {
+        state = nextState >>> 0;
+    };
+    return rng;
 }
 
 function requirePlayableInteger(value, name, minimum, maximum) {
@@ -158,13 +163,17 @@ function requirePlayableInteger(value, name, minimum, maximum) {
     }
 }
 
+function playableTileScale(levelData) {
+    return Object.hasOwn(levelData, 'tileScale') ? levelData.tileScale : 1;
+}
+
 function validatePlayableLevel(levelData) {
     if (!levelData || typeof levelData !== 'object' || Array.isArray(levelData)) {
         throw new Error('level must be an object');
     }
     requirePlayableInteger(levelData.level, 'level', 1, 9999);
     requirePlayableInteger(levelData.target, 'target', 1, Number.MAX_SAFE_INTEGER);
-    requirePlayableInteger(levelData.tileScale || 1, 'tileScale', 1, Number.MAX_SAFE_INTEGER);
+    requirePlayableInteger(playableTileScale(levelData), 'tileScale', 1, Number.MAX_SAFE_INTEGER);
     requirePlayableInteger(levelData.moves, 'moves', 1, 999);
     requirePlayableInteger(levelData.minChain, 'minChain', 2, 20);
     requirePlayableInteger(levelData.gridW, 'gridW', 2, 12);
@@ -182,7 +191,7 @@ function validatePlayableLevel(levelData) {
 
 function createInitialGrid(levelData, rng) {
     validatePlayableLevel(levelData);
-    const tileScale = levelData.tileScale || 1;
+    const tileScale = playableTileScale(levelData);
     const grid = [];
     for (let row = 0; row < levelData.gridH; row++) {
         grid[row] = [];
@@ -704,7 +713,7 @@ class Game {
         // equal-or-double and merges sum, so a uniform scale plays identically
         // and multiplies every score by the same factor - it is what lets later
         // chapters deal 16/32/64 and carry targets that keep climbing.
-        this.tileScale = levelData.tileScale || 1;
+        this.tileScale = playableTileScale(levelData);
         this.random = rng;
         this.authoringCapture = authoringCapture;
 
@@ -823,7 +832,9 @@ class Game {
             })),
             score: this.score,
             moves: this.moves,
-            bestChain: this.bestChain
+            bestChain: this.bestChain,
+            authoringCaptureLength: this.authoringCapture ? this.authoringCapture.chains.length : null,
+            randomState: typeof this.random.getState === 'function' ? this.random.getState() : null
         };
 
         this.history.push(JSON.stringify(state));
@@ -851,6 +862,12 @@ class Game {
         this.score = state.score;
         this.moves = state.moves;
         this.bestChain = state.bestChain;
+        if (this.authoringCapture && Number.isInteger(state.authoringCaptureLength)) {
+            this.authoringCapture.chains.length = state.authoringCaptureLength;
+        }
+        if (state.randomState !== null && typeof this.random.setState === 'function') {
+            this.random.setState(state.randomState);
+        }
         this.gameOver = false;
         this.levelComplete = false;
 

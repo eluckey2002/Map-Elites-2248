@@ -266,7 +266,44 @@ function verifyCandidate(store, receipt, options = {}) {
   assertTerminalTotals(receipt.fitting, FIT_SEEDS.count);
   assertTerminalTotals(receipt.holdout, HOLDOUT_SEEDS.count);
 
-  const measured = measure(candidate, HOLDOUT_SEEDS, options.play || playMeasured, 'holdout');
+  const targetDerivation = receipt.targetDerivation;
+  if (!targetDerivation || typeof targetDerivation !== 'object') throw new Error('target derivation is missing');
+  if (targetDerivation.policy !== 'median-times-demand-rounded-down') throw new Error('target derivation policy is invalid');
+  if (targetDerivation.tileScalePolicy !== '2 ** floor((level - 1) / 10)') throw new Error('tile scale policy is invalid');
+  const expectedTileScale = tileScaleForLevel(candidate.level);
+  if (candidate.tileScale !== expectedTileScale || targetDerivation.tileScale !== expectedTileScale) {
+    throw new Error(`tile scale must equal level-derived policy value ${expectedTileScale}`);
+  }
+
+  const sourceShape = validateShape({
+    schemaVersion: 1,
+    name: receipt.shapeName,
+    level: candidate.level,
+    demand: targetDerivation.demand,
+    demandStatus: targetDerivation.demandStatus,
+    moves: candidate.moves,
+    minChain: candidate.minChain,
+    gridW: candidate.gridW,
+    gridH: candidate.gridH,
+    blockers: candidate.blockers,
+  });
+  if (sourceShape.name !== candidate.name || identity(sourceShape) !== receipt.shapeIdentity) {
+    throw new Error('source shape identity mismatch');
+  }
+
+  const play = options.play || playMeasured;
+  const fittingLevel = { ...candidate, target: Infinity };
+  const measuredFitting = measure(fittingLevel, FIT_SEEDS, play, 'fitting');
+  if (canonicalJson(measuredFitting) !== canonicalJson(receipt.fitting)) throw new Error('fitting measurement mismatch');
+  if (targetDerivation.measuredMedian !== measuredFitting.scoreQuantiles.median) {
+    throw new Error('target derivation measured median mismatch');
+  }
+  const expectedTarget = roundTarget(measuredFitting.scoreQuantiles.median * sourceShape.demand);
+  if (candidate.target !== expectedTarget || targetDerivation.roundedTarget !== expectedTarget) {
+    throw new Error(`rounded target must equal measured derivation ${expectedTarget}`);
+  }
+
+  const measured = measure(candidate, HOLDOUT_SEEDS, play, 'holdout');
   if (canonicalJson(measured) !== canonicalJson(receipt.holdout)) throw new Error('holdout measurement mismatch');
   const gates = { ...DEFAULT_GATES, ...(options.gates || {}) };
   const counts = measured.terminalCounts;
