@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "name": "level-51-split-channel",
+  "level": 51,
+  "demand": 0.7,
+  "demandStatus": "provisional-proposal",
+  "moves": 24,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": []
+}
