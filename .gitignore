@@ -2,3 +2,8 @@
 .orch/friction/
 .codex/
 .orch/runs/*/workspace/repo/
+
+# Regenerable measurement cache for solver/game-tester.js
+solver/.base-scores.json
+solver/.policy-*.json
+solver/.moves-scores.json

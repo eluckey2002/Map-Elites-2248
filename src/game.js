@@ -32,64 +32,64 @@ const BLOCKER_TYPES = {
 
 const LEVELS = [
     // Tutorial levels (1-10) - Min chain 2
-    { level: 1, target: 500, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [], intro: "Connect matching numbers!" },
-    { level: 2, target: 800, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
-    { level: 3, target: 1200, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
-    { level: 4, target: 1500, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
-    { level: 5, target: 2000, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [], intro: "Longer chains = more points!" },
-    { level: 6, target: 2500, moves: 24, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
-    { level: 7, target: 3000, moves: 24, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
-    { level: 8, target: 3500, moves: 23, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
-    { level: 9, target: 4000, moves: 23, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
-    { level: 10, target: 4500, moves: 22, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
+    { level: 1, target: 520, tileScale: 1, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [], intro: "Connect matching numbers!" },
+    { level: 2, target: 970, tileScale: 1, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
+    { level: 3, target: 1400, tileScale: 1, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
+    { level: 4, target: 1850, tileScale: 1, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
+    { level: 5, target: 2300, tileScale: 1, moves: 25, minChain: 2, gridW: 5, gridH: 8, blockers: [], intro: "Longer chains = more points!" },
+    { level: 6, target: 2650, tileScale: 1, moves: 24, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
+    { level: 7, target: 3050, tileScale: 1, moves: 24, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
+    { level: 8, target: 3350, tileScale: 1, moves: 23, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
+    { level: 9, target: 3750, tileScale: 1, moves: 23, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
+    { level: 10, target: 4000, tileScale: 1, moves: 22, minChain: 2, gridW: 5, gridH: 8, blockers: [] },
 
     // Min chain 3 levels (11-25)
-    { level: 11, target: 5000, moves: 28, minChain: 3, gridW: 5, gridH: 8, blockers: [], intro: "Now you need chains of 3+!" },
-    { level: 12, target: 5500, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [] },
-    { level: 13, target: 6000, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [] },
-    { level: 14, target: 6500, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [] },
-    { level: 15, target: 7000, moves: 28, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }], intro: "Stone blocks the way!" },
-    { level: 16, target: 7500, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 4 }] },
-    { level: 17, target: 8000, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 3, y: 2 }] },
-    { level: 18, target: 8500, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 4 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 5 }] },
-    { level: 19, target: 9000, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 5 }] },
-    { level: 20, target: 9500, moves: 25, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 4 }, { type: BLOCKER_TYPES.STONE, x: 4, y: 4 }] },
-    { level: 21, target: 10000, moves: 28, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 2 }] },
-    { level: 22, target: 10500, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }] },
-    { level: 23, target: 11000, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 4 }] },
-    { level: 24, target: 11500, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 5 }] },
-    { level: 25, target: 12000, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.ICE, x: 2, y: 3, duration: 3 }], intro: "Ice thaws after 3 moves!" },
+    { level: 11, target: 7500, tileScale: 2, moves: 28, minChain: 3, gridW: 5, gridH: 8, blockers: [], intro: "Now you need chains of 3+!" },
+    { level: 12, target: 7700, tileScale: 2, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [] },
+    { level: 13, target: 8150, tileScale: 2, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [] },
+    { level: 14, target: 8250, tileScale: 2, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [] },
+    { level: 15, target: 8100, tileScale: 2, moves: 28, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }], intro: "Stone blocks the way!" },
+    { level: 16, target: 8300, tileScale: 2, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 4 }] },
+    { level: 17, target: 8800, tileScale: 2, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 3, y: 2 }] },
+    { level: 18, target: 8050, tileScale: 2, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 4 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 5 }] },
+    { level: 19, target: 7750, tileScale: 2, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 5 }] },
+    { level: 20, target: 9150, tileScale: 2, moves: 25, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 4 }, { type: BLOCKER_TYPES.STONE, x: 4, y: 4 }] },
+    { level: 21, target: 13600, tileScale: 4, moves: 28, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 2 }] },
+    { level: 22, target: 13500, tileScale: 4, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }] },
+    { level: 23, target: 14800, tileScale: 4, moves: 27, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 4 }] },
+    { level: 24, target: 13600, tileScale: 4, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 5 }] },
+    { level: 25, target: 18300, tileScale: 4, moves: 26, minChain: 3, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.ICE, x: 2, y: 3, duration: 3 }], intro: "Ice thaws after 3 moves!" },
 
     // Min chain 4 levels (26-50)
-    { level: 26, target: 13000, moves: 32, minChain: 4, gridW: 5, gridH: 8, blockers: [], intro: "Chains of 4+ required now!" },
-    { level: 27, target: 13500, moves: 31, minChain: 4, gridW: 5, gridH: 8, blockers: [] },
-    { level: 28, target: 14000, moves: 31, minChain: 4, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 4 }] },
-    { level: 29, target: 14500, moves: 30, minChain: 4, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }] },
-    { level: 30, target: 15000, moves: 30, minChain: 4, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }, { type: BLOCKER_TYPES.ICE, x: 2, y: 5, duration: 4 }] },
+    { level: 26, target: 23700, tileScale: 4, moves: 32, minChain: 4, gridW: 5, gridH: 8, blockers: [], intro: "Chains of 4+ required now!" },
+    { level: 27, target: 23800, tileScale: 4, moves: 31, minChain: 4, gridW: 5, gridH: 8, blockers: [] },
+    { level: 28, target: 21000, tileScale: 4, moves: 31, minChain: 4, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 4 }] },
+    { level: 29, target: 21600, tileScale: 4, moves: 30, minChain: 4, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }] },
+    { level: 30, target: 22300, tileScale: 4, moves: 30, minChain: 4, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }, { type: BLOCKER_TYPES.ICE, x: 2, y: 5, duration: 4 }] },
 
     // Grid compression starts (31+)
-    { level: 31, target: 15000, moves: 30, minChain: 4, gridW: 5, gridH: 7, blockers: [], intro: "The grid is smaller now!" },
-    { level: 32, target: 15500, moves: 30, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }] },
-    { level: 33, target: 16000, moves: 29, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }] },
-    { level: 34, target: 16500, moves: 29, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 4 }, { type: BLOCKER_TYPES.ICE, x: 3, y: 2, duration: 3 }] },
-    { level: 35, target: 17000, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 4 }] },
-    { level: 36, target: 17500, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 3 }, { type: BLOCKER_TYPES.ICE, x: 4, y: 3, duration: 4 }] },
-    { level: 37, target: 18000, moves: 27, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 2 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 4 }] },
-    { level: 38, target: 18500, moves: 27, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.ICE, x: 3, y: 3, duration: 3 }] },
-    { level: 39, target: 19000, moves: 26, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 5 }] },
-    { level: 40, target: 20000, moves: 30, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.BOMB, x: 2, y: 3, timer: 8 }], intro: "Bombs explode! Merge them fast!" },
+    { level: 31, target: 33700, tileScale: 8, moves: 30, minChain: 4, gridW: 5, gridH: 7, blockers: [], intro: "The grid is smaller now!" },
+    { level: 32, target: 29400, tileScale: 8, moves: 30, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }] },
+    { level: 33, target: 29900, tileScale: 8, moves: 29, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }] },
+    { level: 34, target: 32700, tileScale: 8, moves: 29, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 4 }, { type: BLOCKER_TYPES.ICE, x: 3, y: 2, duration: 3 }] },
+    { level: 35, target: 26700, tileScale: 8, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 4 }] },
+    { level: 36, target: 37200, tileScale: 8, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 3 }, { type: BLOCKER_TYPES.ICE, x: 4, y: 3, duration: 4 }] },
+    { level: 37, target: 29900, tileScale: 8, moves: 27, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 2 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 4 }] },
+    { level: 38, target: 34500, tileScale: 8, moves: 27, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.ICE, x: 3, y: 3, duration: 3 }] },
+    { level: 39, target: 32500, tileScale: 8, moves: 26, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 5 }] },
+    { level: 40, target: 47200, tileScale: 8, moves: 30, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.BOMB, x: 2, y: 3, timer: 8 }], intro: "Bombs explode! Merge them fast!" },
 
     // More challenging levels with bombs
-    { level: 41, target: 20500, moves: 29, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }, { type: BLOCKER_TYPES.BOMB, x: 3, y: 4, timer: 7 }] },
-    { level: 42, target: 21000, moves: 29, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.BOMB, x: 2, y: 3, timer: 8 }] },
-    { level: 43, target: 21500, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 2 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 5, timer: 7 }] },
-    { level: 44, target: 22000, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.ICE, x: 1, y: 3, duration: 3 }, { type: BLOCKER_TYPES.BOMB, x: 3, y: 3, timer: 6 }] },
-    { level: 45, target: 22500, moves: 27, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 4, y: 3 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 4, timer: 8 }] },
-    { level: 46, target: 23000, moves: 27, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 2 }, { type: BLOCKER_TYPES.ICE, x: 2, y: 5, duration: 4 }] },
-    { level: 47, target: 23500, moves: 26, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.BOMB, x: 3, y: 4, timer: 6 }] },
-    { level: 48, target: 24000, moves: 26, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 4 }, { type: BLOCKER_TYPES.ICE, x: 1, y: 5, duration: 3 }] },
-    { level: 49, target: 24500, moves: 25, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 5 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 3, timer: 7 }] },
-    { level: 50, target: 25000, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 4, y: 3 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 2, timer: 6 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 5, timer: 8 }] },
+    { level: 41, target: 53000, tileScale: 16, moves: 29, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }, { type: BLOCKER_TYPES.BOMB, x: 3, y: 4, timer: 7 }] },
+    { level: 42, target: 67300, tileScale: 16, moves: 29, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.BOMB, x: 2, y: 3, timer: 8 }] },
+    { level: 43, target: 60100, tileScale: 16, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 2 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 5, timer: 7 }] },
+    { level: 44, target: 74000, tileScale: 16, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.ICE, x: 1, y: 3, duration: 3 }, { type: BLOCKER_TYPES.BOMB, x: 3, y: 3, timer: 6 }] },
+    { level: 45, target: 63900, tileScale: 16, moves: 27, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 4, y: 3 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 4, timer: 8 }] },
+    { level: 46, target: 71500, tileScale: 16, moves: 27, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 2 }, { type: BLOCKER_TYPES.ICE, x: 2, y: 5, duration: 4 }] },
+    { level: 47, target: 67800, tileScale: 16, moves: 26, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.BOMB, x: 3, y: 4, timer: 6 }] },
+    { level: 48, target: 66400, tileScale: 16, moves: 26, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 4 }, { type: BLOCKER_TYPES.ICE, x: 1, y: 5, duration: 3 }] },
+    { level: 49, target: 63100, tileScale: 16, moves: 25, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 5 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 3, timer: 7 }] },
+    { level: 50, target: 75900, tileScale: 16, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 4, y: 3 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 2, timer: 6 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 5, timer: 8 }] },
 ];
 
 // ============================================================================
@@ -463,7 +463,7 @@ class Game {
                     else if (rand < 0.9) value = 4;
                     else value = 8;
 
-                    const tile = new Tile(col, row, value);
+                    const tile = new Tile(col, row, value * this.tileScale);
                     this.grid[row][col] = tile;
                 }
             }
@@ -586,6 +586,11 @@ class Game {
         this.targetScore = levelData.target;
         this.maxMoves = levelData.moves;
         this.minChain = levelData.minChain;
+        // Every tile value on this level is multiplied by this. Chains match on
+        // equal-or-double and merges sum, so a uniform scale plays identically
+        // and multiplies every score by the same factor - it is what lets later
+        // chapters deal 16/32/64 and carry targets that keep climbing.
+        this.tileScale = levelData.tileScale || 1;
 
         this.score = 0;
         this.moves = 0;
@@ -611,7 +616,7 @@ class Game {
                 else if (rand < 0.95) value = 8;
                 else value = 16;
 
-                this.grid[row][col] = new Tile(col, row, value);
+                this.grid[row][col] = new Tile(col, row, value * this.tileScale);
             }
         }
 
@@ -1026,11 +1031,39 @@ class Game {
 // INITIALIZE GAME
 // ============================================================================
 
+/**
+ * Which level `?level=N` asks for, or null if it asks for nothing usable.
+ *
+ * Refuses rather than clamps. Dropping someone onto level 1 after they typed
+ * `?level=51` would look exactly like the jump working, and they would spend
+ * the next minute wondering why level 51 looks like a tutorial.
+ */
+function levelFromQuery(search, levelCount) {
+    const raw = new URLSearchParams(search).get('level');
+    if (raw === null || raw.trim() === '') return null;
+    const n = Number(raw);
+    if (!Number.isInteger(n) || n < 1 || n > levelCount) return null;
+    return n;
+}
+
 if (typeof document !== 'undefined') {
     const canvas = document.getElementById('gameCanvas');
     const game = new Game(canvas);
+
+    // The console and any recording tool need a handle on the running game.
+    // Without this it is block-scoped and unreachable, which is why the debug
+    // page's `typeof game` check has always reported "undefined".
+    window.game = game;
+
+    // `?level=26` opens a level directly, past the unlock gate. Unlocking up
+    // to it as well, so the level picker agrees with where you actually are.
+    const jump = levelFromQuery(window.location.search, LEVELS.length);
+    if (jump !== null) {
+        game.unlockedLevel = Math.max(game.unlockedLevel, jump);
+        game.loadLevel(jump);
+    }
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { LEVELS, BLOCKER_TYPES };
+    module.exports = { LEVELS, BLOCKER_TYPES, levelFromQuery };
 }

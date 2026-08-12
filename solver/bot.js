@@ -42,6 +42,12 @@ const CANDIDATE_LIMIT = 12;
 // Measured optimum on level 26 (50 seeds, candidate width 16): 0 -> 6555 avg,
 // 30 -> 7658, 40 -> 7678, 50 -> 7654, 60 -> 7823, 80 -> 7667. A broad plateau,
 // so 40 is a mid-plateau pick, not a knife-edge fit.
+//
+// This is points-per-cell AT TILE SCALE 1. It is derived above from expected
+// spawn value, which scales with the level's tile scale, while every other
+// ranking term is already in points and scales on its own. Leaving it fixed
+// would quietly de-weight turnover on large-value levels and make the bot play
+// worse there for no reason but a unit mismatch.
 const TURNOVER_BONUS_PER_TILE = 40;
 
 // Maps a chain from the real state onto the equivalent tiles in a clone
@@ -121,7 +127,7 @@ function chooseMove(state, options = {}) {
     const total = candidate.points
       + rolloutValue(outcome)
       + remnantPlacementValueFromOutcome(outcome)
-      + TURNOVER_BONUS_PER_TILE * emptiedCells;
+      + TURNOVER_BONUS_PER_TILE * (state.tileScale || 1) * emptiedCells;
     if (total > bestTotal) {
       bestTotal = total;
       bestCandidate = candidate;

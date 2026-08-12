@@ -14,7 +14,9 @@ The exact move-one maximum is **430**, but this does not identify the first move
 
 That proof track is **parked** as of 2026-08-11 (`DECISION-0002`), and active work has moved to level tuning. Calibration across all 50 levels shows Level 26 was never the outlier it was treated as: its target is the *lowest* multiple of achievable score of any level from 19 to 50, while the current bot clears no level at all from 17 onward and demand rises to roughly six times achievable score by level 49 (`RESULT-0005`). Parking decides nothing about 13,000; `QUESTION-0001` and `QUESTION-0002` remain open. (`solver/target-calibration.js`)
 
-Two candidate remedies were then priced and neither rescues the late levels. Enriching the spawn pool is the wrong lever — a 76% increase in spawned value buys 13% more score (`RESULT-0006`). Enlarging the move budget works in the mid game and saturates in the late game, where the board reaches a terminal state before extra moves can be spent (`RESULT-0007`). Levels past roughly 31 are short of their targets by two to four times with no parameter fix available, so their targets are the thing that has to move.
+As of 2026-08-12 the level curve has been retuned and every level is winnable: no level sits below a 5% bot win rate, against 34 levels at 0% before (`RESULT-0008`). Targets are now a measured share of each level's achievable score, and tile scale doubles once per ten-level chapter (`DECISION-0003`). Two rules that were previously undocumented now carry records: only a chain sum equal to the tile scale times a power of two can ever be matched again, and the accumulation of sums that fall off that lattice *is* the board lockout (`FACT-0006`); and a uniform integer tile scale is an exact isomorphism, multiplying every score by the same factor while play is unchanged (`FACT-0007`). `FACT-0003` and `FACT-0004` are superseded by `CORRECTION-0001` and `CORRECTION-0002`. The frozen Level 26 seed-0 study is pinned to its original scale-1 board and 13,000 target and is unaffected.
+
+Two candidate remedies were priced before that retune and neither rescues the late levels on its own. Enriching the spawn pool is the wrong lever — a 76% increase in spawned value buys 13% more score (`RESULT-0006`). Enlarging the move budget works in the mid game and saturates in the late game, where the board reaches a terminal state before extra moves can be spent (`RESULT-0007`). Levels past roughly 31 are short of their targets by two to four times with no parameter fix available, so their targets are the thing that has to move.
 
 Repository baseline for this documentation run is `main` at `10a849d5336bdda89d2d3f5ed1f1ca87e536811d`, with pre-existing dirty work preserved. Recheck with `git status --short --branch` and `git log -1 --format='%H %s'`. (`.orch/runs/game-evidence-ledger-2026-08-11/worklog.md`, **State**)
 
@@ -146,30 +148,30 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### FACT-0003 — Gravity, persistence, and spawn order
 
 - **type:** fact
-- **status:** accepted
+- **status:** superseded
 - **scope:** blocker-free Level 26 transition
 - **statement:** Unselected tiles persist. After a length-`L` merge, gravity acts by column and exactly `L - 1` empty cells are refilled in column-major order. Refill values are 2, 4, or 8 with probabilities 0.6, 0.3, and 0.1. The merge conserves board value; only refills add value.
 - **evidence:** `src/game.js`, `Game.applyGravity` and `Game.spawnNewTiles` at lines 416-470; `solver/engine.js:115-151`; parity tests `solver/tests/engine.test.js:134-182`; concrete conservation replay in `.orch/tickets/level26-move1-envelope-2026-08-11.md:65-80`.
 - **proof_class:** `direct_source`
 - **as_of:** 2026-08-11
 - **reverify:** Run `node --test solver/tests/engine.test.js solver/tests/exact-score.test.js`; expect all tests to pass, then inspect the cited symbols.
-- **updated:** 2026-08-11
+- **updated:** 2026-08-12
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0001]
 
 ### FACT-0004 — Level 26 configuration
 
 - **type:** fact
-- **status:** accepted
+- **status:** superseded
 - **scope:** shipped Level 26
 - **statement:** Level 26 has a 5×8 grid, no blockers, a minimum chain length of 4, 32 moves, and a 13,000-point target.
 - **evidence:** `src/game.js:63-65`, `LEVELS` entry for level 26.
 - **proof_class:** `direct_source`
 - **as_of:** 2026-08-11
 - **reverify:** Inspect the exported `LEVELS` entry for level 26; expect target 13000, moves 32, minChain 4, gridW 5, gridH 8, and no blockers.
-- **updated:** 2026-08-11
+- **updated:** 2026-08-12
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0002]
 
 ### FACT-0005 — Frozen seed-0 input
 
@@ -184,6 +186,36 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-08-11
 - **supersedes:** []
 - **superseded_by:** []
+
+### FACT-0006 — The mergeable-sum lattice and what a lockout is
+
+- **type:** fact
+- **status:** accepted
+- **scope:** shipped game rules, all levels
+- **statement:** A merge leaves exactly one tile behind, valued at the chain's sum. Spawns are the level's tile scale times 2, 4, or 8, and every chain extension is equal-or-double, so a sum lands back in the matchable lattice only when it equals the tile scale times a power of two. Any other sum is a tile nothing can ever match again. One such tile can accrue per move and they never leave, so they accumulate until no legal chain remains. That accumulation *is* the "no valid moves" lockout; it is a property of the scoring rule, not a coding defect.
+- **evidence:** `solver/engine.js`, `isMergeableSum` and its use in `buildGreedyChain`; the level-26 instrumentation recorded at that symbol (5x8 grid, 32 moves, 31 of 40 cells holding unmatchable sums such as 78, 46, 34 at termination); lockout rates per level reported by `node solver/verify-loop.js`.
+- **proof_class:** `direct_source`
+- **as_of:** 2026-08-12
+- **reverify:** Inspect `isMergeableSum` and `buildGreedyChain` in `solver/engine.js`; run `node solver/verify-loop.js` and expect the lockout-rate check to report a nonzero but bounded rate on the late levels.
+- **updated:** 2026-08-12
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This is the mechanism behind the original Level 26 failure and behind the whole score-pace ceiling. It also bounds any future change to the spawn pool: more distinct spawn values means more sums fall off the lattice, so widening the pool trades matchability for value. See `BL-0003` and `RESULT-0006`.
+
+### FACT-0007 — Uniform integer tile scaling is an exact isomorphism
+
+- **type:** fact
+- **status:** accepted
+- **scope:** levels 1, 15, 26, 35, 50 at scales 2, 3, 5, 6, 7, 11, 13, 16, seeds 0-3, reference bot at `solver/bot.js`
+- **statement:** Multiplying every tile value on a level by a positive integer `k` multiplies the final score by exactly `k` and leaves play otherwise identical: same move count, same termination reason. Chain legality is equal-or-double and merges sum, and both relations are preserved by a uniform scale; stone blockers carry value 0, which scaling leaves unchanged. Verified 160 of 160 checks over the stated scope.
+- **evidence:** `solver/game-tester.js`, `verifyScaleInvariance`, which compares score, move count, and end reason against `score x k` for each case and refuses to emit derived numbers if any case fails.
+- **proof_class:** `exact_result`
+- **as_of:** 2026-08-12
+- **reverify:** Run `node solver/game-tester.js --seeds 20`; expect the header line `PASS - 60/60 checks: score scales exactly, play is identical.`
+- **updated:** 2026-08-12
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Exactness holds only after two scale-dependent constants in the reference bot were corrected on 2026-08-12: its turnover bonus was a fixed 40 points per emptied cell while every other ranking term is in game points, and `isMergeableSum` tested for a power of two rather than for `k` times a power of two. Both are inert at scale 1, so no result recorded before this date changes. The structural argument generalises beyond the tested scope, but only the stated scope is verified. This fact is what permits a target to be derived by multiplication rather than re-measured per scale.
 
 ## Result registry
 
@@ -288,6 +320,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** Identical scores at 2x and 3x are the signature of a terminal board, not of a scoring plateau.
 
+### RESULT-0008 — Every level is winnable after the demand-based retune
+
+- **type:** result
+- **status:** accepted
+- **scope:** all 50 shipped levels, reference bot at `solver/bot.js`, 100 seeds per level from seed 100000
+- **statement:** With targets and tile scales set by `DECISION-0003`, no level sits below a 5% bot win rate. Win rate ranges from 37% to 100% across the 50 levels and trends downward with level number. Before the retune, 34 of 50 levels were at 0%. Seeds 100000-100099 are disjoint from seeds 0-149, on which the targets were fitted, so this is not the measurement that set them. Board lockouts persist at a low rate on the late levels, up to roughly 5% at level 50.
+- **evidence:** `node solver/verify-loop.js` (60 seeds from 100000, sampled levels) exits 0 with all seven checks passing; per-level policy table reproducible with `node solver/game-tester.js --seeds 150 --policy powers2 --detail`.
+- **proof_class:** `heuristic_observation`
+- **as_of:** 2026-08-12
+- **reverify:** Run `node solver/verify-loop.js`; expect `RESULT: PASS` and exit code 0.
+- **updated:** 2026-08-12
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Policy-dependent and no bound follows. The reference bot understates a skilled player by an unquantified margin, so these win rates are floors on human success rather than estimates of it. `RESULT-0005`'s finding that the back half was unbeatable is superseded in practice by this retune but is retained as the measurement that motivated it.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
@@ -318,6 +365,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [DECISION-0001]
 - **superseded_by:** []
 - **notes:** Resuming the proof track requires only an owner decision; the frozen inputs, receipts, and verifiers remain committed and replayable.
+
+### DECISION-0003 — Targets are a measured share of achievable score; tile scale doubles per chapter
+
+- **type:** decision
+- **status:** accepted
+- **scope:** all 50 shipped levels, level-authoring going forward
+- **statement:** A level's target is set as *demand* — a chosen share of that level's measured achievable score — rather than as a fixed step. Demand rises across a ten-level chapter and resets downward when a chapter doubles the tile scale. Win rate is reported as the outcome, never used as the input, because it saturates: every trivially winnable level maps to 100% and the target then has nowhere to climb, which is what made an earlier win-rate-driven attempt inflate level 2's target to 7,250. Tile scale doubles exactly once per ten-level chapter (1, 2, 4, 8, 16) so dealt tiles stay on the 2/4/8/16/32/64/128 family; arbitrary integer scales were rejected because they deal off-family values such as 6/12/24, which in this game appear only as dead tiles.
+- **evidence:** `solver/game-tester.js`, `CHAPTERS`, `sawtoothDemand`, and the `powers2` policy; applied values in `src/game.js`, `LEVELS`.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-08-12
+- **reverify:** `not_applicable`
+- **updated:** 2026-08-12
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Consequence worth stating plainly: tile scale has no effect on difficulty. Scaling multiplies the target and achievable score by the same factor, so win rate is unchanged and scale buys presentation only. Difficulty is carried entirely by demand. The move budget was deliberately left as authored — it is a pacing lever, and deriving it from a target curve would make how a level feels a side effect of number cosmetics. That leaves roughly 15 levels whose target is lower than the level before, accepted as honest: a level with more blockers and fewer moves genuinely pays less.
 
 ## Hypothesis registry
 
@@ -393,6 +455,37 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 
+## Correction registry
+
+### CORRECTION-0001 — Spawn values are scale-dependent
+
+- **type:** correction
+- **status:** accepted
+- **scope:** shipped game rules, all levels
+- **statement:** Narrows `FACT-0003`. Gravity, persistence, and refill order are unchanged. Refill values are now the level's `tileScale` times 2, 4, or 8 with probabilities 0.6, 0.3, and 0.1, and the initial grid is `tileScale` times 2, 4, 8, or 16 with probabilities 0.5, 0.3, 0.15, and 0.05. `FACT-0003` stated the unscaled values, correct when written and correct today only for levels at scale 1. Value conservation across a merge is unaffected.
+- **evidence:** `src/game.js`, `Game.loadLevel` (sets `this.tileScale`), `Game.spawnNewTiles`, and the initial-grid loop in `loadLevel`; `solver/engine.js`, `randomInitialValue`, `randomSpawnValue`, and `createLevelState`; parity test `solver/tests/engine.test.js`.
+- **proof_class:** `direct_source`
+- **as_of:** 2026-08-12
+- **reverify:** Run `node --test solver/tests/engine.test.js`; expect all tests to pass, then inspect the cited symbols.
+- **updated:** 2026-08-12
+- **supersedes:** [FACT-0003]
+- **superseded_by:** []
+
+### CORRECTION-0002 — Level 26 configuration after the retune
+
+- **type:** correction
+- **status:** accepted
+- **scope:** shipped Level 26
+- **statement:** Supersedes `FACT-0004`. Level 26 now has a 5x8 grid, no blockers, a minimum chain length of 4, 32 moves, a `tileScale` of 4, and a 23,700-point target. The 13,000 target and scale-1 board named in `FACT-0004` describe the level before 2026-08-12 and remain the configuration the frozen seed-0 proof work refers to.
+- **evidence:** `src/game.js`, `LEVELS` entry for level 26; the frozen study is pinned independently at `solver/upper-bound.js`, `FROZEN_LEVEL_26_TARGET` and `solveFrozenLevel26`, and at `solver/tests/exact-score.test.js`, `FROZEN_LEVEL_26`.
+- **proof_class:** `direct_source`
+- **as_of:** 2026-08-12
+- **reverify:** Inspect the exported `LEVELS` entry for level 26; expect target 23700, tileScale 4, moves 32, minChain 4. Run `node --test solver/tests/upper-bound.test.js solver/tests/exact-score.test.js`; expect the frozen-hash and frozen-target assertions to pass unchanged.
+- **updated:** 2026-08-12
+- **supersedes:** [FACT-0004]
+- **superseded_by:** []
+- **notes:** `QUESTION-0001` and `QUESTION-0002` concern the frozen scale-1 board at target 13,000 and are unaffected. The retune neither answers nor retracts them.
+
 ## Assembly cut log
 
 - Omitted draft labels and repeated draft identities because the root ledger is the assembled authority surface.
@@ -402,6 +495,8 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 
 ## Resume boundary
 
-Active work resumes at level tuning: choose a difficulty standard for the shipped levels and set targets from measured achievable score (`DECISION-0002`, `RESULT-0005`). The open design question is what win rate a target should imply and for which player; the current bot is a weak proxy and understates a skilled player by an unquantified margin.
+Level tuning is done (`DECISION-0003`, `RESULT-0008`). Active work resumes at authoring new levels, against the design at `docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md` and the measurement harness at `solver/game-tester.js`.
+
+Two things are knowingly left open. The reference bot remains a weak proxy for a skilled player, so every recorded win rate is a floor on human success and not an estimate of it; the margin is unquantified. And roughly 15 levels carry a target lower than the level before, accepted rather than fixed, because the remaining lever is the move budget and spending it would make a level's pacing a side effect of target cosmetics (`DECISION-0003`).
 
 The proof track is parked, not closed. It resumes from the unresolved **12,336–326,390** interval for frozen Level 26 seed 0. Closure still requires an accepted replayed 13,000 witness, an exact result, or a proven upper bound below 13,000; heuristic misses, terminal boards, timeouts, and `UNKNOWN` remain non-decisive.

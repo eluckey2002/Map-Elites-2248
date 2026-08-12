@@ -74,8 +74,14 @@ test('value-relaxed action enumerator includes the hand-enumerated maximum', () 
   assert.equal(best, 18);
 });
 
+// The frozen seed-0 study was run on Level 26 as it stood before the 2026-08-12
+// retune, at tile scale 1. Pinning the scale here keeps this fixture testing the
+// board it was computed from; letting it follow the shipped level would silently
+// re-denominate a frozen hash and every score derived from it.
+const FROZEN_LEVEL_26 = () => ({ ...LEVELS.find((entry) => entry.level === 26), tileScale: 1 });
+
 test('Level 26 seed-0 values match the durable certifier frozen hash', () => {
-  const level = LEVELS.find((entry) => entry.level === 26);
+  const level = FROZEN_LEVEL_26();
   const state = createLevelState(level, makeRng(0));
   const initial = state.grid.flat().map((entry) => entry.value);
   const spawns = makeFrozenSpawnValues(level, 0);

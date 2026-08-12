@@ -15,20 +15,25 @@ function makeTile(x, y, value) {
 }
 
 // Mirrors game.js loadLevel's initial-grid spawn weights (line ~607-612).
-function randomInitialValue(rng) {
+// `scale` multiplies every spawned value uniformly. Because chains match on
+// equal-or-double and merges sum, a uniform scale is an exact isomorphism:
+// identical play, every score multiplied by the same factor. Mixing scales on
+// one board is NOT safe - it adds distinct values and hurts matchability.
+function randomInitialValue(rng, scale = 1) {
   const r = rng();
-  if (r < 0.5) return 2;
-  if (r < 0.8) return 4;
-  if (r < 0.95) return 8;
-  return 16;
+  if (r < 0.5) return 2 * scale;
+  if (r < 0.8) return 4 * scale;
+  if (r < 0.95) return 8 * scale;
+  return 16 * scale;
 }
 
 function createLevelState(levelData, rng) {
+  const tileScale = levelData.tileScale || 1;
   const grid = [];
   for (let row = 0; row < levelData.gridH; row++) {
     grid[row] = [];
     for (let col = 0; col < levelData.gridW; col++) {
-      grid[row][col] = makeTile(col, row, randomInitialValue(rng));
+      grid[row][col] = makeTile(col, row, randomInitialValue(rng, tileScale));
     }
   }
 
@@ -56,6 +61,7 @@ function createLevelState(levelData, rng) {
     maxMoves: levelData.moves,
     targetScore: levelData.target,
     minChain: levelData.minChain,
+    tileScale,
   };
 }
 
@@ -133,18 +139,19 @@ function applyGravity(state) {
 }
 
 // Mirrors game.js spawnNewTiles weights (line ~455-471).
-function randomSpawnValue(rng) {
+function randomSpawnValue(rng, scale = 1) {
   const r = rng();
-  if (r < 0.6) return 2;
-  if (r < 0.9) return 4;
-  return 8;
+  if (r < 0.6) return 2 * scale;
+  if (r < 0.9) return 4 * scale;
+  return 8 * scale;
 }
 
 function spawnNewTiles(state, rng) {
+  const scale = state.tileScale || 1;
   for (let col = 0; col < state.gridWidth; col++) {
     for (let row = 0; row < state.gridHeight; row++) {
       if (!state.grid[row][col]) {
-        state.grid[row][col] = makeTile(col, row, randomSpawnValue(rng));
+        state.grid[row][col] = makeTile(col, row, randomSpawnValue(rng, scale));
       }
     }
   }
@@ -253,8 +260,15 @@ function findBestChain(state, options = {}) {
 // leave: instrumenting level 26 (5x8 grid, 32 moves) showed 31 of 40 cells held
 // unmatchable sums (78, 46, 34, ...) by the end, which is the "no valid moves"
 // lockout. Preferring a power-of-two sum is what keeps the board alive.
-function isMergeableSum(sum) {
-  return sum > 0 && (sum & (sum - 1)) === 0;
+// Under a uniform tile scale k the lattice is k*2^n, not 2^n, so the test is
+// "sum/k is a power of two". For k a power of two the two tests coincide, which
+// is why a plain power-of-two test looked correct until non-power-of-two scales
+// were tried: at k=3 it rejected every healthy sum and the walk fell through to
+// the full greedy path, playing a materially different game.
+function isMergeableSum(sum, scale = 1) {
+  if (sum <= 0 || sum % scale !== 0) return false;
+  const n = sum / scale;
+  return (n & (n - 1)) === 0;
 }
 
 // Walks one no-backtracking path from startTile: at each step, among valid
@@ -307,7 +321,7 @@ function buildGreedyChain(state, startTile, options = {}) {
     for (let n = state.minChain; n <= chain.length; n++) {
       const prefix = chain.slice(0, n);
       const sum = chainValue(prefix);
-      if (!isMergeableSum(sum)) continue;
+      if (!isMergeableSum(sum, state.tileScale || 1)) continue;
       const prefixPoints = Math.floor(sum * chainMultiplier(n));
       if (!best || prefixPoints > best.points) best = { chain: prefix, points: prefixPoints };
     }

@@ -109,9 +109,17 @@ function solveMassCursorUpperBound({
   };
 }
 
+// Frozen means frozen: this reproduces the Level 26 seed-0 study as it stood
+// before the 2026-08-12 retune - tile scale 1, target 13,000. It deliberately
+// does NOT follow the shipped level, which now runs at scale 4 with a different
+// target. Reading the live entry would silently re-denominate a frozen input
+// hash and change the question the result answers.
+const FROZEN_LEVEL_26_TARGET = 13000;
+
 function solveFrozenLevel26() {
-  const level = LEVELS.find((entry) => entry.level === 26);
-  if (!level) throw new Error('Level 26 is missing');
+  const shipped = LEVELS.find((entry) => entry.level === 26);
+  if (!shipped) throw new Error('Level 26 is missing');
+  const level = { ...shipped, tileScale: 1, target: FROZEN_LEVEL_26_TARGET };
   const state = createLevelState(level, makeRng(0));
   const spawnValues = makeFrozenSpawnValues(level, 0);
   const inputIdentity = frozenValuesIdentity(state, spawnValues);
