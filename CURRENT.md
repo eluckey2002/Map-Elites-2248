@@ -4,7 +4,7 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Active milestone
 
-Author new levels. The curve is fixed, so new levels can be born calibrated rather than hand-guessed. Design at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md); measurement at `solver/game-tester.js`.
+Author new levels. The curve is fixed, so new levels can be born calibrated rather than hand-guessed. [BL-0004](docs/backlog/BL-0004-build-level-authoring-tracer.md) is active: it carries one candidate through measured target derivation, seeded custom play, and playthrough capture before the loop widens. The historical design remains at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md); measurement is grounded in `solver/game-tester.js`.
 
 The milestone exits when new levels can be generated, measured, and reviewed without hand-setting a target.
 

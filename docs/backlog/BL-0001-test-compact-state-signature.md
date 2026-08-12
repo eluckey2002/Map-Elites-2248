@@ -1,10 +1,10 @@
 ---
 id: BL-0001
 title: Test compact state signature
-status: ready
+status: blocked
 milestone: frozen-level26-seed0-reachability
 depends_on: []
-updated: 2026-08-11
+updated: 2026-08-12
 ---
 
 # BL-0001 — Test compact state signature
@@ -36,3 +36,4 @@ Specify the frozen small-horizon fixtures, candidate signature, rule for compari
 ## History
 
 - 2026-08-11 — Created as the sole ready item for the active milestone from provisional `HYPOTHESIS-0001`; no experiment has started.
+- 2026-08-12 — Blocked while the Level 26 exact-proof track is parked by `DECISION-0002`; its acceptance criteria and evidence standing are unchanged.
