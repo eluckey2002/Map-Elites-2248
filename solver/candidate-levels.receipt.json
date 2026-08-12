@@ -45,9 +45,9 @@
   "inputIdentities": {
     "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
     "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
-    "levelAuthor": "dc062e42cfb9fbcafaf358c0e397b894cc6dbb0154db4d8566ebce4ef448cf03"
+    "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
   },
-  "receiptIdentity": "bbd0f4fda60867a37eefa651e578b69fd8f6689f9314f738543945e52543ee34",
+  "receiptIdentity": "f113a598faba9a2d190d5c10d3bb4a2eb072cdb772f904aed6ce5ff2759f62d9",
   "schemaVersion": 1,
   "shapeIdentity": "4703c7e773bcab2fa5bdae28bd58604f555a5d5e8ae21a5087c2ecfd09495e1a",
   "shapeName": "level-51-split-channel",
