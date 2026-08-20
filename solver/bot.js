@@ -21,12 +21,33 @@ const BOMB_MAX_CHAIN_LENGTH = 9;
 
 // The candidate list is cut to this width BEFORE the lookahead runs, and it is
 // cut by immediate points — the very criterion the lookahead exists to override,
-// so anything that trades points now for a better board later was being
-// discarded before it could be evaluated. Measured on level 26 (50 seeds, with
-// the turnover term below): width 4 -> 6822 avg, 8 -> 7515, 12 -> 7584,
-// 16 -> 7678, 24 -> 7678. Flat past ~12; 12 keeps the sweep about 2.3x baseline
-// cost rather than 2.9x.
-const CANDIDATE_LIMIT = 12;
+// so anything that trades points now for a better board later is discarded
+// before it can be evaluated.
+//
+// This was 12, on a single-level reading that was wrong. The original data
+// (level 26, 50 seeds) was width 12 -> 7584 avg, 24 -> 7678, and was recorded
+// as "flat past ~12". It is not flat: that is a 1.2% gain, and 50 seeds of one
+// level could not resolve it, so a real effect was filed as noise.
+//
+// Re-measured across all 51 levels on 150 unseen seeds per level (7,650 games
+// per width), paired per (level, seed) against the shipped bot, with the
+// standard error clustered by level:
+//
+//     width 12  +0.10% (t 0.4)   cap binds on 65.5% of decisions
+//     width 16  +0.77% (t 2.8)                    37.7%
+//     width 20  +1.01% (t 3.9)                    18.9%
+//     width 24  +1.10% (t 4.1)                     5.6%
+//     width 26  +1.10% (t 4.1)                     1.2%
+//     width 32  +1.10% (t 4.1)   identical play to 26 — the cap never binds
+//
+// So the gain saturates at 24 and the knob is self-limiting: boards offer a
+// median of 15 legal chains and at most 30, so lookahead work plateaus at
+// 1.37x the old setting no matter how high this goes. 24 buys the whole
+// effect at 1.36x. Anything below it is throwing away real options on the
+// majority of moves.
+//
+// See EVIDENCE_LEDGER RESULT-0010.
+const CANDIDATE_LIMIT = 24;
 
 // Points a candidate earns per cell it empties, beyond its own score.
 // Rationale, measured not assumed: `executeChain` deletes every chain tile but
@@ -49,6 +70,20 @@ const CANDIDATE_LIMIT = 12;
 // would quietly de-weight turnover on large-value levels and make the bot play
 // worse there for no reason but a unit mismatch.
 const TURNOVER_BONUS_PER_TILE = 40;
+
+// The tunable surface of this policy, gathered in one place so a search can
+// vary it. DEFAULTS reproduce the hand-tuned bot exactly; every constant above
+// is its documented derivation, not a placeholder. `wNow` is deliberately not
+// tunable: it anchors the scale (multiplying all four weights by a constant
+// leaves the argmax unchanged), so searching it would add a redundant
+// dimension and let the search wander along a ridge that changes nothing.
+const DEFAULT_PARAMS = {
+  wRoll: 1,                          // weight on best next-move points
+  wPlace: 1,                         // weight on a legal chain from the survivor
+  turnover: TURNOVER_BONUS_PER_TILE, // points per emptied cell, at tile scale 1
+  width: CANDIDATE_LIMIT,            // candidates surviving the pre-lookahead cut
+  bombMax: BOMB_MAX_CHAIN_LENGTH,    // longest chain the defuse search will hunt
+};
 
 // Maps a chain from the real state onto the equivalent tiles in a clone
 // (same positions, different object identities).
@@ -105,17 +140,20 @@ function remnantPlacementValue(state, candidate, lookaheadRngFactory) {
 // after the horizon, so it sits with the rollout terms, not with the immediate
 // score. Without lookaheadRngFactory this falls back to plain 1-ply (highest
 // immediate score) and none of the forecasts applies.
+// `options.params` overrides any subset of DEFAULT_PARAMS; omitted keys keep
+// their hand-tuned value, so every existing caller is unaffected.
 // Returns null if the board has no legal move.
 function chooseMove(state, options = {}) {
   const { lookaheadRngFactory } = options;
+  const { wRoll, wPlace, turnover, width, bombMax } = { ...DEFAULT_PARAMS, ...options.params };
 
   const bombs = findBombTiles(state).sort((a, b) => a.bombTimer - b.bombTimer);
   for (const bomb of bombs) {
-    const result = findBestChain(state, { mustEndAt: bomb, maxLength: BOMB_MAX_CHAIN_LENGTH });
+    const result = findBestChain(state, { mustEndAt: bomb, maxLength: bombMax });
     if (result) return result.chain;
   }
 
-  const candidates = findGreedyChains(state, { limit: CANDIDATE_LIMIT });
+  const candidates = findGreedyChains(state, { limit: width });
   if (candidates.length === 0) return null;
   if (!lookaheadRngFactory || candidates.length === 1) return candidates[0].chain;
 
@@ -125,9 +163,9 @@ function chooseMove(state, options = {}) {
     const emptiedCells = candidate.chain.length - 1; // the last tile survives
     const outcome = simulateCandidate(state, candidate, lookaheadRngFactory);
     const total = candidate.points
-      + rolloutValue(outcome)
-      + remnantPlacementValueFromOutcome(outcome)
-      + TURNOVER_BONUS_PER_TILE * (state.tileScale || 1) * emptiedCells;
+      + wRoll * rolloutValue(outcome)
+      + wPlace * remnantPlacementValueFromOutcome(outcome)
+      + turnover * (state.tileScale || 1) * emptiedCells;
     if (total > bestTotal) {
       bestTotal = total;
       bestCandidate = candidate;
@@ -136,4 +174,4 @@ function chooseMove(state, options = {}) {
   return bestCandidate.chain;
 }
 
-module.exports = { chooseMove, remnantPlacementValue };
+module.exports = { chooseMove, remnantPlacementValue, DEFAULT_PARAMS };

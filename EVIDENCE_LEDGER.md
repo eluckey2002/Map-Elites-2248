@@ -335,6 +335,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** Policy-dependent and no bound follows. The reference bot understates a skilled player by an unquantified margin, so these win rates are floors on human success rather than estimates of it. `RESULT-0005`'s finding that the back half was unbeatable is superseded in practice by this retune but is retained as the measurement that motivated it.
 
+### RESULT-0010 — The bot's candidate cap was discarding real options on two-thirds of moves
+
+- **type:** result
+- **status:** accepted
+- **scope:** `solver/bot.js`, `CANDIDATE_LIMIT` (12 -> 24); reference-bot strength only, no level, target, or rule changed
+- **statement:** The lookahead's pre-filter kept only the 12 highest-immediate-point chains, ranked by the very criterion the lookahead exists to overrule. Raising the cap to 24 is worth **+1.10%** median score against the previous bot (geometric mean of per-game log-ratios, 51 levels x 150 unseen seeds = 7,650 games per width, paired per (level, seed), standard error clustered by level, n = 51, **t = 4.1**). The gain saturates exactly at 24: widths 26 and 32 produce bit-identical play, because boards offer a median of 15 legal chains and at most 30, so lookahead work plateaus at 1.37x no matter how high the cap goes. The old cap bound on **65.5%** of real in-game decisions. The prior setting rested on a misreading of correct data: the original level-26 / 50-seed measurement recorded 12 -> 7584 and 24 -> 7678 and called it "flat past ~12", but that is a 1.2% gain that 50 seeds of a single level could not resolve, so a real effect was filed as noise. Effect on the shipped curve is small and does not require re-calibration: median achievable score rises **1.25%** on average across all 51 levels and win rate at the shipped target rises **0.6 points**, the largest single move being level 17 at 97% -> 99%.
+- **evidence:** `solver/policy-search.js`, `solver/policy-eval.js`, `solver/policy-ablation.js` (search, paired estimator, arm comparison); `.orch/policy-search-01.json` and `.orch/policy-ablation-01.json`; `node --test solver/tests/*.test.js` 79 pass, including `solver/tests/policy-eval.test.js` covering the clustered estimator; `node solver/verify-loop.js` -> `RESULT: PASS` with the new cap.
+- **proof_class:** `heuristic_observation` — a measured improvement in a heuristic player, not a bound on achievable score. It moves no proof standing for Level 26 or any other level.
+- **as_of:** 2026-08-19
+- **reverify:** `node --test solver/tests/*.test.js` (expect 79 pass); `node solver/verify-loop.js` (expect `RESULT: PASS`).
+- **updated:** 2026-08-19
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Two corrections are recorded here deliberately, because both were believed and reported before being checked. (1) The searched policy's weight changes — `wRoll` 0.813, `wPlace` 1.432, `turnover` 44.655 — measured +1.31% at fixed width under an arithmetic mean of per-cell ratios, and **+0.10% (t 0.4)** under the log-ratio estimator. They are not adopted; essentially the entire gain is the width. (2) The same estimator change cut the headline holdout lift from +3.30% to +1.68%, because a mean of ratios was being carried by a right tail of games where the new policy scored several times the reference. Clustering by level inflated the standard error only 1.5x, well below the 3.7x that the seeds-per-level count would suggest, because the policy improves most levels by a similar amount rather than winning big on a few. The reference bot remains a weak proxy for a skilled player; 1.1% does not change that, and the open note on unquantified human margin stands.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
