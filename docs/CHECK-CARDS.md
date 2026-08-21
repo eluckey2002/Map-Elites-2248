@@ -49,14 +49,14 @@ card in the same commit.
   about the 2 archived candidates means "deliberately excluded", never "audited
   clean". `STORE_FLOOR` is what stops an accidentally-empty glob reading green.
 - **Does NOT catch:**
-  1. **Two expected reds can camouflage a third.** This check is deliberately
-     failing on levels 52 and 54, so the suite's normal state is red. A new
-     regression shows up as a third named failure among two habitual ones, and
-     habitual red is read as "still the old thing" without being checked. This
-     is the accepted cost of not hiding real debt, but it is a real cost and it
-     grows the longer the two stay unfixed. Mitigation is weak: failures are
-     named per store, so the new one has a new name — that only helps someone
-     who reads them.
+  1. **One habitual red can camouflage a second.** This check fails on level 52
+     by choice, so the suite's normal state is red. A new regression appears as a
+     second named failure beside a habitual one, and habitual red gets read as
+     "still the old thing" without being checked. Level 54 was the other red
+     until 2026-08-21, when it was re-measured (unshipped, so no player cost);
+     level 52 remains because clearing it needs a difficulty-curve decision.
+     Mitigation is weak: failures are named per store, so a new one has a new
+     name — which only helps someone who reads them.
   2. **A receipt that was wrong when it was written.** A bad measurement recorded
      faithfully verifies forever. This proves consistency between receipt and
      code, never correctness of the measurement.
@@ -102,7 +102,7 @@ card in the same commit.
   other call sites (`author-level.js:35`, `generate-levels.js:275`) run at
   creation time, when the receipt has just been measured and passes by
   construction, so they can never detect drift.
-- **Enforcement:** **HARD** (blocking), and **currently red on 2 of 3** — by
+- **Enforcement:** **HARD** (blocking), and **currently red on 1 of 3** — by
   choice. Shipped report-only on 2026-08-21, promoted the same day. The
   promotion was first made to look clean by archiving the two failing stores;
   that was reversed within the hour because clearing a red gate by removing its
@@ -124,7 +124,7 @@ card in the same commit.
   **Demotion condition:** none. Do not return this to report-only, and do not
   archive to clear it.
 - **Decay:** re-runs on every `node --test solver/tests/*.test.js`. Debt trends
-  as failing per-store tests (**2 of 3**). Measured cost: suite
+  as failing per-store tests (**1 of 3** since level 54 was re-measured). Measured cost: suite
   went 1.3s → ~10.5s, the delta being one real 450-seed replay at ~8.9s; each
   additional *passing* live candidate adds ~9s, while a stale one short-circuits
   at ~3ms. Recalibration trigger: past roughly five passing live stores (~45s) the suite gets slow enough that people skip it, at which point
@@ -268,3 +268,67 @@ card in the same commit.
   manifest need rebasing on the real layout.
 - **Shipped:** 2026-08-21 · closes the corpus-shrink pathology observed the same
   day, in the same session that created it.
+
+---
+
+### authoring-refuses-silent-overwrite · HARD
+
+- **Protects:** candidate stores from being destroyed by an authoring run.
+  `author-level.js --shape X --write` used to write the hardcoded
+  `candidate-levels.*` pair unconditionally. That destroyed level 51's candidate
+  store — it ships in `src/game.js`, three recordings still bind to identity
+  `524f37c0063d61e5`, and no receipt carries that identity any more. The same
+  command was run three times in one session against the only passing receipt,
+  each time guarded by nothing but a manual backup.
+- **Where:** `solver/author-level.js` — `assertWritable()`, called from `main()`
+  before `deriveCandidate()` runs.
+- **Level:** file — the two output paths, checked as a pair. Probe: it checks
+  *existence*, not contents, so it cannot tell a precious store from a scratch
+  one. Every existing file is equally protected and equally unblockable by
+  `--force`.
+- **Kind:** shape — "does this path already hold a file". It makes no judgment
+  about whether overwriting would lose anything valuable; that judgment stays
+  with the person typing `--force`.
+- **Scope:** `solver/<basename>.json` and `solver/<basename>.receipt.json`, where
+  basename defaults to `candidate-levels` and `--out` may replace it. `--out`
+  rejects path separators, absolute paths, `..`, and a `.json` suffix, so
+  authoring cannot write outside `solver/`. Covers only the `--write` path;
+  `--verify` writes nothing.
+- **Reads own output?:** no — `fs.existsSync` on the filesystem it is about to
+  write.
+- **Sampling memory:** n/a — both paths checked every run.
+- **Does NOT catch:**
+  1. **`--force`.** The escape hatch is one flag and unaudited. Anyone who hits
+     the refusal and reflexively adds `--force` gets the old behavior exactly,
+     including the old loss.
+  2. **Overwrites by any other route.** `generate-levels.js`, the authoring
+     server, a stray `mv`, or an editor all still write these paths freely. This
+     guard covers one CLI entry point, not the files.
+  3. **A store already lost.** It prevents the next loss, recovers nothing.
+     Level 51 stays gone.
+  4. **Whether the thing being overwritten mattered.** Existence only — a
+     scratch file and the champion receipt are indistinguishable to it.
+  5. **Partial writes.** Both paths are checked before authoring, but the two
+     `writeFileSync` calls are not atomic; a crash between them leaves a store
+     without its receipt. The receipt gate's pairing check is what catches that
+     afterwards.
+- **Crafted-bypass test:** `solver/tests/authorLevelCli.test.js` — 10 cases.
+  The load-bearing one is `writing over an existing candidate is refused, and
+  the refusal says how to proceed`, run against the real live store rather than a
+  fixture, asserting the message names the file and both exits. Also verified by
+  hand: the destructive command from `HANDOFF.md:425` was run verbatim and
+  refused, with the champion confirmed untouched.
+  `a free store but an occupied receipt is still refused` pins the pair check —
+  guarding only the store would half-clobber.
+- **Retires:** NO. Nothing existed to widen; there was no check on this path at
+  all. It is not covered by the receipt gate, which reports damage after the
+  fact and cannot prevent it.
+- **Enforcement:** HARD from ship, green today. **This changes default CLI
+  behavior**: the historical 3-argument form now refuses instead of overwriting.
+  Verified safe because nothing imports or invokes it — `grep -rln author-level
+  solver/tests/` returns nothing, and only prose referenced it.
+- **Decay:** exercised on every `node --test solver/tests/*.test.js`; cost ~5ms.
+  Recalibration trigger: if `--force` starts appearing in scripts or docs as
+  routine, blind spot 1 has become the normal path and the guard is decorative.
+- **Shipped:** 2026-08-21 · closes the friction logged three times in run
+  `curve-debt-2026-08-21`.

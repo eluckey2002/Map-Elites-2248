@@ -422,6 +422,9 @@ node solver/verify-loop.js                               # curve health gate; ex
 node solver/game-tester.js --seeds 150                    # compare tile-scaling policies
 cd .orch/runs/level-authoring-tracer-2026-08-12/workspace/repo
 node solver/authoring-server.js                           # serves whichever candidate-levels.json is live; restart after swapping
-node solver/author-level.js --shape <file> --write        # derive + write a new candidate (overwrites the store)
+node solver/author-level.js --shape <file> --write --out candidate-levels-NN   # derive + write to a named slot
+node solver/author-level.js --shape <file> --write        # same, but targets candidate-levels.* and now REFUSES
+                                                          # if that pair exists; --force to overwrite deliberately.
+                                                          # The old silent overwrite is how level 51's store was lost.
 node solver/author-level.js --verify candidate-levels.json candidate-levels.receipt.json
 ```
