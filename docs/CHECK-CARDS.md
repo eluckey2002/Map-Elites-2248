@@ -49,19 +49,23 @@ card in the same commit.
   about the 2 archived candidates means "deliberately excluded", never "audited
   clean". `STORE_FLOOR` is what stops an accidentally-empty glob reading green.
 - **Does NOT catch:**
-  1. **The exemption lets a shipped level rot, by design.** Level 52 is stale
-     and does not block, because it ships and a human once won it. Nothing
-     expires that: one winning recording licenses the exemption forever, and the
-     evidence behind it is n=1 — a single player, a single run. Level 52's
-     behaviour under the current bot is unknown and will stay unknown. The
-     exemption converts a loud failure into a quiet diagnostic, and a diagnostic
-     is only as good as the person reading the output.
-  1b. **The exemption is only as good as its two lookups.** `shippedLevels()`
-     regex-parses `{ level: N,` out of `src/game.js`; if that file's format
-     changes, the set silently shrinks. That fails *closed* — fewer levels count
-     as shipped, so more candidates block — which is the safe direction, but it
-     would be silent either way. `winningRecordingIdentities()` trusts the
-     `outcome` field in `recordings/` without replaying the recording.
+  1. **One habitual red can camouflage a second.** Level 52 fails on every run
+     by decision, so this suite's normal state is red. A new regression arrives as
+     a second named failure beside a familiar one, and familiar red gets read as
+     "still the old thing". The failure text names itself as known and decided, so
+     an unfamiliar failure reads differently — but that only helps someone who
+     looks. This is the accepted cost of not manufacturing green.
+  1b. **The exemption informs, it does not excuse.** It was briefly wired to let
+     exempt stores pass with a diagnostic — the third time in one day this suite
+     was made green by changing what it looked at rather than what was wrong
+     (archiving the stores, then exempting them). Reverted the same day. The
+     computation stays, and only shapes the failure message. If a future change
+     lets `exempt` bypass an assertion again, this gate has stopped working.
+  1c. **The exemption's two lookups are shallow.** `shippedLevels()` regex-parses
+     `{ level: N,` out of `src/game.js`; a format change silently shrinks the set,
+     which fails *closed* (more failures, not fewer) but silently.
+     `winningRecordingIdentities()` trusts the `outcome` field without replaying
+     the recording, and one win from one player is the whole evidence base.
   2. **A receipt that was wrong when it was written.** A bad measurement recorded
      faithfully verifies forever. This proves consistency between receipt and
      code, never correctness of the measurement.
@@ -107,14 +111,16 @@ card in the same commit.
   other call sites (`author-level.js:35`, `generate-levels.js:275`) run at
   creation time, when the receipt has just been measured and passes by
   construction, so they can never detect drift.
-- **Enforcement:** **HARD** (blocking) for any stale candidate that is not
-  exempt; **green today**. Level 52 is stale-but-exempt and reported every run.
-  The exemption is **computed** on each run from `src/game.js` and `recordings/`
-  and requires BOTH halves — the candidate's level ships, AND a recording binds
-  to its exact `candidateIdentity` with `outcome: "win"`. A receipt that declares
-  its own exemption gets nothing (`the exemption is computed, never declared`).
-  A losing recording does not count. Level 54, being unshipped, can never be
-  exempt and would block immediately if it went stale again. Shipped report-only on 2026-08-21, promoted the same day. The
+- **Enforcement:** **HARD** (blocking) for every stale receipt, exempt or not.
+  **Currently red on 1 of 3** — level 52 — and that is the intended resting
+  state, not a defect to clear. Its failure text says so in the message, so the
+  next reader does not mistake a settled decision for an unfixed bug.
+  The exemption is **computed** each run from `src/game.js` and `recordings/`,
+  requires BOTH halves (the level ships, AND a recording binds to the exact
+  `candidateIdentity` with `outcome: "win"`), and a receipt declaring its own
+  exemption gets nothing. It changes only what the failure *says*.
+  **Demotion condition:** none. Do not archive, re-author, or exempt to clear a
+  red here. All three were tried on 2026-08-21 and all three were reversed. Shipped report-only on 2026-08-21, promoted the same day. The
   promotion was first made to look clean by archiving the two failing stores;
   that was reversed within the hour because clearing a red gate by removing its
   input is precisely the failure this gate exists to catch, and the resulting
@@ -142,9 +148,8 @@ card in the same commit.
   **Demotion condition:** none. Do not return this to report-only, and do not
   archive to clear it.
 - **Decay:** re-runs on every `node --test solver/tests/*.test.js`. Debt trends
-  as the exempt-stale diagnostic count (**1 of 3**: level 52). A rising count is
-  the signal to care; a count that never falls means the exemption has become a
-  place debt goes to be forgotten. Measured cost: suite
+  as failing per-store tests (**1 of 3**: level 52, by decision). A count rising
+  above 1 means new debt; the level 52 failure itself is expected and stable. Measured cost: suite
   went 1.3s → ~10.5s, the delta being one real 450-seed replay at ~8.9s; each
   additional *passing* live candidate adds ~9s, while a stale one short-circuits
   at ~3ms. Recalibration trigger: past roughly five passing live stores (~45s) the suite gets slow enough that people skip it, at which point

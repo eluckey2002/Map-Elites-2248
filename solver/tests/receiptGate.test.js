@@ -128,10 +128,16 @@ function exemptionForStore(dir, storeName, shipped = shippedLevels(), winners = 
   return exemptionFor(candidate, readJson(receiptPath), shipped, winners);
 }
 
-// One place decides. Tests drive this directly rather than re-deriving it.
-function gateVerdict(fault, exemption) {
-  if (fault === null) return 'current';
-  return exemption.exempt ? 'stale-exempt' : 'stale-blocking';
+// Every stale receipt fails. Being exempt does NOT buy a pass -- it only changes
+// what the failure says.
+//
+// An earlier version of this let exempt stores pass with a diagnostic. That was
+// the third time in one day this suite was made green by changing what it looked
+// at rather than what was wrong: first by archiving the failing stores, then by
+// exempting them. A gate that stops failing has stopped working, and a
+// diagnostic among 175 passing tests is a footnote, not a signal.
+function gateVerdict(fault) {
+  return fault === null ? 'current' : 'stale';
 }
 
 // BLOCKING for anything stale that is not exempt. Level 52 is stale and exempt:
@@ -152,29 +158,27 @@ function gateVerdict(fault, exemption) {
 // One test per store, so a failure names the offending file rather than
 // reporting a count.
 for (const storeName of candidateStores(SOLVER_DIR)) {
-  test(`${storeName} has a receipt that verifies against the current bot`, (t) => {
+  test(`${storeName} has a receipt that verifies against the current bot`, () => {
     const fault = faultFor(SOLVER_DIR, storeName);
-    const exemption = exemptionForStore(SOLVER_DIR, storeName);
-    const verdict = gateVerdict(fault, exemption);
+    if (gateVerdict(fault) === 'current') return;
 
-    if (verdict === 'stale-exempt') {
-      t.diagnostic(
-        `STALE (exempt) ${storeName} -- ${fault}. This level ships and a human ` +
-          'has completed it, so its target is not re-derived from a stronger bot. ' +
-          'The debt is real and unfixed; clearing it would raise a live target.',
-      );
-      return;
-    }
-
-    assert.equal(
-      verdict,
-      'current',
-      `${storeName}: ${fault}\n` +
-        'This receipt was measured against different code, and this candidate is ' +
-        `not exempt (ships=${exemption.ships}, human win recorded=${exemption.played}). ` +
-        'Re-author it against the current bot, or move it to ' +
-        'solver/candidates-archive/ and stop quoting its numbers. Do not ' +
-        'weaken this check to clear it.',
+    const { exempt, ships, played } = exemptionForStore(SOLVER_DIR, storeName);
+    assert.fail(
+      exempt
+        ? `${storeName}: ${fault}\n\n` +
+            'THIS FAILURE IS KNOWN AND DECIDED. It is not a new bug and it is not\n' +
+            'yours to fix. This level ships, a human has completed it, and on\n' +
+            '2026-08-21 the owner decided its target stays where it is. Refreshing\n' +
+            'the receipt would re-derive the target from a stronger bot and raise it\n' +
+            '4.9%, making a live level harder for players, while the bot\'s win rate\n' +
+            'on it moved one seed in three hundred (ticket T-003).\n\n' +
+            'Do NOT clear this by re-authoring, archiving, or exempting it. It fails\n' +
+            'because the receipt genuinely predates the current bot, which is true.'
+        : `${storeName}: ${fault}\n\n` +
+            `Not exempt (ships=${ships}, human win recorded=${played}). This receipt\n` +
+            'was measured against different code. Re-author it against the current\n' +
+            'bot, or archive it and stop quoting its numbers. Do not weaken this\n' +
+            'check to clear it.',
     );
   });
 }
@@ -485,10 +489,11 @@ test('both halves together exempt, and only then', () => {
   assert.equal(exemptionFor(candidate, receipt, new Set([52]), new Set(['cccc'])).exempt, true);
 });
 
-test('a stale candidate with neither half blocks the suite', () => {
-  assert.equal(gateVerdict('code/input identity mismatch', { exempt: false }), 'stale-blocking');
-  assert.equal(gateVerdict('code/input identity mismatch', { exempt: true }), 'stale-exempt');
-  assert.equal(gateVerdict(null, { exempt: false }), 'current');
+test('every stale receipt fails, exempt or not', () => {
+  // Exemption changes the wording of the failure, never whether it fails.
+  assert.equal(gateVerdict('code/input identity mismatch'), 'stale');
+  assert.equal(gateVerdict('no receipt: missing'), 'stale');
+  assert.equal(gateVerdict(null), 'current');
 });
 
 test('a losing recording does not license an exemption', () => {
