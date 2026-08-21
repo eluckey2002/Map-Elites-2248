@@ -221,6 +221,11 @@ async function main() {
       seNaive: lift.seNaive,
       winRate: result.winRate,
       avgMovesToTarget: result.avgMovesToTarget,
+      // Per-level lift, already computed by the clustered estimator and
+      // previously discarded. This is the row that says WHICH levels a policy
+      // change helps — one level moved +8% while another moved -0.4% under the
+      // same change, and that spread is invisible in the headline mean.
+      byLevel: lift.byLevel,
     };
   });
 
@@ -262,11 +267,44 @@ async function main() {
       config: { GENS, LAMBDA, MU, SCREEN_LEVELS, SCREEN_SEED_COUNT, HOLDOUT_SEED_COUNT, HOLDOUT_LEVELS },
       reference,
       referenceHoldout: { meanScore: mean(refHold.scores), winRate: refHold.winRate },
-      rows: rows.map(({ params, screenLift, holdoutLift, se, seNaive, t, winRate, avgMovesToTarget }) =>
-        ({ params, screenLift, holdoutLift, se, seNaive, t, winRate, avgMovesToTarget })),
+      rows: rows.map(({ params, screenLift, holdoutLift, se, seNaive, t, winRate, avgMovesToTarget, byLevel }) =>
+        ({ params, screenLift, holdoutLift, se, seNaive, t, winRate, avgMovesToTarget, byLevel })),
       searchTrace: [...seen.values()].map((e) => ({ params: e.params, screenLift: e.lift, se: e.se })),
     }, null, 2));
     console.log(`\nwrote ${outPath}`);
+
+    // The run already played every one of these games. Keeping only six
+    // summary numbers per policy threw away the whole (policy x level x seed)
+    // score table, so each search left nothing behind for the next one and
+    // any new question meant paying for the games again.
+    //
+    // The table is what answers questions the headline cannot: which levels
+    // separate policies, which policies disagree about which boards, whether
+    // a level is hard for everyone or only for the shipped bot. Those are
+    // exactly the level-quality signals the board search failed to measure.
+    //
+    // Written as a sidecar so the main file stays readable. Cells are stored
+    // level-major — cell (j, k) is level j, seed k, at index j * seeds + k —
+    // matching the layout pairedLift already assumes. Roughly 1 MB per run.
+    const cellsPath = `${outPath.replace(/\.json$/, '')}.cells.json`;
+    fs.writeFileSync(cellsPath, JSON.stringify({
+      generatedAt: new Date().toISOString(),
+      layout: 'level-major: index = levelIndex * seeds.length + seedIndex',
+      screen: {
+        levels: SCREEN_LEVELS,
+        seeds: SCREEN_SEEDS,
+        policies: [...seen.values()].map((e) => ({ params: e.params, scores: e.scores })),
+      },
+      holdout: {
+        levels: HOLDOUT_LEVELS,
+        seeds: HOLDOUT_SEEDS,
+        policies: holdout.map((h) => ({ params: h.params, scores: h.result.scores })),
+      },
+    }));
+    const mb = (fs.statSync(cellsPath).size / 1e6).toFixed(1);
+    console.log(`wrote ${cellsPath} (${mb} MB: `
+      + `${seen.size} screened policies x ${SCREEN_LEVELS.length * SCREEN_SEEDS.length} cells, `
+      + `${holdout.length} validated x ${HOLDOUT_LEVELS.length * HOLDOUT_SEEDS.length} cells)`);
   }
 
   await pool.close();
