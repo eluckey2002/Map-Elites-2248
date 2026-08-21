@@ -433,4 +433,5 @@ module.exports = {
   buildGreedyChain,
   findGreedyChains,
   cloneState,
+  isBlockedTile,
 };

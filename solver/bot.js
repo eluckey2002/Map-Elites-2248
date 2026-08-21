@@ -1,5 +1,6 @@
 const {
   findBestChain, findGreedyChains, cloneState, executeChain, applyGravity, spawnNewTiles, checkBombs,
+  isBlockedTile,
 } = require('./engine');
 
 function findBombTiles(state) {
@@ -115,6 +116,7 @@ const DEFAULT_PARAMS = {
   width: CANDIDATE_LIMIT,            // candidates surviving the pre-lookahead cut
   bombMax: BOMB_MAX_CHAIN_LENGTH,    // longest chain the defuse search will hunt
   tieBreak: CHAIN_TIE_BREAK,         // how the walk chooses between equal tiles
+  wHarvest: 0,                       // weight on setting up a chain of built tiles
 };
 
 // Maps a chain from the real state onto the equivalent tiles in a clone
@@ -164,6 +166,70 @@ function remnantPlacementValue(state, candidate, lookaheadRngFactory) {
   return remnantPlacementValueFromOutcome(outcome);
 }
 
+// The strategy the owner described, which the bot does not currently play:
+// build up to a tile a few doublings above the dealt ones -- as high as you can
+// go without landing off the mergeable lattice -- and then, mid game, chain
+// THOSE built tiles together. A chain of equal tiles of value v sums to a
+// multiple of v, so harvesting the tiles you made lands back on the lattice
+// rather than bricking, and it pays enormously: eight tiles at 16x the base
+// score 128x base at the 3x length multiplier, against 8x base for chaining
+// what you were dealt.
+//
+// `remnantPlacementValueFromOutcome` above cannot see any of this. It asks one
+// question -- can the survivor begin SOME legal chain next move -- so it is
+// blind to which tile survived and to where the other built tiles are sitting.
+// Measured: the bot completes a chain of built tiles about once per game across
+// a 24-30 move budget.
+//
+// This term scores the survivor's harvest potential -- how usable the tile it
+// just made actually is. The key is that a built tile is NOT stranded merely
+// because nothing equals it. `canExtendChain` requires the opening PAIR to be
+// equal and then allows equal-or-double, so a chain climbs a ladder: a lone 32
+// is reachable as `16, 16, 32`. A built tile therefore looks both ways --
+// half its value can climb into it, and it can climb into double its value.
+//
+// That is also why the bot does not have to build the big tile in one chain.
+// It can make a 16, then make a 32, and the ladder connects them. Scoring only
+// equal-valued company would have missed every one of those steps and pushed
+// the bot to reach the whole way in a single move, which is how you overshoot
+// the lattice and make a brick.
+//
+// Weights: an equal tile is worth most (it can open a pair with the survivor
+// directly), a half-value tile next (it can climb in), double-value last (the
+// survivor climbs into it, which needs a pair below it first).
+//
+// Distance is Chebyshev because the board is 8-connected, and near counts for
+// more than far because the board churns underneath you. Scaled by the
+// survivor's own value to keep the term in points, like every other term here.
+//
+// Only tiles above the dealt ones count. Rewarding company among the tiles the
+// game hands you would just be a second turnover term.
+const HARVEST_KINSHIP = [
+  [1, 1.0],   // an equal tile: opens a pair with the survivor
+  [0.5, 0.7], // half value: can climb into the survivor
+  [2, 0.4],   // double value: the survivor can climb into it
+];
+
+function harvestValue(sim, survivor) {
+  const base = 2 * (sim.tileScale || 1); // the smallest tile the game deals
+  if (!survivor || survivor.value <= base) return 0;
+  let kin = 0;
+  for (let y = 0; y < sim.gridHeight; y++) {
+    for (let x = 0; x < sim.gridWidth; x++) {
+      const tile = sim.grid[y][x];
+      if (!tile || tile === survivor || isBlockedTile(tile)) continue;
+      let weight = 0;
+      for (const [ratio, w] of HARVEST_KINSHIP) {
+        if (tile.value === survivor.value * ratio) { weight = w; break; }
+      }
+      if (weight === 0) continue;
+      const distance = Math.max(Math.abs(tile.x - survivor.x), Math.abs(tile.y - survivor.y));
+      kin += weight / (1 + distance);
+    }
+  }
+  return kin * survivor.value;
+}
+
 // Heuristic: defuse the most urgent reachable bomb (lowest timer) first;
 // otherwise take the chain maximizing (this move's points + best next-move
 // points on the resulting board + a legal chain beginning at the survivor +
@@ -177,7 +243,7 @@ function remnantPlacementValue(state, candidate, lookaheadRngFactory) {
 // Returns null if the board has no legal move.
 function chooseMove(state, options = {}) {
   const { lookaheadRngFactory } = options;
-  const { wRoll, wPlace, turnover, width, bombMax, tieBreak } = { ...DEFAULT_PARAMS, ...options.params };
+  const { wRoll, wPlace, turnover, width, bombMax, tieBreak, wHarvest } = { ...DEFAULT_PARAMS, ...options.params };
 
   const bombs = findBombTiles(state).sort((a, b) => a.bombTimer - b.bombTimer);
   for (const bomb of bombs) {
@@ -197,7 +263,8 @@ function chooseMove(state, options = {}) {
     const total = candidate.points
       + wRoll * rolloutValue(outcome)
       + wPlace * remnantPlacementValueFromOutcome(outcome)
-      + turnover * (state.tileScale || 1) * emptiedCells;
+      + turnover * (state.tileScale || 1) * emptiedCells
+      + wHarvest * harvestValue(outcome.sim, outcome.survivor);
     if (total > bestTotal) {
       bestTotal = total;
       bestCandidate = candidate;
@@ -206,4 +273,4 @@ function chooseMove(state, options = {}) {
   return bestCandidate.chain;
 }
 
-module.exports = { chooseMove, remnantPlacementValue, DEFAULT_PARAMS };
+module.exports = { chooseMove, remnantPlacementValue, harvestValue, DEFAULT_PARAMS };

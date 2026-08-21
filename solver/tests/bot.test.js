@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { chooseMove, remnantPlacementValue } = require('../bot');
+const { chooseMove, remnantPlacementValue, harvestValue } = require('../bot');
 
 function makeTile(x, y, value, blocker = null, bombTimer = 0) {
   return { x, y, value, blocker, blockerDuration: 0, bombTimer };
@@ -192,4 +192,70 @@ test('chooseMove: placement signal breaks an ordinary-candidate tie toward a cha
   // 32-point ordinary rollout via unrelatedPair. Only the reverse endpoint
   // leaves its merged 16 beside fixedSixteen for another legal 32-point chain.
   assert.deepEqual(chain, [...twos].reverse());
+});
+
+// harvestValue scores how USABLE the tile a move just built is. The subtlety is
+// that a built tile is not stranded merely because nothing equals it: chains
+// open with an equal PAIR and then climb equal-or-double, so a lone 32 is
+// reachable as 16, 16, 32. The term therefore looks both ways along the ladder.
+
+test('harvestValue: a tile the game deals is not something the bot built', () => {
+  // tileScale 1 -> the dealt tile is 2, so 2 is not a built tile.
+  const survivor = makeTile(0, 0, 2);
+  const state = makeState([[survivor, makeTile(1, 0, 2)]], { tileScale: 1 });
+
+  assert.equal(harvestValue(state, survivor), 0);
+});
+
+test('harvestValue: a built tile with only HALF-value company still counts', () => {
+  // This is the case a same-value-only rule gets wrong. Nothing equals the 16,
+  // but 8, 8, 16 is a legal chain, so the 16 is perfectly usable.
+  const survivor = makeTile(0, 0, 16);
+  const half = makeTile(1, 0, 8);
+  const state = makeState([[survivor, half]], { tileScale: 1 });
+
+  assert.equal(harvestValue(state, survivor), 5.6); // 0.7/(1+1) * 16
+});
+
+test('harvestValue: equal company beats half, which beats double', () => {
+  const at = (value) => {
+    const survivor = makeTile(0, 0, 16);
+    const state = makeState([[survivor, makeTile(1, 0, value)]], { tileScale: 1 });
+    return harvestValue(state, survivor);
+  };
+  // An equal tile can open a pair with the survivor directly; a half tile has
+  // to climb into it; the survivor climbing into a double needs a pair first.
+  assert.equal(at(16), 8);   // 1.0/2 * 16
+  assert.equal(at(8), 5.6);  // 0.7/2 * 16
+  assert.equal(at(32), 3.2); // 0.4/2 * 16
+  assert.ok(at(16) > at(8) && at(8) > at(32));
+});
+
+test('harvestValue: company nearby is worth more than the same company far away', () => {
+  const near = makeTile(0, 0, 16);
+  const nearState = makeState([[near, makeTile(1, 0, 16), null, null]], { tileScale: 1 });
+  const far = makeTile(0, 0, 16);
+  const farState = makeState([[far, null, null, makeTile(3, 0, 16)]], { tileScale: 1 });
+
+  assert.equal(harvestValue(nearState, near), 8); // 1/(1+1) * 16
+  assert.equal(harvestValue(farState, far), 4);   // 1/(1+3) * 16
+});
+
+test('harvestValue: an unrelated value is not company at all', () => {
+  const survivor = makeTile(0, 0, 16);
+  const state = makeState([[survivor, makeTile(1, 0, 64)]], { tileScale: 1 });
+
+  assert.equal(harvestValue(state, survivor), 0);
+});
+
+test('harvestValue: what counts as built follows the level tile scale', () => {
+  // At tileScale 32 the dealt tile is 64. A fixed threshold would make this
+  // term fire on dealt tiles in late levels and on nothing in early ones.
+  const dealt = makeTile(0, 0, 64);
+  const dealtState = makeState([[dealt, makeTile(1, 0, 64)]], { tileScale: 32 });
+  assert.equal(harvestValue(dealtState, dealt), 0);
+
+  const built = makeTile(0, 0, 128);
+  const builtState = makeState([[built, makeTile(1, 0, 128)]], { tileScale: 32 });
+  assert.equal(harvestValue(builtState, built), 64); // 1.0/(1+1) * 128
 });
