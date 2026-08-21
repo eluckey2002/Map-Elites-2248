@@ -381,6 +381,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** Calibration consequence, unresolved: a target is `demand x measured achievable score` (`DECISION-0003`), so a level authored after this change is pitched about 5% higher at the same demand. Shipped levels keep the targets they were admitted with, and the curve gate passes unchanged, so nothing needs to move — but the two eras of authored target are no longer directly comparable. Candidate width is unaffected: a width-32 arm produced bit-identical play to width 24 under the new generator, so `RESULT-0010`'s saturation still holds, though its stated reason does not — see `CORRECTION-0003`. On the standing note that the reference bot is a weak proxy for a skilled player: on Level 51 the bot's median moves-to-target improves from 17 to 16 across 120 seeds, and it matches the owner's recorded 12-move pace on 8 of 120 boards against 1 of 119 before. The gap narrows and does not close; the margin remains unquantified in general.
 
+### RESULT-0012 — Level 52 shipped at the target it was admitted with, not a re-derived one
+
+- **type:** result
+- **status:** accepted
+- **scope:** new shipped Level 52 (`src/game.js`, `LEVELS`); no rule, bot, or existing level changed
+- **statement:** Candidate "level-52-stone-gate" (Level 51's 5x7 shape with one stone at (2,3), min chain 4, 24 moves, tile scale 32) is shipped as Level 52. Target 102,000 is 70% of the measured achievable score (median 146,688; 300-seed disjoint holdout, seeds 100000-100299: **290 wins, 0 lockouts, 0 bomb failures**), by `DECISION-0003`'s methodology. It carries human evidence: the owner played and won it at 124,864 in 15 of 24 moves, replay-verified. Both the measurement and the playtest were done before `RESULT-0011` made the reference bot about 5% stronger, and the target is **held at the value it was admitted and played with rather than re-derived**. Re-deriving would raise it to roughly 107,000 and would silently retune a level a human had already validated at 102,000. The consequence is recorded rather than hidden: measured against the current bot this level's effective demand is nearer 0.667 than 0.700, so it sits marginally easier than its stated demand implies. Direction of error is safe — the level is more winnable than its label claims, not less.
+- **evidence:** candidate store and receipt `.orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/solver/candidate-levels-52.json` and `-52.receipt.json` (`targetDerivation`, `holdout`); `src/game.js` `LEVELS` entry for level 52; `node --test solver/tests/*.test.js` 82 pass; `node solver/verify-loop.js` -> `RESULT: PASS`, all seven checks with 52 levels present.
+- **proof_class:** `owner_decision` for shipping and for holding the target; `heuristic_observation` for the win-rate measurement; the owner's session is `direct_source`.
+- **as_of:** 2026-08-20
+- **reverify:** `node solver/verify-loop.js` (expect `RESULT: PASS`, `52/52` on the target/tileScale check); `node --test solver/tests/*.test.js` (expect 82 pass).
+- **updated:** 2026-08-20
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This is the first level to land on the far side of a bot-strength change, and it makes the split named in `RESULT-0011` concrete rather than hypothetical: levels 1-52 carry targets derived against the pre-`RESULT-0011` bot, anything authored later will not. That comparability question is open and is **not** settled by this record — it is only deferred for one level, on the ground that a human-validated target should not move underneath the human who validated it. Whether to re-derive the whole curve remains an owner decision.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

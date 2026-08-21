@@ -99,6 +99,17 @@ const LEVELS = [
     // 14 moves/130,496), which is the signal that made it worth shipping
     // over just being winnable.
     { level: 51, target: 124000, tileScale: 32, moves: 24, minChain: 4, gridW: 5, gridH: 7, blockers: [] },
+
+    // Level 52 ("stone-gate"): Level 51's shape with a single stone at (2,3),
+    // splitting the board's middle. Target is 70% of the measured achievable
+    // score (300-seed holdout: 290 wins, 0 lockouts, 0 bombs), same derivation
+    // as 51. The owner played and won it -- 124,864 in 15 moves, replay
+    // verified.
+    //
+    // Its target was derived under the bot as it stood before RESULT-0011, so
+    // it is held at the value it was admitted and playtested with rather than
+    // re-derived against the stronger bot. See RESULT-0012.
+    { level: 52, target: 102000, tileScale: 32, moves: 24, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }] },
 ];
 
 // ============================================================================
