@@ -157,6 +157,24 @@ function makeSeededRng(seed) {
     return rng;
 }
 
+// A level that names a seed is ONE FIXED BOARD - the same board for every
+// player and every attempt. A level without one draws a fresh board each time,
+// which is how every level shipped before this and what the unseeded levels
+// still do.
+//
+// This is what makes "this level is hard" a statement about the level rather
+// than about the draw. Measured on the generated candidates: for one fixed
+// shape, the number of distinct opening moves ranged from 124 to 1363 across
+// seeds, while two genuinely different shapes sat at 536 and 467. The board
+// mattered about ten times more than the design, so anything tuned across
+// random draws was tuning against noise.
+//
+// The tradeoff is real and deliberate: a fixed board cannot be re-rolled by
+// losing and retrying, so a player who is stuck stays stuck on that board.
+function rngForLevel(levelData) {
+    return Number.isInteger(levelData.seed) ? makeSeededRng(levelData.seed) : Math.random;
+}
+
 function requirePlayableInteger(value, name, minimum, maximum) {
     if (!Number.isInteger(value) || value < minimum || value > maximum) {
         throw new Error(`${name} must be an integer from ${minimum} to ${maximum}`);
@@ -178,6 +196,9 @@ function validatePlayableLevel(levelData) {
     requirePlayableInteger(levelData.minChain, 'minChain', 2, 20);
     requirePlayableInteger(levelData.gridW, 'gridW', 2, 12);
     requirePlayableInteger(levelData.gridH, 'gridH', 2, 12);
+    // Optional: a level without a seed draws a fresh board each attempt, which
+    // is what every level did before fixed boards existed.
+    if (Object.hasOwn(levelData, 'seed')) requirePlayableInteger(levelData.seed, 'seed', 0, 0xffffffff);
     if (!Array.isArray(levelData.blockers)) throw new Error('blockers must be an array');
     levelData.blockers.forEach((blocker) => {
         if (!blocker || !Object.values(BLOCKER_TYPES).includes(blocker.type)) throw new Error('blocker type is invalid');
@@ -293,10 +314,6 @@ class Game {
         this.animating = false;
         this.animations = [];
 
-        // Touch/mouse state
-        this.isDragging = false;
-        this.lastTouchPos = null;
-
         // Unlocked levels
         this.unlockedLevel = parseInt(localStorage.getItem('unlockedLevel')) || 1;
 
@@ -321,28 +338,29 @@ class Game {
     }
 
     setupEventListeners() {
-        // Mouse events
-        this.canvas.addEventListener('mousedown', (e) => this.handleStart(e));
-        this.canvas.addEventListener('mousemove', (e) => this.handleMove(e));
-        this.canvas.addEventListener('mouseup', () => this.handleEnd());
-        this.canvas.addEventListener('mouseleave', () => this.handleEnd());
-
-        // Touch events
+        // Click (or tap) a tile to add it to the chain
+        this.canvas.addEventListener('click', (e) => this.handleTileClick(e.clientX, e.clientY));
         this.canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            this.handleStart(e.touches[0]);
+            const touch = e.touches[0];
+            this.handleTileClick(touch.clientX, touch.clientY);
         });
-        this.canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            this.handleMove(e.touches[0]);
+
+        // Enter submits the chain, Escape clears it
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.submitChain();
+            } else if (e.key === 'Escape') {
+                this.clearChain();
+            }
         });
-        this.canvas.addEventListener('touchend', () => this.handleEnd());
-        this.canvas.addEventListener('touchcancel', () => this.handleEnd());
 
         // Button events
         document.getElementById('undoBtn').addEventListener('click', () => this.undo());
         document.getElementById('restartBtn').addEventListener('click', () => this.reloadCurrentLevel());
         document.getElementById('menuBtn').addEventListener('click', () => this.showLevelSelect());
+        document.getElementById('submitBtn').addEventListener('click', () => this.submitChain());
         document.getElementById('nextLevelBtn').addEventListener('click', () => this.nextLevel());
         document.getElementById('retryBtn').addEventListener('click', () => this.reloadCurrentLevel());
         document.getElementById('gameOverMenuBtn').addEventListener('click', () => {
@@ -366,41 +384,34 @@ class Game {
         return null;
     }
 
-    handleStart(e) {
+    handleTileClick(clientX, clientY) {
         if (this.animating || this.gameOver || this.levelComplete) return;
 
-        const pos = this.getGridPos(e.clientX, e.clientY);
+        const pos = this.getGridPos(clientX, clientY);
         if (!pos) return;
 
         const tile = this.grid[pos.row][pos.col];
         if (!tile || tile.isBlocked()) return;
 
-        this.isDragging = true;
-        this.chain = [tile];
-        tile.selected = true;
-        this.updateChainIndicator();
-        this.render();
-    }
-
-    handleMove(e) {
-        if (!this.isDragging || this.animating) return;
-
-        const pos = this.getGridPos(e.clientX, e.clientY);
-        if (!pos) return;
-
-        const tile = this.grid[pos.row][pos.col];
-        if (!tile || tile.isBlocked()) return;
-
-        // Check if already in chain
+        // Tapping the tile just before the last one steps the chain back,
+        // so a misclick can be corrected with one more click instead of
+        // clearing the whole chain.
         const existingIndex = this.chain.findIndex(t => t === tile);
         if (existingIndex !== -1) {
-            // Backtrack if going back
             if (existingIndex === this.chain.length - 2) {
                 const removed = this.chain.pop();
                 removed.selected = false;
                 this.updateChainIndicator();
                 this.render();
             }
+            return;
+        }
+
+        if (this.chain.length === 0) {
+            this.chain = [tile];
+            tile.selected = true;
+            this.updateChainIndicator();
+            this.render();
             return;
         }
 
@@ -417,20 +428,22 @@ class Game {
         }
     }
 
-    handleEnd() {
-        if (!this.isDragging) return;
-        this.isDragging = false;
+    submitChain() {
+        if (this.animating || this.gameOver || this.levelComplete) return;
+        if (this.chain.length === 0) return;
 
-        // Validate and execute chain
         if (this.isValidChain()) {
             this.executeChain();
         } else {
-            // Clear selection
-            this.chain.forEach(t => t.selected = false);
-            this.chain = [];
-            this.updateChainIndicator();
-            this.render();
+            this.clearChain();
         }
+    }
+
+    clearChain() {
+        this.chain.forEach(t => t.selected = false);
+        this.chain = [];
+        this.updateChainIndicator();
+        this.render();
     }
 
     isAdjacent(tile1, tile2) {
@@ -752,7 +765,7 @@ class Game {
     loadLevel(levelNum) {
         this.customSession = null;
         const levelData = LEVELS.find(l => l.level === levelNum) || LEVELS[0];
-        this.initializeLevel(levelData, Math.random);
+        this.initializeLevel(levelData, rngForLevel(levelData));
     }
 
     startCustomLevel(session) {
@@ -1266,6 +1279,7 @@ if (typeof module !== 'undefined' && module.exports) {
         customCandidateFromQuery,
         levelFromQuery,
         makeSeededRng,
+        rngForLevel,
         validatePlayableLevel,
     };
 }

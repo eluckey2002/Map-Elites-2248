@@ -1,0 +1,24 @@
+{
+  "candidates": [
+    {
+      "blockers": [
+        {
+          "type": "stone",
+          "x": 2,
+          "y": 3
+        }
+      ],
+      "gridH": 7,
+      "gridW": 5,
+      "level": 52,
+      "minChain": 4,
+      "moves": 24,
+      "name": "level-52-stone-gate",
+      "schemaVersion": 1,
+      "sourceShapeIdentity": "e8b746480442e177fe8d85570f26f738cc815c0aa8e7a744193ef189c48cd49a",
+      "target": 102000,
+      "tileScale": 32
+    }
+  ],
+  "schemaVersion": 1
+}

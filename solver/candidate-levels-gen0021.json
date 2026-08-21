@@ -1,0 +1,31 @@
+{
+  "candidates": [
+    {
+      "blockers": [
+        {
+          "duration": 5,
+          "type": "ice",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "duration": 6,
+          "type": "ice",
+          "x": 2,
+          "y": 2
+        }
+      ],
+      "gridH": 6,
+      "gridW": 5,
+      "level": 52,
+      "minChain": 3,
+      "moves": 23,
+      "name": "gen-0021",
+      "schemaVersion": 1,
+      "sourceShapeIdentity": "5554ff513a651700011758db773d5fc4381290bb20293c764c8657f8ff7255a4",
+      "target": 137000,
+      "tileScale": 32
+    }
+  ],
+  "schemaVersion": 1
+}
