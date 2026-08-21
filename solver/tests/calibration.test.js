@@ -9,9 +9,17 @@ const { DEFAULT_PARAMS } = require('../bot');
 // with the bot again and this test is the thing that catches it.
 test('calibration params are a literal snapshot, not a view of the live bot', () => {
   assert.deepEqual(CALIBRATION_PARAMS, {
-    wRoll: 1, wPlace: 1, turnover: 40, width: 24, bombMax: 9, tieBreak: 'degree',
+    wRoll: 1, wPlace: 1, turnover: 40, width: 24, bombMax: 9, tieBreak: 'degree', wHarvest: 0,
   });
   assert.notEqual(CALIBRATION_PARAMS, DEFAULT_PARAMS); // not the same object
+});
+
+// The trap this catches: chooseMove resolves { ...DEFAULT_PARAMS, ...params },
+// so a parameter present on the live bot but MISSING from the ruler silently
+// takes the live bot's value. The ruler would look frozen and would not be.
+// Adding a bot parameter must be a deliberate decision about calibration.
+test('the ruler pins every parameter the live bot has', () => {
+  assert.deepEqual(Object.keys(CALIBRATION_PARAMS).sort(), Object.keys(DEFAULT_PARAMS).sort());
 });
 
 test('calibration params cannot be mutated in place', () => {

@@ -103,6 +103,19 @@ const CHAIN_TIE_BREAK = 'degree';
 // worse there for no reason but a unit mismatch.
 const TURNOVER_BONUS_PER_TILE = 40;
 
+// Measured worth: +2.60% median score against the same bot with this term off
+// (51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level,
+// seed), standard error clustered by level, t = 9.4), win rate 92.3% -> 93.9%.
+// A 100-seed pilot on a different disjoint seed set measured +1.76%; the
+// confirmation came back larger, so the weight is not a selection artifact.
+//
+// The response peaks and falls: 0.25 -> +0.80%, 0.5 -> +1.16%, 1 -> +1.67%,
+// 2 -> +2.60%, 4 -> +1.43%. Overweighting it makes the bot hoard tiles it never
+// cashes, which is the failure mode the shape of that curve is showing.
+//
+// See EVIDENCE_LEDGER RESULT-0014.
+const HARVEST_WEIGHT = 2;
+
 // The tunable surface of this policy, gathered in one place so a search can
 // vary it. DEFAULTS reproduce the hand-tuned bot exactly; every constant above
 // is its documented derivation, not a placeholder. `wNow` is deliberately not
@@ -116,7 +129,7 @@ const DEFAULT_PARAMS = {
   width: CANDIDATE_LIMIT,            // candidates surviving the pre-lookahead cut
   bombMax: BOMB_MAX_CHAIN_LENGTH,    // longest chain the defuse search will hunt
   tieBreak: CHAIN_TIE_BREAK,         // how the walk chooses between equal tiles
-  wHarvest: 0,                       // weight on setting up a chain of built tiles
+  wHarvest: HARVEST_WEIGHT,          // weight on setting up a chain of built tiles
 };
 
 // Maps a chain from the real state onto the equivalent tiles in a clone

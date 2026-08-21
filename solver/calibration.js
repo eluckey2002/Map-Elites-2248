@@ -30,8 +30,16 @@ const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 
-// calib-1: the bot as of 2026-08-20, after RESULT-0011's chain-walk tie-break.
-// Every value is written out rather than referenced, on purpose.
+// calib-1: the bot as of 2026-08-20, after RESULT-0011's chain-walk tie-break
+// and before RESULT-0014's harvest term. Every value is written out rather than
+// referenced, on purpose.
+//
+// EVERY parameter must appear here, including ones set to zero. chooseMove
+// resolves `{ ...DEFAULT_PARAMS, ...params }`, so a key omitted here silently
+// falls through to whatever the LIVE bot uses -- which is exactly the drift
+// this file exists to stop, wearing a disguise. `wHarvest: 0` is not padding:
+// it is what pins calib-1 to the bot that actually set the existing targets.
+// `calibration.test.js` fails if the two key sets diverge.
 const CALIBRATION_VERSION = 'calib-1';
 const CALIBRATION_PARAMS = Object.freeze({
   wRoll: 1,
@@ -40,6 +48,7 @@ const CALIBRATION_PARAMS = Object.freeze({
   width: 24,
   bombMax: 9,
   tieBreak: 'degree',
+  wHarvest: 0,
 });
 
 // Pinning the parameters is not enough on its own: the same parameters against
