@@ -55,7 +55,8 @@ Assign a stable ID when an entry is created: `FACT-NNNN`, `RESULT-NNNN`, `DECISI
 | `accepted` | Admitted to its named registry at the stated type, scope, and proof class. |
 | `provisional` | Retained as an unaccepted lead pending verification or review. |
 | `open` | An unresolved question with no decisive answer recorded. |
-| `superseded` | Replaced or narrowed by a linked correction or newer record. |
+| `superseded` | Replaced by a linked correction or newer record. The claim itself no longer holds. |
+| `narrowed` | A linked correction fixes the record's reasoning, scope, or explanation while its measurements and conclusion stand. Cite the record and its correction together. |
 | `stale` | Time-sensitive and no longer current without re-verification. |
 | `rejected` | Considered but not admitted or no longer adopted; retain the reason and evidence. |
 
@@ -353,7 +354,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0010 — The bot's candidate cap was discarding real options on two-thirds of moves
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** `solver/bot.js`, `CANDIDATE_LIMIT` (12 -> 24); reference-bot strength only, no level, target, or rule changed
 - **statement:** The lookahead's pre-filter kept only the 12 highest-immediate-point chains, ranked by the very criterion the lookahead exists to overrule. Raising the cap to 24 is worth **+1.10%** median score against the previous bot (geometric mean of per-game log-ratios, 51 levels x 150 unseen seeds = 7,650 games per width, paired per (level, seed), standard error clustered by level, n = 51, **t = 4.1**). The gain saturates exactly at 24: widths 26 and 32 produce bit-identical play, because boards offer a median of 15 legal chains and at most 30, so lookahead work plateaus at 1.37x no matter how high the cap goes. The old cap bound on **65.5%** of real in-game decisions. The prior setting rested on a misreading of correct data: the original level-26 / 50-seed measurement recorded 12 -> 7584 and 24 -> 7678 and called it "flat past ~12", but that is a 1.2% gain that 50 seeds of a single level could not resolve, so a real effect was filed as noise. Effect on the shipped curve is small and does not require re-calibration: median achievable score rises **1.25%** on average across all 51 levels and win rate at the shipped target rises **0.6 points**, the largest single move being level 17 at 97% -> 99%.
 - **evidence:** `solver/policy-search.js`, `solver/policy-eval.js`, `solver/policy-ablation.js` (search, paired estimator, arm comparison); `.orch/policy-search-01.json` and `.orch/policy-ablation-01.json`; `node --test solver/tests/*.test.js` 79 pass, including `solver/tests/policy-eval.test.js` covering the clustered estimator; `node solver/verify-loop.js` -> `RESULT: PASS` with the new cap.

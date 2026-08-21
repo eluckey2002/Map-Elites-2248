@@ -210,6 +210,15 @@ headroom above the human**, so every target it calibrates is set for a much weak
 agent-based difficulty measure needs an agent that can beat its human sometimes, or it is
 measuring in a range the human does not occupy.
 
+> **Receipt added 2026-08-20.** The two figures above were carried here as prose with nothing
+> behind them, which for the most decision-relevant number in the project is not good enough.
+> `solver/human-vs-bot.js` now measures it from the replay-verified recordings: on all five
+> winning human sessions the owner reached the target in fewer moves than the bot on the
+> identical level and seed, by 1 to 7 moves. That is measured against the *current* bot, which
+> `RESULT-0011` made about 5% stronger than the one in play when those sessions were recorded,
+> so it understates the margin. The conclusion above holds. The specific counts 41/43 and 48/48
+> remain unreproduced and should not be quoted.
+
 ---
 
 ## 7. Reading
