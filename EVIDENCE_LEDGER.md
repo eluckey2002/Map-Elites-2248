@@ -335,6 +335,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** Policy-dependent and no bound follows. The reference bot understates a skilled player by an unquantified margin, so these win rates are floors on human success rather than estimates of it. `RESULT-0005`'s finding that the back half was unbeatable is superseded in practice by this retune but is retained as the measurement that motivated it.
 
+### RESULT-0009 — Level 51 shipped: the first level admitted through the authoring tracer
+
+- **type:** result
+- **status:** accepted
+- **scope:** new shipped Level 51 (`src/game.js`, `LEVELS`), authoring tracer `authoring-tracer` / run `level-authoring-tracer-2026-08-12`
+- **statement:** Candidate "level-51-split-channel" (5×7 grid, min chain 4, 24 moves, tile scale 32, no blockers) is now shipped as Level 51, continuing the chapter tile-scale ladder (16→32). Its target, 124,000, is 70% of the measured achievable score (300-seed disjoint holdout, seeds 100000-100299: 297 wins, 0 lockouts, 0 bomb failures), per `DECISION-0003`'s methodology. Unlike every other shipped level, this one also has direct human evidence: three real playthroughs of the same seed were played, recorded, and independently replay-verified against `solver/engine.js` — a loss under a since-fixed input bug (24 moves, 59,584), and two different winning strategies once input was fixed (12 moves/127,040 and 14 moves/130,496). The owner's acceptance was explicitly informed by the tension between those two wins, not just winnability.
+- **evidence:** ticket `.orch/tickets/level-authoring-tracer-2026-08-12/authoring-tracer.md` (status `complete`, all six ACs `PASS`); replay verification `.orch/audits/recording-replay-verification-2026-08-17/finding.md` and `verdict.md` (independent re-derivation); worklog `.orch/runs/level-authoring-tracer-2026-08-12/worklog.md`, Iterations 5-8; `node solver/verify-loop.js` and `node --test solver/tests/*.test.js` both pass with 51 levels present.
+- **proof_class:** `owner_decision` for shipping itself; `heuristic_observation` for the underlying win-rate measurement; the three human sessions are `direct_source` (replayed, not simulated).
+- **as_of:** 2026-08-17
+- **reverify:** `node solver/verify-loop.js` (expect `RESULT: PASS`, `51/51` on the target/tileScale check); `node --test solver/tests/*.test.js` (expect 73 pass).
+- **updated:** 2026-08-17
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This is the first level whose target was never hand-picked at all — BL-0004's stated milestone exit condition, for one level. Batch generation of further candidates and any additional shipping remain open, separate work.
+
 ### RESULT-0010 — The bot's candidate cap was discarding real options on two-thirds of moves
 
 - **type:** result

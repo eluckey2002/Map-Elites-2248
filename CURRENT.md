@@ -4,9 +4,11 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Active milestone
 
-Author new levels. The curve is fixed, so new levels can be born calibrated rather than hand-guessed. [BL-0004](docs/backlog/BL-0004-build-level-authoring-tracer.md) is active: it carries one candidate through measured target derivation, seeded custom play, and playthrough capture before the loop widens. The historical design remains at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md); measurement is grounded in `solver/game-tester.js`.
+Author new levels. The curve is fixed, so new levels can be born calibrated rather than hand-guessed. [BL-0004](docs/backlog/BL-0004-build-level-authoring-tracer.md)'s tracer is complete and its one candidate is shipped: Level 51, the first level whose target was never hand-picked (measured demand, `DECISION-0003`) and the first with direct human playtest evidence, not just a bot win rate (`RESULT-0009`). The historical design remains at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md); measurement is grounded in `solver/game-tester.js`.
 
-The milestone exits when new levels can be generated, measured, and reviewed without hand-setting a target.
+**Read [HANDOFF.md](HANDOFF.md) before touching this milestone further** — a 2026-08-17 session conflated the pipeline built so far (measures and validates a *human-picked* shape) with a level generator (invents shapes on its own), which does not exist. That handoff also lists three more candidates from that session in three different states: one ready to ship (52), one correctly rejected (53, real lockouts), and one whose playtest doesn't count (54, tested on a memorized board — needs a fresh seed before its 85%-demand question is actually answered).
+
+The milestone itself isn't closed. What's left is an open choice, not a default: ship more hand-picked candidates one at a time, or build the actual generator.
 
 ## Done — the level curve
 
@@ -38,4 +40,4 @@ node solver/game-tester.js --policy powers2 --detail    # the shipped policy, pe
 node --test solver/tests/*.test.js
 ```
 
-Last reviewed: 2026-08-12
+Last reviewed: 2026-08-17

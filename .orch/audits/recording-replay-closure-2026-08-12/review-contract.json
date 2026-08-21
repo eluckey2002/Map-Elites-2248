@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "review": {
+    "id": "RECORDING_REPLAY_CLOSURE",
+    "mode": "focused",
+    "producer_id": "/root",
+    "completion_state": "accepted",
+    "source_access_limits": [
+      "Local repository, frozen run records, and the user-supplied screenshot only.",
+      "No terminal human recording exists at audit time, so replay behavior cannot be exercised from an actual artifact."
+    ]
+  },
+  "corpus": {
+    "root": ".orch/runs/level-authoring-tracer-2026-08-12",
+    "fingerprint": "c11ccf4cd268b82eae25e60a0f4503b4f32953bb63095cb7d2efbd0d3adbbf96",
+    "frozen_at": "2026-08-12T18:20:26Z"
+  },
+  "evidence": [
+    {
+      "id": "SPEC",
+      "kind": "document",
+      "speaker": "project",
+      "path": ".orch/runs/level-authoring-tracer-2026-08-12/spec.md",
+      "locator": "lines 22-25 and 101",
+      "sha256": "f4c9e5a1019a886d2b24a5e859aa37c8d5295a2fa4cc323e0fe8bb060cb7b62f"
+    },
+    {
+      "id": "VERIFY",
+      "kind": "log",
+      "speaker": "agent",
+      "path": ".orch/runs/level-authoring-tracer-2026-08-12/verification.md",
+      "locator": "lines 64-79",
+      "sha256": "2d85a4243083e8c27f14584af47390de335afbad46a70849fdc02e650dc153b6"
+    },
+    {
+      "id": "TICKET",
+      "kind": "log",
+      "speaker": "agent",
+      "path": ".orch/tickets/level-authoring-tracer-2026-08-12/authoring-tracer.md",
+      "locator": "frontmatter line 4 and lines 169-175",
+      "sha256": "e50181e5be5a8b9eb4cba91415b0322ff863c60d6eaea978cca71c6e05298c2d"
+    },
+    {
+      "id": "SCREENSHOT",
+      "kind": "receipt",
+      "speaker": "owner",
+      "path": ".orch/runs/level-authoring-tracer-2026-08-12/evidence/rendered-smoke-2026-08-12.png",
+      "locator": "rendered initial candidate screen",
+      "sha256": "4d91228e1c297878af637d380901f9038bbfe99c1e3453f71d0e42c47c80567d"
+    },
+    {
+      "id": "RECORDINGS",
+      "kind": "receipt",
+      "speaker": "project",
+      "path": ".orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/recordings/.gitkeep",
+      "locator": "sole file in the actual recordings directory at audit time",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "id": "AUTHORING_CODE",
+      "kind": "source",
+      "speaker": "project",
+      "path": ".orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/src/game.js",
+      "locator": "AuthoringCapture and submitRecording",
+      "sha256": "5a38032573285a02ee7f5e8ad9546701a53938009a7bf5782ff7b33dec1343dd"
+    },
+    {
+      "id": "SERVER_TEST",
+      "kind": "source",
+      "speaker": "project",
+      "path": ".orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/solver/tests/authoringServer.test.js",
+      "locator": "synthetic validRecording fixture and temporary recordings directory",
+      "sha256": "86e17702c6b651f44d2808eb558f4fb7fd5d68d2acf29d5b83966e3c021e41cd"
+    },
+    {
+      "id": "INDEPENDENT_REVIEW",
+      "kind": "log",
+      "speaker": "other",
+      "path": ".orch/audits/recording-replay-closure-2026-08-12/independent-review.md",
+      "locator": "both claim verdicts and limits",
+      "sha256": "ba9b18ce4de9fe073bc8aaad2f4daa710f71097d3f5368ba4ee33f7d25ac0ca8"
+    }
+  ],
+  "owner_directives": [],
+  "self_assessments": [
+    {
+      "id": "CLOSURE_CLAIM",
+      "subject": "agent",
+      "proposition": "The tracer ticket may be marked complete because all frozen AC-1 through AC-6 criteria passed.",
+      "source_ref": "VERIFY",
+      "claim_type": "outcome",
+      "time_context": "contemporaneous",
+      "support_refs": ["SCREENSHOT", "TICKET"],
+      "counterexample_search": {
+        "rounds": [
+          {"method": "frozen-acceptance-versus-final-verdict", "new_defect_classes": 1},
+          {"method": "artifact-existence-and-consumer-inventory", "new_defect_classes": 0}
+        ],
+        "examined_refs": ["SPEC", "VERIFY", "TICKET", "RECORDINGS", "AUTHORING_CODE", "SERVER_TEST", "INDEPENDENT_REVIEW"],
+        "state": "counterexample_found",
+        "counterexample_refs": ["SPEC", "VERIFY", "RECORDINGS", "INDEPENDENT_REVIEW"]
+      },
+      "conclusion": "contradicted"
+    }
+  ],
+  "findings": [
+    {
+      "id": "FINDING_CLOSURE",
+      "category": "evidence",
+      "statement": "The completion claim promoted visual and synthetic capability evidence into unobserved end-to-end human recording and replay evidence.",
+      "basis": {
+        "type": "explicit_record",
+        "attribution": "behavior",
+        "attributed_actor": "agent",
+        "source_refs": ["SPEC", "VERIFY", "TICKET", "RECORDINGS", "INDEPENDENT_REVIEW"]
+      },
+      "hindsight_status": "known_then",
+      "consequence": {
+        "decision": 2,
+        "evidence": 3,
+        "authority": 1,
+        "coordination": 2,
+        "outcome": 2,
+        "reversibility": 1,
+        "recurrence": 3,
+        "total": 14
+      },
+      "smallest_safe_followup": "Append a correction restoring AC-4 and ticket closure to UNVERIFIED/open pending an actual human terminal recording and independent replay or semantic verification."
+    }
+  ],
+  "uncertainties": [
+    {
+      "statement": "Whether a real terminal Candidate 51 session reaches saved status and whether its saved chain sequence can be replayed faithfully are unverified.",
+      "blocking_reason": "No actual recording JSON exists in the worktree and the bounded source inventory found no dedicated replay consumer or semantic replay test for authoring recordings.",
+      "reopening_condition": "A real recording is saved, source-pinned, and independently replayed or semantically verified against its candidate, seed, chains, score, moves, and outcome."
+    }
+  ],
+  "independent_reviewer": {
+    "reviewer_id": "/root/recording_replay_review_gpt_5_6_sol_high",
+    "status": "independent_complete"
+  }
+}

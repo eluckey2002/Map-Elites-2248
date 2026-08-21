@@ -90,6 +90,15 @@ const LEVELS = [
     { level: 48, target: 66400, tileScale: 16, moves: 26, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 4 }, { type: BLOCKER_TYPES.ICE, x: 1, y: 5, duration: 3 }] },
     { level: 49, target: 63100, tileScale: 16, moves: 25, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 5 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 3, timer: 7 }] },
     { level: 50, target: 75900, tileScale: 16, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 0, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 4, y: 3 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 2, timer: 6 }, { type: BLOCKER_TYPES.BOMB, x: 2, y: 5, timer: 8 }] },
+
+    // Level 51 ("split-channel"): the first level admitted through the
+    // authoring tracer (BL-0004) rather than hand-set. Target is 70% of the
+    // measured achievable score (300-seed holdout: 297 wins, 0 lockouts, 0
+    // bombs) instead of a guess. Owner-approved after playing the same seed
+    // three times: two different winning strategies (12 moves/127,040 and
+    // 14 moves/130,496), which is the signal that made it worth shipping
+    // over just being winnable.
+    { level: 51, target: 124000, tileScale: 32, moves: 24, minChain: 4, gridW: 5, gridH: 7, blockers: [] },
 ];
 
 // ============================================================================

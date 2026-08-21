@@ -1,0 +1,16 @@
+{
+  "run_id": "recording-replay-closure-2026-08-12",
+  "created_at": "2026-08-12T18:20:26Z",
+  "target_root": ".orch/runs/level-authoring-tracer-2026-08-12",
+  "target_fingerprint": "c11ccf4cd268b82eae25e60a0f4503b4f32953bb63095cb7d2efbd0d3adbbf96",
+  "policy_files": [
+    "AGENTS.md",
+    ".orch/runs/level-authoring-tracer-2026-08-12/spec.md"
+  ],
+  "source_access": "local repository plus user-supplied rendered screenshot",
+  "producer_id": "/root",
+  "mode": "focused",
+  "budget": 2,
+  "patience": 1,
+  "status": "snapshot"
+}

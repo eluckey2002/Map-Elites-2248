@@ -1,0 +1,81 @@
+{
+  "root": "/Users/eluckey/Developer/research and games/2248-challenge/.orch/runs/level-authoring-tracer-2026-08-12",
+  "fingerprint_sha256": "c11ccf4cd268b82eae25e60a0f4503b4f32953bb63095cb7d2efbd0d3adbbf96",
+  "stats": {
+    "markdown_files": 64,
+    "wikilinks": 0,
+    "findings": 11,
+    "frontmatter_types": {},
+    "finding_codes": {
+      "duplicate-stem": 11
+    }
+  },
+  "findings": [
+    {
+      "code": "duplicate-stem",
+      "path": "repair.md; workspace/repo/.orch/runs/game-evidence-ledger-2026-08-11/repair.md; workspace/repo/.orch/runs/project-records-v1-2026-08-11/repair.md",
+      "locator": "",
+      "detail": "shared stem: repair"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "review.md; workspace/repo/.orch/runs/game-evidence-ledger-2026-08-11/review.md; workspace/repo/.orch/runs/project-records-v1-2026-08-11/review.md",
+      "locator": "",
+      "detail": "shared stem: review"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "spec.md; workspace/repo/.orch/runs/bl0001-compact-signature-code-2026-08-11/spec.md; workspace/repo/.orch/runs/bl0001-compact-signature-code-v2-2026-08-11/spec.md; workspace/repo/.orch/runs/game-evidence-ledger-2026-08-11/spec.md; workspace/repo/.orch/runs/project-records-v1-2026-08-11/spec.md",
+      "locator": "",
+      "detail": "shared stem: spec"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "verification.md; workspace/repo/.orch/runs/game-evidence-ledger-2026-08-11/verification.md; workspace/repo/.orch/runs/project-records-v1-2026-08-11/verification.md",
+      "locator": "",
+      "detail": "shared stem: verification"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "worklog.md; workspace/repo/.orch/runs/bl0001-compact-signature-code-2026-08-11/worklog.md; workspace/repo/.orch/runs/bl0001-compact-signature-code-v2-2026-08-11/worklog.md; workspace/repo/.orch/runs/game-evidence-ledger-2026-08-11/worklog.md; workspace/repo/.orch/runs/git-bootstrap-2026-08-08/worklog.md; workspace/repo/.orch/runs/level26-certified-score-2026-08-10/worklog.md; workspace/repo/.orch/runs/lockout-fix-2026-08-08/worklog.md; workspace/repo/.orch/runs/project-records-v1-2026-08-11/worklog.md; workspace/repo/.orch/runs/remnant-placement-poc-2026-08-08/worklog.md",
+      "locator": "",
+      "detail": "shared stem: worklog"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "workspace/repo/.orch/runs/game-evidence-ledger-2026-08-11/workspace/discovery-hooks.md; workspace/repo/.orch/tickets/game-evidence-ledger-2026-08-11/discovery-hooks.md",
+      "locator": "",
+      "detail": "shared stem: discovery-hooks"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "workspace/repo/.orch/runs/game-evidence-ledger-2026-08-11/workspace/ledger-protocol.md; workspace/repo/.orch/tickets/game-evidence-ledger-2026-08-11/ledger-protocol.md",
+      "locator": "",
+      "detail": "shared stem: ledger-protocol"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "workspace/repo/.orch/runs/game-evidence-ledger-2026-08-11/workspace/seeded-records.md; workspace/repo/.orch/tickets/game-evidence-ledger-2026-08-11/seeded-records.md",
+      "locator": "",
+      "detail": "shared stem: seeded-records"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "workspace/repo/.orch/tickets/bl0001-compact-signature-2026-08-11/intake-investigation.md; workspace/repo/.orch/tickets/project-records-v1-2026-08-11/intake-investigation.md",
+      "locator": "",
+      "detail": "shared stem: intake-investigation"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "workspace/repo/.orch/tickets/bl0001-compact-signature-code-2026-08-11/compact-signature-tracer.md; workspace/repo/.orch/tickets/bl0001-compact-signature-code-v2-2026-08-11/compact-signature-tracer.md",
+      "locator": "",
+      "detail": "shared stem: compact-signature-tracer"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "workspace/repo/docs/backlog/README.md; workspace/repo/solver/README.md",
+      "locator": "",
+      "detail": "shared stem: README"
+    }
+  ]
+}

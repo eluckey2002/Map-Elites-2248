@@ -3,7 +3,13 @@
 .codex/
 .orch/runs/*/workspace/repo/
 
+# Live git worktrees checked out inside the repo; they carry their own history
+.claude/worktrees/
+
 # Regenerable measurement cache for solver/game-tester.js
 solver/.base-scores.json
 solver/.policy-*.json
 solver/.moves-scores.json
+
+# Regenerable recorded sessions for solver/record-session.js
+solver/.session-*.json
