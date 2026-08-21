@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "name": "level-52-stone-gate",
+  "level": 52,
+  "demand": 0.70,
+  "demandStatus": "provisional-proposal",
+  "moves": 24,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": [{ "type": "stone", "x": 2, "y": 3 }]
+}

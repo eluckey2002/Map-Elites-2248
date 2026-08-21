@@ -33,6 +33,13 @@ levels 40-50 (the bomb levels) by hand.
   formulation of that query. It uses finite-domain path variables and an
   explicit stable-compaction network rather than Z3 arrays; SAT is accepted
   only after an independent concrete replay, while a time limit is `UNKNOWN`.
+- `level-author.js` / `author-level.js` — takes one level *shape* (grid,
+  moves, minimum chain, demand, blockers) and derives a candidate level from
+  it: the target is measured, never typed, and the result carries a receipt.
+  See "Level generator" below for the gates it enforces.
+- `generate-levels.js` — proposes shapes itself rather than waiting for a
+  human to type one, screens them cheaply, and runs the survivors through
+  `level-author.js` unchanged. See below.
 - `tests/` — run all tests with `node --test solver/tests/*.test.js`.
 - `../.orch/runs/lockout-fix-2026-08-08/worklog.md` and
   `../.orch/tickets/lockout-fix-2026-08-08/` — the full record of the
@@ -324,3 +331,82 @@ node solver/hinted-cp-sat/verify-result.js \
 unreachability claim. The recorded run validates 12,336 as SAT, returns
 UNKNOWN at 12,400, 12,600, 12,800, and 13,000, and therefore does not decide
 whether the target is reachable.
+
+## Level generator
+
+`generate-levels.js` closes the last human-in-the-loop step in level
+authoring. Before it, a person typed a shape file and the pipeline measured
+it; now the sampler invents the shape and a person only judges the shortlist.
+
+```sh
+node solver/generate-levels.js --count 120 --full 20 --seed 42 \
+  --out solver/generated-batch-01.json
+```
+
+Three stages, in cost order:
+
+1. **Sample.** Draw grid size, move budget, minimum chain, demand, and
+   blockers from `SPACE`. Move budget is drawn per board cell, not
+   absolutely, so a large grid is not accidentally starved. A signature that
+   ignores the generated name and blocker draw order collapses duplicates.
+2. **Screen.** Play 24 seeds from 500000 with no target, which forces every
+   run to spend its whole move budget and report what the board can do. Drop
+   anything that locks up, explodes too often, or scores nothing. The seed
+   range is disjoint from the pipeline's own fitting (0-149) and holdout
+   (100000-100299) ranges on purpose: a shape screened on seeds it is later
+   measured on would be scored against its own training set.
+3. **Author.** Survivors go through `deriveCandidate` unchanged — 150
+   fitting games to set the target, 300 holdout games to gate it — and the
+   shortlist is then re-checked by `verifyCandidate`, which replays all 450
+   games and re-derives every identity.
+
+The screen is a cost filter, not a verdict, and is expected to be wrong in
+one direction: 24 seeds cannot see a fault that appears once in 300, so
+shapes do pass the screen and then fail the real gate. That is the intended
+failure mode. It must never be tightened into an authority — the 300-seed
+holdout is the gate.
+
+**What this does not do:** every gate here asks whether a level is fair and
+winnable. None asks whether it is interesting. The shortlist is ranked
+hardest-for-the-bot first, which is a proxy, not a measure of fun — see
+below for what it rests on and what was tried instead.
+
+### Ranking: one measured attempt, one negative result
+
+The first batch (seed 42) produced fifteen gate-passing candidates, ten of
+which the bot won 100% of the time. A human played the lowest-win-rate one
+(`gen-0010`, 75%) on a blind seed and won by 944 points out of 114,000,
+describing a deliberate three-phase game: bank small chains early, track
+score rate through the middle, commit to one large chain late. The
+recording bears that out — 23% of the score in the first half of the moves,
+36% of it in a single chain on move 12.
+
+That suggested a ranking function: measure how back-loaded and how spiky the
+score curve is, and prefer levels that trend that way. `profile-shapes.js`
+computes exactly that from bot play. **It does not separate the
+candidates** — backload spans 44–53% and spike 10–21% across all fifteen,
+with the dullest candidate tying the best one.
+
+The reason is structural, and it is a property of the measuring instrument
+rather than of the levels: the bot cashes in on every move, so it produces a
+flat curve on every board by construction. Deferring value for eleven moves
+to set up a late chain is invisible to a two-move lookahead. The metric
+measures the player, not the level. `profile-shapes.js` is kept because the
+numbers are real and cheap to recompute against a stronger player, but
+nothing currently ranks on them.
+
+What did work was already present: the bot's own win rate, sorted ascending.
+It put the one candidate a human enjoyed at the top of the list. That rests
+on a single playthrough and should be treated as the current best guess, not
+a finding.
+
+`profile-shapes.js` reads the two curve numbers back out of bot play for
+every gate-passing candidate in a batch:
+
+```sh
+node solver/profile-shapes.js 40      # 40 seeds per candidate, from 200000
+```
+
+Its seed range (200000+) is disjoint from both the fitting and holdout
+ranges, and it plays with no target so the curve is not truncated at the
+moment a run happens to win.

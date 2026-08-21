@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "name": "level-54-tighter-pace",
+  "level": 54,
+  "demand": 0.85,
+  "demandStatus": "provisional-proposal",
+  "moves": 24,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": []
+}

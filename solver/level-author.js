@@ -328,6 +328,7 @@ module.exports = {
   deriveCandidate,
   identity,
   playMeasured,
+  roundTarget,
   serialize,
   tileScaleForLevel,
   validateCandidate,
