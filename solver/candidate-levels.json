@@ -2,15 +2,15 @@
   "candidates": [
     {
       "blockers": [],
-      "gridH": 7,
-      "gridW": 5,
-      "level": 51,
-      "minChain": 4,
-      "moves": 24,
-      "name": "level-51-split-channel",
+      "gridH": 5,
+      "gridW": 6,
+      "level": 53,
+      "minChain": 3,
+      "moves": 16,
+      "name": "gen-0014-wide-sprint",
       "schemaVersion": 1,
-      "sourceShapeIdentity": "4703c7e773bcab2fa5bdae28bd58604f555a5d5e8ae21a5087c2ecfd09495e1a",
-      "target": 124000,
+      "sourceShapeIdentity": "129c358075bb4cca00678ebc597be45bf59dea7b8c661a2372b2e4b3ee2be0a4",
+      "target": 101000,
       "tileScale": 32
     }
   ],
