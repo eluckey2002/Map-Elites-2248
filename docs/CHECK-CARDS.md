@@ -109,13 +109,18 @@ card in the same commit.
   input is precisely the failure this gate exists to catch, and the resulting
   green reported a number whose basis had moved — this project's signature
   pathology, reproduced inside the tool built to cure it.
-  **What honestly clears levels 52 and 54:** a deliberate re-targeting pass, not
-  a re-author. The receipt derives target as `median x demand` and asserts the
-  recorded median matches a fresh measurement, so refreshing a receipt
-  necessarily raises a shipped level's target — with the bot ~8% stronger, that
-  makes two live levels harder for humans on evidence about bot search quality.
-  That is a difficulty-curve decision, deliberately unowned rather than smuggled
-  in as a test fix.
+  **The two reds are not the same problem**, and an earlier version of this card
+  wrongly treated them as one by asserting both levels ship. `src/game.js` holds
+  levels **1..52 only**, verified by parse:
+  - **Level 52 ships.** Players see it; its target of 102000 is live. Refreshing
+    its receipt necessarily *raises* that target, because the receipt derives
+    target as `median x demand` and asserts the recorded median matches a fresh
+    measurement — with the bot ~8% stronger, that makes a live level harder for
+    humans on evidence about bot search quality. That is a difficulty-curve
+    decision, deliberately unowned rather than smuggled in as a test fix.
+  - **Level 54 is unshipped.** No player has ever seen it, so re-measuring it
+    against the current bot clears its red at no player cost and needs no
+    decision at all.
   **Demotion condition:** none. Do not return this to report-only, and do not
   archive to clear it.
 - **Decay:** re-runs on every `node --test solver/tests/*.test.js`. Debt trends

@@ -73,9 +73,16 @@ test('the shipped candidate corpus is not empty', () => {
   );
 });
 
-// BLOCKING, and currently RED on purpose. Levels 52 and 54 ship in the game
-// with receipts measured against an older bot, so they fail here. That is a
-// true fact about this project and the suite states it rather than hiding it.
+// BLOCKING, and currently RED on purpose. Levels 52 and 54 both carry receipts
+// measured against an older bot, so both fail here. That is a true fact about
+// this project and the suite states it rather than hiding it.
+//
+// The two are NOT equivalent, and an earlier version of this comment wrongly
+// said both ship. src/game.js holds levels 1..52 only:
+//   level 52 SHIPS   -- players see it; its target is live
+//   level 54 does not -- an unshipped candidate; no player has ever seen it
+// So level 54's red costs nothing to clear: re-measure it against the current
+// bot and it goes green. Level 52 is the one with a real decision attached.
 //
 // They were briefly archived on 2026-08-21 to make this green, and put back the
 // same day: clearing a red gate by removing its input is the exact failure this
