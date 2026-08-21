@@ -73,39 +73,106 @@ test('the shipped candidate corpus is not empty', () => {
   );
 });
 
-// BLOCKING, and currently RED on purpose. Levels 52 and 54 both carry receipts
-// measured against an older bot, so both fail here. That is a true fact about
-// this project and the suite states it rather than hiding it.
+// --- Exemption -----------------------------------------------------------
+// A level that ships and that a human has completed is not re-targeted just
+// because the bot got stronger: the receipt derives target as median x demand
+// and asserts the recorded median matches a fresh measurement, so refreshing it
+// necessarily RAISES a live level's target. Measured for level 52 (ticket
+// T-003): +4.9% harder for players, while the bot's holdout win rate moved
+// 290/300 -> 291/300. The debt is real and stays reported; it just does not
+// block, because the only way to clear it would degrade shipped content.
 //
-// The two are NOT equivalent, and an earlier version of this comment wrongly
-// said both ship. src/game.js holds levels 1..52 only:
-//   level 52 SHIPS   -- players see it; its target is live
-//   level 54 does not -- an unshipped candidate; no player has ever seen it
-// So level 54's red costs nothing to clear: re-measure it against the current
-// bot and it goes green. Level 52 is the one with a real decision attached.
+// The exemption is COMPUTED from src/game.js and recordings/ on every run. It is
+// never read from the receipt, the store, or the manifest -- a candidate that
+// declares itself exempt gets nothing.
+const GAME_FILE = path.join(SOLVER_DIR, '..', 'src', 'game.js');
+const RECORDINGS_DIR = path.join(SOLVER_DIR, '..', 'recordings');
+
+function shippedLevels(gameFile = GAME_FILE) {
+  const source = fs.readFileSync(gameFile, 'utf8');
+  const levels = new Set();
+  const pattern = /\{\s*level:\s*(\d+),/g;
+  let match;
+  while ((match = pattern.exec(source)) !== null) levels.add(Number(match[1]));
+  return levels;
+}
+
+function winningRecordingIdentities(dir = RECORDINGS_DIR) {
+  const identities = new Set();
+  if (!fs.existsSync(dir)) return identities;
+  for (const name of fs.readdirSync(dir)) {
+    if (!name.endsWith('.json')) continue;
+    const recording = readJson(path.join(dir, name));
+    // A loss proves a human played it, not that it can be finished at this
+    // target. Only a win licenses leaving the target alone.
+    if (recording.outcome === 'win' && typeof recording.candidateIdentity === 'string') {
+      identities.add(recording.candidateIdentity);
+    }
+  }
+  return identities;
+}
+
+function exemptionFor(candidate, receipt, shipped, winners) {
+  const ships = shipped.has(candidate.level);
+  const played = winners.has(receipt.candidateIdentity);
+  return { exempt: ships && played, ships, played };
+}
+
+function exemptionForStore(dir, storeName, shipped = shippedLevels(), winners = winningRecordingIdentities()) {
+  const receiptPath = path.join(dir, receiptFor(storeName));
+  const storePath = path.join(dir, storeName);
+  if (!fs.existsSync(receiptPath) || !fs.existsSync(storePath)) {
+    return { exempt: false, ships: false, played: false };
+  }
+  const candidate = readJson(storePath).candidates[0];
+  return exemptionFor(candidate, readJson(receiptPath), shipped, winners);
+}
+
+// One place decides. Tests drive this directly rather than re-deriving it.
+function gateVerdict(fault, exemption) {
+  if (fault === null) return 'current';
+  return exemption.exempt ? 'stale-exempt' : 'stale-blocking';
+}
+
+// BLOCKING for anything stale that is not exempt. Level 52 is stale and exempt:
+// it ships, and recording f0ae3e75... records a human completing it, so the gate
+// reports it every run without failing. Level 53 (candidate-levels) and level 54
+// are current and pass outright.
 //
-// They were briefly archived on 2026-08-21 to make this green, and put back the
-// same day: clearing a red gate by removing its input is the exact failure this
-// gate exists to catch. See docs/CHECK-CARDS.md.
+// Why level 52 is not simply fixed: refreshing its receipt re-derives its target
+// from a fresh median, which with a stronger bot RAISES it -- measured at +4.9%
+// for players while the bot's win rate on it moved one seed in three hundred
+// (ticket T-003). The owner decided on 2026-08-21 that the target stays at
+// 102000. The debt is real, reported, and deliberately unpaid.
 //
-// What clears these two honestly: a deliberate re-targeting pass. Re-authoring
-// alone will not do it -- the receipt derives target as `median x demand` and
-// asserts the recorded median matches a fresh measurement, so refreshing the
-// receipt necessarily RAISES the target of a shipped level, making it harder
-// for humans because the bot got better at searching. That is a design decision
-// about the difficulty curve, not a test fix.
+// These two were briefly archived to force a green suite, and put back the same
+// day: clearing a red gate by deleting its input is the exact failure this gate
+// exists to catch. See docs/CHECK-CARDS.md.
 //
 // One test per store, so a failure names the offending file rather than
 // reporting a count.
 for (const storeName of candidateStores(SOLVER_DIR)) {
-  test(`${storeName} has a receipt that verifies against the current bot`, () => {
+  test(`${storeName} has a receipt that verifies against the current bot`, (t) => {
     const fault = faultFor(SOLVER_DIR, storeName);
+    const exemption = exemptionForStore(SOLVER_DIR, storeName);
+    const verdict = gateVerdict(fault, exemption);
+
+    if (verdict === 'stale-exempt') {
+      t.diagnostic(
+        `STALE (exempt) ${storeName} -- ${fault}. This level ships and a human ` +
+          'has completed it, so its target is not re-derived from a stronger bot. ' +
+          'The debt is real and unfixed; clearing it would raise a live target.',
+      );
+      return;
+    }
+
     assert.equal(
-      fault,
-      null,
+      verdict,
+      'current',
       `${storeName}: ${fault}\n` +
-        'This receipt was measured against different code. Re-author the ' +
-        'candidate against the current bot, or move it to ' +
+        'This receipt was measured against different code, and this candidate is ' +
+        `not exempt (ships=${exemption.ships}, human win recorded=${exemption.played}). ` +
+        'Re-author it against the current bot, or move it to ' +
         'solver/candidates-archive/ and stop quoting its numbers. Do not ' +
         'weaken this check to clear it.',
     );
@@ -380,4 +447,75 @@ test('a store vanishing from the corpus is detected, not silently tolerated', ()
   );
 
   assert.deepEqual(corpusDrift(declared, declared), { missing: [], undeclared: [] });
+});
+
+// --- Exemption controls --------------------------------------------------
+// The exemption is the one place this gate deliberately does not block, so it
+// is the place most worth attacking.
+
+test('the exemption is computed, never declared', () => {
+  // A candidate that asserts its own exemption gets nothing: the decision reads
+  // src/game.js and recordings/, and never looks at the record itself.
+  const liar = { level: 999, exempt: true, exemptionReason: 'trust me' };
+  const receipt = { candidateIdentity: 'deadbeef', exempt: true };
+  const result = exemptionFor(liar, receipt, new Set([999]), new Set());
+
+  assert.equal(result.exempt, false, 'a self-declared exemption must be ignored');
+  assert.equal(result.ships, true);
+  assert.equal(result.played, false, 'no winning recording binds to it, whatever it claims');
+});
+
+test('shipping alone does not exempt', () => {
+  const candidate = { level: 52 };
+  const receipt = { candidateIdentity: 'aaaa' };
+  const result = exemptionFor(candidate, receipt, new Set([52]), new Set(['other']));
+  assert.deepEqual(result, { exempt: false, ships: true, played: false });
+});
+
+test('a human win alone does not exempt', () => {
+  const candidate = { level: 53 };
+  const receipt = { candidateIdentity: 'bbbb' };
+  const result = exemptionFor(candidate, receipt, new Set([52]), new Set(['bbbb']));
+  assert.deepEqual(result, { exempt: false, ships: false, played: true });
+});
+
+test('both halves together exempt, and only then', () => {
+  const candidate = { level: 52 };
+  const receipt = { candidateIdentity: 'cccc' };
+  assert.equal(exemptionFor(candidate, receipt, new Set([52]), new Set(['cccc'])).exempt, true);
+});
+
+test('a stale candidate with neither half blocks the suite', () => {
+  assert.equal(gateVerdict('code/input identity mismatch', { exempt: false }), 'stale-blocking');
+  assert.equal(gateVerdict('code/input identity mismatch', { exempt: true }), 'stale-exempt');
+  assert.equal(gateVerdict(null, { exempt: false }), 'current');
+});
+
+test('a losing recording does not license an exemption', () => {
+  // Losses prove a human played it, not that it can be finished at this target.
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'recordings-'));
+  fs.writeFileSync(path.join(dir, 'a.json'), JSON.stringify({ candidateIdentity: 'lost', outcome: 'lose' }));
+  fs.writeFileSync(path.join(dir, 'b.json'), JSON.stringify({ candidateIdentity: 'won', outcome: 'win' }));
+
+  const winners = winningRecordingIdentities(dir);
+  assert.equal(winners.has('won'), true);
+  assert.equal(winners.has('lost'), false, 'a loss must not count as validation');
+});
+
+test('the real exemption facts hold for the shipped corpus', () => {
+  const shipped = shippedLevels();
+  assert.equal(shipped.has(52), true, 'level 52 must ship for its exemption to be legitimate');
+  assert.equal(shipped.has(54), false, 'level 54 does not ship; it must never be exempt');
+  assert.equal(shipped.has(53), false, 'level 53 does not ship either');
+
+  assert.equal(
+    exemptionForStore(SOLVER_DIR, 'candidate-levels-52.json').exempt,
+    true,
+    'level 52 ships and recording f0ae3e75 records a human win against its identity',
+  );
+  assert.equal(
+    exemptionForStore(SOLVER_DIR, 'candidate-levels-54.json').exempt,
+    false,
+    'level 54 is unshipped, so it must block if it ever goes stale',
+  );
 });

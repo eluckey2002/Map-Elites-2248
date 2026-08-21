@@ -49,14 +49,19 @@ card in the same commit.
   about the 2 archived candidates means "deliberately excluded", never "audited
   clean". `STORE_FLOOR` is what stops an accidentally-empty glob reading green.
 - **Does NOT catch:**
-  1. **One habitual red can camouflage a second.** This check fails on level 52
-     by choice, so the suite's normal state is red. A new regression appears as a
-     second named failure beside a habitual one, and habitual red gets read as
-     "still the old thing" without being checked. Level 54 was the other red
-     until 2026-08-21, when it was re-measured (unshipped, so no player cost);
-     level 52 remains because clearing it needs a difficulty-curve decision.
-     Mitigation is weak: failures are named per store, so a new one has a new
-     name — which only helps someone who reads them.
+  1. **The exemption lets a shipped level rot, by design.** Level 52 is stale
+     and does not block, because it ships and a human once won it. Nothing
+     expires that: one winning recording licenses the exemption forever, and the
+     evidence behind it is n=1 — a single player, a single run. Level 52's
+     behaviour under the current bot is unknown and will stay unknown. The
+     exemption converts a loud failure into a quiet diagnostic, and a diagnostic
+     is only as good as the person reading the output.
+  1b. **The exemption is only as good as its two lookups.** `shippedLevels()`
+     regex-parses `{ level: N,` out of `src/game.js`; if that file's format
+     changes, the set silently shrinks. That fails *closed* — fewer levels count
+     as shipped, so more candidates block — which is the safe direction, but it
+     would be silent either way. `winningRecordingIdentities()` trusts the
+     `outcome` field in `recordings/` without replaying the recording.
   2. **A receipt that was wrong when it was written.** A bad measurement recorded
      faithfully verifies forever. This proves consistency between receipt and
      code, never correctness of the measurement.
@@ -102,8 +107,14 @@ card in the same commit.
   other call sites (`author-level.js:35`, `generate-levels.js:275`) run at
   creation time, when the receipt has just been measured and passes by
   construction, so they can never detect drift.
-- **Enforcement:** **HARD** (blocking), and **currently red on 1 of 3** — by
-  choice. Shipped report-only on 2026-08-21, promoted the same day. The
+- **Enforcement:** **HARD** (blocking) for any stale candidate that is not
+  exempt; **green today**. Level 52 is stale-but-exempt and reported every run.
+  The exemption is **computed** on each run from `src/game.js` and `recordings/`
+  and requires BOTH halves — the candidate's level ships, AND a recording binds
+  to its exact `candidateIdentity` with `outcome: "win"`. A receipt that declares
+  its own exemption gets nothing (`the exemption is computed, never declared`).
+  A losing recording does not count. Level 54, being unshipped, can never be
+  exempt and would block immediately if it went stale again. Shipped report-only on 2026-08-21, promoted the same day. The
   promotion was first made to look clean by archiving the two failing stores;
   that was reversed within the hour because clearing a red gate by removing its
   input is precisely the failure this gate exists to catch, and the resulting
@@ -131,7 +142,9 @@ card in the same commit.
   **Demotion condition:** none. Do not return this to report-only, and do not
   archive to clear it.
 - **Decay:** re-runs on every `node --test solver/tests/*.test.js`. Debt trends
-  as failing per-store tests (**1 of 3** since level 54 was re-measured). Measured cost: suite
+  as the exempt-stale diagnostic count (**1 of 3**: level 52). A rising count is
+  the signal to care; a count that never falls means the exemption has become a
+  place debt goes to be forgotten. Measured cost: suite
   went 1.3s → ~10.5s, the delta being one real 450-seed replay at ~8.9s; each
   additional *passing* live candidate adds ~9s, while a stale one short-circuits
   at ~3ms. Recalibration trigger: past roughly five passing live stores (~45s) the suite gets slow enough that people skip it, at which point

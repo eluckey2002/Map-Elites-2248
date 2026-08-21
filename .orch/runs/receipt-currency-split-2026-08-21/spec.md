@@ -13,6 +13,28 @@ standards_owner:
 
 # Spec — separate receipt integrity from receipt currency
 
+> **SUPERSEDED 2026-08-21, before any execution. Do not deliver this spec.**
+>
+> It requires editing `solver/level-author.js` (acceptance 1, 2, 3, 9). That file
+> is one of the three inputs hashed into every receipt's `inputIdentities`, so
+> **any** edit to it — proven with a single appended comment — flips every
+> currently-passing receipt to `code/input identity mismatch`:
+> `candidate-levels` and `candidate-levels-54` both failed the probe and both
+> recovered on restore.
+>
+> Delivering this spec would therefore turn all three receipts red and require
+> re-authoring each, including level 52 — the exact action the owner declined on
+> 2026-08-21 after measuring its cost (+4.9% harder for players, bot win rate
+> unmoved). The spec would compel the decision it was written to make
+> unnecessary. That is a defect in the spec, not in the decision.
+>
+> Superseded by ad-hoc ticket `.orch/tickets/curve-debt-2026-08-21/T-004.md`,
+> which reaches the same end state entirely inside the test layer and touches no
+> hashed file. The integrity/currency split remains the right architecture if the
+> corpus ever grows beyond one authored shipped level; revisit this document then,
+> and budget re-authoring the whole corpus as part of it.
+
+
 ## objective
 
 A candidate receipt yields two independently checkable verdicts instead of one:
