@@ -1,12 +1,12 @@
 {
-  "candidateIdentity": "56c8eab00e4a6e2dbf836d0d9aecc041fda4226a53f965e51ac6eaaf837a262f",
+  "candidateIdentity": "0a3b9adfd4ca7e31248170393dff025b25366f0f62090a55bf227930acaf863f",
   "fitting": {
     "scoreQuantiles": {
-      "maximum": 231680,
-      "median": 177408,
-      "minimum": 100928,
-      "p25": 163072,
-      "p75": 191872
+      "maximum": 285952,
+      "median": 188992,
+      "minimum": 119680,
+      "p25": 165888,
+      "p75": 206400
     },
     "seedRange": {
       "count": 150,
@@ -23,11 +23,11 @@
   },
   "holdout": {
     "scoreQuantiles": {
-      "maximum": 201472,
-      "median": 153344,
-      "minimum": 113024,
-      "p25": 150784,
-      "p75": 160128
+      "maximum": 241472,
+      "median": 165248,
+      "minimum": 103424,
+      "p25": 161088,
+      "p75": 176448
     },
     "seedRange": {
       "count": 300,
@@ -37,26 +37,26 @@
       "bombExploded": 0,
       "incomplete": 0,
       "noValidMoves": 0,
-      "outOfMoves": 44,
+      "outOfMoves": 41,
       "total": 300,
-      "win": 256
+      "win": 259
     }
   },
   "inputIdentities": {
-    "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
-    "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
-    "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+    "bot": "c6ca87d430a5cfebb02738241a098eac41b1d08912ad68f4150c1b71b15e64b3",
+    "engine": "1327e13f7db9060ff6e54eb176d5f0cdd953c3f619330f115aed9abe6a57ae7a",
+    "levelAuthor": "305731fbfd7e664075dc177e8be48f5bf530d1f8475f5fd8c501cef84149b257"
   },
-  "receiptIdentity": "16af6dfed730dfd0088a809799c904ba16ff8edbf92abce301faf611e3d453e5",
+  "receiptIdentity": "628c125dd1d24a488af2b63c4027a37a2a770a29bfa41f0b9573a373db90838b",
   "schemaVersion": 1,
   "shapeIdentity": "81bdf91567545b0619c82d9a550c8cda48d68aa7a5806575bf950d0f46ed9047",
   "shapeName": "level-54-tighter-pace",
   "targetDerivation": {
     "demand": 0.85,
     "demandStatus": "provisional-proposal",
-    "measuredMedian": 177408,
+    "measuredMedian": 188992,
     "policy": "median-times-demand-rounded-down",
-    "roundedTarget": 150000,
+    "roundedTarget": 160000,
     "tileScale": 32,
     "tileScalePolicy": "2 ** floor((level - 1) / 10)"
   }
