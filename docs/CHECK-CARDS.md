@@ -357,3 +357,74 @@ card in the same commit.
   routine, blind spot 1 has become the normal path and the guard is decorative.
 - **Shipped:** 2026-08-21 · closes the friction logged three times in run
   `curve-debt-2026-08-21`.
+
+---
+
+### recordings-replay-to-their-claims · HARD
+
+- **Protects:** the evidence that licenses real decisions. Level 52 keeps its
+  target because a human won it; level 53 is a shipping candidate on a recorded
+  win. Nothing had ever checked that a recording's moves actually produce its
+  claimed score — `authoring-server.js:34` validates a recording's *shape* when
+  it arrives (schema, identity binding, integer bounds) and never replays it. So
+  "a human beat this level" was an unverified claim underneath two decisions.
+- **Where:** `solver/tests/recordingReplay.test.js` — `replay()` re-executes the
+  game move by move through `solver/engine.js`; `chainLegality()` enforces the
+  engine's own rules on every chain.
+- **Level:** record — one recording, replayed move by move. Probe: within a
+  recording every move is checked, but the *set* of recordings is not. Nothing
+  pins how many should exist, so deleting a recording silently deletes its check.
+- **Kind:** meaning — it re-runs the game and compares outcomes, not field
+  shapes. Every recorded coordinate must hold the recorded value, every chain
+  must be legal (8-way adjacency, no revisits, the value progression
+  `canExtendChain` allows, the level's `minChain`), every chain must score what
+  it claims, and the final score, move count, and win/lose must reproduce.
+  Unchecked: whether the playthrough was skillful, representative, or human.
+- **Scope:** `recordings/*.json`, resolved to candidates by `candidateIdentity`
+  across `solver/` and `solver/candidates-archive/`. At ship: 3 replayable, 5
+  orphans. Excludes `.orch/runs/*/workspace/repo/recordings/`. Read at run time,
+  so a playthrough recorded minutes ago is checked without editing this file.
+- **Reads own output?:** no, and this is the check's quiet strength. The
+  recording is produced by the **browser** running `src/game.js`; the replay runs
+  `solver/engine.js`, a separate implementation that mirrors it (its comments
+  cite the game.js line numbers it mirrors). A recording replaying exactly is
+  therefore a cross-check between two independent implementations of the rules.
+  If they ever drift apart, this fails.
+- **Sampling memory:** n/a — exhaustive. Orphans are printed by name and by the
+  identity they want, so silence about them would mean "never looked".
+- **Does NOT catch:**
+  1. **Orphans — 5 of 8 recordings cannot be verified at all.** Their candidate
+     store no longer exists, so the board is gone and no replay is possible. This
+     check reports them; it cannot check them. Includes all three level 51
+     recordings and the project's only recorded *loss*.
+  2. **Who played, or when.** Recordings carry no author and no timestamp. A
+     clean replay proves a valid playthrough happened, never that a human did it
+     or which human. Every "human-validated" claim in this repo rests on the fact
+     that only the browser writes recordings and only one person plays.
+  3. **A rule bug present identically in both implementations.** The cross-check
+     in *Reads own output?* only catches divergence, not shared error.
+  4. **Whether a playthrough is representative.** One win on one seed says
+     nothing about the difficulty distribution. Level 53 was cleared by 0.1%.
+  5. **A recording deleted outright.** No manifest pins the expected set, unlike
+     `candidate-corpus.json` for stores. Removing a file removes its check.
+  6. **A recording POSTed directly to the server** rather than played. The
+     endpoint has no authentication; a forged-but-legal playthrough would pass.
+- **Crafted-bypass test:** same file — a bumped final score, an altered chain
+  coordinate, a truncated run still claiming a win, an unresolvable identity, and
+  a freshly staged recording. **The altered-coordinate case initially failed**,
+  and that failure was the point: the first version checked only that recorded
+  tiles held recorded values, so a chain rewritten to a *different tile of the
+  same value* replayed clean — and on a board full of 64s that is most of them.
+  `chainLegality()` exists because a control caught its absence.
+- **Retires:** NO. Nothing existed to widen. `validateRecording` could not be
+  extended to cover this: it runs once, at POST time, and cannot detect a
+  recording that was valid when accepted but whose candidate later changed or
+  vanished.
+- **Enforcement:** HARD from ship, green today. The orphan count is a **ratchet**
+  at 5 — it may fall, never rise. A new orphan means a candidate store was
+  destroyed while a recording still referenced it.
+- **Decay:** runs on every `node --test solver/tests/*.test.js`; ~5ms, no replay
+  search involved. Recalibration trigger: **if anyone raises `ORPHAN_CEILING`
+  instead of recovering the store, this check has been defeated** — that is the
+  same move as archiving a failing receipt, and it should be treated the same way.
+- **Shipped:** 2026-08-21 · ticket `.orch/tickets/curve-debt-2026-08-21/T-005.md`.
