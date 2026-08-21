@@ -30,11 +30,19 @@ async function start() {
   return { server, recordingsDir, base: `http://127.0.0.1:${port}` };
 }
 
+// The live candidate store is a WORKING file -- whichever candidate is being
+// authored or played sits in it -- so these tests must read the level number
+// from the store rather than hard-code one. They previously hard-coded 51 while
+// reading the store for everything else, which meant authoring any new
+// candidate turned this suite red for a reason that had nothing to do with the
+// server.
+const boundLevel = candidateStore.candidates[0].level;
+
 function validRecording() {
   return {
     schemaVersion: 1,
     candidateIdentity: candidateReceipt.candidateIdentity,
-    candidateLevel: 51,
+    candidateLevel: boundLevel,
     seed: 1,
     outcome: 'win',
     reason: 'target reached',
@@ -65,7 +73,7 @@ test('serves only the game assets and exposes the bound candidate', async () => 
   assert.equal(game.status, 200);
   assert.match(game.headers.get('content-type'), /^text\/javascript/);
 
-  const candidate = await fetch(`${base}/api/candidates/51`);
+  const candidate = await fetch(`${base}/api/candidates/${boundLevel}`);
   assert.equal(candidate.status, 200);
   assert.deepEqual(await candidate.json(), {
     candidate: candidateStore.candidates[0],

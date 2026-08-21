@@ -117,7 +117,15 @@ receipt says 146,688, measures 153,984, nothing touched mid-run, drifted across
 sessions from a legitimate improvement. Same habit as mistake 1: reaching for a
 number that fits the argument without checking it is the right number.
 
-**10. Smaller ones, for completeness.** A syntax error from declaring a constant
+**10. I committed a red tree.** I chained the test run and the commit with `&&`,
+and because the run was piped through `grep` the chain succeeded regardless of the
+result -- so four failing tests were pushed. Caught and fixed in the next commit.
+The failures were real but shallow: `authoringServer.test.js` hard-coded level 51
+while reading the live candidate store for everything else, so authoring ANY new
+candidate turned it red. It now reads the level from the store. `&&` after a
+piped test run is not a gate; it is theatre.
+
+**11. Smaller ones, for completeness.** A syntax error from declaring a constant
 after its use, which broke nine test files. A test asserting a `TypeError` on a
 frozen object, which fails in sloppy mode. Piping a 50-minute background run through
 `tail`, so its progress was invisible until it exited. And, repeatedly, making ten
