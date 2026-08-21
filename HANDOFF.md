@@ -1,6 +1,81 @@
-> **Current authority:** This document is the snapshot stopped on 2026-08-17. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. The prior 2026-08-08 snapshot is superseded — the level curve it described (13,000-target Level 26, unresolved feasibility) was retuned and closed out well before this session; see `RESULT-0008` and `DECISION-0003` in the ledger.
+> **Current authority:** This document is the snapshot stopped on 2026-08-20. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
 
 # 2248 Challenge — Handoff
+
+## 2026-08-20: the bot's own move generator was the bottleneck
+
+**Two levels shipped, and the reference bot got 5% stronger from one tie-break.**
+
+The bot chose its moves by walking from each tile to the lowest-value legal
+neighbour and never backtracking. Being self-avoiding, that walk strands itself:
+it builds 11-tile chains on boards where 19-tile chains exist. Points scale with
+the chain sum, so it was leaving close to half the value of the board's best move
+on the table, every move. Breaking ties by Warnsdorff's rule — among equal-value
+tiles take the one with the fewest onward moves — is worth **+5.25%** median
+score at t = 15.7 on 15,300 unseen games (`RESULT-0011`).
+
+For scale: the preceding two-day hyperparameter search bought +1.10%. It was not
+wrong, it was tuning how to rank a candidate list that was being crippled before
+it arrived.
+
+**Shipped:** Level 51 and Level 52, plus the drag-to-chain input replaced with
+click-then-submit. All three had been sitting uncommitted; Level 52 had been
+ready with zero work outstanding since 2026-08-17.
+
+**Preserved:** the level generator and every run output it produced now have
+commits on `codex/level-authoring-tracer`. They previously existed only as
+untracked files on one disk.
+
+### The "do not resume level generation" instruction below is too strong
+
+The 2026-08-18 section says to stop generating 2248 levels because ranking them
+is noise. The winner's-curse diagnosis in it is correct and worth reading. Its
+scope is not. That verdict came from `board-search-01.json`, which ranked **400
+boards of one identical shape**, differing only by spawn seed — the hardest
+possible case, where the true differences between candidates are smaller than the
+measurement error. Ranking levels that differ *structurally* is reliable and
+cheap: scoring the shipped levels twice on disjoint seeds agrees at r = 0.98 at
+60 games each.
+
+So what is dead is **reseeding one shape and ranking the draws**. Generating
+structurally varied levels and ranking those is not, and the generator that does
+it is now committed.
+
+Two more corrections to that section, both from measurement rather than opinion:
+
+- It reports the candidate cap saturating because "boards offer a median of 15
+  legal chains and at most 30". Boards offer 198,563 to 8,284,580. Fifteen to
+  thirty is what the *generator* returned. See `CORRECTION-0003`.
+- The branch it points at, `worktree-deterministic-2048-solver`, does not make
+  2248 deterministic. It builds **vanilla 2048 with walls** — a different game.
+  Seeding 2248 itself was measured separately and is tractable only on tiny
+  boards: 4x4 resolves exactly in 669ms, 4x5 blows past the node cap.
+
+### Open, ranked — what the next session should pick up
+
+1. **Nothing is backed up off this machine.** No git remote exists. Every commit
+   in this repo and in both worktrees lives on one disk.
+2. **Two eras of level target now exist.** A target is `demand x measured
+   achievable score`, and the bot now measures ~5% higher. Levels 1-52 were
+   derived against the old bot; anything authored later will not be. Owner
+   decision, unresolved: re-derive the curve, or accept the split and note it.
+   `RESULT-0012` defers it for one level without settling it.
+3. **Level 35's lockout rate moved 3% -> 7%** under the stronger bot (gate
+   ceiling 10%). Longer chains consume more tiles and lockouts come from
+   unmatchable sums accumulating, so there is a mechanism — but the gate samples
+   ~40 seeds, so this is 1 game against 3. Measure on 300 seeds before believing
+   it either way.
+4. **The ledger has no status for "explanation narrowed, result intact".** The
+   only correction-linked status is `superseded`, which would wrongly retire
+   `RESULT-0010`. It is currently `accepted` with an appended note.
+5. **The "41 of 43, 48 of 48" human-vs-bot claim has no receipt.** It appears
+   once, as prose, in `HANDOFF-NEXT-MAP-ELITES.md`. Independent measurement
+   points the same way and harder, but the figure itself is uncited.
+6. **Candidate 54's open question is still open.** Raising demand from 70% to
+   85% was playtested on a board the owner had already memorised, so it cannot
+   separate "harder target" from "already knows the board". Needs a fresh seed.
+7. **Batch candidate names collide.** They restart at `gen-0000` in every batch,
+   so `gen-0010` names two unrelated levels.
 
 ## 2026-08-18 (late): the generator's rankings were noise; project is pivoting
 
@@ -14,6 +89,12 @@ samples were roughly 8x too small to see it.
 **Do not resume 2248 level generation.** The decision taken at session end is to move to a
 deterministic puzzle game and build a real MAP-Elites archive, because 2248's random tile
 spawns are the source of the noise and cannot be engineered away.
+
+> **Narrowed on 2026-08-20 — read the top section before acting on this.** The diagnosis
+> here is sound; the instruction drawn from it is too broad. It generalises from a search
+> over 400 boards of a single shape to all of 2248 level generation. Ranking structurally
+> different levels measures reliably at 60 games (r = 0.98). Reseeding one shape and
+> ranking the draws is what fails.
 
 Read **[HANDOFF-NEXT-MAP-ELITES.md](HANDOFF-NEXT-MAP-ELITES.md)** first. It carries the full
 history, the pathology and its numbers, the three domain-independent fixes, the game
