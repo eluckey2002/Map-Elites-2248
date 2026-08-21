@@ -287,29 +287,79 @@ function isMergeableSum(sum, scale = 1) {
 // primitive; the policy is applied by findGreedyChains, its only caller) picks
 // the highest-scoring prefix whose sum is a power of two instead of the whole
 // walk, trading immediate points for a remnant tile the board can still use.
+// Every legal extension of `chain`, scanned in the fixed dy/dx order the walk
+// has always used so that "first minimum wins" resolves ties identically.
+function legalExtensions(state, chain, visited) {
+  const lastTile = chain[chain.length - 1];
+  const out = [];
+  for (let dy = -1; dy <= 1; dy++) {
+    for (let dx = -1; dx <= 1; dx++) {
+      if (dx === 0 && dy === 0) continue;
+      const nx = lastTile.x + dx;
+      const ny = lastTile.y + dy;
+      if (nx < 0 || nx >= state.gridWidth || ny < 0 || ny >= state.gridHeight) continue;
+      const neighbor = state.grid[ny][nx];
+      if (!neighbor || isBlockedTile(neighbor) || visited.has(neighbor)) continue;
+      if (!canExtendChain(chain, neighbor)) continue;
+      out.push(neighbor);
+    }
+  }
+  return out;
+}
+
+// How many legal extensions remain if `candidate` is taken next. Used only to
+// break ties, so it is paid for at most once per step and only when the walk
+// actually has a choice between equal-value tiles.
+function countOnward(state, chain, visited, candidate) {
+  chain.push(candidate);
+  visited.add(candidate);
+  const n = legalExtensions(state, chain, visited).length;
+  chain.pop();
+  visited.delete(candidate);
+  return n;
+}
+
 function buildGreedyChain(state, startTile, options = {}) {
-  const { maxLength = Infinity, preferMergeableSum = false } = options;
+  const { maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none' } = options;
   if (isBlockedTile(startTile)) return null;
 
   const chain = [startTile];
   const visited = new Set(chain);
 
   while (chain.length < maxLength) {
-    const lastTile = chain[chain.length - 1];
-    let bestNeighbor = null;
-    for (let dy = -1; dy <= 1; dy++) {
-      for (let dx = -1; dx <= 1; dx++) {
-        if (dx === 0 && dy === 0) continue;
-        const nx = lastTile.x + dx;
-        const ny = lastTile.y + dy;
-        if (nx < 0 || nx >= state.gridWidth || ny < 0 || ny >= state.gridHeight) continue;
-        const neighbor = state.grid[ny][nx];
-        if (!neighbor || isBlockedTile(neighbor) || visited.has(neighbor)) continue;
-        if (!canExtendChain(chain, neighbor)) continue;
-        if (!bestNeighbor || neighbor.value < bestNeighbor.value) bestNeighbor = neighbor;
+    const extensions = legalExtensions(state, chain, visited);
+    if (!extensions.length) break;
+
+    let bestNeighbor = extensions[0];
+    for (const neighbor of extensions) {
+      if (neighbor.value < bestNeighbor.value) bestNeighbor = neighbor;
+    }
+
+    // The walk is self-avoiding and never backtracks, so it can wall itself off
+    // from tiles it could still have used: measured against full enumeration it
+    // finds 11-tile chains where 19-tile ones exist, and since points scale with
+    // the chain sum that costs about half the points available on the board's
+    // best move. Warnsdorff's rule is the standard fix for exactly this shape of
+    // problem (long self-avoiding paths in a grid): among equally good next
+    // tiles, take the one with the FEWEST onward moves, because a tile that is
+    // nearly cut off must be used now or lost, while a well-connected one will
+    // still be reachable later.
+    //
+    // It stays a TIE-BREAK, never the primary rule. Lowest-value-first is what
+    // makes the walk long in the first place, and ranking on connectivity ahead
+    // of value measured far worse (0.19 of the best available chain, against
+    // 0.56 for the shipped rule and 0.69 for this tie-break).
+    if (tieBreak === 'degree') {
+      const tied = extensions.filter((t) => t.value === bestNeighbor.value);
+      if (tied.length > 1) {
+        let fewest = Infinity;
+        for (const candidate of tied) {
+          const onward = countOnward(state, chain, visited, candidate);
+          if (onward < fewest) { fewest = onward; bestNeighbor = candidate; }
+        }
       }
     }
-    if (!bestNeighbor) break;
+
     chain.push(bestNeighbor);
     visited.add(bestNeighbor);
   }
@@ -335,7 +385,7 @@ function buildGreedyChain(state, startTile, options = {}) {
 // Tries buildGreedyChain from every non-blocked tile, dedupes by (finalTile,
 // length, points) same as findTopChains, sorted best-first, capped at limit.
 function findGreedyChains(state, options = {}) {
-  const { maxLength = Infinity, limit = Infinity, preferMergeableSum = true } = options;
+  const { maxLength = Infinity, limit = Infinity, preferMergeableSum = true, tieBreak = 'none' } = options;
   const results = [];
   const seen = new Set();
 
@@ -343,7 +393,7 @@ function findGreedyChains(state, options = {}) {
     for (let col = 0; col < state.gridWidth; col++) {
       const tile = state.grid[row][col];
       if (!tile || isBlockedTile(tile)) continue;
-      const result = buildGreedyChain(state, tile, { maxLength, preferMergeableSum });
+      const result = buildGreedyChain(state, tile, { maxLength, preferMergeableSum, tieBreak });
       if (!result) continue;
       const finalTile = result.chain[result.chain.length - 1];
       const key = `${finalTile.x},${finalTile.y},${result.chain.length},${result.points}`;

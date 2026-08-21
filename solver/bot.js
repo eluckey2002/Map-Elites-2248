@@ -49,6 +49,37 @@ const BOMB_MAX_CHAIN_LENGTH = 9;
 // See EVIDENCE_LEDGER RESULT-0010.
 const CANDIDATE_LIMIT = 24;
 
+// How the chain walk chooses between equally-good next tiles.
+//
+// The walk is self-avoiding and never backtracks, so taking a well-connected
+// tile early can wall it off from tiles it could still have reached. Measured
+// against full enumeration of every legal chain, the plain walk finds 11-tile
+// chains on boards where 19-tile chains exist, and because points scale with
+// the chain sum that is close to half the points available on the board's best
+// move: it reaches 0.56 of the best mergeable-sum chain, averaged over 16
+// boards across six levels.
+//
+// 'degree' applies Warnsdorff's rule -- the standard heuristic for long
+// self-avoiding paths in a grid -- as a TIE-BREAK: among next tiles of equal
+// value, take the one with the fewest onward moves, because a nearly cut-off
+// tile has to be used now or lost, while a well-connected one will still be
+// there later. That lifts the same measure to 0.69 and never scored below the
+// plain walk on any board tested.
+//
+// It stays a tie-break. Ranking on connectivity ahead of value scores 0.19 --
+// far worse than doing nothing -- because lowest-value-first is what makes the
+// walk long in the first place. `engine.test.js` guards that ordering.
+//
+// Worth +5.25% median score against the previous bot (geometric mean of
+// per-game log-ratios, 51 levels x 300 unseen seeds = 15,300 games per arm,
+// paired per (level, seed), standard error clustered by level, n = 51,
+// t = 15.7), for about 1.16x the compute. 50 of 51 levels improve. A 100-seed
+// pilot on a different disjoint seed set measured +4.87%; the confirmation came
+// back larger, so the effect is not a selection artifact.
+//
+// See EVIDENCE_LEDGER RESULT-0011.
+const CHAIN_TIE_BREAK = 'degree';
+
 // Points a candidate earns per cell it empties, beyond its own score.
 // Rationale, measured not assumed: `executeChain` deletes every chain tile but
 // the last and sets that one to the chain's SUM, so a merge conserves total
@@ -83,6 +114,7 @@ const DEFAULT_PARAMS = {
   turnover: TURNOVER_BONUS_PER_TILE, // points per emptied cell, at tile scale 1
   width: CANDIDATE_LIMIT,            // candidates surviving the pre-lookahead cut
   bombMax: BOMB_MAX_CHAIN_LENGTH,    // longest chain the defuse search will hunt
+  tieBreak: CHAIN_TIE_BREAK,         // how the walk chooses between equal tiles
 };
 
 // Maps a chain from the real state onto the equivalent tiles in a clone
@@ -145,7 +177,7 @@ function remnantPlacementValue(state, candidate, lookaheadRngFactory) {
 // Returns null if the board has no legal move.
 function chooseMove(state, options = {}) {
   const { lookaheadRngFactory } = options;
-  const { wRoll, wPlace, turnover, width, bombMax } = { ...DEFAULT_PARAMS, ...options.params };
+  const { wRoll, wPlace, turnover, width, bombMax, tieBreak } = { ...DEFAULT_PARAMS, ...options.params };
 
   const bombs = findBombTiles(state).sort((a, b) => a.bombTimer - b.bombTimer);
   for (const bomb of bombs) {
@@ -153,7 +185,7 @@ function chooseMove(state, options = {}) {
     if (result) return result.chain;
   }
 
-  const candidates = findGreedyChains(state, { limit: width });
+  const candidates = findGreedyChains(state, { limit: width, tieBreak });
   if (candidates.length === 0) return null;
   if (!lookaheadRngFactory || candidates.length === 1) return candidates[0].chain;
 

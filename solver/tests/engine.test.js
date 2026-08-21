@@ -431,6 +431,62 @@ test('buildGreedyChain: preferMergeableSum falls back to the full walk when no p
   assert.equal(result.points, 9); // sum 6 * 1.5
 });
 
+// The walk is self-avoiding and never backtracks, so taking a well-connected
+// tile early can wall it off from tiles it could still have reached. These
+// three fix the behavior of the Warnsdorff tie-break that fixes that.
+//
+//   S P R        S(0,0) starts. P and R sit on the top row; Q hangs below S.
+//   Q . .        Every tile is a 2, so any self-avoiding path is legal.
+//
+// Going S->P first strands Q: from P the walk takes R (first minimum in scan
+// order), and R is a dead end. Going S->Q first uses the tile that was about
+// to be cut off, and the walk then picks up P and R anyway.
+function strandingFixture() {
+  const s = makeTile(0, 0, 2);
+  const p = makeTile(1, 0, 2);
+  const r = makeTile(2, 0, 2);
+  const q = makeTile(0, 1, 2);
+  return { s, p, r, q, state: makeState([[s, p, r], [q, null, null]], { minChain: 2 }) };
+}
+
+test('buildGreedyChain: the plain walk strands a tile it could have used', () => {
+  const { s, p, r, state } = strandingFixture();
+
+  const result = buildGreedyChain(state, s);
+
+  assert.deepEqual(result.chain, [s, p, r]); // Q never reached
+});
+
+test('buildGreedyChain: the degree tie-break takes the nearly-cut-off tile first', () => {
+  const { s, p, r, q, state } = strandingFixture();
+
+  const result = buildGreedyChain(state, s, { tieBreak: 'degree' });
+
+  // Q has one onward move and P has two, so Q goes first and nothing is lost.
+  assert.deepEqual(result.chain, [s, q, p, r]);
+  assert.equal(result.points, 12); // sum 8 * 1.5
+});
+
+test('buildGreedyChain: the degree tie-break never overrides the lower-value preference', () => {
+  // Low-value-first is what makes the walk long; connectivity only settles ties
+  // between tiles of EQUAL value. Ranking on connectivity first measured far
+  // worse, so this guards against the two being swapped.
+  //
+  //   A2 B2      After A->B both C (a double) and D (an equal) are legal.
+  //   C4 D2      C is the dead end -- zero onward moves against D's one -- so a
+  //              degree-first rule would take it. Value-first must take D.
+  const a = makeTile(0, 0, 2);
+  const b = makeTile(1, 0, 2);
+  const c = makeTile(0, 1, 4);
+  const d = makeTile(1, 1, 2);
+  const state = makeState([[a, b], [c, d]], { minChain: 2 });
+
+  const result = buildGreedyChain(state, a, { tieBreak: 'degree' });
+
+  assert.equal(result.chain[2], d);
+  assert.deepEqual(result.chain, [a, b, d, c]);
+});
+
 test('findGreedyChains: applies the mergeable-sum preference by default', () => {
   const t0 = makeTile(0, 0, 2);
   const t1 = makeTile(1, 0, 2);

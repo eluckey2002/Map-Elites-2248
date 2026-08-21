@@ -364,6 +364,22 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** Two corrections are recorded here deliberately, because both were believed and reported before being checked. (1) The searched policy's weight changes — `wRoll` 0.813, `wPlace` 1.432, `turnover` 44.655 — measured +1.31% at fixed width under an arithmetic mean of per-cell ratios, and **+0.10% (t 0.4)** under the log-ratio estimator. They are not adopted; essentially the entire gain is the width. (2) The same estimator change cut the headline holdout lift from +3.30% to +1.68%, because a mean of ratios was being carried by a right tail of games where the new policy scored several times the reference. Clustering by level inflated the standard error only 1.5x, well below the 3.7x that the seeds-per-level count would suggest, because the policy improves most levels by a similar amount rather than winning big on a few. The reference bot remains a weak proxy for a skilled player; 1.1% does not change that, and the open note on unquantified human margin stands.
+- **appended 2026-08-20:** The mechanism named in the statement above — "boards offer a median of 15 legal chains and at most 30" — is wrong, and `CORRECTION-0003` records why. Boards offer hundreds of thousands; 15 to 30 is what the candidate *generator* returns. Every measurement in this record stands and the saturation was re-confirmed under a changed generator, so the status stays `accepted`; only the explanation is narrowed. Read this record together with `CORRECTION-0003` and `RESULT-0011`.
+
+### RESULT-0011 — The chain walk stranded tiles it could have used; a tie-break recovers 5%
+
+- **type:** result
+- **status:** accepted
+- **scope:** `solver/engine.js` (`buildGreedyChain`, `findGreedyChains`), `solver/bot.js` `CHAIN_TIE_BREAK`; reference-bot strength only, no level, target, or rule changed
+- **statement:** The bot's move generator walks one path from each start tile, taking the lowest-value legal neighbour and never backtracking, so it can wall itself off from tiles it could still have reached — it finds 11-tile chains on boards where 19-tile chains exist. Because points scale with the chain sum, that is close to half the points available: measured against full enumeration of every legal chain, the walk reaches **0.563** of the best chain the bot would accept (highest-scoring chain whose sum stays on the mergeable lattice, `FACT-0006`), averaged over 16 boards across six levels. Breaking ties by **Warnsdorff's rule** — among next tiles of equal value, take the one with the fewest onward moves, because a nearly cut-off tile must be used now or lost — lifts that to **0.688** and never scored below the plain walk on any board tested. In play it is worth **+5.25%** median score (geometric mean of per-game log-ratios, 51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, n = 51, **t = 15.7**), for about 1.16x the compute. 50 of 51 levels improve; the worst is level 45 at -0.5%. A 100-seed pilot on a separate disjoint seed set measured +4.87%, so the confirmation came back *larger* and the effect is not a selection artifact. It remains a tie-break: ranking on connectivity ahead of value scores **0.19**, far worse than doing nothing, because lowest-value-first is what makes the walk long in the first place.
+- **evidence:** `solver/chain-coverage.js` (coverage against `enumerateLegalChains`); `solver/routing-ablation.js` and `.orch/routing-ablation-01.json` (paired outcome measurement); `solver/tests/engine.test.js` — three tests covering the stranding case, the tie-break's fix, and a negative control that fails if connectivity is made the primary rule; `node --test solver/tests/*.test.js` 82 pass; `node solver/verify-loop.js` -> `RESULT: PASS`, all seven checks.
+- **proof_class:** `heuristic_observation` — a measured improvement in a heuristic player, not a bound on achievable score. It moves no proof standing for Level 26 or any other level.
+- **as_of:** 2026-08-20
+- **reverify:** `node --test solver/tests/*.test.js` (expect 82 pass); `node solver/routing-ablation.js` (expect roughly +5% at t > 3); `node solver/chain-coverage.js` (expect 0.563 -> 0.688); `node solver/verify-loop.js` (expect `RESULT: PASS`).
+- **updated:** 2026-08-20
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Calibration consequence, unresolved: a target is `demand x measured achievable score` (`DECISION-0003`), so a level authored after this change is pitched about 5% higher at the same demand. Shipped levels keep the targets they were admitted with, and the curve gate passes unchanged, so nothing needs to move — but the two eras of authored target are no longer directly comparable. Candidate width is unaffected: a width-32 arm produced bit-identical play to width 24 under the new generator, so `RESULT-0010`'s saturation still holds, though its stated reason does not — see `CORRECTION-0003`. On the standing note that the reference bot is a weak proxy for a skilled player: on Level 51 the bot's median moves-to-target improves from 17 to 16 across 120 seeds, and it matches the owner's recorded 12-move pace on 8 of 120 boards against 1 of 119 before. The gap narrows and does not close; the margin remains unquantified in general.
 
 ## Decision registry
 
@@ -515,6 +531,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [FACT-0004]
 - **superseded_by:** []
 - **notes:** `QUESTION-0001` and `QUESTION-0002` concern the frozen scale-1 board at target 13,000 and are unaffected. The retune neither answers nor retracts them.
+
+### CORRECTION-0003 — Candidate width saturates because of the generator, not the board
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the stated mechanism inside `RESULT-0010`; its conclusion is unaffected
+- **statement:** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". That is not what boards offer. Level 51's opening boards hold **198,563 to 8,284,580 distinct legal chains** on the seeds measured. The 15-to-30 figure counts what `findGreedyChains` *produces* — it runs one walk per start tile and dedupes, so it can never return more candidates than the board has unblocked tiles, whatever the cap is set to. The cap saturates against the generator's output, not against the move space. `RESULT-0010`'s conclusion stands unchanged and was re-confirmed under the new generator: widths 26 and 32 still produce bit-identical play to width 24, and raising the cap still buys nothing. What changes is the reading of *why*, and therefore what was left on the table: the recorded wording implied the bot was near the limit of its options, when it was seeing a hand-filtered fraction of them. `RESULT-0011` measures that fraction and recovers part of it.
+- **evidence:** `solver/chain-coverage.js` (enumerated chain counts per board, via `enumerateLegalChains` from `solver/exact-score.js`); `solver/engine.js`, `findGreedyChains` — one `buildGreedyChain` call per non-blocked tile; `solver/routing-ablation.js` width arms.
+- **proof_class:** `direct_source` for the chain counts and the generator's structure; `heuristic_observation` for the saturation itself.
+- **as_of:** 2026-08-20
+- **reverify:** `node solver/chain-coverage.js`; compare the enumerated totals against the candidate counts `findGreedyChains` returns on the same state.
+- **updated:** 2026-08-20
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Appended rather than edited into `RESULT-0010`, which keeps its original wording and receipt. The correction is to an explanation, not to a measurement — every number `RESULT-0010` reports was and remains correct.
 
 ## Assembly cut log
 
