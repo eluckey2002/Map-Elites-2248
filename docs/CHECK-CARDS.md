@@ -112,15 +112,22 @@ card in the same commit.
   **The two reds are not the same problem**, and an earlier version of this card
   wrongly treated them as one by asserting both levels ship. `src/game.js` holds
   levels **1..52 only**, verified by parse:
-  - **Level 52 ships.** Players see it; its target of 102000 is live. Refreshing
-    its receipt necessarily *raises* that target, because the receipt derives
-    target as `median x demand` and asserts the recorded median matches a fresh
-    measurement — with the bot ~8% stronger, that makes a live level harder for
-    humans on evidence about bot search quality. That is a difficulty-curve
-    decision, deliberately unowned rather than smuggled in as a test fix.
-  - **Level 54 is unshipped.** No player has ever seen it, so re-measuring it
-    against the current bot clears its red at no player cost and needs no
-    decision at all.
+  - **Level 52 ships, and its target stays at 102000. DECIDED 2026-08-21 by the
+    owner; do not undo this to clear the red.** Refreshing its receipt
+    necessarily *raises* that target, because the receipt derives target as
+    `median x demand` and asserts the recorded median matches a fresh
+    measurement. Measured, not projected (ticket T-003): the target would move
+    to 107000, **+4.9% harder for every player** — while the bot's holdout win
+    rate on this level moved 290/300 to 291/300, one seed in three hundred. The
+    level did not get easier; only the bot's median score rose. Re-targeting
+    would degrade a shipped level on a metric that is not measuring its
+    difficulty. **The red on level 52 is therefore permanent and correct** until
+    the integrity/currency split ships
+    (`.orch/runs/receipt-currency-split-2026-08-21/spec.md`).
+  - **Level 54 was unshipped, and its red is cleared.** Re-measured against the
+    current bot on 2026-08-21 (ticket T-002): target 150000 -> 160000, holdout
+    259/300. No player had seen it, so nothing was degraded. It is measured but
+    **not human-validated** and should not ship on this receipt alone.
   **Demotion condition:** none. Do not return this to report-only, and do not
   archive to clear it.
 - **Decay:** re-runs on every `node --test solver/tests/*.test.js`. Debt trends
