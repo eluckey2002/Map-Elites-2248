@@ -1,0 +1,12 @@
+{
+  "blockers": [],
+  "demand": 0.9,
+  "demandStatus": "provisional-proposal",
+  "gridH": 7,
+  "gridW": 4,
+  "level": 52,
+  "minChain": 3,
+  "moves": 16,
+  "name": "tight-four-seven",
+  "schemaVersion": 1
+}

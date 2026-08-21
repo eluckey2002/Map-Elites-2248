@@ -1,0 +1,10 @@
+{
+  "_why": "Two human playthroughs said blockers are close to inert: three bombs on gen-0017 were swept off the board by move 2 without being aimed at, and two ice tiles on a 30-cell board did not register as an obstacle. Blocker count was the wrong difficulty knob. What actually forces short early chains - the setup phase the player enjoyed on gen-0010 - is the minimum chain length relative to how dense the board is. This space holds blockers at zero and varies that instead.",
+  "_risk": "minChain 5 is the known lockout factory (the rejected level-53 candidate, gen-0000, gen-0021). It is back in range here deliberately, because the question is whether there is a board size where it constrains without killing boards. The zero-lockout gate is the thing standing between that question and a shipped dead board.",
+  "minChain": [3, 5],
+  "blockerCount": [0, 0],
+  "gridW": [4, 7],
+  "gridH": [5, 8],
+  "demand": [0.8, 0.9],
+  "movesPerCell": [0.5, 0.75]
+}

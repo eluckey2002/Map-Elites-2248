@@ -1,0 +1,63 @@
+{
+  "candidateIdentity": "6f99c09bfae98500617b27af62ac28385e0c99036af41919c54a4ddbb429b084",
+  "fitting": {
+    "scoreQuantiles": {
+      "maximum": 205120,
+      "median": 146688,
+      "minimum": 80064,
+      "p25": 131392,
+      "p75": 164928
+    },
+    "seedRange": {
+      "count": 150,
+      "start": 0
+    },
+    "terminalCounts": {
+      "bombExploded": 0,
+      "incomplete": 0,
+      "noValidMoves": 0,
+      "outOfMoves": 150,
+      "total": 150,
+      "win": 0
+    }
+  },
+  "holdout": {
+    "scoreQuantiles": {
+      "maximum": 142720,
+      "median": 106208,
+      "minimum": 86336,
+      "p25": 103296,
+      "p75": 113600
+    },
+    "seedRange": {
+      "count": 300,
+      "start": 100000
+    },
+    "terminalCounts": {
+      "bombExploded": 0,
+      "incomplete": 0,
+      "noValidMoves": 0,
+      "outOfMoves": 10,
+      "total": 300,
+      "win": 290
+    }
+  },
+  "inputIdentities": {
+    "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+    "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+    "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+  },
+  "receiptIdentity": "3d0df6cdf888269dbd67fd2a3114f012647dfd4af92812b780ff87ba6a2575af",
+  "schemaVersion": 1,
+  "shapeIdentity": "e8b746480442e177fe8d85570f26f738cc815c0aa8e7a744193ef189c48cd49a",
+  "shapeName": "level-52-stone-gate",
+  "targetDerivation": {
+    "demand": 0.7,
+    "demandStatus": "provisional-proposal",
+    "measuredMedian": 146688,
+    "policy": "median-times-demand-rounded-down",
+    "roundedTarget": 102000,
+    "tileScale": 32,
+    "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+  }
+}

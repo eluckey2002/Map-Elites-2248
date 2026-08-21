@@ -97,6 +97,13 @@
             color: #f67c5f;
         }
 
+        .authoring-status {
+            margin-top: 8px;
+            min-height: 18px;
+            font-size: 12px;
+            color: #4ade80;
+        }
+
         .game-container {
             position: relative;
             touch-action: none;
@@ -334,6 +341,7 @@
                 <span>Min: <span class="stat-value" id="minChain">2</span></span>
             </div>
         </div>
+        <div class="authoring-status" id="authoringStatus" aria-live="polite"></div>
     </div>
 
     <div class="game-container">
@@ -347,6 +355,9 @@
         <button class="btn btn-secondary" id="undoBtn" disabled>↩ Undo</button>
         <button class="btn btn-secondary" id="restartBtn">↻ Restart</button>
         <button class="btn btn-secondary" id="menuBtn">☰ Levels</button>
+    </div>
+    <div class="controls">
+        <button class="btn btn-primary" id="submitBtn" style="flex: 2;">✓ Submit Chain (Enter)</button>
     </div>
     <div class="controls">
         <button class="btn btn-primary" id="submitBtn" style="flex: 2;">✓ Submit Chain (Enter)</button>

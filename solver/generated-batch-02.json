@@ -1,0 +1,5945 @@
+{
+  "gates": {
+    "maxBombRate": 0.05,
+    "minWinRate": 0.2,
+    "requireZeroLockouts": true
+  },
+  "results": [
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "gridH": 6,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 31,
+        "name": "gen-0000",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "7f73278b1d6437935482900e833c58673c387047b3ea06b8434a92de6c3cb066",
+        "target": 200000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "e10ed5fe61e746d0364ff5afab4d892aac6437153b8b100a6b593670e8fdc9df",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 327488,
+            "median": 236288,
+            "minimum": 166592,
+            "p25": 218688,
+            "p75": 252352
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 248512,
+            "median": 203840,
+            "minimum": 51072,
+            "p25": 200768,
+            "p75": 211264
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 3,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 30,
+            "total": 300,
+            "win": 267
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "bbe25a1e1b1e37d6dc70930e82a1e5d9022f9ee05dd68ecca61bf0a60ef03a88",
+        "schemaVersion": 1,
+        "shapeIdentity": "7f73278b1d6437935482900e833c58673c387047b3ea06b8434a92de6c3cb066",
+        "shapeName": "gen-0000",
+        "targetDerivation": {
+          "demand": 0.85,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 236288,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 200000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 31,
+        "name": "gen-0000",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.89
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "timer": 20,
+            "type": "bomb",
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 12,
+        "name": "gen-0001",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "786b1f33464dabec63a92e0eb52a5e5280318a89cf9008d2747932d0f768f4c3",
+        "target": 48500,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "3f42da7b12796906d7901e0401f7eead163f5a085bad41ed56755bdcdbb7d758",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 94976,
+            "median": 60736,
+            "minimum": 28544,
+            "p25": 50112,
+            "p75": 68864
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 83584,
+            "median": 51456,
+            "minimum": 30272,
+            "p25": 48896,
+            "p75": 56448
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 50,
+            "total": 300,
+            "win": 250
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "c7b4cf62881b3ac26e8bf2769976d0aae70f2e7298934c0cb7eed4635764945d",
+        "schemaVersion": 1,
+        "shapeIdentity": "786b1f33464dabec63a92e0eb52a5e5280318a89cf9008d2747932d0f768f4c3",
+        "shapeName": "gen-0001",
+        "targetDerivation": {
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 60736,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 48500,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 20,
+            "type": "bomb",
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 12,
+        "name": "gen-0001",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.8333333333333334
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "duration": 12,
+            "type": "ice",
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0002",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "cea56e7a9146c66cf5564755b8aa70af6be4ce9ba5ec4c3a041a13243ebafa42",
+        "target": 139000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "617f6c9846fa6ae3c8a19936b9f876f77495c80cc8e1ae2bc53eb83222f1db6b",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 244224,
+            "median": 163840,
+            "minimum": 107584,
+            "p25": 148672,
+            "p75": 176896
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 190208,
+            "median": 142848,
+            "minimum": 103424,
+            "p25": 139776,
+            "p75": 148096
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 44,
+            "total": 300,
+            "win": 256
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "d406540bb89972611e7c60c2c930c9240d480fab5877854bc34e41c454a2e94b",
+        "schemaVersion": 1,
+        "shapeIdentity": "cea56e7a9146c66cf5564755b8aa70af6be4ce9ba5ec4c3a041a13243ebafa42",
+        "shapeName": "gen-0002",
+        "targetDerivation": {
+          "demand": 0.85,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 163840,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 139000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 12,
+            "type": "ice",
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0002",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.8533333333333334
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 6,
+            "y": 1
+          },
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0004",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "bcc6db40bd2ccd150b69911e8b98f6150d897a7142e44547f4aed1b446a9f1e4",
+        "target": 142000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "50a1e2e3751d01780d7ab530544ba9be8a8cd3fefb0a2c3f3571c0979b87ceeb",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 214592,
+            "median": 150336,
+            "minimum": 31744,
+            "p25": 132480,
+            "p75": 162368
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 9,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 141,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 181888,
+            "median": 143552,
+            "minimum": 38464,
+            "p25": 133056,
+            "p75": 148480
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 20,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 94,
+            "total": 300,
+            "win": 186
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "aa2d98c6ed5afabbd99bfa32de7f2bace4fb28bbc4d0cbb13de0feac5ca1595f",
+        "schemaVersion": 1,
+        "shapeIdentity": "bcc6db40bd2ccd150b69911e8b98f6150d897a7142e44547f4aed1b446a9f1e4",
+        "shapeName": "gen-0004",
+        "targetDerivation": {
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 150336,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 142000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 6,
+            "y": 1
+          },
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0004",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [
+          "bomb rate 6.7%"
+        ],
+        "pass": false,
+        "verifierConfirmed": null,
+        "winRate": 0.62
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 1,
+            "y": 5
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 7
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 24,
+        "name": "gen-0005",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "084a6f6cfce0b3413a333f7245683a7cf4e2c78607e3be25188c2a2f69ff0867",
+        "target": 124000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "e575b15087c846f72d543e4aba559e007af1c906ab7f326a96eff35e5c46c010",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 218624,
+            "median": 145984,
+            "minimum": 87744,
+            "p25": 127808,
+            "p75": 167232
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 179520,
+            "median": 126464,
+            "minimum": 84544,
+            "p25": 124352,
+            "p75": 132352
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 57,
+            "total": 300,
+            "win": 243
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "a25fb1b60a97ca405fed7ba0194714c225b569e9c95c26e4dea5a726d65e4b1e",
+        "schemaVersion": 1,
+        "shapeIdentity": "084a6f6cfce0b3413a333f7245683a7cf4e2c78607e3be25188c2a2f69ff0867",
+        "shapeName": "gen-0005",
+        "targetDerivation": {
+          "demand": 0.85,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 145984,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 124000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 1,
+            "y": 5
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 7
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 24,
+        "name": "gen-0005",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.81
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [],
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 16,
+        "name": "gen-0006",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "19d2ad78cfcd40603530c8de85c778f7378d44ed4b919ae0bc4f5add0e9b3974",
+        "target": 95100,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "47c974c7e33bb3186c0ae53913bf0c4d076394eecc5f359f28290bec4598508f",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 154752,
+            "median": 105728,
+            "minimum": 57856,
+            "p25": 91264,
+            "p75": 119232
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 151552,
+            "median": 97728,
+            "minimum": 69696,
+            "p25": 94368,
+            "p75": 101504
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 83,
+            "total": 300,
+            "win": 217
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "7e9aa9c3a954ef4fe7f5520c0ca90b8b0d39015facaf74205c5fea8d3b8e02cc",
+        "schemaVersion": 1,
+        "shapeIdentity": "19d2ad78cfcd40603530c8de85c778f7378d44ed4b919ae0bc4f5add0e9b3974",
+        "shapeName": "gen-0006",
+        "targetDerivation": {
+          "demand": 0.9,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 105728,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 95100,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 16,
+        "name": "gen-0006",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.7233333333333334
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 5,
+            "y": 1
+          }
+        ],
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 25,
+        "name": "gen-0007",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "3c801a6f2f5604b3f8217b18780ce384cc4a2eeb3aca90d1c4b2cc41d9265d7b",
+        "target": 142000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "4677c2f68775204968165096e048091961294f59303a54cf4a16ac2c8bc2b52f",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 212160,
+            "median": 158208,
+            "minimum": 100736,
+            "p25": 147712,
+            "p75": 177600
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 208640,
+            "median": 144768,
+            "minimum": 98496,
+            "p25": 142208,
+            "p75": 150464
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 67,
+            "total": 300,
+            "win": 233
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "49cd636958842b6265268a9be57241007b6b6f806c8f098760378f0e405fbd3c",
+        "schemaVersion": 1,
+        "shapeIdentity": "3c801a6f2f5604b3f8217b18780ce384cc4a2eeb3aca90d1c4b2cc41d9265d7b",
+        "shapeName": "gen-0007",
+        "targetDerivation": {
+          "demand": 0.9,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 158208,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 142000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 5,
+            "y": 1
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 25,
+        "name": "gen-0007",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.7766666666666666
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0008",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "c8e838a24d2f57a6b8f482c8acd2cf342a8eb217440ef0b5c4479efea688d771",
+        "target": 93900,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "1ce5f33d803208765ad10fa2a6f4afdddfe2ca87a40089f09adbec0b81bbdda7",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 179008,
+            "median": 117440,
+            "minimum": 75136,
+            "p25": 104960,
+            "p75": 130880
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 144384,
+            "median": 97536,
+            "minimum": 66496,
+            "p25": 94976,
+            "p75": 102976
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 29,
+            "total": 300,
+            "win": 271
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "a725fba9dbd11699976f2a4548cdc31fe0bdc045341c2c79767befe08c1b38e7",
+        "schemaVersion": 1,
+        "shapeIdentity": "c8e838a24d2f57a6b8f482c8acd2cf342a8eb217440ef0b5c4479efea688d771",
+        "shapeName": "gen-0008",
+        "targetDerivation": {
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 117440,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 93900,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0008",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.9033333333333333
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 1
+          }
+        ],
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0009",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "e62c4676e86956b2dec87e28874dba81da0f9a4bc668e9a4f04c0403a6a1ddb0",
+        "target": 127000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "3aed73c6c96e84b86063372eff044c4555dc5c573b7f4cf4c8770c692fa2bfba",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 208640,
+            "median": 149760,
+            "minimum": 104384,
+            "p25": 134848,
+            "p75": 167616
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 217536,
+            "median": 130752,
+            "minimum": 105664,
+            "p25": 128064,
+            "p75": 136320
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 27,
+            "total": 300,
+            "win": 273
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "9d64fc4980817320c22f1d49fbd0d1f9633d7865472957460cff6d8819d86800",
+        "schemaVersion": 1,
+        "shapeIdentity": "e62c4676e86956b2dec87e28874dba81da0f9a4bc668e9a4f04c0403a6a1ddb0",
+        "shapeName": "gen-0009",
+        "targetDerivation": {
+          "demand": 0.85,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 149760,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 127000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 1
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0009",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.91
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [],
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 29,
+        "name": "gen-0011",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "73df43eeffc35416fef20ea128421cfb65139fd217971fbe83cc8b7a152aabed",
+        "target": 195000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "fad22eb654642aafff4aeb7571e54c7c3ac3eb1488839c63cf1da5de6adcc8d8",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 328512,
+            "median": 244224,
+            "minimum": 189568,
+            "p25": 228736,
+            "p75": 261184
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 272192,
+            "median": 199744,
+            "minimum": 161152,
+            "p25": 196608,
+            "p75": 206336
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 14,
+            "total": 300,
+            "win": 286
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "bb3d927201609dc2bafb8baa80f153f53b6b07fecf65e268b804b405d0f4a8bc",
+        "schemaVersion": 1,
+        "shapeIdentity": "73df43eeffc35416fef20ea128421cfb65139fd217971fbe83cc8b7a152aabed",
+        "shapeName": "gen-0011",
+        "targetDerivation": {
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 244224,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 195000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 29,
+        "name": "gen-0011",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.9533333333333334
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "duration": 12,
+            "type": "ice",
+            "x": 6,
+            "y": 7
+          },
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 3
+          },
+          {
+            "timer": 9,
+            "type": "bomb",
+            "x": 4,
+            "y": 7
+          }
+        ],
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 33,
+        "name": "gen-0012",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "b7269d71e6d62d4bc21bacdca11915f52bd20d87369668eb88dc888f24ce98b5",
+        "target": 277000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "4d3bae7509d92b96df76f1372cf70f37bded1fda6ce068aa4a79cbe5eff63190",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 392832,
+            "median": 291712,
+            "minimum": 60032,
+            "p25": 268928,
+            "p75": 312000
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 1,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 149,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 358016,
+            "median": 280000,
+            "minimum": 68160,
+            "p25": 272960,
+            "p75": 285376
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 3,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 94,
+            "total": 300,
+            "win": 203
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "a4d726616bed9a29603c88b159608a529dccf218598713e88feee255ec992649",
+        "schemaVersion": 1,
+        "shapeIdentity": "b7269d71e6d62d4bc21bacdca11915f52bd20d87369668eb88dc888f24ce98b5",
+        "shapeName": "gen-0012",
+        "targetDerivation": {
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 291712,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 277000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 12,
+            "type": "ice",
+            "x": 6,
+            "y": 7
+          },
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 3
+          },
+          {
+            "timer": 9,
+            "type": "bomb",
+            "x": 4,
+            "y": 7
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 33,
+        "name": "gen-0012",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.6766666666666666
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "timer": 16,
+            "type": "bomb",
+            "x": 2,
+            "y": 0
+          },
+          {
+            "timer": 10,
+            "type": "bomb",
+            "x": 5,
+            "y": 3
+          }
+        ],
+        "gridH": 6,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 25,
+        "name": "gen-0013",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "2ddc793668d350a9911b65dc53c7e7aea607097238dcde9a3302a2a5dc75c9e7",
+        "target": 151000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "f977fca2a318c39fd0d9af3c7490b45e12c4c235a07a307f63f5c5664f0ad515",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 232896,
+            "median": 168512,
+            "minimum": 74496,
+            "p25": 152192,
+            "p75": 187072
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 1,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 149,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 208448,
+            "median": 154240,
+            "minimum": 56320,
+            "p25": 151104,
+            "p75": 160704
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 1,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 72,
+            "total": 300,
+            "win": 227
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "452571a0bb4c299495e31ca415a55af5e94d051456c6d5f2f8ad77028afa25e0",
+        "schemaVersion": 1,
+        "shapeIdentity": "2ddc793668d350a9911b65dc53c7e7aea607097238dcde9a3302a2a5dc75c9e7",
+        "shapeName": "gen-0013",
+        "targetDerivation": {
+          "demand": 0.9,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 168512,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 151000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 16,
+            "type": "bomb",
+            "x": 2,
+            "y": 0
+          },
+          {
+            "timer": 10,
+            "type": "bomb",
+            "x": 5,
+            "y": 3
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 25,
+        "name": "gen-0013",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.7566666666666667
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 6
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 21,
+        "name": "gen-0014",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "5e4bb95be1da36ba54f3f5a2e90dd5201a805ae3a76edfaa7de7789769b500b6",
+        "target": 117000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "d4c14320e435a9e442ed4fb3b5f6b93b4cbe482092381cbee0228984ce1637b2",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 203648,
+            "median": 147456,
+            "minimum": 102656,
+            "p25": 131136,
+            "p75": 159936
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 168640,
+            "median": 121600,
+            "minimum": 99200,
+            "p25": 118848,
+            "p75": 128896
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 14,
+            "total": 300,
+            "win": 286
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "3311b085377e311d2182b5709cbf2a87889dddb2262c7a1a195de46b726ab2b4",
+        "schemaVersion": 1,
+        "shapeIdentity": "5e4bb95be1da36ba54f3f5a2e90dd5201a805ae3a76edfaa7de7789769b500b6",
+        "shapeName": "gen-0014",
+        "targetDerivation": {
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 147456,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 117000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 6
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 21,
+        "name": "gen-0014",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.9533333333333334
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "timer": 14,
+            "type": "bomb",
+            "x": 2,
+            "y": 1
+          }
+        ],
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 28,
+        "name": "gen-0015",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "3475b9eb2581db989c9ef37bea4aa7b30db33ec253ef02f5a61361bf819fb685",
+        "target": 196000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "dde64469e7cc7fc14c7bb7c699c3a1fbcdb9ff7eabb80ece724563fa32611b43",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 289472,
+            "median": 207168,
+            "minimum": 134208,
+            "p25": 192256,
+            "p75": 227072
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 250432,
+            "median": 197696,
+            "minimum": 127360,
+            "p25": 185664,
+            "p75": 202880
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 117,
+            "total": 300,
+            "win": 183
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "871dd36148e48d25632aa2e6e5a996c534596550f12be94f38d50eba5c680a67",
+        "schemaVersion": 1,
+        "shapeIdentity": "3475b9eb2581db989c9ef37bea4aa7b30db33ec253ef02f5a61361bf819fb685",
+        "shapeName": "gen-0015",
+        "targetDerivation": {
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 207168,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 196000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 14,
+            "type": "bomb",
+            "x": 2,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 28,
+        "name": "gen-0015",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.61
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [],
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 15,
+        "name": "gen-0016",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "6d0b2b3e69d79c042cf70621832e0201087183698841bb6a24105e691212aaf8",
+        "target": 69900,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "ed5d58e5be45782647fb24c60eaf60e6e6695191332a684a9bbd4c7d74d62820",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 120384,
+            "median": 82240,
+            "minimum": 38848,
+            "p25": 69184,
+            "p75": 93312
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 101632,
+            "median": 72128,
+            "minimum": 38400,
+            "p25": 70144,
+            "p75": 75968
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 67,
+            "total": 300,
+            "win": 233
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "8890875ffb1511c752f2e9ade6b95b04cae7cdfe5b2b87334f6ae1cde02007c5",
+        "schemaVersion": 1,
+        "shapeIdentity": "6d0b2b3e69d79c042cf70621832e0201087183698841bb6a24105e691212aaf8",
+        "shapeName": "gen-0016",
+        "targetDerivation": {
+          "demand": 0.85,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 82240,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 69900,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 15,
+        "name": "gen-0016",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.7766666666666666
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 4,
+            "y": 1
+          },
+          {
+            "timer": 15,
+            "type": "bomb",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "gridH": 5,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 16,
+        "name": "gen-0017",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "11cb8493426b69fa9084952d146cc11b3769eb0d1b2f69fca7ac2f08bfb21f7c",
+        "target": 69000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "5b12806fa862b5308496fc3897148973203f550e7c1a6e7a78235038bb735b15",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 140736,
+            "median": 76704,
+            "minimum": 47680,
+            "p25": 68288,
+            "p75": 86720
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 101248,
+            "median": 71040,
+            "minimum": 39264,
+            "p25": 67840,
+            "p75": 75264
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 89,
+            "total": 300,
+            "win": 211
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "5cc8496ea064812b1de114d67f26ceb98fee429bca17a0c9015bde8b524f66ca",
+        "schemaVersion": 1,
+        "shapeIdentity": "11cb8493426b69fa9084952d146cc11b3769eb0d1b2f69fca7ac2f08bfb21f7c",
+        "shapeName": "gen-0017",
+        "targetDerivation": {
+          "demand": 0.9,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 76704,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 69000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 4,
+            "y": 1
+          },
+          {
+            "timer": 15,
+            "type": "bomb",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 16,
+        "name": "gen-0017",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.7033333333333334
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 1
+          },
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 29,
+        "name": "gen-0018",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "d8917f229df4a5cda2923a73472804c8a58cb8721380ecbc1f9ddfef7bd4dc7d",
+        "target": 206000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "387d9f80f993f027de1d741a569a4b0f59fa029669a78213704f1b6d3697a870",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 338688,
+            "median": 217024,
+            "minimum": 160064,
+            "p25": 197056,
+            "p75": 242752
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 253888,
+            "median": 208128,
+            "minimum": 127168,
+            "p25": 202688,
+            "p75": 212864
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 87,
+            "total": 300,
+            "win": 213
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "5548c22292f493ca74aeb449d921fe87a6d0484b498a44dd4f6ad34065ad778a",
+        "schemaVersion": 1,
+        "shapeIdentity": "d8917f229df4a5cda2923a73472804c8a58cb8721380ecbc1f9ddfef7bd4dc7d",
+        "shapeName": "gen-0018",
+        "targetDerivation": {
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 217024,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 206000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 1
+          },
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 29,
+        "name": "gen-0018",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.71
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "duration": 7,
+            "type": "ice",
+            "x": 6,
+            "y": 0
+          }
+        ],
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 37,
+        "name": "gen-0019",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "bcb626e9d2ad5d45361fa6a438a7a07cee257552a7e88f3e8434d3c479316e74",
+        "target": 281000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "d0faf8a214e598660fe47b09ebb65bcae1d70ebb2eed11a242fdc004e2b63a1d",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 487616,
+            "median": 331584,
+            "minimum": 254528,
+            "p25": 306176,
+            "p75": 356544
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 374400,
+            "median": 285440,
+            "minimum": 240320,
+            "p25": 282496,
+            "p75": 294784
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 28,
+            "total": 300,
+            "win": 272
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "dbee1d43021c7fd68e28e44747e76f3bc9d78ca4eef70ae86d681ef11ea0d3a6",
+        "schemaVersion": 1,
+        "shapeIdentity": "bcb626e9d2ad5d45361fa6a438a7a07cee257552a7e88f3e8434d3c479316e74",
+        "shapeName": "gen-0019",
+        "targetDerivation": {
+          "demand": 0.85,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 331584,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 281000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "duration": 7,
+            "type": "ice",
+            "x": 6,
+            "y": 0
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 37,
+        "name": "gen-0019",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.9066666666666666
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 3,
+            "y": 2
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0020",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "e8de94aa8e7347040b065199b6cbeea98e385502860f70fc8173a104fc2f7c45",
+        "target": 121000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "c8bfd099b074774e105c9b7de095c9e3c2e0db91727f0bb4cae55cc76869a1ad",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 198784,
+            "median": 127872,
+            "minimum": 65856,
+            "p25": 112768,
+            "p75": 143424
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 167424,
+            "median": 122688,
+            "minimum": 59648,
+            "p25": 113600,
+            "p75": 127040
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 3,
+            "outOfMoves": 102,
+            "total": 300,
+            "win": 195
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "18c851a470ae70031b519e326092c44b7911bb08d214700699323935ee9ad1fe",
+        "schemaVersion": 1,
+        "shapeIdentity": "e8de94aa8e7347040b065199b6cbeea98e385502860f70fc8173a104fc2f7c45",
+        "shapeName": "gen-0020",
+        "targetDerivation": {
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 127872,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 121000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 3,
+            "y": 2
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0020",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [
+          "3 lockouts"
+        ],
+        "pass": false,
+        "verifierConfirmed": null,
+        "winRate": 0.65
+      }
+    },
+    {
+      "candidate": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 0
+          },
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0021",
+        "schemaVersion": 1,
+        "sourceShapeIdentity": "5554ff513a651700011758db773d5fc4381290bb20293c764c8657f8ff7255a4",
+        "target": 137000,
+        "tileScale": 32
+      },
+      "receipt": {
+        "candidateIdentity": "3b03d52a1589070297f5f9d17cc74c7666f76cc7444650fb1e9a35d5564a73e1",
+        "fitting": {
+          "scoreQuantiles": {
+            "maximum": 198336,
+            "median": 145088,
+            "minimum": 83776,
+            "p25": 130560,
+            "p75": 158720
+          },
+          "seedRange": {
+            "count": 150,
+            "start": 0
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 150,
+            "total": 150,
+            "win": 0
+          }
+        },
+        "holdout": {
+          "scoreQuantiles": {
+            "maximum": 185280,
+            "median": 138432,
+            "minimum": 73984,
+            "p25": 127296,
+            "p75": 142784
+          },
+          "seedRange": {
+            "count": 300,
+            "start": 100000
+          },
+          "terminalCounts": {
+            "bombExploded": 0,
+            "incomplete": 0,
+            "noValidMoves": 0,
+            "outOfMoves": 123,
+            "total": 300,
+            "win": 177
+          }
+        },
+        "inputIdentities": {
+          "bot": "d88608e78a310b6135bf19edb793b523c39de190988bbd79bd658da3ca17b5d4",
+          "engine": "a0b0cee008f476b849488b5e4204f1516ab6a4e6beedbfd6f9138b988efde824",
+          "levelAuthor": "7507a172cb225a2afa42c1ed625310bcddaab1226ea23e3cd65a07980ec147ec"
+        },
+        "receiptIdentity": "c727b065621b8ec7a5ba0f75be20ef56f5c6e2ac0503de9db3c266cf606fb8d7",
+        "schemaVersion": 1,
+        "shapeIdentity": "5554ff513a651700011758db773d5fc4381290bb20293c764c8657f8ff7255a4",
+        "shapeName": "gen-0021",
+        "targetDerivation": {
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "measuredMedian": 145088,
+          "policy": "median-times-demand-rounded-down",
+          "roundedTarget": 137000,
+          "tileScale": 32,
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+        }
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 0
+          },
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0021",
+        "schemaVersion": 1
+      },
+      "verdict": {
+        "failures": [],
+        "pass": true,
+        "verifierConfirmed": true,
+        "winRate": 0.59
+      }
+    }
+  ],
+  "sampler": {
+    "count": 120,
+    "full": 20,
+    "level": 52,
+    "seed": 43,
+    "space": {
+      "blockerCount": [
+        0,
+        3
+      ],
+      "blockerTypes": [
+        "stone",
+        "ice",
+        "bomb"
+      ],
+      "bombTimer": [
+        8,
+        20
+      ],
+      "demand": [
+        0.8,
+        0.95
+      ],
+      "demandStep": 0.05,
+      "gridH": [
+        5,
+        8
+      ],
+      "gridW": [
+        4,
+        7
+      ],
+      "iceDuration": [
+        3,
+        12
+      ],
+      "minChain": [
+        3,
+        4
+      ],
+      "movesPerCell": [
+        0.5,
+        0.75
+      ]
+    }
+  },
+  "schemaVersion": 1,
+  "screenSeeds": {
+    "count": 24,
+    "start": 500000
+  },
+  "screened": [
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 237952,
+        "minScore": 184064
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 31,
+        "name": "gen-0000",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 62016,
+        "minScore": 43392
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 20,
+            "type": "bomb",
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 12,
+        "name": "gen-0001",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 155200,
+        "minScore": 124672
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 12,
+            "type": "ice",
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0002",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": "4/24 bombs",
+      "screen": {
+        "bombs": 4,
+        "lockouts": 0,
+        "medianScore": 110016,
+        "minScore": 57216
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 18,
+            "type": "bomb",
+            "x": 2,
+            "y": 7
+          },
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 3,
+            "y": 4
+          },
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 6
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 20,
+        "name": "gen-0003",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 1,
+        "lockouts": 0,
+        "medianScore": 158464,
+        "minScore": 48896
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 6,
+            "y": 1
+          },
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0004",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 134208,
+        "minScore": 113056
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 1,
+            "y": 5
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 7
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 24,
+        "name": "gen-0005",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 108992,
+        "minScore": 59008
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 16,
+        "name": "gen-0006",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 161216,
+        "minScore": 107648
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 5,
+            "y": 1
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 25,
+        "name": "gen-0007",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 106944,
+        "minScore": 72384
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0008",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 157568,
+        "minScore": 111616
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 1
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0009",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": "2/24 lockouts",
+      "screen": {
+        "bombs": 0,
+        "lockouts": 2,
+        "medianScore": 116032,
+        "minScore": 51648
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 9,
+            "type": "bomb",
+            "x": 3,
+            "y": 5
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 1
+          },
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0010",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 247488,
+        "minScore": 190208
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 29,
+        "name": "gen-0011",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 292672,
+        "minScore": 243648
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 12,
+            "type": "ice",
+            "x": 6,
+            "y": 7
+          },
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 3
+          },
+          {
+            "timer": 9,
+            "type": "bomb",
+            "x": 4,
+            "y": 7
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 33,
+        "name": "gen-0012",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 162176,
+        "minScore": 121536
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 16,
+            "type": "bomb",
+            "x": 2,
+            "y": 0
+          },
+          {
+            "timer": 10,
+            "type": "bomb",
+            "x": 5,
+            "y": 3
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 25,
+        "name": "gen-0013",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 145280,
+        "minScore": 94272
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 6
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 21,
+        "name": "gen-0014",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 199808,
+        "minScore": 163136
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 14,
+            "type": "bomb",
+            "x": 2,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 28,
+        "name": "gen-0015",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 84672,
+        "minScore": 54080
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 15,
+        "name": "gen-0016",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 74752,
+        "minScore": 54976
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 4,
+            "y": 1
+          },
+          {
+            "timer": 15,
+            "type": "bomb",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 16,
+        "name": "gen-0017",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 223488,
+        "minScore": 134720
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 1
+          },
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 29,
+        "name": "gen-0018",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 329088,
+        "minScore": 266304
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "duration": 7,
+            "type": "ice",
+            "x": 6,
+            "y": 0
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 37,
+        "name": "gen-0019",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 129024,
+        "minScore": 79296
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 3,
+            "y": 2
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0020",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 144256,
+        "minScore": 111168
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 0
+          },
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0021",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 252480,
+        "minScore": 204928
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 20,
+            "type": "bomb",
+            "x": 0,
+            "y": 2
+          },
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 32,
+        "name": "gen-0022",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 1,
+        "lockouts": 0,
+        "medianScore": 126336,
+        "minScore": 93568
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 17,
+            "type": "bomb",
+            "x": 5,
+            "y": 4
+          },
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 5,
+            "y": 3
+          },
+          {
+            "duration": 4,
+            "type": "ice",
+            "x": 6,
+            "y": 0
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 20,
+        "name": "gen-0023",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 1,
+        "lockouts": 0,
+        "medianScore": 147520,
+        "minScore": 56000
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 9,
+            "type": "bomb",
+            "x": 1,
+            "y": 4
+          },
+          {
+            "type": "stone",
+            "x": 5,
+            "y": 3
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 21,
+        "name": "gen-0024",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 1,
+        "lockouts": 0,
+        "medianScore": 127488,
+        "minScore": 75840
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 15,
+            "type": "bomb",
+            "x": 0,
+            "y": 5
+          },
+          {
+            "timer": 10,
+            "type": "bomb",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 22,
+        "name": "gen-0025",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 143744,
+        "minScore": 96448
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 17,
+            "type": "bomb",
+            "x": 5,
+            "y": 1
+          },
+          {
+            "timer": 14,
+            "type": "bomb",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 23,
+        "name": "gen-0026",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 205824,
+        "minScore": 144000
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 1
+          },
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 0,
+            "y": 3
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 30,
+        "name": "gen-0027",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 109504,
+        "minScore": 61440
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 19,
+        "name": "gen-0028",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 209984,
+        "minScore": 158720
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 25,
+        "name": "gen-0029",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 89472,
+        "minScore": 52800
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 17,
+        "name": "gen-0030",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 60544,
+        "minScore": 33024
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 12,
+        "name": "gen-0031",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 221824,
+        "minScore": 170112
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 30,
+        "name": "gen-0032",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 162048,
+        "minScore": 139584
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 14,
+            "type": "bomb",
+            "x": 5,
+            "y": 3
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 21,
+        "name": "gen-0033",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 335808,
+        "minScore": 274112
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 5,
+            "y": 0
+          },
+          {
+            "timer": 15,
+            "type": "bomb",
+            "x": 1,
+            "y": 7
+          },
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 6,
+            "y": 0
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 37,
+        "name": "gen-0034",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 305024,
+        "minScore": 253760
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 35,
+        "name": "gen-0035",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 67904,
+        "minScore": 40256
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 12,
+        "name": "gen-0036",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 1,
+        "lockouts": 0,
+        "medianScore": 84672,
+        "minScore": 54208
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 1,
+            "y": 5
+          },
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 15,
+        "name": "gen-0037",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 199296,
+        "minScore": 150848
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 24,
+        "name": "gen-0038",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 250304,
+        "minScore": 179456
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 32,
+        "name": "gen-0039",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 1,
+        "lockouts": 0,
+        "medianScore": 112576,
+        "minScore": 42112
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 10,
+            "type": "ice",
+            "x": 4,
+            "y": 4
+          },
+          {
+            "timer": 8,
+            "type": "bomb",
+            "x": 3,
+            "y": 3
+          },
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 6,
+            "y": 2
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0040",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 132096,
+        "minScore": 103488
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 20,
+        "name": "gen-0041",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": "2/24 bombs",
+      "screen": {
+        "bombs": 2,
+        "lockouts": 0,
+        "medianScore": 64192,
+        "minScore": 41312
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 4
+          },
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 13,
+        "name": "gen-0042",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 179264,
+        "minScore": 141056
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 23,
+        "name": "gen-0043",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 218112,
+        "minScore": 144512
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 28,
+        "name": "gen-0044",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 87872,
+        "minScore": 53952
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 17,
+            "type": "bomb",
+            "x": 3,
+            "y": 0
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 15,
+        "name": "gen-0045",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 120000,
+        "minScore": 88960
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 15,
+            "type": "bomb",
+            "x": 1,
+            "y": 4
+          },
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0046",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 375040,
+        "minScore": 311360
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 5,
+            "y": 5
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 42,
+        "name": "gen-0047",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 184640,
+        "minScore": 144256
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 25,
+        "name": "gen-0048",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 266880,
+        "minScore": 215680
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 1,
+            "y": 6
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 32,
+        "name": "gen-0049",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 205760,
+        "minScore": 156800
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 4,
+            "y": 0
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 24,
+        "name": "gen-0050",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": "2/24 bombs",
+      "screen": {
+        "bombs": 2,
+        "lockouts": 0,
+        "medianScore": 117440,
+        "minScore": 39808
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 10,
+            "type": "bomb",
+            "x": 1,
+            "y": 5
+          },
+          {
+            "timer": 9,
+            "type": "bomb",
+            "x": 1,
+            "y": 0
+          },
+          {
+            "duration": 10,
+            "type": "ice",
+            "x": 2,
+            "y": 5
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 18,
+        "name": "gen-0051",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 129152,
+        "minScore": 103296
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 0
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 21,
+        "name": "gen-0052",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 83520,
+        "minScore": 45696
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 1
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 15,
+        "name": "gen-0053",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 200704,
+        "minScore": 143616
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 4,
+            "type": "ice",
+            "x": 0,
+            "y": 3
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 24,
+        "name": "gen-0054",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 125376,
+        "minScore": 68672
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 1
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 25,
+        "name": "gen-0055",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 144576,
+        "minScore": 99584
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0056",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 93312,
+        "minScore": 66752
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 0,
+            "y": 2
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 3
+          },
+          {
+            "timer": 16,
+            "type": "bomb",
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 16,
+        "name": "gen-0057",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 92928,
+        "minScore": 63296
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 14,
+        "name": "gen-0058",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 304704,
+        "minScore": 243648
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 1
+          },
+          {
+            "duration": 4,
+            "type": "ice",
+            "x": 3,
+            "y": 0
+          },
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 37,
+        "name": "gen-0059",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 237760,
+        "minScore": 195200
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 12,
+            "type": "bomb",
+            "x": 5,
+            "y": 0
+          },
+          {
+            "timer": 10,
+            "type": "bomb",
+            "x": 1,
+            "y": 3
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 32,
+        "name": "gen-0060",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 266816,
+        "minScore": 219328
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 9,
+            "type": "ice",
+            "x": 4,
+            "y": 5
+          },
+          {
+            "timer": 9,
+            "type": "bomb",
+            "x": 2,
+            "y": 4
+          },
+          {
+            "timer": 18,
+            "type": "bomb",
+            "x": 5,
+            "y": 5
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 32,
+        "name": "gen-0061",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 123200,
+        "minScore": 90176
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 7,
+            "type": "ice",
+            "x": 3,
+            "y": 4
+          },
+          {
+            "timer": 16,
+            "type": "bomb",
+            "x": 4,
+            "y": 4
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 19,
+        "name": "gen-0062",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 224384,
+        "minScore": 175936
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 0
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 26,
+        "name": "gen-0063",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 127232,
+        "minScore": 84992
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 1,
+            "y": 1
+          },
+          {
+            "duration": 8,
+            "type": "ice",
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 18,
+        "name": "gen-0064",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 167424,
+        "minScore": 110272
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 4,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 5,
+            "y": 4
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 26,
+        "name": "gen-0065",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 127104,
+        "minScore": 69888
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 5
+          },
+          {
+            "duration": 9,
+            "type": "ice",
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0066",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 155328,
+        "minScore": 114560
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 2,
+            "y": 2
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 3
+          },
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 2,
+            "y": 5
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 22,
+        "name": "gen-0067",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 268416,
+        "minScore": 195648
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 10,
+            "type": "ice",
+            "x": 4,
+            "y": 0
+          },
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 34,
+        "name": "gen-0068",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 66048,
+        "minScore": 51392
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 0
+          },
+          {
+            "duration": 12,
+            "type": "ice",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 1,
+            "y": 0
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 14,
+        "name": "gen-0069",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 128640,
+        "minScore": 94592
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 1,
+            "y": 3
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 20,
+        "name": "gen-0070",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 147840,
+        "minScore": 107008
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 19,
+            "type": "bomb",
+            "x": 5,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0071",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 203968,
+        "minScore": 150080
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 27,
+        "name": "gen-0072",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 281792,
+        "minScore": 233920
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 31,
+        "name": "gen-0073",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 79808,
+        "minScore": 46720
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 8,
+            "type": "ice",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "duration": 10,
+            "type": "ice",
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 15,
+        "name": "gen-0074",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 134656,
+        "minScore": 109312
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 4,
+            "type": "ice",
+            "x": 2,
+            "y": 0
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 23,
+        "name": "gen-0075",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 223488,
+        "minScore": 173696
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 25,
+        "name": "gen-0076",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 163840,
+        "minScore": 116800
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 21,
+        "name": "gen-0077",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 243008,
+        "minScore": 153344
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 29,
+        "name": "gen-0078",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 116224,
+        "minScore": 87168
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 4,
+            "type": "ice",
+            "x": 6,
+            "y": 4
+          },
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 4
+          },
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 3,
+            "y": 1
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 19,
+        "name": "gen-0079",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 185344,
+        "minScore": 126144
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "timer": 20,
+            "type": "bomb",
+            "x": 6,
+            "y": 0
+          },
+          {
+            "timer": 11,
+            "type": "bomb",
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 25,
+        "name": "gen-0080",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 56576,
+        "minScore": 35072
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 12,
+        "name": "gen-0081",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 234688,
+        "minScore": 186304
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 3
+          },
+          {
+            "duration": 9,
+            "type": "ice",
+            "x": 2,
+            "y": 2
+          },
+          {
+            "timer": 16,
+            "type": "bomb",
+            "x": 1,
+            "y": 6
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 32,
+        "name": "gen-0082",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 1,
+        "lockouts": 0,
+        "medianScore": 255328,
+        "minScore": 153984
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 20,
+            "type": "bomb",
+            "x": 0,
+            "y": 6
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 32,
+        "name": "gen-0083",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 119040,
+        "minScore": 88192
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 8,
+            "type": "ice",
+            "x": 1,
+            "y": 5
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 20,
+        "name": "gen-0084",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 102080,
+        "minScore": 71168
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 4,
+            "type": "ice",
+            "x": 1,
+            "y": 3
+          },
+          {
+            "timer": 9,
+            "type": "bomb",
+            "x": 1,
+            "y": 6
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 17,
+        "name": "gen-0085",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 131040,
+        "minScore": 105856
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 21,
+        "name": "gen-0086",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 36224,
+        "minScore": 16064
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 2,
+            "y": 0
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 4
+          },
+          {
+            "duration": 10,
+            "type": "ice",
+            "x": 3,
+            "y": 2
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 10,
+        "name": "gen-0087",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 78272,
+        "minScore": 49472
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 0,
+            "y": 5
+          },
+          {
+            "timer": 10,
+            "type": "bomb",
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 17,
+        "name": "gen-0088",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 64064,
+        "minScore": 42048
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 4
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 15,
+        "name": "gen-0089",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 124544,
+        "minScore": 75072
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 2,
+            "y": 0
+          },
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 0
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0091",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 138944,
+        "minScore": 113280
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0092",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 83264,
+        "minScore": 58432
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 2,
+            "y": 1
+          },
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 16,
+        "name": "gen-0093",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 130624,
+        "minScore": 102464
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0094",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 144000,
+        "minScore": 110656
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 22,
+        "name": "gen-0095",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 317120,
+        "minScore": 207488
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 5
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 36,
+        "name": "gen-0096",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 107136,
+        "minScore": 80064
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 17,
+        "name": "gen-0097",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 111616,
+        "minScore": 70272
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 10,
+            "type": "bomb",
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 18,
+        "name": "gen-0098",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 204288,
+        "minScore": 159232
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 18,
+            "type": "bomb",
+            "x": 5,
+            "y": 3
+          },
+          {
+            "duration": 6,
+            "type": "ice",
+            "x": 2,
+            "y": 5
+          },
+          {
+            "timer": 13,
+            "type": "bomb",
+            "x": 3,
+            "y": 1
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 26,
+        "name": "gen-0099",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 81920,
+        "minScore": 56192
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 16,
+            "type": "bomb",
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 16,
+        "name": "gen-0100",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 106752,
+        "minScore": 69760
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 16,
+        "name": "gen-0101",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 204736,
+        "minScore": 143872
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 12,
+            "type": "bomb",
+            "x": 2,
+            "y": 7
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 28,
+        "name": "gen-0102",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 176064,
+        "minScore": 139040
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 5,
+            "type": "ice",
+            "x": 5,
+            "y": 4
+          },
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 6,
+            "y": 4
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 4,
+        "moves": 26,
+        "name": "gen-0103",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 245184,
+        "minScore": 174720
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 31,
+        "name": "gen-0104",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": "7/24 bombs",
+      "screen": {
+        "bombs": 7,
+        "lockouts": 0,
+        "medianScore": 119584,
+        "minScore": 87488
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 15,
+            "type": "bomb",
+            "x": 0,
+            "y": 5
+          },
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 19,
+        "name": "gen-0105",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 67712,
+        "minScore": 41600
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 14,
+        "name": "gen-0106",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 308672,
+        "minScore": 221952
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 36,
+        "name": "gen-0107",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 96192,
+        "minScore": 77760
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 3,
+            "type": "ice",
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 3,
+        "moves": 15,
+        "name": "gen-0108",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 94976,
+        "minScore": 58240
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 16,
+        "name": "gen-0109",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 102720,
+        "minScore": 70912
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 11,
+            "type": "ice",
+            "x": 2,
+            "y": 1
+          },
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 4
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 4,
+        "moves": 20,
+        "name": "gen-0110",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 156608,
+        "minScore": 117184
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 7
+          },
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 5
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 26,
+        "name": "gen-0111",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 157312,
+        "minScore": 124480
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 20,
+            "type": "bomb",
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 6,
+        "level": 52,
+        "minChain": 3,
+        "moves": 22,
+        "name": "gen-0112",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 1,
+        "lockouts": 0,
+        "medianScore": 197504,
+        "minScore": 105600
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 15,
+            "type": "bomb",
+            "x": 0,
+            "y": 4
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 6,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 24,
+        "name": "gen-0113",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 138432,
+        "minScore": 108864
+      },
+      "shape": {
+        "blockers": [
+          {
+            "duration": 8,
+            "type": "ice",
+            "x": 0,
+            "y": 6
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 21,
+        "name": "gen-0114",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": "1/24 lockouts",
+      "screen": {
+        "bombs": 0,
+        "lockouts": 1,
+        "medianScore": 70016,
+        "minScore": 38144
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.95,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 13,
+        "name": "gen-0115",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 305408,
+        "minScore": 259136
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 5,
+            "y": 5
+          }
+        ],
+        "demand": 0.85,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 7,
+        "level": 52,
+        "minChain": 3,
+        "moves": 35,
+        "name": "gen-0116",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 70720,
+        "minScore": 43712
+      },
+      "shape": {
+        "blockers": [],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 5,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 3,
+        "moves": 15,
+        "name": "gen-0117",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 170240,
+        "minScore": 112064
+      },
+      "shape": {
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 6
+          },
+          {
+            "duration": 7,
+            "type": "ice",
+            "x": 1,
+            "y": 0
+          }
+        ],
+        "demand": 0.9,
+        "demandStatus": "provisional-proposal",
+        "gridH": 7,
+        "gridW": 5,
+        "level": 52,
+        "minChain": 4,
+        "moves": 23,
+        "name": "gen-0118",
+        "schemaVersion": 1
+      }
+    },
+    {
+      "rejection": null,
+      "screen": {
+        "bombs": 0,
+        "lockouts": 0,
+        "medianScore": 123264,
+        "minScore": 89600
+      },
+      "shape": {
+        "blockers": [
+          {
+            "timer": 16,
+            "type": "bomb",
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "demand": 0.8,
+        "demandStatus": "provisional-proposal",
+        "gridH": 8,
+        "gridW": 4,
+        "level": 52,
+        "minChain": 4,
+        "moves": 19,
+        "name": "gen-0119",
+        "schemaVersion": 1
+      }
+    }
+  ]
+}

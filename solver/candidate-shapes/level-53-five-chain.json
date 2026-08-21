@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "name": "level-53-five-chain",
+  "level": 53,
+  "demand": 0.70,
+  "demandStatus": "provisional-proposal",
+  "moves": 24,
+  "minChain": 5,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": []
+}

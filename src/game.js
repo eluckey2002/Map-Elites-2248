@@ -161,12 +161,146 @@ class Tile {
     }
 }
 
+function makeSeededRng(seed) {
+    let state = seed >>> 0;
+    const rng = function () {
+        state |= 0;
+        state = (state + 0x6d2b79f5) | 0;
+        let value = Math.imul(state ^ (state >>> 15), 1 | state);
+        value = (value + Math.imul(value ^ (value >>> 7), 61 | value)) ^ value;
+        return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+    };
+    rng.getState = () => state >>> 0;
+    rng.setState = (nextState) => {
+        state = nextState >>> 0;
+    };
+    return rng;
+}
+
+// A level that names a seed is ONE FIXED BOARD - the same board for every
+// player and every attempt. A level without one draws a fresh board each time,
+// which is how every level shipped before this and what the unseeded levels
+// still do.
+//
+// This is what makes "this level is hard" a statement about the level rather
+// than about the draw. Measured on the generated candidates: for one fixed
+// shape, the number of distinct opening moves ranged from 124 to 1363 across
+// seeds, while two genuinely different shapes sat at 536 and 467. The board
+// mattered about ten times more than the design, so anything tuned across
+// random draws was tuning against noise.
+//
+// The tradeoff is real and deliberate: a fixed board cannot be re-rolled by
+// losing and retrying, so a player who is stuck stays stuck on that board.
+function rngForLevel(levelData) {
+    return Number.isInteger(levelData.seed) ? makeSeededRng(levelData.seed) : Math.random;
+}
+
+function requirePlayableInteger(value, name, minimum, maximum) {
+    if (!Number.isInteger(value) || value < minimum || value > maximum) {
+        throw new Error(`${name} must be an integer from ${minimum} to ${maximum}`);
+    }
+}
+
+function playableTileScale(levelData) {
+    return Object.hasOwn(levelData, 'tileScale') ? levelData.tileScale : 1;
+}
+
+function validatePlayableLevel(levelData) {
+    if (!levelData || typeof levelData !== 'object' || Array.isArray(levelData)) {
+        throw new Error('level must be an object');
+    }
+    requirePlayableInteger(levelData.level, 'level', 1, 9999);
+    requirePlayableInteger(levelData.target, 'target', 1, Number.MAX_SAFE_INTEGER);
+    requirePlayableInteger(playableTileScale(levelData), 'tileScale', 1, Number.MAX_SAFE_INTEGER);
+    requirePlayableInteger(levelData.moves, 'moves', 1, 999);
+    requirePlayableInteger(levelData.minChain, 'minChain', 2, 20);
+    requirePlayableInteger(levelData.gridW, 'gridW', 2, 12);
+    requirePlayableInteger(levelData.gridH, 'gridH', 2, 12);
+    // Optional: a level without a seed draws a fresh board each attempt, which
+    // is what every level did before fixed boards existed.
+    if (Object.hasOwn(levelData, 'seed')) requirePlayableInteger(levelData.seed, 'seed', 0, 0xffffffff);
+    if (!Array.isArray(levelData.blockers)) throw new Error('blockers must be an array');
+    levelData.blockers.forEach((blocker) => {
+        if (!blocker || !Object.values(BLOCKER_TYPES).includes(blocker.type)) throw new Error('blocker type is invalid');
+        requirePlayableInteger(blocker.x, 'blocker x', 0, levelData.gridW - 1);
+        requirePlayableInteger(blocker.y, 'blocker y', 0, levelData.gridH - 1);
+        if (blocker.type === BLOCKER_TYPES.ICE) requirePlayableInteger(blocker.duration, 'ice duration', 1, 100);
+        if (blocker.type === BLOCKER_TYPES.BOMB) requirePlayableInteger(blocker.timer, 'bomb timer', 1, 100);
+    });
+    return levelData;
+}
+
+function createInitialGrid(levelData, rng) {
+    validatePlayableLevel(levelData);
+    const tileScale = playableTileScale(levelData);
+    const grid = [];
+    for (let row = 0; row < levelData.gridH; row++) {
+        grid[row] = [];
+        for (let col = 0; col < levelData.gridW; col++) {
+            const rand = rng();
+            let value;
+            if (rand < 0.5) value = 2;
+            else if (rand < 0.8) value = 4;
+            else if (rand < 0.95) value = 8;
+            else value = 16;
+            grid[row][col] = new Tile(col, row, value * tileScale);
+        }
+    }
+    levelData.blockers.forEach((blocker) => {
+        const tile = grid[blocker.y][blocker.x];
+        if (blocker.type === BLOCKER_TYPES.STONE) {
+            tile.value = 0;
+            tile.setBlocker(BLOCKER_TYPES.STONE);
+        } else if (blocker.type === BLOCKER_TYPES.ICE) {
+            tile.setBlocker(BLOCKER_TYPES.ICE, blocker.duration);
+        } else if (blocker.type === BLOCKER_TYPES.BOMB) {
+            tile.setBlocker(BLOCKER_TYPES.BOMB, 0, blocker.timer);
+        }
+    });
+    return grid;
+}
+
+class AuthoringCapture {
+    constructor({ candidateIdentity, candidateLevel, seed, submit = () => {} }) {
+        this.candidateIdentity = candidateIdentity;
+        this.candidateLevel = candidateLevel;
+        this.seed = seed;
+        this.submit = submit;
+        this.chains = [];
+        this.finished = false;
+    }
+
+    recordChain(tiles, points) {
+        this.chains.push({
+            tiles: tiles.map(({ x, y, value }) => ({ x, y, value })),
+            points,
+        });
+    }
+
+    finish({ outcome, reason, score, movesUsed }) {
+        if (this.finished) return false;
+        this.finished = true;
+        this.submit({
+            schemaVersion: 1,
+            candidateIdentity: this.candidateIdentity,
+            candidateLevel: this.candidateLevel,
+            seed: this.seed,
+            outcome,
+            reason,
+            score,
+            movesUsed,
+            chains: this.chains,
+        });
+        return true;
+    }
+}
+
 // ============================================================================
 // GAME CLASS
 // ============================================================================
 
 class Game {
-    constructor(canvas) {
+    constructor(canvas, options = {}) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
 
@@ -188,6 +322,9 @@ class Game {
         this.bestChain = 0;
         this.gameOver = false;
         this.levelComplete = false;
+        this.random = Math.random;
+        this.authoringCapture = null;
+        this.customSession = null;
 
         // History for undo
         this.history = [];
@@ -202,7 +339,8 @@ class Game {
 
         this.setupCanvas();
         this.setupEventListeners();
-        this.loadLevel(this.currentLevel);
+        if (options.customSession) this.startCustomLevel(options.customSession);
+        else this.loadLevel(this.currentLevel);
         this.gameLoop();
     }
 
@@ -240,11 +378,11 @@ class Game {
 
         // Button events
         document.getElementById('undoBtn').addEventListener('click', () => this.undo());
-        document.getElementById('restartBtn').addEventListener('click', () => this.loadLevel(this.currentLevel));
+        document.getElementById('restartBtn').addEventListener('click', () => this.reloadCurrentLevel());
         document.getElementById('menuBtn').addEventListener('click', () => this.showLevelSelect());
         document.getElementById('submitBtn').addEventListener('click', () => this.submitChain());
         document.getElementById('nextLevelBtn').addEventListener('click', () => this.nextLevel());
-        document.getElementById('retryBtn').addEventListener('click', () => this.loadLevel(this.currentLevel));
+        document.getElementById('retryBtn').addEventListener('click', () => this.reloadCurrentLevel());
         document.getElementById('gameOverMenuBtn').addEventListener('click', () => {
             this.hideModal('gameOverModal');
             this.showLevelSelect();
@@ -384,6 +522,8 @@ class Game {
         const multiplier = this.getChainMultiplier();
         const points = Math.floor(chainValue * multiplier);
 
+        if (this.authoringCapture) this.authoringCapture.recordChain(this.chain, points);
+
         // Track best chain
         if (this.chain.length > this.bestChain) {
             this.bestChain = this.chain.length;
@@ -469,7 +609,7 @@ class Game {
             for (let row = 0; row < this.gridHeight; row++) {
                 if (!this.grid[row][col]) {
                     // Spawn new tile (weighted towards lower values)
-                    const rand = Math.random();
+                    const rand = this.random();
                     let value;
                     if (rand < 0.6) value = 2;
                     else if (rand < 0.9) value = 4;
@@ -500,6 +640,7 @@ class Game {
                 if (tile && tile.isBomb() && tile.bombTimer <= 0) {
                     // Bomb explodes! Game over
                     this.gameOver = true;
+                    this.finishAuthoring('lose', 'bomb exploded');
                     this.showGameOver('Bomb exploded!');
                     return;
                 }
@@ -511,6 +652,7 @@ class Game {
         // Check win
         if (this.score >= this.targetScore) {
             this.levelComplete = true;
+            this.finishAuthoring('win', 'target reached');
             this.showLevelComplete();
             return;
         }
@@ -518,6 +660,7 @@ class Game {
         // Check lose (out of moves)
         if (this.moves >= this.maxMoves) {
             this.gameOver = true;
+            this.finishAuthoring('lose', 'out of moves');
             this.showGameOver('Out of moves!');
             return;
         }
@@ -525,6 +668,7 @@ class Game {
         // Check if any valid moves exist
         if (!this.hasValidMoves()) {
             this.gameOver = true;
+            this.finishAuthoring('lose', 'no valid moves');
             this.showGameOver('No valid moves!');
         }
     }
@@ -589,8 +733,8 @@ class Game {
     // LEVEL MANAGEMENT
     // ========================================================================
 
-    loadLevel(levelNum) {
-        const levelData = LEVELS.find(l => l.level === levelNum) || LEVELS[0];
+    initializeLevel(levelData, rng, authoringCapture = null) {
+        validatePlayableLevel(levelData);
 
         this.currentLevel = levelData.level;
         this.gridWidth = levelData.gridW;
@@ -602,7 +746,9 @@ class Game {
         // equal-or-double and merges sum, so a uniform scale plays identically
         // and multiplies every score by the same factor - it is what lets later
         // chapters deal 16/32/64 and carry targets that keep climbing.
-        this.tileScale = levelData.tileScale || 1;
+        this.tileScale = playableTileScale(levelData);
+        this.random = rng;
+        this.authoringCapture = authoringCapture;
 
         this.score = 0;
         this.moves = 0;
@@ -616,36 +762,7 @@ class Game {
         // Update canvas size for grid
         this.setupCanvas();
 
-        // Initialize grid
-        this.grid = [];
-        for (let row = 0; row < this.gridHeight; row++) {
-            this.grid[row] = [];
-            for (let col = 0; col < this.gridWidth; col++) {
-                const rand = Math.random();
-                let value;
-                if (rand < 0.5) value = 2;
-                else if (rand < 0.8) value = 4;
-                else if (rand < 0.95) value = 8;
-                else value = 16;
-
-                this.grid[row][col] = new Tile(col, row, value * this.tileScale);
-            }
-        }
-
-        // Place blockers
-        levelData.blockers.forEach(b => {
-            const tile = this.grid[b.y][b.x];
-            if (tile) {
-                if (b.type === BLOCKER_TYPES.STONE) {
-                    tile.value = 0;
-                    tile.setBlocker(BLOCKER_TYPES.STONE);
-                } else if (b.type === BLOCKER_TYPES.ICE) {
-                    tile.setBlocker(BLOCKER_TYPES.ICE, b.duration);
-                } else if (b.type === BLOCKER_TYPES.BOMB) {
-                    tile.setBlocker(BLOCKER_TYPES.BOMB, 0, b.timer);
-                }
-            }
-        });
+        this.grid = createInitialGrid(levelData, rng);
 
         // Hide modals
         this.hideModal('completeModal');
@@ -663,6 +780,55 @@ class Game {
 
         this.updateUI();
         this.render();
+    }
+
+    loadLevel(levelNum) {
+        this.customSession = null;
+        const levelData = LEVELS.find(l => l.level === levelNum) || LEVELS[0];
+        this.initializeLevel(levelData, rngForLevel(levelData));
+    }
+
+    startCustomLevel(session) {
+        this.customSession = session;
+        const capture = new AuthoringCapture({
+            candidateIdentity: session.candidateIdentity,
+            candidateLevel: session.levelData.level,
+            seed: session.seed,
+            submit: (payload) => this.submitRecording(payload),
+        });
+        this.initializeLevel(session.levelData, makeSeededRng(session.seed), capture);
+        this.updateAuthoringStatus(`Candidate ${session.levelData.level} · seed ${session.seed} · ready`);
+    }
+
+    reloadCurrentLevel() {
+        if (this.customSession) this.startCustomLevel(this.customSession);
+        else this.loadLevel(this.currentLevel);
+    }
+
+    finishAuthoring(outcome, reason) {
+        if (!this.authoringCapture) return;
+        this.authoringCapture.finish({ outcome, reason, score: this.score, movesUsed: this.moves });
+    }
+
+    async submitRecording(payload) {
+        this.updateAuthoringStatus('Saving playthrough…');
+        try {
+            const response = await fetch('/api/recordings', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || `HTTP ${response.status}`);
+            this.updateAuthoringStatus(`Recording ${result.status}: ${result.recordingIdentity.slice(0, 12)}`);
+        } catch (error) {
+            this.updateAuthoringStatus(`Recording failed: ${error.message}`);
+        }
+    }
+
+    updateAuthoringStatus(message) {
+        const status = document.getElementById('authoringStatus');
+        if (status) status.textContent = message;
     }
 
     nextLevel() {
@@ -699,7 +865,9 @@ class Game {
             })),
             score: this.score,
             moves: this.moves,
-            bestChain: this.bestChain
+            bestChain: this.bestChain,
+            authoringCaptureLength: this.authoringCapture ? this.authoringCapture.chains.length : null,
+            randomState: typeof this.random.getState === 'function' ? this.random.getState() : null
         };
 
         this.history.push(JSON.stringify(state));
@@ -727,6 +895,12 @@ class Game {
         this.score = state.score;
         this.moves = state.moves;
         this.bestChain = state.bestChain;
+        if (this.authoringCapture && Number.isInteger(state.authoringCaptureLength)) {
+            this.authoringCapture.chains.length = state.authoringCaptureLength;
+        }
+        if (state.randomState !== null && typeof this.random.setState === 'function') {
+            this.random.setState(state.randomState);
+        }
         this.gameOver = false;
         this.levelComplete = false;
 
@@ -1058,9 +1232,40 @@ function levelFromQuery(search, levelCount) {
     return n;
 }
 
-if (typeof document !== 'undefined') {
+function customCandidateFromQuery(search) {
+    const query = new URLSearchParams(search);
+    const candidateRaw = query.get('candidate');
+    const seedRaw = query.get('seed');
+    if (candidateRaw === null || seedRaw === null || candidateRaw.trim() === '' || seedRaw.trim() === '') return null;
+    const level = Number(candidateRaw);
+    const seed = Number(seedRaw);
+    if (!Number.isInteger(level) || level < 1 || level > 9999) return null;
+    if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) return null;
+    return { level, seed };
+}
+
+async function startBrowserGame() {
     const canvas = document.getElementById('gameCanvas');
-    const game = new Game(canvas);
+    const custom = customCandidateFromQuery(window.location.search);
+    let game;
+    if (custom) {
+        const response = await fetch(`/api/candidates/${custom.level}`);
+        if (!response.ok) throw new Error(`Candidate ${custom.level} could not be loaded (HTTP ${response.status})`);
+        const result = await response.json();
+        validatePlayableLevel(result.candidate);
+        if (result.candidate.level !== custom.level || !/^[a-f0-9]{64}$/.test(result.candidateIdentity || '')) {
+            throw new Error('Candidate response identity is invalid');
+        }
+        game = new Game(canvas, {
+            customSession: {
+                levelData: result.candidate,
+                candidateIdentity: result.candidateIdentity,
+                seed: custom.seed,
+            },
+        });
+    } else {
+        game = new Game(canvas);
+    }
 
     // The console and any recording tool need a handle on the running game.
     // Without this it is block-scoped and unreachable, which is why the debug
@@ -1069,13 +1274,32 @@ if (typeof document !== 'undefined') {
 
     // `?level=26` opens a level directly, past the unlock gate. Unlocking up
     // to it as well, so the level picker agrees with where you actually are.
-    const jump = levelFromQuery(window.location.search, LEVELS.length);
-    if (jump !== null) {
+    const jump = custom ? null : levelFromQuery(window.location.search, LEVELS.length);
+    if (jump !== null && jump !== game.currentLevel) {
         game.unlockedLevel = Math.max(game.unlockedLevel, jump);
         game.loadLevel(jump);
     }
 }
 
+if (typeof document !== 'undefined') {
+    startBrowserGame().catch((error) => {
+        const status = document.getElementById('authoringStatus');
+        if (status) status.textContent = `Authoring failed: ${error.message}`;
+        console.error(error);
+    });
+}
+
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { LEVELS, BLOCKER_TYPES, levelFromQuery };
+    module.exports = {
+        LEVELS,
+        BLOCKER_TYPES,
+        AuthoringCapture,
+        Game,
+        createInitialGrid,
+        customCandidateFromQuery,
+        levelFromQuery,
+        makeSeededRng,
+        rngForLevel,
+        validatePlayableLevel,
+    };
 }
