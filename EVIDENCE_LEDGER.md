@@ -396,6 +396,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** This is the first level to land on the far side of a bot-strength change, and it makes the split named in `RESULT-0011` concrete rather than hypothetical: levels 1-52 carry targets derived against the pre-`RESULT-0011` bot, anything authored later will not. That comparability question is open and is **not** settled by this record — it is only deferred for one level, on the ground that a human-validated target should not move underneath the human who validated it. Whether to re-derive the whole curve remains an owner decision.
 
+### RESULT-0013 — Re-searching the ranking weights over the fixed generator still establishes nothing
+
+- **type:** result
+- **status:** accepted
+- **scope:** `solver/policy-search.js` run `.orch/policy-search-02.json`, 52 levels; the searched weights are **not adopted** and `DEFAULT_PARAMS` is unchanged
+- **statement:** The obvious objection to `RESULT-0010`'s finding that the ranking weights are worth nothing was that the search had been ranking a crippled candidate list. `RESULT-0011` fixed the generator, so the search was re-run against it: 12 generations, 108 distinct policies screened, finalists re-scored on 250 disjoint holdout seeds across all 52 levels. **It still does not clear the bar.** Best holdout lift **+0.78% at t = 2.6**, against the project's own t > 3 threshold, and the mean generalization gap is **-0.57 points** — the finalists screened better than they held up, which is the winner's curse in its policy-search form and the reason the two-stage design exists. Two finalists that screened at +0.94% fell to +0.11% and +0.08% on unseen seeds. The conclusion of `RESULT-0010` therefore survives a fair re-test: the gains in this bot are structural, not in the weights. One narrow lead is recorded and **not** claimed as a finding: `turnover` moved from 40 to roughly 63-67 in every one of the six finalists, the only gene to move consistently. That is the term rewarding emptied cells, and a stronger preference for it is what one would expect once the walk can actually build long chains — but at t = 2.6 it is a direction, not a result.
+- **evidence:** `.orch/policy-search-02.json` (config, finalists, per-level lift) and `.orch/policy-search-02.cells.json` (the full policy x level x seed score table, 108 screened policies x 480 cells plus 6 validated x 13,000 cells); `solver/policy-search.js`; `solver/policy-eval.js` for the clustered log-ratio estimator.
+- **proof_class:** `heuristic_observation` — a bounded search that returned no established gain. It excludes nothing: a better-designed search, a wider genome, or a different objective could still find one.
+- **as_of:** 2026-08-20
+- **reverify:** `node solver/policy-search.js --out <path>`; expect a best holdout lift near 1% with t below 3, and a negative mean generalization gap.
+- **updated:** 2026-08-20
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** First run to leave its score table behind rather than six summary numbers, so the next question about these 121,000 games can be answered without replaying them. Two doors this closes and one it does not. Closed: re-running this same search shape over these same five genes, twice now, has produced nothing adoptable — a third run needs a changed genome or a changed objective to be worth the hour. Also closed: the suspicion that `RESULT-0010`'s weight finding was an artifact of the stranded candidate list. Not closed: the bot's real deficits are structural, and the largest known one is that placement is scored only one move ahead — `wPlace` asks whether the surviving tile can begin any legal chain next move, and nothing rewards surviving tiles landing equal-valued and connected to each other, which is what a mid-game harvest chain requires. No gene in this genome can express that.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
