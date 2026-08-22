@@ -1,6 +1,10 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { pairedLift } = require('../policy-eval');
+const { LEVELS } = require('../../src/game');
+const { DEFAULT_PARAMS } = require('../bot');
+const {
+  evaluatePolicy, pairedLift, recordBehaviorMove, summarizeBehavior,
+} = require('../policy-eval');
 
 // Cells are level-major: level 0's seeds, then level 1's, ...
 function build(levelEffects, seedEffects) {
@@ -70,4 +74,34 @@ test('the correction is an inflation, never a discount', () => {
   const { scores, ref, layout } = build([0.10, 0.02, -0.06, 0.04], Array(50).fill(0));
   const r = pairedLift(scores, ref, layout);
   assert.ok(r.se >= r.seNaive, `clustered ${r.se} should not be below naive ${r.seNaive}`);
+});
+
+test('behavior summary means chain size and the share of score earned in the final third', () => {
+  const behavior = summarizeBehavior({
+    chainCount: 4,
+    chainTiles: 20,
+    totalScore: 100,
+    lateScore: 40,
+  });
+
+  assert.deepEqual(behavior, { meanChainLength: 5, lateScoreShare: 0.4 });
+});
+
+test('patience counts score only from moves in the final third of the budget', () => {
+  const totals = { chainCount: 0, chainTiles: 0, totalScore: 0, lateScore: 0 };
+  recordBehaviorMove(totals, { chainLength: 3, scoreGain: 20, moveNumber: 4, moveBudget: 6 });
+  recordBehaviorMove(totals, { chainLength: 7, scoreGain: 80, moveNumber: 5, moveBudget: 6 });
+
+  assert.deepEqual(totals, { chainCount: 2, chainTiles: 10, totalScore: 100, lateScore: 80 });
+  assert.deepEqual(summarizeBehavior(totals), { meanChainLength: 5, lateScoreShare: 0.8 });
+});
+
+test('policy evaluation exposes aggregate behavior beside uncensored scores', () => {
+  const result = evaluatePolicy(DEFAULT_PARAMS, [LEVELS[0]], [0]);
+
+  assert.equal(result.scores.length, 1);
+  assert.ok(result.behaviorTotals.chainCount > 0);
+  assert.deepEqual(result.behavior, summarizeBehavior(result.behaviorTotals));
+  assert.ok(result.behavior.meanChainLength >= LEVELS[0].minChain);
+  assert.ok(result.behavior.lateScoreShare >= 0 && result.behavior.lateScoreShare <= 1);
 });

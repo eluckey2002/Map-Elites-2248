@@ -457,6 +457,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** `calib-1` explicitly pins `pathWidth: 1`, so existing level targets remain tied to the historical ruler. Future authoring can use that ruler independently of the stronger live bot. The result says nothing about the owner's human margin; that comparison remains separate.
 
+### RESULT-0017 — A bounded MAP-Elites run finds 20 distinct behavior cells without changing the champion
+
+- **type:** result
+- **status:** accepted
+- **scope:** isolated `map-elites-learning` experiment at champion commit `52f500c`; 11-policy descriptor pilot, 48 archive iterations, six fixed screen cases with six seeds each, and twelve disjoint holdout cases with twelve seeds each for three representative elites; no level, target, receipt, authoring path, or champion file changed
+- **statement:** The two proposed behavior descriptors are usable for this bounded learning experiment rather than collapsing to one value. The pilot's mean-chain-length range is **2.4327 tiles** (9.7917 to 12.2244), above the preregistered 0.15 minimum, and its late-score-share range is **0.1089** (0.2758 to 0.3847), above the preregistered 0.02 minimum. The deterministic 5x5 MAP-Elites archive occupies **20 of 25 cells**, spanning all five bins on both axes, and retains the best screened policy independently inside each occupied cell. Three replayable representatives expose distinct styles: `a61e8b8e23b7` at cell `4,2` (12.61 mean-chain length, 32.9% late-score share, +3.30% screen lift, **-3.57% disjoint holdout lift**); `4cbec6509c34` at `0,0` (10.13, 27.9%, -35.07%, -36.55%); and `ebeb9e326a01` at `2,4` (11.24, 37.6%, -14.91%, -11.93%). The first representative is also a concrete winner's-curse lesson: it looked 3.30% better on the cases that selected it but 3.57% worse on unseen holdout cases. This is evidence of behavior diversity and honest selection/holdout separation, **not** evidence that any discovered policy is a stronger replacement champion.
+- **evidence:** `solver/map-elites-output/archive.json` SHA-256 `11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c`; `solver/map-elites-output/map.html` SHA-256 `c1e27d78431f64e4378c286bc6a3cb1882db131573f1aa0cbba357174a692b1a`; producer `solver/map-elites.js`; independent checker `solver/verify-map-elites.js`; public-seam tests `solver/tests/mapElites.test.js` and `solver/tests/policy-eval.test.js`; rendered browser inspection of the generated 25-cell grid; durable execution record `.orch/tickets/2026-08-22-map-elites-learning/T-001.md`.
+- **proof_class:** `heuristic_observation` for the bounded archive and policy results; `direct_source` for the artifact identities, replay equality, disjoint seeds, and unchanged protected hashes. No optimality, human-strength, or complete behavior-space claim follows.
+- **as_of:** 2026-08-22
+- **reverify:** Run the documented fixed command in `solver/README.md`, then `node solver/verify-map-elites.js solver/map-elites-output`; expect 20 occupied cells across five chain bins and five patience bins, three exact representative replays, and unchanged champion/authoring hashes. Run the focused 83-test command recorded in ticket T-001.
+- **updated:** 2026-08-22
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The archive axes are calibrated from the bounded pilot and may clip policies outside that pilot's observed range. The experiment explores the existing parameter seam only; it does not learn a value function, add search depth, or discover new policy structure. The full solver suite remains 193/196 because of the same three pre-existing receipt-identity failures named in `RESULT-0016`; no receipt was refreshed or weakened.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

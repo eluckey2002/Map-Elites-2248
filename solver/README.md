@@ -332,6 +332,56 @@ unreachability claim. The recorded run validates 12,336 as SAT, returns
 UNKNOWN at 12,400, 12,600, 12,800, and 13,000, and therefore does not decide
 whether the target is reachable.
 
+## MAP-Elites learning experiment
+
+`map-elites.js` is a deliberately small quality-diversity experiment. The
+ordinary `policy-search.js` keeps the globally strongest few policies. This
+experiment instead divides behavior into a two-dimensional map and keeps the
+strongest policy **inside every occupied cell**:
+
+- **Chain style** — mean tiles per chain, from many smaller chains to fewer
+  larger chains.
+- **Patience** — share of score earned in the final third of the move budget,
+  from scoring early to building and scoring later.
+
+Run the fixed learning experiment from the repository root:
+
+```sh
+node solver/map-elites.js --seed 20260822 --iterations 48 \
+  --screen-seeds 6 --holdout-seeds 12 --bins 5 \
+  --out solver/map-elites-output
+```
+
+It writes `solver/map-elites-output/archive.json`, the machine-readable archive,
+and `solver/map-elites-output/map.html`, a static map that can be opened without
+a server. Empty squares are part of the result: they mean this bounded search
+did not discover an elite with that combination of behaviors.
+
+The fixed **screen** games select the elite in each cell. They are not evidence
+that an elite generalizes. Three behaviorally separated representatives are
+therefore evaluated on a disjoint **holdout** seed set, and the map labels the
+two numbers separately.
+
+Verify the archive, visual-map content, protected source hashes, seed
+separation, and all representative replays with:
+
+```sh
+node solver/verify-map-elites.js solver/map-elites-output
+```
+
+Replay one elite from the archive on the exact fixed screen cases with:
+
+```sh
+node solver/map-elites.js --archive solver/map-elites-output/archive.json \
+  --replay <policy-id>
+```
+
+The experiment passes policy parameters to the committed champion through its
+existing public interface. It does not rewrite the champion, levels, targets,
+candidate receipts, generator, or authoring pipeline. Its purpose is to make
+MAP-Elites' central idea visible — quality **and** diversity — not to nominate a
+replacement champion.
+
 ## Level generator
 
 `generate-levels.js` closes the last human-in-the-loop step in level

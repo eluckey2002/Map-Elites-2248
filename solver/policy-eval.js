@@ -18,6 +18,23 @@ const { chooseMove } = require(`${ROOT}/solver/bot`);
 
 const LOOKAHEAD_BASE = 987654321; // must match solver/sweep.js
 
+function summarizeBehavior(totals) {
+  return {
+    meanChainLength: totals.chainCount ? totals.chainTiles / totals.chainCount : 0,
+    lateScoreShare: totals.totalScore ? totals.lateScore / totals.totalScore : 0,
+  };
+}
+
+function recordBehaviorMove(totals, {
+  chainLength, scoreGain, moveNumber, moveBudget,
+}) {
+  totals.chainCount += 1;
+  totals.chainTiles += chainLength;
+  totals.totalScore += scoreGain;
+  if (moveNumber > moveBudget * (2 / 3)) totals.lateScore += scoreGain;
+  return totals;
+}
+
 // Plays out the whole move budget and returns the final score. Deliberately
 // does NOT stop at targetScore: the win condition censors score from above, so
 // a policy strong enough to clear the target early would be indistinguishable
@@ -26,6 +43,7 @@ function playToBudget(levelData, rng, params) {
   const state = createLevelState(levelData, rng);
   let moveIndex = 0;
   let reachedTarget = null;
+  const behaviorTotals = { chainCount: 0, chainTiles: 0, totalScore: 0, lateScore: 0 };
   for (let i = 0; i < levelData.moves + 5; i++) {
     const chain = chooseMove(state, {
       params,
@@ -33,7 +51,14 @@ function playToBudget(levelData, rng, params) {
     });
     moveIndex += 1;
     if (!chain) break;
+    const scoreBefore = state.score;
     executeChain(state, chain);
+    recordBehaviorMove(behaviorTotals, {
+      chainLength: chain.length,
+      scoreGain: state.score - scoreBefore,
+      moveNumber: state.moves,
+      moveBudget: state.maxMoves,
+    });
     applyGravity(state);
     spawnNewTiles(state, rng);
     tickBlockers(state);
@@ -41,7 +66,13 @@ function playToBudget(levelData, rng, params) {
     if (reachedTarget === null && state.score >= state.targetScore) reachedTarget = state.moves;
     if (state.moves >= state.maxMoves) break;
   }
-  return { score: state.score, movesToTarget: reachedTarget, moves: state.moves };
+  return {
+    score: state.score,
+    movesToTarget: reachedTarget,
+    moves: state.moves,
+    behaviorTotals,
+    behavior: summarizeBehavior(behaviorTotals),
+  };
 }
 
 // One policy against a fixed (level, seed) grid, flattened in a stable order so
@@ -50,17 +81,21 @@ function evaluatePolicy(params, levels, seeds) {
   const scores = [];
   let wins = 0;
   let movesToTargetSum = 0;
+  const behaviorTotals = { chainCount: 0, chainTiles: 0, totalScore: 0, lateScore: 0 };
   for (const levelData of levels) {
     for (const seed of seeds) {
       const r = playToBudget(levelData, makeRng(seed), params);
       scores.push(r.score);
       if (r.movesToTarget !== null) { wins += 1; movesToTargetSum += r.movesToTarget; }
+      for (const key of Object.keys(behaviorTotals)) behaviorTotals[key] += r.behaviorTotals[key];
     }
   }
   return {
     scores,
     winRate: wins / scores.length,
     avgMovesToTarget: wins ? movesToTargetSum / wins : null,
+    behaviorTotals,
+    behavior: summarizeBehavior(behaviorTotals),
   };
 }
 
@@ -150,4 +185,7 @@ function pairedLift(scores, refScores, layout = null) {
   };
 }
 
-module.exports = { playToBudget, evaluatePolicy, pairedLift, mean, sd, LOOKAHEAD_BASE };
+module.exports = {
+  playToBudget, evaluatePolicy, pairedLift, mean, sd,
+  recordBehaviorMove, summarizeBehavior, LOOKAHEAD_BASE,
+};
