@@ -49,6 +49,8 @@ const CALIBRATION_PARAMS = Object.freeze({
   bombMax: 9,
   tieBreak: 'degree',
   wHarvest: 0,
+  offerFull: 0,
+  pathWidth: 1,
 });
 
 // Pinning the parameters is not enough on its own: the same parameters against

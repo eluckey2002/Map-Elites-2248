@@ -319,6 +319,25 @@ function countOnward(state, chain, visited, candidate) {
   return n;
 }
 
+function scoreGreedyPath(state, chain, preferMergeableSum) {
+  if (chain.length < state.minChain) return null;
+
+  if (preferMergeableSum) {
+    let best = null;
+    for (let n = state.minChain; n <= chain.length; n++) {
+      const prefix = chain.slice(0, n);
+      const sum = chainValue(prefix);
+      if (!isMergeableSum(sum, state.tileScale || 1)) continue;
+      const prefixPoints = Math.floor(sum * chainMultiplier(n));
+      if (!best || prefixPoints > best.points) best = { chain: prefix, points: prefixPoints };
+    }
+    if (best) return best;
+  }
+
+  const points = Math.floor(chainValue(chain) * chainMultiplier(chain.length));
+  return { chain, points };
+}
+
 function buildGreedyChain(state, startTile, options = {}) {
   const { maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none' } = options;
   if (isBlockedTile(startTile)) return null;
@@ -364,28 +383,94 @@ function buildGreedyChain(state, startTile, options = {}) {
     visited.add(bestNeighbor);
   }
 
-  if (chain.length < state.minChain) return null;
-
-  if (preferMergeableSum) {
-    let best = null;
-    for (let n = state.minChain; n <= chain.length; n++) {
-      const prefix = chain.slice(0, n);
-      const sum = chainValue(prefix);
-      if (!isMergeableSum(sum, state.tileScale || 1)) continue;
-      const prefixPoints = Math.floor(sum * chainMultiplier(n));
-      if (!best || prefixPoints > best.points) best = { chain: prefix, points: prefixPoints };
-    }
-    if (best) return best; // no mergeable prefix -> fall through to the full walk
-  }
-
-  const points = Math.floor(chainValue(chain) * chainMultiplier(chain.length));
-  return { chain, points };
+  return scoreGreedyPath(state, chain, preferMergeableSum);
 }
 
-// Tries buildGreedyChain from every non-blocked tile, dedupes by (finalTile,
-// length, points) same as findTopChains, sorted best-first, capped at limit.
+// Keeps several partial walks alive from one start tile. The ordinary greedy
+// walk commits to one neighbor at every step; once that choice walls off the
+// board, later lookahead cannot recover a chain it was never offered. This
+// bounded beam explores the alternatives without paying full DFS cost.
+//
+// Partial paths are ranked by points already accumulated plus the values of
+// their currently reachable extensions. That estimate is deliberately shallow:
+// it is only a pruning rule for the candidate generator. The bot's existing
+// afterstate lookahead still makes the move decision.
+function buildGreedyPathBeam(state, startTile, options = {}) {
+  const {
+    maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none', pathWidth = 1,
+  } = options;
+  if (pathWidth <= 1) {
+    const result = buildGreedyChain(state, startTile, { maxLength, preferMergeableSum, tieBreak });
+    return result ? [result] : [];
+  }
+  if (isBlockedTile(startTile)) return [];
+
+  // Multi-path search supplements the historical walk; it never replaces it.
+  // This prevents alternative routes from crowding a proven long-chain
+  // candidate out of the bot's globally capped candidate list.
+  const baseline = buildGreedyChain(state, startTile, {
+    maxLength, preferMergeableSum, tieBreak,
+  });
+
+  let frontier = [{ chain: [startTile], visited: new Set([startTile]) }];
+  const finished = [];
+
+  while (frontier.length) {
+    const expanded = [];
+    for (const path of frontier) {
+      if (path.chain.length >= maxLength) {
+        finished.push(path.chain);
+        continue;
+      }
+
+      const extensions = legalExtensions(state, path.chain, path.visited);
+      if (!extensions.length) {
+        finished.push(path.chain);
+        continue;
+      }
+
+      extensions.sort((a, b) => {
+        if (a.value !== b.value) return a.value - b.value;
+        if (tieBreak !== 'degree') return 0;
+        return countOnward(state, path.chain, path.visited, a)
+          - countOnward(state, path.chain, path.visited, b);
+      });
+
+      // Preserve the accepted low-value-first policy. The beam explores
+      // alternate routes only among equally low-valued extensions; keeping a
+      // double while an equal tile remains made the first beam greedier and
+      // collapsed whole-game win rate.
+      const lowestValue = extensions[0].value;
+      for (const extension of extensions.filter((tile) => tile.value === lowestValue)) {
+        const chain = [...path.chain, extension];
+        const visited = new Set(path.visited);
+        visited.add(extension);
+        const onward = legalExtensions(state, chain, visited);
+        const points = Math.floor(chainValue(chain) * chainMultiplier(chain.length));
+        const potential = points + onward.reduce((sum, tile) => sum + tile.value, 0);
+        expanded.push({ chain, visited, potential });
+      }
+    }
+
+    if (!expanded.length) break;
+    expanded.sort((a, b) => b.potential - a.potential);
+    frontier = expanded.slice(0, pathWidth);
+  }
+
+  const alternatives = finished
+    .map((chain) => scoreGreedyPath(state, chain, preferMergeableSum))
+    .filter(Boolean);
+  return baseline ? [baseline, ...alternatives] : alternatives;
+}
+
+// Tries one or more bounded paths from every non-blocked tile, dedupes by
+// (finalTile, length, points) same as findTopChains, sorted best-first, capped
+// at limit. pathWidth=1 is the historical one-path walk exactly.
 function findGreedyChains(state, options = {}) {
-  const { maxLength = Infinity, limit = Infinity, preferMergeableSum = true, tieBreak = 'none' } = options;
+  const {
+    maxLength = Infinity, limit = Infinity, preferMergeableSum = true,
+    tieBreak = 'none', pathWidth = 1,
+  } = options;
   const results = [];
   const seen = new Set();
 
@@ -393,13 +478,16 @@ function findGreedyChains(state, options = {}) {
     for (let col = 0; col < state.gridWidth; col++) {
       const tile = state.grid[row][col];
       if (!tile || isBlockedTile(tile)) continue;
-      const result = buildGreedyChain(state, tile, { maxLength, preferMergeableSum, tieBreak });
-      if (!result) continue;
-      const finalTile = result.chain[result.chain.length - 1];
-      const key = `${finalTile.x},${finalTile.y},${result.chain.length},${result.points}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      results.push(result);
+      const paths = buildGreedyPathBeam(state, tile, {
+        maxLength, preferMergeableSum, tieBreak, pathWidth,
+      });
+      for (const result of paths) {
+        const finalTile = result.chain[result.chain.length - 1];
+        const key = `${finalTile.x},${finalTile.y},${result.chain.length},${result.points}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        results.push(result);
+      }
     }
   }
 

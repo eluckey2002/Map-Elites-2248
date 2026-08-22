@@ -81,6 +81,42 @@ const CANDIDATE_LIMIT = 24;
 // See EVIDENCE_LEDGER RESULT-0011.
 const CHAIN_TIE_BREAK = 'degree';
 
+// Retain several low-value-first partial paths instead of committing to one.
+// The beam branches only among extensions tied at the lowest value, preserving
+// the policy that makes chains long while allowing alternate routes around
+// self-created walls. Selected at width 8 on screen seeds, then confirmed on
+// all 53 levels x 300 disjoint seeds: +13.83% paired score (t=20.6), win rate
+// 93.64% -> 99.18%, at 2.69x the previous bot's compute cost.
+const CHAIN_PATH_WIDTH = 8;
+
+// Whether the lookahead is also offered the walk's UNTRIMMED result.
+//
+// `findGreedyChains` defaults `preferMergeableSum` to true, so every candidate
+// reaching the lookahead has already been cut back to a prefix whose sum lands
+// on the mergeable lattice (FACT-0006). That trade is real -- a sum off the
+// lattice can never be matched again, so it makes a dead tile -- but it is
+// taken unconditionally, by the move generator, before anything weighs it.
+//
+// The lookahead is the part that prices future board damage: `rolloutValue`
+// asks what next move the resulting board allows, `harvestValue` asks how
+// usable the surviving tile is. Neither ever sees the untrimmed option,
+// because the generator threw it away first.
+//
+// Measured on opening boards, what the bot plays against its own untrimmed
+// walk: level 52 seed 2, 5,120 against 9,600; level 51 seed 2, 5,120 against
+// 9,920. Across 135 measurable boards the bot finds the best available chain
+// on 46% of them and roughly half of it on 49%.
+//
+// This is the same error the CANDIDATE_LIMIT note above describes one layer
+// up -- a list cut by exactly the criterion the lookahead exists to override.
+// Turning this on removes a filter; it adds no rule and no tuned weight.
+//
+// Default off pending the measurement pre-registered at
+// `.orch/runs/chain-offer-2026-08-21/preregistration.md`. Adoption is a
+// separate decision from clearing the bar, because a stronger bot re-prices
+// every future level target.
+const OFFER_FULL_CHAINS = 0;
+
 // Points a candidate earns per cell it empties, beyond its own score.
 // Rationale, measured not assumed: `executeChain` deletes every chain tile but
 // the last and sets that one to the chain's SUM, so a merge conserves total
@@ -130,6 +166,8 @@ const DEFAULT_PARAMS = {
   bombMax: BOMB_MAX_CHAIN_LENGTH,    // longest chain the defuse search will hunt
   tieBreak: CHAIN_TIE_BREAK,         // how the walk chooses between equal tiles
   wHarvest: HARVEST_WEIGHT,          // weight on setting up a chain of built tiles
+  offerFull: OFFER_FULL_CHAINS,      // also offer the walk's untrimmed result
+  pathWidth: CHAIN_PATH_WIDTH,       // low-value-first partial paths retained per start
 };
 
 // Maps a chain from the real state onto the equivalent tiles in a clone
@@ -243,6 +281,40 @@ function harvestValue(sim, survivor) {
   return kin * survivor.value;
 }
 
+// The move generator's output, optionally with the untrimmed walk merged in.
+//
+// Both lists come from the same walks over the same start tiles; they differ
+// only in whether `buildGreedyChain` cut the result back to a mergeable-sum
+// prefix. Deduped on the key `findGreedyChains` already uses -- final tile,
+// length, points -- so a board where trimming changed nothing yields exactly
+// the shipped list and costs one extra walk, not one extra lookahead.
+//
+// Order matters: the trimmed list goes first, so with `offerFull` off this
+// returns the shipped candidates in the shipped order, and the 1-ply fallback
+// below (which takes candidates[0]) is unaffected.
+function collectCandidates(state, {
+  width, tieBreak, offerFull, pathWidth,
+}) {
+  const trimmed = findGreedyChains(state, { limit: width, tieBreak, pathWidth });
+  if (!offerFull) return trimmed;
+
+  const keyOf = (c) => {
+    const last = c.chain[c.chain.length - 1];
+    return `${last.x},${last.y},${c.chain.length},${c.points}`;
+  };
+  const seen = new Set(trimmed.map(keyOf));
+  const merged = trimmed.slice();
+  for (const candidate of findGreedyChains(state, {
+    limit: width, tieBreak, preferMergeableSum: false, pathWidth,
+  })) {
+    const key = keyOf(candidate);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push(candidate);
+  }
+  return merged;
+}
+
 // Heuristic: defuse the most urgent reachable bomb (lowest timer) first;
 // otherwise take the chain maximizing (this move's points + best next-move
 // points on the resulting board + a legal chain beginning at the survivor +
@@ -256,7 +328,9 @@ function harvestValue(sim, survivor) {
 // Returns null if the board has no legal move.
 function chooseMove(state, options = {}) {
   const { lookaheadRngFactory } = options;
-  const { wRoll, wPlace, turnover, width, bombMax, tieBreak, wHarvest } = { ...DEFAULT_PARAMS, ...options.params };
+  const {
+    wRoll, wPlace, turnover, width, bombMax, tieBreak, wHarvest, offerFull, pathWidth,
+  } = { ...DEFAULT_PARAMS, ...options.params };
 
   const bombs = findBombTiles(state).sort((a, b) => a.bombTimer - b.bombTimer);
   for (const bomb of bombs) {
@@ -264,7 +338,9 @@ function chooseMove(state, options = {}) {
     if (result) return result.chain;
   }
 
-  const candidates = findGreedyChains(state, { limit: width, tieBreak });
+  const candidates = collectCandidates(state, {
+    width, tieBreak, offerFull, pathWidth,
+  });
   if (candidates.length === 0) return null;
   if (!lookaheadRngFactory || candidates.length === 1) return candidates[0].chain;
 

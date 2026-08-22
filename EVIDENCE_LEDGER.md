@@ -427,6 +427,36 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** The one rule here that comes from the engine rather than from a guess: to consume a tile of value v the board needs a v or a v/2 adjacent to it, because a chain opens with an equal pair and then climbs equal-or-double. A lone 32 is therefore *not* stranded — `16, 16, 32` is legal — and an earlier version of this term that counted only equal-valued twins was wrong, because it would have pushed the bot to reach the whole way in one chain instead of building a 16 and then a 32. Overshooting is how a sum lands off the lattice. **Everything else in the term is invented**: the 1.0/0.7/0.4 kinship weights, the `1/(1+distance)` decay, matching on exact ratios only. Those are guesses about good play and they cap the bot at what was thought of, which is the standing argument for a learned evaluation rather than more hand-written terms. Adopting this exposed a defect in `solver/calibration.js`: `chooseMove` resolves `{ ...DEFAULT_PARAMS, ...params }`, so a parameter present on the live bot but absent from the frozen ruler silently takes the live value — the ruler would look frozen and not be. `calib-1` now pins `wHarvest: 0` explicitly and a test fails if the two key sets ever diverge. Existing targets are therefore unaffected by this change.
 
+### RESULT-0015 — Keeping eight low-value chain routes raises score 13.8% and win rate 5.5 points
+
+- **type:** result
+- **status:** superseded
+- **scope:** `solver/engine.js` bounded low-value-first path beam and `solver/bot.js` `pathWidth` (1 -> 8); live reference-bot strength only, no game rule, level, target, or calibration changed
+- **statement:** The prior chain walk retained exactly one route from each start tile. Even after `RESULT-0011`'s degree tie-break, one early choice could wall off a much longer route before the bot's afterstate evaluator ever saw it. The new generator keeps eight partial paths, but branches **only among extensions tied at the lowest tile value**; it therefore preserves the accepted low-value-first strategy rather than becoming greedier. Width 8 was selected on 12 levels x 40 screen seeds, then evaluated exactly once on all 53 levels x 300 disjoint confirmation seeds (15,900 games per arm). Confirmation measured **+13.83%** paired score (geometric mean of per-game log-ratios, clustered by level/seed, **t = 20.6**), mean score 42,355.9 -> 48,776.9, and win rate **93.64% -> 99.18%** (+5.53 points), at **2.69x** the previous bot's compute cost. The screen estimate was +14.82%, so the reportable confirmation came back slightly smaller but remained decisive. A first implementation that also branched to doubled values was rejected before confirmation after its screen reduced score by 23.86% or more and collapsed win rate; the negative control is retained in the bot tests.
+- **evidence:** `solver/multipath-ablation.js`; confirmation command `node solver/multipath-ablation.js --confirm` using screen seeds 9,000,000-9,000,039 and confirmation seeds 10,000,000-10,000,299; fixed public-seam tests in `solver/tests/bot.test.js`; failed predecessor and accepted run records under `.orch/tickets/2026-08-21-adhoc-multipath-bot/T-001.md` and `.orch/tickets/2026-08-21-adhoc-low-value-multipath/T-001.md`.
+- **proof_class:** `heuristic_observation` — a measured improvement in this heuristic player, not a percentage of human strength and not a bound on achievable score.
+- **as_of:** 2026-08-21
+- **reverify:** Run `node solver/multipath-ablation.js --confirm`; expect width 8 selected, confirmation lift near +14% at t > 3, no win-rate fall, and roughly 2.7x cost. Run the targeted bot, engine, policy-evaluation, and calibration tests.
+- **updated:** 2026-08-21
+- **supersedes:** []
+- **superseded_by:** [CORRECTION-0004]
+- **notes:** `calib-1` pins `pathWidth: 1`, so existing level targets remain tied to the historical ruler. Future authoring can continue to use that ruler independently of the stronger live bot. The result says nothing about the owner's human margin; that comparison remains separate.
+
+### RESULT-0016 — Preserving the old route plus bounded alternatives raises score 23.0% and win rate 5.9 points
+
+- **type:** result
+- **status:** accepted
+- **scope:** corrected `solver/engine.js` bounded low-value-first path beam and `solver/bot.js` `pathWidth` (1 -> 8); live reference-bot strength only, no game rule, level, target, or calibration changed
+- **statement:** `RESULT-0015`'s first beam could replace the historical one-path candidate with its alternatives. A pre-existing bot test caught one board where that hid a valuable eight-tile chain, so the corrected generator always keeps the historical route and supplements it with a beam of up to eight alternatives. It still branches only among extensions tied at the lowest tile value. With the corrected identity fixed, beam width 8 was selected on 12 levels x 40 screen seeds at **+24.32%**, then evaluated on all 53 levels x 300 confirmation seeds (15,900 games per arm). Confirmation measured **+23.00%** paired score (geometric mean of per-game log-ratios, clustered by level/seed, **t = 50.8**), mean score 42,355.9 -> 52,268.0, and win rate **93.64% -> 99.58%** (+5.94 points), at **2.68x** the one-path bot's compute cost. Targeted tests passed 74/74. The full solver suite passed 195/198; its only three failures are the already-recorded receipt-identity mismatches for `candidate-levels-52.json`, `candidate-levels-54.json`, and `candidate-levels.json`.
+- **evidence:** `solver/engine.js`, `buildGreedyPathBeam`; `solver/bot.js`, `CHAIN_PATH_WIDTH`; `solver/multipath-ablation.js`; command `node solver/multipath-ablation.js --confirm` on screen seeds 9,000,000-9,000,039 and confirmation seeds 10,000,000-10,000,299; public-seam positive and negative controls in `solver/tests/bot.test.js`; durable execution record `.orch/tickets/2026-08-21-adhoc-low-value-multipath/T-001.md`.
+- **proof_class:** `heuristic_observation` — a measured improvement in this heuristic player, not a percentage of human strength and not a bound on achievable score.
+- **as_of:** 2026-08-21
+- **reverify:** Run `node solver/multipath-ablation.js --confirm`; expect width 8 selected, confirmation lift near +23% at t > 3, no win-rate fall, and roughly 2.7x cost. Run `node --test solver/tests/bot.test.js solver/tests/engine.test.js solver/tests/policy-eval.test.js solver/tests/calibration.test.js` and the full solver suite.
+- **updated:** 2026-08-21
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** `calib-1` explicitly pins `pathWidth: 1`, so existing level targets remain tied to the historical ruler. Future authoring can use that ruler independently of the stronger live bot. The result says nothing about the owner's human margin; that comparison remains separate.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
@@ -592,6 +622,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** Appended rather than edited into `RESULT-0010`, which keeps its original wording and receipt. The correction is to an explanation, not to a measurement — every number `RESULT-0010` reports was and remains correct.
+
+### CORRECTION-0004 — RESULT-0015 was invalidated when the beam was made additive
+
+- **type:** correction
+- **status:** accepted
+- **scope:** `RESULT-0015` and the exact `solver/engine.js` identity it measured
+- **statement:** Supersedes `RESULT-0015`. After its confirmation, the pre-existing test `chooseMove: considers candidates ranked below the top few on immediate points` failed: beam alternatives had replaced, rather than supplemented, the historical one-path candidate. Correcting that behavior changed `solver/engine.js`, so the +13.83% confirmation no longer covered the live result and was invalidated. The corrected identity was re-screened and re-confirmed; its accepted measurement is `RESULT-0016`.
+- **evidence:** failed then passing targeted test recorded in `.orch/tickets/2026-08-21-adhoc-low-value-multipath/T-001.md`; corrected `buildGreedyPathBeam` in `solver/engine.js`; replacement measurement `RESULT-0016`.
+- **proof_class:** `direct_source` for the identity invalidation; replacement performance remains the `heuristic_observation` in `RESULT-0016`.
+- **as_of:** 2026-08-21
+- **reverify:** Inspect `buildGreedyPathBeam` and run the named bot test; expect the historical candidate to remain available. Use `RESULT-0016`, not `RESULT-0015`, for performance.
+- **updated:** 2026-08-21
+- **supersedes:** [RESULT-0015]
+- **superseded_by:** []
+- **notes:** The correction was driven by a deterministic regression test, not by the first confirmation's outcome. The frozen seed sets were then rerun against the corrected identity; only the corrected run is accepted.
 
 ## Assembly cut log
 

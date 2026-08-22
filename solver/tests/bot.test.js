@@ -143,6 +143,53 @@ test('chooseMove: considers candidates ranked below the top few on immediate poi
   assert.ok(chain.every((t) => t.value === 2));
 });
 
+test('chooseMove: multi-path search never abandons equal tiles for a double', () => {
+  // The failed first beam kept a 2->4 branch even though another 2 remained.
+  // That produced a larger immediate chain but collapsed whole-game win rate.
+  // Multi-path search may vary the route among equal low tiles; it must retain
+  // the accepted low-value-first rule rather than introduce a greedier policy.
+  const values = [
+    [null, 2, null, 2],
+    [4, 4, 2, null],
+    [4, 8, 4, 4],
+    [2, null, 2, null],
+  ];
+  const grid = values.map((row, y) => row.map((value, x) => (
+    value === null ? null : makeTile(x, y, value)
+  )));
+  const state = makeState(grid, { tileScale: 1 });
+  const sum = (chain) => chain.reduce((total, tile) => total + tile.value, 0);
+
+  const onePath = chooseMove(state, { params: { pathWidth: 1 } });
+  const multiPath = chooseMove(state, { params: { pathWidth: 6 } });
+
+  assert.equal(sum(onePath), 16);
+  assert.equal(sum(multiPath), 16);
+});
+
+test('chooseMove: low-value multi-path search keeps an alternate long route', () => {
+  const values = [
+    [2, 2, 2, 2, 2],
+    [2, 2, 2, null, 2],
+    [2, 2, 2, 2, 2],
+    [2, null, null, 2, 2],
+    [2, null, 2, null, null],
+  ];
+  const grid = values.map((row, y) => row.map((value, x) => (
+    value === null ? null : makeTile(x, y, value)
+  )));
+  const state = makeState(grid, { tileScale: 1 });
+
+  const onePath = chooseMove(state, { params: { pathWidth: 1 } });
+  const multiPath = chooseMove(state, { params: { pathWidth: 6 } });
+  const adoptedDefault = chooseMove(state);
+
+  assert.equal(onePath.length, 8);
+  assert.equal(multiPath.length, 16);
+  assert.equal(adoptedDefault.length, 16);
+  assert.ok(multiPath.every((tile) => tile.value === 2));
+});
+
 test('remnantPlacementValue: evaluates the survivor after gravity moves it', () => {
   const survivor = makeTile(0, 0, 2);
   const consumed = makeTile(1, 0, 2);
