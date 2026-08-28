@@ -357,6 +357,24 @@ and `solver/map-elites-output/map.html`, a static map that can be opened without
 a server. Empty squares are part of the result: they mean this bounded search
 did not discover an elite with that combination of behaviors.
 
+For an apples-to-apples archive comparison, reuse the first archive's exact
+behavior bins and choose evaluation-seed ranges that no earlier run used:
+
+```sh
+node solver/map-elites.js --seed 20260829 --iterations 120 \
+  --screen-seeds 12 --screen-seed-start 4000000 \
+  --holdout-seeds 24 --holdout-seed-start 5000000 --bins 5 \
+  --axes-from solver/map-elites-output/archive.json \
+  --out <new-output-directory>
+```
+
+`--axes-from` copies only the source archive's chain-style and patience bin
+axes. The new run still measures and records its own pilot descriptor ranges.
+The artifact records SHA-256 identities for both the source archive bytes and
+the frozen axes, and verification rejects an altered axis identity. Without
+these options, the legacy seed starts (`2000000` and `3000000`) and
+pilot-calibrated axes remain the defaults.
+
 The fixed **screen** games select the elite in each cell. They are not evidence
 that an elite generalizes. Three behaviorally separated representatives are
 therefore evaluated on a disjoint **holdout** seed set, and the map labels the

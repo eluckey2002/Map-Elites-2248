@@ -184,3 +184,42 @@ test('artifact verification refuses seed overlap and missing representative hold
     )),
   }), /missing holdout/);
 });
+
+test('artifact verification binds frozen axes to their recorded identity', () => {
+  const axes = {
+    chainStyle: buildAxis('Mean chain length', 4, 8, 2),
+    patience: buildAxis('Late-score share', 0.1, 0.5, 2),
+    pilot: {
+      chainRange: 0.4, minimumChainRange: 0.15,
+      patienceRange: 0.04, minimumPatienceRange: 0.02,
+    },
+  };
+  const artifact = {
+    config: { bins: 2, screen: { seeds: [1, 2] }, holdout: { seeds: [3, 4] } },
+    axes,
+    axesSource: { archiveSha256: 'a'.repeat(64), axesSha256: axesIdentity(axes) },
+    archive: [
+      { cell: '0,0', policyId: 'a' },
+      { cell: '1,0', policyId: 'b' },
+      { cell: '1,1', policyId: 'c' },
+    ],
+    representatives: [
+      { cell: '0,0', policyId: 'a', holdout: { fitness: 0 } },
+      { cell: '1,0', policyId: 'b', holdout: { fitness: -0.1 } },
+      { cell: '1,1', policyId: 'c', holdout: { fitness: 0.1 } },
+    ],
+  };
+
+  assert.doesNotThrow(() => validateArtifact(artifact));
+  assert.throws(() => validateArtifact({
+    ...artifact,
+    axes: {
+      ...axes,
+      chainStyle: { ...axes.chainStyle, maximum: 9 },
+    },
+  }), /frozen axes identity mismatch/);
+  assert.throws(() => validateArtifact({
+    ...artifact,
+    axesSource: { ...artifact.axesSource, archiveSha256: 'not-a-hash' },
+  }), /source archive SHA-256/);
+});

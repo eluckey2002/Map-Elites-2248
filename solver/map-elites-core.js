@@ -178,6 +178,13 @@ function validateArtifact(artifact) {
   if (!Array.isArray(screenSeeds) || !Array.isArray(holdoutSeeds)) throw new Error('screen and holdout seeds are required');
   const screenSet = new Set(screenSeeds);
   if (holdoutSeeds.some((seed) => screenSet.has(seed))) throw new Error('screen and holdout seeds overlap');
+  if (artifact.axesSource !== undefined && artifact.axesSource !== null) {
+    const { archiveSha256, axesSha256 } = artifact.axesSource;
+    if (!/^[a-f0-9]{64}$/.test(archiveSha256 || '')) throw new Error('source archive SHA-256 is invalid');
+    if (!/^[a-f0-9]{64}$/.test(axesSha256 || '')) throw new Error('frozen axes SHA-256 is invalid');
+    validateAxes(artifact.axes, artifact.config.bins);
+    if (axesIdentity(artifact.axes) !== axesSha256) throw new Error('frozen axes identity mismatch');
+  }
   if (!Array.isArray(artifact.archive) || artifact.archive.length < 3) throw new Error('archive needs at least three occupied cells');
   const chainBins = new Set(artifact.archive.map((elite) => elite.cell.split(',')[0]));
   const patienceBins = new Set(artifact.archive.map((elite) => elite.cell.split(',')[1]));
