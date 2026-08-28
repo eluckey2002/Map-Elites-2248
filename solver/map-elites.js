@@ -105,11 +105,25 @@ function parseArgs(argv) {
     iterations: number('iterations', 48),
     screenSeedCount: number('screen-seeds', 6),
     holdoutSeedCount: number('holdout-seeds', 12),
+    screenSeedStart: number('screen-seed-start', 2_000_000),
+    holdoutSeedStart: number('holdout-seed-start', 3_000_000),
     bins: number('bins', 5),
     out: string('out', 'solver/map-elites-output'),
+    axesFrom: string('axes-from', null),
     replay: string('replay', null),
     archive: string('archive', null),
   };
+}
+
+function seedRangeEnd(name, start, count) {
+  if (!Number.isSafeInteger(start) || start < 0) {
+    throw new Error(`${name} must be a non-negative safe integer`);
+  }
+  if (start > Number.MAX_SAFE_INTEGER - (count - 1)) {
+    throw new Error(`${name} range exceeds Number.MAX_SAFE_INTEGER`);
+  }
+  const end = start + count - 1;
+  return end;
 }
 
 function validateConfig(config) {
@@ -122,6 +136,22 @@ function validateConfig(config) {
   if (!Number.isInteger(config.bins) || config.bins < 3 || config.bins > 8) {
     throw new Error('bins must be an integer from 3 to 8');
   }
+  const screenStart = config.screenSeedStart ?? 2_000_000;
+  const holdoutStart = config.holdoutSeedStart ?? 3_000_000;
+  const screenEnd = seedRangeEnd('screen-seed-start', screenStart, config.screenSeedCount);
+  const holdoutEnd = seedRangeEnd('holdout-seed-start', holdoutStart, config.holdoutSeedCount);
+  if (screenStart <= holdoutEnd && holdoutStart <= screenEnd) {
+    throw new Error('screen and holdout seed ranges overlap');
+  }
+}
+
+function evaluationSeeds(config) {
+  const screenStart = config.screenSeedStart ?? 2_000_000;
+  const holdoutStart = config.holdoutSeedStart ?? 3_000_000;
+  return {
+    screenSeeds: Array.from({ length: config.screenSeedCount }, (_, index) => screenStart + index),
+    holdoutSeeds: Array.from({ length: config.holdoutSeedCount }, (_, index) => holdoutStart + index),
+  };
 }
 
 async function evaluateMany(pool, policies, levelNumbers, seeds) {
@@ -178,8 +208,7 @@ function selectRepresentatives(entries, count = 3) {
 
 async function runExperiment(config) {
   validateConfig(config);
-  const screenSeeds = Array.from({ length: config.screenSeedCount }, (_, index) => 2_000_000 + index);
-  const holdoutSeeds = Array.from({ length: config.holdoutSeedCount }, (_, index) => 3_000_000 + index);
+  const { screenSeeds, holdoutSeeds } = evaluationSeeds(config);
   const rng = makeRng(config.seed);
   const pool = createPool();
   try {
@@ -273,8 +302,8 @@ async function runExperiment(config) {
         seed: config.seed,
         iterations: config.iterations,
         bins: config.bins,
-        screen: { levels: SCREEN_LEVELS, seeds: screenSeeds },
-        holdout: { levels: HOLDOUT_LEVELS, seeds: holdoutSeeds },
+        screen: { levels: SCREEN_LEVELS, seedStart: screenSeeds[0], seeds: screenSeeds },
+        holdout: { levels: HOLDOUT_LEVELS, seedStart: holdoutSeeds[0], seeds: holdoutSeeds },
       },
       protected: { commit: PROTECTED_COMMIT, hashes: PROTECTED_HASHES },
       reference: {
@@ -364,5 +393,6 @@ if (require.main === module) {
 
 module.exports = {
   GENES, HOLDOUT_LEVELS, PROTECTED_COMMIT, PROTECTED_HASHES, SCREEN_LEVELS,
-  main, mutate, parseArgs, replayElite, runExperiment, selectRepresentatives,
+  evaluationSeeds, main, mutate, parseArgs, replayElite, runExperiment, selectRepresentatives,
+  validateConfig,
 };

@@ -5,6 +5,40 @@ const {
   axesFromPilot, buildAxis, cellForBehavior, placeElite, policyIdentity, renderMapHtml,
   validateArtifact,
 } = require('../map-elites-core');
+const { evaluationSeeds, parseArgs, validateConfig } = require('../map-elites');
+
+test('measurement-control CLI keeps legacy defaults and parses explicit starts and axes source', () => {
+  const defaults = parseArgs([]);
+  assert.equal(defaults.screenSeedStart, 2_000_000);
+  assert.equal(defaults.holdoutSeedStart, 3_000_000);
+  assert.equal(defaults.axesFrom, null);
+
+  const configured = parseArgs([
+    '--screen-seed-start', '4000000',
+    '--holdout-seed-start', '5000000',
+    '--axes-from', 'solver/map-elites-output/archive.json',
+  ]);
+  assert.equal(configured.screenSeedStart, 4_000_000);
+  assert.equal(configured.holdoutSeedStart, 5_000_000);
+  assert.equal(configured.axesFrom, 'solver/map-elites-output/archive.json');
+});
+
+test('evaluation seed ranges must be safe, non-negative, and disjoint', () => {
+  const config = {
+    iterations: 0, screenSeedCount: 4, holdoutSeedCount: 3, bins: 5,
+    screenSeedStart: 10, holdoutSeedStart: 20,
+  };
+  assert.doesNotThrow(() => validateConfig(config));
+  assert.deepEqual(evaluationSeeds(config), {
+    screenSeeds: [10, 11, 12, 13],
+    holdoutSeeds: [20, 21, 22],
+  });
+  assert.throws(() => validateConfig({ ...config, holdoutSeedStart: 12 }), /overlap/);
+  assert.throws(() => validateConfig({ ...config, screenSeedStart: -1 }), /non-negative safe integer/);
+  assert.throws(() => validateConfig({
+    ...config, screenSeedStart: Number.MAX_SAFE_INTEGER - 2,
+  }), /exceeds Number.MAX_SAFE_INTEGER/);
+});
 
 test('MAP-Elites keeps the best policy independently inside each behavior cell', () => {
   const archive = new Map();
