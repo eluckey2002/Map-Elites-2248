@@ -46,7 +46,11 @@ function assessBaseline(snapshot, { candidate = false } = {}) {
 }
 
 function git(args, cwd) {
-  return execFileSync('git', args, { cwd, encoding: 'utf8' }).trim();
+  return execFileSync('git', args, { cwd, encoding: 'utf8' }).trimEnd();
+}
+
+function parseStatusPaths(raw) {
+  return raw.split('\n').filter(Boolean).map((line) => line.slice(3));
 }
 
 function parseWorktrees(raw) {
@@ -94,13 +98,12 @@ function collectSnapshot() {
   const root = git(['rev-parse', '--show-toplevel'], cwd);
   const head = git(['rev-parse', 'HEAD'], cwd);
   const branch = git(['branch', '--show-current'], cwd);
-  const dirtyPaths = git(['status', '--porcelain'], cwd).split('\n').filter(Boolean).map((line) => line.slice(3));
+  const dirtyPaths = parseStatusPaths(git(['status', '--porcelain'], cwd));
   const registered = parseWorktrees(git(['worktree', 'list', '--porcelain'], root));
   const registeredPaths = new Set(registered.map((worktree) => path.resolve(worktree.path)));
 
   for (const worktree of registered) {
-    worktree.dirtyPaths = git(['status', '--porcelain'], worktree.path)
-      .split('\n').filter(Boolean).map((line) => line.slice(3));
+    worktree.dirtyPaths = parseStatusPaths(git(['status', '--porcelain'], worktree.path));
   }
   for (const discovered of discoverWorktreeLikeDirectories(root)) {
     if (!registeredPaths.has(path.resolve(discovered))) {
@@ -159,5 +162,6 @@ module.exports = {
   collectSnapshot,
   discoverWorktreeLikeDirectories,
   parseRemoteRefs,
+  parseStatusPaths,
   parseWorktrees,
 };

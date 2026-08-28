@@ -5,6 +5,7 @@ const {
   EXPECTED_SAFETY_REFS,
   REQUIRED_ANCESTOR,
   assessBaseline,
+  parseStatusPaths,
 } = require('../../tools/verify-repo-baseline.js');
 
 function greenSnapshot() {
@@ -92,4 +93,11 @@ test('candidate mode permits a non-main branch but keeps every safety check', ()
   snapshot.mainRemote = 'e'.repeat(40);
 
   assert.deepEqual(assessBaseline(snapshot, { candidate: true }), []);
+});
+
+test('porcelain parsing preserves a leading dot on the first unstaged path', () => {
+  assert.deepEqual(parseStatusPaths(' M .gitignore\n?? new-file.txt\n'), [
+    '.gitignore',
+    'new-file.txt',
+  ]);
 });
