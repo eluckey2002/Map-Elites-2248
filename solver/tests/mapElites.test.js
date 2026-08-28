@@ -1,11 +1,17 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 const {
-  axesFromPilot, buildAxis, cellForBehavior, placeElite, policyIdentity, renderMapHtml,
-  validateArtifact,
+  axesFromPilot, axesIdentity, buildAxis, cellForBehavior, placeElite, policyIdentity,
+  renderMapHtml, validateArtifact,
 } = require('../map-elites-core');
-const { evaluationSeeds, parseArgs, validateConfig } = require('../map-elites');
+const {
+  evaluationSeeds, parseArgs, resolveAxes, validateConfig,
+} = require('../map-elites');
 
 test('measurement-control CLI keeps legacy defaults and parses explicit starts and axes source', () => {
   const defaults = parseArgs([]);
@@ -38,6 +44,44 @@ test('evaluation seed ranges must be safe, non-negative, and disjoint', () => {
   assert.throws(() => validateConfig({
     ...config, screenSeedStart: Number.MAX_SAFE_INTEGER - 2,
   }), /exceeds Number.MAX_SAFE_INTEGER/);
+});
+
+test('a source archive freezes exact bin axes while retaining current pilot diagnostics', () => {
+  const source = {
+    axes: {
+      chainStyle: buildAxis('Mean chain length', 4, 10, 3),
+      patience: buildAxis('Late-score share', 0.1, 0.7, 3),
+      pilot: { chainRange: 999, patienceRange: 999 },
+    },
+  };
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'map-elites-axes-'));
+  const sourcePath = path.join(directory, 'archive.json');
+  const sourceBytes = `${JSON.stringify(source, null, 2)}\n`;
+  fs.writeFileSync(sourcePath, sourceBytes);
+
+  const resolved = resolveAxes({ bins: 3, axesFrom: sourcePath }, [
+    { meanChainLength: 5, lateScoreShare: 0.2 },
+    { meanChainLength: 5.4, lateScoreShare: 0.24 },
+  ]);
+
+  assert.deepEqual(resolved.axes.chainStyle, source.axes.chainStyle);
+  assert.deepEqual(resolved.axes.patience, source.axes.patience);
+  assert.equal(resolved.axes.pilot.chainRange, 0.4);
+  assert.ok(Math.abs(resolved.axes.pilot.patienceRange - 0.04) < 1e-12);
+  assert.equal(
+    resolved.axesSource.archiveSha256,
+    crypto.createHash('sha256').update(sourceBytes).digest('hex'),
+  );
+  assert.equal(resolved.axesSource.axesSha256, axesIdentity(source.axes));
+  assert.equal(
+    axesIdentity({ patience: source.axes.patience, chainStyle: source.axes.chainStyle }),
+    resolved.axesSource.axesSha256,
+    'axis identity is independent of object key order',
+  );
+  assert.throws(() => resolveAxes({ bins: 4, axesFrom: sourcePath }, [
+    { meanChainLength: 5, lateScoreShare: 0.2 },
+    { meanChainLength: 5.4, lateScoreShare: 0.24 },
+  ]), /source axes use 3 bins; --bins is 4/);
 });
 
 test('MAP-Elites keeps the best policy independently inside each behavior cell', () => {

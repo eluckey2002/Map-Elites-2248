@@ -4,6 +4,7 @@
 // chooseMove's existing public seam, and the committed defaults are the fixed
 // reference against which screen and holdout fitness are measured.
 
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const { LEVELS } = require('../src/game');
@@ -11,7 +12,8 @@ const { DEFAULT_PARAMS } = require('./bot');
 const { pairedLift, mean } = require('./policy-eval');
 const { createPool } = require('./policy-pool');
 const {
-  axesFromPilot, cellForBehavior, placeElite, policyIdentity, renderMapHtml,
+  axesFromPilot, axesIdentity, cellForBehavior, placeElite, policyIdentity, renderMapHtml,
+  validateAxes,
 } = require('./map-elites-core');
 
 const ROOT = path.join(__dirname, '..');
@@ -154,6 +156,30 @@ function evaluationSeeds(config) {
   };
 }
 
+function resolveAxes(config, pilotBehaviors) {
+  const pilotAxes = axesFromPilot(pilotBehaviors, {
+    count: config.bins,
+    minimumChainRange: 0.15,
+    minimumPatienceRange: 0.02,
+  });
+  if (!config.axesFrom) return { axes: pilotAxes, axesSource: null };
+
+  const sourcePath = resolveFromRoot(config.axesFrom);
+  const sourceBytes = fs.readFileSync(sourcePath);
+  const source = JSON.parse(sourceBytes.toString('utf8'));
+  validateAxes(source.axes, config.bins);
+  const chainStyle = JSON.parse(JSON.stringify(source.axes.chainStyle));
+  const patience = JSON.parse(JSON.stringify(source.axes.patience));
+  const axes = { chainStyle, patience, pilot: pilotAxes.pilot };
+  return {
+    axes,
+    axesSource: {
+      archiveSha256: crypto.createHash('sha256').update(sourceBytes).digest('hex'),
+      axesSha256: axesIdentity(axes),
+    },
+  };
+}
+
 async function evaluateMany(pool, policies, levelNumbers, seeds) {
   return Promise.all(policies.map(async (entry) => ({
     ...entry,
@@ -213,11 +239,9 @@ async function runExperiment(config) {
   const pool = createPool();
   try {
     const pilots = await evaluateMany(pool, pilotPolicies(), SCREEN_LEVELS, screenSeeds);
-    const axes = axesFromPilot(pilots.map((entry) => entry.result.behavior), {
-      count: config.bins,
-      minimumChainRange: 0.15,
-      minimumPatienceRange: 0.02,
-    });
+    const { axes, axesSource } = resolveAxes(
+      config, pilots.map((entry) => entry.result.behavior),
+    );
     const reference = pilots.find((entry) => entry.name === 'champion');
     const archive = new Map();
     const seen = new Set();
@@ -306,6 +330,7 @@ async function runExperiment(config) {
         holdout: { levels: HOLDOUT_LEVELS, seedStart: holdoutSeeds[0], seeds: holdoutSeeds },
       },
       protected: { commit: PROTECTED_COMMIT, hashes: PROTECTED_HASHES },
+      axesSource,
       reference: {
         policyId: policyIdentity(reference.params),
         params: reference.params,
@@ -393,6 +418,6 @@ if (require.main === module) {
 
 module.exports = {
   GENES, HOLDOUT_LEVELS, PROTECTED_COMMIT, PROTECTED_HASHES, SCREEN_LEVELS,
-  evaluationSeeds, main, mutate, parseArgs, replayElite, runExperiment, selectRepresentatives,
-  validateConfig,
+  evaluationSeeds, main, mutate, parseArgs, replayElite, resolveAxes, runExperiment,
+  selectRepresentatives, validateConfig,
 };

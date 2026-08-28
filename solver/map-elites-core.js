@@ -19,6 +19,44 @@ function policyIdentity(params) {
   return crypto.createHash('sha256').update(JSON.stringify(ordered)).digest('hex').slice(0, 12);
 }
 
+function stableJson(value) {
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(',')}]`;
+  if (value && typeof value === 'object') {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${stableJson(value[key])}`).join(',')}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function validateAxes(axes, expectedCount = null) {
+  if (!axes || typeof axes !== 'object') throw new Error('source archive is missing axes');
+  const checked = [];
+  for (const [key, label] of [['chainStyle', 'chain-style'], ['patience', 'patience']]) {
+    const axis = axes[key];
+    if (!axis || !Number.isFinite(axis.minimum) || !Number.isFinite(axis.maximum)
+      || !(axis.maximum > axis.minimum) || !Number.isInteger(axis.count)
+      || !Array.isArray(axis.bins) || axis.bins.length !== axis.count) {
+      throw new Error(`source archive has malformed ${label} axis`);
+    }
+    if (expectedCount !== null && axis.count !== expectedCount) {
+      throw new Error(`source axes use ${axis.count} bins; --bins is ${expectedCount}`);
+    }
+    axis.bins.forEach((bin, index) => {
+      if (!bin || bin.index !== index || !Number.isFinite(bin.from) || !Number.isFinite(bin.to)
+        || !(bin.to > bin.from) || typeof bin.label !== 'string') {
+        throw new Error(`source archive has malformed ${label} bin ${index}`);
+      }
+    });
+    checked.push(axis.count);
+  }
+  if (checked[0] !== checked[1]) throw new Error('source axes use different bin counts');
+}
+
+function axesIdentity(axes) {
+  validateAxes(axes);
+  const frozen = { chainStyle: axes.chainStyle, patience: axes.patience };
+  return crypto.createHash('sha256').update(stableJson(frozen)).digest('hex');
+}
+
 function buildAxis(name, minimum, maximum, count) {
   if (!(maximum > minimum) || !Number.isInteger(count) || count < 2) {
     throw new Error(`invalid ${name} axis`);
@@ -166,6 +204,6 @@ function validateArtifact(artifact) {
 }
 
 module.exports = {
-  axesFromPilot, buildAxis, cellForBehavior, placeElite, policyIdentity, renderMapHtml,
-  validateArtifact,
+  axesFromPilot, axesIdentity, buildAxis, cellForBehavior, placeElite, policyIdentity,
+  renderMapHtml, validateArtifact, validateAxes,
 };
