@@ -511,7 +511,18 @@ test('the real exemption facts hold for the shipped corpus', () => {
   const shipped = shippedLevels();
   assert.equal(shipped.has(52), true, 'level 52 must ship for its exemption to be legitimate');
   assert.equal(shipped.has(54), false, 'level 54 does not ship; it must never be exempt');
-  assert.equal(shipped.has(53), false, 'level 53 does not ship either');
+  // Level 53 shipped on 2026-08-21. Pinning the consequence rather than flipping
+  // false to true: shipping it ARMS its exemption, because three winning
+  // recordings bind to its identity. That is inert while its receipt verifies --
+  // the gate returns `current` before consulting the exemption at all -- and
+  // becomes load-bearing the next time the bot changes. Asserting both halves
+  // keeps that state change visible instead of erasing it.
+  assert.equal(shipped.has(53), true, 'level 53 shipped 2026-08-21');
+  assert.equal(
+    exemptionForStore(SOLVER_DIR, 'candidate-levels.json').exempt,
+    true,
+    'level 53 ships and three winning recordings bind to it, so its exemption is armed',
+  );
 
   assert.equal(
     exemptionForStore(SOLVER_DIR, 'candidate-levels-52.json').exempt,

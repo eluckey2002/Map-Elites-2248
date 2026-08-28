@@ -110,6 +110,22 @@ const LEVELS = [
     // it is held at the value it was admitted and playtested with rather than
     // re-derived against the stronger bot. See RESULT-0012.
     { level: 52, target: 102000, tileScale: 32, moves: 24, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 2, y: 3 }] },
+
+    // Level 53 ("gen-0014-wide-sprint"): the first board wider than five
+    // columns -- 6x5 -- and the shortest, 16 moves against a shipped minimum
+    // of 22 everywhere else. Target 101000 is the bot's measured median
+    // (107,200) times a 0.95 demand, rounded down -- receipt 043ca53f, which
+    // verifies against the current bot. That demand is recorded as a
+    // provisional proposal and sits well above the 70% that set 51 and 52.
+    // Holdout of 300 seeds: 191 wins, 0 lockouts, 0 bombs.
+    //
+    // The owner played it three times and won three times, replay verified:
+    // 101,120 in 13 moves (seed 2), 110,208 in 13 (seed 10), 105,216 in 12
+    // (seed 10) -- never using more than 13 of the 16.
+    //
+    // minChain is 3: the first time the chain requirement steps back down
+    // since level 11 raised it. Shipped exactly as authored.
+    { level: 53, target: 101000, tileScale: 32, moves: 16, minChain: 3, gridW: 6, gridH: 5, blockers: [] },
 ];
 
 // ============================================================================

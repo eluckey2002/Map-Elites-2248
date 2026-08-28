@@ -1,0 +1,1520 @@
+[
+  {
+    "level": 1,
+    "seed": 1,
+    "ms": 23865,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 1,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 2191,
+    "measured": true
+  },
+  {
+    "level": 1,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 1029,
+    "measured": true
+  },
+  {
+    "level": 2,
+    "seed": 1,
+    "ms": 21212,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 2,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 2028,
+    "measured": true
+  },
+  {
+    "level": 2,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 975,
+    "measured": true
+  },
+  {
+    "level": 3,
+    "seed": 1,
+    "ms": 23047,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 3,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 1973,
+    "measured": true
+  },
+  {
+    "level": 3,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 997,
+    "measured": true
+  },
+  {
+    "level": 4,
+    "seed": 1,
+    "ms": 22345,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 4,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 1991,
+    "measured": true
+  },
+  {
+    "level": 4,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 958,
+    "measured": true
+  },
+  {
+    "level": 5,
+    "seed": 1,
+    "ms": 21881,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 5,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 1923,
+    "measured": true
+  },
+  {
+    "level": 5,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 958,
+    "measured": true
+  },
+  {
+    "level": 6,
+    "seed": 1,
+    "ms": 21313,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 6,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 1904,
+    "measured": true
+  },
+  {
+    "level": 6,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 961,
+    "measured": true
+  },
+  {
+    "level": 7,
+    "seed": 1,
+    "ms": 20530,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 7,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 1946,
+    "measured": true
+  },
+  {
+    "level": 7,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 951,
+    "measured": true
+  },
+  {
+    "level": 8,
+    "seed": 1,
+    "ms": 21778,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 8,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 1968,
+    "measured": true
+  },
+  {
+    "level": 8,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 967,
+    "measured": true
+  },
+  {
+    "level": 9,
+    "seed": 1,
+    "ms": 22007,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 9,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 1926,
+    "measured": true
+  },
+  {
+    "level": 9,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 961,
+    "measured": true
+  },
+  {
+    "level": 10,
+    "seed": 1,
+    "ms": 21561,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 10,
+    "seed": 2,
+    "plain": 160,
+    "degree": 320,
+    "truth": 320,
+    "actions": 836058,
+    "ms": 1910,
+    "measured": true
+  },
+  {
+    "level": 10,
+    "seed": 3,
+    "plain": 160,
+    "degree": 160,
+    "truth": 320,
+    "actions": 494674,
+    "ms": 981,
+    "measured": true
+  },
+  {
+    "level": 11,
+    "seed": 1,
+    "ms": 24560,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 11,
+    "seed": 2,
+    "plain": 320,
+    "degree": 640,
+    "truth": 640,
+    "actions": 835970,
+    "ms": 2264,
+    "measured": true
+  },
+  {
+    "level": 11,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 494580,
+    "ms": 1277,
+    "measured": true
+  },
+  {
+    "level": 12,
+    "seed": 1,
+    "ms": 29568,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 12,
+    "seed": 2,
+    "plain": 320,
+    "degree": 640,
+    "truth": 640,
+    "actions": 835970,
+    "ms": 2634,
+    "measured": true
+  },
+  {
+    "level": 12,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 494580,
+    "ms": 1433,
+    "measured": true
+  },
+  {
+    "level": 13,
+    "seed": 1,
+    "ms": 28325,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 13,
+    "seed": 2,
+    "plain": 320,
+    "degree": 640,
+    "truth": 640,
+    "actions": 835970,
+    "ms": 1998,
+    "measured": true
+  },
+  {
+    "level": 13,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 494580,
+    "ms": 1001,
+    "measured": true
+  },
+  {
+    "level": 14,
+    "seed": 1,
+    "ms": 23090,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 14,
+    "seed": 2,
+    "plain": 320,
+    "degree": 640,
+    "truth": 640,
+    "actions": 835970,
+    "ms": 1984,
+    "measured": true
+  },
+  {
+    "level": 14,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 494580,
+    "ms": 1019,
+    "measured": true
+  },
+  {
+    "level": 15,
+    "seed": 1,
+    "plain": 320,
+    "degree": 640,
+    "truth": 640,
+    "actions": 6146798,
+    "ms": 20935,
+    "measured": true
+  },
+  {
+    "level": 15,
+    "seed": 2,
+    "plain": 320,
+    "degree": 640,
+    "truth": 640,
+    "actions": 145163,
+    "ms": 359,
+    "measured": true
+  },
+  {
+    "level": 15,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 286136,
+    "ms": 600,
+    "measured": true
+  },
+  {
+    "level": 16,
+    "seed": 1,
+    "ms": 24728,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 16,
+    "seed": 2,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 238114,
+    "ms": 665,
+    "measured": true
+  },
+  {
+    "level": 16,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 272644,
+    "ms": 796,
+    "measured": true
+  },
+  {
+    "level": 17,
+    "seed": 1,
+    "ms": 24378,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 17,
+    "seed": 2,
+    "plain": 320,
+    "degree": 640,
+    "truth": 640,
+    "actions": 694352,
+    "ms": 2346,
+    "measured": true
+  },
+  {
+    "level": 17,
+    "seed": 3,
+    "plain": 380,
+    "degree": 320,
+    "truth": 640,
+    "actions": 49577,
+    "ms": 199,
+    "measured": true
+  },
+  {
+    "level": 18,
+    "seed": 1,
+    "plain": 320,
+    "degree": 340,
+    "truth": 640,
+    "actions": 1076582,
+    "ms": 3517,
+    "measured": true
+  },
+  {
+    "level": 18,
+    "seed": 2,
+    "plain": 640,
+    "degree": 640,
+    "truth": 640,
+    "actions": 258157,
+    "ms": 839,
+    "measured": true
+  },
+  {
+    "level": 18,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 134728,
+    "ms": 489,
+    "measured": true
+  },
+  {
+    "level": 19,
+    "seed": 1,
+    "plain": 320,
+    "degree": 320,
+    "truth": 320,
+    "actions": 2423388,
+    "ms": 6504,
+    "measured": true
+  },
+  {
+    "level": 19,
+    "seed": 2,
+    "plain": 320,
+    "degree": 640,
+    "truth": 640,
+    "actions": 642064,
+    "ms": 1632,
+    "measured": true
+  },
+  {
+    "level": 19,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 90864,
+    "ms": 233,
+    "measured": true
+  },
+  {
+    "level": 20,
+    "seed": 1,
+    "plain": 320,
+    "degree": 320,
+    "truth": 320,
+    "actions": 5129532,
+    "ms": 14758,
+    "measured": true
+  },
+  {
+    "level": 20,
+    "seed": 2,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 400805,
+    "ms": 941,
+    "measured": true
+  },
+  {
+    "level": 20,
+    "seed": 3,
+    "plain": 320,
+    "degree": 320,
+    "truth": 640,
+    "actions": 474886,
+    "ms": 1085,
+    "measured": true
+  },
+  {
+    "level": 21,
+    "seed": 1,
+    "plain": 640,
+    "degree": 680,
+    "truth": 1280,
+    "actions": 6061470,
+    "ms": 20043,
+    "measured": true
+  },
+  {
+    "level": 21,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 305595,
+    "ms": 657,
+    "measured": true
+  },
+  {
+    "level": 21,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 393321,
+    "ms": 798,
+    "measured": true
+  },
+  {
+    "level": 22,
+    "seed": 1,
+    "plain": 640,
+    "degree": 680,
+    "truth": 1280,
+    "actions": 6075613,
+    "ms": 19626,
+    "measured": true
+  },
+  {
+    "level": 22,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 642064,
+    "ms": 1431,
+    "measured": true
+  },
+  {
+    "level": 22,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 261402,
+    "ms": 529,
+    "measured": true
+  },
+  {
+    "level": 23,
+    "seed": 1,
+    "ms": 23558,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 23,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 279351,
+    "ms": 721,
+    "measured": true
+  },
+  {
+    "level": 23,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 207815,
+    "ms": 482,
+    "measured": true
+  },
+  {
+    "level": 24,
+    "seed": 1,
+    "plain": 640,
+    "degree": 640,
+    "truth": 640,
+    "actions": 2305320,
+    "ms": 5717,
+    "measured": true
+  },
+  {
+    "level": 24,
+    "seed": 2,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 175095,
+    "ms": 450,
+    "measured": true
+  },
+  {
+    "level": 24,
+    "seed": 3,
+    "plain": 640,
+    "degree": 760,
+    "truth": 1280,
+    "actions": 66053,
+    "ms": 181,
+    "measured": true
+  },
+  {
+    "level": 25,
+    "seed": 1,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 6146798,
+    "ms": 24931,
+    "measured": true
+  },
+  {
+    "level": 25,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 145163,
+    "ms": 373,
+    "measured": true
+  },
+  {
+    "level": 25,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 286136,
+    "ms": 664,
+    "measured": true
+  },
+  {
+    "level": 26,
+    "seed": 1,
+    "ms": 23983,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 26,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 835707,
+    "ms": 2227,
+    "measured": true
+  },
+  {
+    "level": 26,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 494285,
+    "ms": 1174,
+    "measured": true
+  },
+  {
+    "level": 27,
+    "seed": 1,
+    "ms": 25631,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 27,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 835707,
+    "ms": 2092,
+    "measured": true
+  },
+  {
+    "level": 27,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 494285,
+    "ms": 1010,
+    "measured": true
+  },
+  {
+    "level": 28,
+    "seed": 1,
+    "ms": 23318,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 28,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 279129,
+    "ms": 685,
+    "measured": true
+  },
+  {
+    "level": 28,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 207537,
+    "ms": 534,
+    "measured": true
+  },
+  {
+    "level": 29,
+    "seed": 1,
+    "plain": 640,
+    "degree": 680,
+    "truth": 1280,
+    "actions": 6075217,
+    "ms": 21151,
+    "measured": true
+  },
+  {
+    "level": 29,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 641820,
+    "ms": 1661,
+    "measured": true
+  },
+  {
+    "level": 29,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 261128,
+    "ms": 608,
+    "measured": true
+  },
+  {
+    "level": 30,
+    "seed": 1,
+    "plain": 640,
+    "degree": 680,
+    "truth": 1280,
+    "actions": 958905,
+    "ms": 2402,
+    "measured": true
+  },
+  {
+    "level": 30,
+    "seed": 2,
+    "plain": 640,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 135432,
+    "ms": 423,
+    "measured": true
+  },
+  {
+    "level": 30,
+    "seed": 3,
+    "plain": 640,
+    "degree": 640,
+    "truth": 1280,
+    "actions": 124727,
+    "ms": 333,
+    "measured": true
+  },
+  {
+    "level": 31,
+    "seed": 1,
+    "ms": 23116,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 31,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 198563,
+    "ms": 531,
+    "measured": true
+  },
+  {
+    "level": 31,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 262589,
+    "ms": 588,
+    "measured": true
+  },
+  {
+    "level": 32,
+    "seed": 1,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 2638174,
+    "ms": 6052,
+    "measured": true
+  },
+  {
+    "level": 32,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 35335,
+    "ms": 123,
+    "measured": true
+  },
+  {
+    "level": 32,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 1680,
+    "truth": 2560,
+    "actions": 128885,
+    "ms": 279,
+    "measured": true
+  },
+  {
+    "level": 33,
+    "seed": 1,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 2558062,
+    "ms": 6492,
+    "measured": true
+  },
+  {
+    "level": 33,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 40067,
+    "ms": 148,
+    "measured": true
+  },
+  {
+    "level": 33,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 2000,
+    "truth": 2560,
+    "actions": 93229,
+    "ms": 249,
+    "measured": true
+  },
+  {
+    "level": 34,
+    "seed": 1,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 1146868,
+    "ms": 2506,
+    "measured": true
+  },
+  {
+    "level": 34,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 45067,
+    "ms": 138,
+    "measured": true
+  },
+  {
+    "level": 34,
+    "seed": 3,
+    "plain": 912,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 14915,
+    "ms": 89,
+    "measured": true
+  },
+  {
+    "level": 35,
+    "seed": 1,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 1148736,
+    "ms": 2451,
+    "measured": true
+  },
+  {
+    "level": 35,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 46001,
+    "ms": 137,
+    "measured": true
+  },
+  {
+    "level": 35,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 48917,
+    "ms": 144,
+    "measured": true
+  },
+  {
+    "level": 36,
+    "seed": 1,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 2636462,
+    "ms": 6095,
+    "measured": true
+  },
+  {
+    "level": 36,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 576,
+    "truth": 2560,
+    "actions": 80672,
+    "ms": 219,
+    "measured": true
+  },
+  {
+    "level": 36,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 190402,
+    "ms": 423,
+    "measured": true
+  },
+  {
+    "level": 37,
+    "seed": 1,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 849559,
+    "ms": 1838,
+    "measured": true
+  },
+  {
+    "level": 37,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 18742,
+    "ms": 93,
+    "measured": true
+  },
+  {
+    "level": 37,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 89966,
+    "ms": 209,
+    "measured": true
+  },
+  {
+    "level": 38,
+    "seed": 1,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 774872,
+    "ms": 1685,
+    "measured": true
+  },
+  {
+    "level": 38,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 133667,
+    "ms": 358,
+    "measured": true
+  },
+  {
+    "level": 38,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 30530,
+    "ms": 116,
+    "measured": true
+  },
+  {
+    "level": 39,
+    "seed": 1,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 653348,
+    "ms": 1640,
+    "measured": true
+  },
+  {
+    "level": 39,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 33484,
+    "ms": 158,
+    "measured": true
+  },
+  {
+    "level": 39,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 1280,
+    "actions": 75097,
+    "ms": 237,
+    "measured": true
+  },
+  {
+    "level": 40,
+    "seed": 1,
+    "ms": 30084,
+    "measured": false,
+    "why": "wall-clock cap"
+  },
+  {
+    "level": 40,
+    "seed": 2,
+    "plain": 1280,
+    "degree": 1280,
+    "truth": 2560,
+    "actions": 198563,
+    "ms": 595,
+    "measured": true
+  },
+  {
+    "level": 40,
+    "seed": 3,
+    "plain": 1280,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 262589,
+    "ms": 622,
+    "measured": true
+  },
+  {
+    "level": 41,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 2558062,
+    "ms": 7189,
+    "measured": true
+  },
+  {
+    "level": 41,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 40067,
+    "ms": 147,
+    "measured": true
+  },
+  {
+    "level": 41,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 4000,
+    "truth": 5120,
+    "actions": 93229,
+    "ms": 334,
+    "measured": true
+  },
+  {
+    "level": 42,
+    "seed": 1,
+    "ms": 26820,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 42,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 198563,
+    "ms": 573,
+    "measured": true
+  },
+  {
+    "level": 42,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 5120,
+    "truth": 5120,
+    "actions": 262589,
+    "ms": 786,
+    "measured": true
+  },
+  {
+    "level": 43,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 2680204,
+    "ms": 8260,
+    "measured": true
+  },
+  {
+    "level": 43,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 73178,
+    "ms": 298,
+    "measured": true
+  },
+  {
+    "level": 43,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 3040,
+    "truth": 5120,
+    "actions": 191674,
+    "ms": 617,
+    "measured": true
+  },
+  {
+    "level": 44,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 2618563,
+    "ms": 7229,
+    "measured": true
+  },
+  {
+    "level": 44,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 151544,
+    "ms": 408,
+    "measured": true
+  },
+  {
+    "level": 44,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 131257,
+    "ms": 432,
+    "measured": true
+  },
+  {
+    "level": 45,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 2636462,
+    "ms": 7296,
+    "measured": true
+  },
+  {
+    "level": 45,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 1152,
+    "truth": 5120,
+    "actions": 80672,
+    "ms": 285,
+    "measured": true
+  },
+  {
+    "level": 45,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 190402,
+    "ms": 574,
+    "measured": true
+  },
+  {
+    "level": 46,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 706088,
+    "ms": 1846,
+    "measured": true
+  },
+  {
+    "level": 46,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 68680,
+    "ms": 204,
+    "measured": true
+  },
+  {
+    "level": 46,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 102645,
+    "ms": 267,
+    "measured": true
+  },
+  {
+    "level": 47,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 2618563,
+    "ms": 7934,
+    "measured": true
+  },
+  {
+    "level": 47,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 151544,
+    "ms": 421,
+    "measured": true
+  },
+  {
+    "level": 47,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 131257,
+    "ms": 316,
+    "measured": true
+  },
+  {
+    "level": 48,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 274369,
+    "ms": 664,
+    "measured": true
+  },
+  {
+    "level": 48,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 3643,
+    "ms": 91,
+    "measured": true
+  },
+  {
+    "level": 48,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 60637,
+    "ms": 215,
+    "measured": true
+  },
+  {
+    "level": 49,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 1056,
+    "truth": 2560,
+    "actions": 1214596,
+    "ms": 3415,
+    "measured": true
+  },
+  {
+    "level": 49,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 40067,
+    "ms": 162,
+    "measured": true
+  },
+  {
+    "level": 49,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 4000,
+    "truth": 5120,
+    "actions": 49494,
+    "ms": 172,
+    "measured": true
+  },
+  {
+    "level": 50,
+    "seed": 1,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 2560,
+    "actions": 2636462,
+    "ms": 7428,
+    "measured": true
+  },
+  {
+    "level": 50,
+    "seed": 2,
+    "plain": 2560,
+    "degree": 1152,
+    "truth": 5120,
+    "actions": 80672,
+    "ms": 270,
+    "measured": true
+  },
+  {
+    "level": 50,
+    "seed": 3,
+    "plain": 2560,
+    "degree": 2560,
+    "truth": 5120,
+    "actions": 190402,
+    "ms": 715,
+    "measured": true
+  },
+  {
+    "level": 51,
+    "seed": 1,
+    "ms": 29249,
+    "measured": false,
+    "why": "heap cap"
+  },
+  {
+    "level": 51,
+    "seed": 2,
+    "plain": 5120,
+    "degree": 5120,
+    "truth": 10240,
+    "actions": 198563,
+    "ms": 568,
+    "measured": true
+  },
+  {
+    "level": 51,
+    "seed": 3,
+    "plain": 5120,
+    "degree": 10240,
+    "truth": 10240,
+    "actions": 262589,
+    "ms": 760,
+    "measured": true
+  },
+  {
+    "level": 52,
+    "seed": 1,
+    "plain": 5120,
+    "degree": 5120,
+    "truth": 5120,
+    "actions": 2638174,
+    "ms": 6910,
+    "measured": true
+  },
+  {
+    "level": 52,
+    "seed": 2,
+    "plain": 5120,
+    "degree": 5120,
+    "truth": 10240,
+    "actions": 35335,
+    "ms": 153,
+    "measured": true
+  },
+  {
+    "level": 52,
+    "seed": 3,
+    "plain": 5120,
+    "degree": 6720,
+    "truth": 10240,
+    "actions": 128885,
+    "ms": 350,
+    "measured": true
+  },
+  {
+    "level": 53,
+    "seed": 1,
+    "plain": 5120,
+    "degree": 5120,
+    "truth": 5120,
+    "actions": 769628,
+    "ms": 2067,
+    "measured": true
+  },
+  {
+    "level": 53,
+    "seed": 2,
+    "plain": 10560,
+    "degree": 4992,
+    "truth": 10240,
+    "actions": 92435,
+    "ms": 256,
+    "measured": true
+  },
+  {
+    "level": 53,
+    "seed": 3,
+    "plain": 5120,
+    "degree": 5120,
+    "truth": 10240,
+    "actions": 387179,
+    "ms": 896,
+    "measured": true
+  }
+]

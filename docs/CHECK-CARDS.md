@@ -34,8 +34,10 @@ card in the same commit.
   `solver/candidate-levels*.receipt.json`, top level of `solver/` only — **3
   stores**, pinned by `solver/candidate-corpus.json`. Store-driven, not
   receipt-driven, so a deleted receipt fails rather than shrinking the corpus.
-  Excludes 14 identically-named files elsewhere:
-  `solver/candidates-archive/` (4) and
+  Excludes 18 identically-named files elsewhere:
+  `solver/candidates-archive/` (8, up from 4 when this card was written: two
+  overwritten stores were recovered from git on 2026-08-21 and archived with
+  their receipts) and
   `.orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/solver/` (10).
   `.json` only; `schemaVersion: 1` only; stores of exactly one candidate
   (`level-author.js:253`).
@@ -46,7 +48,7 @@ card in the same commit.
   receipt to `code/input identity mismatch`, and restoring the file made it
   clean again. Reads no git porcelain, so the `core.quotePath` trap is n/a.
 - **Sampling memory:** n/a — exhaustive over the glob, not a sampler. Silence
-  about the 2 archived candidates means "deliberately excluded", never "audited
+  about the 4 archived candidates means "deliberately excluded", never "audited
   clean". `STORE_FLOOR` is what stops an accidentally-empty glob reading green.
 - **Does NOT catch:**
   1. **One habitual red can camouflage a second.** Level 52 fails on every run
@@ -381,8 +383,12 @@ card in the same commit.
   it claims, and the final score, move count, and win/lose must reproduce.
   Unchecked: whether the playthrough was skillful, representative, or human.
 - **Scope:** `recordings/*.json`, resolved to candidates by `candidateIdentity`
-  across `solver/` and `solver/candidates-archive/`. At ship: 3 replayable, 5
-  orphans. Excludes `.orch/runs/*/workspace/repo/recordings/`. Read at run time,
+  across `solver/` and `solver/candidates-archive/` — both the
+  `candidate-levels*.json` stores and the `results` entries inside
+  `generated-batch*.json`. **10 of 10 replayable, 0 orphans** (2026-08-21). At
+  ship this line read "3 replayable, 5 orphans"; that was a blind spot in the
+  index plus two overwritten stores, not five lost boards — see blind spot 1.
+  Excludes `.orch/runs/*/workspace/repo/recordings/`. Read at run time,
   so a playthrough recorded minutes ago is checked without editing this file.
 - **Reads own output?:** no, and this is the check's quiet strength. The
   recording is produced by the **browser** running `src/game.js`; the replay runs
@@ -393,10 +399,25 @@ card in the same commit.
 - **Sampling memory:** n/a — exhaustive. Orphans are printed by name and by the
   identity they want, so silence about them would mean "never looked".
 - **Does NOT catch:**
-  1. **Orphans — 5 of 8 recordings cannot be verified at all.** Their candidate
-     store no longer exists, so the board is gone and no replay is possible. This
-     check reports them; it cannot check them. Includes all three level 51
-     recordings and the project's only recorded *loss*.
+  1. **An orphan report does not tell you the board is lost.** All the check
+     knows is that a recording's identity is missing from *its index*. Destroyed,
+     sitting in git history, or sitting in a file the index does not read — it
+     cannot tell those apart, and it prints "exists nowhere on disk" for all
+     three. **This card asserted the strong reading, and I was wrong to.** It
+     said 5 of 8 recordings were beyond checking because their boards were gone.
+     That claim was false the day I wrote it; nothing about the situation
+     changed underneath it. Every one of the five was recoverable, and all five
+     were recovered on 2026-08-21: level 51's store came back from
+     `git show 1468392^:solver/candidate-levels.json` and level 54's from
+     `git show 0965038^:solver/candidate-levels-54.json` (both now in
+     `solver/candidates-archive/`, with their receipts), and the fifth was never
+     lost at all — it sits in `solver/generated-batch-02.json` at HEAD as
+     `gen-0017`, invisible only because the index read `candidate-levels*.json`
+     and nothing else. The count is now 10 replayable, 0 orphans. **The blind
+     spot that produced the false claim is untouched:** nothing makes this check
+     look in git history, or in an unindexed file, before it reports a board as
+     gone — and nothing stops the next person believing the message the way I
+     did.
   2. **Who played, or when.** Recordings carry no author and no timestamp. A
      clean replay proves a valid playthrough happened, never that a human did it
      or which human. Every "human-validated" claim in this repo rests on the fact
@@ -409,22 +430,64 @@ card in the same commit.
      `candidate-corpus.json` for stores. Removing a file removes its check.
   6. **A recording POSTed directly to the server** rather than played. The
      endpoint has no authentication; a forged-but-legal playthrough would pass.
+  7. **A recording bound to a candidate nobody ever chose.** Widening the index
+     to read `generated-batch*.json` took it from 5 resolvable identities to
+     **84** — every candidate any generation run ever produced, including the 16
+     whose own `verdict.pass` is `false`. Before, an identity outside the curated
+     stores was flagged for a human to look at; now it resolves silently and
+     replays green. A clean replay proves the moves are legal against *some*
+     board that once existed, never that the board was a level anyone shipped or
+     intended to. This is the price of freeing `44d3802d…`, whose board genuinely
+     was inside a batch file — a trade, not a free win, and the weakest point of
+     the 2026-08-21 recovery.
+  8. **A `generated-batch*.json` file deleted or rewritten.** Those four files
+     are now load-bearing for replay and nothing on disk says so. Removing
+     `generated-batch-02.json` re-orphans `44d3802d…` and, with the ceiling at 0,
+     turns the suite red — which is the good outcome only if the red is read as a
+     lost board rather than as noise from deleted scratch output. Unlike the
+     store corpus, which `solver/candidate-corpus.json` pins and which requires
+     an edit to that manifest to shrink, no manifest and no signature stands
+     between a person and deleting a batch file, and `solver/README.md` does not
+     mention that anything references them.
 - **Crafted-bypass test:** same file — a bumped final score, an altered chain
-  coordinate, a truncated run still claiming a win, an unresolvable identity, and
-  a freshly staged recording. **The altered-coordinate case initially failed**,
+  coordinate, a truncated run still claiming a win, an unresolvable identity, a
+  freshly staged recording, a candidate held only inside a batch file, and a
+  chain that revisits a tile. **The altered-coordinate case initially failed**,
   and that failure was the point: the first version checked only that recorded
   tiles held recorded values, so a chain rewritten to a *different tile of the
   same value* replayed clean — and on a board full of 64s that is most of them.
-  `chainLegality()` exists because a control caught its absence.
+  That is why `chainLegality()` was written.
+  **It is not what kept `chainLegality()` honest, and this card claimed it was.**
+  Measured by mutation on 2026-08-21 — delete the `chainLegality()` loop from
+  `replay()` and 20 of 21 tests stay green, the altered-coordinate case among
+  them. That case is refused by the tile-value check; it never reached the
+  legality branch. So from the day this check shipped until that measurement,
+  chain legality was enforced by code that no test held in place. The single test
+  that dies under the mutation is `a chain that revisits a tile is refused as
+  illegal, not merely as mis-scored`, added 2026-08-21: it appends a repeat of a
+  chain's first tile, changing no coordinate and no value, so nothing but the
+  legality rules can object to it.
 - **Retires:** NO. Nothing existed to widen. `validateRecording` could not be
   extended to cover this: it runs once, at POST time, and cannot detect a
   recording that was valid when accepted but whose candidate later changed or
   vanished.
-- **Enforcement:** HARD from ship, green today. The orphan count is a **ratchet**
-  at 5 — it may fall, never rise. A new orphan means a candidate store was
-  destroyed while a recording still referenced it.
+- **Enforcement:** HARD from ship, green today. The orphan count is a **ratchet**,
+  lowered 5 → **0** on 2026-08-21 once every recording resolved — it may fall,
+  never rise. A new orphan now means a candidate store was destroyed, or an
+  identity was written into a recording that nothing on disk defines. At 0 the
+  ratchet fires on the next authoring overwrite, which is the point and will be
+  inconvenient: the response is a `git show` into `solver/candidates-archive/`,
+  not a raised ceiling.
 - **Decay:** runs on every `node --test solver/tests/*.test.js`; ~5ms, no replay
   search involved. Recalibration trigger: **if anyone raises `ORPHAN_CEILING`
   instead of recovering the store, this check has been defeated** — that is the
   same move as archiving a failing receipt, and it should be treated the same way.
 - **Shipped:** 2026-08-21 · ticket `.orch/tickets/curve-debt-2026-08-21/T-005.md`.
+- **Corrected:** 2026-08-21 · ticket
+  `.orch/tickets/ranked-items-2026-08-21/T-008.md`, after
+  `.orch/tickets/ranked-items-2026-08-21/T-007.md` recovered all five orphans and
+  `.orch/audits/orphaned-recordings-2026-08-21/findings.md` established they were
+  never lost. Three claims on this card were false as written, not overtaken by
+  events: that the five orphans could not be checked, the archived-store counts
+  in the first card, and the credit for chain legality. Commit `91321e4` carries
+  the first of them in its body; it is history and stays as written.
