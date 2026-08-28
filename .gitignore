@@ -1,5 +1,6 @@
 .DS_Store
 .orch/friction/
+.recovery/
 .codex/
 .orch/runs/*/workspace/repo/
 
