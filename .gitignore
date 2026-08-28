@@ -2,10 +2,11 @@
 .orch/friction/
 .recovery/
 .codex/
-.orch/runs/*/workspace/repo/
 
 # Live git worktrees checked out inside the repo; they carry their own history
 .claude/worktrees/
+.orch/runs/*/workspace/repo/
+.orch/runs/*/worktree/
 
 # Regenerable measurement cache for solver/game-tester.js
 solver/.base-scores.json
