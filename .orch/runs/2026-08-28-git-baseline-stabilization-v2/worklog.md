@@ -56,13 +56,26 @@ The repository has one clean, remotely recoverable canonical `main` baseline con
 - Candidate ancestry contains `8508c3b`; whitespace gate passes.
 - T-001 completed. Remaining delivery work is remote containment, local held-material preservation, canonical promotion, contained-worktree retirement, and the live guard.
 
+### 5. Preserve locally and promote without retiring worktrees
+
+- Published the tested candidate branch, then moved all held/local-only material and pre-switch shadows into ignored `.recovery/2026-08-28/`; nothing was deleted.
+- Switched the root to `main` at `404aae2ea424b7624f1b271c62f20c34f5226221` and fast-forwarded remote `main` to the same identity.
+- Owner interruption clarified that the delay was the obsolete permission wait. The safer implementation retains every clean MAP-Elites worktree and ignores only their checkout directories from root status; the guard still inspects their registration and cleanliness.
+
+### 6. Live guard correction
+
+- The first canonical invocation correctly failed on a discovered nested Git marker, but inspection proved it was a historical self-contained repository with a full `.git` directory, not an unregistered linked worktree.
+- Red: a discovery fixture returned both the linked `.git` pointer and the standalone `.git` directory.
+- Green: discovery now returns only linked-worktree pointer files; targeted guard tests pass 10/10.
+- Final full-suite correction: 221 total, 218 pass, exactly the same three deliberate stale-receipt failures and no others.
+
 ## Blame classes
 
 []
 
 ## Failed approaches
 
-[]
+- The first live guard treated every nested `.git` marker as a linked worktree. That would have forced a false choice between deleting preserved historical material and failing the baseline. The corrected implementation distinguishes linked pointer files from standalone repository directories.
 
 ## Queued scope
 

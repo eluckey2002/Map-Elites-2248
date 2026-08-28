@@ -71,7 +71,7 @@ function discoverWorktreeLikeDirectories(root) {
     if (!fs.existsSync(directory)) return;
     const gitMarker = path.join(directory, '.git');
     if (directory !== root && fs.existsSync(gitMarker)) {
-      found.push(directory);
+      if (fs.statSync(gitMarker).isFile()) found.push(directory);
       return;
     }
     for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {

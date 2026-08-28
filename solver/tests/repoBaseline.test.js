@@ -1,10 +1,14 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 const {
   EXPECTED_SAFETY_REFS,
   REQUIRED_ANCESTOR,
   assessBaseline,
+  discoverWorktreeLikeDirectories,
   parseStatusPaths,
 } = require('../../tools/verify-repo-baseline.js');
 
@@ -100,4 +104,17 @@ test('porcelain parsing preserves a leading dot on the first unstaged path', () 
     '.gitignore',
     'new-file.txt',
   ]);
+});
+
+test('discovery distinguishes linked worktree pointers from standalone repositories', (t) => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'repo-baseline-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+
+  const linked = path.join(root, '.orch', 'runs', 'linked', 'worktree');
+  const standalone = path.join(root, '.orch', 'runs', 'standalone', 'workspace', 'repo');
+  fs.mkdirSync(linked, { recursive: true });
+  fs.writeFileSync(path.join(linked, '.git'), 'gitdir: /repo/.git/worktrees/linked\n');
+  fs.mkdirSync(path.join(standalone, '.git'), { recursive: true });
+
+  assert.deepEqual(discoverWorktreeLikeDirectories(root), [linked]);
 });
