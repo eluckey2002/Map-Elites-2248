@@ -69,6 +69,12 @@ The repository has one clean, remotely recoverable canonical `main` baseline con
 - Green: discovery now returns only linked-worktree pointer files; targeted guard tests pass 10/10.
 - Final full-suite correction: 221 total, 218 pass, exactly the same three deliberate stale-receipt failures and no others.
 
+### 7. Canonical admission
+
+- Fast-forwarded remote `main` through guard-correction commit `9f76a342656286487dc7cfd6d9f7937d9a14f901`.
+- Live canonical guard passed with the clean root, exact remote safety identities, required MAP-Elites ancestry, and every retained registered worktree clean.
+- The parked deterministic-solver line remains separate. No worktree, historical repository, evidence artifact, held file, or recovery snapshot was deleted.
+
 ## Blame classes
 
 []
@@ -83,4 +89,4 @@ The repository has one clean, remotely recoverable canonical `main` baseline con
 
 ## Terminal
 
-[]
+- `complete`: A1-A8 satisfied. The final record-only closeout commit is rechecked against remote `main` by the live canonical guard after publication.
