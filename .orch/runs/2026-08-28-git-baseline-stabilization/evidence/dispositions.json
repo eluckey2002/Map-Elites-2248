@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "commit": "52f500c03a11699cb6bd7c3cab7f6a232470e0dd",
+    "statusSha256": "1f276a59ca3f6812a6def0b0382fad9c7e770b7d16327427ebdfc60220a784e8",
+    "trackedPatchSha256": "e3432a9ba31ba1918eb865aa7ee252ae448b8fe3fc4245681c9cc0750fea55c7",
+    "untrackedArchiveSha256": "c1c4ad747415bcfbe3eb51a97786b80ee26c7cbc7b7c0197bcf86fa774145145"
+  },
+  "counts": {
+    "durable evidence/receipt": 53,
+    "unknown/hold": 7,
+    "generated/local-only": 1,
+    "product/source": 6
+  },
+  "entries": [
+    {
+      "path": ".orch/audits/orphaned-recordings-2026-08-21/findings.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/chain-coverage-survey.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/continuation-check.py",
+      "kind": "untracked",
+      "disposition": "unknown/hold"
+    },
+    {
+      "path": ".orch/EVENT-SCHEMA.md",
+      "kind": "untracked",
+      "disposition": "unknown/hold"
+    },
+    {
+      "path": ".orch/events.jsonl",
+      "kind": "untracked",
+      "disposition": "unknown/hold"
+    },
+    {
+      "path": ".orch/goal.md",
+      "kind": "untracked",
+      "disposition": "unknown/hold"
+    },
+    {
+      "path": ".orch/record-event.py",
+      "kind": "untracked",
+      "disposition": "unknown/hold"
+    },
+    {
+      "path": ".orch/run-evaluation.py",
+      "kind": "untracked",
+      "disposition": "unknown/hold"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-git-baseline-stabilization/spec.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-comparable-round/composition.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/synthesis.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round-verification/spec.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round-verification/worklog.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round/evidence/map.html",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round/spec.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round/worklog.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-measurement-controls/spec.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-measurement-controls/worklog.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-transition/evidence/archive.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-transition/evidence/map.html",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-transition/evidence/synthesis.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-transition/spec.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/2026-08-28-map-elites-transition/worklog.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/chain-offer-2026-08-21/c3-respecification.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/chain-offer-2026-08-21/preregistration.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/chain-offer-2026-08-21/stop-record.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/chain-offer-2026-08-23/c2-reverify.js",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/chain-offer-2026-08-23/preregistration.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/chain-offer-2026-08-23/stop-record.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/runs/ranked-items-2026-08-21/worklog.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/state.json",
+      "kind": "untracked",
+      "disposition": "unknown/hold"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-adhoc-current-overview/current-overview.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-adhoc-git-baseline/git-baseline.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-adhoc-level-universe/level-universe.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-adhoc-universe-map-codification/universe-map-codification.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-map-elites-independent-round-verification/T-001.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-map-elites-independent-round-verification/T-002.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-map-elites-independent-round/T-001.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-map-elites-independent-round/T-002.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-map-elites-measurement-controls/T-001.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-map-elites-transition/T-001.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/2026-08-28-map-elites-transition/T-002.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/curve-debt-2026-08-21/T-002.md",
+      "kind": "tracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/curve-debt-2026-08-21/T-003.md",
+      "kind": "tracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/curve-debt-2026-08-21/T-005.md",
+      "kind": "tracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/ranked-items-2026-08-21/T-006.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/ranked-items-2026-08-21/T-007.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/ranked-items-2026-08-21/T-008.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": ".orch/tickets/ranked-items-2026-08-21/T-009.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "2026-08-21-124155--2248 craziness.txt",
+      "kind": "untracked",
+      "disposition": "generated/local-only"
+    },
+    {
+      "path": "docs/ASSISTANT-FAILURE-LEDGER.md",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "docs/CHECK-CARDS.md",
+      "kind": "tracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "recordings/7ad0978f96196c4ffe7ac15035340454d8e79ab23ea98003a84443bdcbd01526.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "solver/candidates-archive/candidate-levels-51-split-channel-524f37c0.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "solver/candidates-archive/candidate-levels-51-split-channel-524f37c0.receipt.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "solver/candidates-archive/candidate-levels-54-tighter-pace-56c8eab0.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "solver/candidates-archive/candidate-levels-54-tighter-pace-56c8eab0.receipt.json",
+      "kind": "untracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "solver/candidates-archive/README.md",
+      "kind": "tracked",
+      "disposition": "durable evidence/receipt"
+    },
+    {
+      "path": "solver/chain-coverage-survey.js",
+      "kind": "untracked",
+      "disposition": "product/source"
+    },
+    {
+      "path": "solver/chain-offer-ablation.js",
+      "kind": "untracked",
+      "disposition": "product/source"
+    },
+    {
+      "path": "solver/tests/gameLevels.test.js",
+      "kind": "tracked",
+      "disposition": "product/source"
+    },
+    {
+      "path": "solver/tests/receiptGate.test.js",
+      "kind": "tracked",
+      "disposition": "product/source"
+    },
+    {
+      "path": "solver/tests/recordingReplay.test.js",
+      "kind": "tracked",
+      "disposition": "product/source"
+    },
+    {
+      "path": "src/game.js",
+      "kind": "tracked",
+      "disposition": "product/source"
+    }
+  ]
+}
