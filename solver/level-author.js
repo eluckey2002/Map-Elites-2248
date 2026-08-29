@@ -12,6 +12,7 @@ const {
   checkBombs,
 } = require('./engine');
 const { chooseMove } = require('./bot');
+const { CALIBRATION_PARAMS, calibrationStamp } = require('./calibration');
 
 const LOOKAHEAD_BASE = 987654321;
 const FIT_SEEDS = Object.freeze({ start: 0, count: 150 });
@@ -39,6 +40,7 @@ function fileIdentity(file) {
 function defaultInputIdentities() {
   return {
     bot: fileIdentity(path.join(__dirname, 'bot.js')),
+    calibration: fileIdentity(path.join(__dirname, 'calibration.js')),
     engine: fileIdentity(path.join(__dirname, 'engine.js')),
     levelAuthor: fileIdentity(__filename),
   };
@@ -118,13 +120,17 @@ function quantile(sorted, q) {
   return sorted[Math.min(Math.floor(sorted.length * q), sorted.length - 1)];
 }
 
-function playMeasured(level, seed) {
+function playMeasured(level, seed, options = {}) {
   const rng = makeRng(seed);
   const state = createLevelState(level, rng);
   const hardCap = level.moves + 5;
+  const selectMove = options.chooseMove || chooseMove;
 
   for (let moveIndex = 0; moveIndex < hardCap; moveIndex++) {
-    const chain = chooseMove(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex) });
+    const chain = selectMove(state, {
+      lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex),
+      params: CALIBRATION_PARAMS,
+    });
     if (!chain) return { score: state.score, result: 'lose', reason: 'no valid moves', movesUsed: state.moves };
     executeChain(state, chain);
     applyGravity(state);
@@ -226,6 +232,7 @@ function deriveCandidate(shapeInput, options = {}) {
       tileScalePolicy: '2 ** floor((level - 1) / 10)',
       tileScale,
       roundedTarget: target,
+      calibration: calibrationStamp(),
     },
     holdout,
   });
@@ -270,6 +277,9 @@ function verifyCandidate(store, receipt, options = {}) {
   if (!targetDerivation || typeof targetDerivation !== 'object') throw new Error('target derivation is missing');
   if (targetDerivation.policy !== 'median-times-demand-rounded-down') throw new Error('target derivation policy is invalid');
   if (targetDerivation.tileScalePolicy !== '2 ** floor((level - 1) / 10)') throw new Error('tile scale policy is invalid');
+  if (canonicalJson(targetDerivation.calibration) !== canonicalJson(calibrationStamp())) {
+    throw new Error('target derivation calibration is invalid');
+  }
   const expectedTileScale = tileScaleForLevel(candidate.level);
   if (candidate.tileScale !== expectedTileScale || targetDerivation.tileScale !== expectedTileScale) {
     throw new Error(`tile scale must equal level-derived policy value ${expectedTileScale}`);

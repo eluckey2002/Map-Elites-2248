@@ -6,9 +6,12 @@ const {
   HOLDOUT_SEEDS,
   deriveCandidate,
   identity,
+  playMeasured,
   verifyCandidate,
   validateShape,
 } = require('../level-author');
+const { CALIBRATION_PARAMS, calibrationStamp } = require('../calibration');
+const { DEFAULT_PARAMS } = require('../bot');
 
 const SHAPE = {
   schemaVersion: 1,
@@ -71,6 +74,7 @@ test('deriveCandidate uses fixed fitting and disjoint holdout seeds with measure
   assert.equal(receipt.targetDerivation.measuredMedian, 1075);
   assert.equal(receipt.targetDerivation.demand, 0.70);
   assert.equal(receipt.targetDerivation.roundedTarget, 750);
+  assert.deepEqual(receipt.targetDerivation.calibration, calibrationStamp());
   assert.equal(receipt.holdout.terminalCounts.total, 300);
   assert.equal(receipt.holdout.terminalCounts.win, 1);
   assert.equal(receipt.holdout.terminalCounts.bombExploded, 1);
@@ -78,6 +82,41 @@ test('deriveCandidate uses fixed fitting and disjoint holdout seeds with measure
   assert.match(receipt.shapeIdentity, /^[a-f0-9]{64}$/);
   assert.match(receipt.candidateIdentity, /^[a-f0-9]{64}$/);
   assert.match(receipt.receiptIdentity, /^[a-f0-9]{64}$/);
+});
+
+test('playMeasured supplies the complete frozen calibration even when live bot defaults move', () => {
+  const level = {
+    level: 1,
+    target: 1000,
+    tileScale: 1,
+    moves: 1,
+    minChain: 2,
+    gridW: 2,
+    gridH: 2,
+    blockers: [],
+  };
+  const observed = [];
+  const originalPathWidth = DEFAULT_PARAMS.pathWidth;
+  DEFAULT_PARAMS.pathWidth = originalPathWidth + 99;
+
+  try {
+    playMeasured(level, 0, {
+      chooseMove: (_state, options) => {
+        observed.push(options);
+        return null;
+      },
+    });
+  } finally {
+    DEFAULT_PARAMS.pathWidth = originalPathWidth;
+  }
+
+  assert.equal(observed.length, 1, 'the test seam must observe the move-selection call');
+  assert.deepEqual(observed[0].params, CALIBRATION_PARAMS);
+  assert.notEqual(
+    observed[0].params.pathWidth,
+    originalPathWidth + 99,
+    'candidate measurement must not inherit a changed live default',
+  );
 });
 
 test('deriveCandidate refuses an incomplete fitting run', () => {

@@ -167,7 +167,7 @@ card in the same commit.
 ### input-closure-is-complete · HARD
 
 - **Protects:** the drift check's own coverage. `defaultInputIdentities()` hashes
-  exactly three files; if a new local require lands in the measurement path
+  exactly four files; if a new local require lands in the measurement path
   without being added to that set, the receipt check keeps passing while the
   code underneath it changes. This is a check that guards another check — it
   fails in precisely the case where the other one wrongly passes.
@@ -184,7 +184,8 @@ card in the same commit.
   `receipt-verifies-against-current-code`.
 - **Scope:** static regex over `require('./x')` and `require("./x")` in
   `solver/level-author.js` and everything transitively reached — today `bot.js`
-  and `engine.js`, three files total. Excludes: `node:` builtins, bare package
+  imports `engine.js` and `calibration.js`, while both calibration and authoring
+  reach `bot.js`; four files total. Excludes: `node:` builtins, bare package
   specifiers, `node_modules`, absolute paths, parent-directory requires
   (`../`), and anything outside the walk root. Also asserts
   `Object.keys(defaultInputIdentities())` still matches `HASHED_FILES`, so
@@ -219,15 +220,18 @@ card in the same commit.
   duplicate of the receipt check: that check passes, wrongly, in exactly the
   case this one fails.
 - **Enforcement:** HARD from ship. Unlike the receipt walk it lands **green** —
-  the closure is complete today (`level-author.js` reaches only `bot.js` and
-  `engine.js`, all three hashed), so there is no pre-existing debt requiring a
-  report-only stage. No promotion condition: it is already at its final rung.
+  the closure is complete today (`level-author.js`, `bot.js`, `engine.js`, and
+  `calibration.js` are all hashed), so there is no pre-existing debt requiring
+  a report-only stage. No promotion condition: it is already at its final rung.
 - **Decay:** re-runs on every `node --test solver/tests/*.test.js`; cost ~1ms,
   so it carries no runtime pressure. Recalibration trigger: the first legitimate
   `require('../x')` or config file entering the measurement path turns blind
   spots 2 and 3 from theoretical into live, at which point the hashed set must
   grow to cover them and this card is rewritten — not waived.
 - **Shipped:** 2026-08-21 · same commit as the receipt check it guards.
+  Updated 2026-08-28 when `calibration.js` became a direct measurement input;
+  the existing staged unhashed-require control failed before `HASHED_FILES`
+  gained that fourth dependency and passed afterward.
 
 ---
 

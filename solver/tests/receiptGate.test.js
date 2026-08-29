@@ -202,6 +202,7 @@ test('the walk inspected the whole corpus', () => {
 // failing. This test makes that a loud failure.
 const HASHED_FILES = Object.freeze({
   bot: 'bot.js',
+  calibration: 'calibration.js',
   engine: 'engine.js',
   levelAuthor: 'level-author.js',
 });
