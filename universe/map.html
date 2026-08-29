@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2248 Universe Map</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #0d1117; color: #e6edf3; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: radial-gradient(circle at top left, #1d2a3a 0, #0d1117 38rem); }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+    h1 { margin: 0; font-size: clamp(2.4rem, 7vw, 5.4rem); letter-spacing: -0.06em; }
+    .lede { max-width: 760px; color: #9fb0c3; font-size: 1.1rem; line-height: 1.6; }
+    .status { display: inline-flex; gap: 8px; align-items: center; padding: 7px 12px; border: 1px solid #3d5269; border-radius: 999px; color: #b8ca3f; background: #141c24; }
+    .warnings { margin: 28px 0; padding: 20px 24px; border: 1px solid #705d2f; border-radius: 16px; background: #241f15; color: #e7d9a2; }
+    .warnings h2 { margin-top: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.12em; }
+    .warnings li + li { margin-top: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card { min-height: 230px; padding: 24px; border: 1px solid #2d3b4a; border-radius: 18px; background: color-mix(in srgb, #161b22 94%, transparent); }
+    .card:last-child { grid-column: 1 / -1; }
+    .eyebrow { margin: 0 0 10px; color: #b8ca3f; font-size: 0.82rem; font-weight: 750; text-transform: uppercase; letter-spacing: 0.14em; }
+    .purpose { margin: 0 0 20px; color: #9fb0c3; line-height: 1.5; }
+    ul { margin: 0; padding-left: 20px; line-height: 1.6; }
+    code { color: #8cc8ff; }
+    footer { margin-top: 24px; color: #718296; font-size: 0.9rem; }
+    a { color: #8cc8ff; }
+    @media (max-width: 720px) { .grid { grid-template-columns: 1fr; } .card:last-child { grid-column: auto; } main { padding-top: 28px; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="status">Generated projection · 2026-08-28</p>
+  <h1>Universe Map</h1>
+  <p class="lede">One view of the identities, evaluation universe, observed performance, evidence standing, and current research frontier. The ledger remains authoritative; this page makes its consequences visible.</p>
+  <aside class="warnings"><h2>Load-bearing warnings</h2><ul><li><strong>artifact-not-ledger-admitted</strong> — The latest verified MAP-Elites artifact has no selected ledger record and is not accepted project evidence.</li><li><strong>current-navigation-stale</strong> — CURRENT.md is stale at this map boundary: last reviewed 2026-08-20, 8 days before 2026-08-28.</li></ul></aside>
+  <div class="grid">
+    <section class="card" id="identity">
+      <p class="eyebrow">Identity</p>
+      <p class="purpose">Bind the rules, champion, evaluator, and source identities behind every interpretation.</p>
+      <ul><li>Champion: <strong>unchanged</strong></li><li>Protected commit: <code>52f500c03a11</code></li><li>Verifier: <code>8508c3b4aa2b</code></li></ul>
+    </section>
+    <section class="card" id="evaluation-universe">
+      <p class="eyebrow">Evaluation universe</p>
+      <p class="purpose">Show which levels, seeds, and partitions were actually evaluated.</p>
+      <ul><li>Selection: <strong>6 levels</strong>, 72 games</li><li>Shipped-level coverage: <strong>11.3%</strong></li><li>Representative holdout: <strong>12 levels</strong>, 288 games</li></ul>
+    </section>
+    <section class="card" id="observed-performance">
+      <p class="eyebrow">Observed performance</p>
+      <p class="purpose">Separate accepted results from newer artifact observations and their uncertainty.</p>
+      <ul><li>Ledger-admitted: <strong>20/25</strong> cells</li><li>Verified-only artifact: <strong>23/25</strong> cells</li><li>Positive holdout representatives: <strong>0/3</strong></li></ul>
+    </section>
+    <section class="card" id="evidence-standing">
+      <p class="eyebrow">Evidence standing</p>
+      <p class="purpose">Expose accepted, verified-only, stale, contradictory, and unresolved information.</p>
+      <ul><li>Standing authority: <code>EVIDENCE_LEDGER.md</code></li><li>Accepted: <strong>RESULT-0017</strong></li><li>Latest artifact: <strong>not-admitted</strong></li><li>CURRENT.md: <strong>stale</strong></li></ul>
+    </section>
+    <section class="card" id="current-frontier">
+      <p class="eyebrow">Current frontier</p>
+      <p class="purpose">Derive the weakest current boundary and the evidence needed to move it.</p>
+      <ul><li>Independently admit or explicitly reject the latest verified artifact before using it as accepted evidence.</li><li>Widen and characterize the selection-level universe before interpreting policy lift as broad generalization.</li><li>Seek positive disjoint-holdout evidence before considering any champion change.</li></ul>
+    </section>
+  </div>
+  <footer>Do not edit this file by hand. Rebuild with <code>node tools/build-universe-map.js</code>; verify with <code>node tools/verify-universe-map.js</code>. <a href="../UNIVERSE.md">Markdown view</a> · <a href="resolved.json">resolved model</a></footer>
+</main>
+</body>
+</html>

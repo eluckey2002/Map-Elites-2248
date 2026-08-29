@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-08-28",
+  "authority": {
+    "standing": "EVIDENCE_LEDGER.md",
+    "artifactContents": "named primary receipts",
+    "generatedViews": "projections only"
+  },
+  "cards": [
+    {
+      "id": "identity",
+      "title": "Identity",
+      "purpose": "Bind the rules, champion, evaluator, and source identities behind every interpretation."
+    },
+    {
+      "id": "evaluation-universe",
+      "title": "Evaluation universe",
+      "purpose": "Show which levels, seeds, and partitions were actually evaluated."
+    },
+    {
+      "id": "observed-performance",
+      "title": "Observed performance",
+      "purpose": "Separate accepted results from newer artifact observations and their uncertainty."
+    },
+    {
+      "id": "evidence-standing",
+      "title": "Evidence standing",
+      "purpose": "Expose accepted, verified-only, stale, contradictory, and unresolved information."
+    },
+    {
+      "id": "current-frontier",
+      "title": "Current frontier",
+      "purpose": "Derive the weakest current boundary and the evidence needed to move it."
+    }
+  ],
+  "sources": {
+    "ledger": {
+      "path": "EVIDENCE_LEDGER.md",
+      "acceptedRecords": [
+        {
+          "id": "RESULT-0017",
+          "type": "result",
+          "status": "accepted"
+        }
+      ]
+    },
+    "currentNavigation": {
+      "path": "CURRENT.md",
+      "maximumAgeDays": 7
+    },
+    "shippedGame": {
+      "path": "src/game.js"
+    },
+    "latestMapElitesArtifact": {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json",
+      "sha256": "ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22",
+      "ledgerRecordId": null,
+      "protectedChampionCommit": "52f500c03a11699cb6bd7c3cab7f6a232470e0dd",
+      "verifierCommit": "8508c3b4aa2bac9eceaac0bcaf91e3838e303a53"
+    }
+  },
+  "freshness": {
+    "maximumMapAgeDays": 7
+  },
+  "thresholds": {
+    "minimumSelectionLevelCoverage": 0.25,
+    "minimumPositiveHoldoutRepresentatives": 1
+  }
+}
