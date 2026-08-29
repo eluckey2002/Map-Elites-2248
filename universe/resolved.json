@@ -7,11 +7,12 @@
     "generatedViews": "projections only"
   },
   "sourceIdentities": {
-    "contractSha256": "ce81c9d0be5e841937e386ee91db4d9b14b496016d5ce911aaf649e48d18693c",
+    "contractSha256": "372ac90f35f69d38c96ee37be4fddf6f19e322bd5ecaf732df2e142fe5828ac1",
     "ledgerSha256": "ff30067d23e4d1bd1b40dd6c6882c7dda5ecf721e43127a0ab0f182e6766d716",
     "currentNavigationSha256": "5c0a94cb8ed38c9bc448043a3eb762b307df7a9a3c75d9c3c32d972fddfde887",
     "shippedGameSha256": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
     "latestArtifactSha256": "ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22",
+    "latestArtifactVerificationSha256": "701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790",
     "artifactVerifierCommit": "8508c3b4aa2bac9eceaac0bcaf91e3838e303a53"
   },
   "cards": [

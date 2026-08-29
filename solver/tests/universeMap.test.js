@@ -34,6 +34,7 @@ function makeFixture(t) {
     'CURRENT.md',
     'src/game.js',
     '.orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json',
+    '.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md',
   ]) copyFileIntoFixture(fixture, relativePath);
   writeUniverse(fixture);
   return fixture;
@@ -78,6 +79,10 @@ test('one resolved model keeps admitted evidence separate from the later verifie
   assert.equal(model.evaluationUniverse.holdout.levelCount, 12);
   assert.equal(model.observedPerformance.latest.positiveHoldoutRepresentatives, 0);
   assert.equal(model.identity.championStanding, 'unchanged');
+  assert.equal(
+    model.sourceIdentities.latestArtifactVerificationSha256,
+    '701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790',
+  );
   assert.ok(model.warnings.some((warning) => warning.id === 'current-navigation-stale'));
   assert.ok(model.warnings.some((warning) => warning.id === 'artifact-not-ledger-admitted'));
 });
@@ -157,6 +162,17 @@ test('verification fails closed for receipt hash mismatch', (t) => {
   fs.appendFileSync(archivePath, ' ');
 
   assert.match(verifyUniverse(fixture).join('\n'), /artifact SHA-256/);
+});
+
+test('verification fails closed when the artifact verification evidence drifts', (t) => {
+  const fixture = makeFixture(t);
+  const verificationPath = path.join(
+    fixture,
+    '.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md',
+  );
+  fs.appendFileSync(verificationPath, '\nchanged verification evidence\n');
+
+  assert.match(verifyUniverse(fixture).join('\n'), /artifact verification SHA-256/);
 });
 
 test('verification fails closed for protected champion identity mismatch even with a rebound hash', (t) => {

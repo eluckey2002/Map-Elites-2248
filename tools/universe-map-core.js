@@ -140,6 +140,26 @@ function resolveUniverse(root) {
   if (artifact.protected?.commit !== artifactSource.protectedChampionCommit) {
     throw new Error(`protected champion commit: expected ${artifactSource.protectedChampionCommit}, got ${artifact.protected?.commit || 'missing'}`);
   }
+  const verificationSource = contract.sources.latestMapElitesVerification;
+  const verificationBytes = readText(root, verificationSource.path);
+  const verificationHash = sha256(verificationBytes);
+  if (verificationHash !== verificationSource.sha256) {
+    throw new Error(`artifact verification SHA-256: expected ${verificationSource.sha256}, got ${verificationHash}`);
+  }
+  for (const requiredIdentity of [artifactHash, artifactSource.verifierCommit]) {
+    if (!verificationBytes.includes(requiredIdentity)) {
+      throw new Error(`artifact verification evidence omits identity ${requiredIdentity}`);
+    }
+  }
+  for (const requiredObservation of [
+    'PASS MAP-Elites artifact: 23 occupied cells across 5 chain bins and 5 patience bins',
+    'PASS 3 representative elite replays',
+    'PASS protected champion 52f500c and level-authoring hashes',
+  ]) {
+    if (!verificationBytes.includes(requiredObservation)) {
+      throw new Error(`artifact verification evidence omits observation: ${requiredObservation}`);
+    }
+  }
 
   const screenLevels = artifact.config?.screen?.levels;
   const screenSeeds = artifact.config?.screen?.seeds;
@@ -224,6 +244,7 @@ function resolveUniverse(root) {
       currentNavigationSha256: fileSha256(root, currentSource.path),
       shippedGameSha256: fileSha256(root, contract.sources.shippedGame.path),
       latestArtifactSha256: artifactHash,
+      latestArtifactVerificationSha256: verificationHash,
       artifactVerifierCommit: artifactSource.verifierCommit,
     },
     cards,

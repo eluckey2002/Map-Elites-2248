@@ -57,6 +57,10 @@
       "ledgerRecordId": null,
       "protectedChampionCommit": "52f500c03a11699cb6bd7c3cab7f6a232470e0dd",
       "verifierCommit": "8508c3b4aa2bac9eceaac0bcaf91e3838e303a53"
+    },
+    "latestMapElitesVerification": {
+      "path": ".orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md",
+      "sha256": "701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790"
     }
   },
   "freshness": {
