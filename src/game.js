@@ -344,6 +344,102 @@ class AuthoringCapture {
     }
 }
 
+const PLAYER_STUDY_STORAGE_KEY = '2248.playerStudy.v1';
+
+function cloneStudyData(value) {
+    return JSON.parse(JSON.stringify(value));
+}
+
+function snapshotBoard(grid) {
+    return grid.map((row) => row.map((tile) => {
+        if (!tile) return null;
+        return {
+            x: tile.x,
+            y: tile.y,
+            value: tile.value,
+            blocker: tile.blocker,
+            blockerDuration: tile.blockerDuration,
+            bombTimer: tile.bombTimer,
+        };
+    }));
+}
+
+class PlayerStudy {
+    constructor({ storage, now = Date.now, storageKey = PLAYER_STUDY_STORAGE_KEY } = {}) {
+        this.storage = storage;
+        this.now = now;
+        this.storageKey = storageKey;
+        this.recording = false;
+        this.study = this.load();
+    }
+
+    load() {
+        if (!this.storage) return { schemaVersion: 1, moves: [] };
+        try {
+            const parsed = JSON.parse(this.storage.getItem(this.storageKey) || 'null');
+            if (parsed && parsed.schemaVersion === 1 && Array.isArray(parsed.moves)) {
+                return cloneStudyData(parsed);
+            }
+        } catch (_error) {
+            // A malformed local value is ignored; recording remains off.
+        }
+        return { schemaVersion: 1, moves: [] };
+    }
+
+    persist() {
+        if (this.storage) this.storage.setItem(this.storageKey, JSON.stringify(this.study));
+    }
+
+    start() {
+        this.recording = true;
+    }
+
+    stop() {
+        this.recording = false;
+    }
+
+    isRecording() {
+        return this.recording;
+    }
+
+    recordMove({ chain, boardBefore, boardAfter, context }) {
+        if (!this.recording) return false;
+        this.study.moves.push(cloneStudyData({
+            ordinal: this.study.moves.length + 1,
+            recordedAt: new Date(this.now()).toISOString(),
+            chain: chain.map(({ x, y, value }) => ({ x, y, value })),
+            boardBefore,
+            boardAfter,
+            context,
+        }));
+        this.persist();
+        return true;
+    }
+
+    truncate(moveCount) {
+        this.study.moves.length = Math.max(0, Math.min(moveCount, this.study.moves.length));
+        if (this.study.moves.length === 0) {
+            if (this.storage) this.storage.removeItem(this.storageKey);
+        } else {
+            this.persist();
+        }
+    }
+
+    getStudy() {
+        return cloneStudyData(this.study);
+    }
+
+    exportJson() {
+        return `${JSON.stringify(this.study, null, 2)}\n`;
+    }
+
+    clear() {
+        this.recording = false;
+        this.study = { schemaVersion: 1, moves: [] };
+        if (this.storage) this.storage.removeItem(this.storageKey);
+    }
+}
+
 // ============================================================================
 // GAME CLASS
 // ============================================================================
@@ -374,6 +470,7 @@ class Game {
         this.random = Math.random;
         this.authoringCapture = null;
         this.customSession = null;
+        this.playerStudy = new PlayerStudy({ storage: localStorage });
 
         // History for undo
         this.history = [];
@@ -437,6 +534,11 @@ class Game {
             this.showLevelSelect();
         });
         document.getElementById('closeLevelSelect').addEventListener('click', () => this.hideModal('levelSelectModal'));
+        document.getElementById('recordToggleBtn').addEventListener('click', () => this.togglePlayerRecording());
+        document.getElementById('reviewStudyBtn').addEventListener('click', () => this.showPlayerStudy());
+        document.getElementById('exportStudyBtn').addEventListener('click', () => this.exportPlayerStudy());
+        document.getElementById('clearStudyBtn').addEventListener('click', () => this.clearPlayerStudy());
+        document.getElementById('closeStudyBtn').addEventListener('click', () => this.hideModal('playReviewModal'));
     }
 
     getGridPos(clientX, clientY) {
@@ -559,6 +661,29 @@ class Game {
     }
 
     executeChain() {
+        const feedback = describeChainFeedback(
+            this.chain.map((tile) => tile.value),
+            this.minChain,
+            this.tileScale,
+        );
+        const playerMove = this.playerStudy.isRecording() ? {
+            chain: this.chain.map(({ x, y, value }) => ({ x, y, value })),
+            boardBefore: snapshotBoard(this.grid),
+            context: {
+                level: this.currentLevel,
+                targetScore: this.targetScore,
+                minChain: this.minChain,
+                moveNumber: this.moves + 1,
+                moveBudget: this.maxMoves,
+                scoreBefore: this.score,
+                scoreAfter: this.score + feedback.projectedPoints,
+                resultTile: feedback.resultTile,
+                multiplier: feedback.multiplier,
+                projectedPoints: feedback.projectedPoints,
+                futureMatchability: feedback.futureMatchability,
+            },
+        } : null;
+
         // Save state for undo
         this.saveState();
 
@@ -617,6 +742,10 @@ class Game {
             this.spawnNewTiles();
             this.tickBlockers();
             this.checkBombs();
+            if (playerMove) {
+                this.playerStudy.recordMove({ ...playerMove, boardAfter: snapshotBoard(this.grid) });
+                this.updatePlayerStudyUI();
+            }
             this.animating = false;
             this.updateUI();
             this.checkWinLose();
@@ -911,6 +1040,7 @@ class Game {
             moves: this.moves,
             bestChain: this.bestChain,
             authoringCaptureLength: this.authoringCapture ? this.authoringCapture.chains.length : null,
+            playerStudyMoveCount: this.playerStudy ? this.playerStudy.getStudy().moves.length : null,
             randomState: typeof this.random.getState === 'function' ? this.random.getState() : null
         };
 
@@ -942,6 +1072,9 @@ class Game {
         if (this.authoringCapture && Number.isInteger(state.authoringCaptureLength)) {
             this.authoringCapture.chains.length = state.authoringCaptureLength;
         }
+        if (this.playerStudy && Number.isInteger(state.playerStudyMoveCount)) {
+            this.playerStudy.truncate(state.playerStudyMoveCount);
+        }
         if (state.randomState !== null && typeof this.random.setState === 'function') {
             this.random.setState(state.randomState);
         }
@@ -960,6 +1093,50 @@ class Game {
 
         this.updateUI();
         this.render();
+    }
+
+    togglePlayerRecording() {
+        if (this.playerStudy.isRecording()) this.playerStudy.stop();
+        else this.playerStudy.start();
+        this.updatePlayerStudyUI();
+    }
+
+    updatePlayerStudyUI() {
+        const button = document.getElementById('recordToggleBtn');
+        const status = document.getElementById('recordingStatus');
+        if (!button || !status) return;
+        const moveCount = this.playerStudy.getStudy().moves.length;
+        const active = this.playerStudy.isRecording();
+        button.textContent = active ? 'Stop recording' : 'Start recording';
+        button.setAttribute('aria-pressed', String(active));
+        button.classList.toggle('recording-active', active);
+        status.textContent = `${active ? 'Recording' : 'Off'} · ${moveCount} move${moveCount === 1 ? '' : 's'} saved locally`;
+    }
+
+    showPlayerStudy() {
+        const review = document.getElementById('studyReviewContent');
+        const moves = this.playerStudy.getStudy().moves;
+        review.textContent = moves.length === 0
+            ? 'No recorded moves yet.'
+            : `${moves.length} recorded move${moves.length === 1 ? '' : 's'} ready to export.`;
+        this.showModal('playReviewModal');
+    }
+
+    exportPlayerStudy() {
+        const blob = new Blob([this.playerStudy.exportJson()], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = '2248-player-study.json';
+        link.click();
+        URL.revokeObjectURL(url);
+    }
+
+    clearPlayerStudy() {
+        if (!window.confirm('Clear every locally recorded move?')) return;
+        this.playerStudy.clear();
+        this.updatePlayerStudyUI();
+        this.showPlayerStudy();
     }
 
     // ========================================================================
@@ -984,6 +1161,7 @@ class Game {
         } else {
             minChainDisplay.classList.remove('min-chain-warning');
         }
+        this.updatePlayerStudyUI();
     }
 
     updateChainIndicator() {
@@ -1341,6 +1519,7 @@ if (typeof module !== 'undefined' && module.exports) {
         BLOCKER_TYPES,
         AuthoringCapture,
         Game,
+        PlayerStudy,
         describeChainFeedback,
         createInitialGrid,
         customCandidateFromQuery,

@@ -155,6 +155,52 @@
             cursor: not-allowed;
         }
 
+        .study-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px;
+        }
+
+        .study-controls .btn {
+            padding: 10px 12px;
+            font-size: 14px;
+        }
+
+        .recording-active {
+            background: #dc5f4b;
+            color: #fff;
+        }
+
+        .recording-status {
+            grid-column: 1 / -1;
+            min-height: 16px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.72);
+        }
+
+        .study-review-content {
+            min-height: 80px;
+            margin: 16px 0;
+            padding: 12px 0;
+            border-block: 1px solid rgba(255,255,255,0.12);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .study-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .study-actions .btn:last-child {
+            grid-column: 1 / -1;
+        }
+
         .multiplier-popup {
             position: absolute;
             font-size: 48px;
@@ -361,6 +407,11 @@
     <div class="controls">
         <button class="btn btn-primary" id="submitBtn" style="flex: 2;">✓ Submit Chain (Enter)</button>
     </div>
+    <div class="study-controls" aria-label="Player study controls">
+        <button class="btn btn-secondary" id="recordToggleBtn" aria-pressed="false">Start recording</button>
+        <button class="btn btn-secondary" id="reviewStudyBtn">Review study</button>
+        <div class="recording-status" id="recordingStatus" aria-live="polite">Off · 0 moves saved locally</div>
+    </div>
     <div class="controls">
         <button class="btn btn-primary" id="submitBtn" style="flex: 2;">✓ Submit Chain (Enter)</button>
     </div>
@@ -418,6 +469,19 @@
             <div class="modal-title">Select Level</div>
             <div class="level-select" id="levelSelect"></div>
             <button class="btn btn-secondary" id="closeLevelSelect" style="width: 100%; margin-top: 15px;">Close</button>
+        </div>
+    </div>
+
+    <!-- Local Player Study Review -->
+    <div class="modal" id="playReviewModal">
+        <div class="modal-content">
+            <div class="modal-title">Play study</div>
+            <div class="study-review-content" id="studyReviewContent">No recorded moves yet.</div>
+            <div class="study-actions">
+                <button class="btn btn-primary" id="exportStudyBtn">Export JSON</button>
+                <button class="btn btn-secondary" id="clearStudyBtn">Clear</button>
+                <button class="btn btn-secondary" id="closeStudyBtn">Close</button>
+            </div>
         </div>
     </div>
 
