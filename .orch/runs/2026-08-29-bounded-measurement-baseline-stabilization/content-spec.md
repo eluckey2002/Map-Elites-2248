@@ -45,4 +45,3 @@
 
 - Three sequential content slots and one assembly pass; no external research.
 - `plan_gate: false` — the owner approved only the four stabilization changes.
-

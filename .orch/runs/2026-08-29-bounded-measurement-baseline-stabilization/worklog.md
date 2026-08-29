@@ -20,4 +20,3 @@ Complete only the four owner-approved changes: pin authoring measurement to `cal
 ## Terminal
 
 - **complete:** the four approved stabilization items are implemented. No level, rule, score, champion, new candidate, or new experiment changed. Final revision and full verification are recorded after the terminal review commit.
-

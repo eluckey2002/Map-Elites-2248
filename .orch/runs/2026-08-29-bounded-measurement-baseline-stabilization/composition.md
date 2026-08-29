@@ -32,4 +32,3 @@ PASS only when the authoring measurement supplies all `calib-1` parameters expli
 Require: owner approval limited to the four named items, baseline revision `90166907437c7b686f868be0e049325d97fb00f6`, the completed investigation ticket, and the repository evidence rules.
 
 Return: result envelope containing status, code and content revision identities, changed paths, verification verdicts, preserved historical failures, archived identities, ledger record IDs, remaining proof gaps, and feedback.
-

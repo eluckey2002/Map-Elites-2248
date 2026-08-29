@@ -69,4 +69,3 @@
 
 - A partial parameter override would look frozen while silently inheriting future live defaults; complete key-set parity and the observed-call test close that path.
 - Archiving can hide inconvenient failures; exact identity preservation, manifest signature, the existing disappearance negative control, and an updated check card make this retirement explicit and reviewable.
-
