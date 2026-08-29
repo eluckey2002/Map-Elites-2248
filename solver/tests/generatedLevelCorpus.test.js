@@ -2,11 +2,16 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 
 const {
+  MAX_GAME_BUDGET,
+  PINNED,
   PROTOCOL,
   allFamilyKeys,
   buildPlan,
+  evaluateCoverage,
   familyForShape,
   partitionForFamily,
+  preflight,
+  runCorpus,
   selectForFullMeasurement,
   serializePlan,
 } = require('../generated-level-corpus');
@@ -146,4 +151,140 @@ test('duplicates cannot enter full measurement selection', () => {
   entries[0] = { ...entries[0], duplicateOf: 'earlier-slot' };
   const selected = selectForFullMeasurement(entries).selected;
   assert.ok(!selected.some((entry) => entry.slotId === entries[0].slotId));
+});
+
+test('current pinned sources, protocol, calibration, champion, and seed ranges pass preflight', () => {
+  const result = preflight({ declaredSeedRanges: [] });
+  assert.equal(result.status, 'PASS');
+  assert.deepEqual(result.failures, []);
+  assert.equal(result.protocolIdentity, PINNED.protocolIdentity);
+});
+
+test('every preflight mismatch invalidates before a single game seam is called', async () => {
+  const current = preflight({ declaredSeedRanges: [] });
+  const cases = [
+    { sourceHashes: { ...current.sourceHashes, 'solver/engine.js': 'wrong' }, declaredSeedRanges: [] },
+    { calibration: { ...current.calibration, solverIdentity: 'wrong' }, declaredSeedRanges: [] },
+    { championExists: false, declaredSeedRanges: [] },
+    { protocolIdentity: 'wrong', declaredSeedRanges: [] },
+    { declaredSeedRanges: [{ name: 'new-overlap', start: 20_000_005, count: 1 }] },
+  ];
+
+  for (const preflightOptions of cases) {
+    const calls = { screen: 0, derive: 0, replay: 0 };
+    const result = await runCorpus({
+      preflightOptions,
+      dependencies: {
+        screen: () => { calls.screen += 1; throw new Error('screen must not run'); },
+        deriveCandidate: () => { calls.derive += 1; throw new Error('derive must not run'); },
+        verifyCandidate: () => { calls.replay += 1; throw new Error('replay must not run'); },
+      },
+    });
+    assert.equal(result.status, 'INVALIDATED');
+    assert.deepEqual(calls, { screen: 0, derive: 0, replay: 0 });
+  }
+});
+
+function measuredRecord(familyKey, index, overrides = {}) {
+  return {
+    slotId: `measured-${index}`,
+    familyKey,
+    demandStratum: [0.8, 0.85, 0.9, 0.95][index % 4],
+    partition: partitionForFamily(familyKey),
+    candidateIdentity: `candidate-${index}`,
+    receiptIdentity: `receipt-${index}`,
+    replayIntegrity: 'PASS',
+    admissionLabel: 'playable-core',
+    ...overrides,
+  };
+}
+
+test('coverage passes only with the frozen family, axis, demand, partition, and integrity bars', () => {
+  const passing = allFamilyKeys().map((familyKey, index) => measuredRecord(familyKey, index));
+  const result = evaluateCoverage(passing);
+  assert.equal(result.status, 'PASS');
+  assert.ok(result.conditions.every((condition) => condition.pass));
+
+  const tooNarrow = evaluateCoverage(passing.slice(0, 35));
+  assert.equal(tooNarrow.status, 'INCONCLUSIVE');
+  assert.equal(tooNarrow.conditions.find((condition) => condition.id === 'family-count').pass, false);
+
+  const stressCannotFill = evaluateCoverage(passing.map((record, index) => (
+    index < 40 ? { ...record, admissionLabel: 'adversarial-stress' } : record
+  )));
+  assert.equal(stressCannotFill.status, 'INCONCLUSIVE');
+
+  const duplicateIdentity = [...passing, { ...passing[0], slotId: 'duplicate-record' }];
+  assert.equal(evaluateCoverage(duplicateIdentity).conditions.find((condition) => condition.id === 'identity-integrity').pass, false);
+});
+
+test('stubbed execution accounts for all slots, selection origins, dispositions, and budget', async () => {
+  let screenCalls = 0;
+  let deriveCalls = 0;
+  let replayCalls = 0;
+  const result = await runCorpus({
+    preflightOptions: { declaredSeedRanges: [] },
+    dependencies: {
+      screen: (candidateShape) => {
+        screenCalls += 1;
+        const index = Number(candidateShape.name.slice(-4));
+        return { lockouts: index < 3 ? 1 : 0, bombs: 0, medianScore: 1000, minScore: 500 };
+      },
+      deriveCandidate: (candidateShape) => {
+        deriveCalls += 1;
+        const index = deriveCalls;
+        return {
+          store: { schemaVersion: 1, candidates: [{ ...candidateShape, target: 1000, tileScale: 32, sourceShapeIdentity: `shape-${index}` }] },
+          receipt: {
+            receiptIdentity: `receipt-${index}`,
+            candidateIdentity: `candidate-${index}`,
+            holdout: { terminalCounts: { win: index % 5 === 0 ? 30 : 240, noValidMoves: 0, bombExploded: 0, outOfMoves: index % 5 === 0 ? 270 : 60, incomplete: 0, total: 300 } },
+          },
+        };
+      },
+      verifyCandidate: () => { replayCalls += 1; },
+    },
+  });
+
+  assert.equal(result.manifest.rawDraws.length, 480);
+  assert.equal(screenCalls, result.manifest.uniqueShapeCount);
+  assert.equal(deriveCalls, result.manifest.selection.clean.length + result.manifest.selection.stressProbe.length);
+  assert.equal(replayCalls, deriveCalls);
+  assert.ok(result.manifest.selection.clean.length <= 60);
+  assert.ok(result.manifest.selection.stressProbe.length <= 12);
+  assert.ok(result.manifest.measurements.some((entry) => entry.admissionLabel === 'playable-core'));
+  assert.ok(result.manifest.measurements.some((entry) => entry.admissionLabel === 'adversarial-stress'));
+  assert.ok(result.manifest.measurements.every((entry) => ['clean', 'stress-probe'].includes(entry.selectionOrigin)));
+  assert.ok(result.manifest.gameBudget.maximum <= MAX_GAME_BUDGET);
+  assert.ok(['PASS', 'INCONCLUSIVE'].includes(result.status));
+});
+
+test('a replay failure is unverified and a planning crash is BLOCKED', async () => {
+  let derived = 0;
+  const unverified = await runCorpus({
+    preflightOptions: { declaredSeedRanges: [] },
+    planOptions: {
+      sampleShape: (_rng, level, index) => shape({ name: `stub-${index}`, level, demand: [0.8, 0.85, 0.9, 0.95][index % 4], moves: 10 + (index % 5) }),
+    },
+    dependencies: {
+      screen: () => ({ lockouts: 0, bombs: 0, medianScore: 1000, minScore: 500 }),
+      deriveCandidate: (candidateShape) => {
+        derived += 1;
+        return {
+          store: { schemaVersion: 1, candidates: [{ ...candidateShape, target: 1000, tileScale: 32 }] },
+          receipt: { receiptIdentity: `r-${derived}`, candidateIdentity: `c-${derived}`, holdout: { terminalCounts: { win: 240, noValidMoves: 0, bombExploded: 0, outOfMoves: 60, incomplete: 0, total: 300 } } },
+        };
+      },
+      verifyCandidate: () => { throw new Error('wrong replay'); },
+    },
+  });
+  assert.ok(unverified.manifest.measurements.every((entry) => entry.admissionLabel === 'unverified'));
+  assert.equal(unverified.status, 'INCONCLUSIVE');
+
+  const blocked = await runCorpus({
+    preflightOptions: { declaredSeedRanges: [] },
+    dependencies: { planBuilder: () => { throw new Error('cannot materialize plan'); } },
+  });
+  assert.equal(blocked.status, 'BLOCKED');
+  assert.match(blocked.reason, /cannot materialize plan/);
 });
