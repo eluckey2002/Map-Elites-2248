@@ -31,13 +31,12 @@ card in the same commit.
   whether the level is any **good** — difficulty feel, curve fit, fun. Owned by
   human playtest: 8 recordings on disk, all one player.
 - **Scope:** `solver/candidate-levels*.json` paired to
-  `solver/candidate-levels*.receipt.json`, top level of `solver/` only — **3
+  `solver/candidate-levels*.receipt.json`, top level of `solver/` only — **2
   stores**, pinned by `solver/candidate-corpus.json`. Store-driven, not
   receipt-driven, so a deleted receipt fails rather than shrinking the corpus.
-  Excludes 18 identically-named files elsewhere:
-  `solver/candidates-archive/` (8, up from 4 when this card was written: two
-  overwritten stores were recovered from git on 2026-08-21 and archived with
-  their receipts) and
+  Excludes 20 identically-named files elsewhere:
+  `solver/candidates-archive/` (10: five stores and receipts, including the
+  authorized unshipped Level 54 retirement on 2026-08-28) and
   `.orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/solver/` (10).
   `.json` only; `schemaVersion: 1` only; stores of exactly one candidate
   (`level-author.js:253`).
@@ -48,7 +47,7 @@ card in the same commit.
   receipt to `code/input identity mismatch`, and restoring the file made it
   clean again. Reads no git porcelain, so the `core.quotePath` trap is n/a.
 - **Sampling memory:** n/a — exhaustive over the glob, not a sampler. Silence
-  about the 4 archived candidates means "deliberately excluded", never "audited
+  about the 5 archived candidates means "deliberately excluded", never "audited
   clean". `STORE_FLOOR` is what stops an accidentally-empty glob reading green.
 - **Does NOT catch:**
   1. **One habitual red can camouflage a second.** Level 52 fails on every run
@@ -86,7 +85,11 @@ card in the same commit.
      edited in the same commit — a paper trail, not a lock. Anyone willing to
      edit the manifest can still retire an inconvenient failure; the difference
      is that it is now a visible, reviewable act instead of a `git mv`. Nothing
-     enforces the "archived numbers are not quotable" rule either.
+     enforces the "archived numbers are not quotable" rule either. The approved
+     2026-08-28 Level 54 retirement exercised this path: its manifest edit,
+     identity-bearing archive filenames, and permanent archive test make the
+     disposition visible, but the gate still cannot decide whether approval was
+     substantively wise.
   6. **Level quality, difficulty feel, and single-player bias.** Untouched.
   7. **Non-determinism in the bot**, if ever introduced — the replay would flap
      intermittently rather than fail cleanly.
@@ -114,8 +117,8 @@ card in the same commit.
   creation time, when the receipt has just been measured and passes by
   construction, so they can never detect drift.
 - **Enforcement:** **HARD** (blocking) for every stale receipt, exempt or not.
-  **Currently red on 1 of 3** — level 52 — and that is the intended resting
-  state, not a defect to clear. Its failure text says so in the message, so the
+  **Currently red on 2 of 2** — levels 52 and 53 — and that is the intended
+  resting state, not a defect to clear. Their failure text says so, so the
   next reader does not mistake a settled decision for an unfixed bug.
   The exemption is **computed** each run from `src/game.js` and `recordings/`,
   requires BOTH halves (the level ships, AND a recording binds to the exact
@@ -128,9 +131,8 @@ card in the same commit.
   input is precisely the failure this gate exists to catch, and the resulting
   green reported a number whose basis had moved — this project's signature
   pathology, reproduced inside the tool built to cure it.
-  **The two reds are not the same problem**, and an earlier version of this card
-  wrongly treated them as one by asserting both levels ship. `src/game.js` holds
-  levels **1..52 only**, verified by parse:
+  The two live reds both describe shipped historical receipts, but their
+  supporting records differ:
   - **Level 52 ships, and its target stays at 102000. DECIDED 2026-08-21 by the
     owner; do not undo this to clear the red.** Refreshing its receipt
     necessarily *raises* that target, because the receipt derives target as
@@ -143,15 +145,21 @@ card in the same commit.
     difficulty. **The red on level 52 is therefore permanent and correct** until
     the integrity/currency split ships
     (`.orch/runs/receipt-currency-split-2026-08-21/spec.md`).
-  - **Level 54 was unshipped, and its red is cleared.** Re-measured against the
-    current bot on 2026-08-21 (ticket T-002): target 150000 -> 160000, holdout
-    259/300. No player had seen it, so nothing was degraded. It is measured but
-    **not human-validated** and should not ship on this receipt alone.
+  - **Level 53 ships, with three human wins bound to its exact candidate
+    identity.** Its receipt now fails the input-identity check. No current-bot
+    remeasurement has been admitted, so the gate preserves that mismatch without
+    inventing a replacement target or current win rate.
+  - **Level 54 was unshipped and is now explicitly retired.** The owner approved
+    retirement as part of the bounded 2026-08-28 stabilization. Candidate
+    `0a3b9adf...` and its stale receipt are preserved byte-for-byte under
+    `solver/candidates-archive/`; no human recording binds to it, its measured
+    numbers are not quotable, and no replacement was generated.
   **Demotion condition:** none. Do not return this to report-only, and do not
   archive to clear it.
 - **Decay:** re-runs on every `node --test solver/tests/*.test.js`. Debt trends
-  as failing per-store tests (**1 of 3**: level 52, by decision). A count rising
-  above 1 means new debt; the level 52 failure itself is expected and stable. Measured cost: suite
+  as named failing per-store tests (**2 of 2**: levels 52 and 53, both shipped).
+  Any failing store with another name is new debt; both named failures are
+  expected and stable. Measured cost: suite
   went 1.3s → ~10.5s, the delta being one real 450-seed replay at ~8.9s; each
   additional *passing* live candidate adds ~9s, while a stale one short-circuits
   at ~3ms. Recalibration trigger: past roughly five passing live stores (~45s) the suite gets slow enough that people skip it, at which point
@@ -160,7 +168,8 @@ card in the same commit.
   silently drops blind spots (2) and (3).
 - **Shipped:** 2026-08-21 · closes the drift class behind the retracted
   win-condition thesis, the batch candidates invalidated mid-run, and the
-  measurement variance misattributed to level design.
+  measurement variance misattributed to level design. Updated 2026-08-28 for
+  the explicit Level 54 retirement and the resulting two-store live corpus.
 
 ---
 
@@ -250,9 +259,9 @@ card in the same commit.
   here. Content integrity is the receipt check's job.
 - **Kind:** value — set equality between the live glob and the declared list. Not
   meaning: it never asks whether a declared store is any good, or whether its
-  receipt verifies. It is green today while two of the three stores are red.
+  receipt verifies. It is green today while both stores are red.
 - **Scope:** `solver/candidate-levels*.json` (excluding `*.receipt.json`) against
-  the `stores` array of `solver/candidate-corpus.json` — 3 entries. Excludes
+  the `stores` array of `solver/candidate-corpus.json` — 2 entries. Excludes
   `solver/candidates-archive/` and all `.orch/` copies. **Deliberately records
   membership only, never pass/fail status:** a manifest able to mark a store
   "known stale" would be a quarantine list, and would excuse precisely what it
@@ -271,7 +280,7 @@ card in the same commit.
   2. **Content changes.** Names only. A store whose contents were swapped for
      different ones passes here; the receipt check is what catches that.
   3. **Whether anything actually verifies.** This check is green while levels 52
-     and 54 fail. It guards scope, not truth.
+     and 53 fail. It guards scope, not truth.
   4. **Candidates authored outside `solver/` top level.** Invisible to both the
      glob and the manifest — neither would report a store in a subdirectory.
   5. **A manifest that was wrong when written.** It was hand-written on
@@ -298,7 +307,9 @@ card in the same commit.
   turns blind spot 4 from theoretical into live, and both the glob and the
   manifest need rebasing on the real layout.
 - **Shipped:** 2026-08-21 · closes the corpus-shrink pathology observed the same
-  day, in the same session that created it.
+  day, in the same session that created it. Updated 2026-08-28 when the owner
+  authorized one manifest-signed retirement; the permanent archive test records
+  that exact exception without weakening set equality.
 
 ---
 

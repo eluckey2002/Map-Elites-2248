@@ -4,7 +4,6 @@
   "removalRule": "Removing a store from solver/ fails the suite until this list changes in the same commit. Archiving stays available; it just requires a signature instead of a silent git mv.",
   "stores": [
     "candidate-levels-52.json",
-    "candidate-levels-54.json",
     "candidate-levels.json"
   ]
 }

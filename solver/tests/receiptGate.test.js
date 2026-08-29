@@ -4,9 +4,12 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
-const { defaultInputIdentities, verifyCandidate } = require('../level-author');
+const { defaultInputIdentities, identity, verifyCandidate } = require('../level-author');
 
 const SOLVER_DIR = path.join(__dirname, '..');
+const ARCHIVE_DIR = path.join(SOLVER_DIR, 'candidates-archive');
+const RETIRED_LEVEL_54 = 'candidate-levels-54-tighter-pace-0a3b9adf';
+const RETIRED_LEVEL_54_IDENTITY = '0a3b9adfd4ca7e31248170393dff025b25366f0f62090a55bf227930acaf863f';
 
 // Every candidate store that ships in solver/ must carry a receipt that still
 // verifies against the code as it stands right now. verifyCandidate has always
@@ -140,10 +143,10 @@ function gateVerdict(fault) {
   return fault === null ? 'current' : 'stale';
 }
 
-// BLOCKING for anything stale that is not exempt. Level 52 is stale and exempt:
-// it ships, and recording f0ae3e75... records a human completing it, so the gate
-// reports it every run without failing. Level 53 (candidate-levels) and level 54
-// are current and pass outright.
+// Every stale store fails. Levels 52 and 53 are stale and exempt only in the
+// explanatory sense: both ship and have bound human wins, but neither is allowed
+// to pass. The unshipped stale Level 54 candidate was explicitly retired from
+// the live corpus on 2026-08-28 and is pinned by the archive test below.
 //
 // Why level 52 is not simply fixed: refreshing its receipt re-derives its target
 // from a fresh median, which with a stronger bot RAISES it -- measured at +4.9%
@@ -151,9 +154,10 @@ function gateVerdict(fault) {
 // (ticket T-003). The owner decided on 2026-08-21 that the target stays at
 // 102000. The debt is real, reported, and deliberately unpaid.
 //
-// These two were briefly archived to force a green suite, and put back the same
-// day: clearing a red gate by deleting its input is the exact failure this gate
-// exists to catch. See docs/CHECK-CARDS.md.
+// Level 52 and the then-unshipped Level 54 were briefly archived to force a green
+// suite and put back the same day. Level 54's later retirement is different: the
+// owner authorized it, the manifest signs it, the exact bytes remain archived,
+// and the permanent test below pins that disposition. See docs/CHECK-CARDS.md.
 //
 // One test per store, so a failure names the offending file rather than
 // reporting a count.
@@ -167,11 +171,10 @@ for (const storeName of candidateStores(SOLVER_DIR)) {
       exempt
         ? `${storeName}: ${fault}\n\n` +
             'THIS FAILURE IS KNOWN AND DECIDED. It is not a new bug and it is not\n' +
-            'yours to fix. This level ships, a human has completed it, and on\n' +
-            '2026-08-21 the owner decided its target stays where it is. Refreshing\n' +
-            'the receipt would re-derive the target from a stronger bot and raise it\n' +
-            '4.9%, making a live level harder for players, while the bot\'s win rate\n' +
-            'on it moved one seed in three hundred (ticket T-003).\n\n' +
+            'yours to fix. This level ships and a human completed this exact\n' +
+            'candidate. Re-authoring would derive a different target from a\n' +
+            'different measurement basis; it would not describe the shipped\n' +
+            'decision.\n\n' +
             'Do NOT clear this by re-authoring, archiving, or exempting it. It fails\n' +
             'because the receipt genuinely predates the current bot, which is true.'
         : `${storeName}: ${fault}\n\n` +
@@ -454,6 +457,25 @@ test('a store vanishing from the corpus is detected, not silently tolerated', ()
   assert.deepEqual(corpusDrift(declared, declared), { missing: [], undeclared: [] });
 });
 
+test('the authorized unshipped Level 54 retirement stays preserved and outside the live corpus', () => {
+  const liveStore = 'candidate-levels-54.json';
+  const archivedStore = readJson(path.join(ARCHIVE_DIR, `${RETIRED_LEVEL_54}.json`));
+  const archivedReceipt = readJson(path.join(ARCHIVE_DIR, `${RETIRED_LEVEL_54}.receipt.json`));
+
+  assert.equal(
+    candidateStores(SOLVER_DIR).includes(liveStore),
+    false,
+    'the retired unshipped candidate must not re-enter the live receipt corpus',
+  );
+  assert.equal(identity(archivedStore.candidates[0]), RETIRED_LEVEL_54_IDENTITY);
+  assert.equal(archivedReceipt.candidateIdentity, RETIRED_LEVEL_54_IDENTITY);
+  assert.throws(
+    () => verifyCandidate(archivedStore, archivedReceipt),
+    /code\/input identity mismatch/i,
+    'the preserved receipt remains historical evidence, not a quotable current measurement',
+  );
+});
+
 // --- Exemption controls --------------------------------------------------
 // The exemption is the one place this gate deliberately does not block, so it
 // is the place most worth attacking.
@@ -530,9 +552,5 @@ test('the real exemption facts hold for the shipped corpus', () => {
     true,
     'level 52 ships and recording f0ae3e75 records a human win against its identity',
   );
-  assert.equal(
-    exemptionForStore(SOLVER_DIR, 'candidate-levels-54.json').exempt,
-    false,
-    'level 54 is unshipped, so it must block if it ever goes stale',
-  );
+  assert.equal(candidateStores(SOLVER_DIR).includes('candidate-levels-54.json'), false);
 });

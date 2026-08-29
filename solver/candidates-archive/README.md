@@ -101,3 +101,19 @@ tells them apart.
 Everything above about these two — targets, boards, recorded scores — is
 quotable. Their receipts' win rates and medians are not, same as the rest of
 this directory.
+
+## Retired unshipped Level 54 measurement — `0a3b9adf`
+
+Retired from the live corpus on 2026-08-28 as one of the four owner-approved
+measurement-baseline stabilization changes. This is the later target-160000
+version of `level-54-tighter-pace`, candidate identity
+`0a3b9adfd4ca7e31248170393dff025b25366f0f62090a55bf227930acaf863f`.
+It never shipped and no human recording binds to it. Its receipt became stale
+and failed the hard corpus gate with `code/input identity mismatch`.
+
+The candidate and receipt are preserved byte-for-byte under the identity-bearing
+filenames `candidate-levels-54-tighter-pace-0a3b9adf.*`; the manifest edit that
+removed `candidate-levels-54.json` is the required retirement signature. This
+does not make the archived receipt current: its medians, win rate, and terminal
+counts are historical and must not be quoted. No replacement candidate was
+generated.
