@@ -6,6 +6,7 @@ const path = require('node:path');
 const {
   describeChainFeedback,
   PlayerStudy,
+  summarizeStudyPhases,
 } = require('../../src/game.js');
 
 const ROOT = path.join(__dirname, '..', '..');
@@ -119,4 +120,19 @@ test('player-study UI exposes explicit local controls and the study class has no
   assert.match(html, /id="exportStudyBtn"/);
   assert.match(html, /id="clearStudyBtn"/);
   assert.doesNotMatch(studySource, /\b(fetch|XMLHttpRequest|WebSocket|sendBeacon)\b/);
+});
+
+test('nine recorded moves group into beginning, middle, and end summaries', () => {
+  const chainLengths = [2, 3, 4, 5, 5, 5, 7, 9, 2];
+  const multipliers = [1, 1.5, 1.5, 2, 2, 2, 3, 5, 1];
+  const moves = chainLengths.map((length, index) => ({
+    chain: Array.from({ length }, (_, x) => ({ x, y: index, value: 2 })),
+    context: { multiplier: multipliers[index] },
+  }));
+
+  assert.deepEqual(summarizeStudyPhases(moves), [
+    { phase: 'beginning', moveCount: 3, averageChainLength: 3, bestMultiplier: 1.5 },
+    { phase: 'middle', moveCount: 3, averageChainLength: 5, bestMultiplier: 2 },
+    { phase: 'end', moveCount: 3, averageChainLength: 6, bestMultiplier: 5 },
+  ]);
 });

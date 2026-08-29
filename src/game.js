@@ -440,6 +440,30 @@ class PlayerStudy {
     }
 }
 
+function summarizeStudyPhases(moves) {
+    const phases = ['beginning', 'middle', 'end'].map((phase) => ({
+        phase,
+        moveCount: 0,
+        chainLengthTotal: 0,
+        bestMultiplier: 0,
+    }));
+
+    moves.forEach((move, index) => {
+        const phaseIndex = Math.min(2, Math.floor((index * 3) / moves.length));
+        const bucket = phases[phaseIndex];
+        bucket.moveCount++;
+        bucket.chainLengthTotal += Array.isArray(move.chain) ? move.chain.length : 0;
+        bucket.bestMultiplier = Math.max(bucket.bestMultiplier, Number(move.context?.multiplier) || 0);
+    });
+
+    return phases.map(({ phase, moveCount, chainLengthTotal, bestMultiplier }) => ({
+        phase,
+        moveCount,
+        averageChainLength: moveCount === 0 ? 0 : Number((chainLengthTotal / moveCount).toFixed(2)),
+        bestMultiplier,
+    }));
+}
+
 // ============================================================================
 // GAME CLASS
 // ============================================================================
@@ -1116,9 +1140,17 @@ class Game {
     showPlayerStudy() {
         const review = document.getElementById('studyReviewContent');
         const moves = this.playerStudy.getStudy().moves;
-        review.textContent = moves.length === 0
-            ? 'No recorded moves yet.'
-            : `${moves.length} recorded move${moves.length === 1 ? '' : 's'} ready to export.`;
+        const summaries = summarizeStudyPhases(moves);
+        review.innerHTML = `<div class="study-phase-grid">${summaries.map((summary) => `
+            <section class="study-phase" data-phase="${summary.phase}">
+                <h3>${summary.phase}</h3>
+                <dl>
+                    <div><dt>Moves</dt><dd>${summary.moveCount}</dd></div>
+                    <div><dt>Avg chain</dt><dd>${summary.averageChainLength}</dd></div>
+                    <div><dt>Best multiplier</dt><dd>×${summary.bestMultiplier}</dd></div>
+                </dl>
+            </section>
+        `).join('')}</div>`;
         this.showModal('playReviewModal');
     }
 
@@ -1521,6 +1553,7 @@ if (typeof module !== 'undefined' && module.exports) {
         Game,
         PlayerStudy,
         describeChainFeedback,
+        summarizeStudyPhases,
         createInitialGrid,
         customCandidateFromQuery,
         levelFromQuery,

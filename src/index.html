@@ -183,12 +183,46 @@
         }
 
         .study-review-content {
-            min-height: 80px;
             margin: 16px 0;
             padding: 12px 0;
             border-block: 1px solid rgba(255,255,255,0.12);
             font-size: 14px;
             line-height: 1.5;
+        }
+
+        .study-phase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .study-phase {
+            padding: 0 8px;
+            text-align: left;
+        }
+
+        .study-phase + .study-phase {
+            border-left: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .study-phase h3 {
+            margin-bottom: 8px;
+            color: #f2b179;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .study-phase dl div {
+            margin-top: 6px;
+        }
+
+        .study-phase dt {
+            color: rgba(255,255,255,0.62);
+            font-size: 10px;
+        }
+
+        .study-phase dd {
+            font-size: 14px;
+            font-weight: 700;
         }
 
         .study-actions {
