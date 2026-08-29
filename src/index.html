@@ -107,9 +107,12 @@
         .game-container {
             position: relative;
             touch-action: none;
+            width: min(100%, 400px);
         }
 
         #gameCanvas {
+            display: block;
+            max-width: 100%;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
@@ -294,16 +297,15 @@
         }
 
         .chain-indicator {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
+            width: 100%;
+            margin-top: 8px;
             background: rgba(0,0,0,0.7);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 12px;
             font-weight: 600;
-            white-space: nowrap;
+            line-height: 1.4;
+            text-align: center;
         }
 
         .chain-valid {
@@ -346,7 +348,7 @@
 
     <div class="game-container">
         <canvas id="gameCanvas"></canvas>
-        <div class="chain-indicator" id="chainIndicator" style="display: none;">
+        <div class="chain-indicator" id="chainIndicator" style="display: none;" aria-live="polite">
             <span id="chainText"></span>
         </div>
     </div>

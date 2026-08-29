@@ -276,6 +276,39 @@ function createInitialGrid(levelData, rng) {
     return grid;
 }
 
+function chainMultiplierForLength(length) {
+    if (length >= 9) return 5;
+    if (length >= 7) return 3;
+    if (length >= 5) return 2;
+    if (length >= 3) return 1.5;
+    return 1;
+}
+
+function describeChainFeedback(values, minChain, tileScale = 1) {
+    const selected = values.map(Number);
+    const resultTile = selected.reduce((sum, value) => sum + value, 0);
+    const multiplier = chainMultiplierForLength(selected.length);
+    const legalValues = selected.length < 2 || (
+        selected[0] === selected[1] &&
+        selected.slice(2).every((value, index) => {
+            const previous = selected[index + 1];
+            return value === previous || value === previous * 2;
+        })
+    );
+    const scaleRatio = resultTile / tileScale;
+    const isPowerOfTwo = Number.isInteger(scaleRatio) && scaleRatio > 0 &&
+        (scaleRatio & (scaleRatio - 1)) === 0;
+
+    return {
+        values: selected,
+        resultTile,
+        multiplier,
+        projectedPoints: Math.floor(resultTile * multiplier),
+        ready: legalValues && selected.length >= minChain,
+        futureMatchability: isPowerOfTwo ? 'matchable' : 'off-lattice',
+    };
+}
+
 class AuthoringCapture {
     constructor({ candidateIdentity, candidateLevel, seed, submit = () => {} }) {
         this.candidateIdentity = candidateIdentity;
@@ -522,12 +555,7 @@ class Game {
     }
 
     getChainMultiplier() {
-        const len = this.chain.length;
-        if (len >= 9) return 5;
-        if (len >= 7) return 3;
-        if (len >= 5) return 2;
-        if (len >= 3) return 1.5;
-        return 1;
+        return chainMultiplierForLength(this.chain.length);
     }
 
     executeChain() {
@@ -968,21 +996,23 @@ class Game {
         }
 
         indicator.style.display = 'block';
-        const sum = this.calculateChainValue();
-        const multiplier = this.getChainMultiplier();
-        const isValid = this.isValidChain();
-
-        if (isValid) {
-            text.className = 'chain-valid';
-            text.textContent = `${this.chain.length} tiles → ${sum} × ${multiplier} = ${Math.floor(sum * multiplier)}`;
-        } else {
-            text.className = 'chain-invalid';
-            if (this.chain.length < this.minChain) {
-                text.textContent = `Need ${this.minChain - this.chain.length} more tiles`;
-            } else {
-                text.textContent = 'Invalid chain';
-            }
-        }
+        const feedback = describeChainFeedback(
+            this.chain.map((tile) => tile.value),
+            this.minChain,
+            this.tileScale,
+        );
+        const readiness = feedback.ready
+            ? 'Ready'
+            : `Building (${Math.max(0, this.minChain - this.chain.length)} more)`;
+        text.className = feedback.ready ? 'chain-valid' : 'chain-invalid';
+        text.textContent = [
+            `Selected ${feedback.values.join(' + ')}`,
+            `Result tile ${feedback.resultTile}`,
+            `Multiplier ×${feedback.multiplier}`,
+            `Projected ${feedback.projectedPoints} points`,
+            readiness,
+            `Future ${feedback.futureMatchability}`,
+        ].join(' · ');
     }
 
     showMultiplierPopup(x, y, multiplier) {
@@ -1311,6 +1341,7 @@ if (typeof module !== 'undefined' && module.exports) {
         BLOCKER_TYPES,
         AuthoringCapture,
         Game,
+        describeChainFeedback,
         createInitialGrid,
         customCandidateFromQuery,
         levelFromQuery,
