@@ -41,6 +41,22 @@ A repository reader can open one generated Universe Map and see the five load-be
 - Negative controls: missing card, unresolved ledger ID, stale selected record, receipt hash mismatch, protected champion mismatch with rebound hash, and generated Markdown drift all fail closed.
 - T-001 completed; A1-A5 are ready for gate re-verification.
 
+### 3. Widen the evidence binding and project gate
+
+- Commit `9d8778d` added the independent verification receipt as a protected source identity; focused tests widened to 13/13.
+- Full-suite gate on the fixed implementation revision reported 233/236 pass, with exactly the frozen three stale-receipt failures and no new failure identity.
+- The shipped curve gate passed all seven checks across 53/53 configurations.
+- The historical MAP-Elites verifier, run from pinned revision `8508c3b4aa2bac9eceaac0bcaf91e3838e303a53`, passed 23 occupied cells, three representative replays, and protected champion `52f500c` plus level-authoring hashes.
+
+### 4. Apply the single review correction pass
+
+- Review found two defects: copied empirical verification observations in executable code, and inaccurate/inaccessible view labels.
+- Red: three focused assertions failed against revision `9d8778d`.
+- Commit `1c835db` derives receipt observations from the hash-bound artifact, uses real card headings, and names the HTML accurately as a visual static view.
+- Green: 15/15 focused tests, deterministic build check, live Universe verifier, and diff check pass.
+- Final regression: 236 total, 233 pass, with only `candidate-levels-52.json`, `candidate-levels-54.json`, and `candidate-levels.json` failing for their frozen stale receipts.
+- The curve and historical-artifact gate receipts remain reusable because the correction changed only Universe code, its tests, and generated views; no game, curve, artifact, verifier, champion, or experiment input changed.
+
 ## Blame classes
 
 []
@@ -55,4 +71,6 @@ A repository reader can open one generated Universe Map and see the five load-be
 
 ## Terminal
 
-[]
+- status: complete
+- deciding evidence: A1-A5 pass in the focused 15-test suite and live verifier; A6 matches the frozen baseline and its exact three deliberate failures; A7 review findings were corrected in `1c835db`, with no remaining finding in the fresh sequential code-pack lens required by this host's adapter mapping.
+- no proof-class, ledger standing, experiment artifact, game rule, or champion identity changed.
