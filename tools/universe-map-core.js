@@ -140,6 +140,21 @@ function resolveUniverse(root) {
   if (artifact.protected?.commit !== artifactSource.protectedChampionCommit) {
     throw new Error(`protected champion commit: expected ${artifactSource.protectedChampionCommit}, got ${artifact.protected?.commit || 'missing'}`);
   }
+  const screenLevels = artifact.config?.screen?.levels;
+  const screenSeeds = artifact.config?.screen?.seeds;
+  const holdoutLevels = artifact.config?.holdout?.levels;
+  const holdoutSeeds = artifact.config?.holdout?.seeds;
+  if (![screenLevels, screenSeeds, holdoutLevels, holdoutSeeds].every(Array.isArray)) {
+    throw new Error('artifact evaluation partitions are incomplete');
+  }
+  if (!Array.isArray(artifact.archive) || !Array.isArray(artifact.representatives)) {
+    throw new Error('artifact archive or representatives missing');
+  }
+  const chainBinCount = artifact.axes?.chainStyle?.count;
+  const patienceBinCount = artifact.axes?.patience?.count;
+  if (![chainBinCount, patienceBinCount].every(Number.isInteger)) {
+    throw new Error('artifact behavior axes are incomplete');
+  }
   const verificationSource = contract.sources.latestMapElitesVerification;
   const verificationBytes = readText(root, verificationSource.path);
   const verificationHash = sha256(verificationBytes);
@@ -152,27 +167,17 @@ function resolveUniverse(root) {
     }
   }
   for (const requiredObservation of [
-    'PASS MAP-Elites artifact: 23 occupied cells across 5 chain bins and 5 patience bins',
-    'PASS 3 representative elite replays',
-    'PASS protected champion 52f500c and level-authoring hashes',
+    `PASS MAP-Elites artifact: ${artifact.archive.length} occupied cells across ${chainBinCount} chain bins and ${patienceBinCount} patience bins`,
+    `PASS ${artifact.representatives.length} representative elite replays`,
+    `PASS protected champion ${artifact.protected.commit.slice(0, 7)} and level-authoring hashes`,
   ]) {
     if (!verificationBytes.includes(requiredObservation)) {
       throw new Error(`artifact verification evidence omits observation: ${requiredObservation}`);
     }
   }
 
-  const screenLevels = artifact.config?.screen?.levels;
-  const screenSeeds = artifact.config?.screen?.seeds;
-  const holdoutLevels = artifact.config?.holdout?.levels;
-  const holdoutSeeds = artifact.config?.holdout?.seeds;
-  if (![screenLevels, screenSeeds, holdoutLevels, holdoutSeeds].every(Array.isArray)) {
-    throw new Error('artifact evaluation partitions are incomplete');
-  }
   const overlap = screenSeeds.filter((seed) => new Set(holdoutSeeds).has(seed));
   if (overlap.length) throw new Error(`artifact selection and holdout seeds overlap: ${overlap.join(', ')}`);
-  if (!Array.isArray(artifact.archive) || !Array.isArray(artifact.representatives)) {
-    throw new Error('artifact archive or representatives missing');
-  }
 
   const currentSource = contract.sources.currentNavigation;
   const current = readText(root, currentSource.path);
@@ -343,7 +348,7 @@ function renderMarkdown(model) {
     `- CURRENT.md navigation: ${model.evidenceStanding.currentNavigation}; last reviewed ${model.evidenceStanding.currentNavigationLastReviewed}.\n\n`+
     `## Current frontier\n\n${frontier}\n\n`+
     `## Drill-down\n\n`+
-    `- [Interactive static view](universe/map.html)\n`+
+    `- [Visual static view](universe/map.html)\n`+
     `- [Resolved machine-readable model](universe/resolved.json)\n`+
     `- [Universe contract](universe/contract.json)\n`+
     `- [Current navigation](CURRENT.md)\n`+
@@ -385,7 +390,7 @@ function renderHtml(model) {
   };
   const cards = model.cards.map((card) => `
     <section class="card" id="${escapeHtml(card.id)}">
-      <p class="eyebrow">${escapeHtml(card.title)}</p>
+      <h2 class="eyebrow">${escapeHtml(card.title)}</h2>
       <p class="purpose">${escapeHtml(card.purpose)}</p>
       <ul>${cardContent[card.id].map((line) => `<li>${line}</li>`).join('')}</ul>
     </section>`).join('');

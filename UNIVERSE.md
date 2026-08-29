@@ -44,7 +44,7 @@
 
 ## Drill-down
 
-- [Interactive static view](universe/map.html)
+- [Visual static view](universe/map.html)
 - [Resolved machine-readable model](universe/resolved.json)
 - [Universe contract](universe/contract.json)
 - [Current navigation](CURRENT.md)

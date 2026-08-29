@@ -110,6 +110,15 @@ test('generated Markdown exposes the load-bearing distinctions in one screen', (
   assert.match(markdown, /0 of 3 representatives beat the champion on holdout/);
   assert.match(markdown, /Champion standing.*unchanged/s);
   assert.match(markdown, /CURRENT\.md.*stale/s);
+  assert.doesNotMatch(markdown, /Interactive static view/);
+});
+
+test('the static HTML uses real headings for all five card titles', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'universe/map.html'), 'utf8');
+
+  for (const title of ['Identity', 'Evaluation universe', 'Observed performance', 'Evidence standing', 'Current frontier']) {
+    assert.match(html, new RegExp(`<h2 class="eyebrow">${title}</h2>`));
+  }
 });
 
 test('CURRENT links the generated control panel without erasing its historical milestone', () => {
@@ -173,6 +182,37 @@ test('verification fails closed when the artifact verification evidence drifts',
   fs.appendFileSync(verificationPath, '\nchanged verification evidence\n');
 
   assert.match(verifyUniverse(fixture).join('\n'), /artifact verification SHA-256/);
+});
+
+test('verification observations derive from rebound evidence instead of copied metrics in code', (t) => {
+  const fixture = makeFixture(t);
+  const archivePath = path.join(
+    fixture,
+    '.orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json',
+  );
+  const artifact = JSON.parse(fs.readFileSync(archivePath, 'utf8'));
+  artifact.archive.push({ cell: '9,9', policyId: 'fixture-only' });
+  const artifactBytes = `${JSON.stringify(artifact, null, 2)}\n`;
+  fs.writeFileSync(archivePath, artifactBytes);
+
+  const verificationPath = path.join(
+    fixture,
+    '.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md',
+  );
+  const verification = fs.readFileSync(verificationPath, 'utf8')
+    .replaceAll('ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22', hash(artifactBytes))
+    .replace('PASS MAP-Elites artifact: 23 occupied cells', 'PASS MAP-Elites artifact: 24 occupied cells');
+  fs.writeFileSync(verificationPath, verification);
+
+  const contractPath = path.join(fixture, 'universe/contract.json');
+  const contract = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+  contract.sources.latestMapElitesArtifact.sha256 = hash(artifactBytes);
+  contract.sources.latestMapElitesVerification.sha256 = hash(verification);
+  fs.writeFileSync(contractPath, `${JSON.stringify(contract, null, 2)}\n`);
+  writeUniverse(fixture);
+
+  assert.equal(resolveUniverse(fixture).observedPerformance.latest.occupiedCells, 24);
+  assert.deepEqual(verifyUniverse(fixture), []);
 });
 
 test('verification fails closed for protected champion identity mismatch even with a rebound hash', (t) => {
