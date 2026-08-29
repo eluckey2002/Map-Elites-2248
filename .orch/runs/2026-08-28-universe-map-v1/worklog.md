@@ -33,6 +33,14 @@ A repository reader can open one generated Universe Map and see the five load-be
 - Baseline: clean status; frozen project suite is 221 total, 218 pass, exactly the three deliberate receipt-identity failures.
 - Decomposition: one end-to-end tracer ticket covers A1-A5; A6 belongs to the deterministic final gate and A7 to the code-pack lens.
 
+### 2. Complete the end-to-end tracer
+
+- Red identity: missing `tools/universe-map-core.js` caused the authored Universe test to fail before implementation.
+- Result: commit `8a229be4f9a87dd16ee78126f4a787eaf286a341`.
+- Unit verification: 12/12 Universe tests pass; build check and live verifier pass.
+- Negative controls: missing card, unresolved ledger ID, stale selected record, receipt hash mismatch, protected champion mismatch with rebound hash, and generated Markdown drift all fail closed.
+- T-001 completed; A1-A5 are ready for gate re-verification.
+
 ## Blame classes
 
 []
