@@ -18,6 +18,10 @@ As of 2026-08-12 the level curve has been retuned and every level is winnable: n
 
 Two candidate remedies were priced before that retune and neither rescues the late levels on its own. Enriching the spawn pool is the wrong lever — a 76% increase in spawned value buys 13% more score (`RESULT-0006`). Enlarging the move budget works in the mid game and saturates in the late game, where the board reaches a terminal state before extra moves can be spent (`RESULT-0007`). Levels past roughly 31 are short of their targets by two to four times with no parameter fix available, so their targets are the thing that has to move.
 
+As of 2026-08-28, **53 levels ship**. Level 53 is the exact `043ca53f...` candidate and has three replayed human wins, but its authoring receipt is historical rather than current-bot evidence (`RESULT-0018`). New candidate measurement now supplies the complete frozen `calib-1` ruler, and the unshipped stale Level 54 candidate `0a3b9adf...` is preserved outside the live corpus at fixed code revision `d6ceb96`; the two shipped Level 52 and 53 receipt mismatches remain deliberately visible.
+
+The later fixed-axis MAP-Elites artifact is now accepted at its bounded scope (`RESULT-0019`). It expands exact shared-grid occupancy from 20/25 to 23/25, but none of three preselected representatives has positive disjoint-holdout lift, so the champion remains unchanged. This is accepted quality-diversity evidence, not a stronger-policy result and not a complete behavior-space claim.
+
 Repository baseline for this documentation run is `main` at `10a849d5336bdda89d2d3f5ed1f1ca87e536811d`, with pre-existing dirty work preserved. Recheck with `git status --short --branch` and `git log -1 --format='%H %s'`. (`.orch/runs/game-evidence-ledger-2026-08-11/worklog.md`, **State**)
 
 ## Authority and navigation
@@ -472,6 +476,36 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** The archive axes are calibrated from the bounded pilot and may clip policies outside that pilot's observed range. The experiment explores the existing parameter seam only; it does not learn a value function, add search depth, or discover new policy structure. The full solver suite remains 193/196 because of the same three pre-existing receipt-identity failures named in `RESULT-0016`; no receipt was refreshed or weakened.
 
+### RESULT-0018 — Level 53 ships with replayed human wins and a historical receipt
+
+- **type:** result
+- **status:** accepted
+- **scope:** shipped Level 53 at candidate identity `043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16`; current repository through stabilization revision `d6ceb964986fed5dc8625394de98753ef51239c4`
+- **statement:** Level 53 ships as `gen-0014-wide-sprint`: target 101,000, tile scale 32, 16 moves, minimum chain 3, a 6×5 grid, and no blockers. The owner shipped that exact candidate after three recorded plays, all wins; the recordings replay exactly at 101,120 in 13 moves, 110,208 in 13, and 105,216 in 12. Its receipt records the measurement basis used during authoring, but it now fails `code/input identity mismatch` and does not establish a current-bot median, win rate, or general human difficulty. The stale “verifies against the current bot” sentence in `src/game.js` is historical commentary, not current standing; the live receipt gate controls that question.
+- **evidence:** shipped entry `src/game.js`, `LEVELS[52]`, SHA-256 `541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee`; candidate `solver/candidate-levels.json` SHA-256 `0b046cfe11090e2b8a3836e0964913800c115b2a4d16f558acc08b725bdfedda`; receipt SHA-256 `261ad85e9566974cf709429bd566a627a4fe5413db0d15e90fe8efa0ec8a6e0b`; shipping ticket `.orch/tickets/ranked-items-2026-08-21/T-006.md`; replay files `recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json`, `recordings/7061bbf0132f36d071d6aa1367653116bbac064777a13461cda3e5e170f39af0.json`, and `recordings/7ad0978f96196c4ffe7ac15035340454d8e79ab23ea98003a84443bdcbd01526.json`; fixed receipt-gate result in `.orch/tickets/2026-08-29-bounded-measurement-baseline-stabilization/T-001.md`.
+- **proof_class:** `owner_decision` for shipping; `direct_source` for the shipped configuration, recording replays, identities, and current stale-receipt standing. The historical bot measurement remains a `heuristic_observation` at its old input identity and is not promoted to current evidence.
+- **as_of:** 2026-08-28
+- **reverify:** Run `node --test solver/tests/gameLevels.test.js solver/tests/recordingReplay.test.js`; expect the 53-level pin and every bound recording replay to pass. Run `node --test solver/tests/receiptGate.test.js`; expect the Level 53 store `candidate-levels.json` to remain one of exactly two failures, with `code/input identity mismatch`.
+- **updated:** 2026-08-28
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Three wins establish that one player completed this exact shipped candidate three times. They do not estimate a population win rate or quantify the owner's margin over the bot.
+
+### RESULT-0019 — A fixed-axis MAP-Elites round expands admitted coverage to 23 cells without a champion
+
+- **type:** result
+- **status:** accepted
+- **scope:** archive SHA-256 `ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22`; runner/verifier revision `8508c3b4aa2bac9eceaac0bcaf91e3838e303a53`; original 5×5 axes identity `07ac51b0e1d4d69509052baf5b0af02f5c98854d1387e2701db85e0baf4e8457`; 11 pilots, 120 mutations, 12 screen seeds across six levels, and 24 disjoint holdout seeds across twelve levels for three representatives
+- **statement:** On the original accepted archive's exact behavior axes, this deterministic round occupies **23 of 25 cells**, versus 20/25 in `RESULT-0017`: four previously empty cells are occupied, one formerly occupied cell is absent, for a net gain of three. All three selected representatives replay exactly. The best screen elite, `e7349b8a477a`, measured +0.7337% on its 72 selection games and -1.4739% on 288 disjoint holdout games (`t = -1.3563`); the other two representatives were also negative on holdout. Therefore zero of three representatives clears even the positive-holdout prerequisite, and the champion remains `52f500c`. The result admits broader bounded quality-diversity coverage, not repeatability, optimality, a complete map, or a stronger policy.
+- **evidence:** artifact `.orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json` SHA-256 `ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22`; rendered map alongside it SHA-256 `a94fc61469d36ab672bcb4722f1b08d628f9bee7d0137dfe0f4afb3568d7a0fb`; deterministic verification `.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md` SHA-256 `701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790`; bounded synthesis `.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/synthesis.md` SHA-256 `401665cf9f3a2a863e0650759e729306a4e3cf4b8b5859f431446c44d7101c61`; correction worklog terminal record in `.orch/runs/2026-08-28-map-elites-independent-round-verification/worklog.md`.
+- **proof_class:** `heuristic_observation` for archive occupancy and policy performance in this bounded search; `direct_source` for artifact identities, exact axis binding, seed disjointness, replay equality, and protected champion standing. No policy-independent bound follows.
+- **as_of:** 2026-08-28
+- **reverify:** Check the four fixed SHA-256 identities, then run the verifier at revision `8508c3b4aa2bac9eceaac0bcaf91e3838e303a53` against the frozen artifact; expect 23 occupied cells, three exact representative replays, unchanged protected identities, and the three recorded holdout recomputations. Current-main verification is not a substitute because the artifact intentionally pins the earlier 52-level `src/game.js` identity.
+- **updated:** 2026-08-28
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The six selection levels are `[1, 10, 20, 30, 40, 52]`; Level 53 was not evaluated. Twenty of 23 final elites have selection evidence only. Whether 23/25 repeats, whether the two empty cells are hard to reach, and whether any non-representative elite generalizes remain unresolved.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
@@ -662,7 +696,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 
 ## Resume boundary
 
-Level tuning is done (`DECISION-0003`, `RESULT-0008`). Active work resumes at authoring new levels, against the design at `docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md` and the measurement harness at `solver/game-tester.js`.
+Level tuning is done (`DECISION-0003`, `RESULT-0008`). Active work remains authoring new levels. The generator now exists at `solver/generate-levels.js`, and revision `d6ceb96` makes its candidate measurement path use the complete frozen `calib-1` ruler through `solver/level-author.js`. Level 54 has no live candidate; its unshipped `0a3b9adf...` version is preserved as retired evidence, not a queued replacement. The next level or experiment remains an owner choice rather than an inferred default.
 
 Two things are knowingly left open. The reference bot remains a weak proxy for a skilled player, so every recorded win rate is a floor on human success and not an estimate of it; the margin is unquantified. And roughly 15 levels carry a target lower than the level before, accepted rather than fixed, because the remaining lever is the move budget and spending it would make a level's pacing a side effect of target cosmetics (`DECISION-0003`).
 

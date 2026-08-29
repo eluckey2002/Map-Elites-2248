@@ -6,11 +6,18 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 ## Active milestone
 
-Author new levels. The curve is fixed, so new levels can be born calibrated rather than hand-guessed. [BL-0004](docs/backlog/BL-0004-build-level-authoring-tracer.md)'s tracer is complete and its one candidate is shipped: Level 51, the first level whose target was never hand-picked (measured demand, `DECISION-0003`) and the first with direct human playtest evidence, not just a bot win rate (`RESULT-0009`). The historical design remains at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md); measurement is grounded in `solver/game-tester.js`.
+Author new levels. The curve is fixed, and the authoring baseline is now bounded and stable:
 
-**Read [HANDOFF.md](HANDOFF.md) before touching this milestone further** — a 2026-08-17 session conflated the pipeline built so far (measures and validates a *human-picked* shape) with a level generator (invents shapes on its own), which does not exist. That handoff also lists three more candidates from that session in three different states: one ready to ship (52), one correctly rejected (53, real lockouts), and one whose playtest doesn't count (54, tested on a memorized board — needs a fresh seed before its 85%-demand question is actually answered).
+- **53 levels ship.** Level 53 is the exact `043ca53f...` candidate and has three replayed human wins. Its old authoring receipt is historical, not current-bot performance evidence ([RESULT-0018](EVIDENCE_LEDGER.md#result-0018--level-53-ships-with-replayed-human-wins-and-a-historical-receipt)).
+- **The generator exists.** `solver/generate-levels.js` samples legal shapes, screens them, derives one candidate through the authoring path, and verifies it before writing. It does not make a shipping decision.
+- **New target measurement uses `calib-1`.** `solver/level-author.js` now passes the complete frozen calibration parameters and records the calibration stamp, so live bot-default changes cannot silently move a future candidate's target.
+- **The unshipped stale Level 54 candidate is retired.** Candidate `0a3b9adf...` and its receipt remain byte-for-byte in `solver/candidates-archive/`; no replacement was generated. The live receipt corpus intentionally retains the two shipped Level 52 and 53 identity failures.
 
-The milestone itself isn't closed. What's left is an open choice, not a default: ship more hand-picked candidates one at a time, or build the actual generator.
+The milestone is not closed, but no next candidate or experiment is implied by this stabilization. Continue only from a separately approved level-authoring choice. The historical design remains at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md).
+
+## Admitted MAP-Elites standing
+
+The fixed-axis independent round is accepted as bounded quality-diversity evidence ([RESULT-0019](EVIDENCE_LEDGER.md#result-0019--a-fixed-axis-map-elites-round-expands-admitted-coverage-to-23-cells-without-a-champion)). On the original 5×5 behavior grid it occupied 23/25 cells, up from 20/25 in the first accepted run. None of its three representatives had positive disjoint-holdout lift, so the champion is unchanged. The selection universe covered six levels and omitted Level 53; this is not broad generalization evidence and does not authorize another run.
 
 ## Done — the level curve
 
@@ -44,4 +51,4 @@ node solver/chain-coverage.js                           # how much of the best m
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
-Last reviewed: 2026-08-20
+Last reviewed: 2026-08-28

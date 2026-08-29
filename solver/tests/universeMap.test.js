@@ -54,26 +54,26 @@ test('the contract has exactly the five load-bearing cards and no copied claim f
 
 test('the selected ledger parser resolves one record without pretending to parse the whole ledger', () => {
   const ledger = fs.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
-  const record = parseLedgerRecord(ledger, 'RESULT-0017');
+  const record = parseLedgerRecord(ledger, 'RESULT-0019');
 
-  assert.equal(record.id, 'RESULT-0017');
+  assert.equal(record.id, 'RESULT-0019');
   assert.equal(record.type, 'result');
   assert.equal(record.status, 'accepted');
-  assert.match(record.title, /bounded MAP-Elites run/);
-  assert.match(record.statement, /20 of 25 cells/);
+  assert.match(record.title, /fixed-axis MAP-Elites round/);
+  assert.match(record.statement, /23 of 25 cells/);
   assert.match(record.proofClass, /heuristic_observation/);
   assert.throws(() => parseLedgerRecord(ledger, 'RESULT-9999'), /unresolved ledger record RESULT-9999/);
 });
 
-test('one resolved model keeps admitted evidence separate from the later verified artifact', () => {
+test('one resolved model binds the admitted record to the exact verified artifact', () => {
   const model = resolveUniverse(ROOT);
 
   assert.equal(model.cards.length, 5);
-  assert.equal(model.observedPerformance.admitted.recordId, 'RESULT-0017');
-  assert.equal(model.observedPerformance.admitted.occupiedCells, 20);
+  assert.equal(model.observedPerformance.admitted.recordId, 'RESULT-0019');
+  assert.equal(model.observedPerformance.admitted.occupiedCells, 23);
   assert.equal(model.observedPerformance.admitted.totalCells, 25);
   assert.equal(model.observedPerformance.latest.occupiedCells, 23);
-  assert.equal(model.observedPerformance.latest.ledgerStanding, 'not-admitted');
+  assert.equal(model.observedPerformance.latest.ledgerStanding, 'selected');
   assert.deepEqual(model.evaluationUniverse.selection.levels, [1, 10, 20, 30, 40, 52]);
   assert.equal(model.evaluationUniverse.selection.levelCount, 6);
   assert.equal(model.evaluationUniverse.holdout.levelCount, 12);
@@ -83,8 +83,7 @@ test('one resolved model keeps admitted evidence separate from the later verifie
     model.sourceIdentities.latestArtifactVerificationSha256,
     '701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790',
   );
-  assert.ok(model.warnings.some((warning) => warning.id === 'current-navigation-stale'));
-  assert.ok(model.warnings.some((warning) => warning.id === 'artifact-not-ledger-admitted'));
+  assert.deepEqual(model.warnings, []);
 });
 
 test('the builder is byte-stable and the committed generated views are current', () => {
@@ -103,13 +102,15 @@ test('the builder is byte-stable and the committed generated views are current',
 test('generated Markdown exposes the load-bearing distinctions in one screen', () => {
   const markdown = fs.readFileSync(path.join(ROOT, 'UNIVERSE.md'), 'utf8');
 
-  assert.match(markdown, /Ledger-admitted: RESULT-0017.*20\/25/s);
-  assert.match(markdown, /Verified artifact, not ledger-admitted.*23\/25/s);
+  assert.match(markdown, /Ledger-admitted: RESULT-0019.*23\/25/s);
+  assert.match(markdown, /Verified artifact, ledger-admitted.*23\/25/s);
   assert.match(markdown, /Selection universe.*6 levels/s);
   assert.match(markdown, /Representative holdout.*12 levels/s);
   assert.match(markdown, /0 of 3 representatives beat the champion on holdout/);
   assert.match(markdown, /Champion standing.*unchanged/s);
-  assert.match(markdown, /CURRENT\.md.*stale/s);
+  assert.match(markdown, /CURRENT\.md.*current/s);
+  assert.match(markdown, /## Warnings\n\n- None\./);
+  assert.match(markdown, /## Current frontier\n\n1\. \*\*evaluation-universe-coverage:.*2\. \*\*generalization:/s);
   assert.doesNotMatch(markdown, /Interactive static view/);
 });
 
@@ -119,6 +120,9 @@ test('the static HTML uses real headings for all five card titles', () => {
   for (const title of ['Identity', 'Evaluation universe', 'Observed performance', 'Evidence standing', 'Current frontier']) {
     assert.match(html, new RegExp(`<h2 class="eyebrow">${title}</h2>`));
   }
+  assert.match(html, /<aside class="warnings">.*<li>None\.<\/li>/s);
+  assert.match(html, /Verified, ledger-admitted: <strong>23\/25<\/strong> cells/);
+  assert.doesNotMatch(html, /Verified-only artifact/);
 });
 
 test('CURRENT links the generated control panel without erasing its historical milestone', () => {
@@ -153,13 +157,13 @@ test('verification fails closed when selected current evidence is not accepted',
   const fixture = makeFixture(t);
   const ledgerPath = path.join(fixture, 'EVIDENCE_LEDGER.md');
   const ledger = fs.readFileSync(ledgerPath, 'utf8');
-  const heading = ledger.indexOf('### RESULT-0017');
+  const heading = ledger.indexOf('### RESULT-0019');
   const nextHeading = ledger.indexOf('\n## Decision registry', heading);
   const before = ledger.slice(0, heading);
   const selected = ledger.slice(heading, nextHeading).replace('- **status:** accepted', '- **status:** stale');
   fs.writeFileSync(ledgerPath, `${before}${selected}${ledger.slice(nextHeading)}`);
 
-  assert.match(verifyUniverse(fixture).join('\n'), /RESULT-0017 status: expected accepted, got stale/);
+  assert.match(verifyUniverse(fixture).join('\n'), /RESULT-0019 status: expected accepted, got stale/);
 });
 
 test('verification fails closed for receipt hash mismatch', (t) => {

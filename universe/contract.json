@@ -38,7 +38,7 @@
       "path": "EVIDENCE_LEDGER.md",
       "acceptedRecords": [
         {
-          "id": "RESULT-0017",
+          "id": "RESULT-0019",
           "type": "result",
           "status": "accepted"
         }
@@ -54,7 +54,7 @@
     "latestMapElitesArtifact": {
       "path": ".orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json",
       "sha256": "ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22",
-      "ledgerRecordId": null,
+      "ledgerRecordId": "RESULT-0019",
       "protectedChampionCommit": "52f500c03a11699cb6bd7c3cab7f6a232470e0dd",
       "verifierCommit": "8508c3b4aa2bac9eceaac0bcaf91e3838e303a53"
     },

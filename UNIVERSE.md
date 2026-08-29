@@ -4,8 +4,7 @@
 
 ## Warnings
 
-- **artifact-not-ledger-admitted:** The latest verified MAP-Elites artifact has no selected ledger record and is not accepted project evidence.
-- **current-navigation-stale:** CURRENT.md is stale at this map boundary: last reviewed 2026-08-20, 8 days before 2026-08-28.
+- None.
 
 ## Identity
 
@@ -23,8 +22,8 @@
 
 ## Observed performance
 
-- **Ledger-admitted: RESULT-0017** (accepted, `heuristic_observation` for the bounded archive and policy results; `direct_source` for the artifact identities, replay equality, disjoint seeds, and unchanged protected hashes. No optimality, human-strength, or complete behavior-space claim follows.) — 20/25 occupied behavior cells.
-- **Verified artifact, not ledger-admitted** — 23/25 occupied behavior cells.
+- **Ledger-admitted: RESULT-0019** (accepted, `heuristic_observation` for archive occupancy and policy performance in this bounded search; `direct_source` for artifact identities, exact axis binding, seed disjointness, replay equality, and protected champion standing. No policy-independent bound follows.) — 23/25 occupied behavior cells.
+- **Verified artifact, ledger-admitted** — 23/25 occupied behavior cells.
 - **Generalization:** 0 of 3 representatives beat the champion on holdout.
   - `e7349b8a477a` in `4,1`: -1.48% holdout fitness
   - `d4dee742cedd` in `0,4`: -33.21% holdout fitness
@@ -32,15 +31,14 @@
 
 ## Evidence standing
 
-- Accepted standing: RESULT-0017 in EVIDENCE_LEDGER.md.
-- Latest artifact: not-admitted.
-- CURRENT.md navigation: stale; last reviewed 2026-08-20.
+- Accepted standing: RESULT-0019 in EVIDENCE_LEDGER.md.
+- Latest artifact: selected.
+- CURRENT.md navigation: current; last reviewed 2026-08-28.
 
 ## Current frontier
 
-1. **ledger-admission-gap:** Independently admit or explicitly reject the latest verified artifact before using it as accepted evidence.
-2. **evaluation-universe-coverage:** Widen and characterize the selection-level universe before interpreting policy lift as broad generalization.
-3. **generalization:** Seek positive disjoint-holdout evidence before considering any champion change.
+1. **evaluation-universe-coverage:** Widen and characterize the selection-level universe before interpreting policy lift as broad generalization.
+2. **generalization:** Seek positive disjoint-holdout evidence before considering any champion change.
 
 ## Drill-down
 

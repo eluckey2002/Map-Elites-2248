@@ -322,8 +322,13 @@ function renderMarkdown(model) {
   const representatives = latest.representatives
     .map((entry) => `  - \`${entry.policyId}\` in \`${entry.cell}\`: ${(entry.holdoutFitness * 100).toFixed(2)}% holdout fitness`)
     .join('\n');
-  const warnings = model.warnings.map((warning) => `- **${warning.id}:** ${warning.message}`).join('\n');
-  const frontier = model.currentFrontier.map((item) => `${item.priority}. **${item.id}:** ${item.action}`).join('\n');
+  const latestStandingLabel = latest.ledgerStanding === 'selected'
+    ? 'Verified artifact, ledger-admitted'
+    : 'Verified artifact, not ledger-admitted';
+  const warnings = model.warnings.length
+    ? model.warnings.map((warning) => `- **${warning.id}:** ${warning.message}`).join('\n')
+    : '- None.';
+  const frontier = model.currentFrontier.map((item, index) => `${index + 1}. **${item.id}:** ${item.action}`).join('\n');
 
   return `# Universe Map\n\n`+
     `> Generated control panel as of ${model.asOf}. Do not edit by hand. Evidence standing comes only from [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md); this page is a projection.\n\n`+
@@ -340,7 +345,7 @@ function renderMarkdown(model) {
     `- Levels: ${holdout.levels.join(', ')}.\n\n`+
     `## Observed performance\n\n`+
     `- **Ledger-admitted: ${admitted.recordId}** (${admitted.status}, ${admitted.proofClass}) — ${admitted.occupiedCells}/${admitted.totalCells} occupied behavior cells.\n`+
-    `- **Verified artifact, not ledger-admitted** — ${latest.occupiedCells}/${latest.totalCells} occupied behavior cells.\n`+
+    `- **${latestStandingLabel}** — ${latest.occupiedCells}/${latest.totalCells} occupied behavior cells.\n`+
     `- **Generalization:** ${latest.positiveHoldoutRepresentatives} of ${latest.representativeCount} representatives beat the champion on holdout.\n${representatives}\n\n`+
     `## Evidence standing\n\n`+
     `- Accepted standing: ${model.evidenceStanding.acceptedRecord} in ${model.evidenceStanding.standingAuthority}.\n`+
@@ -364,6 +369,9 @@ function escapeHtml(value) {
 }
 
 function renderHtml(model) {
+  const latestArtifactLabel = model.observedPerformance.latest.ledgerStanding === 'selected'
+    ? 'Verified, ledger-admitted'
+    : 'Verified-only artifact';
   const cardContent = {
     identity: [
       `Champion: <strong>${escapeHtml(model.identity.championStanding)}</strong>`,
@@ -377,7 +385,7 @@ function renderHtml(model) {
     ],
     'observed-performance': [
       `Ledger-admitted: <strong>${model.observedPerformance.admitted.occupiedCells}/${model.observedPerformance.admitted.totalCells}</strong> cells`,
-      `Verified-only artifact: <strong>${model.observedPerformance.latest.occupiedCells}/${model.observedPerformance.latest.totalCells}</strong> cells`,
+      `${latestArtifactLabel}: <strong>${model.observedPerformance.latest.occupiedCells}/${model.observedPerformance.latest.totalCells}</strong> cells`,
       `Positive holdout representatives: <strong>${model.observedPerformance.latest.positiveHoldoutRepresentatives}/${model.observedPerformance.latest.representativeCount}</strong>`,
     ],
     'evidence-standing': [
@@ -394,7 +402,9 @@ function renderHtml(model) {
       <p class="purpose">${escapeHtml(card.purpose)}</p>
       <ul>${cardContent[card.id].map((line) => `<li>${line}</li>`).join('')}</ul>
     </section>`).join('');
-  const warnings = model.warnings.map((warning) => `<li><strong>${escapeHtml(warning.id)}</strong> — ${escapeHtml(warning.message)}</li>`).join('');
+  const warnings = model.warnings.length
+    ? model.warnings.map((warning) => `<li><strong>${escapeHtml(warning.id)}</strong> — ${escapeHtml(warning.message)}</li>`).join('')
+    : '<li>None.</li>';
 
   return `<!doctype html>
 <html lang="en">
