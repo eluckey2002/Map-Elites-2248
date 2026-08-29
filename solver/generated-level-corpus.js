@@ -21,6 +21,7 @@ const {
   verifyCandidate,
 } = require('./level-author');
 const { calibrationStamp } = require('./calibration');
+const { DEFAULT_PARAMS } = require('./bot');
 
 const ROOT = path.join(__dirname, '..');
 const PROTOCOL_PATH = '.orch/runs/2026-08-29-generated-level-corpus-preregistration/preregistration.md';
@@ -257,10 +258,53 @@ function championExists(root = ROOT) {
   }
 }
 
+function repositoryState(root = ROOT) {
+  return {
+    head: childProcess.execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root }).toString('utf8').trim(),
+    dirty: childProcess.execFileSync('git', ['status', '--porcelain'], { cwd: root }).toString('utf8').trim().length > 0,
+  };
+}
+
 function rangesOverlap(left, right) {
   const leftEnd = left.start + left.count - 1;
   const rightEnd = right.start + right.count - 1;
   return left.start <= rightEnd && right.start <= leftEnd;
+}
+
+function scanDeclaredSeedRanges(root = ROOT) {
+  const ignored = new Set([
+    PROTOCOL_PATH,
+    'solver/generated-level-corpus.js',
+    'solver/tests/generatedLevelCorpus.test.js',
+  ]);
+  const tracked = childProcess.execFileSync('git', ['ls-files', '-z'], { cwd: root })
+    .toString('utf8')
+    .split('\0')
+    .filter(Boolean);
+  const collisions = [];
+  for (const relativePath of tracked) {
+    if (ignored.has(relativePath)) continue;
+    const lines = fs.readFileSync(path.join(root, relativePath), 'utf8').split('\n');
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+      const literals = lines[lineIndex].match(/\b\d[\d_,]*\b/g) || [];
+      for (const literal of literals) {
+        const value = Number(literal.replaceAll('_', '').replaceAll(',', ''));
+        if (!Number.isSafeInteger(value)) continue;
+        const registered = GAMEPLAY_SEED_RANGES.find((range) => rangesOverlap(
+          { start: value, count: 1 }, range,
+        ));
+        if (registered) {
+          collisions.push({
+            name: `${relativePath}:${lineIndex + 1}`,
+            start: value,
+            count: 1,
+            registeredRange: registered.name,
+          });
+        }
+      }
+    }
+  }
+  return collisions;
 }
 
 function preflight(options = {}) {
@@ -269,7 +313,9 @@ function preflight(options = {}) {
   const observedCalibration = options.calibration || calibrationStamp();
   const observedProtocolIdentity = options.protocolIdentity || sha256(fs.readFileSync(path.join(root, PROTOCOL_PATH)));
   const observedChampion = options.championExists === undefined ? championExists(root) : options.championExists;
-  const declaredSeedRanges = options.declaredSeedRanges || [];
+  const declaredSeedRanges = options.declaredSeedRanges === undefined
+    ? scanDeclaredSeedRanges(root)
+    : options.declaredSeedRanges;
   const failures = [];
 
   for (const [relativePath, expected] of Object.entries(PINNED.sourceHashes)) {
@@ -295,6 +341,8 @@ function preflight(options = {}) {
     sourceHashes: observedSources,
     calibration: observedCalibration,
     protectedChampion: PINNED.protectedChampion,
+    championParams: { ...DEFAULT_PARAMS },
+    repository: repositoryState(root),
     gameplaySeedRanges: GAMEPLAY_SEED_RANGES,
   };
 }
@@ -376,6 +424,7 @@ async function runCorpus(options = {}) {
         ...entry,
         screen: measurement,
         screenRejection: dependencies.screenVerdict(measurement),
+        selectionHash: selectionHash(entry),
       });
     }
   } catch (error) {
@@ -383,6 +432,7 @@ async function runCorpus(options = {}) {
   }
 
   const selection = selectForFullMeasurement(screened);
+  const cleanIds = new Set(selection.clean.map((entry) => entry.slotId));
   const stressIds = new Set(selection.stressProbe.map((entry) => entry.slotId));
   const measurements = [];
   for (const entry of selection.selected) {
@@ -424,6 +474,16 @@ async function runCorpus(options = {}) {
   }
 
   const coverage = evaluateCoverage(measurements);
+  const screens = screened.map((entry) => ({
+    ...entry,
+    fullAuthoringDisposition: cleanIds.has(entry.slotId)
+      ? 'selected-clean'
+      : stressIds.has(entry.slotId)
+        ? 'selected-stress-probe'
+        : entry.screenRejection === null
+          ? 'not-selected-clean'
+          : 'not-selected-screen-rejected',
+  }));
   const gameBudget = {
     screen: plan.uniqueShapes.length * 24,
     authoring: selection.selected.length * 450,
@@ -438,10 +498,14 @@ async function runCorpus(options = {}) {
     schemaVersion: 1,
     protocol: PROTOCOL.name,
     preflight: preflightResult,
+    run: {
+      command: options.command || null,
+      repository: preflightResult.repository,
+    },
     familyMap: plan.familyMap,
     rawDraws: plan.rawDraws,
     uniqueShapeCount: plan.uniqueShapes.length,
-    screens: screened,
+    screens,
     selection: {
       clean: selection.clean.map((entry) => entry.slotId),
       stressProbe: selection.stressProbe.map((entry) => entry.slotId),
@@ -453,6 +517,157 @@ async function runCorpus(options = {}) {
   return { status: coverage.status, preflight: preflightResult, manifest };
 }
 
+function assertRunScopedOutput(outDir, allowedRoot) {
+  const resolvedRoot = fs.realpathSync(allowedRoot);
+  const resolvedParent = fs.realpathSync(path.dirname(path.resolve(outDir)));
+  if (resolvedParent !== resolvedRoot) throw new Error('output is outside allowed run root');
+  const resolvedOut = path.resolve(outDir);
+  if (fs.existsSync(resolvedOut)) throw new Error(`output already exists: ${resolvedOut}`);
+  return resolvedOut;
+}
+
+function writeExclusive(file, bytes) {
+  fs.writeFileSync(file, bytes, { flag: 'wx' });
+}
+
+function writePlan(plan, outDir, options = {}) {
+  const allowedRoot = options.allowedRoot || path.join(ROOT, '.orch', 'runs');
+  const resolvedOut = assertRunScopedOutput(outDir, allowedRoot);
+  fs.mkdirSync(resolvedOut);
+  writeExclusive(path.join(resolvedOut, 'plan.json'), serializePlan(plan));
+  return { outDir: resolvedOut, files: ['plan.json'] };
+}
+
+function renderReport(result) {
+  const manifest = result.manifest || {};
+  const measurements = manifest.measurements || [];
+  const labels = {};
+  for (const measurement of measurements) {
+    labels[measurement.admissionLabel] = (labels[measurement.admissionLabel] || 0) + 1;
+  }
+  const conditions = manifest.coverage && manifest.coverage.conditions
+    ? manifest.coverage.conditions.map((condition) => `- ${condition.id}: ${condition.pass ? 'PASS' : 'FAIL'}`).join('\n')
+    : '- coverage: unavailable';
+  return [
+    '# Generated level corpus result',
+    '',
+    `- Protocol: ${manifest.protocol || PROTOCOL.name}`,
+    `- Status: ${result.status}`,
+    `- Raw draw slots: ${(manifest.rawDraws || []).length}`,
+    `- Measurements: ${measurements.length}`,
+    `- Admission labels: ${canonicalJson(labels)}`,
+    '',
+    '## Coverage',
+    '',
+    conditions,
+    '',
+  ].join('\n');
+}
+
+function writeEvidence(result, outDir, options = {}) {
+  if (!result.manifest) throw new Error('execution result has no manifest');
+  const allowedRoot = options.allowedRoot || path.join(ROOT, '.orch', 'runs');
+  const resolvedOut = assertRunScopedOutput(outDir, allowedRoot);
+  const report = renderReport(result);
+  const reportHash = sha256(report);
+  const manifest = {
+    ...result.manifest,
+    resultStatus: result.status,
+    artifactHashes: { 'report.md': reportHash },
+  };
+  const manifestBytes = serialize(manifest);
+  const manifestHash = sha256(manifestBytes);
+  const checksumIndex = `${manifestHash}  manifest.json\n${reportHash}  report.md\n`;
+
+  fs.mkdirSync(resolvedOut);
+  writeExclusive(path.join(resolvedOut, 'manifest.json'), manifestBytes);
+  writeExclusive(path.join(resolvedOut, 'report.md'), report);
+  writeExclusive(path.join(resolvedOut, 'sha256sums.txt'), checksumIndex);
+  return {
+    outDir: resolvedOut,
+    files: ['manifest.json', 'report.md', 'sha256sums.txt'],
+    hashes: { 'manifest.json': manifestHash, 'report.md': reportHash },
+  };
+}
+
+function parseArgs(argv) {
+  const modes = ['--dry-run', '--plan', '--execute'].filter((flag) => argv.includes(flag));
+  if (modes.length !== 1) throw new Error('choose exactly one of --dry-run, --plan, or --execute');
+  const valueAfter = (flag) => {
+    const index = argv.indexOf(flag);
+    return index === -1 ? null : argv[index + 1];
+  };
+  const known = new Set(['--dry-run', '--plan', '--execute', '--out', '--confirm']);
+  for (let index = 0; index < argv.length; index++) {
+    const value = argv[index];
+    if (!value.startsWith('--')) continue;
+    if (!known.has(value)) throw new Error(`unknown option ${value}`);
+    if (value === '--out' || value === '--confirm') index += 1;
+  }
+  const mode = modes[0].slice(2);
+  const out = valueAfter('--out');
+  const confirm = valueAfter('--confirm');
+  if ((mode === 'plan' || mode === 'execute') && !out) throw new Error(`${modes[0]} requires --out`);
+  if (mode === 'execute' && confirm !== PROTOCOL.name) {
+    throw new Error(`--execute requires --confirm ${PROTOCOL.name}`);
+  }
+  return { mode, out, confirm };
+}
+
+async function main(argv = process.argv.slice(2), options = {}) {
+  const stdout = options.stdout || ((value) => process.stdout.write(value));
+  const stderr = options.stderr || ((value) => process.stderr.write(value));
+  let args;
+  try {
+    args = parseArgs(argv);
+  } catch (error) {
+    stderr(`FAIL: ${error.message}\n`);
+    return 1;
+  }
+
+  const preflightOptions = options.preflightOptions || {};
+  if (args.mode === 'dry-run' || args.mode === 'plan') {
+    const check = preflight(preflightOptions);
+    if (check.status !== 'PASS') {
+      stderr(`INVALIDATED: ${check.failures.join('; ')}\n`);
+      return 2;
+    }
+    let plan;
+    try {
+      plan = buildPlan(options.planOptions || {});
+      if (args.mode === 'dry-run') stdout(serializePlan(plan));
+      else writePlan(plan, args.out, { allowedRoot: options.allowedRoot });
+    } catch (error) {
+      stderr(`FAIL: ${error.message}\n`);
+      return 1;
+    }
+    return 0;
+  }
+
+  const result = await runCorpus({
+    preflightOptions,
+    planOptions: options.planOptions,
+    dependencies: options.dependencies,
+    command: ['node', 'solver/generated-level-corpus.js', ...argv],
+  });
+  if (result.status === 'INVALIDATED' || result.status === 'BLOCKED') {
+    stderr(`${result.status}: ${result.reason || result.preflight.failures.join('; ')}\n`);
+    return 2;
+  }
+  try {
+    writeEvidence(result, args.out, { allowedRoot: options.allowedRoot });
+  } catch (error) {
+    stderr(`FAIL: ${error.message}\n`);
+    return 1;
+  }
+  stdout(`${result.status}\n`);
+  return 0;
+}
+
+if (require.main === module) {
+  main().then((exitCode) => { process.exitCode = exitCode; });
+}
+
 module.exports = {
   GAMEPLAY_SEED_RANGES,
   MAX_GAME_BUDGET,
@@ -462,9 +677,13 @@ module.exports = {
   buildPlan,
   evaluateCoverage,
   familyForShape,
+  main,
   partitionForFamily,
   preflight,
   runCorpus,
+  scanDeclaredSeedRanges,
   selectForFullMeasurement,
   serializePlan,
+  writeEvidence,
+  writePlan,
 };

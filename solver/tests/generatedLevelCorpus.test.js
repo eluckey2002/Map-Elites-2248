@@ -1,5 +1,9 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 const {
   MAX_GAME_BUDGET,
@@ -9,11 +13,14 @@ const {
   buildPlan,
   evaluateCoverage,
   familyForShape,
+  main,
   partitionForFamily,
   preflight,
   runCorpus,
+  scanDeclaredSeedRanges,
   selectForFullMeasurement,
   serializePlan,
+  writeEvidence,
 } = require('../generated-level-corpus');
 
 function shape(overrides = {}) {
@@ -158,6 +165,10 @@ test('current pinned sources, protocol, calibration, champion, and seed ranges p
   assert.equal(result.status, 'PASS');
   assert.deepEqual(result.failures, []);
   assert.equal(result.protocolIdentity, PINNED.protocolIdentity);
+  assert.equal(result.championParams.wHarvest, 2);
+  assert.equal(result.championParams.pathWidth, 8);
+  assert.match(result.repository.head, /^[0-9a-f]{40}$/);
+  assert.equal(typeof result.repository.dirty, 'boolean');
 });
 
 test('every preflight mismatch invalidates before a single game seam is called', async () => {
@@ -252,6 +263,13 @@ test('stubbed execution accounts for all slots, selection origins, dispositions,
   assert.equal(replayCalls, deriveCalls);
   assert.ok(result.manifest.selection.clean.length <= 60);
   assert.ok(result.manifest.selection.stressProbe.length <= 12);
+  assert.ok(result.manifest.screens.every((entry) => /^[0-9a-f]{64}$/.test(entry.selectionHash)));
+  assert.ok(result.manifest.screens.every((entry) => [
+    'selected-clean',
+    'selected-stress-probe',
+    'not-selected-clean',
+    'not-selected-screen-rejected',
+  ].includes(entry.fullAuthoringDisposition)));
   assert.ok(result.manifest.measurements.some((entry) => entry.admissionLabel === 'playable-core'));
   assert.ok(result.manifest.measurements.some((entry) => entry.admissionLabel === 'adversarial-stress'));
   assert.ok(result.manifest.measurements.every((entry) => ['clean', 'stress-probe'].includes(entry.selectionOrigin)));
@@ -287,4 +305,130 @@ test('a replay failure is unverified and a planning crash is BLOCKED', async () 
   });
   assert.equal(blocked.status, 'BLOCKED');
   assert.match(blocked.reason, /cannot materialize plan/);
+});
+
+function temporaryRoot() {
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'generated-level-corpus-'));
+}
+
+function stubDependencies() {
+  let index = 0;
+  return {
+    screen: () => ({ lockouts: 0, bombs: 0, medianScore: 1000, minScore: 500 }),
+    deriveCandidate: (candidateShape) => {
+      index += 1;
+      return {
+        store: { schemaVersion: 1, candidates: [{ ...candidateShape, target: 1000, tileScale: 32 }] },
+        receipt: {
+          receiptIdentity: `writer-receipt-${index}`,
+          candidateIdentity: `writer-candidate-${index}`,
+          holdout: { terminalCounts: { win: 240, noValidMoves: 0, bombExploded: 0, outOfMoves: 60, incomplete: 0, total: 300 } },
+        },
+      };
+    },
+    verifyCandidate: () => {},
+  };
+}
+
+test('the tracked-tree seed scanner has no undeclared collision at the frozen revision', () => {
+  assert.deepEqual(scanDeclaredSeedRanges(), []);
+});
+
+test('no mode and unsafe output paths fail closed without files or games', async () => {
+  const root = temporaryRoot();
+  const allowedRoot = path.join(root, 'runs');
+  fs.mkdirSync(allowedRoot);
+  const outside = path.join(root, 'outside');
+  let screenCalls = 0;
+  const stderr = [];
+  const options = {
+    allowedRoot,
+    stdout: () => {},
+    stderr: (value) => stderr.push(value),
+    dependencies: { screen: () => { screenCalls += 1; } },
+    preflightOptions: { declaredSeedRanges: [] },
+  };
+
+  assert.equal(await main([], options), 1);
+  assert.equal(await main(['--plan', '--out', outside], options), 1);
+  assert.equal(await main(['--execute', '--out', path.join(allowedRoot, 'run')], options), 1);
+  assert.equal(screenCalls, 0);
+  assert.equal(fs.existsSync(outside), false);
+  assert.deepEqual(fs.readdirSync(allowedRoot), []);
+  assert.ok(stderr.length >= 3);
+});
+
+test('dry-run is game-free and plan output is byte stable inside its allowed root', async () => {
+  const root = temporaryRoot();
+  const allowedRoot = path.join(root, 'runs');
+  fs.mkdirSync(allowedRoot);
+  const stdout = [];
+  let screenCalls = 0;
+  const options = {
+    allowedRoot,
+    stdout: (value) => stdout.push(value),
+    stderr: () => {},
+    dependencies: { screen: () => { screenCalls += 1; throw new Error('dry-run played a game'); } },
+    preflightOptions: { declaredSeedRanges: [] },
+  };
+
+  assert.equal(await main(['--dry-run'], options), 0);
+  assert.equal(screenCalls, 0);
+  assert.equal(JSON.parse(stdout.join('')).rawDraws.length, 480);
+  assert.deepEqual(fs.readdirSync(allowedRoot), []);
+
+  const firstOut = path.join(allowedRoot, 'plan-one');
+  const secondOut = path.join(allowedRoot, 'plan-two');
+  assert.equal(await main(['--plan', '--out', firstOut], options), 0);
+  assert.equal(await main(['--plan', '--out', secondOut], options), 0);
+  assert.equal(fs.readFileSync(path.join(firstOut, 'plan.json'), 'utf8'), fs.readFileSync(path.join(secondOut, 'plan.json'), 'utf8'));
+  assert.deepEqual(fs.readdirSync(firstOut), ['plan.json']);
+  assert.equal(screenCalls, 0);
+});
+
+test('explicit stub execution writes only manifest, report, and an exact external checksum index', async () => {
+  const root = temporaryRoot();
+  const allowedRoot = path.join(root, 'runs');
+  const out = path.join(allowedRoot, 'execution-one');
+  fs.mkdirSync(allowedRoot);
+  const code = await main([
+    '--execute', '--confirm', PROTOCOL.name, '--out', out,
+  ], {
+    allowedRoot,
+    stdout: () => {},
+    stderr: () => {},
+    dependencies: stubDependencies(),
+    preflightOptions: { declaredSeedRanges: [] },
+  });
+
+  assert.equal(code, 0);
+  assert.deepEqual(fs.readdirSync(out).sort(), ['manifest.json', 'report.md', 'sha256sums.txt']);
+  const manifestBytes = fs.readFileSync(path.join(out, 'manifest.json'));
+  const reportBytes = fs.readFileSync(path.join(out, 'report.md'));
+  const sums = fs.readFileSync(path.join(out, 'sha256sums.txt'), 'utf8');
+  const manifestHash = crypto.createHash('sha256').update(manifestBytes).digest('hex');
+  const reportHash = crypto.createHash('sha256').update(reportBytes).digest('hex');
+  assert.equal(sums, `${manifestHash}  manifest.json\n${reportHash}  report.md\n`);
+  const manifest = JSON.parse(manifestBytes);
+  assert.equal(manifest.artifactHashes['report.md'], reportHash);
+  assert.equal(manifest.rawDraws.length, 480);
+  assert.deepEqual(manifest.run.command, [
+    'node', 'solver/generated-level-corpus.js', '--execute', '--confirm', PROTOCOL.name, '--out', out,
+  ]);
+  assert.match(manifest.run.repository.head, /^[0-9a-f]{40}$/);
+  assert.equal(manifest.preflight.championParams.wHarvest, 2);
+});
+
+test('the evidence writer refuses overwrite and paths outside the run root', () => {
+  const root = temporaryRoot();
+  const allowedRoot = path.join(root, 'runs');
+  const outside = path.join(root, 'outside');
+  fs.mkdirSync(allowedRoot);
+  const result = { status: 'INCONCLUSIVE', manifest: { schemaVersion: 1, rawDraws: [], measurements: [], coverage: { conditions: [] } } };
+
+  assert.throws(() => writeEvidence(result, outside, { allowedRoot }), /outside allowed run root/);
+  const out = path.join(allowedRoot, 'one');
+  writeEvidence(result, out, { allowedRoot });
+  assert.throws(() => writeEvidence(result, out, { allowedRoot }), /already exists/);
+  assert.equal(fs.existsSync(outside), false);
 });
