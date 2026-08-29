@@ -1,0 +1,69 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: Level 1
+      - generic [ref=e5]:
+        - generic [ref=e6]: "4"
+        - generic [ref=e7]: SCORE
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: ⬡
+        - generic [ref=e12]: "Moves: 24/25"
+      - generic [ref=e13]:
+        - generic [ref=e14]: 🎯
+        - generic [ref=e15]: "Target: 520"
+      - generic [ref=e16]:
+        - generic [ref=e17]: 🔗
+        - generic [ref=e18]: "Min: 2"
+  - generic [ref=e22]:
+    - button "↩ Undo" [ref=e23] [cursor=pointer]
+    - button "↻ Restart" [ref=e24] [cursor=pointer]
+    - button "☰ Levels" [ref=e25] [cursor=pointer]
+  - button "✓ Submit Chain (Enter)" [ref=e27] [cursor=pointer]
+  - generic "Player study controls" [ref=e28]:
+    - button "Stop recording" [pressed] [ref=e32] [cursor=pointer]
+    - button "Review study" [active] [ref=e30] [cursor=pointer]
+    - generic [ref=e31]: Recording · 1 move saved locally
+  - generic [ref=e36]:
+    - generic [ref=e37]: Play study
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - heading "beginning" [level=3] [ref=e41]
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - term [ref=e44]: Moves
+            - definition [ref=e45]: "1"
+          - generic [ref=e46]:
+            - term [ref=e47]: Avg chain
+            - definition [ref=e48]: "2"
+          - generic [ref=e49]:
+            - term [ref=e50]: Best multiplier
+            - definition [ref=e51]: ×1
+      - generic [ref=e52]:
+        - heading "middle" [level=3] [ref=e53]
+        - generic [ref=e54]:
+          - generic [ref=e55]:
+            - term [ref=e56]: Moves
+            - definition [ref=e57]: "0"
+          - generic [ref=e58]:
+            - term [ref=e59]: Avg chain
+            - definition [ref=e60]: "0"
+          - generic [ref=e61]:
+            - term [ref=e62]: Best multiplier
+            - definition [ref=e63]: ×0
+      - generic [ref=e64]:
+        - heading "end" [level=3] [ref=e65]
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - term [ref=e68]: Moves
+            - definition [ref=e69]: "0"
+          - generic [ref=e70]:
+            - term [ref=e71]: Avg chain
+            - definition [ref=e72]: "0"
+          - generic [ref=e73]:
+            - term [ref=e74]: Best multiplier
+            - definition [ref=e75]: ×0
+    - generic [ref=e76]:
+      - button "Export JSON" [ref=e77] [cursor=pointer]
+      - button "Clear" [ref=e78] [cursor=pointer]
+      - button "Close" [ref=e79] [cursor=pointer]

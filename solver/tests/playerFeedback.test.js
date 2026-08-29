@@ -136,3 +136,11 @@ test('nine recorded moves group into beginning, middle, and end summaries', () =
     { phase: 'end', moveCount: 3, averageChainLength: 6, bestMultiplier: 5 },
   ]);
 });
+
+test('compact player UI has one submit action and responsive stable controls', () => {
+  const html = fs.readFileSync(path.join(ROOT, 'src', 'index.html'), 'utf8');
+  assert.equal((html.match(/id="submitBtn"/g) || []).length, 1);
+  assert.match(html, /overflow-y:\s*auto/);
+  assert.match(html, /@media\s*\(max-width:\s*520px\)/);
+  assert.match(html, /min-height:\s*44px/);
+});

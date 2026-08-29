@@ -1,0 +1,26 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: Level 1
+      - generic [ref=e5]:
+        - generic [ref=e6]: "0"
+        - generic [ref=e7]: SCORE
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: ⬡
+        - generic [ref=e12]: "Moves: 25/25"
+      - generic [ref=e13]:
+        - generic [ref=e14]: 🎯
+        - generic [ref=e15]: "Target: 520"
+      - generic [ref=e16]:
+        - generic [ref=e17]: 🔗
+        - generic [ref=e18]: "Min: 2"
+  - generic [ref=e22]:
+    - button "↩ Undo" [disabled] [ref=e23]
+    - button "↻ Restart" [ref=e24] [cursor=pointer]
+    - button "☰ Levels" [ref=e25] [cursor=pointer]
+  - button "✓ Submit Chain (Enter)" [ref=e27] [cursor=pointer]
+  - generic "Player study controls" [ref=e28]:
+    - button "Start recording" [ref=e29] [cursor=pointer]
+    - button "Review study" [ref=e30] [cursor=pointer]
+    - generic [ref=e31]: Off · 0 moves saved locally
