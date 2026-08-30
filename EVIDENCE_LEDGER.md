@@ -472,6 +472,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** The archive axes are calibrated from the bounded pilot and may clip policies outside that pilot's observed range. The experiment explores the existing parameter seam only; it does not learn a value function, add search depth, or discover new policy structure. The full solver suite remains 193/196 because of the same three pre-existing receipt-identity failures named in `RESULT-0016`; no receipt was refreshed or weakened.
 
+### RESULT-0018 — A target-aware finish rule extracted from human Level 51 play generalizes across all shipped levels
+
+- **type:** result
+- **status:** accepted
+- **scope:** fixed experimental challenger at code identity `c68247ce390bfec8f32e5c3c6a676efc1ea012ec81da958deeb5c19d840a20a7`; one 13-level x 40-seed screen followed by one sealed 52-level x 300-seed paired holdout; champion and protected product/authoring surfaces unchanged
+- **statement:** Exact comparison of the owner's two Level 51 seed-1 replays with the champion supported one narrow endgame rule: if an alternate untrimmed legal route reaches the target immediately, use it instead of preserving a merge-friendly survivor for a future move that will not occur. A challenger applying only that override, and never applying it while a bomb is present, changed Level 51 seed 1 from 17 to 13 moves. On 15,600 unseen paired games, it made **9,354 existing wins faster**, tied 6,186 existing wins, made no existing win slower, caused **zero champion-win regressions**, and converted 9 champion losses into wins. Mean all-cell saving was **1.271 moves** (median 1; conservative level/seed-clustered **t = 15.68**), and faster cases appeared on **all 52 shipped levels**. Challenger compute was 1.45x the champion's. This supports the endgame rule for reaching the current targets sooner; it does not show higher terminal score, autonomous learning, or authorize champion promotion.
+- **evidence:** diagnosis `.orch/runs/level51-human-strategy-diagnosis-2026-08-30/evidence/report.md`; holdout artifact `.orch/runs/level51-target-aware-evaluation-v2-2026-08-30/evidence/holdout.json`, identity `83316f3055bb136b181dcf8e837989ead0f3c1e39ab78a7f1c777eeb64b059b0`; independent recomputation `.orch/runs/level51-target-aware-evaluation-v2-2026-08-30/evidence/verification.json`, SHA-256 `5bdf5baa5b55672337d52379d5b43920671f5ae2e9ef4a8fd0d51063010e41e9`; report `.orch/runs/level51-target-aware-evaluation-v2-2026-08-30/evidence/report.md`.
+- **proof_class:** `heuristic_observation` for generalization over the fixed unseen sample; `direct_source` for artifact identity, completeness, disjoint seeds, source hashes, and unchanged protected surfaces. Zero observed regressions is not a proof over every possible board.
+- **as_of:** 2026-08-30
+- **reverify:** Independently validate the screen and holdout artifact identities and recompute the frozen gate from the level-major cells; run the targeted challenger tests, MAP-Elites verifier, protected hash check, and full solver suite. Expect 15,600 unique holdout pairs, 9,354 faster both-win cells, 9 challenger-only wins, zero champion-only wins, zero slower both-win cells, all 52 levels represented among faster cases, and the same three pre-existing receipt failures.
+- **updated:** 2026-08-30
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Terminal score averaged 970 points lower because the challenger often stopped earlier with less target overshoot. If maximizing score rather than reaching the target were the objective, this result would not support it. Promotion remains a separate owner decision.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
