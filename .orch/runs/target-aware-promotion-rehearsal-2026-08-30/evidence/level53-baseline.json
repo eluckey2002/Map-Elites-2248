@@ -1,0 +1,3619 @@
+{
+  "schemaVersion": 1,
+  "experiment": "target-aware-promotion-rehearsal",
+  "mode": "level53-baseline",
+  "levelNumbers": [
+    53
+  ],
+  "seeds": [
+    14000000,
+    14000001,
+    14000002,
+    14000003,
+    14000004,
+    14000005,
+    14000006,
+    14000007,
+    14000008,
+    14000009,
+    14000010,
+    14000011,
+    14000012,
+    14000013,
+    14000014,
+    14000015,
+    14000016,
+    14000017,
+    14000018,
+    14000019,
+    14000020,
+    14000021,
+    14000022,
+    14000023,
+    14000024,
+    14000025,
+    14000026,
+    14000027,
+    14000028,
+    14000029,
+    14000030,
+    14000031,
+    14000032,
+    14000033,
+    14000034,
+    14000035,
+    14000036,
+    14000037,
+    14000038,
+    14000039,
+    14000040,
+    14000041,
+    14000042,
+    14000043,
+    14000044,
+    14000045,
+    14000046,
+    14000047,
+    14000048,
+    14000049,
+    14000050,
+    14000051,
+    14000052,
+    14000053,
+    14000054,
+    14000055,
+    14000056,
+    14000057,
+    14000058,
+    14000059,
+    14000060,
+    14000061,
+    14000062,
+    14000063,
+    14000064,
+    14000065,
+    14000066,
+    14000067,
+    14000068,
+    14000069,
+    14000070,
+    14000071,
+    14000072,
+    14000073,
+    14000074,
+    14000075,
+    14000076,
+    14000077,
+    14000078,
+    14000079,
+    14000080,
+    14000081,
+    14000082,
+    14000083,
+    14000084,
+    14000085,
+    14000086,
+    14000087,
+    14000088,
+    14000089,
+    14000090,
+    14000091,
+    14000092,
+    14000093,
+    14000094,
+    14000095,
+    14000096,
+    14000097,
+    14000098,
+    14000099,
+    14000100,
+    14000101,
+    14000102,
+    14000103,
+    14000104,
+    14000105,
+    14000106,
+    14000107,
+    14000108,
+    14000109,
+    14000110,
+    14000111,
+    14000112,
+    14000113,
+    14000114,
+    14000115,
+    14000116,
+    14000117,
+    14000118,
+    14000119,
+    14000120,
+    14000121,
+    14000122,
+    14000123,
+    14000124,
+    14000125,
+    14000126,
+    14000127,
+    14000128,
+    14000129,
+    14000130,
+    14000131,
+    14000132,
+    14000133,
+    14000134,
+    14000135,
+    14000136,
+    14000137,
+    14000138,
+    14000139,
+    14000140,
+    14000141,
+    14000142,
+    14000143,
+    14000144,
+    14000145,
+    14000146,
+    14000147,
+    14000148,
+    14000149,
+    14000150,
+    14000151,
+    14000152,
+    14000153,
+    14000154,
+    14000155,
+    14000156,
+    14000157,
+    14000158,
+    14000159,
+    14000160,
+    14000161,
+    14000162,
+    14000163,
+    14000164,
+    14000165,
+    14000166,
+    14000167,
+    14000168,
+    14000169,
+    14000170,
+    14000171,
+    14000172,
+    14000173,
+    14000174,
+    14000175,
+    14000176,
+    14000177,
+    14000178,
+    14000179,
+    14000180,
+    14000181,
+    14000182,
+    14000183,
+    14000184,
+    14000185,
+    14000186,
+    14000187,
+    14000188,
+    14000189,
+    14000190,
+    14000191,
+    14000192,
+    14000193,
+    14000194,
+    14000195,
+    14000196,
+    14000197,
+    14000198,
+    14000199,
+    14000200,
+    14000201,
+    14000202,
+    14000203,
+    14000204,
+    14000205,
+    14000206,
+    14000207,
+    14000208,
+    14000209,
+    14000210,
+    14000211,
+    14000212,
+    14000213,
+    14000214,
+    14000215,
+    14000216,
+    14000217,
+    14000218,
+    14000219,
+    14000220,
+    14000221,
+    14000222,
+    14000223,
+    14000224,
+    14000225,
+    14000226,
+    14000227,
+    14000228,
+    14000229,
+    14000230,
+    14000231,
+    14000232,
+    14000233,
+    14000234,
+    14000235,
+    14000236,
+    14000237,
+    14000238,
+    14000239,
+    14000240,
+    14000241,
+    14000242,
+    14000243,
+    14000244,
+    14000245,
+    14000246,
+    14000247,
+    14000248,
+    14000249,
+    14000250,
+    14000251,
+    14000252,
+    14000253,
+    14000254,
+    14000255,
+    14000256,
+    14000257,
+    14000258,
+    14000259,
+    14000260,
+    14000261,
+    14000262,
+    14000263,
+    14000264,
+    14000265,
+    14000266,
+    14000267,
+    14000268,
+    14000269,
+    14000270,
+    14000271,
+    14000272,
+    14000273,
+    14000274,
+    14000275,
+    14000276,
+    14000277,
+    14000278,
+    14000279,
+    14000280,
+    14000281,
+    14000282,
+    14000283,
+    14000284,
+    14000285,
+    14000286,
+    14000287,
+    14000288,
+    14000289,
+    14000290,
+    14000291,
+    14000292,
+    14000293,
+    14000294,
+    14000295,
+    14000296,
+    14000297,
+    14000298,
+    14000299
+  ],
+  "order": "level-major",
+  "sources": {
+    "bot": "9abe8ca83dc26d8596320ce3e9b84aae9e3c342e6e79cac2c4c743c43c70b840",
+    "engine": "4e2323b9218aed6a552017ca37eab16becf8ef0a314f7081d02717ef1f7a12c6",
+    "levels": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee"
+  },
+  "cells": [
+    {
+      "level": 53,
+      "seed": 14000000,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104640,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000001,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 16,
+        "moves": 16,
+        "score": 119936,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000002,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 137152,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000003,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 102016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000004,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101056,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000005,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 108800,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000006,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104896,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000007,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 103360,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000008,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 102656,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000009,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 127808,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000010,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 113728,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000011,
+      "terminal": {
+        "win": false,
+        "movesToTarget": null,
+        "moves": 16,
+        "score": 93248,
+        "reason": "out_of_moves"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000012,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 121536,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000013,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103616,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000014,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 114816,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000015,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 102208,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000016,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 124928,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000017,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105408,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000018,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 122496,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000019,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101312,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000020,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103424,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000021,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105216,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000022,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 118016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000023,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 101760,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000024,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 150464,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000025,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 105536,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000026,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 115200,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000027,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 134976,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000028,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 16,
+        "moves": 16,
+        "score": 101376,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000029,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 109056,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000030,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 107200,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000031,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 129984,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000032,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 141824,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000033,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 141632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000034,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 125376,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000035,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 114112,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000036,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 109632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000037,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101952,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000038,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 111232,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000039,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 103680,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000040,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 114688,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000041,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 102720,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000042,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 102016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000043,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 102976,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000044,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 136832,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000045,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 113024,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000046,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105472,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000047,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 148672,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000048,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 102016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000049,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000050,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 112256,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000051,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 116288,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000052,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 113536,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000053,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 118464,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000054,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 109760,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000055,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 135488,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000056,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 102336,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000057,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105408,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000058,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105664,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000059,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 16,
+        "moves": 16,
+        "score": 152448,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000060,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 121856,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000061,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 106816,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000062,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101888,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000063,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 142784,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000064,
+      "terminal": {
+        "win": false,
+        "movesToTarget": null,
+        "moves": 16,
+        "score": 97472,
+        "reason": "out_of_moves"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000065,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 108672,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000066,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104064,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000067,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 104128,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000068,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 102144,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000069,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 102336,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000070,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 104256,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000071,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 106112,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000072,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104192,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000073,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 111872,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000074,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 112512,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000075,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 121216,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000076,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 104000,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000077,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 102016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000078,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 125760,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000079,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 120064,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000080,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 103616,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000081,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 136320,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000082,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105280,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000083,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101184,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000084,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 105536,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000085,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 111552,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000086,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 102208,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000087,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 151104,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000088,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 118272,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000089,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 109824,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000090,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105536,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000091,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 120448,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000092,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101568,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000093,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 126016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000094,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105664,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000095,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104960,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000096,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 104064,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000097,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 106112,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000098,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103872,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000099,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 114496,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000100,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 105792,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000101,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 110464,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000102,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 144960,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000103,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 102976,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000104,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 105664,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000105,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103936,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000106,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 106496,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000107,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 137472,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000108,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 103424,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000109,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 103232,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000110,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 124736,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000111,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 101696,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000112,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 104832,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000113,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 118464,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000114,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105728,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000115,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 141376,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000116,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 101248,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000117,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 121536,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000118,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 111296,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000119,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 103104,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000120,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 124672,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000121,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 122240,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000122,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 103936,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000123,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 107584,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000124,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 106560,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000125,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 115520,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000126,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 129408,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000127,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101312,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000128,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104576,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000129,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 129984,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000130,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 107520,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000131,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 104896,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000132,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 102656,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000133,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 123264,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000134,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 106752,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000135,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 128896,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000136,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 133632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000137,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 113216,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000138,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 105088,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000139,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 107712,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000140,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 105216,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000141,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 105728,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000142,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 103616,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000143,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 8,
+        "moves": 8,
+        "score": 109760,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000144,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 7,
+        "moves": 7,
+        "score": 109120,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000145,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 120768,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000146,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 121600,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000147,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101312,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000148,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 116096,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000149,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 114048,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000150,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101184,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000151,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 110208,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000152,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 169280,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000153,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101056,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000154,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 102080,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000155,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101696,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000156,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 118976,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000157,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 102720,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000158,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103040,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000159,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 103936,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000160,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 102656,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000161,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 116160,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000162,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 122112,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000163,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 108608,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000164,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104192,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000165,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 122944,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000166,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 103552,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000167,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 8,
+        "moves": 8,
+        "score": 101760,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000168,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 124672,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000169,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 125632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000170,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 101632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000171,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 110016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000172,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 16,
+        "moves": 16,
+        "score": 148416,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000173,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 118912,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000174,
+      "terminal": {
+        "win": false,
+        "movesToTarget": null,
+        "moves": 16,
+        "score": 99776,
+        "reason": "out_of_moves"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000175,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105216,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000176,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103616,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000177,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 109568,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000178,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 104768,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000179,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 135424,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000180,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 104256,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000181,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 103296,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000182,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 105920,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000183,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 128960,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000184,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 101632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000185,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 108736,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000186,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 104256,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000187,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 111296,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000188,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 126080,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000189,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 114112,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000190,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 105920,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000191,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 120768,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000192,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105856,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000193,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 124160,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000194,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101440,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000195,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 8,
+        "moves": 8,
+        "score": 102336,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000196,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 127936,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000197,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 106112,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000198,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 128448,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000199,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 115712,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000200,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 118016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000201,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105536,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000202,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104576,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000203,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 16,
+        "moves": 16,
+        "score": 118784,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000204,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 101888,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000205,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 105536,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000206,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 118976,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000207,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 110272,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000208,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 109504,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000209,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 103296,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000210,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 103616,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000211,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 116608,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000212,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 130368,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000213,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 125120,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000214,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 101888,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000215,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101440,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000216,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105792,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000217,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 109248,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000218,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105984,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000219,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 116096,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000220,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 125632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000221,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 106496,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000222,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101376,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000223,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 112640,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000224,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 111744,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000225,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 16,
+        "moves": 16,
+        "score": 104704,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000226,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 124096,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000227,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 101376,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000228,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 120256,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000229,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103808,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000230,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 102272,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000231,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 101696,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000232,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105408,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000233,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 132096,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000234,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 101504,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000235,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 128000,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000236,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 110016,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000237,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 119744,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000238,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 119232,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000239,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 109056,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000240,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103552,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000241,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 107136,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000242,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 102592,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000243,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 113216,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000244,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104320,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000245,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101376,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000246,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 105792,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000247,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 136192,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000248,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 123840,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000249,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 139136,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000250,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 102464,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000251,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 109376,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000252,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 15,
+        "moves": 15,
+        "score": 103168,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000253,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 124672,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000254,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105280,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000255,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101312,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000256,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 127872,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000257,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 106880,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000258,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101440,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000259,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 114688,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000260,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 125632,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000261,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 119040,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000262,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 159616,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000263,
+      "terminal": {
+        "win": false,
+        "movesToTarget": null,
+        "moves": 16,
+        "score": 98304,
+        "reason": "out_of_moves"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000264,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 102400,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000265,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 101120,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000266,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 102720,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000267,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105664,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000268,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 102656,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000269,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 101120,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000270,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 103616,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000271,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 103808,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000272,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 103808,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000273,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 111296,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000274,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 113024,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000275,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 112896,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000276,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 102720,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000277,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 122752,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000278,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 117376,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000279,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 112512,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000280,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 16,
+        "moves": 16,
+        "score": 142784,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000281,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 109312,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000282,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 129472,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000283,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 103616,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000284,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 115328,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000285,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 9,
+        "moves": 9,
+        "score": 101312,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000286,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 104832,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000287,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 13,
+        "moves": 13,
+        "score": 105216,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000288,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 10,
+        "moves": 10,
+        "score": 102080,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000289,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 103872,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000290,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 108416,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000291,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 106048,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000292,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 105408,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000293,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 102144,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000294,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 130944,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000295,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 109504,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000296,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 11,
+        "moves": 11,
+        "score": 101248,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000297,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 103872,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000298,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 14,
+        "moves": 14,
+        "score": 105728,
+        "reason": "target"
+      }
+    },
+    {
+      "level": 53,
+      "seed": 14000299,
+      "terminal": {
+        "win": true,
+        "movesToTarget": 12,
+        "moves": 12,
+        "score": 116736,
+        "reason": "target"
+      }
+    }
+  ],
+  "artifactIdentity": "21ae8d14c949f9993a428fc2d6cbd078b9c086c17693efa258e4516b378d430a"
+}
