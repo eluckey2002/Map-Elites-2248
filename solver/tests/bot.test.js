@@ -1,6 +1,14 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { chooseMove, remnantPlacementValue, harvestValue } = require('../bot');
+const { LEVELS } = require('../../src/game');
+const {
+  makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles, tickBlockers,
+  checkBombs, findGreedyChains,
+} = require('../engine');
+const { chooseMove, remnantPlacementValue, harvestValue, DEFAULT_PARAMS } = require('../bot');
+
+const LOOKAHEAD_BASE = 987654321;
+const chainKey = (chain) => chain && chain.map(({ x, y }) => `${x},${y}`).join('|');
 
 function makeTile(x, y, value, blocker = null, bombTimer = 0) {
   return { x, y, value, blocker, blockerDuration: 0, bombTimer };
@@ -19,6 +27,72 @@ function makeState(grid, overrides = {}) {
     ...overrides,
   };
 }
+
+function playToTarget(level, seed) {
+  const rng = makeRng(seed);
+  const state = createLevelState(level, rng);
+  const moves = [];
+  for (let moveIndex = 0; moveIndex < level.moves; moveIndex++) {
+    const chain = chooseMove(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex) });
+    if (!chain) break;
+    moves.push(chainKey(chain));
+    executeChain(state, chain);
+    applyGravity(state);
+    spawnNewTiles(state, rng);
+    tickBlockers(state);
+    if (checkBombs(state) || state.score >= state.targetScore) break;
+  }
+  return { state, moves };
+}
+
+function level51BeforeMove13() {
+  const level = LEVELS.find(({ level: number }) => number === 51);
+  const rng = makeRng(1);
+  const state = createLevelState(level, rng);
+  for (let moveIndex = 0; moveIndex < 12; moveIndex++) {
+    const chain = chooseMove(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex) });
+    executeChain(state, chain);
+    applyGravity(state);
+    spawnNewTiles(state, rng);
+    tickBlockers(state);
+  }
+  return state;
+}
+
+test('chooseMove: public chooser cashes out the Level 51 teaching board on move 13', () => {
+  const level = LEVELS.find(({ level: number }) => number === 51);
+  const result = playToTarget(level, 1);
+
+  assert.deepEqual({ moves: result.state.moves, score: result.state.score }, {
+    moves: 13,
+    score: 130048,
+  });
+});
+
+test('chooseMove: immediate winner follows deterministic untrimmed order and parameter overrides', () => {
+  const state = level51BeforeMove13();
+  const params = { width: 1, tieBreak: 'none', pathWidth: 1 };
+  const resolved = { ...DEFAULT_PARAMS, ...params };
+  const expected = findGreedyChains(state, {
+    limit: resolved.width,
+    tieBreak: resolved.tieBreak,
+    pathWidth: resolved.pathWidth,
+    preferMergeableSum: false,
+  }).find(({ points }) => state.score + points >= state.targetScore);
+
+  assert.ok(expected);
+  assert.equal(chainKey(chooseMove(state, { params })), chainKey(expected.chain));
+});
+
+test('chooseMove: target-aware public seam does not mutate input and falls back after target', () => {
+  const state = level51BeforeMove13();
+  state.score = state.targetScore;
+  const before = JSON.stringify(state);
+  const chain = chooseMove(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + 12) });
+
+  assert.ok(chain);
+  assert.equal(JSON.stringify(state), before);
+});
 
 test('chooseMove: with no bombs, takes the highest-scoring valid chain', () => {
   const t0 = makeTile(0, 0, 2);

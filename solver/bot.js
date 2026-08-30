@@ -326,7 +326,7 @@ function collectCandidates(state, {
 // `options.params` overrides any subset of DEFAULT_PARAMS; omitted keys keep
 // their hand-tuned value, so every existing caller is unaffected.
 // Returns null if the board has no legal move.
-function chooseMove(state, options = {}) {
+function chooseBaseMove(state, options = {}) {
   const { lookaheadRngFactory } = options;
   const {
     wRoll, wPlace, turnover, width, bombMax, tieBreak, wHarvest, offerFull, pathWidth,
@@ -360,6 +360,29 @@ function chooseMove(state, options = {}) {
     }
   }
   return bestCandidate.chain;
+}
+
+function hasBomb(state) {
+  return state.grid.some((row) => row.some((tile) => tile && tile.blocker === 'bomb'));
+}
+
+function immediateWinningUntrimmed(state, params = DEFAULT_PARAMS) {
+  if (!Number.isFinite(state.targetScore) || state.score >= state.targetScore || hasBomb(state)) return null;
+  const resolved = { ...DEFAULT_PARAMS, ...params };
+  const candidates = findGreedyChains(state, {
+    limit: resolved.width,
+    tieBreak: resolved.tieBreak,
+    pathWidth: resolved.pathWidth,
+    preferMergeableSum: false,
+  });
+  const winner = candidates.find(({ points }) => state.score + points >= state.targetScore);
+  return winner ? winner.chain : null;
+}
+
+function chooseMove(state, options = {}) {
+  const champion = chooseBaseMove(state, options);
+  if (!champion) return null;
+  return immediateWinningUntrimmed(state, options.params) || champion;
 }
 
 module.exports = { chooseMove, remnantPlacementValue, harvestValue, DEFAULT_PARAMS };
