@@ -1,0 +1,10 @@
+.orch/heavy-after-ablation-01.txt
+.orch/human-replay-01.json
+.orch/runs/2026-08-29T10-29-19Z-adhoc-session-workspace/root-dirty-tracked.patch
+.orch/runs/2026-08-29T10-29-19Z-adhoc-session-workspace/root-untracked.txt
+.orch/tickets/2026-08-29-generated-level-corpus-preregistration/T-001.md
+.orch/tickets/2026-08-29-generated-level-corpus-runner/T-001.md
+.orch/tickets/2026-08-29T01-57-14Z-adhoc-research-worktree/setup-research-worktree.md
+.orch/tickets/2026-08-29T01-59-57Z-adhoc-next-best-course/investigate-next-best-course.md
+solver/heavy-after-ablation.js
+solver/human-replay.js

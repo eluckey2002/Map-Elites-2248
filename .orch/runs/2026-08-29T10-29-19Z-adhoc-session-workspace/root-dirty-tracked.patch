@@ -1,0 +1,404 @@
+diff --git a/CURRENT.md b/CURRENT.md
+index 72cb791..083f2fa 100644
+--- a/CURRENT.md
++++ b/CURRENT.md
+@@ -12,6 +12,10 @@ Author new levels. The curve is fixed, so new levels can be born calibrated rath
+ 
+ The milestone itself isn't closed. What's left is an open choice, not a default: ship more hand-picked candidates one at a time, or build the actual generator.
+ 
++## The open lead
++
++The human recordings say the owner builds heavy tiles across several moves and then chains those together, and that this is worth far more than picking better tiles inside any single move ([RESULT-0018](EVIDENCE_LEDGER.md#result-0018--replayed-human-play-trades-early-points-for-a-late-harvest-the-bot-does-the-reverse)). `harvestValue` already reaches for exactly this at weight 2 and was worth +2.6% (`RESULT-0014`). Whether it is under-weighted, or whether the endgame should switch it off entirely — the human abandons lattice discipline in the last third while the bot holds it — is untested. Trying to express the same idea *inside* one walk was tried and failed (`RESULT-0019`).
++
+ ## Done — the level curve
+ 
+ Every level is winnable. No level sits below a 5% bot win rate, against 34 levels at 0% before ([RESULT-0008](EVIDENCE_LEDGER.md#result-0008--every-level-is-winnable-after-the-demand-based-retune)).
+@@ -25,13 +29,14 @@ The Level 26 exact-proof track, by [DECISION-0002](EVIDENCE_LEDGER.md#decision-0
+ ## Accepted, not fixed
+ 
+ - **Roughly 15 levels have a target lower than the level before.** The remaining lever is the move budget, and spending it would make a level's pacing a side effect of target cosmetics. Revisit from playtest feel, not from a monotonicity rule.
+-- **The reference bot is a weak proxy for a skilled player.** Every recorded win rate is a floor on human success, not an estimate. The margin is still unquantified in general, but it is no longer unmeasured: on Level 51 the owner reached the target in 12 moves where the bot's median is 16 across 120 seeds, and the bot matches that 12-move pace on 8 of 120 boards. The gap narrowed with `RESULT-0011` and did not close.
++- **The reference bot is a weak proxy for a skilled player.** Every recorded win rate is a floor on human success, not an estimate. The margin is still unquantified in general, but it is no longer unmeasured: on Level 51 the owner reached the target in 12 moves where the bot's median is 16 across 120 seeds, and the bot matches that 12-move pace on 8 of 120 boards. The gap narrowed with `RESULT-0011` and did not close. [RESULT-0018](EVIDENCE_LEDGER.md#result-0018--replayed-human-play-trades-early-points-for-a-late-harvest-the-bot-does-the-reverse) now compares the two move by move on the same scale: over a whole game they capture nearly the same share of the best available move, but the human is worse early and much better late, and the bot never learns that the game is about to end. Still one player on four boards, so it sizes nothing.
+ - **Lockouts persist at up to ~5% on the late levels.** A lockout is a dead board, not a fair loss. Bounded by `solver/verify-loop.js`.
+ 
+ ## Priced and rejected — do not re-propose without new evidence
+ 
+ - **Enrich the spawn pool.** Raising spawned value 76% bought 13% more score ([RESULT-0006](EVIDENCE_LEDGER.md#result-0006--spawning-16s-does-not-lift-the-ceiling)). More distinct values means more chain sums fall off the matchable lattice ([FACT-0006](EVIDENCE_LEDGER.md#fact-0006--the-mergeable-sum-lattice-and-what-a-lockout-is)). Future direction only: [BL-0003](docs/backlog/BL-0003-widen-spawn-pool.md).
+ - **Enlarge the move budget.** Works to about level 31 and saturates after ([RESULT-0007](EVIDENCE_LEDGER.md#result-0007--more-moves-rescue-the-mid-levels-and-saturate-on-the-late-ones)).
++- **Make the chain walk take the heaviest tile once the length multiplier is capped.** Worse at every threshold tried, by 6.6% to 32.7%, all significant against the `t > 3` bar ([RESULT-0019](EVIDENCE_LEDGER.md#result-0019--taking-the-heaviest-tile-past-the-multiplier-cap-is-worse-at-every-threshold)). A chain extends on equal-or-double, so grabbing a heavy tile raises the floor for every later tile and the walk dies; length keeps paying past the cap, just linearly. The `heavyAfter` parameter exists and is pinned at 0 so the result stays reverifiable.
+ 
+ ## Useful commands
+ 
+@@ -42,6 +47,8 @@ node solver/game-tester.js --policy powers2 --detail    # the shipped policy, pe
+ node --test solver/tests/*.test.js
+ node solver/chain-coverage.js                           # how much of the best move the walk finds
+ node solver/routing-ablation.js                         # what that is worth in play
++node solver/human-replay.js                             # recorded human play vs the exact best move (~30 min)
++node solver/heavy-after-ablation.js                     # the rejected heaviest-first-past-the-cap walk
+ ```
+ 
+-Last reviewed: 2026-08-20
++Last reviewed: 2026-08-28
+diff --git a/EVIDENCE_LEDGER.md b/EVIDENCE_LEDGER.md
+index 3f08a7f..32e1a62 100644
+--- a/EVIDENCE_LEDGER.md
++++ b/EVIDENCE_LEDGER.md
+@@ -472,6 +472,37 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
+ - **superseded_by:** []
+ - **notes:** The archive axes are calibrated from the bounded pilot and may clip policies outside that pilot's observed range. The experiment explores the existing parameter seam only; it does not learn a value function, add search depth, or discover new policy structure. The full solver suite remains 193/196 because of the same three pre-existing receipt-identity failures named in `RESULT-0016`; no receipt was refreshed or weakened.
+ 
++### RESULT-0018 — Replayed human play trades early points for a late harvest; the bot does the reverse
++
++- **type:** result
++- **status:** accepted as an exploratory record; **not** accepted as a tested finding
++- **scope:** the 10 recordings in `recordings/`, one player (the owner), 4 candidate configs, seeds 1/2/10/777; describes recorded play only and changes no level, target, rule, or bot parameter
++- **statement:** The recordings are the only primary record of human play in this project and had never been analysed. Nine of the ten replay **exactly** against `solver/engine.js` — final score, move count, and every individual move's points — which is the gate for everything below; the tenth is dropped because its candidate config (`5b12806fa862`) is no longer in the repo. At each of the 135 replayed positions every legal chain was enumerated with `enumerateLegalChains` to establish the exact best available move. **Over a whole game the human and the bot capture nearly the same share of it — 0.515 against 0.587 — but the curves cross.** By thirds of the move budget the human takes 0.426 / 0.447 / **0.685** of the best available while the bot takes 0.629 / 0.590 / **0.537**: the human starts worse and finishes far better, and the bot degrades. Per-move points move the same way, the human roughly doubling across a game while the bot stays flat. The mechanism is visible in lattice discipline — the share of moves whose sum lands on a power of two (`FACT-0006`). Early the two are alike (human 73%, bot 79%); by the final third the human has **dropped to 35% while the bot holds at 84%**. That discipline buys future options, and in the endgame there are none left to buy, so the human cashes out into the largest chain available and the bot keeps paying for an option it will never exercise. On 41 of 135 moves the human took under a quarter of what was available; those chains average 6.5 tiles at sum 692 and 33 of 41 land on a power of two. **These setup moves come in runs of up to six**, so the harvest is the first ordinary move that ENDS a run, compared against ordinary moves no run preceded: **13.2 tiles at sum 3,779 for 18,208 points, against 14.8 tiles at sum 1,584 for 7,623**. Both sides sit above the nine-tile multiplier cap, so the multiplier is identical at 5 and the sum and score ratios are equal at **x2.39** — the entire gain is chain sum, not chain length. Tested separately: the sum difference clears the project bar at **t = 3.45**, while the length difference is **-1.6 tiles at t = -1.25** and is not distinguishable from zero. Length is therefore reported as unchanged, and neither "longer" nor "shorter" is supported. **No dose-response is established.** Harvest sum by build length is 3,419 (n=12), 3,936 (n=6), 4,352 (n=2), 2,048 (n=1) and 7,744 (n=1); only the first two carry any weight, the n=1 five-move case moves against the trend, and the 7,744 that makes the sequence look cumulative is a single observation. Excluding the one game the owner played under the since-fixed input bug (`RESULT-0009`) sharpens every figure rather than softening it: 0.567 against 0.583 overall, 0.479 / 0.758 human against 0.621 / 0.541 bot early-to-late, and **all 30** declines landing on a power of two.
++- **evidence:** `solver/human-replay.js`; `.orch/human-replay-01.json` (the full 135-move table: human, bot, and exact-best points, chain length, sum, and lattice status per position); `recordings/`; `solver/exact-score.js` `enumerateLegalChains` (the enumerator behind `RESULT-0003`).
++- **proof_class:** `direct_source` for the replays themselves and for the exact best-available figures, which are enumerated rather than sampled; `hypothesis` for every claim about what the pattern means. One player on four boards bounds nothing about human play in general.
++- **pre_registration:** **NONE. This analysis was exploratory throughout and no part of it tests a hypothesis.** Unlike `RESULT-0019`, nothing here was declared before the data was seen. Every analytic choice was made afterwards: the threshold defining a setup move (under 25% of the best available) was picked while looking at the table; the run-grouping was corrected only after the owner challenged a conclusion drawn from the uncorrected one; the two alternative definitions (chains under nine and under seven tiles) were tried after the first was disputed; and the significance tests were run after the conclusion they support had already been asserted. **The dataset is now spent for confirmatory purposes** — all ten recordings have been examined, so no holdout remains within it. The line between what is measured and what is chosen runs at the per-move table: the 135 rows in `.orch/human-replay-01.json` carry no analyst degrees of freedom, while every grouping built on top of them does. Read the table as evidence and the story as a hypothesis awaiting a pre-registered test on recordings that do not yet exist.
++- **as_of:** 2026-08-28
++- **reverify:** `node solver/human-replay.js --from .orch/human-replay-01.json` re-derives every grouping from the saved table in about a second. To rebuild the table itself, `node --max-old-space-size=8192 solver/human-replay.js --out <path>`; expect 135 moves across 9 games with `44d3802d` dropped, the early/late capture crossover, and the late lattice gap near 35% against 84%. That takes roughly half an hour — a full 5x7 opening holds over 8 million distinct actions.
++- **updated:** 2026-08-28
++- **supersedes:** []
++- **superseded_by:** []
++- **notes:** This narrows but does not close the standing note that the reference bot is a weak proxy for a skilled player (`RESULT-0008`). It gives the first move-by-move comparison on a common scale, and the direction is the one already recorded: where they differ, the human is ahead. It does not size the margin — one player, four boards, and that player designed the game. The owner states the intent directly: take a small chain to set up a bigger one. **The data supports that description as given.** An earlier reading in this project recorded the harvest chain as *shorter* than a typical move; that was an artifact of grouping, because 19 of the 41 moves following a setup move are themselves setup moves, and averaging them into the harvest dragged its length down. Grouped correctly the harvest chain is the same length as an ordinary one and worth 2.39x as much. The lever is chain sum: `chainMultiplier` is capped at 5 from nine tiles, both groups are past that cap, and 77 of the 111 clean moves were already at or past it, so length had nothing left to earn. The magnitude is sensitive to how a setup move is defined, and this must not be over-read: the x2.39 figure uses a detector that conditions on the enumerated best move, which is large precisely when a big chain is nearby, so it partly selects for the harvest it measures. Under a purely mechanical definition that never references the optimum — any chain under nine tiles, which forgoes the maximum multiplier by construction — the same three-group structure holds at **x1.55**, and under seven tiles at x1.29. **The pattern is not an artifact of the detector; the headline ratio is a property of it.** Treat roughly 1.5x as the defensible figure. The heavy tiles are built by earlier moves folding several tiles into one survivor, which is a cross-move setup and not a preference expressible inside one walk — see `RESULT-0019` for the attempt to express it inside the walk and why it fails. **What a confirmatory test would require, declared here so it cannot be chosen to fit a later result:** the setup-move definition fixed in advance at chains under nine tiles, because it is mechanical and never references the enumerated optimum; the comparison fixed as harvest-versus-ordinary under the run-grouping above; the predicted effect a harvest chain sum near **1.55x** ordinary at a length difference indistinguishable from zero; and fresh recordings that no one has looked at, on boards not among these four. None of that exists yet.
++
++### RESULT-0019 — Taking the heaviest tile past the multiplier cap is worse at every threshold
++
++- **type:** result
++- **status:** accepted
++- **scope:** `solver/bot.js` `CHAIN_HEAVY_AFTER` / `heavyAfter`, added and left at **0** (disabled); the shipped bot is unchanged and no target, level, or receipt moves
++- **statement:** `RESULT-0018` shows the owner's harvest chains carry a far larger sum than ordinary moves at essentially unchanged length. The hypothesis tested here was that the walk should therefore stop preferring the lightest reachable tile once the length multiplier is maxed: `chainMultiplier` caps at 5 and reaches it at nine tiles, so past that an added tile contributes exactly its own value x 5 and the walk is still deliberately choosing the smallest tile it can reach. **The hypothesis is false, and not marginally.** Flipping the walk to heaviest-first at thresholds 7, 9, 11 and 13 measures **-32.65% (t = -10.7), -16.06% (t = -8.1), -10.10% (t = -6.5) and -6.57% (t = -4.3)** against the shipped bot, paired per (level, seed) with the standard error clustered by level, on 12 levels x 40 unseen seeds. Win rate falls from 99.17% to 70.83% at threshold 7. Every arm is significant in the wrong direction against the project's own `t > 3` bar, and the damage is **monotone in the threshold** — flipping later hurts less — so the gradient points at never flipping, which is the bot that already ships. The cause is the chain rule (`FACT-0001`): a chain extends on equal-or-double, so values never decrease along it, and taking the heaviest reachable tile raises the floor every later tile must clear. Tiles that large are scarce, so the walk dies on the spot. The real trade is not value against nothing but **value against the chain surviving**, and survival keeps paying past the cap because each further tile is still worth its own value x 5 — length continues to pay, linearly rather than multiplicatively. The reasoning that "the multiplier is capped" implies "length stops paying" is the specific error.
++- **evidence:** `solver/heavy-after-ablation.js`; `.orch/heavy-after-ablation-01.txt` (the screen table); `solver/bot.js` `CHAIN_HEAVY_AFTER = 0`; `solver/engine.js` `buildGreedyChain` and `buildGreedyPathBeam` `heavyAfter` option; `solver/calibration.js` pins `heavyAfter: 0`.
++- **proof_class:** `heuristic_observation` — a measured degradation of this heuristic player at four thresholds. It does not exclude some other way of raising the chain sum; it excludes doing it inside the walk by tile preference.
++- **as_of:** 2026-08-28
++- **reverify:** `node solver/heavy-after-ablation.js`; expect every threshold negative with |t| > 3 and the lift rising monotonically toward zero as the threshold rises. `node --test solver/tests/*.test.js`; expect 236 tests, 233 pass, and only the three known receipt failures.
++- **updated:** 2026-08-28
++- **supersedes:** []
++- **superseded_by:** []
++- **notes:** Screen data only, and deliberately so: the two-stage confirmation exists to deflate a winner inflated by selection, and there is no winner here to deflate, so 31,800 confirmation games would have bought nothing. Three pre-registration checks were run before any measurement — with `heavyAfter` at 0 all 48 probe games are identical to the pre-change bot move for move, with it at 9 all 48 change, and the suite returns to its exact 236/233/3 baseline. The parameter is therefore inert and is kept only so this result stays reverifiable rather than becoming prose; reverting it removes the reverify command with it. Adding it tripped both calibration guards exactly as designed — one test requires the frozen ruler to pin every parameter the live bot has, the other is a literal snapshot that then goes stale — and both were updated together, pinning `heavyAfter: 0` so existing targets stay tied to the historical walk. This is the same trap `RESULT-0014` records for `wHarvest`. What is **not** excluded, and is the live lead from `RESULT-0018`: the human builds heavy tiles across several moves and chains them later, which is what `harvestValue` already reaches for at weight 2. Whether that term is under-weighted is untested here.
++
+ ## Decision registry
+ 
+ ### DECISION-0001 — Keep the feasibility study frozen
+diff --git a/UNIVERSE.md b/UNIVERSE.md
+index 74996da..fc2be74 100644
+--- a/UNIVERSE.md
++++ b/UNIVERSE.md
+@@ -5,7 +5,6 @@
+ ## Warnings
+ 
+ - **artifact-not-ledger-admitted:** The latest verified MAP-Elites artifact has no selected ledger record and is not accepted project evidence.
+-- **current-navigation-stale:** CURRENT.md is stale at this map boundary: last reviewed 2026-08-20, 8 days before 2026-08-28.
+ 
+ ## Identity
+ 
+@@ -34,7 +33,7 @@
+ 
+ - Accepted standing: RESULT-0017 in EVIDENCE_LEDGER.md.
+ - Latest artifact: not-admitted.
+-- CURRENT.md navigation: stale; last reviewed 2026-08-20.
++- CURRENT.md navigation: current; last reviewed 2026-08-28.
+ 
+ ## Current frontier
+ 
+diff --git a/solver/bot.js b/solver/bot.js
+index c182fb4..a7b12a1 100644
+--- a/solver/bot.js
++++ b/solver/bot.js
+@@ -89,6 +89,23 @@ const CHAIN_TIE_BREAK = 'degree';
+ // 93.64% -> 99.18%, at 2.69x the previous bot's compute cost.
+ const CHAIN_PATH_WIDTH = 8;
+ 
++// Chain length at which the walk stops preferring the LIGHTEST reachable tile
++// and starts preferring the HEAVIEST. 0 disables the flip entirely, which is
++// the shipped behaviour.
++//
++// `chainMultiplier` tops out at 5 and gets there at 9 tiles. Below that,
++// lowest-value-first is what keeps the walk alive long enough to reach the cap
++// (RESULT-0011). At or above it the multiplier cannot rise again, so a further
++// tile is worth exactly its own value x 5 -- and the walk is still deliberately
++// choosing the smallest tile it can reach, which is the one term still paying.
++//
++// Measured motivation: across 111 replayed human moves the owner's payoff
++// chains were SHORTER than their typical move (11.4 tiles vs 15.4) but carried
++// a far larger sum (2,957 vs 2,286). 77 of those 111 moves were already at or
++// past the cap, averaging 16 tiles, so about seven tiles per chain were being
++// selected for smallness with no multiplier left to earn.
++const CHAIN_HEAVY_AFTER = 0;
++
+ // Whether the lookahead is also offered the walk's UNTRIMMED result.
+ //
+ // `findGreedyChains` defaults `preferMergeableSum` to true, so every candidate
+@@ -168,6 +185,7 @@ const DEFAULT_PARAMS = {
+   wHarvest: HARVEST_WEIGHT,          // weight on setting up a chain of built tiles
+   offerFull: OFFER_FULL_CHAINS,      // also offer the walk's untrimmed result
+   pathWidth: CHAIN_PATH_WIDTH,       // low-value-first partial paths retained per start
++  heavyAfter: CHAIN_HEAVY_AFTER,     // chain length past which the walk takes heaviest-first
+ };
+ 
+ // Maps a chain from the real state onto the equivalent tiles in a clone
+@@ -293,9 +311,11 @@ function harvestValue(sim, survivor) {
+ // returns the shipped candidates in the shipped order, and the 1-ply fallback
+ // below (which takes candidates[0]) is unaffected.
+ function collectCandidates(state, {
+-  width, tieBreak, offerFull, pathWidth,
++  width, tieBreak, offerFull, pathWidth, heavyAfter,
+ }) {
+-  const trimmed = findGreedyChains(state, { limit: width, tieBreak, pathWidth });
++  const trimmed = findGreedyChains(state, {
++    limit: width, tieBreak, pathWidth, heavyAfter,
++  });
+   if (!offerFull) return trimmed;
+ 
+   const keyOf = (c) => {
+@@ -305,7 +325,7 @@ function collectCandidates(state, {
+   const seen = new Set(trimmed.map(keyOf));
+   const merged = trimmed.slice();
+   for (const candidate of findGreedyChains(state, {
+-    limit: width, tieBreak, preferMergeableSum: false, pathWidth,
++    limit: width, tieBreak, preferMergeableSum: false, pathWidth, heavyAfter,
+   })) {
+     const key = keyOf(candidate);
+     if (seen.has(key)) continue;
+@@ -330,6 +350,7 @@ function chooseMove(state, options = {}) {
+   const { lookaheadRngFactory } = options;
+   const {
+     wRoll, wPlace, turnover, width, bombMax, tieBreak, wHarvest, offerFull, pathWidth,
++    heavyAfter,
+   } = { ...DEFAULT_PARAMS, ...options.params };
+ 
+   const bombs = findBombTiles(state).sort((a, b) => a.bombTimer - b.bombTimer);
+@@ -339,7 +360,7 @@ function chooseMove(state, options = {}) {
+   }
+ 
+   const candidates = collectCandidates(state, {
+-    width, tieBreak, offerFull, pathWidth,
++    width, tieBreak, offerFull, pathWidth, heavyAfter,
+   });
+   if (candidates.length === 0) return null;
+   if (!lookaheadRngFactory || candidates.length === 1) return candidates[0].chain;
+diff --git a/solver/calibration.js b/solver/calibration.js
+index 578b5cb..89ae0e3 100644
+--- a/solver/calibration.js
++++ b/solver/calibration.js
+@@ -51,6 +51,7 @@ const CALIBRATION_PARAMS = Object.freeze({
+   wHarvest: 0,
+   offerFull: 0,
+   pathWidth: 1,
++  heavyAfter: 0,
+ });
+ 
+ // Pinning the parameters is not enough on its own: the same parameters against
+diff --git a/solver/engine.js b/solver/engine.js
+index 783783b..c0a73c3 100644
+--- a/solver/engine.js
++++ b/solver/engine.js
+@@ -339,7 +339,9 @@ function scoreGreedyPath(state, chain, preferMergeableSum) {
+ }
+ 
+ function buildGreedyChain(state, startTile, options = {}) {
+-  const { maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none' } = options;
++  const {
++    maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none', heavyAfter = 0,
++  } = options;
+   if (isBlockedTile(startTile)) return null;
+ 
+   const chain = [startTile];
+@@ -349,9 +351,21 @@ function buildGreedyChain(state, startTile, options = {}) {
+     const extensions = legalExtensions(state, chain, visited);
+     if (!extensions.length) break;
+ 
++    // `chainMultiplier` is capped at 5 and reaches it at 9 tiles, so past that
++    // length an extra tile adds exactly its own value x 5 and nothing more.
++    // Lowest-value-first is chosen to keep the walk ALIVE (see below), which is
++    // what buys the multiplier in the first place -- but once the multiplier is
++    // maxed there is nothing left to buy, and continuing to take the smallest
++    // reachable tile suppresses the only term still paying: the chain sum.
++    // `heavyAfter` is the length at which the walk flips to heaviest-first.
++    // 0 disables it, which is the shipped behaviour exactly.
++    const heavy = heavyAfter > 0 && chain.length >= heavyAfter;
+     let bestNeighbor = extensions[0];
+     for (const neighbor of extensions) {
+-      if (neighbor.value < bestNeighbor.value) bestNeighbor = neighbor;
++      const better = heavy
++        ? neighbor.value > bestNeighbor.value
++        : neighbor.value < bestNeighbor.value;
++      if (better) bestNeighbor = neighbor;
+     }
+ 
+     // The walk is self-avoiding and never backtracks, so it can wall itself off
+@@ -398,9 +412,12 @@ function buildGreedyChain(state, startTile, options = {}) {
+ function buildGreedyPathBeam(state, startTile, options = {}) {
+   const {
+     maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none', pathWidth = 1,
++    heavyAfter = 0,
+   } = options;
+   if (pathWidth <= 1) {
+-    const result = buildGreedyChain(state, startTile, { maxLength, preferMergeableSum, tieBreak });
++    const result = buildGreedyChain(state, startTile, {
++      maxLength, preferMergeableSum, tieBreak, heavyAfter,
++    });
+     return result ? [result] : [];
+   }
+   if (isBlockedTile(startTile)) return [];
+@@ -409,7 +426,7 @@ function buildGreedyPathBeam(state, startTile, options = {}) {
+   // This prevents alternative routes from crowding a proven long-chain
+   // candidate out of the bot's globally capped candidate list.
+   const baseline = buildGreedyChain(state, startTile, {
+-    maxLength, preferMergeableSum, tieBreak,
++    maxLength, preferMergeableSum, tieBreak, heavyAfter,
+   });
+ 
+   let frontier = [{ chain: [startTile], visited: new Set([startTile]) }];
+@@ -429,8 +446,11 @@ function buildGreedyPathBeam(state, startTile, options = {}) {
+         continue;
+       }
+ 
++      // Same multiplier-cap reasoning as `buildGreedyChain`: past `heavyAfter`
++      // tiles the multiplier is frozen, so the beam flips to heaviest-first.
++      const heavy = heavyAfter > 0 && path.chain.length >= heavyAfter;
+       extensions.sort((a, b) => {
+-        if (a.value !== b.value) return a.value - b.value;
++        if (a.value !== b.value) return heavy ? b.value - a.value : a.value - b.value;
+         if (tieBreak !== 'degree') return 0;
+         return countOnward(state, path.chain, path.visited, a)
+           - countOnward(state, path.chain, path.visited, b);
+@@ -439,9 +459,11 @@ function buildGreedyPathBeam(state, startTile, options = {}) {
+       // Preserve the accepted low-value-first policy. The beam explores
+       // alternate routes only among equally low-valued extensions; keeping a
+       // double while an equal tile remains made the first beam greedier and
+-      // collapsed whole-game win rate.
+-      const lowestValue = extensions[0].value;
+-      for (const extension of extensions.filter((tile) => tile.value === lowestValue)) {
++      // collapsed whole-game win rate. Past the cap the same rule applies to
++      // the heaviest value instead, so the beam still branches only among
++      // equally ranked tiles rather than widening.
++      const pivotValue = extensions[0].value;
++      for (const extension of extensions.filter((tile) => tile.value === pivotValue)) {
+         const chain = [...path.chain, extension];
+         const visited = new Set(path.visited);
+         visited.add(extension);
+@@ -469,7 +491,7 @@ function buildGreedyPathBeam(state, startTile, options = {}) {
+ function findGreedyChains(state, options = {}) {
+   const {
+     maxLength = Infinity, limit = Infinity, preferMergeableSum = true,
+-    tieBreak = 'none', pathWidth = 1,
++    tieBreak = 'none', pathWidth = 1, heavyAfter = 0,
+   } = options;
+   const results = [];
+   const seen = new Set();
+@@ -479,7 +501,7 @@ function findGreedyChains(state, options = {}) {
+       const tile = state.grid[row][col];
+       if (!tile || isBlockedTile(tile)) continue;
+       const paths = buildGreedyPathBeam(state, tile, {
+-        maxLength, preferMergeableSum, tieBreak, pathWidth,
++        maxLength, preferMergeableSum, tieBreak, pathWidth, heavyAfter,
+       });
+       for (const result of paths) {
+         const finalTile = result.chain[result.chain.length - 1];
+diff --git a/solver/tests/calibration.test.js b/solver/tests/calibration.test.js
+index 5a75aa4..eb4fa9b 100644
+--- a/solver/tests/calibration.test.js
++++ b/solver/tests/calibration.test.js
+@@ -10,7 +10,7 @@ const { DEFAULT_PARAMS } = require('../bot');
+ test('calibration params are a literal snapshot, not a view of the live bot', () => {
+   assert.deepEqual(CALIBRATION_PARAMS, {
+     wRoll: 1, wPlace: 1, turnover: 40, width: 24, bombMax: 9, tieBreak: 'degree', wHarvest: 0,
+-    offerFull: 0, pathWidth: 1,
++    offerFull: 0, pathWidth: 1, heavyAfter: 0,
+   });
+   assert.notEqual(CALIBRATION_PARAMS, DEFAULT_PARAMS); // not the same object
+ });
+diff --git a/solver/tests/universeMap.test.js b/solver/tests/universeMap.test.js
+index d94b2fd..79c343b 100644
+--- a/solver/tests/universeMap.test.js
++++ b/solver/tests/universeMap.test.js
+@@ -83,7 +83,17 @@ test('one resolved model keeps admitted evidence separate from the later verifie
+     model.sourceIdentities.latestArtifactVerificationSha256,
+     '701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790',
+   );
+-  assert.ok(model.warnings.some((warning) => warning.id === 'current-navigation-stale'));
++  // Navigation freshness is a TRANSIENT condition: the warning exists so that
++  // someone updates CURRENT.md, and doing so must not break this test. Asserting
++  // either state pins the repo -- 'stale' broke the moment it was fixed, and
++  // 'current' would break again once CURRENT.md next ages out. Assert instead
++  // that the distinction is computed at all; the stale path is covered by the
++  // fails-closed tests below.
++  assert.ok(['current', 'stale'].includes(model.evidenceStanding.currentNavigation));
++  assert.equal(
++    model.warnings.some((warning) => warning.id === 'current-navigation-stale'),
++    model.evidenceStanding.currentNavigation === 'stale',
++  );
+   assert.ok(model.warnings.some((warning) => warning.id === 'artifact-not-ledger-admitted'));
+ });
+ 
+@@ -109,7 +119,8 @@ test('generated Markdown exposes the load-bearing distinctions in one screen', (
+   assert.match(markdown, /Representative holdout.*12 levels/s);
+   assert.match(markdown, /0 of 3 representatives beat the champion on holdout/);
+   assert.match(markdown, /Champion standing.*unchanged/s);
+-  assert.match(markdown, /CURRENT\.md.*stale/s);
++  // Surfaced either way; see the note on transient navigation freshness above.
++  assert.match(markdown, /CURRENT\.md navigation: (current|stale)/);
+   assert.doesNotMatch(markdown, /Interactive static view/);
+ });
+ 
+diff --git a/universe/map.html b/universe/map.html
+index b62e910..9721d53 100644
+--- a/universe/map.html
++++ b/universe/map.html
+@@ -32,7 +32,7 @@
+   <p class="status">Generated projection · 2026-08-28</p>
+   <h1>Universe Map</h1>
+   <p class="lede">One view of the identities, evaluation universe, observed performance, evidence standing, and current research frontier. The ledger remains authoritative; this page makes its consequences visible.</p>
+-  <aside class="warnings"><h2>Load-bearing warnings</h2><ul><li><strong>artifact-not-ledger-admitted</strong> — The latest verified MAP-Elites artifact has no selected ledger record and is not accepted project evidence.</li><li><strong>current-navigation-stale</strong> — CURRENT.md is stale at this map boundary: last reviewed 2026-08-20, 8 days before 2026-08-28.</li></ul></aside>
++  <aside class="warnings"><h2>Load-bearing warnings</h2><ul><li><strong>artifact-not-ledger-admitted</strong> — The latest verified MAP-Elites artifact has no selected ledger record and is not accepted project evidence.</li></ul></aside>
+   <div class="grid">
+     <section class="card" id="identity">
+       <h2 class="eyebrow">Identity</h2>
+@@ -52,7 +52,7 @@
+     <section class="card" id="evidence-standing">
+       <h2 class="eyebrow">Evidence standing</h2>
+       <p class="purpose">Expose accepted, verified-only, stale, contradictory, and unresolved information.</p>
+-      <ul><li>Standing authority: <code>EVIDENCE_LEDGER.md</code></li><li>Accepted: <strong>RESULT-0017</strong></li><li>Latest artifact: <strong>not-admitted</strong></li><li>CURRENT.md: <strong>stale</strong></li></ul>
++      <ul><li>Standing authority: <code>EVIDENCE_LEDGER.md</code></li><li>Accepted: <strong>RESULT-0017</strong></li><li>Latest artifact: <strong>not-admitted</strong></li><li>CURRENT.md: <strong>current</strong></li></ul>
+     </section>
+     <section class="card" id="current-frontier">
+       <h2 class="eyebrow">Current frontier</h2>
+diff --git a/universe/resolved.json b/universe/resolved.json
+index 968ac7a..c69c8bf 100644
+--- a/universe/resolved.json
++++ b/universe/resolved.json
+@@ -8,8 +8,8 @@
+   },
+   "sourceIdentities": {
+     "contractSha256": "372ac90f35f69d38c96ee37be4fddf6f19e322bd5ecaf732df2e142fe5828ac1",
+-    "ledgerSha256": "ff30067d23e4d1bd1b40dd6c6882c7dda5ecf721e43127a0ab0f182e6766d716",
+-    "currentNavigationSha256": "5c0a94cb8ed38c9bc448043a3eb762b307df7a9a3c75d9c3c32d972fddfde887",
++    "ledgerSha256": "ee637a33582bc95de0865bb9da95c8f3057f826ec77936b2d831fc7370becb66",
++    "currentNavigationSha256": "3a0d11ad17c0b97c4d08cb34738fd97235128245f3bfd7cafc9dae5919d0794f",
+     "shippedGameSha256": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
+     "latestArtifactSha256": "ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22",
+     "latestArtifactVerificationSha256": "701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790",
+@@ -130,8 +130,8 @@
+     "standingAuthority": "EVIDENCE_LEDGER.md",
+     "acceptedRecord": "RESULT-0017",
+     "latestArtifact": "not-admitted",
+-    "currentNavigation": "stale",
+-    "currentNavigationLastReviewed": "2026-08-20"
++    "currentNavigation": "current",
++    "currentNavigationLastReviewed": "2026-08-28"
+   },
+   "currentFrontier": [
+     {
+@@ -154,10 +154,6 @@
+     {
+       "id": "artifact-not-ledger-admitted",
+       "message": "The latest verified MAP-Elites artifact has no selected ledger record and is not accepted project evidence."
+-    },
+-    {
+-      "id": "current-navigation-stale",
+-      "message": "CURRENT.md is stale at this map boundary: last reviewed 2026-08-20, 8 days before 2026-08-28."
+     }
+   ]
+ }
