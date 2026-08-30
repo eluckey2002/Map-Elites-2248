@@ -5,7 +5,6 @@
 ## Warnings
 
 - **artifact-not-ledger-admitted:** The latest verified MAP-Elites artifact has no selected ledger record and is not accepted project evidence.
-- **current-navigation-stale:** CURRENT.md is stale at this map boundary: last reviewed 2026-08-20, 8 days before 2026-08-28.
 
 ## Identity
 
@@ -34,7 +33,7 @@
 
 - Accepted standing: RESULT-0017 in EVIDENCE_LEDGER.md.
 - Latest artifact: not-admitted.
-- CURRENT.md navigation: stale; last reviewed 2026-08-20.
+- CURRENT.md navigation: current; last reviewed 2026-08-29.
 
 ## Current frontier
 

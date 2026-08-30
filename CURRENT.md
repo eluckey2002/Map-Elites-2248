@@ -8,9 +8,9 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 Author new levels. The curve is fixed, so new levels can be born calibrated rather than hand-guessed. [BL-0004](docs/backlog/BL-0004-build-level-authoring-tracer.md)'s tracer is complete and its one candidate is shipped: Level 51, the first level whose target was never hand-picked (measured demand, `DECISION-0003`) and the first with direct human playtest evidence, not just a bot win rate (`RESULT-0009`). The historical design remains at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md); measurement is grounded in `solver/game-tester.js`.
 
-**Read [HANDOFF.md](HANDOFF.md) before touching this milestone further** — a 2026-08-17 session conflated the pipeline built so far (measures and validates a *human-picked* shape) with a level generator (invents shapes on its own), which does not exist. That handoff also lists three more candidates from that session in three different states: one ready to ship (52), one correctly rejected (53, real lockouts), and one whose playtest doesn't count (54, tested on a memorized board — needs a fresh seed before its 85%-demand question is actually answered).
+**Read [HANDOFF.md](HANDOFF.md) before touching this milestone further** — a 2026-08-17 session conflated the pipeline built so far (measures and validates a *human-picked* shape) with a level generator (invents shapes on its own). That distinction still matters, but the generator is no longer hypothetical: `solver/generate-levels.js` (added 2026-08-20, `355dc5a`) proposes level shapes and screens them cheaply before spending the full 450-game authoring pipeline on the survivors. That handoff also lists three more candidates from that session, and their standing has since moved. **Level 53 ships**, as does 52 — `src/game.js` carries 53 levels and `solver/tests/gameLevels.test.js` pins that count. **54 does not**: its playtest still doesn't count (tested on a memorized board — needs a fresh seed before its 85%-demand question is actually answered), and its receipt is one of the three the suite reports stale. Level 53's move from rejected to shipped carries no ledger record; it entered `src/game.js` in `530deb3`, a commit about MAP-Elites evidence. Adjudicating that is open.
 
-The milestone itself isn't closed. What's left is an open choice, not a default: ship more hand-picked candidates one at a time, or build the actual generator.
+The milestone itself isn't closed, but the open choice has moved. The generator exists, so what is left is not whether to build it: it is whether to run it at scale, and against what acceptance bar.
 
 ## Done — the level curve
 
@@ -44,4 +44,4 @@ node solver/chain-coverage.js                           # how much of the best m
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
-Last reviewed: 2026-08-20
+Last reviewed: 2026-08-29
