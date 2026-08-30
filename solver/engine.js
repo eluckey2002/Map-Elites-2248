@@ -339,7 +339,9 @@ function scoreGreedyPath(state, chain, preferMergeableSum) {
 }
 
 function buildGreedyChain(state, startTile, options = {}) {
-  const { maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none' } = options;
+  const {
+    maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none', heavyAfter = 0,
+  } = options;
   if (isBlockedTile(startTile)) return null;
 
   const chain = [startTile];
@@ -349,9 +351,21 @@ function buildGreedyChain(state, startTile, options = {}) {
     const extensions = legalExtensions(state, chain, visited);
     if (!extensions.length) break;
 
+    // `chainMultiplier` is capped at 5 and reaches it at 9 tiles, so past that
+    // length an extra tile adds exactly its own value x 5 and nothing more.
+    // Lowest-value-first is chosen to keep the walk ALIVE (see below), which is
+    // what buys the multiplier in the first place -- but once the multiplier is
+    // maxed there is nothing left to buy, and continuing to take the smallest
+    // reachable tile suppresses the only term still paying: the chain sum.
+    // `heavyAfter` is the length at which the walk flips to heaviest-first.
+    // 0 disables it, which is the shipped behaviour exactly.
+    const heavy = heavyAfter > 0 && chain.length >= heavyAfter;
     let bestNeighbor = extensions[0];
     for (const neighbor of extensions) {
-      if (neighbor.value < bestNeighbor.value) bestNeighbor = neighbor;
+      const better = heavy
+        ? neighbor.value > bestNeighbor.value
+        : neighbor.value < bestNeighbor.value;
+      if (better) bestNeighbor = neighbor;
     }
 
     // The walk is self-avoiding and never backtracks, so it can wall itself off
@@ -398,9 +412,12 @@ function buildGreedyChain(state, startTile, options = {}) {
 function buildGreedyPathBeam(state, startTile, options = {}) {
   const {
     maxLength = Infinity, preferMergeableSum = false, tieBreak = 'none', pathWidth = 1,
+    heavyAfter = 0,
   } = options;
   if (pathWidth <= 1) {
-    const result = buildGreedyChain(state, startTile, { maxLength, preferMergeableSum, tieBreak });
+    const result = buildGreedyChain(state, startTile, {
+      maxLength, preferMergeableSum, tieBreak, heavyAfter,
+    });
     return result ? [result] : [];
   }
   if (isBlockedTile(startTile)) return [];
@@ -409,7 +426,7 @@ function buildGreedyPathBeam(state, startTile, options = {}) {
   // This prevents alternative routes from crowding a proven long-chain
   // candidate out of the bot's globally capped candidate list.
   const baseline = buildGreedyChain(state, startTile, {
-    maxLength, preferMergeableSum, tieBreak,
+    maxLength, preferMergeableSum, tieBreak, heavyAfter,
   });
 
   let frontier = [{ chain: [startTile], visited: new Set([startTile]) }];
@@ -429,8 +446,11 @@ function buildGreedyPathBeam(state, startTile, options = {}) {
         continue;
       }
 
+      // Same multiplier-cap reasoning as `buildGreedyChain`: past `heavyAfter`
+      // tiles the multiplier is frozen, so the beam flips to heaviest-first.
+      const heavy = heavyAfter > 0 && path.chain.length >= heavyAfter;
       extensions.sort((a, b) => {
-        if (a.value !== b.value) return a.value - b.value;
+        if (a.value !== b.value) return heavy ? b.value - a.value : a.value - b.value;
         if (tieBreak !== 'degree') return 0;
         return countOnward(state, path.chain, path.visited, a)
           - countOnward(state, path.chain, path.visited, b);
@@ -439,9 +459,11 @@ function buildGreedyPathBeam(state, startTile, options = {}) {
       // Preserve the accepted low-value-first policy. The beam explores
       // alternate routes only among equally low-valued extensions; keeping a
       // double while an equal tile remains made the first beam greedier and
-      // collapsed whole-game win rate.
-      const lowestValue = extensions[0].value;
-      for (const extension of extensions.filter((tile) => tile.value === lowestValue)) {
+      // collapsed whole-game win rate. Past the cap the same rule applies to
+      // the heaviest value instead, so the beam still branches only among
+      // equally ranked tiles rather than widening.
+      const pivotValue = extensions[0].value;
+      for (const extension of extensions.filter((tile) => tile.value === pivotValue)) {
         const chain = [...path.chain, extension];
         const visited = new Set(path.visited);
         visited.add(extension);
@@ -469,7 +491,7 @@ function buildGreedyPathBeam(state, startTile, options = {}) {
 function findGreedyChains(state, options = {}) {
   const {
     maxLength = Infinity, limit = Infinity, preferMergeableSum = true,
-    tieBreak = 'none', pathWidth = 1,
+    tieBreak = 'none', pathWidth = 1, heavyAfter = 0,
   } = options;
   const results = [];
   const seen = new Set();
@@ -479,7 +501,7 @@ function findGreedyChains(state, options = {}) {
       const tile = state.grid[row][col];
       if (!tile || isBlockedTile(tile)) continue;
       const paths = buildGreedyPathBeam(state, tile, {
-        maxLength, preferMergeableSum, tieBreak, pathWidth,
+        maxLength, preferMergeableSum, tieBreak, pathWidth, heavyAfter,
       });
       for (const result of paths) {
         const finalTile = result.chain[result.chain.length - 1];

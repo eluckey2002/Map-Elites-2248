@@ -89,6 +89,23 @@ const CHAIN_TIE_BREAK = 'degree';
 // 93.64% -> 99.18%, at 2.69x the previous bot's compute cost.
 const CHAIN_PATH_WIDTH = 8;
 
+// Chain length at which the walk stops preferring the LIGHTEST reachable tile
+// and starts preferring the HEAVIEST. 0 disables the flip entirely, which is
+// the shipped behaviour.
+//
+// `chainMultiplier` tops out at 5 and gets there at 9 tiles. Below that,
+// lowest-value-first is what keeps the walk alive long enough to reach the cap
+// (RESULT-0011). At or above it the multiplier cannot rise again, so a further
+// tile is worth exactly its own value x 5 -- and the walk is still deliberately
+// choosing the smallest tile it can reach, which is the one term still paying.
+//
+// Measured motivation: across 111 replayed human moves the owner's payoff
+// chains were SHORTER than their typical move (11.4 tiles vs 15.4) but carried
+// a far larger sum (2,957 vs 2,286). 77 of those 111 moves were already at or
+// past the cap, averaging 16 tiles, so about seven tiles per chain were being
+// selected for smallness with no multiplier left to earn.
+const CHAIN_HEAVY_AFTER = 0;
+
 // Whether the lookahead is also offered the walk's UNTRIMMED result.
 //
 // `findGreedyChains` defaults `preferMergeableSum` to true, so every candidate
@@ -168,6 +185,7 @@ const DEFAULT_PARAMS = {
   wHarvest: HARVEST_WEIGHT,          // weight on setting up a chain of built tiles
   offerFull: OFFER_FULL_CHAINS,      // also offer the walk's untrimmed result
   pathWidth: CHAIN_PATH_WIDTH,       // low-value-first partial paths retained per start
+  heavyAfter: CHAIN_HEAVY_AFTER,     // chain length past which the walk takes heaviest-first
 };
 
 // Maps a chain from the real state onto the equivalent tiles in a clone
@@ -293,9 +311,11 @@ function harvestValue(sim, survivor) {
 // returns the shipped candidates in the shipped order, and the 1-ply fallback
 // below (which takes candidates[0]) is unaffected.
 function collectCandidates(state, {
-  width, tieBreak, offerFull, pathWidth,
+  width, tieBreak, offerFull, pathWidth, heavyAfter,
 }) {
-  const trimmed = findGreedyChains(state, { limit: width, tieBreak, pathWidth });
+  const trimmed = findGreedyChains(state, {
+    limit: width, tieBreak, pathWidth, heavyAfter,
+  });
   if (!offerFull) return trimmed;
 
   const keyOf = (c) => {
@@ -305,7 +325,7 @@ function collectCandidates(state, {
   const seen = new Set(trimmed.map(keyOf));
   const merged = trimmed.slice();
   for (const candidate of findGreedyChains(state, {
-    limit: width, tieBreak, preferMergeableSum: false, pathWidth,
+    limit: width, tieBreak, preferMergeableSum: false, pathWidth, heavyAfter,
   })) {
     const key = keyOf(candidate);
     if (seen.has(key)) continue;
@@ -330,6 +350,7 @@ function chooseMove(state, options = {}) {
   const { lookaheadRngFactory } = options;
   const {
     wRoll, wPlace, turnover, width, bombMax, tieBreak, wHarvest, offerFull, pathWidth,
+    heavyAfter,
   } = { ...DEFAULT_PARAMS, ...options.params };
 
   const bombs = findBombTiles(state).sort((a, b) => a.bombTimer - b.bombTimer);
@@ -339,7 +360,7 @@ function chooseMove(state, options = {}) {
   }
 
   const candidates = collectCandidates(state, {
-    width, tieBreak, offerFull, pathWidth,
+    width, tieBreak, offerFull, pathWidth, heavyAfter,
   });
   if (candidates.length === 0) return null;
   if (!lookaheadRngFactory || candidates.length === 1) return candidates[0].chain;

@@ -51,6 +51,7 @@ const CALIBRATION_PARAMS = Object.freeze({
   wHarvest: 0,
   offerFull: 0,
   pathWidth: 1,
+  heavyAfter: 0,
 });
 
 // Pinning the parameters is not enough on its own: the same parameters against

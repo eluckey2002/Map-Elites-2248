@@ -83,8 +83,56 @@ test('one resolved model keeps admitted evidence separate from the later verifie
     model.sourceIdentities.latestArtifactVerificationSha256,
     '701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790',
   );
-  assert.ok(model.warnings.some((warning) => warning.id === 'current-navigation-stale'));
+  // Navigation freshness is a TRANSIENT condition: the warning exists so that
+  // someone updates CURRENT.md, and doing so must not break this test. Asserting
+  // either state outright pins the repo -- 'stale' broke the moment it was
+  // fixed, and 'current' would break again once CURRENT.md next ages out. So
+  // assert the INVARIANT here: the warning is present exactly when the standing
+  // reads stale. The stale branch itself is exercised against a backdated
+  // fixture by 'the stale-navigation warning fires when CURRENT.md ages past
+  // the contract limit' below -- this comment previously claimed the
+  // fails-closed tests covered it, and they did not.
+  assert.ok(['current', 'stale'].includes(model.evidenceStanding.currentNavigation));
+  assert.equal(
+    model.warnings.some((warning) => warning.id === 'current-navigation-stale'),
+    model.evidenceStanding.currentNavigation === 'stale',
+  );
   assert.ok(model.warnings.some((warning) => warning.id === 'artifact-not-ledger-admitted'));
+});
+
+test('the stale-navigation warning fires when CURRENT.md ages past the contract limit', (t) => {
+  const fixture = makeFixture(t);
+  const currentPath = path.join(fixture, 'CURRENT.md');
+  const contract = JSON.parse(fs.readFileSync(path.join(fixture, 'universe/contract.json'), 'utf8'));
+  const limit = contract.sources.currentNavigation.maximumAgeDays;
+  const { asOf } = contract;
+
+  const dateAtAge = (days) => {
+    const at = new Date(`${asOf}T00:00:00Z`);
+    at.setUTCDate(at.getUTCDate() - days);
+    return at.toISOString().slice(0, 10);
+  };
+  const setReviewed = (date) => {
+    const text = fs.readFileSync(currentPath, 'utf8');
+    const next = text.replace(/^Last reviewed: \d{4}-\d{2}-\d{2}$/m, `Last reviewed: ${date}`);
+    assert.notEqual(next, text, 'fixture CURRENT.md must carry a Last reviewed line to rewrite');
+    fs.writeFileSync(currentPath, next);
+  };
+
+  // One day past the limit: the standing reads stale and the warning is raised.
+  setReviewed(dateAtAge(limit + 1));
+  const stale = resolveUniverse(fixture);
+  assert.equal(stale.evidenceStanding.currentNavigation, 'stale');
+  const warning = stale.warnings.find((entry) => entry.id === 'current-navigation-stale');
+  assert.ok(warning, 'ageing CURRENT.md past the limit must raise current-navigation-stale');
+  assert.match(warning.message, new RegExp(`${limit + 1} days before ${asOf}`));
+
+  // Exactly at the limit: still current, and the warning must be absent. Both
+  // directions are asserted so the test cannot pass by never computing either.
+  setReviewed(dateAtAge(limit));
+  const fresh = resolveUniverse(fixture);
+  assert.equal(fresh.evidenceStanding.currentNavigation, 'current');
+  assert.ok(!fresh.warnings.some((entry) => entry.id === 'current-navigation-stale'));
 });
 
 test('the builder is byte-stable and the committed generated views are current', () => {
@@ -109,7 +157,8 @@ test('generated Markdown exposes the load-bearing distinctions in one screen', (
   assert.match(markdown, /Representative holdout.*12 levels/s);
   assert.match(markdown, /0 of 3 representatives beat the champion on holdout/);
   assert.match(markdown, /Champion standing.*unchanged/s);
-  assert.match(markdown, /CURRENT\.md.*stale/s);
+  // Surfaced either way; see the note on transient navigation freshness above.
+  assert.match(markdown, /CURRENT\.md navigation: (current|stale)/);
   assert.doesNotMatch(markdown, /Interactive static view/);
 });
 

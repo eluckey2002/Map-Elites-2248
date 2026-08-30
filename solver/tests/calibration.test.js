@@ -10,7 +10,7 @@ const { DEFAULT_PARAMS } = require('../bot');
 test('calibration params are a literal snapshot, not a view of the live bot', () => {
   assert.deepEqual(CALIBRATION_PARAMS, {
     wRoll: 1, wPlace: 1, turnover: 40, width: 24, bombMax: 9, tieBreak: 'degree', wHarvest: 0,
-    offerFull: 0, pathWidth: 1,
+    offerFull: 0, pathWidth: 1, heavyAfter: 0,
   });
   assert.notEqual(CALIBRATION_PARAMS, DEFAULT_PARAMS); // not the same object
 });
