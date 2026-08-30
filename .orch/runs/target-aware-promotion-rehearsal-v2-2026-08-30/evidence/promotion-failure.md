@@ -55,3 +55,9 @@ evidence. The authoritative original-run receipt is
 at SHA-256 `acc15f15fd87132d3343299b39083cc4d1037d65db5010ea757840b38bc980ec`,
 with outcome `RETAIN_CHAMPION`. Full correction:
 `.orch/runs/target-aware-promotion-rehearsal-v2-2026-08-30/evidence/correction.md`.
+
+## Authority revoked
+
+Neither this duplicate nor the original run is authoritative. The combined
+experiment is `INVALIDATED`; controlling record:
+`.orch/runs/target-aware-promotion-rehearsal-2026-08-30/evidence/authority-revocation.md`.

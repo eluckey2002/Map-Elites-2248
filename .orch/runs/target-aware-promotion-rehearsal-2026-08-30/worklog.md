@@ -62,3 +62,8 @@
 - A later v2 lane duplicated the Level 53 replay after this run had already closed. V2 is `INVALIDATED` and excluded; correction path `.orch/runs/target-aware-promotion-rehearsal-v2-2026-08-30/evidence/correction.md`.
 - The first authorized `RETAIN_CHAMPION` verdict remains authoritative. Earlier “not rerun” statements describe state at original close, not final repository custody.
 - The sealed receipt's original-at-close SHA-256 was `acc15f15fd87132d3343299b39083cc4d1037d65db5010ea757840b38bc980ec`; after its append-only custody correction it is `71f6c664baef224a8ba384f14df253e021593ab61b1bc3352274011abc43b8e9`.
+
+## Authority revocation
+
+- The terminal `RETAIN_CHAMPION` classification above is superseded and has no decision standing.
+- Controlling disposition: `INVALIDATED`, per `.orch/runs/target-aware-promotion-rehearsal-2026-08-30/evidence/authority-revocation.md`.

@@ -52,3 +52,9 @@ fixed replay. That v2 run is `INVALIDATED` and excluded from the evidence basis;
 see `.orch/runs/target-aware-promotion-rehearsal-v2-2026-08-30/evidence/correction.md`.
 The first authorized result and its `RETAIN_CHAMPION` decision remain unchanged,
 but the repository-wide claim that no later rerun occurred is superseded.
+
+## Authority revoked
+
+This receipt has no authoritative decision standing. Its `RETAIN_CHAMPION`
+classification is superseded by `evidence/authority-revocation.md`; the combined
+promotion experiment is `INVALIDATED`.

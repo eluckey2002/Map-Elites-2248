@@ -26,3 +26,9 @@ The authoritative evidence is:
 No code, seed, threshold, gate, champion, or canonical-main state changed
 between the original reveal and the duplicate. This correction does not use
 the duplicate as corroboration; it excludes it from the evidence basis.
+
+## Superseded authority
+
+This correction's claim that the original run remains authoritative is revoked.
+Neither run has decision standing. The combined experiment is `INVALIDATED` per
+`.orch/runs/target-aware-promotion-rehearsal-2026-08-30/evidence/authority-revocation.md`.
