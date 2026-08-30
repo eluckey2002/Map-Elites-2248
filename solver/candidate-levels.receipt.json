@@ -1,12 +1,25 @@
 {
-  "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+  "calibration": {
+    "params": {
+      "bombMax": 9,
+      "tieBreak": "degree",
+      "turnover": 40,
+      "wHarvest": 0,
+      "wPlace": 1,
+      "wRoll": 1,
+      "width": 24
+    },
+    "solverIdentity": "3f25ca3288c43e2bb2a5cff25175acdc6b7ab53bc4e4a591c1207805e1cfc371",
+    "version": "calib-1"
+  },
+  "candidateIdentity": "a6c3e36031a17276354ba0d8b16e796d4338038fb984a581ffbe96cb9c3387f7",
   "fitting": {
     "scoreQuantiles": {
       "maximum": 170240,
-      "median": 107200,
-      "minimum": 47872,
-      "p25": 94464,
-      "p75": 120512
+      "median": 107904,
+      "minimum": 60384,
+      "p25": 91520,
+      "p75": 120832
     },
     "seedRange": {
       "count": 150,
@@ -23,11 +36,11 @@
   },
   "holdout": {
     "scoreQuantiles": {
-      "maximum": 156864,
-      "median": 103232,
-      "minimum": 49824,
-      "p25": 93696,
-      "p75": 109120
+      "maximum": 159296,
+      "median": 104000,
+      "minimum": 62656,
+      "p25": 95488,
+      "p75": 108992
     },
     "seedRange": {
       "count": 300,
@@ -37,26 +50,25 @@
       "bombExploded": 0,
       "incomplete": 0,
       "noValidMoves": 0,
-      "outOfMoves": 109,
+      "outOfMoves": 104,
       "total": 300,
-      "win": 191
+      "win": 196
     }
   },
   "inputIdentities": {
-    "bot": "c6ca87d430a5cfebb02738241a098eac41b1d08912ad68f4150c1b71b15e64b3",
-    "engine": "1327e13f7db9060ff6e54eb176d5f0cdd953c3f619330f115aed9abe6a57ae7a",
-    "levelAuthor": "305731fbfd7e664075dc177e8be48f5bf530d1f8475f5fd8c501cef84149b257"
+    "engine": "cb031d296014042795dcb8701b276c07cad78ac279038140595db0fb2ca944b1",
+    "levelAuthor": "636ec8077011c88ea95b0890203988d9ec0b5c987a31d931c6544baecec9bc37"
   },
-  "receiptIdentity": "f1bb12b1b8716b6fe8e5608bf840257f3f5a31505b70e79c76126181132da5f2",
+  "receiptIdentity": "935147963e40e21d8635f25852ce7086f90fb8b5f6e792f3bf029d9528323241",
   "schemaVersion": 1,
   "shapeIdentity": "129c358075bb4cca00678ebc597be45bf59dea7b8c661a2372b2e4b3ee2be0a4",
   "shapeName": "gen-0014-wide-sprint",
   "targetDerivation": {
     "demand": 0.95,
     "demandStatus": "provisional-proposal",
-    "measuredMedian": 107200,
+    "measuredMedian": 107904,
     "policy": "median-times-demand-rounded-down",
-    "roundedTarget": 101000,
+    "roundedTarget": 102000,
     "tileScale": 32,
     "tileScalePolicy": "2 ** floor((level - 1) / 10)"
   }

@@ -11,7 +11,8 @@ const {
   tickBlockers,
   checkBombs,
 } = require('./engine');
-const { chooseMove } = require('./bot');
+const { chooseMove } = require('./calibrations/calib-1');
+const { calibrationStamp } = require('./calibration');
 
 const LOOKAHEAD_BASE = 987654321;
 const FIT_SEEDS = Object.freeze({ start: 0, count: 150 });
@@ -38,7 +39,6 @@ function fileIdentity(file) {
 
 function defaultInputIdentities() {
   return {
-    bot: fileIdentity(path.join(__dirname, 'bot.js')),
     engine: fileIdentity(path.join(__dirname, 'engine.js')),
     levelAuthor: fileIdentity(__filename),
   };
@@ -217,6 +217,7 @@ function deriveCandidate(shapeInput, options = {}) {
     shapeIdentity,
     candidateIdentity,
     inputIdentities,
+    calibration: calibrationStamp(),
     fitting,
     targetDerivation: {
       policy: 'median-times-demand-rounded-down',
@@ -260,6 +261,9 @@ function verifyCandidate(store, receipt, options = {}) {
   if (identity(unsigned) !== receipt.receiptIdentity) throw new Error('receipt identity mismatch');
   if (identity(candidate) !== receipt.candidateIdentity) throw new Error('candidate identity mismatch');
   if (candidate.sourceShapeIdentity !== receipt.shapeIdentity) throw new Error('shape identity mismatch');
+  if (canonicalJson(receipt.calibration) !== canonicalJson(calibrationStamp())) {
+    throw new Error('calibration stamp mismatch');
+  }
   const inputIdentities = options.inputIdentities || defaultInputIdentities();
   if (canonicalJson(inputIdentities) !== canonicalJson(receipt.inputIdentities)) throw new Error('code/input identity mismatch');
   assertSeedRanges(receipt);
