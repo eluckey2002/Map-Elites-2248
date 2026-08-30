@@ -42,3 +42,13 @@ The fail-fast comparator exited before writing `promotion-verification.json`; th
 - Curve health: `RESULT: PASS`; hardest sampled Level 50 92% wins, 0% lockouts, 2% bombs.
 - Public exports remain `DEFAULT_PARAMS`, `chooseMove`, `harvestValue`, and `remnantPlacementValue`; no base chooser API is exported.
 - `git diff --check` passed. Main remained at `76871b12ebf5c75b2681360c1941fbd7ec908012`; no merge or push occurred.
+
+## Post-terminal custody correction
+
+The statements above that Level 53 “was not rerun” were true when this receipt
+was written. A later v2 lane, claimed at `2026-08-30T23:30:42Z`, failed to
+notice this run had completed at `2026-08-30T23:26:53Z` and duplicated the
+fixed replay. That v2 run is `INVALIDATED` and excluded from the evidence basis;
+see `.orch/runs/target-aware-promotion-rehearsal-v2-2026-08-30/evidence/correction.md`.
+The first authorized result and its `RETAIN_CHAMPION` decision remain unchanged,
+but the repository-wide claim that no later rerun occurred is superseded.

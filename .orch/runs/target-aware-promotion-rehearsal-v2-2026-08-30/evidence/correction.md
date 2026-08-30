@@ -19,7 +19,8 @@ even though it observed the same fail-closed error.
 The authoritative evidence is:
 
 - `.orch/runs/target-aware-promotion-rehearsal-2026-08-30/evidence/sealed-reveal.md`
-- SHA-256 `acc15f15fd87132d3343299b39083cc4d1037d65db5010ea757840b38bc980ec`
+- original-at-close SHA-256 `acc15f15fd87132d3343299b39083cc4d1037d65db5010ea757840b38bc980ec`
+- corrected receipt SHA-256 `71f6c664baef224a8ba384f14df253e021593ab61b1bc3352274011abc43b8e9`
 - outcome `RETAIN_CHAMPION`
 
 No code, seed, threshold, gate, champion, or canonical-main state changed
