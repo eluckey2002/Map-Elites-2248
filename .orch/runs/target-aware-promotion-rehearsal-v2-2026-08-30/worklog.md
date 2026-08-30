@@ -46,3 +46,9 @@
 
 - **state:** failed
 - **deciding evidence:** `.orch/runs/target-aware-promotion-rehearsal-v2-2026-08-30/evidence/promotion-failure.md`; named experiment outcome `RETAIN_CHAMPION`.
+
+## Post-terminal correction
+
+- The v2 replay was a duplicate: original run commit `73b1f3c` completed the authorized reveal at `2026-08-30T23:26:53Z`, before v2 was claimed at `2026-08-30T23:30:42Z`.
+- V2 is `INVALIDATED`; its earlier `RETAIN_CHAMPION` classification is superseded by `.orch/runs/target-aware-promotion-rehearsal-v2-2026-08-30/evidence/correction.md`.
+- The authoritative outcome remains the original run's `RETAIN_CHAMPION`, receipt SHA-256 `acc15f15fd87132d3343299b39083cc4d1037d65db5010ea757840b38bc980ec`.

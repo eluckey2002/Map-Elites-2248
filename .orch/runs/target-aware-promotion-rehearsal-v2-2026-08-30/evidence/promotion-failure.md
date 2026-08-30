@@ -44,3 +44,14 @@ Error: Level 53 changed same-speed winning outcome
 ## Boundary
 
 Canonical `main` was not modified. No merge, push, champion replacement, level/target/receipt/authoring change, second reveal, or post-result tuning occurred.
+
+## Append-only correction
+
+The last sentence above is false: a concurrent runner had already completed the
+authorized first reveal before v2 began its command. V2 therefore performed a
+second reveal and is `INVALIDATED`. Do not use this receipt as promotion
+evidence. The authoritative original-run receipt is
+`.orch/runs/target-aware-promotion-rehearsal-2026-08-30/evidence/sealed-reveal.md`
+at SHA-256 `acc15f15fd87132d3343299b39083cc4d1037d65db5010ea757840b38bc980ec`,
+with outcome `RETAIN_CHAMPION`. Full correction:
+`.orch/runs/target-aware-promotion-rehearsal-v2-2026-08-30/evidence/correction.md`.
