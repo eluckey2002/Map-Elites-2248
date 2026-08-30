@@ -29,6 +29,14 @@
 - Baseline verifier PASS; Universe Map PASS; full suite 234/237 with exactly the three receipt failures; curve health PASS.
 - Fixed evidence copied with expected hashes.
 
+### 2 — sealed promotion rehearsal
+
+- Captured and validated the write-once Level 53 champion baseline before changing `solver/bot.js`: 300 ordered cells, 296 wins and 4 out-of-moves losses; artifact identity `21ae8d14c949f9993a428fc2d6cbd078b9c086c17693efa258e4516b378d430a`.
+- Implemented the exact target-aware public chooser on candidate commit `ab8cbb5a381f3628a9084b738bc0836d1636fdef`; candidate `solver/bot.js` SHA-256 `6f58e6c136f58dc52df5d1b4203d0c032b497109ef4c517cd0ca1628057e1fd1`.
+- Reproduced all 15,600 frozen Levels 1-52 challenger terminal tuples exactly, with no translation correction.
+- Ran the one authorized Level 53 promoted replay. The frozen comparator found a changed same-speed winning outcome, so criterion 4 failed and the protocol outcome is `RETAIN_CHAMPION`. Level 53 was not rerun.
+- Join independently confirmed focused tests 26/26 PASS, full suite 242/245 with exactly the same three receipt failures, curve health `RESULT: PASS`, protected source hashes, and clean in-scope diff.
+
 ## Blame classes
 
 []
@@ -42,3 +50,9 @@
 - If the candidate becomes eligible, updating the Universe Map, evidence records, receipts, pushing, or merging remains a separate owner-approved promotion step.
 
 ## Terminal
+
+- **status:** failed
+- **protocol outcome:** `RETAIN_CHAMPION`
+- **deciding evidence:** `.orch/runs/target-aware-promotion-rehearsal-2026-08-30/evidence/sealed-reveal.md`, SHA-256 `acc15f15fd87132d3343299b39083cc4d1037d65db5010ea757840b38bc980ec`
+- **reason:** the deterministic Level 53 gate rejected at least one changed same-speed winning terminal outcome; the candidate is not promotion-eligible.
+- **publication boundary:** current champion and canonical `main` remain unchanged; candidate is local, unmerged, and unpushed.
