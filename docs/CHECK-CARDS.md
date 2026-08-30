@@ -491,3 +491,57 @@ card in the same commit.
   events: that the five orphans could not be checked, the archived-store counts
   in the first card, and the credit for chain legality. Commit `91321e4` carries
   the first of them in its body; it is history and stays as written.
+
+---
+
+### target-aware-promotion-regression · HARD
+
+- **Protects:** promotion of a target-aware chooser from silently losing a
+  champion win, taking longer to reach a target, changing a losing terminal
+  outcome, or translating the accepted sampled policy incorrectly.
+- **Where:** `solver/promotion-replay.js` (`compareGolden52` and
+  `validateLevel53Comparison`), exercised by
+  `solver/tests/promotionReplay.test.js` and the run-scoped promotion command.
+- **Level:** one ordered level/seed terminal tuple. The final verdict reduces
+  15,600 cells from the fixed Levels 1-52 artifact plus 300 fixed Level 53
+  cells; any forbidden cell fails the whole promotion.
+- **Kind:** meaning and value. Levels 1-52 require exact terminal equality for
+  win, moves-to-target, moves, score, and termination reason. Level 53 permits
+  only exact equality, an earlier win, or a new win.
+- **Scope:** frozen Levels 1-52 seeds `13000000-13000299` and fixed Level 53
+  seeds `14000000-14000299`, with source manifests, order, uniqueness, file
+  hash, and artifact identity checked. It does not cover other seeds or boards.
+- **Reads own output?:** partly. The Level 53 baseline and candidate use the
+  same replay engine, but the baseline was captured before the bot change and
+  is write-once. The Levels 1-52 golden outputs predate the promotion harness,
+  so the new implementation does not author that oracle. Shared engine defects
+  remain possible.
+- **Sampling memory:** Levels 1-52 exhaust the accepted fixed holdout, not a new
+  effectiveness sample. Level 53 is a published, write-once regression slice,
+  not a sealed holdout. Neither may be regenerated or described as all boards.
+- **Does NOT catch:**
+  1. A behavioral difference outside the 15,900 fixed level/seed cells.
+  2. A game-engine defect shared by baseline and candidate replays.
+  3. Higher runtime cost; the accepted approximately 1.45x observation is not
+     remeasured here.
+  4. Lower terminal score caused by reaching the target sooner; that is outside
+     the objective and known in the accepted result.
+  5. Byte identity with historical challenger source `ba75b5…`; those source
+     bytes are absent. Golden equality proves sampled output equivalence only.
+  6. Human-perceived quality or whether target-reaching speed is the desired
+     objective; promotion remains an owner decision.
+- **Crafted-bypass test:** `solver/tests/promotionReplay.test.js` rejects a
+  champion win changed to a loss, a both-win result made one move slower, a
+  changed losing terminal result, duplicate/out-of-order cells, source drift,
+  identity drift, and overwrite. Each asserts its expected fault class.
+- **Retires:** NO. Existing bot tests cover individual chooser seams but do not
+  compare the full accepted terminal corpus or newly shipped Level 53.
+- **Enforcement:** HARD for `PROMOTION_ELIGIBLE`. A failure is
+  `RETAIN_CHAMPION` or `INVALIDATED`; the check never merges, pushes, or changes
+  the champion automatically.
+- **Decay:** run on every proposed champion change claiming this evidence.
+  Recalibrate by a new owner-approved protocol if levels, engine, candidate,
+  golden identity, seeds, or terminal contract change; never update expected
+  outputs merely to clear a failure.
+- **Added:** 2026-08-30 · run
+  `target-aware-promotion-rehearsal-v2-2026-08-30`.
