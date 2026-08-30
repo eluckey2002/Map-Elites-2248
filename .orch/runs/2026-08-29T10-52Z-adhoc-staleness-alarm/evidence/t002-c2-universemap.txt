@@ -1,0 +1,24 @@
+[32m✔ the contract has exactly the five load-bearing cards and no copied claim fields [90m(1.647542ms)[39m[39m
+[32m✔ the selected ledger parser resolves one record without pretending to parse the whole ledger [90m(1.19575ms)[39m[39m
+[32m✔ one resolved model keeps admitted evidence separate from the later verified artifact [90m(4.257541ms)[39m[39m
+[32m✔ the stale-navigation warning fires when CURRENT.md ages past the contract limit [90m(8.475292ms)[39m[39m
+[32m✔ the builder is byte-stable and the committed generated views are current [90m(2.979792ms)[39m[39m
+[32m✔ generated Markdown exposes the load-bearing distinctions in one screen [90m(0.25575ms)[39m[39m
+[32m✔ the static HTML uses real headings for all five card titles [90m(0.085791ms)[39m[39m
+[32m✔ CURRENT links the generated control panel without erasing its historical milestone [90m(0.074416ms)[39m[39m
+[32m✔ verification fails closed for a missing card [90m(4.304041ms)[39m[39m
+[32m✔ verification fails closed for an unresolved ledger record [90m(5.013ms)[39m[39m
+[32m✔ verification fails closed when selected current evidence is not accepted [90m(5.198459ms)[39m[39m
+[32m✔ verification fails closed for receipt hash mismatch [90m(4.661125ms)[39m[39m
+[32m✔ verification fails closed when the artifact verification evidence drifts [90m(4.427917ms)[39m[39m
+[32m✔ verification observations derive from rebound evidence instead of copied metrics in code [90m(8.5215ms)[39m[39m
+[32m✔ verification fails closed for protected champion identity mismatch even with a rebound hash [90m(5.301083ms)[39m[39m
+[32m✔ verification fails closed when a generated view drifts [90m(5.541875ms)[39m[39m
+[34mℹ tests 16[39m
+[34mℹ suites 0[39m
+[34mℹ pass 16[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 132.290666[39m

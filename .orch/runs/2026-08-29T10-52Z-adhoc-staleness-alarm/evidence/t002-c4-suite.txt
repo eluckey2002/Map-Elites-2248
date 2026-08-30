@@ -1,0 +1,326 @@
+[32m✔ with no --out, output still lands on the historical filenames [90m(0.779542ms)[39m[39m
+[32m✔ --out names both files from one basename [90m(0.074417ms)[39m[39m
+[32m✔ --out refuses anything that is not a bare basename [90m(0.589834ms)[39m[39m
+[32m✔ writing over an existing candidate is refused, and the refusal says how to proceed [90m(0.505917ms)[39m[39m
+[32m✔ --force is the deliberate escape and does not throw [90m(0.169541ms)[39m[39m
+[32m✔ a basename nothing occupies is writable without --force [90m(0.4435ms)[39m[39m
+[32m✔ a free store but an occupied receipt is still refused [90m(0.7135ms)[39m[39m
+[32m✔ the historical three-argument form still parses unchanged [90m(1.219375ms)[39m[39m
+[32m✔ --out and --force parse in either order [90m(0.142959ms)[39m[39m
+[32m✔ a malformed write invocation falls through to usage rather than guessing [90m(0.188625ms)[39m[39m
+[32m✔ serves only the game assets and exposes the bound candidate [90m(125.593584ms)[39m[39m
+[32m✔ writes a schema-valid recording and treats an exact duplicate as idempotent [90m(15.618208ms)[39m[39m
+[32m✔ fails closed for traversal and unknown candidates [90m(5.168291ms)[39m[39m
+[32m✔ rejects malformed, oversized, and schema-invalid recording bodies [90m(15.136875ms)[39m[39m
+[32m✔ refuses to overwrite conflicting bytes at a recording identity [90m(14.828166ms)[39m[39m
+[32m✔ beam witness returns a deterministic legal lower-bound result [90m(4.291ms)[39m[39m
+[32m✔ chooseMove: with no bombs, takes the highest-scoring valid chain [90m(3.590541ms)[39m[39m
+[32m✔ chooseMove: prioritizes defusing a reachable bomb over a higher-scoring non-bomb chain [90m(0.320584ms)[39m[39m
+[32m✔ chooseMove: falls back to the best chain when the bomb is unreachable this turn [90m(0.161291ms)[39m[39m
+[32m✔ chooseMove: returns null when no valid chain exists anywhere [90m(0.085ms)[39m[39m
+[32m✔ chooseMove: with lookahead, prefers a small immediate chain that sets up a much bigger follow-up over a bigger immediate chain that does not [90m(2.066667ms)[39m[39m
+[32m✔ chooseMove: with lookahead, prefers the chain that clears more of the board even when it scores less right now [90m(35.237084ms)[39m[39m
+[32m✔ chooseMove: considers candidates ranked below the top few on immediate points [90m(5.86925ms)[39m[39m
+[32m✔ chooseMove: multi-path search never abandons equal tiles for a double [90m(0.893417ms)[39m[39m
+[32m✔ chooseMove: low-value multi-path search keeps an alternate long route [90m(10.833458ms)[39m[39m
+[32m✔ remnantPlacementValue: evaluates the survivor after gravity moves it [90m(0.304917ms)[39m[39m
+[32m✔ remnantPlacementValue: rewards a survivor that can begin a future chain [90m(0.207916ms)[39m[39m
+[32m✔ chooseMove: placement signal breaks an ordinary-candidate tie toward a chainable survivor [90m(0.694334ms)[39m[39m
+[32m✔ harvestValue: a tile the game deals is not something the bot built [90m(0.093542ms)[39m[39m
+[32m✔ harvestValue: a built tile with only HALF-value company still counts [90m(0.066959ms)[39m[39m
+[32m✔ harvestValue: equal company beats half, which beats double [90m(0.108333ms)[39m[39m
+[32m✔ harvestValue: company nearby is worth more than the same company far away [90m(0.069625ms)[39m[39m
+[32m✔ harvestValue: an unrelated value is not company at all [90m(0.063375ms)[39m[39m
+[32m✔ harvestValue: what counts as built follows the level tile scale [90m(0.07875ms)[39m[39m
+[32m✔ calibration params are a literal snapshot, not a view of the live bot [90m(3.188417ms)[39m[39m
+[32m✔ the ruler pins every parameter the live bot has [90m(0.195167ms)[39m[39m
+[32m✔ calibration params cannot be mutated in place [90m(0.129667ms)[39m[39m
+[32m✔ mutating the live bot params does not move the calibration ruler [90m(0.118583ms)[39m[39m
+[32m✔ the stamp carries the version, the params, and a solver identity [90m(0.7555ms)[39m[39m
+[32m✔ the solver identity is stable across calls and covers engine and bot [90m(0.263042ms)[39m[39m
+[32m✔ candidate and seed parsing is strict and does not change shipped level query behavior [90m(2.975333ms)[39m[39m
+[32m✔ seeded candidate initialization is repeatable and arbitrary-level validation fails closed [90m(0.915791ms)[39m[39m
+[32m✔ authoring capture records each legal chain as ordered coordinates and values [90m(0.210333ms)[39m[39m
+[32m✔ authoring capture emits one terminal payload and ignores later terminal paths [90m(0.183041ms)[39m[39m
+[32m✔ candidate undo restores capture length and seeded RNG state [90m(0.421875ms)[39m[39m
+[32m✔ makeRng: same seed produces the same sequence [90m(9.536292ms)[39m[39m
+[32m✔ createLevelState: grid has levelData dimensions [90m(0.311333ms)[39m[39m
+[32m✔ createLevelState: places a bomb blocker at the configured position [90m(0.169958ms)[39m[39m
+[32m✔ canExtendChain: first extension requires equal value to the start tile [90m(0.123625ms)[39m[39m
+[32m✔ canExtendChain: later extensions allow equal or double the last tile [90m(0.132416ms)[39m[39m
+[32m✔ isValidChain: false when shorter than minChain [90m(0.089375ms)[39m[39m
+[32m✔ isValidChain: false when the first two tiles do not match [90m(0.08475ms)[39m[39m
+[32m✔ isValidChain: true for a same-value chain meeting minChain [90m(0.083584ms)[39m[39m
+[32m✔ chainValue: sums the tile values [90m(0.114125ms)[39m[39m
+[32m✔ chainMultiplier: steps at 3/5/7/9 tiles [90m(0.165292ms)[39m[39m
+[32m✔ executeChain: removes non-final tiles, sets final tile to the chain sum, scores points, spends a move [90m(0.195959ms)[39m[39m
+[32m✔ executeChain: defuses the final tile if it was a bomb [90m(0.144417ms)[39m[39m
+[32m✔ executeChain: applies the length multiplier (>=3 tiles = 1.5x) [90m(0.092416ms)[39m[39m
+[32m✔ applyGravity: a tile falls through holes to the bottom of its column [90m(0.103916ms)[39m[39m
+[32m✔ applyGravity: a stone blocks tiles above it from falling past [90m(0.077542ms)[39m[39m
+[32m✔ spawnNewTiles: fills every null cell using the weighted spawn rng [90m(0.106667ms)[39m[39m
+[32m✔ spawnNewTiles: spawn weight thresholds match game.js (0.6/0.9 for 2/4/8) [90m(0.120875ms)[39m[39m
+[32m✔ tickBlockers: ice counts down and clears at zero [90m(0.086625ms)[39m[39m
+[32m✔ tickBlockers: bomb timer counts down but blocker stays until checkBombs [90m(0.056208ms)[39m[39m
+[32m✔ checkBombs: true when any bomb timer has reached zero [90m(0.067667ms)[39m[39m
+[32m✔ checkBombs: false when all bomb timers are still positive [90m(0.050667ms)[39m[39m
+[32m✔ findBestChain: picks the highest-scoring reachable chain [90m(0.294667ms)[39m[39m
+[32m✔ findBestChain: returns null when no chain of minChain length exists [90m(0.07375ms)[39m[39m
+[32m✔ findBestChain: mustEndAt restricts the result to chains ending at that tile [90m(0.091959ms)[39m[39m
+[32m✔ findBestChain: mustEndAt returns null when the target tile is unreachable [90m(0.344334ms)[39m[39m
+[32m✔ findBestChain: maxLength stops the search from extending past that many tiles [90m(0.13825ms)[39m[39m
+[32m✔ findBestChain: mustStartAt restricts the search to chains starting at that tile [90m(0.056209ms)[39m[39m
+[32m✔ cloneState: deep-copies the grid so mutating the clone leaves the original untouched [90m(0.064084ms)[39m[39m
+[32m✔ findTopChains: sorted best-first and covers moves from every reachable cluster [90m(0.09ms)[39m[39m
+[32m✔ findTopChains: respects the limit [90m(0.036959ms)[39m[39m
+[32m✔ findBestChain: a stone tile cannot be part of a chain [90m(0.030292ms)[39m[39m
+[32m✔ buildGreedyChain: walks the connected same-or-double run from a start tile, no backtracking [90m(0.138625ms)[39m[39m
+[32m✔ buildGreedyChain: at each step prefers the lower-value valid neighbor (keeps the walk alive longer) [90m(0.051334ms)[39m[39m
+[32m✔ buildGreedyChain: returns null when the start alone cannot reach minChain [90m(0.028042ms)[39m[39m
+[32m✔ buildGreedyChain: respects maxLength [90m(0.036542ms)[39m[39m
+[32m✔ buildGreedyChain: a stone tile cannot be part of the chain [90m(0.029792ms)[39m[39m
+[32m✔ buildGreedyChain: preferMergeableSum stops at the prefix whose sum is a power of two [90m(0.055917ms)[39m[39m
+[32m✔ buildGreedyChain: preferMergeableSum falls back to the full walk when no prefix sums to a power of two [90m(0.036375ms)[39m[39m
+[32m✔ buildGreedyChain: the plain walk strands a tile it could have used [90m(0.047042ms)[39m[39m
+[32m✔ buildGreedyChain: the degree tie-break takes the nearly-cut-off tile first [90m(0.059791ms)[39m[39m
+[32m✔ buildGreedyChain: the degree tie-break never overrides the lower-value preference [90m(0.039666ms)[39m[39m
+[32m✔ findGreedyChains: applies the mergeable-sum preference by default [90m(0.237125ms)[39m[39m
+[32m✔ findGreedyChains: preferMergeableSum:false restores the plain longest-walk behavior [90m(0.07325ms)[39m[39m
+[32m✔ findGreedyChains: tries every non-blocked tile as a start, sorted best-first [90m(0.072667ms)[39m[39m
+[32m✔ position-aware exact search matches a hand-enumerated four-tile fixture [90m(3.251709ms)[39m[39m
+[32m✔ position-aware enumerator keeps distinct survivor actions with equal scores [90m(0.258459ms)[39m[39m
+[32m✔ position-aware enumerator keeps visited cells distinct above the 32-bit boundary [90m(0.577542ms)[39m[39m
+[32m✔ value-relaxed action enumerator includes the hand-enumerated maximum [90m(0.382ms)[39m[39m
+[32m✔ Level 26 seed-0 values match the durable certifier frozen hash [90m(1.427625ms)[39m[39m
+[32m✔ a fixed-board shape must name the seed that fixes the board [90m(0.947792ms)[39m[39m
+[32m✔ target and tileScale remain forbidden shape controls [90m(0.069666ms)[39m[39m
+[32m✔ fitting and holdout use disjoint player variants [90m(0.077625ms)[39m[39m
+[32m✔ adjacent variants map to far-apart lookahead seeds [90m(0.047583ms)[39m[39m
+[32m✔ the target is the fitted median times demand, rounded down [90m(0.58025ms)[39m[39m
+[32m✔ the candidate carries the seed, so the board is part of the level [90m(0.10875ms)[39m[39m
+[32m✔ a freshly derived candidate verifies against its own receipt [90m(0.268708ms)[39m[39m
+[32m✔ the receipt is rejected when the candidate is edited underneath it [90m(0.151208ms)[39m[39m
+[32m✔ swapping the board invalidates the receipt [90m(0.167875ms)[39m[39m
+[32m✔ a receipt from the random-board pipeline is refused outright [90m(0.144416ms)[39m[39m
+[32m✔ a correctly signed receipt that fitted across boards is still refused [90m(0.168292ms)[39m[39m
+[32m✔ the same fixed board yields a real spread of scores across players [90m(602.976667ms)[39m[39m
+[32m✔ the same board and the same player replay identically [90m(54.478041ms)[39m[39m
+[32m✔ a level that names a seed deals the same board every time [90m(5.254166ms)[39m[39m
+[32m✔ different seeds are different boards [90m(0.2305ms)[39m[39m
+[32m✔ a level with no seed still draws a fresh board each time [90m(0.292125ms)[39m[39m
+[32m✔ every shipped level is currently unseeded, so none of them changed [90m(0.116417ms)[39m[39m
+[32m✔ an unusable seed is rejected rather than silently ignored [90m(0.527792ms)[39m[39m
+[32m✔ game.js exports LEVELS for headless use, unchanged from the shipped data [90m(1.905083ms)[39m[39m
+[32m✔ every sampled shape is legal input to the authoring pipeline [90m(9.689667ms)[39m[39m
+[32m✔ sampled shapes stay inside the declared sampling space [90m(1.100291ms)[39m[39m
+[32m✔ the sampler is reproducible from its seed [90m(2.945958ms)[39m[39m
+[32m✔ the signature ignores name and blocker order [90m(0.152041ms)[39m[39m
+[32m✔ the signature separates shapes that differ in any knob [90m(0.092542ms)[39m[39m
+[32m✔ the screen drops a board that locks up and keeps a clean one [90m(0.10675ms)[39m[39m
+[32m✔ the gate verdict matches the pipeline thresholds [90m(0.113291ms)[39m[39m
+[32m✔ the shortlist puts the hardest level for the bot first [90m(0.079375ms)[39m[39m
+[32m✔ the shortlist drops anything that failed a gate, however hard it was [90m(0.058458ms)[39m[39m
+[32m✔ validateShape accepts one named target-free proposal shape [90m(1.088167ms)[39m[39m
+[32m✔ validateShape forbids authored target and tile scale controls [90m(0.21025ms)[39m[39m
+[32m✔ validateShape rejects malformed dimensions, blockers, and proposal labeling [90m(0.138875ms)[39m[39m
+[32m✔ deriveCandidate uses fixed fitting and disjoint holdout seeds with measured target rounding [90m(0.83425ms)[39m[39m
+[32m✔ deriveCandidate refuses an incomplete fitting run [90m(0.396541ms)[39m[39m
+[32m✔ verifyCandidate passes a bound receipt and rejects tampering, invalid data, overlap, and incomplete totals [90m(4.2415ms)[39m[39m
+[32m✔ verifyCandidate remeasures fitting evidence and enforces target and tile-scale derivation [90m(2.128291ms)[39m[39m
+[32m✔ a level in range is the level you get [90m(0.731667ms)[39m[39m
+[32m✔ the first and last levels are both reachable [90m(0.0595ms)[39m[39m
+[32m✔ no level parameter means no jump [90m(0.044417ms)[39m[39m
+[32m✔ a level past the end is refused rather than clamped [90m(0.041167ms)[39m[39m
+[32m✔ zero and negative levels are refused [90m(0.0465ms)[39m[39m
+[32m✔ a value that is not a whole number is refused, not truncated [90m(0.049792ms)[39m[39m
+[32m✔ the jump survives other query parameters [90m(0.035667ms)[39m[39m
+[32m✔ measurement-control CLI keeps legacy defaults and parses explicit starts and axes source [90m(0.735791ms)[39m[39m
+[32m✔ evaluation seed ranges must be safe, non-negative, and disjoint [90m(0.907ms)[39m[39m
+[32m✔ a source archive freezes exact bin axes while retaining current pilot diagnostics [90m(1.365542ms)[39m[39m
+[32m✔ MAP-Elites keeps the best policy independently inside each behavior cell [90m(0.092667ms)[39m[39m
+[32m✔ behavior descriptors land in understandable numeric chain-style and patience bins [90m(0.080625ms)[39m[39m
+[32m✔ a pilot must demonstrate real range on both descriptors before axes exist [90m(0.07275ms)[39m[39m
+[32m✔ policy identity is stable across object key order [90m(0.111792ms)[39m[39m
+[32m✔ the static map explains axes, empty cells, elite identity, selection, and holdout [90m(0.189791ms)[39m[39m
+[32m✔ artifact verification refuses seed overlap and missing representative holdout evidence [90m(0.186334ms)[39m[39m
+[32m✔ artifact verification binds frozen axes to their recorded identity [90m(0.24475ms)[39m[39m
+[32m✔ naive SE is returned unchanged when no layout is supplied [90m(0.762541ms)[39m[39m
+[32m✔ a layout that does not match the cell count is rejected [90m(0.18425ms)[39m[39m
+[32m✔ level-clustered SE does not shrink when seeds are added to the same levels [90m(3.643541ms)[39m[39m
+[32m✔ level-clustered SE does shrink when genuinely new levels are added [90m(0.175417ms)[39m[39m
+[32m✔ seed-clustered SE catches variation that is common across levels [90m(0.081833ms)[39m[39m
+[32m✔ the correction is an inflation, never a discount [90m(0.084708ms)[39m[39m
+[32m✔ behavior summary means chain size and the share of score earned in the final third [90m(0.666208ms)[39m[39m
+[32m✔ patience counts score only from moves in the final third of the budget [90m(0.070291ms)[39m[39m
+[32m✔ policy evaluation exposes aggregate behavior beside uncensored scores [90m(164.614041ms)[39m[39m
+[32m✔ a flat game is neither back- nor front-loaded [90m(0.663166ms)[39m[39m
+[32m✔ backload rises when the score arrives late and falls when it arrives early [90m(0.08775ms)[39m[39m
+[32m✔ an odd move count biases backload down, never up [90m(0.05125ms)[39m[39m
+[32m✔ spike is the largest single move as a share of the score [90m(0.046958ms)[39m[39m
+[32m✔ a scoreless or empty game reports no curve at all [90m(0.045834ms)[39m[39m
+[32m✔ the human gen-0010 playthrough reads as strongly back-loaded and spiky [90m(0.052042ms)[39m[39m
+[32m✔ the shipped candidate corpus is not empty [90m(2.106166ms)[39m[39m
+[31m✖ candidate-levels-52.json has a receipt that verifies against the current bot [90m(9.286834ms)[39m[39m
+[31m✖ candidate-levels-54.json has a receipt that verifies against the current bot [90m(4.201041ms)[39m[39m
+[31m✖ candidate-levels.json has a receipt that verifies against the current bot [90m(3.736792ms)[39m[39m
+[32m✔ the walk inspected the whole corpus [90m(1.227625ms)[39m[39m
+[32m✔ every file the measurement depends on is one of the hashed inputs [90m(0.611125ms)[39m[39m
+[32m✔ a tampered receipt is refused rather than verified [90m(0.673666ms)[39m[39m
+[32m✔ a candidate store with no receipt is a failure, not an absence [90m(0.2485ms)[39m[39m
+[32m✔ an empty corpus fails the floor instead of reading as clean [90m(0.155792ms)[39m[39m
+[32m✔ a receipt whose code has drifted is refused, not verified [90m(0.385333ms)[39m[39m
+[32m✔ a new unhashed require in the measurement path is detected [90m(0.361292ms)[39m[39m
+[32m✔ the closure detector does not see computed or templated requires [90m(0.187084ms)[39m[39m
+[32m✔ the live corpus matches the committed manifest exactly [90m(0.262333ms)[39m[39m
+[32m✔ a store vanishing from the corpus is detected, not silently tolerated [90m(0.073791ms)[39m[39m
+[32m✔ the exemption is computed, never declared [90m(0.041208ms)[39m[39m
+[32m✔ shipping alone does not exempt [90m(0.041959ms)[39m[39m
+[32m✔ a human win alone does not exempt [90m(0.03575ms)[39m[39m
+[32m✔ both halves together exempt, and only then [90m(0.033625ms)[39m[39m
+[32m✔ every stale receipt fails, exempt or not [90m(0.028667ms)[39m[39m
+[32m✔ a losing recording does not license an exemption [90m(0.292625ms)[39m[39m
+[32m✔ the real exemption facts hold for the shipped corpus [90m(2.879625ms)[39m[39m
+[32m✔ at least one recording is replayable [90m(1.250917ms)[39m[39m
+[32m✔ recording 1352aa7a02cd (level 53, win) replays exactly [90m(2.420792ms)[39m[39m
+[32m✔ recording 1c87356748ee (level 51, win) replays exactly [90m(0.576ms)[39m[39m
+[32m✔ recording 3d3ba1f05b08 (level 54, win) replays exactly [90m(0.49525ms)[39m[39m
+[32m✔ recording 44d3802d5512 (level 52, win) replays exactly [90m(0.312333ms)[39m[39m
+[32m✔ recording 7061bbf0132f (level 53, win) replays exactly [90m(0.9085ms)[39m[39m
+[32m✔ recording 78749fc07834 (level 51, win) replays exactly [90m(1.01425ms)[39m[39m
+[32m✔ recording 7ad0978f9619 (level 53, win) replays exactly [90m(0.302458ms)[39m[39m
+[32m✔ recording 8ac6c9d4c533 (level 51, lose) replays exactly [90m(0.130916ms)[39m[39m
+[32m✔ recording d36e875d0839 (level 52, win) replays exactly [90m(0.160417ms)[39m[39m
+[32m✔ recording f0ae3e75fe38 (level 52, win) replays exactly [90m(0.441958ms)[39m[39m
+[32m✔ recordings whose candidate is gone are named, and their count cannot grow [90m(0.163083ms)[39m[39m
+[32m✔ a recording claiming a score it did not reach is refused [90m(0.396166ms)[39m[39m
+[32m✔ a recording whose moves were altered is refused [90m(0.534334ms)[39m[39m
+[32m✔ a chain that revisits a tile is refused as illegal, not merely as mis-scored [90m(1.095667ms)[39m[39m
+[32m✔ a recording claiming a win it did not achieve is refused [90m(0.134417ms)[39m[39m
+[32m✔ a recording added after this file was written is picked up without editing it [90m(1.037875ms)[39m[39m
+[32m✔ an unresolvable recording is classed as an orphan, not quietly dropped [90m(0.391042ms)[39m[39m
+[32m✔ a candidate held only inside a generated batch file is found by the index [90m(0.511459ms)[39m[39m
+[32m✔ widening the index to batch files still leaves an unknown identity an orphan [90m(0.402875ms)[39m[39m
+[32m✔ a batch entry without a candidate identity is skipped, not indexed as undefined [90m(0.2095ms)[39m[39m
+[32m✔ a clean canonical checkout with protected recovery refs passes [90m(1.461208ms)[39m[39m
+[32m✔ a dirty consequential checkout fails closed and names its paths [90m(0.164833ms)[39m[39m
+[32m✔ a dirty linked worktree fails closed [90m(0.080375ms)[39m[39m
+[32m✔ a discovered but unregistered worktree fails closed [90m(0.073125ms)[39m[39m
+[32m✔ a missing or moved remote safety ref fails closed [90m(0.06675ms)[39m[39m
+[32m✔ a checkout outside the declared ancestry fails closed [90m(0.045375ms)[39m[39m
+[32m✔ canonical mode requires main and exact remote equality [90m(0.048209ms)[39m[39m
+[32m✔ candidate mode permits a non-main branch but keeps every safety check [90m(0.0435ms)[39m[39m
+[32m✔ porcelain parsing preserves a leading dot on the first unstaged path [90m(0.078125ms)[39m[39m
+[32m✔ discovery distinguishes linked worktree pointers from standalone repositories [90m(5.842875ms)[39m[39m
+[32m✔ playLevel: wins as soon as score reaches target [90m(3.052417ms)[39m[39m
+[32m✔ playLevel: loses out of moves when the target is unreachable in the budget [90m(0.375291ms)[39m[39m
+[32m✔ playLevel: loses with no valid moves when the board has no legal chain [90m(0.311666ms)[39m[39m
+[32m✔ playLevel: loses when a bomb timer reaches zero unattended [90m(0.331209ms)[39m[39m
+[32m✔ the contract has exactly the five load-bearing cards and no copied claim fields [90m(4.419958ms)[39m[39m
+[32m✔ the selected ledger parser resolves one record without pretending to parse the whole ledger [90m(1.579666ms)[39m[39m
+[32m✔ one resolved model keeps admitted evidence separate from the later verified artifact [90m(5.4595ms)[39m[39m
+[32m✔ the stale-navigation warning fires when CURRENT.md ages past the contract limit [90m(16.854875ms)[39m[39m
+[32m✔ the builder is byte-stable and the committed generated views are current [90m(3.606833ms)[39m[39m
+[32m✔ generated Markdown exposes the load-bearing distinctions in one screen [90m(0.598875ms)[39m[39m
+[32m✔ the static HTML uses real headings for all five card titles [90m(0.317792ms)[39m[39m
+[32m✔ CURRENT links the generated control panel without erasing its historical milestone [90m(0.230042ms)[39m[39m
+[32m✔ verification fails closed for a missing card [90m(5.591416ms)[39m[39m
+[32m✔ verification fails closed for an unresolved ledger record [90m(5.65975ms)[39m[39m
+[32m✔ verification fails closed when selected current evidence is not accepted [90m(5.869708ms)[39m[39m
+[32m✔ verification fails closed for receipt hash mismatch [90m(6.709375ms)[39m[39m
+[32m✔ verification fails closed when the artifact verification evidence drifts [90m(5.807625ms)[39m[39m
+[32m✔ verification observations derive from rebound evidence instead of copied metrics in code [90m(11.340583ms)[39m[39m
+[32m✔ verification fails closed for protected champion identity mismatch even with a rebound hash [90m(5.851542ms)[39m[39m
+[32m✔ verification fails closed when a generated view drifts [90m(5.418583ms)[39m[39m
+[32m✔ mass-cursor relaxation bounds the exact four-tile maximum [90m(3.035333ms)[39m[39m
+[32m✔ mass-cursor relaxation bounds a distinct five-tile multiplier fixture [90m(0.316708ms)[39m[39m
+[32m✔ negative control rejects an intentionally lowered fixture bound [90m(0.604708ms)[39m[39m
+[32m✔ Level 26 seed-0 calculation is complete and bound to the certifier inputs [90m(82.948458ms)[39m[39m
+[34mℹ tests 237[39m
+[34mℹ suites 0[39m
+[34mℹ pass 234[39m
+[34mℹ fail 3[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 845.211042[39m
+
+[31m✖ failing tests:[39m
+
+test at solver/tests/receiptGate.test.js:161:3
+[31m✖ candidate-levels-52.json has a receipt that verifies against the current bot [90m(9.286834ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: candidate-levels-52.json: code/input identity mismatch
+
+  THIS FAILURE IS KNOWN AND DECIDED. It is not a new bug and it is not
+  yours to fix. This level ships, a human has completed it, and on
+  2026-08-21 the owner decided its target stays where it is. Refreshing
+  the receipt would re-derive the target from a stronger bot and raise it
+  4.9%, making a live level harder for players, while the bot's win rate
+  on it moved one seed in three hundred (ticket T-003).
+
+  Do NOT clear this by re-authoring, archiving, or exempting it. It fails
+  because the receipt genuinely predates the current bot, which is true.
+      at TestContext.<anonymous> [90m(/Users/eluckey/Developer/research and games/2248-challenge/.orch/runs/2026-08-29T10-29-19Z-adhoc-session-workspace/worktree/[39msolver/tests/receiptGate.test.js:166:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:226:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1201:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:831:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1330:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1258:12)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    expected: [90mundefined[39m,
+    operator: [32m'fail'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at solver/tests/receiptGate.test.js:161:3
+[31m✖ candidate-levels-54.json has a receipt that verifies against the current bot [90m(4.201041ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: candidate-levels-54.json: code/input identity mismatch
+
+  Not exempt (ships=false, human win recorded=false). This receipt
+  was measured against different code. Re-author it against the current
+  bot, or archive it and stop quoting its numbers. Do not weaken this
+  check to clear it.
+      at TestContext.<anonymous> [90m(/Users/eluckey/Developer/research and games/2248-challenge/.orch/runs/2026-08-29T10-29-19Z-adhoc-session-workspace/worktree/[39msolver/tests/receiptGate.test.js:166:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:226:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1201:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:831:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1330:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1258:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:831:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    expected: [90mundefined[39m,
+    operator: [32m'fail'[39m,
+    diff: [32m'simple'[39m
+  }
+
+test at solver/tests/receiptGate.test.js:161:3
+[31m✖ candidate-levels.json has a receipt that verifies against the current bot [90m(3.736792ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: candidate-levels.json: code/input identity mismatch
+
+  THIS FAILURE IS KNOWN AND DECIDED. It is not a new bug and it is not
+  yours to fix. This level ships, a human has completed it, and on
+  2026-08-21 the owner decided its target stays where it is. Refreshing
+  the receipt would re-derive the target from a stronger bot and raise it
+  4.9%, making a live level harder for players, while the bot's win rate
+  on it moved one seed in three hundred (ticket T-003).
+
+  Do NOT clear this by re-authoring, archiving, or exempting it. It fails
+  because the receipt genuinely predates the current bot, which is true.
+      at TestContext.<anonymous> [90m(/Users/eluckey/Developer/research and games/2248-challenge/.orch/runs/2026-08-29T10-29-19Z-adhoc-session-workspace/worktree/[39msolver/tests/receiptGate.test.js:166:12[90m)[39m
+  [90m    at Test.runInAsyncScope (node:async_hooks:226:14)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1201:25)[39m
+  [90m    at Test.processPendingSubtests (node:internal/test_runner/test:831:18)[39m
+  [90m    at Test.postRun (node:internal/test_runner/test:1330:19)[39m
+  [90m    at Test.run (node:internal/test_runner/test:1258:12)[39m
+  [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:831:7)[39m {
+    generatedMessage: [33mfalse[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [90mundefined[39m,
+    expected: [90mundefined[39m,
+    operator: [32m'fail'[39m,
+    diff: [32m'simple'[39m
+  }

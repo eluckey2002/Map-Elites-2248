@@ -1,0 +1,4 @@
+C1 grep -c 'which does not exist'        = 0   [required 0]
+C2 grep -c 'correctly rejected'          = 0   [required 0]
+C3 grep -c 'solver/generate-levels.js'   = 1   [required >=1]
+C4 grep -Ec 'Level 53 ships|53 ships'    = 1   [required >=1]

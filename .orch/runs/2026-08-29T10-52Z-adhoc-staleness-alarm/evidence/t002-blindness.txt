@@ -1,0 +1,44 @@
+✔ the contract has exactly the five load-bearing cards and no copied claim fields (1.847667ms)
+✔ the selected ledger parser resolves one record without pretending to parse the whole ledger (0.764916ms)
+✔ one resolved model keeps admitted evidence separate from the later verified artifact (2.472292ms)
+✖ the stale-navigation warning fires when CURRENT.md ages past the contract limit (6.921792ms)
+✔ the builder is byte-stable and the committed generated views are current (2.936166ms)
+✔ generated Markdown exposes the load-bearing distinctions in one screen (0.227458ms)
+✔ the static HTML uses real headings for all five card titles (0.080208ms)
+✔ CURRENT links the generated control panel without erasing its historical milestone (0.070791ms)
+✔ verification fails closed for a missing card (4.192125ms)
+✔ verification fails closed for an unresolved ledger record (4.286917ms)
+✔ verification fails closed when selected current evidence is not accepted (4.715125ms)
+✔ verification fails closed for receipt hash mismatch (4.100084ms)
+✔ verification fails closed when the artifact verification evidence drifts (5.573958ms)
+✔ verification observations derive from rebound evidence instead of copied metrics in code (6.665125ms)
+✔ verification fails closed for protected champion identity mismatch even with a rebound hash (4.667041ms)
+✔ verification fails closed when a generated view drifts (6.581375ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 15
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.874458
+
+✖ failing tests:
+
+test at solver/tests/universeMap.test.js:103:1
+✖ the stale-navigation warning fires when CURRENT.md ages past the contract limit (6.921792ms)
+  AssertionError [ERR_ASSERTION]: ageing CURRENT.md past the limit must raise current-navigation-stale
+      at TestContext.<anonymous> (/Users/eluckey/Developer/research and games/2248-challenge/.orch/runs/2026-08-29T10-29-19Z-adhoc-session-workspace/worktree/solver/tests/universeMap.test.js:127:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
