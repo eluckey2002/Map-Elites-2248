@@ -9,7 +9,7 @@
       "wRoll": 1,
       "width": 24
     },
-    "solverIdentity": "3f25ca3288c43e2bb2a5cff25175acdc6b7ab53bc4e4a591c1207805e1cfc371",
+    "solverIdentity": "9be686646189feb3d255b3516ad7ab1e66be5cb9e1cc30a608e02dfb34056f27",
     "version": "calib-1"
   },
   "candidateIdentity": "a6c3e36031a17276354ba0d8b16e796d4338038fb984a581ffbe96cb9c3387f7",
@@ -56,10 +56,10 @@
     }
   },
   "inputIdentities": {
-    "engine": "cb031d296014042795dcb8701b276c07cad78ac279038140595db0fb2ca944b1",
-    "levelAuthor": "636ec8077011c88ea95b0890203988d9ec0b5c987a31d931c6544baecec9bc37"
+    "engine": "1327e13f7db9060ff6e54eb176d5f0cdd953c3f619330f115aed9abe6a57ae7a",
+    "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
   },
-  "receiptIdentity": "935147963e40e21d8635f25852ce7086f90fb8b5f6e792f3bf029d9528323241",
+  "receiptIdentity": "ceee608e194c291c122aa50bfaca22495c3382468d0109301692928a11886347",
   "schemaVersion": 1,
   "shapeIdentity": "129c358075bb4cca00678ebc597be45bf59dea7b8c661a2372b2e4b3ee2be0a4",
   "shapeName": "gen-0014-wide-sprint",

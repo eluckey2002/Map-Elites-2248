@@ -19,6 +19,7 @@ const FIT_SEEDS = Object.freeze({ start: 0, count: 150 });
 const HOLDOUT_SEEDS = Object.freeze({ start: 100000, count: 300 });
 const DEFAULT_GATES = Object.freeze({ minWinRate: 0.20, maxBombRate: 0.05, requireZeroLockouts: true });
 const ROOT = path.join(__dirname, '..');
+const OUTPUT_NEWLINE = process.platform === 'win32' ? '\r\n' : '\n';
 
 function canonicalJson(value) {
   if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
@@ -34,7 +35,8 @@ function identity(value) {
 }
 
 function fileIdentity(file) {
-  return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+  const canonicalSource = fs.readFileSync(file, 'utf8').replace(/\r\n?/g, '\n');
+  return crypto.createHash('sha256').update(canonicalSource, 'utf8').digest('hex');
 }
 
 function defaultInputIdentities() {
@@ -320,7 +322,7 @@ function verifyCandidate(store, receipt, options = {}) {
 }
 
 function serialize(value) {
-  return `${JSON.stringify(JSON.parse(canonicalJson(value)), null, 2)}\n`;
+  return `${JSON.stringify(JSON.parse(canonicalJson(value)), null, 2)}\n`.replace(/\n/g, OUTPUT_NEWLINE);
 }
 
 module.exports = {
