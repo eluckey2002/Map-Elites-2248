@@ -18,6 +18,8 @@ As of 2026-08-12 the level curve has been retuned and every level is winnable: n
 
 Two candidate remedies were priced before that retune and neither rescues the late levels on its own. Enriching the spawn pool is the wrong lever — a 76% increase in spawned value buys 13% more score (`RESULT-0006`). Enlarging the move budget works in the mid game and saturates in the late game, where the board reaches a terminal state before extra moves can be spent (`RESULT-0007`). Levels past roughly 31 are short of their targets by two to four times with no parameter fix available, so their targets are the thing that has to move.
 
+As of 2026-08-30, level authoring is pinned to the independently verified `calib-1` evaluator rather than the evolving live bot (`RESULT-0015`). On the frozen `gen-0014` split it reproduces the exact target **102,000**, fitting median **107,904**, and holdout outcomes **196 wins / 104 out-of-moves / 0 lockouts / 0 bombs** across 300 holdout seeds. This establishes evaluator stability and clean-checkout receipt reproducibility only; it does not establish human difficulty, fun, optimality, publication readiness, or a MAP-Elites result.
+
 Repository baseline for this documentation run is `main` at `10a849d5336bdda89d2d3f5ed1f1ca87e536811d`, with pre-existing dirty work preserved. Recheck with `git status --short --branch` and `git log -1 --format='%H %s'`. (`.orch/runs/game-evidence-ledger-2026-08-11/worklog.md`, **State**)
 
 ## Authority and navigation
@@ -427,6 +429,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** The one rule here that comes from the engine rather than from a guess: to consume a tile of value v the board needs a v or a v/2 adjacent to it, because a chain opens with an equal pair and then climbs equal-or-double. A lone 32 is therefore *not* stranded — `16, 16, 32` is legal — and an earlier version of this term that counted only equal-valued twins was wrong, because it would have pushed the bot to reach the whole way in one chain instead of building a 16 and then a 32. Overshooting is how a sum lands off the lattice. **Everything else in the term is invented**: the 1.0/0.7/0.4 kinship weights, the `1/(1+distance)` decay, matching on exact ratios only. Those are guesses about good play and they cap the bot at what was thought of, which is the standing argument for a learned evaluation rather than more hand-written terms. Adopting this exposed a defect in `solver/calibration.js`: `chooseMove` resolves `{ ...DEFAULT_PARAMS, ...params }`, so a parameter present on the live bot but absent from the frozen ruler silently takes the live value — the ruler would look frozen and not be. `calib-1` now pins `wHarvest: 0` explicitly and a test fails if the two key sets ever diverge. Existing targets are therefore unaffected by this change.
 
+### RESULT-0015 — Frozen calibration evaluator makes candidate receipts reproducible across clean checkouts
+
+- **type:** result
+- **status:** accepted
+- **scope:** evaluator foundation at code commit `3a2f5bb02724cf9e7483eaf2c16992b3fd530a8b`; `gen-0014` under `calib-1`; fitting seeds 0-149 and holdout seeds 100000-100299; no game rule, live bot, shipped level, or target changed
+- **statement:** Level authoring now uses the versioned `calib-1` evaluator, which is behaviorally equivalent to the frozen-base bot with its exact parameters across all **450** fitting-plus-holdout games and **8** focused fixtures. An independent replay reproduced `gen-0014`'s exact target **102,000**, fitting median **107,904**, and holdout outcomes **196 wins / 104 out-of-moves / 0 lockouts / 0 bombs**. The accepted receipt identity is `ceee608e194c291c122aa50bfaca22495c3382468d0109301692928a11886347`, and its engine-plus-evaluator identity is `9be686646189feb3d255b3516ad7ab1e66be5cb9e1cc30a608e02dfb34056f27`. Exact reauthoring in a clean detached checkout preserves the tracked artifact bytes. The first cold check failed because those identities and bytes did not survive a clean Windows checkout; that failed result remains in the evidence, followed by the line-ending-normalization repair and a fresh passing cold run.
+- **evidence:** `solver/calibrations/calib-1.js`; `solver/calibration.js`; `solver/level-author.js`; `solver/candidate-levels.json`; `solver/candidate-levels.receipt.json`; `docs/goals/evaluator-foundation/PRE_LEDGER_CHECK.md` Run 2; repair commit `3a2f5bb02724cf9e7483eaf2c16992b3fd530a8b`; cold-verification commit `92682ced67b3df64b5d2d3c5ac04ab8f9d3c9686`
+- **proof_class:** `exact_result` — exact deterministic evaluation and receipt reproduction within the frozen evaluator, seed splits, candidate, and repository identities named above
+- **as_of:** 2026-08-30
+- **reverify:** `node solver/author-level.js --verify solver/candidate-levels.json solver/candidate-levels.receipt.json`; `node --test solver/tests/*.test.js` (expect 147 pass); `node solver/verify-loop.js` (expect seven passing checks and `RESULT: PASS`); use `docs/goals/evaluator-foundation/PRE_LEDGER_CHECK.md` Run 2 for the independent replay, fault injection, clean-checkout reauthoring, and complete hashes
+- **updated:** 2026-08-30
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This proves evaluator isolation, exact frozen-split measurements, and receipt reproducibility. It does **not** prove human difficulty, fun, publication readiness, candidate optimality, or a MAP-Elites result. The live bot can improve independently without changing this calibration. The original failed pre-ledger run is retained rather than rewritten; its observed clean-checkout mismatch motivated the accepted end-of-line normalization repair.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
@@ -603,6 +620,8 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ## Resume boundary
 
 Level tuning is done (`DECISION-0003`, `RESULT-0008`). Active work resumes at authoring new levels, against the design at `docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md` and the measurement harness at `solver/game-tester.js`.
+
+The frozen `calib-1` evaluator now gates that authoring path (`RESULT-0015`). `gen-0014` has a reproducible evaluator receipt, but it is not thereby shipped or approved for publication; human play still has to answer the difficulty and fun questions that this evaluator contract intentionally excludes.
 
 Two things are knowingly left open. The reference bot remains a weak proxy for a skilled player, so every recorded win rate is a floor on human success and not an estimate of it; the margin is unquantified. And roughly 15 levels carry a target lower than the level before, accepted rather than fixed, because the remaining lever is the move budget and spending it would make a level's pacing a side effect of target cosmetics (`DECISION-0003`).
 
