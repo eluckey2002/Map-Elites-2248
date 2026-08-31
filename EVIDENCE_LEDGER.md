@@ -16,6 +16,8 @@ That proof track is **parked** as of 2026-08-11 (`DECISION-0002`), and active wo
 
 As of 2026-08-12 the level curve has been retuned and every level is winnable: no level sits below a 5% bot win rate, against 34 levels at 0% before (`RESULT-0008`). Targets are now a measured share of each level's achievable score, and tile scale doubles once per ten-level chapter (`DECISION-0003`). Two rules that were previously undocumented now carry records: only a chain sum equal to the tile scale times a power of two can ever be matched again, and the accumulation of sums that fall off that lattice *is* the board lockout (`FACT-0006`); and a uniform integer tile scale is an exact isomorphism, multiplying every score by the same factor while play is unchanged (`FACT-0007`). `FACT-0003` and `FACT-0004` are superseded by `CORRECTION-0001` and `CORRECTION-0002`. The frozen Level 26 seed-0 study is pinned to its original scale-1 board and 13,000 target and is unaffected.
 
+As of 2026-08-30, the owner has promoted the target-aware immediate-finish policy as the current engineering champion at main commit `b82a9b6` (`DECISION-0004`). The decision uses `RESULT-0018` at its accepted bounded heuristic standing; it does not turn the observation into a universal proof or rewrite historical MAP, Universe Map, level, target, receipt, or authoring evidence.
+
 Two candidate remedies were priced before that retune and neither rescues the late levels on its own. Enriching the spawn pool is the wrong lever — a 76% increase in spawned value buys 13% more score (`RESULT-0006`). Enlarging the move budget works in the mid game and saturates in the late game, where the board reaches a terminal state before extra moves can be spent (`RESULT-0007`). Levels past roughly 31 are short of their targets by two to four times with no parameter fix available, so their targets are the thing that has to move.
 
 Repository baseline for this documentation run is `main` at `10a849d5336bdda89d2d3f5ed1f1ca87e536811d`, with pre-existing dirty work preserved. Recheck with `git status --short --branch` and `git log -1 --format='%H %s'`. (`.orch/runs/game-evidence-ledger-2026-08-11/worklog.md`, **State**)
@@ -532,6 +534,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** Consequence worth stating plainly: tile scale has no effect on difficulty. Scaling multiplies the target and achievable score by the same factor, so win rate is unchanged and scale buys presentation only. Difficulty is carried entirely by demand. The move budget was deliberately left as authored — it is a pacing lever, and deriving it from a target curve would make how a level feels a side effect of number cosmetics. That leaves roughly 15 levels whose target is lower than the level before, accepted as honest: a level with more blockers and fewer moves genuinely pays less.
+
+### DECISION-0004 — Promote the target-aware policy as the current engineering champion
+
+- **type:** decision
+- **status:** accepted
+- **scope:** the reference solver policy on `main` beginning at commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`; historical experiment artifacts and level-authoring evidence excluded
+- **statement:** The owner promotes the target-aware immediate-finish policy in `solver/bot.js` as the current engineering champion. The policy keeps the prior chooser, but when a deterministic untrimmed legal route reaches the finite unmet target immediately, it takes that route; it never applies the override while a bomb is present. Promotion is an engineering decision supported by the bounded heuristic observation in `RESULT-0018` and post-promotion regression gates. It is not a claim of universal non-regression, higher terminal-score optimization, autonomous learning, or pristine experimental provenance. The previous champion remains the historical identity for artifacts that were generated against it; levels, targets, receipts, MAP/Universe artifacts, and the level-authoring system are not rewritten.
+- **evidence:** owner instructions `Promote it` and `Proceed with these tasks` on 2026-08-30; promoted code commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`, `solver/bot.js` SHA-256 `6f58e6c136f58dc52df5d1b4203d0c032b497109ef4c517cd0ca1628057e1fd1`; accepted `RESULT-0018` and its primary evidence at immutable commit `6a07294571644d963a5a9b728f8e4aed3b29a835`; promotion checks and corrected push status at `f0ba51864c11cc6a1bb2d97bdf8bb589efb886a3:.orch/tickets/proportional-target-aware-promotion-2026-08-30/T-001.md`.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-08-30
+- **reverify:** Inspect commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`; run `node --test solver/tests/bot.test.js`, `node solver/verify-loop.js`, and `node tools/verify-universe-map.js`; expect focused tests and both gates to pass. Resolve the bounded evidence with `git show 6a07294571644d963a5a9b728f8e4aed3b29a835:EVIDENCE_LEDGER.md` and retain its `heuristic_observation` limits.
+- **updated:** 2026-08-30
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This decision changes which policy is current; it does not change the historical standing or identity of any earlier result.
 
 ## Hypothesis registry
 
