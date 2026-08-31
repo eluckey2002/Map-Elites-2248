@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "decisionTableSha256": "2f30244b37a3dd6bfa9bd65c62c2d76e213469caac325cd8a43cf6e2d6dcd904",
+  "checks": [
+    {
+      "name": "baseline commit",
+      "pass": true,
+      "observed": "be843368be8e19ec59501aae38f19eebaf188b87"
+    },
+    {
+      "name": "historical candidate identity",
+      "pass": true,
+      "observed": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c"
+    },
+    {
+      "name": "shipped Level 51 gameplay equivalence",
+      "pass": true
+    },
+    {
+      "name": "1c87356748ee source hash",
+      "pass": true,
+      "observed": "335bdcf43b446fa6ed9f1a35df221f9a9bfcb4eb4a4c440c9cbb06774af78bb9"
+    },
+    {
+      "name": "1c87356748ee exact replay",
+      "pass": true,
+      "moves": 12,
+      "score": 127040
+    },
+    {
+      "name": "78749fc07834 source hash",
+      "pass": true,
+      "observed": "ffbf55ae111b4f71fe608c34336585ea3a05e898873d3b5a304d80d4cd0d9de3"
+    },
+    {
+      "name": "78749fc07834 exact replay",
+      "pass": true,
+      "moves": 14,
+      "score": 130496
+    },
+    {
+      "name": "generated-action coverage matches table",
+      "pass": true,
+      "observed": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "champion same-board replay",
+      "pass": true,
+      "observed": {
+        "movesToTarget": 17,
+        "scoreAtStop": 125952
+      }
+    },
+    {
+      "name": "tampered recording rejected",
+      "pass": true
+    },
+    {
+      "name": "decision table schema and coverage",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,3137 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "be843368be8e19ec59501aae38f19eebaf188b87",
+  "historicalCandidate": {
+    "commit": "420ba8ef79e1850e7dc50124f7ab564801b1d314",
+    "identity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+    "gameplayEquivalentToShippedLevel51": true,
+    "gameplay": {
+      "level": 51,
+      "target": 124000,
+      "tileScale": 32,
+      "moves": 24,
+      "minChain": 4,
+      "gridW": 5,
+      "gridH": 7,
+      "blockers": []
+    }
+  },
+  "champion": {
+    "params": {
+      "wRoll": 1,
+      "wPlace": 1,
+      "turnover": 40,
+      "width": 24,
+      "bombMax": 9,
+      "tieBreak": "degree",
+      "wHarvest": 2,
+      "offerFull": 0,
+      "pathWidth": 8
+    },
+    "replay": {
+      "movesToTarget": 17,
+      "scoreAtStop": 125952,
+      "moves": [
+        {
+          "move": 1,
+          "scoreBefore": 0,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 10240,
+          "placement": 0,
+          "turnover": 19200,
+          "harvest": 680.9599999999999,
+          "total": 35921.92,
+          "chainLength": 16,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 2,
+            "y": 5
+          },
+          "survivorAfterGravity": {
+            "x": 2,
+            "y": 5,
+            "value": 1024
+          }
+        },
+        {
+          "move": 2,
+          "scoreBefore": 5120,
+          "scoreGain": 7360,
+          "immediate": 7360,
+          "rollout": 16960,
+          "placement": 0,
+          "turnover": 15360,
+          "harvest": 0,
+          "total": 39680,
+          "chainLength": 13,
+          "chainSum": 1472,
+          "mergeableSum": false,
+          "survivorBeforeGravity": {
+            "x": 0,
+            "y": 6
+          },
+          "survivorAfterGravity": {
+            "x": 0,
+            "y": 6,
+            "value": 1472
+          }
+        },
+        {
+          "move": 3,
+          "scoreBefore": 12480,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 22080,
+          "placement": 0,
+          "turnover": 12800,
+          "harvest": 1032.5333333333333,
+          "total": 42065.066666666666,
+          "chainLength": 11,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 3,
+            "y": 1
+          },
+          "survivorAfterGravity": {
+            "x": 3,
+            "y": 2,
+            "value": 1024
+          }
+        },
+        {
+          "move": 4,
+          "scoreBefore": 17600,
+          "scoreGain": 23360,
+          "immediate": 23360,
+          "rollout": 5120,
+          "placement": 0,
+          "turnover": 21760,
+          "harvest": 0,
+          "total": 50240,
+          "chainLength": 18,
+          "chainSum": 4672,
+          "mergeableSum": false,
+          "survivorBeforeGravity": {
+            "x": 2,
+            "y": 5
+          },
+          "survivorAfterGravity": {
+            "x": 2,
+            "y": 5,
+            "value": 4672
+          }
+        },
+        {
+          "move": 5,
+          "scoreBefore": 40960,
+          "scoreGain": 10240,
+          "immediate": 10240,
+          "rollout": 10240,
+          "placement": 0,
+          "turnover": 30720,
+          "harvest": 477.8666666666666,
+          "total": 52155.73333333333,
+          "chainLength": 25,
+          "chainSum": 2048,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 4,
+            "y": 6
+          },
+          "survivorAfterGravity": {
+            "x": 4,
+            "y": 6,
+            "value": 2048
+          }
+        },
+        {
+          "move": 6,
+          "scoreBefore": 51200,
+          "scoreGain": 10240,
+          "immediate": 10240,
+          "rollout": 10240,
+          "placement": 0,
+          "turnover": 26880,
+          "harvest": 768,
+          "total": 48896,
+          "chainLength": 22,
+          "chainSum": 2048,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 0,
+            "y": 4
+          },
+          "survivorAfterGravity": {
+            "x": 0,
+            "y": 5,
+            "value": 2048
+          }
+        },
+        {
+          "move": 7,
+          "scoreBefore": 61440,
+          "scoreGain": 10240,
+          "immediate": 10240,
+          "rollout": 3648,
+          "placement": 0,
+          "turnover": 15360,
+          "harvest": 2150.4,
+          "total": 33548.8,
+          "chainLength": 13,
+          "chainSum": 2048,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 4,
+            "y": 4
+          },
+          "survivorAfterGravity": {
+            "x": 4,
+            "y": 5,
+            "value": 2048
+          }
+        },
+        {
+          "move": 8,
+          "scoreBefore": 71680,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 9216,
+          "placement": 9216,
+          "turnover": 15360,
+          "harvest": 1024,
+          "total": 40960,
+          "chainLength": 13,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 3,
+            "y": 4
+          },
+          "survivorAfterGravity": {
+            "x": 3,
+            "y": 5,
+            "value": 1024
+          }
+        },
+        {
+          "move": 9,
+          "scoreBefore": 76800,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 14336,
+          "placement": 9216,
+          "turnover": 19200,
+          "harvest": 1433.6,
+          "total": 50739.2,
+          "chainLength": 16,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 2,
+            "y": 5
+          },
+          "survivorAfterGravity": {
+            "x": 2,
+            "y": 5,
+            "value": 1024
+          }
+        },
+        {
+          "move": 10,
+          "scoreBefore": 81920,
+          "scoreGain": 10240,
+          "immediate": 10240,
+          "rollout": 14336,
+          "placement": 0,
+          "turnover": 20480,
+          "harvest": 2696.5333333333333,
+          "total": 50449.066666666666,
+          "chainLength": 17,
+          "chainSum": 2048,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 0,
+            "y": 3
+          },
+          "survivorAfterGravity": {
+            "x": 0,
+            "y": 3,
+            "value": 2048
+          }
+        },
+        {
+          "move": 11,
+          "scoreBefore": 92160,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 16384,
+          "placement": 9216,
+          "turnover": 14080,
+          "harvest": 1911.4666666666665,
+          "total": 48622.933333333334,
+          "chainLength": 12,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 2,
+            "y": 4
+          },
+          "survivorAfterGravity": {
+            "x": 2,
+            "y": 4,
+            "value": 1024
+          }
+        },
+        {
+          "move": 12,
+          "scoreBefore": 97280,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 10240,
+          "placement": 7680,
+          "turnover": 11520,
+          "harvest": 2321.0666666666666,
+          "total": 39202.13333333333,
+          "chainLength": 10,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 1,
+            "y": 4
+          },
+          "survivorAfterGravity": {
+            "x": 1,
+            "y": 4,
+            "value": 1024
+          }
+        },
+        {
+          "move": 13,
+          "scoreBefore": 102400,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 24576,
+          "placement": 7680,
+          "turnover": 10240,
+          "harvest": 2235.733333333333,
+          "total": 52087.46666666667,
+          "chainLength": 9,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 3,
+            "y": 3
+          },
+          "survivorAfterGravity": {
+            "x": 3,
+            "y": 3,
+            "value": 1024
+          }
+        },
+        {
+          "move": 14,
+          "scoreBefore": 107520,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 24576,
+          "placement": 0,
+          "turnover": 15360,
+          "harvest": 1716.9066666666668,
+          "total": 48489.81333333333,
+          "chainLength": 13,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 0,
+            "y": 1
+          },
+          "survivorAfterGravity": {
+            "x": 0,
+            "y": 1,
+            "value": 1024
+          }
+        },
+        {
+          "move": 15,
+          "scoreBefore": 112640,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 24576,
+          "placement": 9216,
+          "turnover": 11520,
+          "harvest": 3532.8,
+          "total": 57497.6,
+          "chainLength": 10,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 3,
+            "y": 4
+          },
+          "survivorAfterGravity": {
+            "x": 3,
+            "y": 4,
+            "value": 1024
+          }
+        },
+        {
+          "move": 16,
+          "scoreBefore": 117760,
+          "scoreGain": 5120,
+          "immediate": 5120,
+          "rollout": 24576,
+          "placement": 7680,
+          "turnover": 10240,
+          "harvest": 3017.3866666666668,
+          "total": 53650.77333333333,
+          "chainLength": 9,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 2,
+            "y": 0
+          },
+          "survivorAfterGravity": {
+            "x": 2,
+            "y": 2,
+            "value": 1024
+          }
+        },
+        {
+          "move": 17,
+          "scoreBefore": 122880,
+          "scoreGain": 3072,
+          "immediate": 3072,
+          "rollout": 24576,
+          "placement": 7680,
+          "turnover": 8960,
+          "harvest": 3409.9200000000005,
+          "total": 51107.840000000004,
+          "chainLength": 8,
+          "chainSum": 1024,
+          "mergeableSum": true,
+          "survivorBeforeGravity": {
+            "x": 3,
+            "y": 2
+          },
+          "survivorAfterGravity": {
+            "x": 3,
+            "y": 2,
+            "value": 1024
+          }
+        }
+      ]
+    }
+  },
+  "humanReplays": [
+    {
+      "file": "1c87356748ee23c9388d27f6c66ae60ed7d448f2f327f27dbe4d36a46ea6a0d0.json",
+      "shaPrefix": "1c87356748ee",
+      "claimed": {
+        "moves": 12,
+        "score": 127040,
+        "outcome": "win"
+      },
+      "replayed": {
+        "moves": 12,
+        "score": 127040,
+        "outcome": "win"
+      },
+      "rows": [
+        {
+          "move": 1,
+          "scoreBefore": 0,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 16,
+            "maxUntrimmedLength": 25,
+            "trimmedCountBeforeWidthCap": 50,
+            "untrimmedCountBeforeWidthCap": 71,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 25
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 25
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 25
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 10240,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 32000,
+            "harvest": 0,
+            "total": 47360,
+            "chainLength": 26,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 3
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 6,
+              "value": 2048
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 19200,
+            "harvest": 680.9599999999999,
+            "total": 35921.92,
+            "chainLength": 16,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 5,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 25,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 15,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 5120,
+            "rollout": -5120,
+            "placement": 0,
+            "turnover": 12800,
+            "harvest": -680.9599999999999,
+            "total": 11438.080000000002,
+            "chainLength": 10,
+            "chainSum": 1024
+          }
+        },
+        {
+          "move": 2,
+          "scoreBefore": 10240,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 22,
+            "maxUntrimmedLength": 22,
+            "trimmedCountBeforeWidthCap": 70,
+            "untrimmedCountBeforeWidthCap": 106,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 22,
+                "maxUntrimmedLength": 22
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 22,
+                "maxUntrimmedLength": 22
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 22,
+                "maxUntrimmedLength": 22
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 17920,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 33280,
+            "harvest": 0,
+            "total": 61440,
+            "chainLength": 27,
+            "chainSum": 3584,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 5,
+              "value": 3584
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 7296,
+            "placement": 0,
+            "turnover": 26880,
+            "harvest": 512,
+            "total": 45440,
+            "chainLength": 22,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 6,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 26,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 21,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 7680,
+            "rollout": 2944,
+            "placement": 0,
+            "turnover": 6400,
+            "harvest": -512,
+            "total": 16000,
+            "chainLength": 5,
+            "chainSum": 1536
+          }
+        },
+        {
+          "move": 3,
+          "scoreBefore": 28160,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 13,
+            "maxUntrimmedLength": 16,
+            "trimmedCountBeforeWidthCap": 45,
+            "untrimmedCountBeforeWidthCap": 60,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 16
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": true,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 18
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": true,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 18
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 11840,
+            "rollout": 4224,
+            "placement": 0,
+            "turnover": 21760,
+            "harvest": 0,
+            "total": 37824,
+            "chainLength": 18,
+            "chainSum": 2368,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 3,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 6,
+              "value": 2368
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 3264,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 1024,
+            "total": 30912,
+            "chainLength": 13,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 3,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 6,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 17,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 1600,
+            "rollout": 960,
+            "placement": 0,
+            "turnover": 6400,
+            "harvest": -1024,
+            "total": 6912,
+            "chainLength": 5,
+            "chainSum": 320
+          }
+        },
+        {
+          "move": 4,
+          "scoreBefore": 40000,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 16,
+            "maxUntrimmedLength": 23,
+            "trimmedCountBeforeWidthCap": 38,
+            "untrimmedCountBeforeWidthCap": 57,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 17,
+                "maxUntrimmedLength": 23
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 17,
+                "maxUntrimmedLength": 23
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 18,
+                "maxUntrimmedLength": 23
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 12480,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 29440,
+            "harvest": 0,
+            "total": 52160,
+            "chainLength": 24,
+            "chainSum": 2496,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 6,
+              "value": 2496
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 19200,
+            "harvest": 102.4,
+            "total": 34764.8,
+            "chainLength": 16,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 3
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 3,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 23,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 15,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 7360,
+            "rollout": 0,
+            "placement": 0,
+            "turnover": 10240,
+            "harvest": -102.4,
+            "total": 17395.199999999997,
+            "chainLength": 8,
+            "chainSum": 1472
+          }
+        },
+        {
+          "move": 5,
+          "scoreBefore": 52480,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 18,
+            "maxUntrimmedLength": 20,
+            "trimmedCountBeforeWidthCap": 65,
+            "untrimmedCountBeforeWidthCap": 81,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 18,
+                "maxUntrimmedLength": 20
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 18,
+                "maxUntrimmedLength": 20
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 18,
+                "maxUntrimmedLength": 20
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 13760,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 25600,
+            "harvest": 0,
+            "total": 49600,
+            "chainLength": 21,
+            "chainSum": 2752,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 0
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 6,
+              "value": 2752
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 11200,
+            "placement": 0,
+            "turnover": 19200,
+            "harvest": 409.6,
+            "total": 41459.2,
+            "chainLength": 16,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 0,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 20,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 15,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 3520,
+            "rollout": -960,
+            "placement": 0,
+            "turnover": 6400,
+            "harvest": -409.6,
+            "total": 8140.800000000003,
+            "chainLength": 5,
+            "chainSum": 704
+          }
+        },
+        {
+          "move": 6,
+          "scoreBefore": 66240,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 24,
+            "maxUntrimmedLength": 24,
+            "trimmedCountBeforeWidthCap": 53,
+            "untrimmedCountBeforeWidthCap": 67,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 24,
+                "maxUntrimmedLength": 24
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 24,
+                "maxUntrimmedLength": 24
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 24,
+                "maxUntrimmedLength": 24
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 9920,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 29440,
+            "harvest": 0,
+            "total": 44480,
+            "chainLength": 24,
+            "chainSum": 1984,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 5,
+              "value": 1984
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 29440,
+            "harvest": 409.6,
+            "total": 45619.2,
+            "chainLength": 24,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 0,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 23,
+            "higherThanMinimumCount": 1,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": [
+              {
+                "step": 24,
+                "chosenValue": 256,
+                "minimumAvailableValue": 128,
+                "deferredLowerUsedLater": false
+              }
+            ]
+          },
+          "championRouteChoices": {
+            "steps": 23,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": -320,
+            "rollout": 0,
+            "placement": 0,
+            "turnover": 0,
+            "harvest": -409.6,
+            "total": -1139.199999999997,
+            "chainLength": 0,
+            "chainSum": -64
+          }
+        },
+        {
+          "move": 7,
+          "scoreBefore": 76160,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": true,
+            "maxTrimmedLength": 11,
+            "maxUntrimmedLength": 17,
+            "trimmedCountBeforeWidthCap": 50,
+            "untrimmedCountBeforeWidthCap": 77,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": true,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 17
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": true,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 17
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": true,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 17
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 7040,
+            "rollout": 6720,
+            "placement": 0,
+            "turnover": 16640,
+            "harvest": 0,
+            "total": 30400,
+            "chainLength": 14,
+            "chainSum": 1408,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 2
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 3,
+              "value": 1408
+            }
+          },
+          "champion": {
+            "immediate": 6080,
+            "rollout": 6080,
+            "placement": 0,
+            "turnover": 12800,
+            "harvest": 0,
+            "total": 24960,
+            "chainLength": 11,
+            "chainSum": 1216,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 0,
+              "y": 3
+            },
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 3,
+              "value": 1216
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 13,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 10,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 960,
+            "rollout": 640,
+            "placement": 0,
+            "turnover": 3840,
+            "harvest": 0,
+            "total": 5440,
+            "chainLength": 3,
+            "chainSum": 192
+          }
+        },
+        {
+          "move": 8,
+          "scoreBefore": 83200,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 16,
+            "maxUntrimmedLength": 20,
+            "trimmedCountBeforeWidthCap": 31,
+            "untrimmedCountBeforeWidthCap": 48,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 20
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 20
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 20
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 8640,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 24320,
+            "harvest": 0,
+            "total": 43200,
+            "chainLength": 20,
+            "chainSum": 1728,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 0,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 6,
+              "value": 1728
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 17920,
+            "harvest": 136.53333333333333,
+            "total": 33553.066666666666,
+            "chainLength": 15,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 4,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 19,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 14,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 3520,
+            "rollout": 0,
+            "placement": 0,
+            "turnover": 6400,
+            "harvest": -136.53333333333333,
+            "total": 9646.933333333334,
+            "chainLength": 5,
+            "chainSum": 704
+          }
+        },
+        {
+          "move": 9,
+          "scoreBefore": 91840,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 13,
+            "maxUntrimmedLength": 17,
+            "trimmedCountBeforeWidthCap": 51,
+            "untrimmedCountBeforeWidthCap": 68,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 17
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 17
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 17
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 9280,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 21760,
+            "harvest": 0,
+            "total": 36160,
+            "chainLength": 18,
+            "chainSum": 1856,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 4,
+              "value": 1856
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 6720,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 102.4,
+            "total": 27404.8,
+            "chainLength": 13,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 3,
+              "y": 3
+            },
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 3,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 17,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 4160,
+            "rollout": -1600,
+            "placement": 0,
+            "turnover": 6400,
+            "harvest": -102.4,
+            "total": 8755.2,
+            "chainLength": 5,
+            "chainSum": 832
+          }
+        },
+        {
+          "move": 10,
+          "scoreBefore": 101120,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 19,
+            "maxUntrimmedLength": 19,
+            "trimmedCountBeforeWidthCap": 73,
+            "untrimmedCountBeforeWidthCap": 87,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 19,
+                "maxUntrimmedLength": 19
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 19,
+                "maxUntrimmedLength": 19
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 19,
+                "maxUntrimmedLength": 19
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 10240,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 21760,
+            "harvest": 1024,
+            "total": 39168,
+            "chainLength": 18,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 3,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 5,
+              "value": 2048
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 1792,
+            "placement": 0,
+            "turnover": 23040,
+            "harvest": 409.6,
+            "total": 35891.2,
+            "chainLength": 19,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 0,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 4,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 17,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 18,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 0,
+            "rollout": 3328,
+            "placement": 0,
+            "turnover": -1280,
+            "harvest": 614.4,
+            "total": 3276.800000000003,
+            "chainLength": -1,
+            "chainSum": 0
+          }
+        },
+        {
+          "move": 11,
+          "scoreBefore": 111360,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 13,
+            "maxUntrimmedLength": 19,
+            "trimmedCountBeforeWidthCap": 56,
+            "untrimmedCountBeforeWidthCap": 78,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 19
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 19
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": true,
+                "maxTrimmedLength": 18,
+                "maxUntrimmedLength": 19
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 6720,
+            "rollout": 3072,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 0,
+            "total": 25152,
+            "chainLength": 13,
+            "chainSum": 1344,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 2
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 3,
+              "value": 1344
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 238.93333333333334,
+            "total": 26077.866666666665,
+            "chainLength": 13,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 2
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 3,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 1600,
+            "rollout": -2048,
+            "placement": 0,
+            "turnover": 0,
+            "harvest": -238.93333333333334,
+            "total": -925.866666666665,
+            "chainLength": 0,
+            "chainSum": 320
+          }
+        },
+        {
+          "move": 12,
+          "scoreBefore": 118080,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 13,
+            "maxUntrimmedLength": 21,
+            "trimmedCountBeforeWidthCap": 53,
+            "untrimmedCountBeforeWidthCap": 51,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 21
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 13,
+                "maxUntrimmedLength": 21
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 14,
+                "maxUntrimmedLength": 21
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 8960,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 23040,
+            "harvest": 358.40000000000003,
+            "total": 37836.8,
+            "chainLength": 19,
+            "chainSum": 1792,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 3,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 4,
+              "value": 1792
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 184.32,
+            "total": 25968.64,
+            "chainLength": 13,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 2
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 2,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 18,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 3840,
+            "rollout": 0,
+            "placement": 0,
+            "turnover": 7680,
+            "harvest": 174.08000000000004,
+            "total": 11868.160000000003,
+            "chainLength": 6,
+            "chainSum": 768
+          }
+        }
+      ]
+    },
+    {
+      "file": "78749fc07834f892542e7abd3317e9ed0b124082fe5b9b36876dac5918aa4b40.json",
+      "shaPrefix": "78749fc07834",
+      "claimed": {
+        "moves": 14,
+        "score": 130496,
+        "outcome": "win"
+      },
+      "replayed": {
+        "moves": 14,
+        "score": 130496,
+        "outcome": "win"
+      },
+      "rows": [
+        {
+          "move": 1,
+          "scoreBefore": 0,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 16,
+            "maxUntrimmedLength": 25,
+            "trimmedCountBeforeWidthCap": 50,
+            "untrimmedCountBeforeWidthCap": 71,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 25
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 25
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 25
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 5120,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 19200,
+            "harvest": 955.7333333333332,
+            "total": 31351.466666666667,
+            "chainLength": 16,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 3,
+              "y": 3
+            },
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 3,
+              "value": 1024
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 19200,
+            "harvest": 680.9599999999999,
+            "total": 35921.92,
+            "chainLength": 16,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 5,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 15,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 15,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 0,
+            "rollout": -5120,
+            "placement": 0,
+            "turnover": 0,
+            "harvest": 274.7733333333333,
+            "total": -4570.453333333331,
+            "chainLength": 0,
+            "chainSum": 0
+          }
+        },
+        {
+          "move": 2,
+          "scoreBefore": 5120,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 19,
+            "maxUntrimmedLength": 23,
+            "trimmedCountBeforeWidthCap": 69,
+            "untrimmedCountBeforeWidthCap": 116,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 19,
+                "maxUntrimmedLength": 23
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 19,
+                "maxUntrimmedLength": 23
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 19,
+                "maxUntrimmedLength": 23
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 5440,
+            "rollout": 6720,
+            "placement": 0,
+            "turnover": 16640,
+            "harvest": 0,
+            "total": 28800,
+            "chainLength": 14,
+            "chainSum": 1088,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 4,
+              "value": 1088
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 20480,
+            "placement": 0,
+            "turnover": 21760,
+            "harvest": 477.8666666666666,
+            "total": 53435.73333333333,
+            "chainLength": 18,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 6,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 13,
+            "higherThanMinimumCount": 1,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": [
+              {
+                "step": 12,
+                "chosenValue": 128,
+                "minimumAvailableValue": 64,
+                "deferredLowerUsedLater": false
+              }
+            ]
+          },
+          "championRouteChoices": {
+            "steps": 17,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": -4800,
+            "rollout": -13760,
+            "placement": 0,
+            "turnover": -5120,
+            "harvest": -477.8666666666666,
+            "total": -24635.73333333333,
+            "chainLength": -4,
+            "chainSum": -960
+          }
+        },
+        {
+          "move": 3,
+          "scoreBefore": 10560,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 21,
+            "maxUntrimmedLength": 21,
+            "trimmedCountBeforeWidthCap": 71,
+            "untrimmedCountBeforeWidthCap": 95,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 21,
+                "maxUntrimmedLength": 21
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 21,
+                "maxUntrimmedLength": 21
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 22,
+                "maxUntrimmedLength": 22
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 3072,
+            "rollout": 7168,
+            "placement": 0,
+            "turnover": 8960,
+            "harvest": 1348.2666666666667,
+            "total": 21896.533333333333,
+            "chainLength": 8,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 6,
+              "value": 1024
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 20800,
+            "placement": 0,
+            "turnover": 20480,
+            "harvest": 477.8666666666666,
+            "total": 52475.73333333333,
+            "chainLength": 17,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 2
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 4,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 7,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 16,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": -7168,
+            "rollout": -13632,
+            "placement": 0,
+            "turnover": -11520,
+            "harvest": 870.4000000000001,
+            "total": -30579.199999999997,
+            "chainLength": -9,
+            "chainSum": -1024
+          }
+        },
+        {
+          "move": 4,
+          "scoreBefore": 13632,
+          "category": "human_action_generated_but_ranked_lower",
+          "generatedCandidateCount": 24,
+          "humanGenerated": true,
+          "generatorCoverage": {
+            "exactInTrimmedAll": true,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 16,
+            "maxUntrimmedLength": 17,
+            "trimmedCountBeforeWidthCap": 76,
+            "untrimmedCountBeforeWidthCap": 104,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": true,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 17
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": true,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 17
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": true,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 17
+              }
+            ]
+          },
+          "humanRankByChampionTotal": 2,
+          "human": {
+            "immediate": 5120,
+            "rollout": 30080,
+            "placement": 0,
+            "turnover": 11520,
+            "harvest": 1450.6666666666667,
+            "total": 49621.333333333336,
+            "chainLength": 10,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 3
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 5,
+              "value": 1024
+            }
+          },
+          "champion": {
+            "immediate": 24640,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 19200,
+            "harvest": 0,
+            "total": 54080,
+            "chainLength": 16,
+            "chainSum": 4928,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 6,
+              "value": 4928
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 9,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 15,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": -19520,
+            "rollout": 19840,
+            "placement": 0,
+            "turnover": -7680,
+            "harvest": 1450.6666666666667,
+            "total": -4458.666666666664,
+            "chainLength": -6,
+            "chainSum": -3904
+          }
+        },
+        {
+          "move": 5,
+          "scoreBefore": 18752,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 14,
+            "maxUntrimmedLength": 18,
+            "trimmedCountBeforeWidthCap": 41,
+            "untrimmedCountBeforeWidthCap": 53,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 15,
+                "maxUntrimmedLength": 18
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 15,
+                "maxUntrimmedLength": 18
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 15,
+                "maxUntrimmedLength": 19
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 28480,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 20480,
+            "harvest": 0,
+            "total": 54080,
+            "chainLength": 17,
+            "chainSum": 5696,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 5,
+              "value": 5696
+            }
+          },
+          "champion": {
+            "immediate": 30080,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 16640,
+            "harvest": 0,
+            "total": 51840,
+            "chainLength": 14,
+            "chainSum": 6016,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 5,
+              "value": 6016
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 16,
+            "higherThanMinimumCount": 1,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": [
+              {
+                "step": 12,
+                "chosenValue": 512,
+                "minimumAvailableValue": 256,
+                "deferredLowerUsedLater": false
+              }
+            ]
+          },
+          "championRouteChoices": {
+            "steps": 13,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": -1600,
+            "rollout": 0,
+            "placement": 0,
+            "turnover": 3840,
+            "harvest": 0,
+            "total": 2240,
+            "chainLength": 3,
+            "chainSum": -320
+          }
+        },
+        {
+          "move": 6,
+          "scoreBefore": 47232,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 13,
+            "maxUntrimmedLength": 14,
+            "trimmedCountBeforeWidthCap": 45,
+            "untrimmedCountBeforeWidthCap": 71,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 13
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 10,
+                "maxUntrimmedLength": 13
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 14
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 5120,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 12800,
+            "harvest": 0,
+            "total": 23040,
+            "chainLength": 11,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 6,
+              "value": 1024
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 0,
+            "total": 25600,
+            "chainLength": 13,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 2
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 4,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 10,
+            "higherThanMinimumCount": 2,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": [
+              {
+                "step": 9,
+                "chosenValue": 128,
+                "minimumAvailableValue": 64,
+                "deferredLowerUsedLater": false
+              },
+              {
+                "step": 11,
+                "chosenValue": 256,
+                "minimumAvailableValue": 128,
+                "deferredLowerUsedLater": false
+              }
+            ]
+          },
+          "championRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 0,
+            "rollout": 0,
+            "placement": 0,
+            "turnover": -2560,
+            "harvest": 0,
+            "total": -2560,
+            "chainLength": -2,
+            "chainSum": 0
+          }
+        },
+        {
+          "move": 7,
+          "scoreBefore": 52352,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 15,
+            "maxUntrimmedLength": 20,
+            "trimmedCountBeforeWidthCap": 52,
+            "untrimmedCountBeforeWidthCap": 75,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 14,
+                "maxUntrimmedLength": 21
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 15,
+                "maxUntrimmedLength": 21
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 15,
+                "maxUntrimmedLength": 21
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 5120,
+            "rollout": 6720,
+            "placement": 0,
+            "turnover": 14080,
+            "harvest": 512,
+            "total": 26944,
+            "chainLength": 12,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 5,
+              "value": 1024
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 13760,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 256,
+            "total": 34752,
+            "chainLength": 13,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 0
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 3,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 11,
+            "higherThanMinimumCount": 1,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": [
+              {
+                "step": 9,
+                "chosenValue": 128,
+                "minimumAvailableValue": 64,
+                "deferredLowerUsedLater": false
+              }
+            ]
+          },
+          "championRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 0,
+            "rollout": -7040,
+            "placement": 0,
+            "turnover": -1280,
+            "harvest": 256,
+            "total": -7808,
+            "chainLength": -1,
+            "chainSum": 0
+          }
+        },
+        {
+          "move": 8,
+          "scoreBefore": 57472,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 13,
+            "maxUntrimmedLength": 18,
+            "trimmedCountBeforeWidthCap": 49,
+            "untrimmedCountBeforeWidthCap": 76,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 16,
+                "maxUntrimmedLength": 18
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 14,
+                "maxUntrimmedLength": 18
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 14,
+                "maxUntrimmedLength": 18
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 11520,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 20480,
+            "harvest": 0,
+            "total": 37120,
+            "chainLength": 17,
+            "chainSum": 2304,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 0,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 6,
+              "value": 2304
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 3072,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 955.7333333333332,
+            "total": 30583.466666666667,
+            "chainLength": 13,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 0,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 16,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 1280,
+            "rollout": 2048,
+            "placement": 0,
+            "turnover": 5120,
+            "harvest": -955.7333333333332,
+            "total": 6536.533333333333,
+            "chainLength": 4,
+            "chainSum": 256
+          }
+        },
+        {
+          "move": 9,
+          "scoreBefore": 68992,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 11,
+            "maxUntrimmedLength": 13,
+            "trimmedCountBeforeWidthCap": 59,
+            "untrimmedCountBeforeWidthCap": 71,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 13
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 13
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 15
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 7360,
+            "rollout": 5440,
+            "placement": 0,
+            "turnover": 15360,
+            "harvest": 0,
+            "total": 28160,
+            "chainLength": 13,
+            "chainSum": 1472,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 6,
+              "value": 1472
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 12800,
+            "harvest": 853.3333333333333,
+            "total": 24746.666666666668,
+            "chainLength": 11,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 0
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 4,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 12,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 10,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 2240,
+            "rollout": 320,
+            "placement": 0,
+            "turnover": 2560,
+            "harvest": -853.3333333333333,
+            "total": 3413.333333333332,
+            "chainLength": 2,
+            "chainSum": 448
+          }
+        },
+        {
+          "move": 10,
+          "scoreBefore": 76352,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 9,
+            "maxUntrimmedLength": 12,
+            "trimmedCountBeforeWidthCap": 46,
+            "untrimmedCountBeforeWidthCap": 56,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 13
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 11,
+                "maxUntrimmedLength": 13
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 9,
+                "maxUntrimmedLength": 12
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 1024,
+            "rollout": 19520,
+            "placement": 0,
+            "turnover": 6400,
+            "harvest": 947.1999999999999,
+            "total": 28838.4,
+            "chainLength": 6,
+            "chainSum": 512,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 4,
+              "value": 512
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 6720,
+            "placement": 0,
+            "turnover": 10240,
+            "harvest": 597.3333333333333,
+            "total": 23274.666666666668,
+            "chainLength": 9,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 1,
+              "y": 3
+            },
+            "survivorAfterGravity": {
+              "x": 1,
+              "y": 3,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 5,
+            "higherThanMinimumCount": 1,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": [
+              {
+                "step": 5,
+                "chosenValue": 128,
+                "minimumAvailableValue": 64,
+                "deferredLowerUsedLater": false
+              }
+            ]
+          },
+          "championRouteChoices": {
+            "steps": 8,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": -4096,
+            "rollout": 12800,
+            "placement": 0,
+            "turnover": -3840,
+            "harvest": 349.8666666666667,
+            "total": 5563.733333333334,
+            "chainLength": -3,
+            "chainSum": -512
+          }
+        },
+        {
+          "move": 11,
+          "scoreBefore": 77376,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 17,
+            "maxUntrimmedLength": 20,
+            "trimmedCountBeforeWidthCap": 52,
+            "untrimmedCountBeforeWidthCap": 64,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 12,
+                "maxUntrimmedLength": 20
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 17,
+                "maxUntrimmedLength": 20
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 18,
+                "maxUntrimmedLength": 20
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 20800,
+            "rollout": 10240,
+            "placement": 0,
+            "turnover": 21760,
+            "harvest": 0,
+            "total": 52800,
+            "chainLength": 18,
+            "chainSum": 4160,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 6,
+              "value": 4160
+            }
+          },
+          "champion": {
+            "immediate": 20480,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 20480,
+            "harvest": 0,
+            "total": 46080,
+            "chainLength": 17,
+            "chainSum": 4096,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 6,
+              "value": 4096
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 17,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 16,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 320,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 1280,
+            "harvest": 0,
+            "total": 6720,
+            "chainLength": 1,
+            "chainSum": 64
+          }
+        },
+        {
+          "move": 12,
+          "scoreBefore": 98176,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 15,
+            "maxUntrimmedLength": 18,
+            "trimmedCountBeforeWidthCap": 45,
+            "untrimmedCountBeforeWidthCap": 58,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 15,
+                "maxUntrimmedLength": 18
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 15,
+                "maxUntrimmedLength": 18
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 15,
+                "maxUntrimmedLength": 18
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 11200,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 26880,
+            "harvest": 0,
+            "total": 43200,
+            "chainLength": 22,
+            "chainSum": 2240,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 3,
+              "y": 6
+            },
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 6,
+              "value": 2240
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 17920,
+            "harvest": 0,
+            "total": 28160,
+            "chainLength": 15,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 4,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 21,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 14,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 6080,
+            "rollout": 0,
+            "placement": 0,
+            "turnover": 8960,
+            "harvest": 0,
+            "total": 15040,
+            "chainLength": 7,
+            "chainSum": 1216
+          }
+        },
+        {
+          "move": 13,
+          "scoreBefore": 109376,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 22,
+            "maxUntrimmedLength": 24,
+            "trimmedCountBeforeWidthCap": 50,
+            "untrimmedCountBeforeWidthCap": 88,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 22,
+                "maxUntrimmedLength": 24
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 22,
+                "maxUntrimmedLength": 24
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 22,
+                "maxUntrimmedLength": 24
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 12160,
+            "rollout": 8640,
+            "placement": 0,
+            "turnover": 29440,
+            "harvest": 0,
+            "total": 50240,
+            "chainLength": 24,
+            "chainSum": 2432,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 5
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 5,
+              "value": 2432
+            }
+          },
+          "champion": {
+            "immediate": 10240,
+            "rollout": 8640,
+            "placement": 0,
+            "turnover": 26880,
+            "harvest": 0,
+            "total": 45760,
+            "chainLength": 22,
+            "chainSum": 2048,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 3,
+              "y": 4
+            },
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 4,
+              "value": 2048
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 23,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 21,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 1920,
+            "rollout": 0,
+            "placement": 0,
+            "turnover": 2560,
+            "harvest": 0,
+            "total": 4480,
+            "chainLength": 2,
+            "chainSum": 384
+          }
+        },
+        {
+          "move": 14,
+          "scoreBefore": 121536,
+          "category": "human_action_not_generated",
+          "generatedCandidateCount": 24,
+          "humanGenerated": false,
+          "generatorCoverage": {
+            "exactInTrimmedAll": false,
+            "exactInUntrimmedAll": false,
+            "maxTrimmedLength": 14,
+            "maxUntrimmedLength": 19,
+            "trimmedCountBeforeWidthCap": 37,
+            "untrimmedCountBeforeWidthCap": 73,
+            "wider": [
+              {
+                "pathWidth": 16,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 14,
+                "maxUntrimmedLength": 19
+              },
+              {
+                "pathWidth": 32,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 14,
+                "maxUntrimmedLength": 19
+              },
+              {
+                "pathWidth": 64,
+                "exactInTrimmed": false,
+                "exactInUntrimmed": false,
+                "maxTrimmedLength": 21,
+                "maxUntrimmedLength": 21
+              }
+            ]
+          },
+          "humanRankByChampionTotal": null,
+          "human": {
+            "immediate": 8960,
+            "rollout": 5120,
+            "placement": 0,
+            "turnover": 24320,
+            "harvest": 0,
+            "total": 38400,
+            "chainLength": 20,
+            "chainSum": 1792,
+            "mergeableSum": false,
+            "survivorBeforeGravity": {
+              "x": 2,
+              "y": 0
+            },
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 4,
+              "value": 1792
+            }
+          },
+          "champion": {
+            "immediate": 5120,
+            "rollout": 8640,
+            "placement": 0,
+            "turnover": 16640,
+            "harvest": 0,
+            "total": 30400,
+            "chainLength": 14,
+            "chainSum": 1024,
+            "mergeableSum": true,
+            "survivorBeforeGravity": {
+              "x": 4,
+              "y": 3
+            },
+            "survivorAfterGravity": {
+              "x": 4,
+              "y": 3,
+              "value": 1024
+            }
+          },
+          "humanRouteChoices": {
+            "steps": 19,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "championRouteChoices": {
+            "steps": 13,
+            "higherThanMinimumCount": 0,
+            "deferredLowerUsedLaterCount": 0,
+            "deviations": []
+          },
+          "deltasHumanMinusChampion": {
+            "immediate": 3840,
+            "rollout": -3520,
+            "placement": 0,
+            "turnover": 7680,
+            "harvest": 0,
+            "total": 8000,
+            "chainLength": 6,
+            "chainSum": 768
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,849 @@
+{
+  "schemaVersion": 1,
+  "verdict": "SUPPORTED",
+  "gates": {
+    "validArtifacts": true,
+    "sourceIdentityFixed": true,
+    "protectedHashesMatch": true,
+    "seedsDisjoint": true,
+    "zeroWinRegressions": true,
+    "zeroSlowerBothWin": true,
+    "enoughFasterCells": true,
+    "enoughFasterLevels": true,
+    "positiveClusteredSaving": true
+  },
+  "code": {
+    "expectedIdentity": "c68247ce390bfec8f32e5c3c6a676efc1ea012ec81da958deeb5c19d840a20a7",
+    "calculatedIdentity": "c68247ce390bfec8f32e5c3c6a676efc1ea012ec81da958deeb5c19d840a20a7",
+    "files": {
+      "solver/target-aware-challenger.js": "ba75b5a66883a63562eb7a819e339dd6b398279a7fe0178512e231c11a77dd90",
+      "solver/target-aware-evaluation.js": "53aa4b2ef23d3245010cacd6e5f121eb99c697f9802549d360a501c4ac3dddb1",
+      "solver/target-aware-worker.js": "ed25df87210c7be65121318dde27fbf8cd09988c4a007795352ac7d4c07f13ac",
+      "solver/tests/targetAwareChallenger.test.js": "2dbddc00abb42bffad3c1467744e9fe7fc85c871f5e948c168e4615e024a7fbd",
+      "solver/tests/targetAwareEvaluation.test.js": "8f86822a82cb7a660162d44fc71fab9feb11cad3c2e674a978e03743638dc626"
+    }
+  },
+  "protected": {
+    "prefixesMatch": true,
+    "files": {
+      "solver/bot.js": "9abe8ca83dc26d8596320ce3e9b84aae9e3c342e6e79cac2c4c743c43c70b840",
+      "solver/engine.js": "4e2323b9218aed6a552017ca37eab16becf8ef0a314f7081d02717ef1f7a12c6",
+      "solver/level-author.js": "305731fbfd7e664075dc177e8be48f5bf530d1f8475f5fd8c501cef84149b257",
+      "solver/generate-levels.js": "d7a8bf832fa0baea07045cb5546ce6683a3dca0c49024262658f09f23ecc3842",
+      "src/game.js": "9493407cd9dc8b7cefaefac811b52969c89a078aa7df4fd2a5fa1c1e64207115"
+    }
+  },
+  "artifacts": {
+    "screen": {
+      "valid": true,
+      "errors": [],
+      "cells": 520,
+      "uniqueCells": 520,
+      "embeddedIdentity": "b4416954a024f790ac8aa1ad5a94c95f075d46bcf9a564c83b02ffce87f469bf",
+      "calculatedIdentity": "b4416954a024f790ac8aa1ad5a94c95f075d46bcf9a564c83b02ffce87f469bf",
+      "fileSha256": "23904833ba8ae2f8ab3b98c3ea1bc92bc23d48577224d146c33324be8dfe7d97"
+    },
+    "holdout": {
+      "valid": true,
+      "errors": [],
+      "cells": 15600,
+      "uniqueCells": 15600,
+      "embeddedIdentity": "83316f3055bb136b181dcf8e837989ead0f3c1e39ab78a7f1c777eeb64b059b0",
+      "calculatedIdentity": "83316f3055bb136b181dcf8e837989ead0f3c1e39ab78a7f1c777eeb64b059b0",
+      "fileSha256": "b6fe43d6a7818868c10b40cc95399259c689bf958679f5c8fb4aa4e37e3217c8"
+    },
+    "runtimeSourcesMatch": true,
+    "seedsDisjoint": true
+  },
+  "screen": {
+    "counts": {
+      "championOnly": 0,
+      "challengerOnly": 1,
+      "bothWin": 519,
+      "bothLose": 0,
+      "faster": 304,
+      "slower": 0,
+      "tied": 215,
+      "changedCells": 479,
+      "changedMoves": 479
+    },
+    "championWins": 519,
+    "challengerWins": 520,
+    "fasterLevels": [
+      1,
+      5,
+      10,
+      15,
+      20,
+      26,
+      30,
+      35,
+      40,
+      45,
+      50,
+      51,
+      52
+    ],
+    "fasterLevelCount": 13,
+    "moveSavings": {
+      "mean": 1.1557692307692307,
+      "median": 1,
+      "min": 0,
+      "max": 9,
+      "seLevel": 0.14760789855551879,
+      "seSeed": 0.06473968390975932,
+      "conservativeSe": 0.14760789855551879,
+      "t": 7.829995834095008,
+      "zeroVariancePositive": false
+    },
+    "terminationScores": {
+      "championMean": 42670.85384615385,
+      "challengerMean": 41511.79615384615,
+      "meanDelta": -1159.0576923076924,
+      "medianDelta": 0
+    },
+    "relativeCompute": 1.4383007095268139,
+    "perLevel": {
+      "1": {
+        "cells": 40,
+        "faster": 25,
+        "slower": 0,
+        "tied": 15,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 39,
+        "meanMoveSaving": 0.7
+      },
+      "5": {
+        "cells": 40,
+        "faster": 31,
+        "slower": 0,
+        "tied": 9,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 40,
+        "meanMoveSaving": 1.2
+      },
+      "10": {
+        "cells": 40,
+        "faster": 38,
+        "slower": 0,
+        "tied": 2,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 40,
+        "meanMoveSaving": 2.55
+      },
+      "15": {
+        "cells": 40,
+        "faster": 26,
+        "slower": 0,
+        "tied": 14,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 38,
+        "meanMoveSaving": 1.175
+      },
+      "20": {
+        "cells": 40,
+        "faster": 21,
+        "slower": 0,
+        "tied": 19,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 36,
+        "meanMoveSaving": 1.25
+      },
+      "26": {
+        "cells": 40,
+        "faster": 24,
+        "slower": 0,
+        "tied": 16,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 35,
+        "meanMoveSaving": 1.65
+      },
+      "30": {
+        "cells": 40,
+        "faster": 20,
+        "slower": 0,
+        "tied": 20,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 33,
+        "meanMoveSaving": 1.2
+      },
+      "35": {
+        "cells": 40,
+        "faster": 23,
+        "slower": 0,
+        "tied": 17,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 36,
+        "meanMoveSaving": 0.9
+      },
+      "40": {
+        "cells": 40,
+        "faster": 22,
+        "slower": 0,
+        "tied": 18,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 36,
+        "meanMoveSaving": 1.05
+      },
+      "45": {
+        "cells": 40,
+        "faster": 21,
+        "slower": 0,
+        "tied": 19,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 36,
+        "meanMoveSaving": 1.1
+      },
+      "50": {
+        "cells": 40,
+        "faster": 14,
+        "slower": 0,
+        "tied": 25,
+        "championOnly": 0,
+        "challengerOnly": 1,
+        "changedCells": 34,
+        "meanMoveSaving": 0.45
+      },
+      "51": {
+        "cells": 40,
+        "faster": 23,
+        "slower": 0,
+        "tied": 17,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 38,
+        "meanMoveSaving": 1.275
+      },
+      "52": {
+        "cells": 40,
+        "faster": 16,
+        "slower": 0,
+        "tied": 24,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 38,
+        "meanMoveSaving": 0.525
+      }
+    }
+  },
+  "holdout": {
+    "counts": {
+      "championOnly": 0,
+      "challengerOnly": 9,
+      "bothWin": 15540,
+      "bothLose": 51,
+      "faster": 9354,
+      "slower": 0,
+      "tied": 6186,
+      "changedCells": 14478,
+      "changedMoves": 14478
+    },
+    "championWins": 15540,
+    "challengerWins": 15549,
+    "fasterLevels": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52
+    ],
+    "fasterLevelCount": 52,
+    "moveSavings": {
+      "mean": 1.2709615384615387,
+      "median": 1,
+      "min": 0,
+      "max": 12,
+      "seLevel": 0.08103121490508032,
+      "seSeed": 0.0178584360522778,
+      "conservativeSe": 0.08103121490508032,
+      "t": 15.684838737150104,
+      "zeroVariancePositive": false
+    },
+    "terminationScores": {
+      "championMean": 31756.252307692306,
+      "challengerMean": 30785.973974358974,
+      "meanDelta": -970.2783333333333,
+      "medianDelta": 0
+    },
+    "relativeCompute": 1.4533511695896162,
+    "perLevel": {
+      "1": {
+        "cells": 300,
+        "faster": 159,
+        "slower": 0,
+        "tied": 141,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 286,
+        "meanMoveSaving": 0.57
+      },
+      "2": {
+        "cells": 300,
+        "faster": 215,
+        "slower": 0,
+        "tied": 85,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 296,
+        "meanMoveSaving": 0.8433333333333334
+      },
+      "3": {
+        "cells": 300,
+        "faster": 126,
+        "slower": 0,
+        "tied": 174,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 290,
+        "meanMoveSaving": 0.5833333333333334
+      },
+      "4": {
+        "cells": 300,
+        "faster": 178,
+        "slower": 0,
+        "tied": 122,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 290,
+        "meanMoveSaving": 0.9266666666666666
+      },
+      "5": {
+        "cells": 300,
+        "faster": 240,
+        "slower": 0,
+        "tied": 60,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 296,
+        "meanMoveSaving": 1.5566666666666666
+      },
+      "6": {
+        "cells": 300,
+        "faster": 248,
+        "slower": 0,
+        "tied": 52,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 298,
+        "meanMoveSaving": 1.9866666666666666
+      },
+      "7": {
+        "cells": 300,
+        "faster": 265,
+        "slower": 0,
+        "tied": 35,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 297,
+        "meanMoveSaving": 2.59
+      },
+      "8": {
+        "cells": 300,
+        "faster": 260,
+        "slower": 0,
+        "tied": 40,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 295,
+        "meanMoveSaving": 2.5966666666666667
+      },
+      "9": {
+        "cells": 300,
+        "faster": 270,
+        "slower": 0,
+        "tied": 30,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 294,
+        "meanMoveSaving": 2.8666666666666667
+      },
+      "10": {
+        "cells": 300,
+        "faster": 259,
+        "slower": 0,
+        "tied": 40,
+        "championOnly": 0,
+        "challengerOnly": 1,
+        "changedCells": 297,
+        "meanMoveSaving": 2.99
+      },
+      "11": {
+        "cells": 300,
+        "faster": 218,
+        "slower": 0,
+        "tied": 82,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 291,
+        "meanMoveSaving": 1.7766666666666666
+      },
+      "12": {
+        "cells": 300,
+        "faster": 213,
+        "slower": 0,
+        "tied": 87,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 290,
+        "meanMoveSaving": 1.75
+      },
+      "13": {
+        "cells": 300,
+        "faster": 208,
+        "slower": 0,
+        "tied": 92,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 283,
+        "meanMoveSaving": 1.79
+      },
+      "14": {
+        "cells": 300,
+        "faster": 208,
+        "slower": 0,
+        "tied": 92,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 284,
+        "meanMoveSaving": 1.8233333333333333
+      },
+      "15": {
+        "cells": 300,
+        "faster": 185,
+        "slower": 0,
+        "tied": 115,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 275,
+        "meanMoveSaving": 1.3766666666666667
+      },
+      "16": {
+        "cells": 300,
+        "faster": 185,
+        "slower": 0,
+        "tied": 115,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 276,
+        "meanMoveSaving": 1.37
+      },
+      "17": {
+        "cells": 300,
+        "faster": 187,
+        "slower": 0,
+        "tied": 113,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 274,
+        "meanMoveSaving": 1.3866666666666667
+      },
+      "18": {
+        "cells": 300,
+        "faster": 167,
+        "slower": 0,
+        "tied": 133,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 276,
+        "meanMoveSaving": 1.0733333333333333
+      },
+      "19": {
+        "cells": 300,
+        "faster": 145,
+        "slower": 0,
+        "tied": 153,
+        "championOnly": 0,
+        "challengerOnly": 1,
+        "changedCells": 270,
+        "meanMoveSaving": 0.92
+      },
+      "20": {
+        "cells": 300,
+        "faster": 182,
+        "slower": 0,
+        "tied": 117,
+        "championOnly": 0,
+        "challengerOnly": 1,
+        "changedCells": 280,
+        "meanMoveSaving": 1.3533333333333333
+      },
+      "21": {
+        "cells": 300,
+        "faster": 186,
+        "slower": 0,
+        "tied": 114,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 282,
+        "meanMoveSaving": 1.3966666666666667
+      },
+      "22": {
+        "cells": 300,
+        "faster": 201,
+        "slower": 0,
+        "tied": 99,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 286,
+        "meanMoveSaving": 1.4133333333333333
+      },
+      "23": {
+        "cells": 300,
+        "faster": 176,
+        "slower": 0,
+        "tied": 124,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 282,
+        "meanMoveSaving": 1.1366666666666667
+      },
+      "24": {
+        "cells": 300,
+        "faster": 165,
+        "slower": 0,
+        "tied": 135,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 280,
+        "meanMoveSaving": 0.9566666666666667
+      },
+      "25": {
+        "cells": 300,
+        "faster": 224,
+        "slower": 0,
+        "tied": 76,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 283,
+        "meanMoveSaving": 1.9166666666666667
+      },
+      "26": {
+        "cells": 300,
+        "faster": 205,
+        "slower": 0,
+        "tied": 95,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 281,
+        "meanMoveSaving": 1.8666666666666667
+      },
+      "27": {
+        "cells": 300,
+        "faster": 210,
+        "slower": 0,
+        "tied": 90,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 280,
+        "meanMoveSaving": 1.87
+      },
+      "28": {
+        "cells": 300,
+        "faster": 177,
+        "slower": 0,
+        "tied": 123,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 284,
+        "meanMoveSaving": 1.25
+      },
+      "29": {
+        "cells": 300,
+        "faster": 179,
+        "slower": 0,
+        "tied": 121,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 275,
+        "meanMoveSaving": 1.3033333333333332
+      },
+      "30": {
+        "cells": 300,
+        "faster": 174,
+        "slower": 0,
+        "tied": 125,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 282,
+        "meanMoveSaving": 1.27
+      },
+      "31": {
+        "cells": 300,
+        "faster": 181,
+        "slower": 0,
+        "tied": 119,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 276,
+        "meanMoveSaving": 1.3566666666666667
+      },
+      "32": {
+        "cells": 300,
+        "faster": 152,
+        "slower": 0,
+        "tied": 148,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 276,
+        "meanMoveSaving": 0.97
+      },
+      "33": {
+        "cells": 300,
+        "faster": 155,
+        "slower": 0,
+        "tied": 145,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 278,
+        "meanMoveSaving": 0.96
+      },
+      "34": {
+        "cells": 300,
+        "faster": 132,
+        "slower": 0,
+        "tied": 168,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 270,
+        "meanMoveSaving": 0.7633333333333333
+      },
+      "35": {
+        "cells": 300,
+        "faster": 136,
+        "slower": 0,
+        "tied": 161,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 261,
+        "meanMoveSaving": 0.7233333333333334
+      },
+      "36": {
+        "cells": 300,
+        "faster": 160,
+        "slower": 0,
+        "tied": 140,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 268,
+        "meanMoveSaving": 1.0666666666666667
+      },
+      "37": {
+        "cells": 300,
+        "faster": 142,
+        "slower": 0,
+        "tied": 157,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 266,
+        "meanMoveSaving": 0.71
+      },
+      "38": {
+        "cells": 300,
+        "faster": 142,
+        "slower": 0,
+        "tied": 157,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 267,
+        "meanMoveSaving": 0.7833333333333333
+      },
+      "39": {
+        "cells": 300,
+        "faster": 137,
+        "slower": 0,
+        "tied": 160,
+        "championOnly": 0,
+        "challengerOnly": 1,
+        "changedCells": 262,
+        "meanMoveSaving": 0.7533333333333333
+      },
+      "40": {
+        "cells": 300,
+        "faster": 154,
+        "slower": 0,
+        "tied": 145,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 273,
+        "meanMoveSaving": 0.8633333333333333
+      },
+      "41": {
+        "cells": 300,
+        "faster": 146,
+        "slower": 0,
+        "tied": 154,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 279,
+        "meanMoveSaving": 0.81
+      },
+      "42": {
+        "cells": 300,
+        "faster": 169,
+        "slower": 0,
+        "tied": 131,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 274,
+        "meanMoveSaving": 0.9433333333333334
+      },
+      "43": {
+        "cells": 300,
+        "faster": 149,
+        "slower": 0,
+        "tied": 151,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 280,
+        "meanMoveSaving": 0.8766666666666667
+      },
+      "44": {
+        "cells": 300,
+        "faster": 169,
+        "slower": 0,
+        "tied": 131,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 277,
+        "meanMoveSaving": 1.1066666666666667
+      },
+      "45": {
+        "cells": 300,
+        "faster": 140,
+        "slower": 0,
+        "tied": 158,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 272,
+        "meanMoveSaving": 0.7333333333333333
+      },
+      "46": {
+        "cells": 300,
+        "faster": 160,
+        "slower": 0,
+        "tied": 140,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 267,
+        "meanMoveSaving": 0.8933333333333333
+      },
+      "47": {
+        "cells": 300,
+        "faster": 160,
+        "slower": 0,
+        "tied": 137,
+        "championOnly": 0,
+        "challengerOnly": 1,
+        "changedCells": 273,
+        "meanMoveSaving": 0.8466666666666667
+      },
+      "48": {
+        "cells": 300,
+        "faster": 131,
+        "slower": 0,
+        "tied": 161,
+        "championOnly": 0,
+        "challengerOnly": 2,
+        "changedCells": 249,
+        "meanMoveSaving": 0.6033333333333334
+      },
+      "49": {
+        "cells": 300,
+        "faster": 138,
+        "slower": 0,
+        "tied": 154,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 255,
+        "meanMoveSaving": 0.73
+      },
+      "50": {
+        "cells": 300,
+        "faster": 146,
+        "slower": 0,
+        "tied": 129,
+        "championOnly": 0,
+        "challengerOnly": 2,
+        "changedCells": 248,
+        "meanMoveSaving": 0.7333333333333333
+      },
+      "51": {
+        "cells": 300,
+        "faster": 179,
+        "slower": 0,
+        "tied": 121,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 284,
+        "meanMoveSaving": 1.36
+      },
+      "52": {
+        "cells": 300,
+        "faster": 161,
+        "slower": 0,
+        "tied": 139,
+        "championOnly": 0,
+        "challengerOnly": 0,
+        "changedCells": 270,
+        "meanMoveSaving": 0.9933333333333333
+      }
+    }
+  }
+}
