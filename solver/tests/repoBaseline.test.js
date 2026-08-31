@@ -8,9 +8,10 @@ const {
   EXPECTED_SAFETY_REFS,
   REQUIRED_ANCESTOR,
   assessBaseline,
+  collectSnapshot,
   discoverWorktreeLikeDirectories,
   parseStatusPaths,
-} = require('../../tools/verify-repo-baseline.js');
+} = require("../../tools/verify-repo-baseline.js");
 
 function greenSnapshot() {
   return {
@@ -117,4 +118,34 @@ test('discovery distinguishes linked worktree pointers from standalone repositor
   fs.mkdirSync(path.join(standalone, '.git'), { recursive: true });
 
   assert.deepEqual(discoverWorktreeLikeDirectories(root), [linked]);
+});
+
+// The tests above prove assessBaseline's LOGIC against hand-built snapshots.
+// None of them look at this repository, so all of them can pass while a real
+// ticket sits stranded in a worktree that is about to be deleted. That is what
+// happened on 2026-08-30: a suspended .orch ticket survived only because a
+// human happened to look before removing its worktree. The tests below run the
+// guard against the live repo so the check has something to inspect.
+
+test('LIVE: no durable .orch state is left uncommitted in this checkout', () => {
+  const snapshot = collectSnapshot();
+  const stranded = snapshot.dirtyPaths.filter((p) => p.startsWith('.orch/'));
+  assert.deepEqual(
+    stranded, [],
+    `Uncommitted .orch state found. Ticket and run files are durable state — commit them.\n  ${stranded.join('\n  ')}`,
+  );
+});
+
+test('LIVE: no linked worktree is holding uncommitted .orch state', () => {
+  const snapshot = collectSnapshot();
+  const offenders = [];
+  for (const worktree of snapshot.worktrees || []) {
+    for (const p of worktree.dirtyPaths || []) {
+      if (p.startsWith('.orch/')) offenders.push(`${worktree.path}: ${p}`);
+    }
+  }
+  assert.deepEqual(
+    offenders, [],
+    `A worktree holds uncommitted .orch state. Removing it would destroy the record.\n  ${offenders.join('\n  ')}`,
+  );
 });

@@ -385,4 +385,6 @@ function chooseMove(state, options = {}) {
   return immediateWinningUntrimmed(state, options.params) || champion;
 }
 
-module.exports = { chooseMove, remnantPlacementValue, harvestValue, DEFAULT_PARAMS };
+module.exports = {
+  chooseMove, chooseBaseMove, remnantPlacementValue, harvestValue, DEFAULT_PARAMS,
+};
