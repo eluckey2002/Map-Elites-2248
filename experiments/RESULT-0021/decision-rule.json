@@ -1,0 +1,6 @@
+{
+  "stablePearson": 0.95,
+  "unstablePearson": 0.8,
+  "sufficientSingleSeedReliability": 0.8,
+  "insufficientSingleSeedReliability": 0.5
+}
