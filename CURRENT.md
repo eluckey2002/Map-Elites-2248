@@ -49,7 +49,10 @@ reasoning is recorded in `experiments/README.md`.
 (`DECISION-0004` promoted the target-aware policy into `solver/bot.js`).
 Registering a protocol and re-running its holdout is deferred at
 [BL-0005](docs/backlog/BL-0005-retrofit-result-0018-protocol.md), waiting on a
-spare half hour of compute rather than on any decision.
+spare half hour of compute rather than on any decision. Its acceptance test,
+and five traps that record does not know about, are in
+[BL-0005-FINISH-LINE](docs/backlog/BL-0005-FINISH-LINE.md) — read both before
+starting, and note it amends steps 2 and 7.
 
 ## Parked
 

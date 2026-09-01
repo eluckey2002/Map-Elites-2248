@@ -14,6 +14,14 @@ updated: 2026-08-31
 This record is intent, not evidence. Proof standing lives in the
 [evidence ledger](../../EVIDENCE_LEDGER.md); nothing here upgrades a claim.
 
+## Amended — read the finish line alongside this
+
+[BL-0005-FINISH-LINE.md](BL-0005-FINISH-LINE.md), written 2026-08-31, amends
+step 2 and step 7 below and adds five facts verified against `849dcb7` that
+this record does not know — among them a run command that does not parse and a
+gate that fails on step 7 as written. Read both. Where they disagree the
+finish line is later and wins.
+
 ## READ THIS FIRST or the run measures nothing
 
 `solver/target-aware-evaluation.js` compares `chooseMove` (champion) against
