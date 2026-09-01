@@ -18,6 +18,39 @@ Every level is winnable. No level sits below a 5% bot win rate, against 34 level
 
 A target is now a measured share of that level's achievable score, and tile scale doubles once per ten-level chapter so dealt tiles stay on the 2/4/8/16/32/64/128 family ([DECISION-0003](EVIDENCE_LEDGER.md#decision-0003--targets-are-a-measured-share-of-achievable-score-tile-scale-doubles-per-chapter)). Tile scale does not affect difficulty — it multiplies the target and achievable score together — so difficulty is carried entirely by demand.
 
+
+## Experiments now require a protocol registered before the run
+
+As of 2026-08-31 a claim that generalizes beyond what it measured — a ledger
+record whose `proof_class` includes `heuristic_observation` — needs a protocol
+registered in advance at `experiments/<RESULT-ID>/protocol.md`. Observations
+(`direct_source`), proofs (`exact_result`), and owner rulings
+(`owner_decision`) need nothing.
+
+The rule and its rationale: [experiments/README.md](experiments/README.md).
+The worked example remains `.orch/runs/chain-offer-2026-08-23/preregistration.md`,
+which is where the format came from.
+
+Enforcement fires at three points, earliest first. All five evidence-producing
+scripts (`target-aware-evaluation`, `map-elites`, `policy-ablation`,
+`routing-ablation`, `policy-search`) refuse to run without `--protocol` and
+stamp the protocol's commit into the artifact they write. `node
+tools/new-experiment.js RESULT-NNNN` registers and commits in one step.
+`tools/verify-experiments.js` checks the ledger, run live by
+`solver/tests/experiments.test.js`.
+
+The 14 results accepted before the cutoff are grandfathered explicitly in
+[experiments/GRANDFATHERED.md](experiments/GRANDFATHERED.md) rather than
+backfilled, because a protocol written after the outcome is fiction. **There is
+no escape hatch and one is not to be proposed without new evidence** — the
+reasoning is recorded in `experiments/README.md`.
+
+`RESULT-0018` is the one grandfathered result a shipped decision rests on
+(`DECISION-0004` promoted the target-aware policy into `solver/bot.js`).
+Registering a protocol and re-running its holdout is deferred at
+[BL-0005](docs/backlog/BL-0005-retrofit-result-0018-protocol.md), waiting on a
+spare half hour of compute rather than on any decision.
+
 ## Parked
 
 The Level 26 exact-proof track, by [DECISION-0002](EVIDENCE_LEDGER.md#decision-0002--park-the-exact-proof-track-tune-levels-from-measured-calibration). 13,000 reachability and the exact maximum stay open. The frozen study is pinned to its original scale-1 board and 13,000 target, so the retune did not move it. [BL-0001](docs/backlog/BL-0001-test-compact-state-signature.md) and [BL-0002](docs/backlog/BL-0002-evaluate-decisive-proof-formulation.md) are parked with it.
@@ -44,4 +77,4 @@ node solver/chain-coverage.js                           # how much of the best m
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
-Last reviewed: 2026-08-29
+Last reviewed: 2026-08-31

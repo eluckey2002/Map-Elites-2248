@@ -33,7 +33,7 @@
 
 - Accepted standing: RESULT-0017 in EVIDENCE_LEDGER.md.
 - Latest artifact: not-admitted.
-- CURRENT.md navigation: current; last reviewed 2026-08-29.
+- CURRENT.md navigation: current; last reviewed 2026-08-31.
 
 ## Current frontier
 
