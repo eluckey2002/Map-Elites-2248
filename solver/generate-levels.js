@@ -23,6 +23,7 @@ const {
   tileScaleForLevel,
   verifyCandidate,
 } = require('./level-author');
+const { sourceIdentities, verifyEntitlement } = require('./seed-variance');
 
 const SCREEN_SEEDS = Object.freeze({ start: 500000, count: 24 });
 
@@ -183,6 +184,11 @@ function rankShortlist(results) {
     .sort((a, b) => a.verdict.winRate - b.verdict.winRate);
 }
 
+function selectShortlist(results, entitlement) {
+  verifyEntitlement(entitlement, { currentIdentities: sourceIdentities() });
+  return rankShortlist(results);
+}
+
 function describe(shape) {
   const blockers = shape.blockers.length === 0
     ? 'no blockers'
@@ -191,10 +197,24 @@ function describe(shape) {
 }
 
 function parseArgs(argv) {
-  const args = { count: 60, level: 52, seed: 1, out: null, full: 12, space: null };
-  const paths = new Set(['out', 'space']);
+  const args = {
+    count: 60,
+    level: 52,
+    seed: 1,
+    out: null,
+    full: 12,
+    space: null,
+    selectFrom: null,
+    seedVarianceEntitlement: null,
+  };
+  const optionNames = {
+    'select-from': 'selectFrom',
+    'seed-variance-entitlement': 'seedVarianceEntitlement',
+  };
+  const paths = new Set(['out', 'space', 'selectFrom', 'seedVarianceEntitlement']);
   for (let i = 0; i < argv.length; i += 2) {
-    const key = argv[i].replace(/^--/, '');
+    const raw = argv[i].replace(/^--/, '');
+    const key = optionNames[raw] || raw;
     const value = argv[i + 1];
     if (!(key in args)) throw new Error(`unknown option ${argv[i]}`);
     args[key] = paths.has(key) ? value : Number(value);
@@ -205,6 +225,16 @@ function parseArgs(argv) {
 
 function main(argv = process.argv.slice(2)) {
   const args = parseArgs(argv);
+  if (!args.seedVarianceEntitlement) throw new Error('--seed-variance-entitlement is required');
+  const entitlement = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), args.seedVarianceEntitlement), 'utf8'));
+  verifyEntitlement(entitlement, { currentIdentities: sourceIdentities() });
+  if (args.selectFrom) {
+    const batch = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), args.selectFrom), 'utf8'));
+    if (!batch || !Array.isArray(batch.results)) throw new Error('selection input must contain results');
+    const selected = selectShortlist(batch.results, entitlement);
+    process.stdout.write(`SELECTED ${selected.map((entry) => entry.shape.name).join(',')}\n`);
+    return { results: batch.results, passed: selected };
+  }
   const rng = makeRng(args.seed);
   const started = Date.now();
   // An experiment can override any part of the sampling space without editing
@@ -268,7 +298,7 @@ function main(argv = process.argv.slice(2)) {
   // pipeline's own verifier - it replays all 450 games and re-derives every
   // identity, so it also catches a candidate whose receipt does not match the
   // shape it claims to come from.
-  const passed = rankShortlist(results);
+  const passed = selectShortlist(results, entitlement);
   process.stdout.write(`\nConfirming ${passed.length} shortlisted candidates with the pipeline verifier\n`);
   for (const entry of passed) {
     try {
@@ -338,6 +368,7 @@ module.exports = {
   screenVerdict,
   gateVerdict,
   rankShortlist,
+  selectShortlist,
   SPACE,
   SCREEN_SEEDS,
 };
