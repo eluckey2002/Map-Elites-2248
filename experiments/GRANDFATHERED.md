@@ -46,4 +46,6 @@ rather than resolved — it is the clearest evidence for why the gate exists.
 `DECISION-0004` promoted a change into the shipped bot on the strength of
 RESULT-0018, and RESULT-0018 is grandfathered. That is the one place where a
 decision with consequences rests on a result the gate would otherwise have
-required a protocol for. Recorded plainly; not a reason to backfill one.
+required a protocol for. Recorded plainly; not a reason to backfill one. Tracked for a proper re-run at
+[BL-0005](../docs/backlog/BL-0005-retrofit-result-0018-protocol.md), deferred
+2026-08-31 pending a spare half hour of compute — not pending a decision.

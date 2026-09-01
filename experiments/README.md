@@ -55,3 +55,18 @@ while never once looking at the repository.
 Nothing here is new methodology. It is the methodology already written down
 in `chain-offer-2026-08-23`, with a gate attached so it survives contact with
 a busy week.
+
+## Settled: there is no escape hatch
+
+Asked and answered 2026-08-31. There is deliberately no `preregistered: false`
+field, no "record it anyway" flag, and no exception for a finding that turned
+out to be real. Do not propose one without new evidence.
+
+The reasoning: an easy exception becomes the default path, and that is exactly
+how the original preregistration habit died in August. Two honest routes
+already exist and neither needs a hatch — record a `direct_source` observation
+of the single run you actually did, which carries no protocol requirement, or
+register a protocol and run it again. Seeds are cheap.
+
+If a future session genuinely resents the absence of a hatch on a real case,
+that is the evidence to reopen this. Anticipating the need is not.
