@@ -14,7 +14,7 @@ function makeTile(x, y, value) {
   return { x, y, value, blocker: null, blockerDuration: 0, bombTimer: 0 };
 }
 
-// Mirrors game.js loadLevel's initial-grid spawn weights (line ~607-612).
+// Mirrors game.js loadLevel's initial-grid spawn weights.
 // `scale` multiplies every spawned value uniformly. Because chains match on
 // equal-or-double and merges sum, a uniform scale is an exact isomorphism:
 // identical play, every score multiplied by the same factor. Mixing scales on
@@ -65,7 +65,7 @@ function createLevelState(levelData, rng) {
   };
 }
 
-// Mirrors game.js canExtendChain (line ~325-337).
+// Mirrors game.js canExtendChain.
 function canExtendChain(chain, newTile) {
   if (chain.length === 0) return true;
   const lastTile = chain[chain.length - 1];
@@ -73,7 +73,7 @@ function canExtendChain(chain, newTile) {
   return newTile.value === lastTile.value || newTile.value === lastTile.value * 2;
 }
 
-// Mirrors game.js isValidChain (line ~339-348).
+// Mirrors game.js isValidChain.
 function isValidChain(chain, minChain) {
   if (chain.length < minChain) return false;
   if (chain.length >= 2 && chain[0].value !== chain[1].value) return false;
@@ -84,7 +84,7 @@ function chainValue(chain) {
   return chain.reduce((sum, tile) => sum + tile.value, 0);
 }
 
-// Mirrors game.js getChainMultiplier (line ~358-365).
+// Mirrors game.js getChainMultiplier.
 function chainMultiplier(length) {
   if (length >= 9) return 5;
   if (length >= 7) return 3;
@@ -93,7 +93,7 @@ function chainMultiplier(length) {
   return 1;
 }
 
-// Mirrors game.js executeChain scoring/mutation (line ~367-410), minus animation/UI.
+// Mirrors game.js executeChain scoring/mutation, minus animation/UI.
 function executeChain(state, chain) {
   const sum = chainValue(chain);
   const multiplier = chainMultiplier(chain.length);
@@ -118,7 +118,7 @@ function executeChain(state, chain) {
   return points;
 }
 
-// Mirrors game.js applyGravity (line ~434-453).
+// Mirrors game.js applyGravity.
 function applyGravity(state) {
   for (let col = 0; col < state.gridWidth; col++) {
     let writeRow = state.gridHeight - 1;
@@ -138,7 +138,7 @@ function applyGravity(state) {
   }
 }
 
-// Mirrors game.js spawnNewTiles weights (line ~455-471).
+// Mirrors game.js spawnNewTiles weights.
 function randomSpawnValue(rng, scale = 1) {
   const r = rng();
   if (r < 0.6) return 2 * scale;
@@ -157,7 +157,7 @@ function spawnNewTiles(state, rng) {
   }
 }
 
-// Mirrors Tile.tickBlocker (line ~131-141) applied grid-wide.
+// Mirrors Tile.tickBlocker applied grid-wide.
 function tickBlockers(state) {
   for (let row = 0; row < state.gridHeight; row++) {
     for (let col = 0; col < state.gridWidth; col++) {
@@ -174,7 +174,7 @@ function tickBlockers(state) {
   }
 }
 
-// Mirrors game.js checkBombs (line ~484-496).
+// Mirrors game.js checkBombs.
 function checkBombs(state) {
   for (let row = 0; row < state.gridHeight; row++) {
     for (let col = 0; col < state.gridWidth; col++) {
@@ -191,12 +191,18 @@ function isBlockedTile(tile) {
 
 // Every distinct valid chain reachable in state, searched via DFS over
 // king-move adjacency + canExtendChain, mirroring game.js canFormValidChain's
-// traversal (line ~535-574) but scoring instead of just checking existence.
+// traversal but scoring instead of just checking existence.
 // Sorted best-first, capped at options.limit. "Distinct" = a unique
 // (finalTile, length, points) combination, since the final tile is the one
 // that survives and absorbs the chain's value.
-// options.mustEndAt restricts results to chains whose last tile is that tile
-// (this is how a bomb gets defused: it must be the merge's final tile).
+// options.mustEndAt restricts results to chains whose last tile is that tile.
+// For bombs this is how the bomb SURVIVES as a scoring tile: executeChain
+// clears the blocker on the final tile and keeps it, valued at the chain sum.
+// It is NOT the only way to remove a bomb -- a bomb in any non-final position
+// is nulled along with the rest of the chain, and checkBombs only scans tiles
+// still on the grid. Verified by `mirrors-game.test.js`. bot.js searches only
+// the mustEndAt route, so consuming a bomb mid-chain is a legal move the bot
+// never generates.
 // options.mustStartAt restricts results to chains starting at that tile.
 function findTopChains(state, options = {}) {
   const { mustEndAt, mustStartAt, maxLength = Infinity, limit = Infinity } = options;
