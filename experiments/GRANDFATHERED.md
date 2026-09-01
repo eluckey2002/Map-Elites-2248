@@ -41,11 +41,25 @@ So either that experiment never completed, or it completed under a different
 framing and the registered record was never closed out. This is left recorded
 rather than resolved — it is the clearest evidence for why the gate exists.
 
-## RESULT-0018 is the load-bearing exemption
+## RESULT-0018 was the load-bearing exemption — no longer
 
 `DECISION-0004` promoted a change into the shipped bot on the strength of
-RESULT-0018, and RESULT-0018 is grandfathered. That is the one place where a
-decision with consequences rests on a result the gate would otherwise have
-required a protocol for. Recorded plainly; not a reason to backfill one. Tracked for a proper re-run at
-[BL-0005](../docs/backlog/BL-0005-retrofit-result-0018-protocol.md), deferred
-2026-08-31 pending a spare half hour of compute — not pending a decision.
+RESULT-0018, and RESULT-0018 is grandfathered. That was the one place where a
+decision with consequences rested on a result the gate would otherwise have
+required a protocol for.
+
+**Closed 2026-09-01.** `RESULT-0020` registered a protocol, re-ran the same
+52 x 300 holdout, and reproduced every one of RESULT-0018’s counts exactly.
+`DECISION-0004` now has evidence a clean checkout can regenerate, produced
+under a protocol committed before the data existed.
+
+RESULT-0018 stays on the list above. It was not backfilled, not edited, and
+not removed: the exemption genuinely happened, and this file is the record
+that it did. What changed is that no shipped decision depends on it any more.
+
+The re-run also surfaced something the original could not. While both arms
+were the same promoted policy the instrument returned 520 of 520 identical
+cells and exited 0 — a null result indistinguishable from a real one. That is
+the failure mode this gate exists to make visible, and it was found by running
+the experiment again rather than by reading the record. See `RESULT-0020`’s
+C2 and P3.

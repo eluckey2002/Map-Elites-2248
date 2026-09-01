@@ -488,7 +488,22 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-08-30
 - **supersedes:** []
 - **superseded_by:** []
-- **notes:** Terminal score averaged 970 points lower because the challenger often stopped earlier with less target overshoot. If maximizing score rather than reaching the target were the objective, this result would not support it. Promotion remains a separate owner decision.
+- **notes:** Terminal score averaged 970 points lower because the challenger often stopped earlier with less target overshoot. If maximizing score rather than reaching the target were the objective, this result would not support it. Promotion remains a separate owner decision. Replicated 2026-09-01 by `RESULT-0020`, which registered a protocol before running and reproduced every count here exactly; this record is unchanged by that and keeps its own standing.
+
+### RESULT-0020 — RESULT-0018's holdout reproduces exactly under a protocol registered before the run
+
+- **type:** result
+- **status:** accepted
+- **scope:** one sealed 52-level x 300-seed paired holdout, 15,600 cells, replicating `RESULT-0018`'s comparison on a clean checkout of `main` at commit `b09737b`; champion arm `chooseBaseMove`, challenger `chooseTargetAwareMove`; seven source files frozen at registration; shipped bot and protected surfaces unchanged
+- **statement:** Run under a protocol committed before any game was played, the target-aware immediate-finish rule reproduces `RESULT-0018` exactly on all six predeclared counts: **9,354 existing wins made faster**, 6,186 tied, **zero made slower**, **zero champion-win regressions**, 9 champion losses converted to wins, and faster cases on **all 52 shipped levels**. Mean all-cell saving **1.271 moves**, matching to three decimals; mean terminal score **970.3 points lower**, matching the original's stated cost. The predeclared compute check **breached**: 1.965x against a declared 1.3x–1.6x band. That breach is a defect the replication exposed rather than a property of the policy — `solver/bot.js`'s promoted `chooseMove` is byte-identical to `chooseTargetAwareMove` apart from identifiers, and the challenger calls it as its fallback, so it evaluates the target-aware override twice per move; on identical plays (260 of 260) the second evaluation costs ~17% and changes nothing. This record establishes reproducibility and provenance for a claim already made; it does not extend that claim.
+- **evidence:** protocol `experiments/RESULT-0020/protocol.md` registered at commit `b09737b58e30e9263bb1ccc82c605a22f5f8b8ab`, a strict ancestor of the report commit; report `experiments/RESULT-0020/report.md`; holdout artifact `.orch/runs/result-0020-target-aware-replication-2026-09-01/evidence/holdout.json`, identity `90c4dc6fffc4aab824a6ca557a201c48ca10fe35dc9edaeb077b902163610ca8`, carrying `registration.protocol = RESULT-0020` and `registration.protocolCommit = b09737b`; screen artifact `.orch/runs/result-0020-target-aware-replication-2026-09-01/evidence/screen.json`, identity `08a87042a4f663211dffa6a7c714c82885c4443531f509606c1359153d1e91e5`, diagnostic only.
+- **proof_class:** `heuristic_observation` for generalization over the fixed unseen sample; `direct_source` for artifact identity, completeness, disjoint seeds, registration stamps, source hashes, and the commit ordering that makes this a pre-registration. Zero observed regressions is not a proof over every possible board.
+- **as_of:** 2026-09-01
+- **reverify:** From a clean checkout at `b09737b` or later, confirm the holdout artifact's `artifactIdentity` and its 15,600 level-major cells with `validateArtifact`; recompute the six counts, the 1.271 mean saving, and the compute ratio from the cells; confirm `registration.protocolCommit` is a strict ancestor of the commit adding `report.md`; run `node tools/verify-experiments.js`. Expect exact agreement with `RESULT-0018` on every move-based figure and the 1.965x compute breach.
+- **updated:** 2026-09-01
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** A replication, not a promotion. `RESULT-0018` keeps its own `proof_class` and its grandfather entry; nothing here upgrades it. The compute figure is wall-clock on a shared machine and was declared diagnostic before the run; it is reported as a breach because the protocol named a band and the run left it, not because the timing is authoritative. The challenger's doubled override is recorded here and not fixed — `solver/target-aware-challenger.js` is frozen for this record.
 
 ## Decision registry
 
@@ -549,7 +564,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-08-30
 - **supersedes:** []
 - **superseded_by:** []
-- **notes:** This decision changes which policy is current; it does not change the historical standing or identity of any earlier result.
+- **notes:** This decision changes which policy is current; it does not change the historical standing or identity of any earlier result. The evidence under it is now reproducible: `RESULT-0020` (2026-09-01) registered a protocol before running and reproduced RESULT-0018 holdout counts exactly, so this decision no longer rests solely on a grandfathered result. That replication also found that the promotion copied the target-aware policy into `solver/bot.js` rather than moving it — `chooseMove` and `chooseTargetAwareMove` are now byte-identical apart from their identifiers, and the experimental challenger calls the promoted one, evaluating the override twice per move. That is a code duplication to resolve, not a change to this decision.
 
 ## Hypothesis registry
 

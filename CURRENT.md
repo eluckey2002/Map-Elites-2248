@@ -45,14 +45,24 @@ backfilled, because a protocol written after the outcome is fiction. **There is
 no escape hatch and one is not to be proposed without new evidence** — the
 reasoning is recorded in `experiments/README.md`.
 
-`RESULT-0018` is the one grandfathered result a shipped decision rests on
+`RESULT-0018` was the one grandfathered result a shipped decision rested on
 (`DECISION-0004` promoted the target-aware policy into `solver/bot.js`).
-Registering a protocol and re-running its holdout is deferred at
-[BL-0005](docs/backlog/BL-0005-retrofit-result-0018-protocol.md), waiting on a
-spare half hour of compute rather than on any decision. Its acceptance test,
-and five traps that record does not know about, are in
-[BL-0005-FINISH-LINE](docs/backlog/BL-0005-FINISH-LINE.md) — read both before
-starting, and note it amends steps 2 and 7.
+**Closed 2026-09-01.** `RESULT-0020` registered a protocol, re-ran the same
+52 x 300 holdout, and reproduced every count exactly — 9,354 wins made faster,
+zero made slower, zero champion-win regressions, mean saving 1.271 moves. That
+decision now has evidence a clean checkout can regenerate. `RESULT-0018` was
+not edited and stays grandfathered; the re-run replicates it rather than
+replacing it. [BL-0005](docs/backlog/BL-0005-retrofit-result-0018-protocol.md)
+and its [finish line](docs/backlog/BL-0005-FINISH-LINE.md) are done.
+
+Two things the re-run found that reading the records could not. The evaluation
+had been comparing the promoted policy against itself — 520 of 520 identical
+cells, exit 0, indistinguishable from a real null. And the promotion *copied*
+the policy into `solver/bot.js` instead of moving it, so `chooseMove` and
+`chooseTargetAwareMove` are now byte-identical apart from their identifiers and
+the challenger evaluates the same override twice per move. The first is fixed
+(`ab4b9d7`); the second is recorded in `RESULT-0020` P3 and **not** fixed —
+that file was frozen for the run.
 
 ## Parked
 

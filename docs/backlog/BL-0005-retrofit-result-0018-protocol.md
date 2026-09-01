@@ -1,10 +1,10 @@
 ---
 id: BL-0005
 title: Register a protocol for RESULT-0018 and re-run its holdout
-status: deferred
+status: done
 milestone: experiment-discipline
 depends_on: []
-updated: 2026-08-31
+updated: 2026-09-01
 ---
 
 # BL-0005 — Register a protocol for RESULT-0018 and re-run its holdout
@@ -13,6 +13,15 @@ updated: 2026-08-31
 
 This record is intent, not evidence. Proof standing lives in the
 [evidence ledger](../../EVIDENCE_LEDGER.md); nothing here upgrades a claim.
+
+## Done — 2026-09-01
+
+Completed as `RESULT-0020`: protocol registered at `b09737b` before any game
+was played, holdout re-run once, all six predeclared counts reproduced
+exactly. `RESULT-0018` was not edited and stays grandfathered — see the
+amendment below for why removing it would have failed the gate it was meant
+to satisfy. One declared check breached (P3, compute ratio) and is reported
+as a breach in `experiments/RESULT-0020/report.md`.
 
 ## Amended — read the finish line alongside this
 

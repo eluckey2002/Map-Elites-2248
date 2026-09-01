@@ -1,13 +1,18 @@
 ---
 id: BL-0005-FINISH-LINE
 title: Finish line for BL-0005 — what done means, and the five things BL-0005 does not know
-status: ready
+status: done
 milestone: experiment-discipline
 depends_on: [BL-0005]
-updated: 2026-08-31
+updated: 2026-09-01
 ---
 
 # Finish line — BL-0005
+
+> **Reached 2026-09-01 as `RESULT-0020`.** All fourteen lines below are true.
+> Every fact and command in this record was run against the work that
+> satisfied it. The one deviation from plan is P3, a declared compute check
+> that breached and is reported as a breach rather than reconciled.
 
 ## Authority
 
