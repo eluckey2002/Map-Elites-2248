@@ -51,6 +51,9 @@ verdict whose covered identities still match.
    Integration then found the batch-production path unreachable; revision
    `c24a745` restored generation without exposing a shortlist. Focused evidence
    is 23/23 and the seed-variance suite is 7/7 at the accepted revision.
+4. **Statistical scale audit** — revision `b149eda` replaced the mixed-scale
+   comparison with a one-way random-effects between-candidate variance
+   component. Focused evidence is 24/24 and the seed-variance suite is 8/8.
 
 ## Blame classes
 
@@ -67,6 +70,6 @@ verdict whose covered identities still match.
 ## Terminal
 
 - `complete`
-- Deciding evidence: `SV-CODE-001` acceptance 1-6 PASS at `c24a745`; the code
+- Deciding evidence: `SV-CODE-001` acceptance 1-6 PASS at `b149eda`; the code
   lens's accepted findings are corrected; known full-suite baseline failures
   remain explicitly non-green and outside this code result.

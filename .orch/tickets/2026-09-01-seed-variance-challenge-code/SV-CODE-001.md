@@ -74,7 +74,7 @@ seed-noise verdict.
 
 ## Result
 
-- **Accepted revision:** `c24a745b06eac29f8e65fe5aef67be9df87403b8`.
+- **Accepted revision:** `b149eda598d59a9db3750cbbf721c3a9f6dad078`.
 - **Changed artifacts:**
   - `solver/seed-variance.js` — real-subject measurement, statistical
     reduction, decision, valid/broken entitlement, challenge receipt, and
@@ -88,8 +88,8 @@ seed-noise verdict.
 - **Red observation:** before implementation,
   `node --test solver/tests/seedVariance.test.js` failed with
   `Cannot find module '../seed-variance'`.
-- **Green observation:** focused completion tests pass 23/23 at the accepted
-  revision; the seed-variance suite passes 7/7 including spawned production
+- **Green observation:** focused completion tests pass 24/24 at the accepted
+  revision; the seed-variance suite passes 8/8 including spawned production
   CLI paths.
 
 ## Gate review and correction
@@ -110,6 +110,13 @@ batch, and `--select-from` requires the verified bundle for that exact batch.
 The added regression test proves generation emits no shortlist before the
 challenge exists.
 
+Before preregistration, a dimensional audit found that the first analysis had
+compared variance of candidate sample means with single-game within-level
+variance. Revision `b149eda` replaces that with the one-way random-effects
+between-candidate component and derives the between/within ratio and
+single-seed reliability from components on the same scale. A focused numeric
+test fixes that interpretation.
+
 ## Verification
 
 1. **PASS — valid subject and broken twin.** The focused suite reaches
@@ -126,7 +133,7 @@ challenge exists.
    selection for the broken entitlement.
 4. **PASS — focused regression.** `node --test
    solver/tests/generateLevels.test.js solver/tests/levelAuthor.test.js
-   solver/tests/seedVariance.test.js` passes 23/23.
+   solver/tests/seedVariance.test.js` passes 24/24.
 5. **PASS — deterministic scope checks.** `git diff 1b40d80..5194faf --check`
    passes; the producer commit changes only the three ticket-authorized source
    and test paths.
