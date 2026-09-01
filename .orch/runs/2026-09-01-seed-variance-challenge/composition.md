@@ -15,8 +15,8 @@ entry: named
 2. `bounded-verdict`
    - unit: `orch-deliver`
    - pack: `orch-research-pack`
-   - spec: created by `orch-spec` after `entitled-check` returns a fixed result
-     identity
+   - spec: `.orch/runs/2026-09-01-seed-variance-verdict/spec.md`
+   - predecessor: code result `b149eda598d59a9db3750cbbf721c3a9f6dad078`
 
 ## Edges
 
