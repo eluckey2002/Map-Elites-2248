@@ -242,16 +242,20 @@ function analyzeArtifact(artifact) {
     withinDegrees += all.length - 1;
   }
   const withinLevelVariance = withinDegrees === 0 ? 0 : withinSquares / withinDegrees;
-  const betweenCandidateVariance = variance(candidateMeans);
+  const gamesPerCandidate = artifact.samples.a.count + artifact.samples.b.count;
+  const betweenCandidateMeanVariance = variance(candidateMeans);
+  const betweenMeanSquare = gamesPerCandidate * betweenCandidateMeanVariance;
+  const betweenCandidateVariance = Math.max(0, (betweenMeanSquare - withinLevelVariance) / gamesPerCandidate);
   const total = betweenCandidateVariance + withinLevelVariance;
   return {
     pearson: pearson(aMeans, bMeans),
     withinLevelVariance,
     betweenCandidateVariance,
+    betweenCandidateMeanVariance,
     betweenToWithinVarianceRatio: withinLevelVariance === 0 ? null : betweenCandidateVariance / withinLevelVariance,
     singleSeedReliability: total === 0 ? 0 : betweenCandidateVariance / total,
     candidateCount: artifact.candidates.length,
-    gamesPerCandidate: artifact.samples.a.count + artifact.samples.b.count,
+    gamesPerCandidate,
   };
 }
 

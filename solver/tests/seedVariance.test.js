@@ -158,6 +158,16 @@ test('a bounded artifact measured through real playMeasured reaches PASS and its
   assert.equal(broken.check.status, 'FAIL');
 });
 
+test('variance comparison uses single-game between-candidate and within-level components', () => {
+  const stats = analyzeArtifact(syntheticArtifact());
+  assert.ok(stats.betweenCandidateVariance < stats.betweenCandidateMeanVariance);
+  assert.ok(stats.betweenCandidateVariance > 99 && stats.betweenCandidateVariance < 100);
+  assert.equal(
+    stats.singleSeedReliability,
+    stats.betweenCandidateVariance / (stats.betweenCandidateVariance + stats.withinLevelVariance),
+  );
+});
+
 test('artifacts and issuance require a protocol committed before measurement', () => {
   assert.equal(PROTOCOL.path, 'experiments/RESULT-0020/protocol.md');
   assert.notEqual(PROTOCOL.protocolCommit, PROTOCOL.measurementCommit);
