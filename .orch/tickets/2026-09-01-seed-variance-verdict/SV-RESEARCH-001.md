@@ -1,7 +1,7 @@
 ---
 id: SV-RESEARCH-001
 run: 2026-09-01-seed-variance-verdict
-status: ready
+status: claimed
 executor: orch-research
 pack: orch-research-pack
 depends_on:
@@ -16,6 +16,8 @@ excluded_actions:
   - rerun on alternate seeds
   - decide qualitative human-play needs
 bound: one registered confirmation and one challenge
+claimed_by: root-codex
+claimed_at: 2026-09-01T23:59:00Z
 ---
 
 # SV-RESEARCH-001 — Registered seed-variance verdict

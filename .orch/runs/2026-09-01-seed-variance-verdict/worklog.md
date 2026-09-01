@@ -17,5 +17,9 @@ only if every proof condition passes.
 
 1. Research spec frozen before data. Baseline 284 tests: 280 pass and four
    named pre-existing/external failures.
+2. `RESULT-0021` preregistered at
+   `e63f83c70ad1cf0725237e37f82d41491676d778`, including fixed samples,
+   statistics, thresholds, controls, source identities, and decision rule.
+   No all-level measurement had run when this entry was written.
 
 ## Terminal
