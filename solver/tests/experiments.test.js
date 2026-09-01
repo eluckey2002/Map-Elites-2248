@@ -1,7 +1,9 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
+const path = require('node:path');
 const {
-  assessExperiments, declaredChecks, parseFrontmatter, readLedgerResults,
+  addedIn, assessExperiments, declaredChecks, isStrictAncestor, parseFrontmatter, readLedgerResults,
 } = require('../../tools/verify-experiments.js');
 
 test('a result claiming only direct evidence needs no protocol', () => {
@@ -66,4 +68,19 @@ test('LIVE: every generalizing result in this ledger has a protocol or a grandfa
     assessExperiments(), [],
     'Experiment gate failed against the live ledger; run node tools/verify-experiments.js',
   );
+});
+
+test('a commit is never a strict ancestor of itself — same-commit backfill fails', () => {
+  const root = path.join(__dirname, '..', '..');
+  const head = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+  const prev = execFileSync('git', ['rev-parse', 'HEAD~1'], { cwd: root, encoding: 'utf8' }).trim();
+  assert.equal(isStrictAncestor(head, head), false, 'same commit must not count as ordered');
+  assert.equal(isStrictAncestor(prev, head), true, 'earlier commit precedes later');
+  assert.equal(isStrictAncestor(head, prev), false, 'later commit does not precede earlier');
+  assert.equal(isStrictAncestor(null, head), false);
+});
+
+test('addedIn returns the OLDEST add, so delete-and-re-add cannot reset the clock', () => {
+  assert.equal(typeof addedIn('EVIDENCE_LEDGER.md'), 'string');
+  assert.equal(addedIn('does/not/exist.md'), null);
 });

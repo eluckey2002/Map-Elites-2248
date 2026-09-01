@@ -9,6 +9,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const { execFileSync } = require('node:child_process');
 
 const ROOT = path.join(__dirname, '..');
 const LEDGER = path.join(ROOT, 'EVIDENCE_LEDGER.md');
@@ -60,6 +61,25 @@ function grandfathered() {
   if (!fs.existsSync(GRANDFATHER)) return new Set();
   const text = fs.readFileSync(GRANDFATHER, 'utf8');
   return new Set([...text.matchAll(/^- (RESULT-\d+)\b/gm)].map((m) => m[1]));
+}
+
+// The commit that FIRST added a path (oldest), so delete-and-re-add cannot
+// reset the clock. Null when the path is not committed yet.
+function addedIn(relPath) {
+  try {
+    const out = execFileSync('git', ['log', '--diff-filter=A', '--format=%H', '--', relPath], {
+      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim().split('\n').filter(Boolean);
+    return out.length ? out[out.length - 1] : null;
+  } catch { return null; }
+}
+
+function isStrictAncestor(a, b) {
+  if (!a || !b || a === b) return false;
+  try {
+    execFileSync('git', ['merge-base', '--is-ancestor', a, b], { cwd: ROOT, stdio: 'ignore' });
+    return true;
+  } catch { return false; }
 }
 
 function sha16(file) {
@@ -114,6 +134,17 @@ function assessExperiments() {
           problems.push(`${result.id}: declared check ${check} is not resolved in report.md`);
         }
       }
+      // A protocol is a PRE-registration only if it was committed before the
+      // report it justifies. Same commit means no ordering was ever recorded.
+      const protoCommit = addedIn(path.join('experiments', result.id, 'protocol.md'));
+      const reportCommit = addedIn(path.join('experiments', result.id, 'report.md'));
+      if (protoCommit && reportCommit && !isStrictAncestor(protoCommit, reportCommit)) {
+        problems.push(
+          `${result.id}: protocol.md was not committed before report.md `
+          + `(protocol ${protoCommit.slice(0, 8)}, report ${reportCommit.slice(0, 8)}). `
+          + 'A protocol committed with or after its results is a reconstruction.',
+        );
+      }
     } else if (front.status === 'complete') {
       problems.push(`${result.id}: protocol is complete but has no report.md`);
     }
@@ -135,5 +166,6 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, assessExperiments, declaredChecks, parseFrontmatter, readLedgerResults, sha16,
+  REQUIRES_PROTOCOL, addedIn, assessExperiments, declaredChecks, isStrictAncestor,
+  parseFrontmatter, readLedgerResults, sha16,
 };
