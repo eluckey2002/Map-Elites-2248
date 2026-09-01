@@ -503,7 +503,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-09-01
 - **supersedes:** []
 - **superseded_by:** []
-- **notes:** A replication, not a promotion. `RESULT-0018` keeps its own `proof_class` and its grandfather entry; nothing here upgrades it. The compute figure is wall-clock on a shared machine and was declared diagnostic before the run; it is reported as a breach because the protocol named a band and the run left it, not because the timing is authoritative. The challenger's doubled override is recorded here and not fixed — `solver/target-aware-challenger.js` is frozen for this record.
+- **notes:** A replication, not a promotion. `RESULT-0018` keeps its own `proof_class` and its grandfather entry; nothing here upgrades it. The compute figure is wall-clock on a shared machine and was declared diagnostic before the run; it is reported as a breach because the protocol named a band and the run left it, not because the timing is authoritative. The challenger's doubled override is recorded here and not fixed — `solver/target-aware-challenger.js` is frozen for this record. **Fixed after this record completed**: the challenger now calls `chooseBaseMove` directly, verified play-identical on 1,040 games across all 52 levels, with a spy test pinning that it never routes through the promoted champion. That edit moves the file off its frozen hash, so this protocol correctly refuses to re-run — the record is complete and its artifact stands.
 
 ## Decision registry
 

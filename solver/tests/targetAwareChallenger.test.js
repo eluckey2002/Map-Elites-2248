@@ -101,3 +101,32 @@ test('null/no-move behavior is preserved', () => {
   assert.equal(chooseMove(state), null);
   assert.equal(chooseTargetAwareMove(state), null);
 });
+
+// The challenger must be built on the PLAIN chooser, never on the shipped one.
+// Two things go wrong when it routes through chooseMove. It evaluates the same
+// override twice per move, which is pure waste (~17%, RESULT-0020 P3). Worse,
+// once that rule is promoted into the champion — which DECISION-0004 did — the
+// experimental policy is built out of the thing it is supposed to be tested
+// against, and the comparison stops meaning anything. A spy is used rather than
+// a source grep so this checks the dependency, not the spelling.
+test('the challenger never routes through the promoted champion', () => {
+  const bot = require('../bot');
+  const real = bot.chooseMove;
+  let promotedCalls = 0;
+  bot.chooseMove = (...args) => { promotedCalls++; return real(...args); };
+  delete require.cache[require.resolve('../target-aware-challenger')];
+
+  try {
+    const fresh = require('../target-aware-challenger').chooseTargetAwareMove;
+    const level = LEVELS.find(({ level: number }) => number === 51);
+    const run = play(level, 1, fresh);
+    assert.ok(run.moves.length > 0, 'the spy run must actually play moves');
+    assert.equal(
+      promotedCalls, 0,
+      'target-aware-challenger called bot.chooseMove; it must call chooseBaseMove',
+    );
+  } finally {
+    bot.chooseMove = real;
+    delete require.cache[require.resolve('../target-aware-challenger')];
+  }
+});

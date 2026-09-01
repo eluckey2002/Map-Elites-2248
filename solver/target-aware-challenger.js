@@ -5,7 +5,12 @@
 // after the move that wins the level, so this challenger inspects the same
 // walk's untrimmed routes only when one can reach target now.
 const { findGreedyChains } = require('./engine');
-const { chooseMove, DEFAULT_PARAMS } = require('./bot');
+// chooseBaseMove, never chooseMove. DECISION-0004 promoted this same rule into
+// the bot, so chooseMove already applies the override — routing through it made
+// the challenger evaluate the override twice per move for no change in play
+// (~17% wasted, RESULT-0020 P3). Building an experimental policy on top of the
+// shipped champion also collapses the A/B the moment that policy is promoted.
+const { chooseBaseMove, DEFAULT_PARAMS } = require('./bot');
 
 function hasBomb(state) {
   return state.grid.some((row) => row.some((tile) => tile && tile.blocker === 'bomb'));
@@ -25,7 +30,7 @@ function immediateWinningUntrimmed(state, params = DEFAULT_PARAMS) {
 }
 
 function chooseTargetAwareMove(state, options = {}) {
-  const champion = chooseMove(state, options);
+  const champion = chooseBaseMove(state, options);
   if (!champion) return null;
   return immediateWinningUntrimmed(state, options.params) || champion;
 }
