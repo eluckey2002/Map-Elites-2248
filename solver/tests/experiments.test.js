@@ -84,3 +84,25 @@ test('addedIn returns the OLDEST add, so delete-and-re-add cannot reset the cloc
   assert.equal(typeof addedIn('EVIDENCE_LEDGER.md'), 'string');
   assert.equal(addedIn('does/not/exist.md'), null);
 });
+
+const { UnregisteredExperiment, registrationStamp, requireProtocol } = require('../experiment-guard.js');
+
+test('an unregistered run is refused before any compute', () => {
+  assert.throws(() => requireProtocol(['node', 'x']), UnregisteredExperiment);
+});
+
+test('exploratory runs are allowed but stamped as such', () => {
+  const reg = requireProtocol(['node', 'x', '--exploratory']);
+  assert.equal(reg.exploratory, true);
+  assert.deepEqual(registrationStamp(reg), { exploratory: true });
+});
+
+test('a malformed or unregistered protocol id is refused', () => {
+  assert.throws(() => requireProtocol(['node', 'x', '--protocol', 'nonsense']), UnregisteredExperiment);
+  assert.throws(() => requireProtocol(['node', 'x', '--protocol', 'RESULT-9999']), UnregisteredExperiment);
+});
+
+test('a real registration stamps the protocol commit into the artifact', () => {
+  const stamp = registrationStamp({ exploratory: false, resultId: 'RESULT-0019', protocolCommit: 'abc123' });
+  assert.deepEqual(stamp, { exploratory: false, protocol: 'RESULT-0019', protocolCommit: 'abc123' });
+});

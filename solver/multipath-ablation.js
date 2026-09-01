@@ -11,7 +11,15 @@ const { DEFAULT_PARAMS } = require('./bot');
 const { pairedLift, mean } = require('./policy-eval');
 const { createPool } = require('./policy-pool');
 
+const { registrationStamp, requireProtocolOrExit } = require('./experiment-guard');
+
 const CONFIRM = process.argv.includes('--confirm');
+// Refuse before spending the run, not after. --confirm produces the evidence a
+// generalizing claim rests on, so it needs a protocol registered in advance.
+const REGISTRATION = CONFIRM
+  ? requireProtocolOrExit(process.argv, { name: 'multipath-ablation --confirm' })
+  : { exploratory: true, protocolCommit: null, resultId: null };
+const REGISTRATION_STAMP = registrationStamp(REGISTRATION);
 const SCREEN_LEVEL_NUMBERS = [1, 5, 10, 15, 20, 26, 30, 35, 40, 45, 50, 53];
 const SCREEN_LEVELS = SCREEN_LEVEL_NUMBERS.map((n) => LEVELS[n - 1]);
 const SCREEN_SEEDS = Array.from({ length: 40 }, (_, i) => 9_000_000 + i);

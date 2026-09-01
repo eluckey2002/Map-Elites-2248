@@ -9,7 +9,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
-const { sha16 } = require('./verify-experiments.js');
+const { addedIn, sha16 } = require('./verify-experiments.js');
 
 const ROOT = path.join(__dirname, '..');
 const FROZEN_BY_DEFAULT = ['solver/bot.js', 'solver/engine.js', 'solver/policy-eval.js', 'src/game.js'];
@@ -26,6 +26,17 @@ function main() {
     return;
   }
   const dir = path.join(ROOT, 'experiments', resultId);
+  // An id that was ever registered keeps its original registration commit
+  // forever (addedIn takes the oldest add), so reusing one would inherit a
+  // registration timestamp that belongs to a different experiment.
+  const priorRegistration = addedIn(path.join('experiments', resultId, 'protocol.md'));
+  if (priorRegistration) {
+    console.error(`${resultId} was already registered at ${priorRegistration.slice(0, 8)}, even if the file is gone now.`);
+    console.error('Ids are not reusable: git would date the new protocol from that old commit.');
+    console.error('Use the next unused RESULT id.');
+    process.exitCode = 1;
+    return;
+  }
   if (fs.existsSync(path.join(dir, 'protocol.md'))) {
     console.error(`${resultId} is already registered at experiments/${resultId}/protocol.md.`);
     console.error('A registered protocol is frozen. If the question or denominator changed,');

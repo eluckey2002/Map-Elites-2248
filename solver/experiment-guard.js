@@ -98,4 +98,20 @@ function registrationStamp(registration) {
     : { exploratory: false, protocol: registration.resultId, protocolCommit: registration.protocolCommit };
 }
 
-module.exports = { UnregisteredExperiment, flagValue, registrationStamp, requireProtocol };
+// CLI wrapper: an unregistered run is a rule being enforced, not a crash, so
+// it prints the reason and exits 1 instead of throwing a stack trace an agent
+// might read as a bug worth working around.
+function requireProtocolOrExit(argv, options) {
+  try {
+    return requireProtocol(argv, options);
+  } catch (error) {
+    if (!(error instanceof UnregisteredExperiment)) throw error;
+    console.error(`\nEXPERIMENT NOT REGISTERED\n\n${error.message}\n`);
+    process.exit(1);
+  }
+  return null;
+}
+
+module.exports = {
+  UnregisteredExperiment, flagValue, registrationStamp, requireProtocol, requireProtocolOrExit,
+};
