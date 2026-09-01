@@ -194,9 +194,9 @@ protocol says so plainly rather than hiding it:
 | Source | At the original run | Today | What moved |
 | --- | --- | --- | --- |
 | champion `solver/bot.js` | `9abe8ca8…` | `8d0dec5f…` | `DECISION-0004` promoted the challenger into the bot. The original champion is recoverable at `52f500c` and is behaviourally identical to today's `chooseBaseMove` (fact 3). |
-| challenger `solver/target-aware-challenger.js` | `ba75b5a6…` | `6b375b15…` | **`ba75b5a6…` does not exist at any committed version of that path on any ref in this repository.** The only content git has ever held there is `6b375b15…`, in the two commits that touch it — one of which is RESULT-0018's own evidence commit `6a07294`. The original run was made from an uncommitted working tree. Disclose this; it is the sharpest existing argument for why the replication is worth running. |
+| challenger `solver/target-aware-challenger.js` | `ba75b5a6…` | `6b375b15…` | **`ba75b5a6…` has never existed at that path.** `git rev-list --objects --all` finds exactly one blob ever associated with `solver/target-aware-challenger.js` across every ref, and it hashes to `6b375b15…`. `git log --all --full-history` finds the same two commits, one of them RESULT-0018's own evidence commit `6a07294`. The challenger could have lived under another name at run time; what is certain is that this path never held that content. The original run was made from an uncommitted working tree. Disclose this; it is the sharpest existing argument for why the replication is worth running. |
 | engine `solver/engine.js` | `4e2323b9…` | `4e2323b9…` | Unchanged. |
-| levels `src/game.js` | `9493407c…` | `541baa1c…` | Level 53 was added. Levels 1–52 are byte-identical in structure to `6a07294` — verified by comparing the parsed `LEVELS` arrays. The holdout only runs levels 1–52. |
+| levels `src/game.js` | `9493407c…` | `541baa1c…` | Level 53 was added. Levels 1–52 are unchanged — verified by comparing the parsed `LEVELS` arrays from `6a07294` and `HEAD` for structural equality, not by hashing the file. The holdout only runs levels 1–52. |
 | evaluator `solver/target-aware-evaluation.js` | `53aa4b2e…` | `1ed88514…` | Will move again once the champion-arm and `--protocol` parsing changes land. Both are declared in *change under test*. |
 
 ---
@@ -220,7 +220,7 @@ Nothing here is satisfied by inspection or by asserting it in a record.
 | 10 | RESULT-0018 is unedited and still grandfathered | `git diff` shows no change to its `statement`, `evidence`, `proof_class`, or `status` |
 | 11 | Universe Map regenerated after the ledger moved | `node tools/build-universe-map.js` then `node tools/verify-universe-map.js` exits 0 |
 | 12 | All four gates green | `verify-loop`, `verify-universe-map`, `verify-repo-baseline`, `verify-experiments` all exit 0 |
-| 13 | Suite at 265/268, the same three receipt failures and no others | `node --test solver/tests/*.test.js` |
+| 13 | The same three receipt failures and **no others**. The total moves above 268 once the `--protocol` parse tests land, which is correct — count failures by name, not the pass ratio | `node --test solver/tests/*.test.js` |
 | 14 | Working tree clean and **pushed** | the baseline gate fails unless `origin/main` equals local `HEAD` — commit and push, do not leave it local |
 
 The three permitted failures at line 13, by name:
@@ -280,6 +280,31 @@ engine and levels 1–52 are unchanged:
 - 9 champion losses converted to wins
 - mean saving 1.271 moves
 - challenger compute 1.45x
+
+All eight recompute exactly from the original artifact — BL-0005 transcribed
+them correctly, so they can be predeclared as written:
+
+```bash
+node -e "
+const a=require('./.orch/runs/level51-target-aware-evaluation-v2-2026-08-30/evidence/holdout.json');
+let f=0,t=0,s=0,r=0,w=0,save=0;const lv=new Set();
+for(const c of a.cells){const cw=c.champion.win,lw=c.challenger.win;
+  if(cw&&lw){const d=c.champion.movesToTarget-c.challenger.movesToTarget;
+    if(d>0){f++;lv.add(c.level)}else if(d===0)t++;else s++}
+  else if(cw&&!lw)r++; else if(!cw&&lw)w++;
+  save+=c.champion.moves-c.challenger.moves;}
+console.log({cells:a.cells.length,faster:f,tied:t,slower:s,regressions:r,converted:w,
+  levels:lv.size,meanSaving:+(save/a.cells.length).toFixed(4),
+  compute:+(a.timings.challengerMs/a.timings.championMs).toFixed(3)});
+"
+# { cells: 15600, faster: 9354, tied: 6186, slower: 0, regressions: 0,
+#   converted: 9, levels: 52, meanSaving: 1.271, compute: 1.453 }
+```
+
+Two gate behaviours were smoke-tested by injecting a throwaway `RESULT-0020`
+record into the ledger and reverting it: the experiment gate correctly refuses
+a new `heuristic_observation` record with no protocol, and the Universe Map
+regenerates and verifies cleanly with an extra record present.
 
 ---
 
