@@ -62,6 +62,35 @@ function declaredChecks(text) {
   return [...text.matchAll(/^### ([CP]\d+)(?:['′])?\s*[—-]/gm)].map((m) => m[1]);
 }
 
+// Paths a ledger record cites as evidence. Only artifacts we can open are
+// checked; prose citations are the ordering check's job, not this one.
+function citedArtifacts(body) {
+  return [...body.matchAll(/`([A-Za-z0-9._/\-]+\.json)`/g)].map((m) => m[1]);
+}
+
+// An --exploratory run is allowed to exist; it is not allowed to be the
+// evidence under a claim that generalizes. Without this the --exploratory
+// hatch has no teeth, and the guard's own error message promises it does.
+function assessArtifactStamps(result, exempt) {
+  const problems = [];
+  if (exempt.has(result.id)) return problems;
+  for (const rel of citedArtifacts(result.body)) {
+    const abs = path.join(ROOT, rel);
+    if (!fs.existsSync(abs)) continue;
+    let artifact;
+    try { artifact = JSON.parse(fs.readFileSync(abs, 'utf8')); } catch { continue; }
+    const stamp = artifact.registration;
+    if (!stamp) {
+      problems.push(`${result.id}: ${rel} carries no registration stamp; it cannot back a ${REQUIRES_PROTOCOL} claim`);
+    } else if (stamp.exploratory) {
+      problems.push(`${result.id}: ${rel} was produced by an --exploratory run and cannot back a ${REQUIRES_PROTOCOL} claim. Register a protocol and re-run.`);
+    } else if (stamp.protocol && stamp.protocol !== result.id) {
+      problems.push(`${result.id}: ${rel} was produced under ${stamp.protocol}, not ${result.id}`);
+    }
+  }
+  return problems;
+}
+
 function grandfathered() {
   if (!fs.existsSync(GRANDFATHER)) return new Set();
   const text = fs.readFileSync(GRANDFATHER, 'utf8');
@@ -102,6 +131,8 @@ function assessExperiments() {
     const dir = path.join(EXPERIMENTS, result.id);
     const protocolPath = path.join(dir, 'protocol.md');
     const hasProtocol = fs.existsSync(protocolPath);
+
+    if (needs) problems.push(...assessArtifactStamps(result, exempt));
 
     if (needs && !hasProtocol && !exempt.has(result.id)) {
       problems.push(`${result.id} claims ${REQUIRES_PROTOCOL} with no experiments/${result.id}/protocol.md and no grandfather entry`);
@@ -157,6 +188,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, addedIn, assessExperiments, declaredChecks, isStrictAncestor,
+  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessExperiments, citedArtifacts,
+  declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
 };

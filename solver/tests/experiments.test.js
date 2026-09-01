@@ -120,3 +120,18 @@ test('the registration stamp rides outside the hashed body, so old artifacts sti
   const stamped = { ...holdout, registration: { exploratory: false, protocol: 'RESULT-0019', protocolCommit: 'abc' } };
   assert.equal(validateArtifact(stamped).identity, before.identity);
 });
+
+test('an exploratory artifact cannot back a generalizing claim', () => {
+  const { assessArtifactStamps, citedArtifacts } = require('../../tools/verify-experiments.js');
+  assert.deepEqual(citedArtifacts('cited `a/b.json` and `c.json` but not `d.md`'), ['a/b.json', 'c.json']);
+  // grandfathered results predate stamping and are skipped
+  assert.deepEqual(
+    assessArtifactStamps({ id: 'RESULT-0005', body: 'sees `.orch/policy-search-01.json`' }, new Set(['RESULT-0005'])),
+    [],
+  );
+  // a missing file is not an error here; the citation check owns that
+  assert.deepEqual(
+    assessArtifactStamps({ id: 'RESULT-0099', body: 'sees `does/not/exist.json`' }, new Set()),
+    [],
+  );
+});
