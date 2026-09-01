@@ -22,6 +22,36 @@ test('CLI exposes only fixed diagnostic, screen, and holdout protocols', () => {
   assert.throws(() => parseArgs(['--diagnostic', '--out', 'x.json']), /does not write/);
 });
 
+// The registration guard reads --protocol off raw argv before parseArgs runs.
+// If parseArgs then rejects it, the documented command dies after the guard
+// passes and before any compute — which is how it shipped, and why the flags
+// are asserted here rather than left to the first real run to discover.
+test('registration flags parse instead of dying as unknown arguments', () => {
+  assert.deepEqual(
+    parseArgs(['--holdout', '--out', 'x.json', '--protocol', 'RESULT-0020']),
+    { mode: 'holdout', out: 'x.json' },
+  );
+  assert.deepEqual(
+    parseArgs(['--screen', '--out', 'x.json', '--exploratory']),
+    { mode: 'screen', out: 'x.json' },
+  );
+  assert.throws(() => parseArgs(['--holdout', '--out', 'x.json', '--protocol']), /--protocol needs a RESULT id/);
+});
+
+// The measurement itself. chooseMove on main is the promoted target-aware
+// policy, so a champion arm pointed at it compares a policy with itself and
+// reports no difference on any board. This pins the arms apart.
+test('the champion arm is the pre-promotion chooser, not the promoted bot', () => {
+  const level = require('../../src/game').LEVELS.find((lv) => lv.level === 51);
+  const cells = evaluatePair([level], [1]);
+  assert.equal(cells.length, 1);
+  assert.ok(cells[0].changedMoveCount > 0, 'champion and challenger must not be the same policy');
+  assert.deepEqual(
+    { champion: cells[0].champion.movesToTarget, challenger: cells[0].challenger.movesToTarget },
+    { champion: 17, challenger: 13 },
+  );
+});
+
 test('screen and holdout identities are frozen and exclude diagnostic seed 1', () => {
   assert.deepEqual(SCREEN_LEVELS, [1, 5, 10, 15, 20, 26, 30, 35, 40, 45, 50, 51, 52]);
   assert.equal(SCREEN_SEEDS[0], 12000000);

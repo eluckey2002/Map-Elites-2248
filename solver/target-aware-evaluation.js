@@ -11,7 +11,11 @@ const { LEVELS } = require('../src/game');
 const {
   makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles, tickBlockers, checkBombs,
 } = require('./engine');
-const { chooseMove } = require('./bot');
+// chooseBaseMove, not chooseMove. DECISION-0004 promoted the target-aware
+// policy into the bot, so on main chooseMove IS the challenger and this
+// comparison reads zero on every board. chooseBaseMove is the pre-promotion
+// chooser kept for exactly this. See BL-0005-FINISH-LINE fact 2.
+const { chooseBaseMove } = require('./bot');
 const { chooseTargetAwareMove } = require('./target-aware-challenger');
 const { registrationStamp, requireProtocolOrExit } = require('./experiment-guard');
 
@@ -89,7 +93,7 @@ function evaluatePairWithTimings(levels, seeds) {
   for (const level of levels) {
     for (const seed of seeds) {
       let start = performance.now();
-      const champion = playToTerminal(level, seed, chooseMove);
+      const champion = playToTerminal(level, seed, chooseBaseMove);
       championMs += performance.now() - start;
       start = performance.now();
       const challenger = playToTerminal(level, seed, chooseTargetAwareMove);
@@ -176,6 +180,12 @@ function parseArgs(argv) {
     } else if (arg === '--out') {
       out = argv[++index];
       if (!out) throw new Error('--out needs a path');
+    } else if (arg === '--protocol') {
+      // Consumed by the registration guard against raw argv before this runs.
+      // Accepted and ignored here so the documented command actually parses.
+      if (!argv[++index]) throw new Error('--protocol needs a RESULT id');
+    } else if (arg === '--exploratory') {
+      // Same: the guard already read it and stamped the artifact exploratory.
     } else {
       throw new Error(`unknown argument ${arg}`);
     }
