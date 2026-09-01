@@ -40,6 +40,17 @@ verdict whose covered identities still match.
    `/private/tmp/2248-seed-variance-20260901`; baseline focused tests PASS
    16/16; one tracer ticket `SV-CODE-001`; uncovered remainder `[]`;
    decision gap `[]`.
+2. **Code tracer producer** — red: missing production module; green: focused
+   21/21 and seed-variance 6/6; result revision
+   `5194faf55ca1c3a725f9f8ccb7fdbda07a818880`; full suite 278/282 with three
+   retained stale-receipt failures and one external root-worktree `.orch`
+   failure; code-lens gate dispatched against the fixed revision.
+3. **Gate and correction** — the code lens rejected standalone entitlement,
+   unproved protocol ordering, incomplete receipt cross-binding, and a real
+   evaluator test that did not reach PASS. Revision `2aa3018` repaired all four.
+   Integration then found the batch-production path unreachable; revision
+   `c24a745` restored generation without exposing a shortlist. Focused evidence
+   is 23/23 and the seed-variance suite is 7/7 at the accepted revision.
 
 ## Blame classes
 
@@ -54,3 +65,8 @@ verdict whose covered identities still match.
 []
 
 ## Terminal
+
+- `complete`
+- Deciding evidence: `SV-CODE-001` acceptance 1-6 PASS at `c24a745`; the code
+  lens's accepted findings are corrected; known full-suite baseline failures
+  remain explicitly non-green and outside this code result.
