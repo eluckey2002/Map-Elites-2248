@@ -84,10 +84,31 @@ is "we checked afterward."
 
 ## If the re-run disagrees with the original
 
-Report it. Do not reconcile it, do not re-run on fresh seeds to get a cleaner
-number, and do not quietly widen a threshold. A disagreement is a finding about
-`RESULT-0018` and possibly about `DECISION-0004`, and it is the owner's call.
-The stopping rules in the protocol must say this before the run starts.
+Do not reconcile it, do not re-run on fresh seeds to get a cleaner number, and
+do not quietly widen a threshold. The stopping rules in the protocol must say
+this before the run starts.
+
+"Report it" means the repository's own mechanism, not a message in chat. Per
+`AGENTS.md`, every correction is append-only: add a `CORRECTION-NNNN` record,
+update the affected record's status, and retain the prior claim and its
+receipt. **`CORRECTION-0004` is the worked example** — "RESULT-0015 was
+invalidated when the beam was made additive" is the same shape as this case,
+and it neither deleted the old claim nor edited it.
+
+So a disagreement produces, in this order:
+
+1. A `CORRECTION-NNNN` record stating what the re-run measured and how it
+   differs, at its own honest `proof_class`. The new run's artifact is its
+   evidence and carries a registration stamp; the original stays cited.
+2. `RESULT-0018`'s `status` updated and `superseded_by` populated. Its text is
+   not edited — it stays as written, which is the whole point of append-only.
+3. A note on `DECISION-0004` that the evidence under it has moved.
+
+What is explicitly **not** the agent's call: whether the shipped bot change in
+`solver/bot.js` comes out. `DECISION-0004` is an `owner_decision`, and an
+`owner_decision` is not overturned by a measurement — it is re-put to the
+owner. Leave the code alone, leave the gates green, and stop with the
+correction recorded and the question raised.
 
 ## The trigger
 
