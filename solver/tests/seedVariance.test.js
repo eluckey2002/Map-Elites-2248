@@ -216,6 +216,19 @@ test('the production CLI selects only from a verified bundle bound to the exact 
   assert.match(mismatched.stderr, /consumer subject identity mismatch/);
 });
 
+test('the production CLI can generate an unselected batch before a challenge bundle exists', () => {
+  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'seed-variance-generate-'));
+  const batchPath = path.join(temp, 'batch.json');
+  const generated = spawnSync(process.execPath, [
+    'solver/generate-levels.js', '--count', '0', '--full', '0', '--out', batchPath,
+  ], { cwd: ROOT, encoding: 'utf8' });
+  assert.equal(generated.status, 0, generated.stderr);
+  assert.match(generated.stdout, /Selection withheld/);
+  assert.doesNotMatch(generated.stdout, /Hardest for the bot first|^SELECTED /m);
+  const batch = JSON.parse(fs.readFileSync(batchPath, 'utf8'));
+  assert.deepEqual(batch.results, []);
+});
+
 test('receipt verifier cross-binds claim, subjects, protocol, execution path, and actual selections', () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'seed-variance-receipt-'));
   const batchPath = path.join(temp, 'batch.json');

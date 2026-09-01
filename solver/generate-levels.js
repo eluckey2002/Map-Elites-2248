@@ -249,9 +249,9 @@ function parseArgs(argv) {
 
 function main(argv = process.argv.slice(2)) {
   const args = parseArgs(argv);
-  if (!args.seedVarianceBundle) throw new Error('--seed-variance-bundle is required');
-  const bundle = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), args.seedVarianceBundle), 'utf8'));
   if (args.selectFrom) {
+    if (!args.seedVarianceBundle) throw new Error('--seed-variance-bundle is required');
+    const bundle = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), args.seedVarianceBundle), 'utf8'));
     const batchPath = path.resolve(process.cwd(), args.selectFrom);
     const batch = JSON.parse(fs.readFileSync(batchPath, 'utf8'));
     if (!batch || !Array.isArray(batch.results)) throw new Error('selection input must contain results');
@@ -322,14 +322,13 @@ function main(argv = process.argv.slice(2)) {
     );
   }
 
-  // gateVerdict above is this file's own reading of the thresholds, which is
-  // only a preview. Anything about to be shown to a human is re-checked by the
-  // pipeline's own verifier - it replays all 450 games and re-derives every
-  // identity, so it also catches a candidate whose receipt does not match the
-  // shape it claims to come from.
-  throw new Error('verified seed-variance selection requires --select-from for the exact challenged batch');
-  process.stdout.write(`\nConfirming ${passed.length} shortlisted candidates with the pipeline verifier\n`);
-  for (const entry of passed) {
+  // This phase may produce a batch, but it must not choose or order a shortlist.
+  // Re-check every gate-passing result so the saved batch records verifier
+  // disagreements. A later --select-from invocation can rank this exact batch
+  // only after a challenge bundle has been issued for it.
+  const gatePassing = results.filter((entry) => entry.verdict.pass);
+  process.stdout.write(`\nConfirming ${gatePassing.length} gate-passing candidates with the pipeline verifier\n`);
+  for (const entry of gatePassing) {
     try {
       verifyCandidate({ schemaVersion: 1, candidates: [entry.candidate] }, entry.receipt);
       entry.confirmed = true;
@@ -339,19 +338,14 @@ function main(argv = process.argv.slice(2)) {
       process.stdout.write(`  DISAGREES  ${entry.shape.name}: ${error.message}\n`);
     }
   }
-  const disagreements = passed.filter((e) => !e.confirmed).length;
+  const disagreements = gatePassing.filter((e) => !e.confirmed).length;
   process.stdout.write(
     disagreements === 0
       ? '  all confirmed\n'
       : `  ${disagreements} candidate(s) the verifier rejects - do not show these\n`,
   );
 
-  process.stdout.write(`\n${passed.length} of ${results.length} passed every gate. Hardest for the bot first:\n`);
-  for (const entry of passed) {
-    process.stdout.write(
-      `  ${(entry.verdict.winRate * 100).toFixed(0).padStart(3)}%  ${entry.shape.name}  ${describe(entry.shape)}  target=${entry.candidate.target}${entry.confirmed ? '' : '  [UNCONFIRMED]'}\n`,
-    );
-  }
+  process.stdout.write('\nSelection withheld: rerun with --select-from and a verified --seed-variance-bundle for this exact batch.\n');
   process.stdout.write(`\nTotal ${((Date.now() - started) / 1000).toFixed(1)}s\n`);
 
   if (args.out) {
@@ -377,7 +371,7 @@ function main(argv = process.argv.slice(2)) {
     process.stdout.write(`Wrote ${outPath}\n`);
   }
 
-  return { screened, results, passed };
+  return { screened, results, passed: [] };
 }
 
 if (require.main === module) {
