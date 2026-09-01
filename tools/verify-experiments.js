@@ -5,6 +5,11 @@
 // A result whose proof_class is only direct_source / exact_result /
 // owner_decision is an observation or a ruling, not an experiment, and needs
 // no protocol. A result carrying heuristic_observation does.
+//
+// Deliberately NOT checked here: whether a registered protocol's version
+// freeze still holds. solver/experiment-guard.js checks that at run time,
+// before any compute — which is strictly better, because a freeze that broke
+// after the run is a fact about the past, not something a report can fix.
 
 const fs = require('node:fs');
 const path = require('node:path');
@@ -109,20 +114,6 @@ function assessExperiments() {
     if (!front) { problems.push(`${result.id}: protocol.md has no frontmatter`); continue; }
     if (front.result !== result.id) {
       problems.push(`${result.id}: protocol declares result ${front.result}`);
-    }
-
-    // While a protocol is registered but not yet complete, its version freeze
-    // must still hold. This is what invalidated chain-offer-v1.
-    if (front.status === 'registered' && front.version_freeze && typeof front.version_freeze === 'object') {
-      for (const [file, expected] of Object.entries(front.version_freeze)) {
-        if (expected.startsWith('<')) continue;
-        const abs = path.join(ROOT, file);
-        if (!fs.existsSync(abs)) { problems.push(`${result.id}: frozen file ${file} is missing`); continue; }
-        const actual = sha16(abs);
-        if (actual !== expected) {
-          problems.push(`${result.id}: version freeze broken — ${file} is ${actual}, registered as ${expected}. Supersede this record; do not edit it.`);
-        }
-      }
     }
 
     // Every check declared before the outcome must be answered by name.

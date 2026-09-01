@@ -54,6 +54,15 @@ const HOLDOUT_SEED_COUNT = flag('holdout-seeds', 250);
 const FINALISTS = flag('finalists', 5);
 const OUT = strFlag('out', null);
 
+const { registrationStamp, requireProtocolOrExit } = require('./experiment-guard');
+// Refuse before spending the run, not after it. Writing an artifact means
+// producing evidence a generalizing claim may rest on, so --out requires a
+// protocol registered in advance; --exploratory runs without one and says so.
+const REGISTRATION = OUT
+  ? requireProtocolOrExit(process.argv, { name: 'policy-search --out' })
+  : { exploratory: true, protocolCommit: null, resultId: null };
+const REGISTRATION_STAMP = registrationStamp(REGISTRATION);
+
 // A spread of the shipped curve: small early boards, the mid-game, the scaled
 // late levels, and the one generated level. Kept small so the screen is cheap;
 // the holdout runs every level, which is where level-overfitting would show.
@@ -264,6 +273,7 @@ async function main() {
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, JSON.stringify({
       generatedAt: new Date().toISOString(),
+      registration: REGISTRATION_STAMP,
       config: { GENS, LAMBDA, MU, SCREEN_LEVELS, SCREEN_SEED_COUNT, HOLDOUT_SEED_COUNT, HOLDOUT_LEVELS },
       reference,
       referenceHoldout: { meanScore: mean(refHold.scores), winRate: refHold.winRate },

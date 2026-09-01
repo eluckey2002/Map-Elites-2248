@@ -29,6 +29,15 @@ const strFlag = (n, d) => { const i = argv.indexOf(`--${n}`); return i === -1 ? 
 const SEED_COUNT = flag('seeds', 300);
 const FIRST = flag('first', 3e6);
 const OUT = strFlag('out', null);
+
+const { registrationStamp, requireProtocolOrExit } = require('./experiment-guard');
+// Refuse before spending the run, not after it. Writing an artifact means
+// producing evidence a generalizing claim may rest on, so --out requires a
+// protocol registered in advance; --exploratory runs without one and says so.
+const REGISTRATION = OUT
+  ? requireProtocolOrExit(process.argv, { name: 'routing-ablation --out' })
+  : { exploratory: true, protocolCommit: null, resultId: null };
+const REGISTRATION_STAMP = registrationStamp(REGISTRATION);
 const SHARDS = flag('shards', 3);
 const LEVEL_NUMBERS = LEVELS.map((l) => l.level);
 const SEEDS = Array.from({ length: SEED_COUNT }, (_, i) => FIRST + i);
@@ -103,6 +112,7 @@ async function main() {
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, JSON.stringify({
       generatedAt: new Date().toISOString(),
+      registration: REGISTRATION_STAMP,
       levels: LEVEL_NUMBERS, seedCount: SEED_COUNT, firstSeed: SEEDS[0],
       rows: rows.map(({ byLevel, ...keep }) => keep),
       perLevelLift: Object.fromEntries(rows.map((r) => [r.name, r.byLevel])),
