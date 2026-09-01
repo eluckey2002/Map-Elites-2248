@@ -11,6 +11,7 @@ const { LEVELS } = require('../src/game');
 const { DEFAULT_PARAMS } = require('./bot');
 const { pairedLift, mean } = require('./policy-eval');
 const { createPool } = require('./policy-pool');
+const { registrationStamp, requireProtocolOrExit } = require('./experiment-guard');
 const {
   axesFromPilot, axesIdentity, cellForBehavior, placeElite, policyIdentity, renderMapHtml,
   validateAxes,
@@ -398,7 +399,11 @@ async function main(argv = process.argv.slice(2)) {
     console.log(`PASS elite ${result.policyId} cell ${result.cell} fitness ${(Math.expm1(result.fitness) * 100).toFixed(2)}%`);
     return result;
   }
+  // Refuse before spending the run. A replay re-reads existing evidence and
+  // produces no new claim, so only a fresh experiment needs a protocol.
+  const registration = requireProtocolOrExit(process.argv, { name: 'map-elites' });
   const artifact = await runExperiment(config);
+  artifact.registration = registrationStamp(registration);
   const outDir = resolveFromRoot(config.out);
   fs.mkdirSync(outDir, { recursive: true });
   const archivePath = path.join(outDir, 'archive.json');

@@ -106,3 +106,17 @@ test('a real registration stamps the protocol commit into the artifact', () => {
   const stamp = registrationStamp({ exploratory: false, resultId: 'RESULT-0019', protocolCommit: 'abc123' });
   assert.deepEqual(stamp, { exploratory: false, protocol: 'RESULT-0019', protocolCommit: 'abc123' });
 });
+
+test('the registration stamp rides outside the hashed body, so old artifacts still verify', () => {
+  const { validateArtifact } = require('../target-aware-evaluation.js');
+  const holdout = require('../../.orch/runs/level51-target-aware-evaluation-v2-2026-08-30/evidence/holdout.json');
+  const before = validateArtifact(holdout);
+  assert.equal(
+    before.identity,
+    '83316f3055bb136b181dcf8e837989ead0f3c1e39ab78a7f1c777eeb64b059b0',
+    'RESULT-0018 cites this identity; adding a stamp field must not move it',
+  );
+  // a stamped copy must hash identically — the stamp is excluded from the body
+  const stamped = { ...holdout, registration: { exploratory: false, protocol: 'RESULT-0019', protocolCommit: 'abc' } };
+  assert.equal(validateArtifact(stamped).identity, before.identity);
+});

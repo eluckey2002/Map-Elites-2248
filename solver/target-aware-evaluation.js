@@ -13,6 +13,13 @@ const {
 } = require('./engine');
 const { chooseMove } = require('./bot');
 const { chooseTargetAwareMove } = require('./target-aware-challenger');
+const { registrationStamp, requireProtocolOrExit } = require('./experiment-guard');
+
+// Refuse before spending the run. This script produced RESULT-0018's holdout.
+const REGISTRATION = process.argv.includes('--out')
+  ? requireProtocolOrExit(process.argv, { name: 'target-aware-evaluation --out' })
+  : { exploratory: true, protocolCommit: null, resultId: null };
+const REGISTRATION_STAMP = registrationStamp(REGISTRATION);
 
 const ROOT = path.join(__dirname, '..');
 const LOOKAHEAD_BASE = 987654321;
@@ -130,11 +137,13 @@ function makeArtifact(mode, levelNumbers, seeds, cells, timings) {
     timings,
     cells,
   };
-  return { ...body, artifactIdentity: identity(body) };
+  return { ...body, artifactIdentity: identity(body), registration: REGISTRATION_STAMP };
 }
 
 function validateArtifact(artifact) {
-  const { artifactIdentity, ...body } = artifact;
+  // registration rides outside the hashed body; stripping it here keeps
+  // artifacts written before the guard existed verifying unchanged.
+  const { artifactIdentity, registration, ...body } = artifact;
   const expected = artifact.levelNumbers.length * artifact.seeds.length;
   if (artifact.cells.length !== expected) throw new Error(`cell count ${artifact.cells.length} does not match ${expected}`);
   let index = 0;
