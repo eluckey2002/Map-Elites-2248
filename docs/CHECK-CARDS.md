@@ -491,3 +491,182 @@ card in the same commit.
   events: that the five orphans could not be checked, the archived-store counts
   in the first card, and the credit for chain legality. Commit `91321e4` carries
   the first of them in its body; it is history and stays as written.
+
+---
+
+## The experiment gate
+
+`tools/verify-experiments.js`, run live by `solver/tests/experiments.test.js`.
+It shipped 2026-08-31 with **no cards at all**; the five below were written
+2026-09-01 when an adversarial review found that four of its five promises were
+enforced by nothing. Each card's negative test plants a real failure against the
+real artifacts, because every one of these checks had a fixture-only ancestor
+that passed while inspecting nothing.
+
+### report-answers-each-declared-check · HARD
+
+- **Protects:** `experiments/README.md`'s central promise — "a prediction that
+  came out badly cannot be quietly dropped".
+- **Where:** `assessReportAnswers`, `tools/verify-experiments.js`.
+- **Level:** section. A declared check must have a `##`–`######` heading of its
+  own naming it, and that section must contain one of PASS / FAIL / SUPPORTED /
+  FALSIFIED / INCONCLUSIVE / BREACH.
+- **Kind:** shape, honestly. It proves an outcome was *stated*, never that the
+  outcome is *true* or that the section's prose supports it. Truth is owned by
+  human review and by the artifact-level cards below.
+- **Scope:** checks matching `^### ([CP]\d+)'? [—-]` in `protocol.md`, resolved
+  against `report.md` in the same directory. Only runs when a report exists.
+- **Reads own output?:** no. Protocol and report are separate files by separate
+  commits; the ordering check enforces that.
+- **Sampling memory:** n/a — exhaustive over declared checks.
+- **Does NOT catch:**
+  1. **A verdict word used in passing inside the right section.** P4's real
+     section says "the declared `SUPPORTED` condition was exact equality" — that
+     alone satisfies this check even with the verdict deleted from the heading.
+     Found while crafting the negative test: the first crafted input passed
+     because of exactly this, and the test now replaces the whole section.
+  2. **A wrong verdict.** `## P1 — **SUPPORTED**` over prose describing a
+     falsification passes. This gate reads structure, not agreement.
+  3. **A check the protocol never declared.** Scope that was never registered
+     still cannot show up here — it shows up as a missing protocol section only
+     if someone declared it.
+  4. **A report for an experiment with no protocol.** Nothing to declare
+     against, so nothing to answer.
+- **Replaces:** the previous `\bC1\b`-anywhere mention test, which the real
+  RESULT-0020 report satisfied for P1, P2 and P4 from incidental sentences in a
+  *different* section — all three sections were deletable with the gate green.
+- **Rung:** blocking. **Decay:** the live test fails if the real report ever
+  stops answering all eight of RESULT-0020's checks.
+
+### cited-path-resolves · HARD
+
+- **Protects:** the rot `experiments/README.md` names as motivating the gate —
+  "two ledger citations rotted to paths that never resolved".
+- **Where:** `assessCitationsResolve`, over `openCitedArtifacts`.
+- **Level:** citation. Every backticked `*.json` token in a ledger record that
+  **contains a slash** must exist on disk and parse as JSON.
+- **Kind:** existence plus parseability. Not contents — `artifact-identity-verifies`
+  owns that.
+- **Scope:** all 19 ledger records **including grandfathered ones** —
+  grandfathering waives the protocol requirement, never the requirement that a
+  receipt be a real file. 13 path-shaped citations today, all resolving.
+- **Reads own output?:** no.
+- **Does NOT catch:**
+  1. **A filename named in prose.** Four live citations have no slash
+     (`-52.receipt.json`, `candidate-levels*.json`) and are deliberately
+     skipped; firing on them would make the gate red on English. So a real path
+     written without a directory is invisible here.
+  2. **A path that resolves to the *wrong* file.** Existence only.
+  3. **Non-JSON evidence.** `citedArtifacts` only matches `.json`; a cited `.md`,
+     `.html`, or commit-scoped path is not checked by anything.
+  4. **A citation inside a decision or hypothesis record.** `readLedgerResults`
+     only parses `### RESULT-NNNN` blocks, so `DECISION-0004`'s citations are
+     unchecked.
+- **Rung:** blocking. **Decay:** live test plants a nonexistent path each run.
+
+### artifact-identity-verifies · HARD
+
+- **Protects:** the ledger's `artifactIdentity` values, published as
+  `direct_source` facts. Nothing ever recomputed one: every cell of a 15,600-cell
+  holdout could be edited with all four gates green.
+- **Where:** `assessArtifactIdentity`; sha256 over `canonicalJson(body)` with
+  `artifactIdentity` and `registration` removed.
+- **Level:** whole artifact — one verdict for the file, so you learn *this
+  artifact moved*, never *which cell*.
+- **Kind:** meaning. It recomputes from content rather than comparing a record to
+  a copy of itself.
+- **Scope:** cited artifacts carrying a string `artifactIdentity` — **3 today**
+  (RESULT-0018's holdout, RESULT-0020's holdout and screen, 13.2 MB total,
+  ~0.4 s). Artifacts without the field are silently skipped.
+- **Reads own output?:** yes — the identity was written by
+  `solver/target-aware-evaluation.js` and is re-derived here by a *duplicate* of
+  its `canonicalJson`, deliberately not an import: `solver/experiment-guard.js`
+  requires this file, so importing solver code back would close a require cycle
+  on every worker thread. **That duplication is the risk:** if the two canonical
+  forms ever diverge, this check goes red on honest artifacts.
+- **Does NOT catch:**
+  1. **An artifact with no `artifactIdentity` field.** 10 of the 13 cited
+     artifacts have none — `.orch/policy-search-*.json`, the map-elites archive,
+     RESULT-0018's `verification.json`. Silence about those means "carries no
+     identity", never "verified".
+  2. **An artifact that was wrong when written.** Consistency with itself, never
+     correctness of the measurement.
+  3. **Artifact and identity regenerated together from broken code.** Both move,
+     the hash agrees, the gate is silent. `version-freeze-covers-the-evidence`
+     is the partial answer.
+  4. **A different canonical form.** `solver/map-elites-core.js` has its own
+     `validateArtifact`; if a map-elites artifact ever grows an
+     `artifactIdentity` computed differently, this fires a false red.
+- **Rung:** blocking. **Decay:** live test tampers with cell 0 of the real
+  15,600-cell holdout and asserts the clean state first.
+
+### stamp-commit-is-real · HARD
+
+- **Protects:** the whole pre-registration argument. `registration.protocolCommit`
+  is the one field that cannot be produced after the fact — and nothing read it.
+  A forged sha, an absent field, and a real-but-wrong commit all passed.
+- **Where:** `assessStampProvenance`.
+- **Level:** stamp. Four clauses: 40-hex; **reachable from HEAD** (not merely
+  present in the object store, so an amended-away commit that would not exist in
+  a fresh clone fails); contains `experiments/<ID>/protocol.md` at that commit;
+  and strictly precedes the commit that added `report.md`.
+- **Kind:** meaning — it resolves the sha against real git history.
+- **Scope:** non-exploratory stamps on artifacts cited by non-grandfathered
+  `heuristic_observation` records. Complements the existing ordering check, which
+  compares the two *files'* add-commits and never looked at the artifact.
+- **Reads own output?:** yes, and this is the important one — the stamp is
+  written by `solver/experiment-guard.js` from `addedIn()` in this same file.
+  Safe because verification re-resolves against git rather than against the
+  writer's record of git.
+- **Does NOT catch:**
+  1. **A protocol whose *content* was written after the data**, then committed
+     and only then run. The sha proves the file existed, never that its
+     predictions were authored blind. Owned by human review.
+  2. **An artifact produced by a different run** under the same registration.
+     Nothing binds a stamp to the compute that made the cells.
+  3. **An exploratory artifact**, skipped here — `assessArtifactStamps` owns it.
+  4. **History rewrite.** Reachability is evaluated against today's HEAD; a
+     force-push that drops the registration commit turns this red, which is the
+     intended direction but reads as a data failure rather than a history one.
+- **Rung:** blocking. **Decay:** live test forges four shas — malformed,
+  unreachable, real-but-pre-protocol (`52f500c`), and real-but-not-an-ancestor
+  (HEAD) — and asserts the real stamps pass first.
+
+### version-freeze-covers-the-evidence · HARD
+
+- **Protects:** `experiments/README.md` item 4, which claimed the gate enforced
+  the freeze while `tools/verify-experiments.js` said in its own header that it
+  deliberately did not. A record asserted a property no check inspected.
+- **Where:** `assessVersionFreeze`. Two clauses.
+  **(a)** while `status: registered`, every frozen file must still match the
+  tree — literally what README item 4 always claimed.
+  **(b)** once complete, every hash in the artifact's `sources` must be covered
+  by a `version_freeze` entry. This is the durable half: it stays checkable
+  after a frozen file legitimately moves on, and goes red if the freeze list
+  never covered a file that carried the measurement.
+- **Level:** file hash, first 16 hex of sha256.
+- **Kind:** value. Whether the frozen *set* is the right set is unchecked —
+  clause (b) is the only pressure on that, and only for files the artifact
+  happens to record.
+- **Scope:** records with a protocol carrying `version_freeze`. **Clause (a) is
+  vacuous today** — no protocol is in `registered` state, so its only exercise is
+  the negative test. Clause (b) covers RESULT-0020's 5 recorded sources against
+  its 7 frozen files.
+- **Reads own output?:** clause (b) yes — `sources` is written by the evaluator
+  and the freeze by `tools/new-experiment.js`. They are independent writers, so
+  agreement is informative.
+- **Does NOT catch:**
+  1. **A frozen file moving after a completed run.** Deliberate: that is a fact
+     about the present, not about the evidence. `solver/target-aware-challenger.js`
+     is off RESULT-0020's frozen hash right now, by an intended fix, and this
+     stays green. Clause (b) is what keeps the evidence pinned.
+  2. **A measurement file absent from BOTH the freeze and the artifact's
+     `sources`.** `solver/target-aware-worker.js` is frozen but never appears in
+     `sources`; a file in neither is invisible to both clauses.
+  3. **`policy-eval.js`-style freeze theatre.** It is frozen by default and never
+     loaded by the measurement. Freezing an irrelevant file costs nothing and
+     proves nothing.
+  4. **A 64-bit truncation collision.** `sha16` is the first 16 hex chars.
+- **Rung:** blocking. **Decay:** live test breaks a registered freeze against the
+  real `solver/bot.js` and plants an uncovered source hash, with positive
+  controls for both.

@@ -23,14 +23,30 @@ generalize from a sample without having declared the test first.
 1. Every generalizing result has `experiments/<RESULT-ID>/protocol.md`, or an
    entry in `GRANDFATHERED.md`.
 2. The protocol's frontmatter `result:` matches its directory.
-3. **Every check the protocol declares is resolved by name in `report.md`.**
-   Declare C1, C2, C3, P1, P2, P3 and the report answers all six. A prediction
-   that came out badly cannot be quietly dropped, and scope that was never
-   declared shows up as a check nobody registered.
+3. **Every check the protocol declares gets a section of its own in
+   `report.md`, and that section states an outcome** — PASS, FAIL, SUPPORTED,
+   FALSIFIED, INCONCLUSIVE or BREACH. Declare C1, C2, C3, P1, P2, P3 and the
+   report answers all six. A prediction that came out badly cannot be quietly
+   dropped. Until 2026-09-01 this checked only that the check's *name* appeared
+   somewhere in the report, which a report could satisfy while answering
+   nothing.
 4. While `status: registered`, the `version_freeze` hashes still match. If a
    frozen file moves before the run, the record is invalid — supersede it,
-   never edit it. This is what invalidated `chain-offer-v1`.
+   never edit it. This is what invalidated `chain-offer-v1`. Once
+   `status: complete`, the freeze is instead checked against the artifact:
+   every hash in its `sources` must be one the protocol froze, which stays true
+   after a frozen file legitimately moves on.
 5. A protocol marked `status: complete` has a report.
+6. **Every path-shaped `.json` citation in the ledger resolves and parses** —
+   for grandfathered records too. Grandfathering waives the protocol
+   requirement, not the requirement that a receipt be a real file.
+7. **An artifact that publishes an `artifactIdentity` still hashes to it**, and
+   a non-exploratory `registration.protocolCommit` is a real commit, reachable
+   from HEAD, that carries this protocol and precedes the report commit.
+
+Each of 3, 4, 6 and 7 has a card in [docs/CHECK-CARDS.md](../docs/CHECK-CARDS.md)
+whose `Does NOT catch` list is the honest limit. Read those before trusting a
+green gate.
 
 ## Writing one
 
