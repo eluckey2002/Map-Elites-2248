@@ -23,7 +23,13 @@ const {
   tileScaleForLevel,
   verifyCandidate,
 } = require('./level-author');
-const { sourceIdentities, verifyEntitlement } = require('./seed-variance');
+const {
+  EXECUTION_PATH,
+  identity,
+  sourceIdentities,
+  verifyChallengeBundle,
+  verifyEntitlement,
+} = require('./seed-variance');
 
 const SCREEN_SEEDS = Object.freeze({ start: 500000, count: 24 });
 
@@ -184,8 +190,26 @@ function rankShortlist(results) {
     .sort((a, b) => a.verdict.winRate - b.verdict.winRate);
 }
 
-function selectShortlist(results, entitlement) {
-  verifyEntitlement(entitlement, { currentIdentities: sourceIdentities() });
+function observeShortlist(results, entitlement, batchIdentity) {
+  try {
+    verifyEntitlement(entitlement, { currentIdentities: sourceIdentities() });
+    return { status: 'PASS', batchIdentity, selected: rankShortlist(results).map((entry) => entry.shape.name) };
+  } catch (error) {
+    return { status: 'FAIL', batchIdentity, selected: [], error: error.message };
+  }
+}
+
+function selectShortlist(results, bundle, consumerSubject) {
+  const consumerObservation = {
+    valid: observeShortlist(results, bundle.validEntitlement, consumerSubject.batchIdentity),
+    broken: observeShortlist(results, bundle.brokenEntitlement, consumerSubject.batchIdentity),
+  };
+  verifyChallengeBundle(bundle, {
+    currentIdentities: sourceIdentities(),
+    executionPath: EXECUTION_PATH,
+    consumerSubject,
+    consumerObservation,
+  });
   return rankShortlist(results);
 }
 
@@ -205,13 +229,13 @@ function parseArgs(argv) {
     full: 12,
     space: null,
     selectFrom: null,
-    seedVarianceEntitlement: null,
+    seedVarianceBundle: null,
   };
   const optionNames = {
     'select-from': 'selectFrom',
-    'seed-variance-entitlement': 'seedVarianceEntitlement',
+    'seed-variance-bundle': 'seedVarianceBundle',
   };
-  const paths = new Set(['out', 'space', 'selectFrom', 'seedVarianceEntitlement']);
+  const paths = new Set(['out', 'space', 'selectFrom', 'seedVarianceBundle']);
   for (let i = 0; i < argv.length; i += 2) {
     const raw = argv[i].replace(/^--/, '');
     const key = optionNames[raw] || raw;
@@ -225,13 +249,18 @@ function parseArgs(argv) {
 
 function main(argv = process.argv.slice(2)) {
   const args = parseArgs(argv);
-  if (!args.seedVarianceEntitlement) throw new Error('--seed-variance-entitlement is required');
-  const entitlement = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), args.seedVarianceEntitlement), 'utf8'));
-  verifyEntitlement(entitlement, { currentIdentities: sourceIdentities() });
+  if (!args.seedVarianceBundle) throw new Error('--seed-variance-bundle is required');
+  const bundle = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), args.seedVarianceBundle), 'utf8'));
   if (args.selectFrom) {
-    const batch = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), args.selectFrom), 'utf8'));
+    const batchPath = path.resolve(process.cwd(), args.selectFrom);
+    const batch = JSON.parse(fs.readFileSync(batchPath, 'utf8'));
     if (!batch || !Array.isArray(batch.results)) throw new Error('selection input must contain results');
-    const selected = selectShortlist(batch.results, entitlement);
+    const consumerSubject = {
+      path: path.relative(path.join(__dirname, '..'), batchPath),
+      sha256: require('node:crypto').createHash('sha256').update(fs.readFileSync(batchPath)).digest('hex'),
+      batchIdentity: identity(batch),
+    };
+    const selected = selectShortlist(batch.results, bundle, consumerSubject);
     process.stdout.write(`SELECTED ${selected.map((entry) => entry.shape.name).join(',')}\n`);
     return { results: batch.results, passed: selected };
   }
@@ -298,7 +327,7 @@ function main(argv = process.argv.slice(2)) {
   // pipeline's own verifier - it replays all 450 games and re-derives every
   // identity, so it also catches a candidate whose receipt does not match the
   // shape it claims to come from.
-  const passed = selectShortlist(results, entitlement);
+  throw new Error('verified seed-variance selection requires --select-from for the exact challenged batch');
   process.stdout.write(`\nConfirming ${passed.length} shortlisted candidates with the pipeline verifier\n`);
   for (const entry of passed) {
     try {
@@ -368,6 +397,7 @@ module.exports = {
   screenVerdict,
   gateVerdict,
   rankShortlist,
+  observeShortlist,
   selectShortlist,
   SPACE,
   SCREEN_SEEDS,

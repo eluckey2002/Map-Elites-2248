@@ -7,6 +7,9 @@ const { spawnSync } = require('node:child_process');
 const { playMeasured } = require('./level-author');
 
 const ROOT = path.join(__dirname, '..');
+const SHA256 = /^[a-f0-9]{64}$/;
+const COMMIT_IDENTITY = /^[a-f0-9]{40,64}$/;
+const EXECUTION_PATH = 'solver/seed-variance.js#measureSubject -> solver/level-author.js#playMeasured; solver/generate-levels.js#main -> selectShortlist -> rankShortlist';
 
 function canonicalJson(value) {
   if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
@@ -27,6 +30,45 @@ function fileIdentity(relativePath) {
 
 function absoluteFileIdentity(file) {
   return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+
+function git(args) {
+  const run = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8' });
+  if (run.status !== 0) throw new Error((run.stderr || run.stdout).trim() || `git ${args.join(' ')} failed`);
+  return run.stdout.trim();
+}
+
+function validateProtocol(protocol) {
+  if (!protocol || typeof protocol.path !== 'string' || !protocol.path) throw new Error('artifact protocol binding is required');
+  if (!SHA256.test(protocol.identity || '')) throw new Error('protocol identity must be SHA-256');
+  if (!COMMIT_IDENTITY.test(protocol.protocolCommit || '') || !COMMIT_IDENTITY.test(protocol.measurementCommit || '')) {
+    throw new Error('protocol and measurement commits must be full commit identities');
+  }
+  if (protocol.protocolCommit === protocol.measurementCommit || protocol.ordering !== 'STRICT_ANCESTOR') {
+    throw new Error('protocol commit must strictly precede measurement commit');
+  }
+}
+
+function committedProtocol(file) {
+  const absolute = path.resolve(file);
+  const relative = path.relative(ROOT, absolute).split(path.sep).join('/');
+  if (!relative || relative.startsWith('../') || path.isAbsolute(relative)) throw new Error('protocol must be inside the repository');
+  if (git(['status', '--porcelain', '--', relative])) throw new Error('protocol must be tracked and unmodified');
+  git(['ls-files', '--error-unmatch', '--', relative]);
+  const protocolCommit = git(['log', '-1', '--format=%H', '--', relative]);
+  const measurementCommit = git(['rev-parse', 'HEAD']);
+  if (!protocolCommit || protocolCommit === measurementCommit) throw new Error('protocol commit must strictly precede measurement commit');
+  const ancestry = spawnSync('git', ['merge-base', '--is-ancestor', protocolCommit, measurementCommit], { cwd: ROOT });
+  if (ancestry.status !== 0) throw new Error('protocol commit is not an ancestor of measurement commit');
+  const protocol = {
+    path: relative,
+    identity: absoluteFileIdentity(absolute),
+    protocolCommit,
+    measurementCommit,
+    ordering: 'STRICT_ANCESTOR',
+  };
+  validateProtocol(protocol);
+  return protocol;
 }
 
 function sourceIdentities() {
@@ -77,6 +119,7 @@ function candidateDescriptor(level) {
 
 function createArtifact(input) {
   validateSamples(input.samples);
+  validateProtocol(input.protocol);
   if (!Array.isArray(input.candidates) || input.candidates.length < 2) throw new Error('at least two candidates are required');
   if (!Array.isArray(input.measurements)) throw new Error('measurements are required');
   const candidateIds = new Set(input.candidates.map((candidate) => candidate.identity));
@@ -103,10 +146,10 @@ function createArtifact(input) {
     samples: input.samples,
     metric: input.metric,
     executionSeam: input.executionSeam,
+    protocol: input.protocol,
     coveredIdentities: input.coveredIdentities,
     measurements: input.measurements,
   };
-  if (input.protocolIdentity) unsigned.protocolIdentity = input.protocolIdentity;
   return { ...unsigned, artifactIdentity: identity(unsigned) };
 }
 
@@ -119,7 +162,7 @@ function verifyArtifact(artifact) {
   return { status: 'PASS', artifactIdentity: artifact.artifactIdentity };
 }
 
-function measureSubject({ claim, candidates, samples, play = playMeasured, coveredIdentities = sourceIdentities(), protocolIdentity }) {
+function measureSubject({ claim, candidates, samples, protocol, play = playMeasured, coveredIdentities = sourceIdentities() }) {
   validateSamples(samples);
   const declared = candidates.map(candidateDescriptor);
   const measurements = [];
@@ -147,9 +190,9 @@ function measureSubject({ claim, candidates, samples, play = playMeasured, cover
     samples,
     metric: 'terminal achievable score before target stopping',
     executionSeam: 'solver/level-author.js#playMeasured',
+    protocol,
     coveredIdentities,
     measurements,
-    protocolIdentity,
   });
 }
 
@@ -222,17 +265,16 @@ function decide(stats, rule) {
   return { status: 'FAIL', humanSeedVerdict: 'INCONCLUSIVE' };
 }
 
-function issueEntitlement(artifact, { protocolIdentity, decisionRule, coveredIdentities }) {
+function issueEntitlement(artifact, { decisionRule, coveredIdentities }) {
   verifyArtifact(artifact);
   assertIdentityMap(artifact.coveredIdentities, coveredIdentities);
-  if (!/^[a-f0-9]{64}$/.test(protocolIdentity || '')) throw new Error('protocol identity must be SHA-256');
-  if (artifact.protocolIdentity && artifact.protocolIdentity !== protocolIdentity) throw new Error('artifact protocol identity mismatch');
+  validateProtocol(artifact.protocol);
   const statistics = analyzeArtifact(artifact);
   const decision = decide(statistics, decisionRule);
   const unsigned = {
     schemaVersion: 1,
     artifactIdentity: artifact.artifactIdentity,
-    protocolIdentity,
+    protocol: artifact.protocol,
     decisionRule,
     coveredIdentities,
     check: { ...decision, statistics },
@@ -246,6 +288,7 @@ function validateEntitlement(entitlement, { currentIdentities, requirePass }) {
   const unsigned = { ...entitlement };
   delete unsigned.entitlementIdentity;
   if (identity(unsigned) !== entitlement.entitlementIdentity) throw new Error('entitlement identity mismatch');
+  validateProtocol(entitlement.protocol);
   assertIdentityMap(entitlement.coveredIdentities, currentIdentities);
   if (requirePass && entitlement.check.status !== 'PASS') throw new Error('seed-variance check did not pass');
   return { status: 'PASS', entitlementIdentity: entitlement.entitlementIdentity };
@@ -294,13 +337,16 @@ function buildChallengeReceipt(input) {
       candidates: input.validArtifact.candidates,
       samples: input.validArtifact.samples,
       metric: input.validArtifact.metric,
+      executionSeam: input.validArtifact.executionSeam,
+      protocol: input.validArtifact.protocol,
       coveredIdentities: input.currentIdentities,
     },
     executionPath: input.executionPath,
     validChallenge: {
       status: input.validEntitlement.check.status,
       entitlementIdentity: input.validEntitlement.entitlementIdentity,
-      protocolIdentity: input.validEntitlement.protocolIdentity,
+      protocol: input.validEntitlement.protocol,
+      decisionRule: input.validEntitlement.decisionRule,
       statistics: input.validEntitlement.check.statistics,
       humanSeedVerdict: input.validEntitlement.check.humanSeedVerdict,
     },
@@ -308,6 +354,8 @@ function buildChallengeReceipt(input) {
       status: input.brokenEntitlement.check.status,
       artifactIdentity: input.brokenArtifact.artifactIdentity,
       entitlementIdentity: input.brokenEntitlement.entitlementIdentity,
+      protocol: input.brokenEntitlement.protocol,
+      decisionRule: input.brokenEntitlement.decisionRule,
       statistics: input.brokenEntitlement.check.statistics,
       humanSeedVerdict: input.brokenEntitlement.check.humanSeedVerdict,
     },
@@ -324,6 +372,9 @@ function verifyChallengeReceipt(receipt, {
   validEntitlement,
   brokenEntitlement,
   currentIdentities,
+  executionPath,
+  consumerSubject,
+  consumerObservation,
 } = {}) {
   if (!receipt || receipt.schemaVersion !== 1) throw new Error('challenge receipt schemaVersion must be 1');
   const unsigned = { ...receipt };
@@ -331,25 +382,66 @@ function verifyChallengeReceipt(receipt, {
   if (identity(unsigned) !== receipt.receiptIdentity) throw new Error('challenge receipt identity mismatch');
   verifyArtifact(validArtifact);
   verifyArtifact(brokenArtifact);
+  const expectedBroken = createBrokenTwin(validArtifact);
+  if (expectedBroken.artifactIdentity !== brokenArtifact.artifactIdentity) throw new Error('broken artifact is not the controlled twin');
   if (receipt.realSubject.artifactIdentity !== validArtifact.artifactIdentity) throw new Error('valid artifact identity mismatch');
   if (receipt.brokenTwinChallenge.artifactIdentity !== brokenArtifact.artifactIdentity) throw new Error('broken artifact identity mismatch');
+  if (receipt.exactClaim !== validArtifact.claim) throw new Error('exact claim mismatch');
+  if (canonicalJson(receipt.realSubject.candidates) !== canonicalJson(validArtifact.candidates)) throw new Error('candidate subject mismatch');
+  if (canonicalJson(receipt.realSubject.samples) !== canonicalJson(validArtifact.samples)) throw new Error('sample subject mismatch');
+  if (receipt.realSubject.metric !== validArtifact.metric) throw new Error('metric subject mismatch');
+  if (receipt.realSubject.executionSeam !== validArtifact.executionSeam) throw new Error('evaluator execution seam mismatch');
+  if (canonicalJson(receipt.realSubject.protocol) !== canonicalJson(validArtifact.protocol)) throw new Error('artifact protocol mismatch');
+  if (receipt.executionPath !== executionPath) throw new Error('execution path mismatch');
   assertIdentityMap(receipt.realSubject.coveredIdentities, currentIdentities);
-  if (validEntitlement) {
-    validateEntitlement(validEntitlement, { currentIdentities, requirePass: true });
-    if (validEntitlement.entitlementIdentity !== receipt.validChallenge.entitlementIdentity) throw new Error('valid entitlement identity mismatch');
-    if (validEntitlement.artifactIdentity !== validArtifact.artifactIdentity) throw new Error('valid entitlement artifact mismatch');
-    if (canonicalJson(validEntitlement.check.statistics) !== canonicalJson(receipt.validChallenge.statistics)) throw new Error('valid statistics mismatch');
+  validateEntitlement(validEntitlement, { currentIdentities, requirePass: true });
+  validateEntitlement(brokenEntitlement, { currentIdentities, requirePass: false });
+  if (validEntitlement.entitlementIdentity !== receipt.validChallenge.entitlementIdentity) throw new Error('valid entitlement identity mismatch');
+  if (validEntitlement.artifactIdentity !== validArtifact.artifactIdentity) throw new Error('valid entitlement artifact mismatch');
+  if (brokenEntitlement.entitlementIdentity !== receipt.brokenTwinChallenge.entitlementIdentity) throw new Error('broken entitlement identity mismatch');
+  if (brokenEntitlement.artifactIdentity !== brokenArtifact.artifactIdentity) throw new Error('broken entitlement artifact mismatch');
+  if (brokenEntitlement.check.status !== 'FAIL') throw new Error('broken entitlement unexpectedly passed');
+  for (const [label, challenge, entitlement] of [
+    ['valid', receipt.validChallenge, validEntitlement],
+    ['broken', receipt.brokenTwinChallenge, brokenEntitlement],
+  ]) {
+    if (canonicalJson(challenge.protocol) !== canonicalJson(entitlement.protocol)) throw new Error(`${label} protocol mismatch`);
+    if (canonicalJson(challenge.decisionRule) !== canonicalJson(entitlement.decisionRule)) throw new Error(`${label} decision rule mismatch`);
+    if (canonicalJson(challenge.statistics) !== canonicalJson(entitlement.check.statistics)) throw new Error(`${label} statistics mismatch`);
+    if (challenge.humanSeedVerdict !== entitlement.check.humanSeedVerdict) throw new Error(`${label} verdict mismatch`);
   }
-  if (brokenEntitlement) {
-    validateEntitlement(brokenEntitlement, { currentIdentities, requirePass: false });
-    if (brokenEntitlement.entitlementIdentity !== receipt.brokenTwinChallenge.entitlementIdentity) throw new Error('broken entitlement identity mismatch');
-    if (brokenEntitlement.artifactIdentity !== brokenArtifact.artifactIdentity) throw new Error('broken entitlement artifact mismatch');
-    if (brokenEntitlement.check.status !== 'FAIL') throw new Error('broken entitlement unexpectedly passed');
-  }
+  if (canonicalJson(receipt.consumerSubject) !== canonicalJson(consumerSubject)) throw new Error('consumer subject identity mismatch');
+  if (canonicalJson(receipt.consumerObservation) !== canonicalJson(consumerObservation)) throw new Error('consumer observation mismatch');
   if (receipt.validChallenge.status !== 'PASS' || receipt.brokenTwinChallenge.status !== 'FAIL') throw new Error('challenge outcomes are invalid');
   if (receipt.consumerObservation.valid.status !== 'PASS' || receipt.consumerObservation.broken.status !== 'FAIL') throw new Error('consumer observation is invalid');
   if (receipt.identityMutationObservation.status !== 'FAIL') throw new Error('identity mutation observation is invalid');
   return { status: 'PASS', receiptIdentity: receipt.receiptIdentity };
+}
+
+function buildChallengeBundle({ validArtifact, brokenArtifact, validEntitlement, brokenEntitlement, receipt }) {
+  const unsigned = {
+    schemaVersion: 1,
+    validArtifact,
+    brokenArtifact,
+    validEntitlement,
+    brokenEntitlement,
+    receipt,
+  };
+  return { ...unsigned, bundleIdentity: identity(unsigned) };
+}
+
+function verifyChallengeBundle(bundle, options) {
+  if (!bundle || bundle.schemaVersion !== 1) throw new Error('challenge bundle schemaVersion must be 1');
+  const unsigned = { ...bundle };
+  delete unsigned.bundleIdentity;
+  if (identity(unsigned) !== bundle.bundleIdentity) throw new Error('challenge bundle identity mismatch');
+  return verifyChallengeReceipt(bundle.receipt, {
+    validArtifact: bundle.validArtifact,
+    brokenArtifact: bundle.brokenArtifact,
+    validEntitlement: bundle.validEntitlement,
+    brokenEntitlement: bundle.brokenEntitlement,
+    ...options,
+  });
 }
 
 function parseFlags(argv) {
@@ -371,11 +463,11 @@ function writeJson(file, value) {
   fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-function selectionObservation(batchPath, entitlementPath) {
+function selectionObservation(batchPath, bundlePath) {
   const run = spawnSync(process.execPath, [
     'solver/generate-levels.js',
     '--select-from', batchPath,
-    '--seed-variance-entitlement', entitlementPath,
+    '--seed-variance-bundle', bundlePath,
   ], { cwd: ROOT, encoding: 'utf8' });
   const match = run.stdout.match(/^SELECTED (.*)$/m);
   return {
@@ -394,20 +486,26 @@ function challengeCommand(flags) {
   verifyArtifact(validArtifact);
   const currentIdentities = sourceIdentities();
   assertIdentityMap(validArtifact.coveredIdentities, currentIdentities);
-  const protocolIdentity = absoluteFileIdentity(flags.protocol);
+  const protocol = committedProtocol(flags.protocol);
+  if (canonicalJson(validArtifact.protocol) !== canonicalJson(protocol)) throw new Error('artifact protocol registration mismatch');
   const decisionRule = readJson(flags['decision-rule']);
   const brokenArtifact = createBrokenTwin(validArtifact);
-  const validEntitlement = issueEntitlement(validArtifact, { protocolIdentity, decisionRule, coveredIdentities: currentIdentities });
-  const brokenEntitlement = issueEntitlement(brokenArtifact, { protocolIdentity, decisionRule, coveredIdentities: currentIdentities });
+  const validEntitlement = issueEntitlement(validArtifact, { decisionRule, coveredIdentities: currentIdentities });
+  const brokenEntitlement = issueEntitlement(brokenArtifact, { decisionRule, coveredIdentities: currentIdentities });
   const outDir = path.resolve(flags['out-dir']);
-  const brokenPath = path.join(outDir, 'broken-twin.json');
-  const validEntitlementPath = path.join(outDir, 'valid-entitlement.json');
-  const brokenEntitlementPath = path.join(outDir, 'broken-entitlement.json');
-  writeJson(brokenPath, brokenArtifact);
-  writeJson(validEntitlementPath, validEntitlement);
-  writeJson(brokenEntitlementPath, brokenEntitlement);
-  const validSelection = selectionObservation(path.resolve(flags.batch), validEntitlementPath);
-  const brokenSelection = selectionObservation(path.resolve(flags.batch), brokenEntitlementPath);
+  const batchPath = path.resolve(flags.batch);
+  const batch = readJson(batchPath);
+  if (!batch || !Array.isArray(batch.results)) throw new Error('selection input must contain results');
+  const consumerSubject = {
+    path: path.relative(ROOT, batchPath),
+    sha256: absoluteFileIdentity(batchPath),
+    batchIdentity: identity(batch),
+  };
+  const { observeShortlist } = require('./generate-levels');
+  const consumerObservation = {
+    valid: observeShortlist(batch.results, validEntitlement, consumerSubject.batchIdentity),
+    broken: observeShortlist(batch.results, brokenEntitlement, consumerSubject.batchIdentity),
+  };
   const mutatedIdentities = { ...currentIdentities, evaluator: '0'.repeat(64) };
   let mutationError = null;
   try {
@@ -422,26 +520,23 @@ function challengeCommand(flags) {
     validEntitlement,
     brokenEntitlement,
     currentIdentities,
-    executionPath: 'solver/seed-variance.js#measureSubject -> solver/level-author.js#playMeasured; solver/generate-levels.js#main -> selectShortlist -> rankShortlist',
-    consumerSubject: {
-      path: path.relative(ROOT, path.resolve(flags.batch)),
-      sha256: absoluteFileIdentity(flags.batch),
-    },
-    consumerObservation: { valid: validSelection, broken: brokenSelection },
+    executionPath: EXECUTION_PATH,
+    consumerSubject,
+    consumerObservation,
     identityMutationObservation: {
       status: mutationError ? 'FAIL' : 'PASS',
       changedIdentity: 'evaluator',
       error: mutationError,
     },
   });
-  verifyChallengeReceipt(receipt, {
-    validArtifact,
-    brokenArtifact,
-    validEntitlement,
-    brokenEntitlement,
+  const bundle = buildChallengeBundle({ validArtifact, brokenArtifact, validEntitlement, brokenEntitlement, receipt });
+  verifyChallengeBundle(bundle, {
     currentIdentities,
+    executionPath: EXECUTION_PATH,
+    consumerSubject,
+    consumerObservation,
   });
-  writeJson(path.join(outDir, 'challenge-receipt.json'), receipt);
+  writeJson(path.join(outDir, 'challenge-bundle.json'), bundle);
   process.stdout.write(`CHALLENGE RECEIPT PASS ${receipt.receiptIdentity}\n`);
 }
 
@@ -450,37 +545,35 @@ function verifyCommand(flags) {
     if (!flags[name]) throw new Error(`--${name} is required`);
   }
   const evidenceDir = path.resolve(flags['evidence-dir']);
-  const validArtifact = readJson(flags.artifact);
-  const brokenArtifact = readJson(path.join(evidenceDir, 'broken-twin.json'));
-  const validEntitlement = readJson(path.join(evidenceDir, 'valid-entitlement.json'));
-  const brokenEntitlement = readJson(path.join(evidenceDir, 'broken-entitlement.json'));
-  const receipt = readJson(path.join(evidenceDir, 'challenge-receipt.json'));
+  const bundlePath = path.join(evidenceDir, 'challenge-bundle.json');
+  const bundle = readJson(bundlePath);
+  const { validArtifact, validEntitlement, brokenEntitlement, receipt } = bundle;
+  const suppliedArtifact = readJson(flags.artifact);
+  verifyArtifact(suppliedArtifact);
+  if (suppliedArtifact.artifactIdentity !== validArtifact.artifactIdentity) throw new Error('supplied artifact identity mismatch');
   const currentIdentities = sourceIdentities();
-  const protocolIdentity = absoluteFileIdentity(flags.protocol);
-  if (validEntitlement.protocolIdentity !== protocolIdentity || brokenEntitlement.protocolIdentity !== protocolIdentity) {
-    throw new Error('protocol identity mismatch');
-  }
+  const protocol = committedProtocol(flags.protocol);
+  if (canonicalJson(validArtifact.protocol) !== canonicalJson(protocol)) throw new Error('artifact protocol registration mismatch');
   if (canonicalJson(validEntitlement.decisionRule) !== canonicalJson(readJson(flags['decision-rule']))) {
     throw new Error('decision rule mismatch');
   }
-  verifyChallengeReceipt(receipt, {
-    validArtifact,
-    brokenArtifact,
-    validEntitlement,
-    brokenEntitlement,
-    currentIdentities,
-  });
-  if (!receipt.consumerSubject || receipt.consumerSubject.sha256 !== absoluteFileIdentity(flags.batch)) {
-    throw new Error('consumer subject identity mismatch');
+  const batchPath = path.resolve(flags.batch);
+  const batch = readJson(batchPath);
+  const consumerSubject = { path: path.relative(ROOT, batchPath), sha256: absoluteFileIdentity(batchPath), batchIdentity: identity(batch) };
+  const { observeShortlist } = require('./generate-levels');
+  const consumerObservation = {
+    valid: observeShortlist(batch.results, validEntitlement, consumerSubject.batchIdentity),
+    broken: observeShortlist(batch.results, brokenEntitlement, consumerSubject.batchIdentity),
+  };
+  verifyChallengeBundle(bundle, { currentIdentities, executionPath: EXECUTION_PATH, consumerSubject, consumerObservation });
+  const replay = selectionObservation(batchPath, bundlePath);
+  if (replay.status !== 'PASS' || canonicalJson(replay.selected) !== canonicalJson(receipt.consumerObservation.valid.selected)) {
+    throw new Error('valid consumer CLI replay mismatch');
   }
-  const validSelection = selectionObservation(path.resolve(flags.batch), path.join(evidenceDir, 'valid-entitlement.json'));
-  const brokenSelection = selectionObservation(path.resolve(flags.batch), path.join(evidenceDir, 'broken-entitlement.json'));
-  if (canonicalJson(validSelection) !== canonicalJson(receipt.consumerObservation.valid)) throw new Error('valid consumer observation mismatch');
-  if (canonicalJson(brokenSelection) !== canonicalJson(receipt.consumerObservation.broken)) throw new Error('broken consumer observation mismatch');
   const mutated = { ...currentIdentities, evaluator: '0'.repeat(64) };
   let mutationFailed = false;
   try {
-    verifyEntitlement(validEntitlement, { currentIdentities: mutated });
+    verifyChallengeBundle(bundle, { currentIdentities: mutated, executionPath: EXECUTION_PATH, consumerSubject, consumerObservation });
   } catch {
     mutationFailed = true;
   }
@@ -493,7 +586,7 @@ function runCommand(flags) {
     if (!flags[name]) throw new Error(`--${name} is required`);
   }
   const { LEVELS } = require('../src/game');
-  const protocolIdentity = absoluteFileIdentity(flags.protocol);
+  const protocol = committedProtocol(flags.protocol);
   const count = Number(flags.count);
   const artifact = measureSubject({
     claim: 'structural candidate ranking is stable across two disjoint seed samples and single-seed reliability is sufficient for candidate differentiation',
@@ -502,8 +595,8 @@ function runCommand(flags) {
       a: { start: Number(flags['sample-a-start']), count },
       b: { start: Number(flags['sample-b-start']), count },
     },
+    protocol,
     coveredIdentities: sourceIdentities(),
-    protocolIdentity,
   });
   writeJson(path.resolve(flags.out), artifact);
   process.stdout.write(`SEED VARIANCE ARTIFACT PASS ${artifact.artifactIdentity}\n`);
@@ -518,6 +611,25 @@ function main(argv = process.argv.slice(2)) {
   throw new Error('command must be run, challenge, or verify');
 }
 
+module.exports = {
+  analyzeArtifact,
+  buildChallengeBundle,
+  buildChallengeReceipt,
+  canonicalJson,
+  createArtifact,
+  createBrokenTwin,
+  committedProtocol,
+  EXECUTION_PATH,
+  identity,
+  issueEntitlement,
+  measureSubject,
+  sourceIdentities,
+  verifyArtifact,
+  verifyChallengeBundle,
+  verifyChallengeReceipt,
+  verifyEntitlement,
+};
+
 if (require.main === module) {
   try {
     main();
@@ -526,18 +638,3 @@ if (require.main === module) {
     process.exitCode = 1;
   }
 }
-
-module.exports = {
-  analyzeArtifact,
-  buildChallengeReceipt,
-  canonicalJson,
-  createArtifact,
-  createBrokenTwin,
-  identity,
-  issueEntitlement,
-  measureSubject,
-  sourceIdentities,
-  verifyArtifact,
-  verifyChallengeReceipt,
-  verifyEntitlement,
-};
