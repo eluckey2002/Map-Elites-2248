@@ -1,0 +1,61 @@
+---
+name: seed-variance-challenge-delivery
+description: Build an entitled seed-variance check, then use it for a preregistered verdict and ledger admission.
+entry: named
+---
+
+# Seed-variance challenge delivery
+
+## Steps
+
+1. `entitled-check`
+   - unit: `orch-deliver`
+   - pack: `orch-code-pack`
+   - spec: `.orch/runs/2026-09-01-seed-variance-challenge/spec.md`
+2. `bounded-verdict`
+   - unit: `orch-deliver`
+   - pack: `orch-research-pack`
+   - spec: created by `orch-spec` after `entitled-check` returns a fixed result
+     identity
+
+## Edges
+
+- `seq`: `entitled-check` result identity becomes `bounded-verdict.evidence`.
+
+## Invariants
+
+- `entitled-check` may change only the executable check, its production
+  selector binding, and focused tests; it must not execute the generalizing
+  study or edit the evidence ledger.
+- `bounded-verdict` must preregister and commit its protocol before the first
+  real-subject run; it may not change executable behavior after inheriting the
+  predecessor identity.
+- Both steps preserve game rules, shipped levels, scoring, champion policy,
+  and unrelated user work.
+- Neither step may treat a helper-only green test or a recorded claim as
+  entitlement evidence.
+
+## Done check
+
+At the terminal revision, a fresh invocation of the production verifier must:
+
+1. validate the real-subject artifact and immutable challenge receipt;
+2. reproduce the declared correlation and variance comparison;
+3. show the same verifier rejecting a controlled broken twin;
+4. reject a receipt after any covered identity changes;
+5. show the production shortlist path accepting or withholding candidates
+   because of the entitlement verdict; and
+6. resolve the ledger's admitted record to the frozen artifact and receipt.
+
+The composition is complete only when all six observations are PASS and the
+project's experiment gate plus focused and full relevant tests are green.
+
+## Require
+
+The accepted persistent Goal Contract and tracked repository state at
+`4dd93219f69d5288654dd2aee395f6e6388bda4a`.
+
+## Return
+
+Status, terminal result identity, done-check verification, per-step result
+identities, changed artifacts, and unresolved gaps.
