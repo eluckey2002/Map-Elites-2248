@@ -57,9 +57,12 @@ silent edit.
 argument throws, using `--seeds`. That assertion stays true; add cases proving
 `--protocol RESULT-0020` and `--exploratory` now parse.
 
-**Check the other four guarded scripts for the same defect before assuming it
-is local to this one** — `map-elites`, `policy-ablation`, `routing-ablation`,
-and `policy-search` were wired to the same guard in the same session.
+**The defect is local to this script — already checked, do not re-check.**
+`map-elites`, `policy-ablation`, `routing-ablation`, and `policy-search` were
+wired to the same guard in the same session, but all four read flags by lookup
+and ignore unrecognised ones, so `--protocol` passes through them harmlessly.
+`target-aware-evaluation.js` is the only one with a strict parser, which is why
+it is the only one that breaks.
 
 ## Fact 2 — the null result is measured, not predicted
 
