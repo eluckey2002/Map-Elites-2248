@@ -60,9 +60,11 @@ had been comparing the promoted policy against itself — 520 of 520 identical
 cells, exit 0, indistinguishable from a real null. And the promotion *copied*
 the policy into `solver/bot.js` instead of moving it, so `chooseMove` and
 `chooseTargetAwareMove` are now byte-identical apart from their identifiers and
-the challenger evaluates the same override twice per move. The first is fixed
-(`ab4b9d7`); the second is recorded in `RESULT-0020` P3 and **not** fixed —
-that file was frozen for the run.
+the challenger evaluated the same override twice per move. Both are fixed —
+the wiring at `ab4b9d7`, the duplication at `c37c83a`, once the run was over
+and the file was no longer frozen. `solver/bot.js` still carries its own copy
+of the rule; that half is untouched and is a question for `DECISION-0004`, not
+a measurement.
 
 ## Parked
 

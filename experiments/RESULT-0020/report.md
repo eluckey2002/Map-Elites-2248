@@ -179,3 +179,48 @@ falsified, the correction would have been recorded and the code left alone.
 it: the promotion duplicated the policy instead of moving it, and the
 experimental challenger has been paying for that duplication ever since. See
 P3.
+
+---
+
+## Addendum — 2026-09-01, after adversarial review
+
+Appended after this report was committed. It corrects commentary, not a check
+outcome: P1, P2, P4 and P5 are unaffected, and P3 remains a **BREACH**.
+
+**P3's corrective timing table does not reproduce, and understated itself.**
+
+An independent re-run of the same procedure (52 levels x 5 screen seeds, three
+interleaved rounds after warm-up) returned champion 19,721 ms, shipped
+challenger 37,358 ms (**1.894x**), single-override challenger 28,029 ms
+(**1.421x**) — a 25.0% saving from removing the duplication, not the ~17%
+reported above. Absolute times differ from this report's by roughly 2x, which
+is what an unpinned wall-clock measurement on a shared machine does.
+
+Two things follow, and the second is the one this report got wrong.
+
+1. The table has no artifact behind it and should not have been stated as
+   precisely as it was. The claim it exists to support — that the two
+   challenger variants play identically — is separately verified at a wider
+   denominator (1,040 games, all 52 levels) and stands.
+2. **This report's own corrected figure, 1.689x, is itself outside the
+   declared 1.3x–1.6x band, and the report did not say so.** Writing that it
+   "moves the ratio most of the way back toward the original figure" was true
+   and incomplete. The honest statement is that removing the duplication does
+   not by itself bring the ratio inside the declared band on this machine,
+   though the independent re-run's 1.421x does land inside it — which is a
+   further reason to treat the band, not the mechanism, as the defective part.
+
+**The band should not have been a pass/fail check.** The protocol declares
+wall-clock timings diagnostic under *Instrument bound* and then hangs a
+predeclared threshold on them. Those two statements are in tension, and the
+artifact records no CPU count, worker-pool size, or machine load that would
+let anyone reproduce either figure. A future protocol should report the ratio
+and explain a deviation, without a threshold that a second machine can move.
+
+**Also corrected:** C2's supporting sentence above cites the screen artifact's
+479-of-520 as independent agreement with C2's 480-of-520. Those are different
+samples that coincidentally share a denominator — C2 ran 52 levels x 10 seeds,
+the screen is 13 levels x 40 seeds — and `changedMoveCount` is a weaker measure
+than C2's whole-sequence equality, since it compares positionwise only up to
+the shorter sequence. The two numbers are consistent, but one does not
+corroborate the other.

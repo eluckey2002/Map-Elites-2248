@@ -9,10 +9,14 @@ updated: 2026-09-01
 
 # Finish line — BL-0005
 
-> **Reached 2026-09-01 as `RESULT-0020`.** All fourteen lines below are true.
-> Every fact and command in this record was run against the work that
-> satisfied it. The one deviation from plan is P3, a declared compute check
-> that breached and is reported as a breach rather than reconciled.
+> **Reached 2026-09-01 as `RESULT-0020`**, with three deviations recorded
+> rather than smoothed over. P3, a declared compute check, breached and is
+> reported as a breach. Rows 4 and 5 below were written with wrong numbers —
+> corrected in place on 2026-09-01 after an adversarial review recomputed
+> them; the substance they demanded was met at the corrected denominator, but
+> the figures as first written were not achievable. Row 4 also asked for C2 to
+> be recorded before the holdout, and it was not: C2 has no artifact and
+> survives only in `report.md`, committed afterward.
 
 ## Authority
 
@@ -216,8 +220,8 @@ Nothing here is satisfied by inspection or by asserting it in a record.
 | 1 | Started from a clean `main` with the baseline gate green | `node tools/verify-repo-baseline.js` exits 0 before anything else |
 | 2 | `RESULT-0020` registered, committed, and its commit predates every artifact | `node tools/new-experiment.js RESULT-0020`; the artifact's `registration.protocolCommit` names it |
 | 3 | The protocol declares the champion-arm change, the `--protocol` parsing fix, and all five hash movements | read `experiments/RESULT-0020/protocol.md` |
-| 4 | The two arms genuinely differ before the holdout runs | C2 control above returns **0 identical of 156**, run and recorded before the holdout |
-| 5 | The champion arm reproduces the pre-promotion bot | C1 control above returns **156 identical of 156**, at 52 levels x 10 seeds |
+| 4 | The two arms genuinely differ before the holdout runs | C2 returns **40 identical of 520** (52 levels x 10 screen seeds), every level showing a differing cell. *Originally written as "0 identical of 156" — false at any denominator: at 52 levels x 3 holdout seeds it is 5 of 156, not 0.* Record it in its own artifact, not only in the report |
+| 5 | The champion arm reproduces the pre-promotion bot | C1 returns **520 identical of 520**, at 52 levels x 10 screen seeds. *Originally written as "156 identical of 156, at 52 levels x 10 seeds" — 52 x 10 is 520, so the stated count could not arise from the stated denominator* |
 | 6 | Screen ran first, holdout ran exactly once, both stamped | two artifacts, each with `registration.exploratory === false` and `registration.protocol === "RESULT-0020"` |
 | 7 | The holdout is complete and its identity verifies | `validateArtifact` returns 15,600 cells; seeds 13,000,000–13,000,299 x 52 levels |
 | 8 | Every declared check is resolved by name, including any that came out badly | `node tools/verify-experiments.js` exits 0 with `report.md` present |

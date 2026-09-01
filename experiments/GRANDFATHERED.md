@@ -55,7 +55,10 @@ under a protocol committed before the data existed.
 
 RESULT-0018 stays on the list above. It was not backfilled, not edited, and
 not removed: the exemption genuinely happened, and this file is the record
-that it did. What changed is that no shipped decision depends on it any more.
+that it did. What changed is that the same claim now also rests on a
+reproducible, pre-registered run. `DECISION-0004` still cites RESULT-0018 in
+its `evidence:` field and `RESULT-0020` does not supersede it — the dependency
+was not removed, it was given an alternative.
 
 The re-run also surfaced something the original could not. While both arms
 were the same promoted policy the instrument returned 520 of 520 identical
