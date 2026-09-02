@@ -65,9 +65,11 @@ function evaluateCoverage(fixture, generatorOptions = {}) {
     cappedStates: 0,
     nodesVisited: 0,
     actionsConsidered: 0,
+    candidatesAvailable: 0,
     candidatesReturned: 0,
     elapsedMs: 0,
     capReasons: {},
+    records: [],
   };
   let opening24TileSum3456 = false;
 
@@ -95,6 +97,7 @@ function evaluateCoverage(fixture, generatorOptions = {}) {
       search.states += 1;
       search.nodesVisited += generated.telemetry.nodesVisited;
       search.actionsConsidered += generated.telemetry.actionsConsidered;
+      search.candidatesAvailable += generated.telemetry.candidatesAvailable;
       search.candidatesReturned += generated.telemetry.candidatesReturned;
       search.elapsedMs += generated.telemetry.elapsedMs;
       if (generated.complete) search.completeStates += 1;
@@ -102,6 +105,20 @@ function evaluateCoverage(fixture, generatorOptions = {}) {
       for (const reason of generated.telemetry.capReasons) {
         search.capReasons[reason] = (search.capReasons[reason] || 0) + 1;
       }
+      search.records.push({
+        sourceFile: session.sourceFile,
+        sourceSha256: session.sourceSha256,
+        moveIndex,
+        humanActionIdentity: actionIdentity(human),
+        complete: generated.complete,
+        nodesVisited: generated.telemetry.nodesVisited,
+        actionsConsidered: generated.telemetry.actionsConsidered,
+        candidatesAvailable: generated.telemetry.candidatesAvailable,
+        candidatesReturned: generated.telemetry.candidatesReturned,
+        elapsedMs: generated.telemetry.elapsedMs,
+        capReasons: [...generated.telemetry.capReasons],
+        limits: { ...generated.telemetry.limits },
+      });
 
       const live = human.map(({ x, y }) => state.grid[y][x]);
       executeChain(state, live);
@@ -164,8 +181,15 @@ function parseArgs(argv) {
     return index === -1 ? fallback : argv[index + 1];
   };
   const number = (name) => {
-    const raw = value(name, undefined);
-    return raw === undefined ? undefined : Number(raw);
+    const flag = `--${name}`;
+    const index = argv.indexOf(flag);
+    if (index === -1) return undefined;
+    const raw = argv[index + 1];
+    const parsed = Number(raw);
+    if (raw === undefined || raw.startsWith('--') || !Number.isSafeInteger(parsed) || parsed < 1) {
+      throw new Error(`${flag} requires a positive integer value`);
+    }
+    return parsed;
   };
   return {
     fixture: value('fixture', path.join(__dirname, 'test-fixtures', 'level52-seed2000000-human-games.json')),

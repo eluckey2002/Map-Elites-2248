@@ -184,7 +184,7 @@ function generateTargetedChains(state, options = {}) {
 
   const heuristic = heuristicCandidates(state, pathWidth, objectiveLimit);
   const lattice = [...latticeBySum.values()].sort((a, b) => a.sum - b.sum || compareImmediate(a, b));
-  const candidates = [];
+  const availableCandidates = [];
   const byIdentity = new Map();
   const objectives = [
     ['high-immediate-score', immediate],
@@ -192,18 +192,19 @@ function generateTargetedChains(state, options = {}) {
     ['mergeable-lattice-sum', lattice],
     ['bounded-path-diversity', heuristic],
   ];
-  for (let rank = 0; candidates.length < candidateLimit; rank++) {
+  for (let rank = 0; ; rank++) {
     let found = false;
     for (const [objective, pool] of objectives) {
       const candidate = pool[rank];
       if (!candidate) continue;
       found = true;
-      addCandidate(candidates, byIdentity, candidate, objective, candidateLimit);
+      addCandidate(availableCandidates, byIdentity, candidate, objective, Infinity);
     }
     if (!found) break;
   }
 
-  const candidateLimitHit = actionsConsidered > candidates.length;
+  const candidateLimitHit = availableCandidates.length > candidateLimit;
+  const candidates = availableCandidates.slice(0, candidateLimit);
   const capReasons = [];
   if (nodeLimitHit) capReasons.push('maxNodes');
   if (candidateLimitHit) capReasons.push('candidateLimit');
@@ -215,6 +216,7 @@ function generateTargetedChains(state, options = {}) {
       nodesVisited,
       pathStates: pathStates.size,
       actionsConsidered,
+      candidatesAvailable: availableCandidates.length,
       candidatesReturned: candidates.length,
       elapsedMs: Number(elapsedMs.toFixed(3)),
       capReasons,

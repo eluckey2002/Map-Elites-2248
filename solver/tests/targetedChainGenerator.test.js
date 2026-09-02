@@ -126,6 +126,29 @@ test('caller node caps fail closed and are deterministic', () => {
   assert.deepEqual(first.telemetry.capReasons, ['maxNodes']);
 });
 
+test('candidate-limit telemetry only reports actual outward truncation', () => {
+  const state = {
+    grid: Array.from({ length: 3 }, (_, y) => (
+      Array.from({ length: 3 }, (_, x) => ({ x, y, value: 2, blocker: null }))
+    )),
+    gridWidth: 3,
+    gridHeight: 3,
+    minChain: 3,
+    tileScale: 1,
+  };
+  const result = generateTargetedChains(state, {
+    maxNodes: 10_000,
+    candidateLimit: 512,
+    pathWidth: 8,
+  });
+
+  assert.ok(result.telemetry.actionsConsidered > result.telemetry.candidatesReturned);
+  assert.ok(result.telemetry.candidatesReturned < result.telemetry.limits.candidateLimit);
+  assert.equal(result.telemetry.candidatesAvailable, result.telemetry.candidatesReturned);
+  assert.equal(result.complete, true);
+  assert.deepEqual(result.telemetry.capReasons, []);
+});
+
 test('the real-state coverage seam beats production and recovers both named anchors', () => {
   const report = evaluateCoverage(FIXTURE, {
     maxNodes: 100_000,
@@ -144,6 +167,42 @@ test('the real-state coverage seam beats production and recovers both named anch
   assert.equal(report.search.completeStates + report.search.cappedStates, 39);
   assert.ok(report.search.nodesVisited > 0);
   assert.ok(report.search.elapsedMs >= 0);
+  assert.equal(report.search.records.length, 39);
+  assert.equal(
+    new Set(report.search.records.map(({ sourceFile, moveIndex }) => `${sourceFile}:${moveIndex}`)).size,
+    39,
+  );
+  for (const record of report.search.records) {
+    assert.ok(EXPECTED_SOURCES.has(record.sourceFile));
+    assert.equal(record.sourceSha256, EXPECTED_SOURCES.get(record.sourceFile));
+    assert.ok(Number.isSafeInteger(record.moveIndex));
+    assert.match(record.humanActionIdentity, /^\d+,\d+;/);
+    assert.equal(record.complete, record.capReasons.length === 0);
+    if (record.capReasons.includes('candidateLimit')) {
+      assert.equal(record.candidatesReturned, record.limits.candidateLimit);
+      assert.ok(record.candidatesAvailable > record.candidatesReturned);
+    }
+  }
+  assert.equal(
+    report.search.candidatesAvailable,
+    report.search.records.reduce((sum, { candidatesAvailable }) => sum + candidatesAvailable, 0),
+  );
+  assert.equal(
+    report.search.capReasons.candidateLimit || 0,
+    report.search.records.filter(({ capReasons }) => capReasons.includes('candidateLimit')).length,
+  );
+});
+
+test('present numeric CLI flags without values fail closed before coverage runs', () => {
+  const cli = path.join(__dirname, '..', 'targeted-chain-coverage.js');
+  const fixture = path.join(__dirname, '..', 'test-fixtures', 'level52-seed2000000-human-games.json');
+
+  for (const flag of ['--max-nodes', '--candidate-limit', '--path-width']) {
+    const run = spawnSync(process.execPath, [cli, '--fixture', fixture, flag], { encoding: 'utf8' });
+    assert.equal(run.status, 1, flag);
+    assert.equal(run.stdout, '', flag);
+    assert.match(run.stderr, new RegExp(`${flag} requires a positive integer value`), flag);
+  }
 });
 
 test('a controlled broken cap fails the coverage CLI acceptance seam', () => {
