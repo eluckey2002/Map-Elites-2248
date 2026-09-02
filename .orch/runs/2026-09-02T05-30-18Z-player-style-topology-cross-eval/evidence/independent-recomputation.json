@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0023",
+  "confirmationIdentity": "a4476ca1fe4006d7427f8cd103d5ba54a93a06eb1c9eaf8afe99e9e9a7465367",
+  "recomputation": {
+    "primaryVerdict": "INCONCLUSIVE",
+    "styleGuard": {
+      "chainRange": 1.7614583333333336,
+      "patienceRange": 0.04526923143220901,
+      "pass": true
+    },
+    "interactionSpread": 0.029832057784871302,
+    "stableOrdering": false,
+    "halfOrderings": [
+      {
+        "mostAffected": "4cbec6509c34",
+        "leastAffected": "0de51bc557de"
+      },
+      {
+        "mostAffected": "a61e8b8e23b7",
+        "leastAffected": "4cbec6509c34"
+      }
+    ],
+    "responses": [
+      {
+        "policyId": "0de51bc557de",
+        "response": -0.19498423114269836,
+        "openMeanChainLength": 12.045416666666666,
+        "openLateScoreShare": 0.34178724886601314
+      },
+      {
+        "policyId": "a61e8b8e23b7",
+        "response": -0.22481628892756966,
+        "openMeanChainLength": 11.933125,
+        "openLateScoreShare": 0.33569390427948753
+      },
+      {
+        "policyId": "4cbec6509c34",
+        "response": -0.20935581111530466,
+        "openMeanChainLength": 10.283958333333333,
+        "openLateScoreShare": 0.2965180174338041
+      },
+      {
+        "policyId": "ebeb9e326a01",
+        "response": -0.20223751950435542,
+        "openMeanChainLength": 11.019166666666667,
+        "openLateScoreShare": 0.33263316089632494
+      }
+    ]
+  },
+  "artifactIdentity": "8c94578c6558a31e187db5383914f5c9445f8108b51a2008a14aa1e9e7bec3e9"
+}

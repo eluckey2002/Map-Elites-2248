@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0023",
+  "verifier": "03927d6f91ca69cba75d3e6f78663d843492505b9bba1b53a54e6271f238d6e8",
+  "valid": {
+    "verdict": "PASS",
+    "confirmationIdentity": "a4476ca1fe4006d7427f8cd103d5ba54a93a06eb1c9eaf8afe99e9e9a7465367"
+  },
+  "brokenTwin": {
+    "verdict": "FAIL",
+    "mutation": "cells[0].score += 1",
+    "error": "/var/folders/bb/jgtk589s6f51m62dw2gc32300000gn/T/result-0023-broken-FSdUSk/confirmation-broken.json: artifact identity mismatch (7c6ff64193d9f0d3b0b1313c0dd0032cd9ae020f0ebc63a7915ec36fcd9ed63d != a4476ca1fe4006d7427f8cd103d5ba54a93a06eb1c9eaf8afe99e9e9a7465367)"
+  },
+  "artifactIdentity": "193a2837c5839f738cbe2d595ef209aa922304cd1582eda1a4a1a2cc3962591e"
+}

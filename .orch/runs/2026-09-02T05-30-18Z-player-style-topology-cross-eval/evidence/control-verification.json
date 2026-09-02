@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "result": "RESULT-0023",
+  "controlsIdentity": "70c8631efcf6f7311804e430e1b4c457ab91b2a9b7e82f3f43b4555dff205dac",
+  "subjectCheck": {
+    "subjects": "PASS",
+    "policyCount": 4,
+    "layoutCount": 3,
+    "sourceCount": 9
+  },
+  "controlCheck": {
+    "controls": "PASS",
+    "negativeRepeatCells": 144,
+    "positiveChangedPairs": 48
+  },
+  "artifactIdentity": "1526be14754a0a94c5f2f0712d1c586c0e7dfabdf83c321432df04eeb9dacf82"
+}

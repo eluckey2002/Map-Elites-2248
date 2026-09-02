@@ -1,0 +1,147 @@
+{
+  "status": "PASS",
+  "result": "RESULT-0023",
+  "controlsIdentity": "70c8631efcf6f7311804e430e1b4c457ab91b2a9b7e82f3f43b4555dff205dac",
+  "confirmationIdentity": "a4476ca1fe4006d7427f8cd103d5ba54a93a06eb1c9eaf8afe99e9e9a7465367",
+  "subjectControls": {
+    "subjects": "PASS",
+    "policyCount": 4,
+    "layoutCount": 3,
+    "sourceCount": 9
+  },
+  "subjectConfirmation": {
+    "subjects": "PASS",
+    "policyCount": 4,
+    "layoutCount": 3,
+    "sourceCount": 9
+  },
+  "controlCheck": {
+    "controls": "PASS",
+    "negativeRepeatCells": 144,
+    "positiveChangedPairs": 48
+  },
+  "matrixCheck": {
+    "matrix": "PASS",
+    "cells": 2400
+  },
+  "verdictCheck": {
+    "verdict": "PASS",
+    "primaryVerdict": "INCONCLUSIVE",
+    "styleGuard": {
+      "chainRange": 1.7614583333333336,
+      "patienceRange": 0.04526923143220901,
+      "pass": true
+    },
+    "interactionSpread": 0.029832057784871246,
+    "stableOrdering": false,
+    "halfOrderings": [
+      {
+        "mostAffected": "4cbec6509c34",
+        "leastAffected": "0de51bc557de"
+      },
+      {
+        "mostAffected": "a61e8b8e23b7",
+        "leastAffected": "4cbec6509c34"
+      }
+    ],
+    "responses": [
+      {
+        "policyId": "0de51bc557de",
+        "response": -0.1949842311426984,
+        "oneVsOpen": -0.1682613608327174,
+        "earlyTerminationRate": {
+          "open": 0,
+          "one-center-stone": 0,
+          "two-center-stones": 0
+        },
+        "behavior": {
+          "open": {
+            "meanChainLength": 12.045416666666666,
+            "lateScoreShare": 0.34178724886601314
+          },
+          "one-center-stone": {
+            "meanChainLength": 10.683958333333333,
+            "lateScoreShare": 0.30985895520139256
+          },
+          "two-center-stones": {
+            "meanChainLength": 9.398125,
+            "lateScoreShare": 0.28712999305295317
+          }
+        }
+      },
+      {
+        "policyId": "a61e8b8e23b7",
+        "response": -0.22481628892756964,
+        "oneVsOpen": -0.145991233799001,
+        "earlyTerminationRate": {
+          "open": 0,
+          "one-center-stone": 0,
+          "two-center-stones": 0
+        },
+        "behavior": {
+          "open": {
+            "meanChainLength": 11.933125,
+            "lateScoreShare": 0.33569390427948753
+          },
+          "one-center-stone": {
+            "meanChainLength": 10.636458333333334,
+            "lateScoreShare": 0.3105184316615255
+          },
+          "two-center-stones": {
+            "meanChainLength": 9.26625,
+            "lateScoreShare": 0.28396641582302257
+          }
+        }
+      },
+      {
+        "policyId": "4cbec6509c34",
+        "response": -0.2093558111153046,
+        "oneVsOpen": -0.2026461788576754,
+        "earlyTerminationRate": {
+          "open": 0,
+          "one-center-stone": 0,
+          "two-center-stones": 0.005
+        },
+        "behavior": {
+          "open": {
+            "meanChainLength": 10.283958333333333,
+            "lateScoreShare": 0.2965180174338041
+          },
+          "one-center-stone": {
+            "meanChainLength": 8.944583333333334,
+            "lateScoreShare": 0.27190426328449224
+          },
+          "two-center-stones": {
+            "meanChainLength": 7.729453483521068,
+            "lateScoreShare": 0.25157905314231577
+          }
+        }
+      },
+      {
+        "policyId": "ebeb9e326a01",
+        "response": -0.2022375195043554,
+        "oneVsOpen": -0.14091423771062245,
+        "earlyTerminationRate": {
+          "open": 0,
+          "one-center-stone": 0,
+          "two-center-stones": 0
+        },
+        "behavior": {
+          "open": {
+            "meanChainLength": 11.019166666666667,
+            "lateScoreShare": 0.33263316089632494
+          },
+          "one-center-stone": {
+            "meanChainLength": 9.9,
+            "lateScoreShare": 0.31798782085125077
+          },
+          "two-center-stones": {
+            "meanChainLength": 8.751666666666667,
+            "lateScoreShare": 0.2899492526238343
+          }
+        }
+      }
+    ]
+  },
+  "artifactIdentity": "7cd45f897a02a25c7abbd59ac743e006f6ce13732b7caf887863e61a8e1c070c"
+}

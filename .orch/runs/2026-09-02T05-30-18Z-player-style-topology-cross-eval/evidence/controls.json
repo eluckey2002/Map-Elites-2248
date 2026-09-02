@@ -1,0 +1,5055 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0023",
+  "kind": "controls",
+  "subjects": {
+    "policies": [
+      {
+        "name": "current-base",
+        "policyId": "0de51bc557de",
+        "params": {
+          "wRoll": 1,
+          "wPlace": 1,
+          "turnover": 40,
+          "width": 24,
+          "bombMax": 9,
+          "tieBreak": "degree",
+          "wHarvest": 2,
+          "offerFull": 0,
+          "pathWidth": 8
+        }
+      },
+      {
+        "name": "historical-long-chain",
+        "policyId": "a61e8b8e23b7",
+        "params": {
+          "wRoll": 1,
+          "wPlace": 1,
+          "turnover": 72,
+          "width": 24,
+          "bombMax": 11,
+          "tieBreak": "degree",
+          "wHarvest": 2,
+          "offerFull": 0,
+          "pathWidth": 6
+        }
+      },
+      {
+        "name": "historical-short-chain",
+        "policyId": "4cbec6509c34",
+        "params": {
+          "wRoll": 0,
+          "wPlace": 0.75,
+          "turnover": 0,
+          "width": 12,
+          "bombMax": 9,
+          "tieBreak": "degree",
+          "wHarvest": 0,
+          "offerFull": 0,
+          "pathWidth": 1
+        }
+      },
+      {
+        "name": "historical-late-score",
+        "policyId": "ebeb9e326a01",
+        "params": {
+          "wRoll": 1,
+          "wPlace": 1.75,
+          "turnover": 0,
+          "width": 12,
+          "bombMax": 9,
+          "tieBreak": "degree",
+          "wHarvest": 3.5,
+          "offerFull": 0,
+          "pathWidth": 8
+        }
+      }
+    ],
+    "layouts": [
+      {
+        "name": "open",
+        "level": 54,
+        "gridW": 4,
+        "gridH": 8,
+        "moves": 24,
+        "minChain": 3,
+        "tileScale": 32,
+        "target": "Infinity",
+        "blockers": [],
+        "layoutIdentity": "6d1685c3af2e5d301d687426f0c9b750b925cdb7612e40cedb36f20f0257a011"
+      },
+      {
+        "name": "one-center-stone",
+        "level": 54,
+        "gridW": 4,
+        "gridH": 8,
+        "moves": 24,
+        "minChain": 3,
+        "tileScale": 32,
+        "target": "Infinity",
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "layoutIdentity": "878b21b31e406eed754126c2458753ec9c1254f82ac06bd16e26463b571dd1a7"
+      },
+      {
+        "name": "two-center-stones",
+        "level": 54,
+        "gridW": 4,
+        "gridH": 8,
+        "moves": 24,
+        "minChain": 3,
+        "tileScale": 32,
+        "target": "Infinity",
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "layoutIdentity": "552435ef7d06a3eb95639de00c25e9cc756df5bbaf1f4cef387ad05d27356d5e"
+      }
+    ]
+  },
+  "seeds": [
+    20000000,
+    20000001,
+    20000002,
+    20000003,
+    20000004,
+    20000005,
+    20000006,
+    20000007,
+    20000008,
+    20000009,
+    20000010,
+    20000011
+  ],
+  "sources": {
+    "experiments/RESULT-0023/run.js": "5f20cd7a6552edf6838bde51aaa93dc821b200a78d6d8aa05057d8d414598b30",
+    "experiments/RESULT-0023/verify.js": "03927d6f91ca69cba75d3e6f78663d843492505b9bba1b53a54e6271f238d6e8",
+    "experiments/RESULT-0023/recompute.js": "0179f3b8f143f6ebd184cf4f28461fdf892ebd7b99271085e94d62a098c45ecc",
+    "solver/bot.js": "8d0dec5f6b0669ca7c039e6493b4014fdc5cefb4df9d93ad54dba2cb168b0b10",
+    "solver/engine.js": "4e2323b9218aed6a552017ca37eab16becf8ef0a314f7081d02717ef1f7a12c6",
+    "solver/policy-eval.js": "ab76eeb937b61b85835602f4db431de9f8686dfa281a48cfd2c97caa039457a1",
+    "solver/map-elites-core.js": "2ff166ac8c500969c2c5ae5af8264d50787e67ec2fdb99600cce78ab9355c297",
+    "solver/map-elites-output/archive.json": "11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c",
+    "src/game.js": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee"
+  },
+  "cells": [
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000000,
+      "score": 202304,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 260,
+        "totalScore": 202304,
+        "lateScore": 110208
+      },
+      "behavior": {
+        "meanChainLength": 10.833333333333334,
+        "lateScoreShare": 0.5447643150901613
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000001,
+      "score": 185088,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 256,
+        "totalScore": 185088,
+        "lateScore": 62976
+      },
+      "behavior": {
+        "meanChainLength": 10.666666666666666,
+        "lateScoreShare": 0.34024896265560167
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000002,
+      "score": 232576,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 286,
+        "totalScore": 232576,
+        "lateScore": 87488
+      },
+      "behavior": {
+        "meanChainLength": 11.916666666666666,
+        "lateScoreShare": 0.37616951018161804
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000003,
+      "score": 236608,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 295,
+        "totalScore": 236608,
+        "lateScore": 87232
+      },
+      "behavior": {
+        "meanChainLength": 12.291666666666666,
+        "lateScoreShare": 0.36867730592372194
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000004,
+      "score": 217536,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 292,
+        "totalScore": 217536,
+        "lateScore": 61632
+      },
+      "behavior": {
+        "meanChainLength": 12.166666666666666,
+        "lateScoreShare": 0.2833186231244484
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000005,
+      "score": 245696,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 293,
+        "totalScore": 245696,
+        "lateScore": 107840
+      },
+      "behavior": {
+        "meanChainLength": 12.208333333333334,
+        "lateScoreShare": 0.4389163844751237
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000006,
+      "score": 239296,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 310,
+        "totalScore": 239296,
+        "lateScore": 89280
+      },
+      "behavior": {
+        "meanChainLength": 12.916666666666666,
+        "lateScoreShare": 0.3730944102701257
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000007,
+      "score": 206848,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 274,
+        "totalScore": 206848,
+        "lateScore": 68032
+      },
+      "behavior": {
+        "meanChainLength": 11.416666666666666,
+        "lateScoreShare": 0.32889851485148514
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000008,
+      "score": 193472,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 319,
+        "totalScore": 193472,
+        "lateScore": 44032
+      },
+      "behavior": {
+        "meanChainLength": 13.291666666666666,
+        "lateScoreShare": 0.22758848825669864
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000009,
+      "score": 211328,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 286,
+        "totalScore": 211328,
+        "lateScore": 45120
+      },
+      "behavior": {
+        "meanChainLength": 11.916666666666666,
+        "lateScoreShare": 0.2135069654754694
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000010,
+      "score": 201856,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 275,
+        "totalScore": 201856,
+        "lateScore": 69120
+      },
+      "behavior": {
+        "meanChainLength": 11.458333333333334,
+        "lateScoreShare": 0.34242232086239693
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000011,
+      "score": 209152,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 313,
+        "totalScore": 209152,
+        "lateScore": 42496
+      },
+      "behavior": {
+        "meanChainLength": 13.041666666666666,
+        "lateScoreShare": 0.20318237454100369
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000000,
+      "score": 185664,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 240,
+        "totalScore": 185664,
+        "lateScore": 60032
+      },
+      "behavior": {
+        "meanChainLength": 10,
+        "lateScoreShare": 0.32333678042054464
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000001,
+      "score": 199616,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 288,
+        "totalScore": 199616,
+        "lateScore": 60224
+      },
+      "behavior": {
+        "meanChainLength": 12,
+        "lateScoreShare": 0.3016992625841616
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000002,
+      "score": 163776,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 253,
+        "totalScore": 163776,
+        "lateScore": 41920
+      },
+      "behavior": {
+        "meanChainLength": 10.541666666666666,
+        "lateScoreShare": 0.25595935912465806
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000003,
+      "score": 191424,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 265,
+        "totalScore": 191424,
+        "lateScore": 72832
+      },
+      "behavior": {
+        "meanChainLength": 11.041666666666666,
+        "lateScoreShare": 0.3804747576061518
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000004,
+      "score": 239296,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 309,
+        "totalScore": 239296,
+        "lateScore": 65536
+      },
+      "behavior": {
+        "meanChainLength": 12.875,
+        "lateScoreShare": 0.2738700187215833
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000005,
+      "score": 173440,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 266,
+        "totalScore": 173440,
+        "lateScore": 54272
+      },
+      "behavior": {
+        "meanChainLength": 11.083333333333334,
+        "lateScoreShare": 0.3129151291512915
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000006,
+      "score": 181184,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 253,
+        "totalScore": 181184,
+        "lateScore": 56256
+      },
+      "behavior": {
+        "meanChainLength": 10.541666666666666,
+        "lateScoreShare": 0.3104909925821265
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000007,
+      "score": 162496,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 231,
+        "totalScore": 162496,
+        "lateScore": 67712
+      },
+      "behavior": {
+        "meanChainLength": 9.625,
+        "lateScoreShare": 0.4166994879873966
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000008,
+      "score": 204736,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 292,
+        "totalScore": 204736,
+        "lateScore": 69120
+      },
+      "behavior": {
+        "meanChainLength": 12.166666666666666,
+        "lateScoreShare": 0.33760550171928727
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000009,
+      "score": 147712,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 210,
+        "totalScore": 147712,
+        "lateScore": 41536
+      },
+      "behavior": {
+        "meanChainLength": 8.75,
+        "lateScoreShare": 0.28119584055459274
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000010,
+      "score": 174976,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 264,
+        "totalScore": 174976,
+        "lateScore": 50752
+      },
+      "behavior": {
+        "meanChainLength": 11,
+        "lateScoreShare": 0.2900512070226774
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000011,
+      "score": 126336,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 217,
+        "totalScore": 126336,
+        "lateScore": 35008
+      },
+      "behavior": {
+        "meanChainLength": 9.041666666666666,
+        "lateScoreShare": 0.27710233029381964
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000000,
+      "score": 179776,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 239,
+        "totalScore": 179776,
+        "lateScore": 61888
+      },
+      "behavior": {
+        "meanChainLength": 9.958333333333334,
+        "lateScoreShare": 0.344250622997508
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000001,
+      "score": 148416,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 225,
+        "totalScore": 148416,
+        "lateScore": 51776
+      },
+      "behavior": {
+        "meanChainLength": 9.375,
+        "lateScoreShare": 0.3488572660629582
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000002,
+      "score": 171072,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 233,
+        "totalScore": 171072,
+        "lateScore": 59264
+      },
+      "behavior": {
+        "meanChainLength": 9.708333333333334,
+        "lateScoreShare": 0.3464272353161242
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000003,
+      "score": 103232,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 205,
+        "totalScore": 103232,
+        "lateScore": 32640
+      },
+      "behavior": {
+        "meanChainLength": 8.541666666666666,
+        "lateScoreShare": 0.3161810291382517
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000004,
+      "score": 144064,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 225,
+        "totalScore": 144064,
+        "lateScore": 54272
+      },
+      "behavior": {
+        "meanChainLength": 9.375,
+        "lateScoreShare": 0.37672145713016436
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000005,
+      "score": 134848,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 221,
+        "totalScore": 134848,
+        "lateScore": 48704
+      },
+      "behavior": {
+        "meanChainLength": 9.208333333333334,
+        "lateScoreShare": 0.3611770289511153
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000006,
+      "score": 110464,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 214,
+        "totalScore": 110464,
+        "lateScore": 26688
+      },
+      "behavior": {
+        "meanChainLength": 8.916666666666666,
+        "lateScoreShare": 0.24159907300115874
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000007,
+      "score": 115200,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 215,
+        "totalScore": 115200,
+        "lateScore": 16576
+      },
+      "behavior": {
+        "meanChainLength": 8.958333333333334,
+        "lateScoreShare": 0.1438888888888889
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000008,
+      "score": 120320,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 227,
+        "totalScore": 120320,
+        "lateScore": 26816
+      },
+      "behavior": {
+        "meanChainLength": 9.458333333333334,
+        "lateScoreShare": 0.22287234042553192
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000009,
+      "score": 115904,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 203,
+        "totalScore": 115904,
+        "lateScore": 25344
+      },
+      "behavior": {
+        "meanChainLength": 8.458333333333334,
+        "lateScoreShare": 0.21866372170071782
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000010,
+      "score": 99136,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 186,
+        "totalScore": 99136,
+        "lateScore": 16256
+      },
+      "behavior": {
+        "meanChainLength": 7.75,
+        "lateScoreShare": 0.16397675919948354
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000011,
+      "score": 160960,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 250,
+        "totalScore": 160960,
+        "lateScore": 45568
+      },
+      "behavior": {
+        "meanChainLength": 10.416666666666666,
+        "lateScoreShare": 0.2831013916500994
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000000,
+      "score": 105408,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 197,
+        "totalScore": 105408,
+        "lateScore": 43456
+      },
+      "behavior": {
+        "meanChainLength": 8.208333333333334,
+        "lateScoreShare": 0.41226472374013357
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000001,
+      "score": 177472,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 264,
+        "totalScore": 177472,
+        "lateScore": 53888
+      },
+      "behavior": {
+        "meanChainLength": 11,
+        "lateScoreShare": 0.3036422646952759
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000002,
+      "score": 253952,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 315,
+        "totalScore": 253952,
+        "lateScore": 86656
+      },
+      "behavior": {
+        "meanChainLength": 13.125,
+        "lateScoreShare": 0.34122983870967744
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000003,
+      "score": 196096,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 269,
+        "totalScore": 196096,
+        "lateScore": 90752
+      },
+      "behavior": {
+        "meanChainLength": 11.208333333333334,
+        "lateScoreShare": 0.46279373368146215
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000004,
+      "score": 189312,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 282,
+        "totalScore": 189312,
+        "lateScore": 35328
+      },
+      "behavior": {
+        "meanChainLength": 11.75,
+        "lateScoreShare": 0.18661257606490872
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000005,
+      "score": 237184,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 282,
+        "totalScore": 237184,
+        "lateScore": 120256
+      },
+      "behavior": {
+        "meanChainLength": 11.75,
+        "lateScoreShare": 0.507015650296816
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000006,
+      "score": 223936,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 285,
+        "totalScore": 223936,
+        "lateScore": 81984
+      },
+      "behavior": {
+        "meanChainLength": 11.875,
+        "lateScoreShare": 0.3661046013146613
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000007,
+      "score": 210240,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 272,
+        "totalScore": 210240,
+        "lateScore": 82624
+      },
+      "behavior": {
+        "meanChainLength": 11.333333333333334,
+        "lateScoreShare": 0.39299847792998477
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000008,
+      "score": 222528,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 330,
+        "totalScore": 222528,
+        "lateScore": 54720
+      },
+      "behavior": {
+        "meanChainLength": 13.75,
+        "lateScoreShare": 0.2459016393442623
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000009,
+      "score": 239936,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 292,
+        "totalScore": 239936,
+        "lateScore": 67904
+      },
+      "behavior": {
+        "meanChainLength": 12.166666666666666,
+        "lateScoreShare": 0.2830088023472926
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000010,
+      "score": 209984,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 288,
+        "totalScore": 209984,
+        "lateScore": 78016
+      },
+      "behavior": {
+        "meanChainLength": 12,
+        "lateScoreShare": 0.3715330691862237
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000011,
+      "score": 282496,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 332,
+        "totalScore": 282496,
+        "lateScore": 81856
+      },
+      "behavior": {
+        "meanChainLength": 13.833333333333334,
+        "lateScoreShare": 0.2897598550067966
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000000,
+      "score": 128704,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 211,
+        "totalScore": 128704,
+        "lateScore": 56320
+      },
+      "behavior": {
+        "meanChainLength": 8.791666666666666,
+        "lateScoreShare": 0.43759323719542514
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000001,
+      "score": 170624,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 263,
+        "totalScore": 170624,
+        "lateScore": 33280
+      },
+      "behavior": {
+        "meanChainLength": 10.958333333333334,
+        "lateScoreShare": 0.19504876219054765
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000002,
+      "score": 173504,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 270,
+        "totalScore": 173504,
+        "lateScore": 54016
+      },
+      "behavior": {
+        "meanChainLength": 11.25,
+        "lateScoreShare": 0.3113242345997787
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000003,
+      "score": 180160,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 254,
+        "totalScore": 180160,
+        "lateScore": 74368
+      },
+      "behavior": {
+        "meanChainLength": 10.583333333333334,
+        "lateScoreShare": 0.4127886323268206
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000004,
+      "score": 208128,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 276,
+        "totalScore": 208128,
+        "lateScore": 73536
+      },
+      "behavior": {
+        "meanChainLength": 11.5,
+        "lateScoreShare": 0.3533210332103321
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000005,
+      "score": 122752,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 225,
+        "totalScore": 122752,
+        "lateScore": 21056
+      },
+      "behavior": {
+        "meanChainLength": 9.375,
+        "lateScoreShare": 0.17153284671532848
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000006,
+      "score": 169408,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 257,
+        "totalScore": 169408,
+        "lateScore": 79680
+      },
+      "behavior": {
+        "meanChainLength": 10.708333333333334,
+        "lateScoreShare": 0.4703437854174537
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000007,
+      "score": 180416,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 258,
+        "totalScore": 180416,
+        "lateScore": 36736
+      },
+      "behavior": {
+        "meanChainLength": 10.75,
+        "lateScoreShare": 0.20361830436324937
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000008,
+      "score": 160384,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 269,
+        "totalScore": 160384,
+        "lateScore": 33984
+      },
+      "behavior": {
+        "meanChainLength": 11.208333333333334,
+        "lateScoreShare": 0.21189146049481244
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000009,
+      "score": 145088,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 217,
+        "totalScore": 145088,
+        "lateScore": 27648
+      },
+      "behavior": {
+        "meanChainLength": 9.041666666666666,
+        "lateScoreShare": 0.1905602117335686
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000010,
+      "score": 198592,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 258,
+        "totalScore": 198592,
+        "lateScore": 101120
+      },
+      "behavior": {
+        "meanChainLength": 10.75,
+        "lateScoreShare": 0.5091846600064454
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000011,
+      "score": 188992,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 261,
+        "totalScore": 188992,
+        "lateScore": 55552
+      },
+      "behavior": {
+        "meanChainLength": 10.875,
+        "lateScoreShare": 0.2939383677615984
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000000,
+      "score": 147456,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 210,
+        "totalScore": 147456,
+        "lateScore": 53120
+      },
+      "behavior": {
+        "meanChainLength": 8.75,
+        "lateScoreShare": 0.3602430555555556
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000001,
+      "score": 159808,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 236,
+        "totalScore": 159808,
+        "lateScore": 70464
+      },
+      "behavior": {
+        "meanChainLength": 9.833333333333334,
+        "lateScoreShare": 0.4409291149379255
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000002,
+      "score": 142016,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 218,
+        "totalScore": 142016,
+        "lateScore": 43904
+      },
+      "behavior": {
+        "meanChainLength": 9.083333333333334,
+        "lateScoreShare": 0.30914826498422715
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000003,
+      "score": 157888,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 227,
+        "totalScore": 157888,
+        "lateScore": 47168
+      },
+      "behavior": {
+        "meanChainLength": 9.458333333333334,
+        "lateScoreShare": 0.29874341305229024
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000004,
+      "score": 119936,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 192,
+        "totalScore": 119936,
+        "lateScore": 53760
+      },
+      "behavior": {
+        "meanChainLength": 8,
+        "lateScoreShare": 0.44823906083244397
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000005,
+      "score": 97216,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 198,
+        "totalScore": 97216,
+        "lateScore": 17472
+      },
+      "behavior": {
+        "meanChainLength": 8.25,
+        "lateScoreShare": 0.17972350230414746
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000006,
+      "score": 86464,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 192,
+        "totalScore": 86464,
+        "lateScore": 18496
+      },
+      "behavior": {
+        "meanChainLength": 8,
+        "lateScoreShare": 0.21391561806069578
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000007,
+      "score": 109248,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 198,
+        "totalScore": 109248,
+        "lateScore": 48128
+      },
+      "behavior": {
+        "meanChainLength": 8.25,
+        "lateScoreShare": 0.44053895723491504
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000008,
+      "score": 151744,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 256,
+        "totalScore": 151744,
+        "lateScore": 31744
+      },
+      "behavior": {
+        "meanChainLength": 10.666666666666666,
+        "lateScoreShare": 0.20919443272880642
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000009,
+      "score": 134720,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 206,
+        "totalScore": 134720,
+        "lateScore": 32320
+      },
+      "behavior": {
+        "meanChainLength": 8.583333333333334,
+        "lateScoreShare": 0.23990498812351543
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000010,
+      "score": 120320,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 202,
+        "totalScore": 120320,
+        "lateScore": 47424
+      },
+      "behavior": {
+        "meanChainLength": 8.416666666666666,
+        "lateScoreShare": 0.3941489361702128
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000011,
+      "score": 120832,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 208,
+        "totalScore": 120832,
+        "lateScore": 26496
+      },
+      "behavior": {
+        "meanChainLength": 8.666666666666666,
+        "lateScoreShare": 0.21927966101694915
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000000,
+      "score": 108416,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 213,
+        "totalScore": 108416,
+        "lateScore": 13248
+      },
+      "behavior": {
+        "meanChainLength": 8.875,
+        "lateScoreShare": 0.12219598583234947
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000001,
+      "score": 123392,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 256,
+        "totalScore": 123392,
+        "lateScore": 28416
+      },
+      "behavior": {
+        "meanChainLength": 10.666666666666666,
+        "lateScoreShare": 0.23029045643153526
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000002,
+      "score": 151168,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 244,
+        "totalScore": 151168,
+        "lateScore": 59392
+      },
+      "behavior": {
+        "meanChainLength": 10.166666666666666,
+        "lateScoreShare": 0.392887383573243
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000003,
+      "score": 138880,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 236,
+        "totalScore": 138880,
+        "lateScore": 49728
+      },
+      "behavior": {
+        "meanChainLength": 9.833333333333334,
+        "lateScoreShare": 0.3580645161290323
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000004,
+      "score": 151552,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 271,
+        "totalScore": 151552,
+        "lateScore": 41408
+      },
+      "behavior": {
+        "meanChainLength": 11.291666666666666,
+        "lateScoreShare": 0.27322635135135137
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000005,
+      "score": 119168,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 241,
+        "totalScore": 119168,
+        "lateScore": 26560
+      },
+      "behavior": {
+        "meanChainLength": 10.041666666666666,
+        "lateScoreShare": 0.22287862513426424
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000006,
+      "score": 154432,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 245,
+        "totalScore": 154432,
+        "lateScore": 40960
+      },
+      "behavior": {
+        "meanChainLength": 10.208333333333334,
+        "lateScoreShare": 0.2652300041442188
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000007,
+      "score": 129216,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 240,
+        "totalScore": 129216,
+        "lateScore": 36864
+      },
+      "behavior": {
+        "meanChainLength": 10,
+        "lateScoreShare": 0.2852897473997028
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000008,
+      "score": 123648,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 240,
+        "totalScore": 123648,
+        "lateScore": 21440
+      },
+      "behavior": {
+        "meanChainLength": 10,
+        "lateScoreShare": 0.17339544513457558
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000009,
+      "score": 150016,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 246,
+        "totalScore": 150016,
+        "lateScore": 38592
+      },
+      "behavior": {
+        "meanChainLength": 10.25,
+        "lateScoreShare": 0.2572525597269625
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000010,
+      "score": 164352,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 250,
+        "totalScore": 164352,
+        "lateScore": 69056
+      },
+      "behavior": {
+        "meanChainLength": 10.416666666666666,
+        "lateScoreShare": 0.42017133956386293
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000011,
+      "score": 134720,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 251,
+        "totalScore": 134720,
+        "lateScore": 19712
+      },
+      "behavior": {
+        "meanChainLength": 10.458333333333334,
+        "lateScoreShare": 0.14631828978622327
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000000,
+      "score": 95680,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 186,
+        "totalScore": 95680,
+        "lateScore": 28864
+      },
+      "behavior": {
+        "meanChainLength": 7.75,
+        "lateScoreShare": 0.3016722408026756
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000001,
+      "score": 107840,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 219,
+        "totalScore": 107840,
+        "lateScore": 32000
+      },
+      "behavior": {
+        "meanChainLength": 9.125,
+        "lateScoreShare": 0.29673590504451036
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000002,
+      "score": 115072,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 206,
+        "totalScore": 115072,
+        "lateScore": 48832
+      },
+      "behavior": {
+        "meanChainLength": 8.583333333333334,
+        "lateScoreShare": 0.42436040044493883
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000003,
+      "score": 135680,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 239,
+        "totalScore": 135680,
+        "lateScore": 31936
+      },
+      "behavior": {
+        "meanChainLength": 9.958333333333334,
+        "lateScoreShare": 0.23537735849056604
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000004,
+      "score": 114752,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 233,
+        "totalScore": 114752,
+        "lateScore": 29696
+      },
+      "behavior": {
+        "meanChainLength": 9.708333333333334,
+        "lateScoreShare": 0.2587841606246514
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000005,
+      "score": 73920,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 180,
+        "totalScore": 73920,
+        "lateScore": 19712
+      },
+      "behavior": {
+        "meanChainLength": 7.5,
+        "lateScoreShare": 0.26666666666666666
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000006,
+      "score": 139136,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 235,
+        "totalScore": 139136,
+        "lateScore": 53824
+      },
+      "behavior": {
+        "meanChainLength": 9.791666666666666,
+        "lateScoreShare": 0.38684452621895127
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000007,
+      "score": 148224,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 249,
+        "totalScore": 148224,
+        "lateScore": 55680
+      },
+      "behavior": {
+        "meanChainLength": 10.375,
+        "lateScoreShare": 0.3756476683937824
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000008,
+      "score": 122112,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 237,
+        "totalScore": 122112,
+        "lateScore": 35584
+      },
+      "behavior": {
+        "meanChainLength": 9.875,
+        "lateScoreShare": 0.2914046121593291
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000009,
+      "score": 138496,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 238,
+        "totalScore": 138496,
+        "lateScore": 39104
+      },
+      "behavior": {
+        "meanChainLength": 9.916666666666666,
+        "lateScoreShare": 0.2823475046210721
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000010,
+      "score": 87296,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 188,
+        "totalScore": 87296,
+        "lateScore": 27072
+      },
+      "behavior": {
+        "meanChainLength": 7.833333333333333,
+        "lateScoreShare": 0.3101173020527859
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000011,
+      "score": 141504,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 240,
+        "totalScore": 141504,
+        "lateScore": 44608
+      },
+      "behavior": {
+        "meanChainLength": 10,
+        "lateScoreShare": 0.3152419719583899
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000000,
+      "score": 107328,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 208,
+        "totalScore": 107328,
+        "lateScore": 21440
+      },
+      "behavior": {
+        "meanChainLength": 8.666666666666666,
+        "lateScoreShare": 0.1997614788312463
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000001,
+      "score": 78656,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 185,
+        "totalScore": 78656,
+        "lateScore": 15488
+      },
+      "behavior": {
+        "meanChainLength": 7.708333333333333,
+        "lateScoreShare": 0.1969080553295362
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000002,
+      "score": 74912,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 160,
+        "totalScore": 74912,
+        "lateScore": 9952
+      },
+      "behavior": {
+        "meanChainLength": 6.666666666666667,
+        "lateScoreShare": 0.1328492097394276
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000003,
+      "score": 76064,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 177,
+        "totalScore": 76064,
+        "lateScore": 14560
+      },
+      "behavior": {
+        "meanChainLength": 7.375,
+        "lateScoreShare": 0.19141775347076145
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000004,
+      "score": 82080,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 181,
+        "totalScore": 82080,
+        "lateScore": 9824
+      },
+      "behavior": {
+        "meanChainLength": 7.541666666666667,
+        "lateScoreShare": 0.11968810916179337
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000005,
+      "score": 82176,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 184,
+        "totalScore": 82176,
+        "lateScore": 25984
+      },
+      "behavior": {
+        "meanChainLength": 7.666666666666667,
+        "lateScoreShare": 0.3161993769470405
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000006,
+      "score": 93024,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 198,
+        "totalScore": 93024,
+        "lateScore": 24608
+      },
+      "behavior": {
+        "meanChainLength": 8.25,
+        "lateScoreShare": 0.26453388372893016
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000007,
+      "score": 88832,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 188,
+        "totalScore": 88832,
+        "lateScore": 17408
+      },
+      "behavior": {
+        "meanChainLength": 7.833333333333333,
+        "lateScoreShare": 0.19596541786743515
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000008,
+      "score": 96448,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 197,
+        "totalScore": 96448,
+        "lateScore": 21760
+      },
+      "behavior": {
+        "meanChainLength": 8.208333333333334,
+        "lateScoreShare": 0.22561380225613803
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000009,
+      "score": 99136,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 190,
+        "totalScore": 99136,
+        "lateScore": 17344
+      },
+      "behavior": {
+        "meanChainLength": 7.916666666666667,
+        "lateScoreShare": 0.17495158166559072
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000010,
+      "score": 75264,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 182,
+        "totalScore": 75264,
+        "lateScore": 14208
+      },
+      "behavior": {
+        "meanChainLength": 7.583333333333333,
+        "lateScoreShare": 0.18877551020408162
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000011,
+      "score": 102848,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 205,
+        "totalScore": 102848,
+        "lateScore": 24256
+      },
+      "behavior": {
+        "meanChainLength": 8.541666666666666,
+        "lateScoreShare": 0.2358431860609832
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000000,
+      "score": 192128,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 263,
+        "totalScore": 192128,
+        "lateScore": 66112
+      },
+      "behavior": {
+        "meanChainLength": 10.958333333333334,
+        "lateScoreShare": 0.3441039307128581
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000001,
+      "score": 165824,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 283,
+        "totalScore": 165824,
+        "lateScore": 52736
+      },
+      "behavior": {
+        "meanChainLength": 11.791666666666666,
+        "lateScoreShare": 0.3180239289849479
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000002,
+      "score": 178944,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 265,
+        "totalScore": 178944,
+        "lateScore": 65856
+      },
+      "behavior": {
+        "meanChainLength": 11.041666666666666,
+        "lateScoreShare": 0.36802575107296137
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000003,
+      "score": 192576,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 265,
+        "totalScore": 192576,
+        "lateScore": 50560
+      },
+      "behavior": {
+        "meanChainLength": 11.041666666666666,
+        "lateScoreShare": 0.26254569624459956
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000004,
+      "score": 173248,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 268,
+        "totalScore": 173248,
+        "lateScore": 63296
+      },
+      "behavior": {
+        "meanChainLength": 11.166666666666666,
+        "lateScoreShare": 0.36534909493904694
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000005,
+      "score": 167936,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 268,
+        "totalScore": 167936,
+        "lateScore": 68608
+      },
+      "behavior": {
+        "meanChainLength": 11.166666666666666,
+        "lateScoreShare": 0.40853658536585363
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000006,
+      "score": 119008,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 208,
+        "totalScore": 119008,
+        "lateScore": 27936
+      },
+      "behavior": {
+        "meanChainLength": 8.666666666666666,
+        "lateScoreShare": 0.23474052164560366
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000007,
+      "score": 181888,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 263,
+        "totalScore": 181888,
+        "lateScore": 37888
+      },
+      "behavior": {
+        "meanChainLength": 10.958333333333334,
+        "lateScoreShare": 0.2083040112596763
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000008,
+      "score": 200064,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 293,
+        "totalScore": 200064,
+        "lateScore": 47104
+      },
+      "behavior": {
+        "meanChainLength": 12.208333333333334,
+        "lateScoreShare": 0.23544465770953296
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000009,
+      "score": 143808,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 222,
+        "totalScore": 143808,
+        "lateScore": 46976
+      },
+      "behavior": {
+        "meanChainLength": 9.25,
+        "lateScoreShare": 0.32665776591010237
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000010,
+      "score": 178688,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 253,
+        "totalScore": 178688,
+        "lateScore": 61632
+      },
+      "behavior": {
+        "meanChainLength": 10.541666666666666,
+        "lateScoreShare": 0.3449140401146132
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000011,
+      "score": 189952,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 276,
+        "totalScore": 189952,
+        "lateScore": 73728
+      },
+      "behavior": {
+        "meanChainLength": 11.5,
+        "lateScoreShare": 0.3881401617250674
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000000,
+      "score": 136128,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 237,
+        "totalScore": 136128,
+        "lateScore": 37888
+      },
+      "behavior": {
+        "meanChainLength": 9.875,
+        "lateScoreShare": 0.27832628114715563
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000001,
+      "score": 159744,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 244,
+        "totalScore": 159744,
+        "lateScore": 66048
+      },
+      "behavior": {
+        "meanChainLength": 10.166666666666666,
+        "lateScoreShare": 0.41346153846153844
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000002,
+      "score": 155264,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 237,
+        "totalScore": 155264,
+        "lateScore": 33728
+      },
+      "behavior": {
+        "meanChainLength": 9.875,
+        "lateScoreShare": 0.21723000824402308
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000003,
+      "score": 169856,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 257,
+        "totalScore": 169856,
+        "lateScore": 62272
+      },
+      "behavior": {
+        "meanChainLength": 10.708333333333334,
+        "lateScoreShare": 0.36661642803315747
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000004,
+      "score": 149056,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 234,
+        "totalScore": 149056,
+        "lateScore": 34496
+      },
+      "behavior": {
+        "meanChainLength": 9.75,
+        "lateScoreShare": 0.2314297981966509
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000005,
+      "score": 134208,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 218,
+        "totalScore": 134208,
+        "lateScore": 52224
+      },
+      "behavior": {
+        "meanChainLength": 9.083333333333334,
+        "lateScoreShare": 0.38912732474964234
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000006,
+      "score": 137472,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 230,
+        "totalScore": 137472,
+        "lateScore": 46208
+      },
+      "behavior": {
+        "meanChainLength": 9.583333333333334,
+        "lateScoreShare": 0.3361266294227188
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000007,
+      "score": 147456,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 232,
+        "totalScore": 147456,
+        "lateScore": 38848
+      },
+      "behavior": {
+        "meanChainLength": 9.666666666666666,
+        "lateScoreShare": 0.2634548611111111
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000008,
+      "score": 137600,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 243,
+        "totalScore": 137600,
+        "lateScore": 18688
+      },
+      "behavior": {
+        "meanChainLength": 10.125,
+        "lateScoreShare": 0.13581395348837208
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000009,
+      "score": 150752,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 218,
+        "totalScore": 150752,
+        "lateScore": 38240
+      },
+      "behavior": {
+        "meanChainLength": 9.083333333333334,
+        "lateScoreShare": 0.2536616429632774
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000010,
+      "score": 173824,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 243,
+        "totalScore": 173824,
+        "lateScore": 67136
+      },
+      "behavior": {
+        "meanChainLength": 10.125,
+        "lateScoreShare": 0.3862297496318115
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000011,
+      "score": 170176,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 264,
+        "totalScore": 170176,
+        "lateScore": 44800
+      },
+      "behavior": {
+        "meanChainLength": 11,
+        "lateScoreShare": 0.2632568634825122
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000000,
+      "score": 113408,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 200,
+        "totalScore": 113408,
+        "lateScore": 31232
+      },
+      "behavior": {
+        "meanChainLength": 8.333333333333334,
+        "lateScoreShare": 0.27539503386004516
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000001,
+      "score": 130688,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 219,
+        "totalScore": 130688,
+        "lateScore": 40512
+      },
+      "behavior": {
+        "meanChainLength": 9.125,
+        "lateScoreShare": 0.3099902056807052
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000002,
+      "score": 111424,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 197,
+        "totalScore": 111424,
+        "lateScore": 37376
+      },
+      "behavior": {
+        "meanChainLength": 8.208333333333334,
+        "lateScoreShare": 0.33543940264215966
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000003,
+      "score": 132032,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 221,
+        "totalScore": 132032,
+        "lateScore": 17792
+      },
+      "behavior": {
+        "meanChainLength": 9.208333333333334,
+        "lateScoreShare": 0.13475521085797382
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000004,
+      "score": 137728,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 225,
+        "totalScore": 137728,
+        "lateScore": 37504
+      },
+      "behavior": {
+        "meanChainLength": 9.375,
+        "lateScoreShare": 0.27230483271375466
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000005,
+      "score": 148096,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 227,
+        "totalScore": 148096,
+        "lateScore": 64192
+      },
+      "behavior": {
+        "meanChainLength": 9.458333333333334,
+        "lateScoreShare": 0.4334485738980121
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000006,
+      "score": 117184,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 199,
+        "totalScore": 117184,
+        "lateScore": 37568
+      },
+      "behavior": {
+        "meanChainLength": 8.291666666666666,
+        "lateScoreShare": 0.3205898416166029
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000007,
+      "score": 161792,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 226,
+        "totalScore": 161792,
+        "lateScore": 63744
+      },
+      "behavior": {
+        "meanChainLength": 9.416666666666666,
+        "lateScoreShare": 0.3939873417721519
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000008,
+      "score": 94528,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 195,
+        "totalScore": 94528,
+        "lateScore": 22656
+      },
+      "behavior": {
+        "meanChainLength": 8.125,
+        "lateScoreShare": 0.23967501692620177
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000009,
+      "score": 112640,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 191,
+        "totalScore": 112640,
+        "lateScore": 36288
+      },
+      "behavior": {
+        "meanChainLength": 7.958333333333333,
+        "lateScoreShare": 0.3221590909090909
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000010,
+      "score": 139264,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 220,
+        "totalScore": 139264,
+        "lateScore": 37376
+      },
+      "behavior": {
+        "meanChainLength": 9.166666666666666,
+        "lateScoreShare": 0.26838235294117646
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000011,
+      "score": 117312,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 213,
+        "totalScore": 117312,
+        "lateScore": 38400
+      },
+      "behavior": {
+        "meanChainLength": 8.875,
+        "lateScoreShare": 0.32733224222585927
+      }
+    }
+  ],
+  "repeatCells": [
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000000,
+      "score": 202304,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 260,
+        "totalScore": 202304,
+        "lateScore": 110208
+      },
+      "behavior": {
+        "meanChainLength": 10.833333333333334,
+        "lateScoreShare": 0.5447643150901613
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000001,
+      "score": 185088,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 256,
+        "totalScore": 185088,
+        "lateScore": 62976
+      },
+      "behavior": {
+        "meanChainLength": 10.666666666666666,
+        "lateScoreShare": 0.34024896265560167
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000002,
+      "score": 232576,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 286,
+        "totalScore": 232576,
+        "lateScore": 87488
+      },
+      "behavior": {
+        "meanChainLength": 11.916666666666666,
+        "lateScoreShare": 0.37616951018161804
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000003,
+      "score": 236608,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 295,
+        "totalScore": 236608,
+        "lateScore": 87232
+      },
+      "behavior": {
+        "meanChainLength": 12.291666666666666,
+        "lateScoreShare": 0.36867730592372194
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000004,
+      "score": 217536,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 292,
+        "totalScore": 217536,
+        "lateScore": 61632
+      },
+      "behavior": {
+        "meanChainLength": 12.166666666666666,
+        "lateScoreShare": 0.2833186231244484
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000005,
+      "score": 245696,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 293,
+        "totalScore": 245696,
+        "lateScore": 107840
+      },
+      "behavior": {
+        "meanChainLength": 12.208333333333334,
+        "lateScoreShare": 0.4389163844751237
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000006,
+      "score": 239296,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 310,
+        "totalScore": 239296,
+        "lateScore": 89280
+      },
+      "behavior": {
+        "meanChainLength": 12.916666666666666,
+        "lateScoreShare": 0.3730944102701257
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000007,
+      "score": 206848,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 274,
+        "totalScore": 206848,
+        "lateScore": 68032
+      },
+      "behavior": {
+        "meanChainLength": 11.416666666666666,
+        "lateScoreShare": 0.32889851485148514
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000008,
+      "score": 193472,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 319,
+        "totalScore": 193472,
+        "lateScore": 44032
+      },
+      "behavior": {
+        "meanChainLength": 13.291666666666666,
+        "lateScoreShare": 0.22758848825669864
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000009,
+      "score": 211328,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 286,
+        "totalScore": 211328,
+        "lateScore": 45120
+      },
+      "behavior": {
+        "meanChainLength": 11.916666666666666,
+        "lateScoreShare": 0.2135069654754694
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000010,
+      "score": 201856,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 275,
+        "totalScore": 201856,
+        "lateScore": 69120
+      },
+      "behavior": {
+        "meanChainLength": 11.458333333333334,
+        "lateScoreShare": 0.34242232086239693
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "open",
+      "seed": 20000011,
+      "score": 209152,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 313,
+        "totalScore": 209152,
+        "lateScore": 42496
+      },
+      "behavior": {
+        "meanChainLength": 13.041666666666666,
+        "lateScoreShare": 0.20318237454100369
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000000,
+      "score": 185664,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 240,
+        "totalScore": 185664,
+        "lateScore": 60032
+      },
+      "behavior": {
+        "meanChainLength": 10,
+        "lateScoreShare": 0.32333678042054464
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000001,
+      "score": 199616,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 288,
+        "totalScore": 199616,
+        "lateScore": 60224
+      },
+      "behavior": {
+        "meanChainLength": 12,
+        "lateScoreShare": 0.3016992625841616
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000002,
+      "score": 163776,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 253,
+        "totalScore": 163776,
+        "lateScore": 41920
+      },
+      "behavior": {
+        "meanChainLength": 10.541666666666666,
+        "lateScoreShare": 0.25595935912465806
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000003,
+      "score": 191424,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 265,
+        "totalScore": 191424,
+        "lateScore": 72832
+      },
+      "behavior": {
+        "meanChainLength": 11.041666666666666,
+        "lateScoreShare": 0.3804747576061518
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000004,
+      "score": 239296,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 309,
+        "totalScore": 239296,
+        "lateScore": 65536
+      },
+      "behavior": {
+        "meanChainLength": 12.875,
+        "lateScoreShare": 0.2738700187215833
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000005,
+      "score": 173440,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 266,
+        "totalScore": 173440,
+        "lateScore": 54272
+      },
+      "behavior": {
+        "meanChainLength": 11.083333333333334,
+        "lateScoreShare": 0.3129151291512915
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000006,
+      "score": 181184,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 253,
+        "totalScore": 181184,
+        "lateScore": 56256
+      },
+      "behavior": {
+        "meanChainLength": 10.541666666666666,
+        "lateScoreShare": 0.3104909925821265
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000007,
+      "score": 162496,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 231,
+        "totalScore": 162496,
+        "lateScore": 67712
+      },
+      "behavior": {
+        "meanChainLength": 9.625,
+        "lateScoreShare": 0.4166994879873966
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000008,
+      "score": 204736,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 292,
+        "totalScore": 204736,
+        "lateScore": 69120
+      },
+      "behavior": {
+        "meanChainLength": 12.166666666666666,
+        "lateScoreShare": 0.33760550171928727
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000009,
+      "score": 147712,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 210,
+        "totalScore": 147712,
+        "lateScore": 41536
+      },
+      "behavior": {
+        "meanChainLength": 8.75,
+        "lateScoreShare": 0.28119584055459274
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000010,
+      "score": 174976,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 264,
+        "totalScore": 174976,
+        "lateScore": 50752
+      },
+      "behavior": {
+        "meanChainLength": 11,
+        "lateScoreShare": 0.2900512070226774
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "one-center-stone",
+      "seed": 20000011,
+      "score": 126336,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 217,
+        "totalScore": 126336,
+        "lateScore": 35008
+      },
+      "behavior": {
+        "meanChainLength": 9.041666666666666,
+        "lateScoreShare": 0.27710233029381964
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000000,
+      "score": 179776,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 239,
+        "totalScore": 179776,
+        "lateScore": 61888
+      },
+      "behavior": {
+        "meanChainLength": 9.958333333333334,
+        "lateScoreShare": 0.344250622997508
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000001,
+      "score": 148416,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 225,
+        "totalScore": 148416,
+        "lateScore": 51776
+      },
+      "behavior": {
+        "meanChainLength": 9.375,
+        "lateScoreShare": 0.3488572660629582
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000002,
+      "score": 171072,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 233,
+        "totalScore": 171072,
+        "lateScore": 59264
+      },
+      "behavior": {
+        "meanChainLength": 9.708333333333334,
+        "lateScoreShare": 0.3464272353161242
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000003,
+      "score": 103232,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 205,
+        "totalScore": 103232,
+        "lateScore": 32640
+      },
+      "behavior": {
+        "meanChainLength": 8.541666666666666,
+        "lateScoreShare": 0.3161810291382517
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000004,
+      "score": 144064,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 225,
+        "totalScore": 144064,
+        "lateScore": 54272
+      },
+      "behavior": {
+        "meanChainLength": 9.375,
+        "lateScoreShare": 0.37672145713016436
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000005,
+      "score": 134848,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 221,
+        "totalScore": 134848,
+        "lateScore": 48704
+      },
+      "behavior": {
+        "meanChainLength": 9.208333333333334,
+        "lateScoreShare": 0.3611770289511153
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000006,
+      "score": 110464,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 214,
+        "totalScore": 110464,
+        "lateScore": 26688
+      },
+      "behavior": {
+        "meanChainLength": 8.916666666666666,
+        "lateScoreShare": 0.24159907300115874
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000007,
+      "score": 115200,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 215,
+        "totalScore": 115200,
+        "lateScore": 16576
+      },
+      "behavior": {
+        "meanChainLength": 8.958333333333334,
+        "lateScoreShare": 0.1438888888888889
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000008,
+      "score": 120320,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 227,
+        "totalScore": 120320,
+        "lateScore": 26816
+      },
+      "behavior": {
+        "meanChainLength": 9.458333333333334,
+        "lateScoreShare": 0.22287234042553192
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000009,
+      "score": 115904,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 203,
+        "totalScore": 115904,
+        "lateScore": 25344
+      },
+      "behavior": {
+        "meanChainLength": 8.458333333333334,
+        "lateScoreShare": 0.21866372170071782
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000010,
+      "score": 99136,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 186,
+        "totalScore": 99136,
+        "lateScore": 16256
+      },
+      "behavior": {
+        "meanChainLength": 7.75,
+        "lateScoreShare": 0.16397675919948354
+      }
+    },
+    {
+      "policyId": "0de51bc557de",
+      "layout": "two-center-stones",
+      "seed": 20000011,
+      "score": 160960,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 250,
+        "totalScore": 160960,
+        "lateScore": 45568
+      },
+      "behavior": {
+        "meanChainLength": 10.416666666666666,
+        "lateScoreShare": 0.2831013916500994
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000000,
+      "score": 105408,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 197,
+        "totalScore": 105408,
+        "lateScore": 43456
+      },
+      "behavior": {
+        "meanChainLength": 8.208333333333334,
+        "lateScoreShare": 0.41226472374013357
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000001,
+      "score": 177472,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 264,
+        "totalScore": 177472,
+        "lateScore": 53888
+      },
+      "behavior": {
+        "meanChainLength": 11,
+        "lateScoreShare": 0.3036422646952759
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000002,
+      "score": 253952,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 315,
+        "totalScore": 253952,
+        "lateScore": 86656
+      },
+      "behavior": {
+        "meanChainLength": 13.125,
+        "lateScoreShare": 0.34122983870967744
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000003,
+      "score": 196096,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 269,
+        "totalScore": 196096,
+        "lateScore": 90752
+      },
+      "behavior": {
+        "meanChainLength": 11.208333333333334,
+        "lateScoreShare": 0.46279373368146215
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000004,
+      "score": 189312,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 282,
+        "totalScore": 189312,
+        "lateScore": 35328
+      },
+      "behavior": {
+        "meanChainLength": 11.75,
+        "lateScoreShare": 0.18661257606490872
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000005,
+      "score": 237184,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 282,
+        "totalScore": 237184,
+        "lateScore": 120256
+      },
+      "behavior": {
+        "meanChainLength": 11.75,
+        "lateScoreShare": 0.507015650296816
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000006,
+      "score": 223936,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 285,
+        "totalScore": 223936,
+        "lateScore": 81984
+      },
+      "behavior": {
+        "meanChainLength": 11.875,
+        "lateScoreShare": 0.3661046013146613
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000007,
+      "score": 210240,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 272,
+        "totalScore": 210240,
+        "lateScore": 82624
+      },
+      "behavior": {
+        "meanChainLength": 11.333333333333334,
+        "lateScoreShare": 0.39299847792998477
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000008,
+      "score": 222528,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 330,
+        "totalScore": 222528,
+        "lateScore": 54720
+      },
+      "behavior": {
+        "meanChainLength": 13.75,
+        "lateScoreShare": 0.2459016393442623
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000009,
+      "score": 239936,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 292,
+        "totalScore": 239936,
+        "lateScore": 67904
+      },
+      "behavior": {
+        "meanChainLength": 12.166666666666666,
+        "lateScoreShare": 0.2830088023472926
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000010,
+      "score": 209984,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 288,
+        "totalScore": 209984,
+        "lateScore": 78016
+      },
+      "behavior": {
+        "meanChainLength": 12,
+        "lateScoreShare": 0.3715330691862237
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "open",
+      "seed": 20000011,
+      "score": 282496,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 332,
+        "totalScore": 282496,
+        "lateScore": 81856
+      },
+      "behavior": {
+        "meanChainLength": 13.833333333333334,
+        "lateScoreShare": 0.2897598550067966
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000000,
+      "score": 128704,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 211,
+        "totalScore": 128704,
+        "lateScore": 56320
+      },
+      "behavior": {
+        "meanChainLength": 8.791666666666666,
+        "lateScoreShare": 0.43759323719542514
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000001,
+      "score": 170624,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 263,
+        "totalScore": 170624,
+        "lateScore": 33280
+      },
+      "behavior": {
+        "meanChainLength": 10.958333333333334,
+        "lateScoreShare": 0.19504876219054765
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000002,
+      "score": 173504,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 270,
+        "totalScore": 173504,
+        "lateScore": 54016
+      },
+      "behavior": {
+        "meanChainLength": 11.25,
+        "lateScoreShare": 0.3113242345997787
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000003,
+      "score": 180160,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 254,
+        "totalScore": 180160,
+        "lateScore": 74368
+      },
+      "behavior": {
+        "meanChainLength": 10.583333333333334,
+        "lateScoreShare": 0.4127886323268206
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000004,
+      "score": 208128,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 276,
+        "totalScore": 208128,
+        "lateScore": 73536
+      },
+      "behavior": {
+        "meanChainLength": 11.5,
+        "lateScoreShare": 0.3533210332103321
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000005,
+      "score": 122752,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 225,
+        "totalScore": 122752,
+        "lateScore": 21056
+      },
+      "behavior": {
+        "meanChainLength": 9.375,
+        "lateScoreShare": 0.17153284671532848
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000006,
+      "score": 169408,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 257,
+        "totalScore": 169408,
+        "lateScore": 79680
+      },
+      "behavior": {
+        "meanChainLength": 10.708333333333334,
+        "lateScoreShare": 0.4703437854174537
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000007,
+      "score": 180416,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 258,
+        "totalScore": 180416,
+        "lateScore": 36736
+      },
+      "behavior": {
+        "meanChainLength": 10.75,
+        "lateScoreShare": 0.20361830436324937
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000008,
+      "score": 160384,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 269,
+        "totalScore": 160384,
+        "lateScore": 33984
+      },
+      "behavior": {
+        "meanChainLength": 11.208333333333334,
+        "lateScoreShare": 0.21189146049481244
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000009,
+      "score": 145088,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 217,
+        "totalScore": 145088,
+        "lateScore": 27648
+      },
+      "behavior": {
+        "meanChainLength": 9.041666666666666,
+        "lateScoreShare": 0.1905602117335686
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000010,
+      "score": 198592,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 258,
+        "totalScore": 198592,
+        "lateScore": 101120
+      },
+      "behavior": {
+        "meanChainLength": 10.75,
+        "lateScoreShare": 0.5091846600064454
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "one-center-stone",
+      "seed": 20000011,
+      "score": 188992,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 261,
+        "totalScore": 188992,
+        "lateScore": 55552
+      },
+      "behavior": {
+        "meanChainLength": 10.875,
+        "lateScoreShare": 0.2939383677615984
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000000,
+      "score": 147456,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 210,
+        "totalScore": 147456,
+        "lateScore": 53120
+      },
+      "behavior": {
+        "meanChainLength": 8.75,
+        "lateScoreShare": 0.3602430555555556
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000001,
+      "score": 159808,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 236,
+        "totalScore": 159808,
+        "lateScore": 70464
+      },
+      "behavior": {
+        "meanChainLength": 9.833333333333334,
+        "lateScoreShare": 0.4409291149379255
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000002,
+      "score": 142016,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 218,
+        "totalScore": 142016,
+        "lateScore": 43904
+      },
+      "behavior": {
+        "meanChainLength": 9.083333333333334,
+        "lateScoreShare": 0.30914826498422715
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000003,
+      "score": 157888,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 227,
+        "totalScore": 157888,
+        "lateScore": 47168
+      },
+      "behavior": {
+        "meanChainLength": 9.458333333333334,
+        "lateScoreShare": 0.29874341305229024
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000004,
+      "score": 119936,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 192,
+        "totalScore": 119936,
+        "lateScore": 53760
+      },
+      "behavior": {
+        "meanChainLength": 8,
+        "lateScoreShare": 0.44823906083244397
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000005,
+      "score": 97216,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 198,
+        "totalScore": 97216,
+        "lateScore": 17472
+      },
+      "behavior": {
+        "meanChainLength": 8.25,
+        "lateScoreShare": 0.17972350230414746
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000006,
+      "score": 86464,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 192,
+        "totalScore": 86464,
+        "lateScore": 18496
+      },
+      "behavior": {
+        "meanChainLength": 8,
+        "lateScoreShare": 0.21391561806069578
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000007,
+      "score": 109248,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 198,
+        "totalScore": 109248,
+        "lateScore": 48128
+      },
+      "behavior": {
+        "meanChainLength": 8.25,
+        "lateScoreShare": 0.44053895723491504
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000008,
+      "score": 151744,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 256,
+        "totalScore": 151744,
+        "lateScore": 31744
+      },
+      "behavior": {
+        "meanChainLength": 10.666666666666666,
+        "lateScoreShare": 0.20919443272880642
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000009,
+      "score": 134720,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 206,
+        "totalScore": 134720,
+        "lateScore": 32320
+      },
+      "behavior": {
+        "meanChainLength": 8.583333333333334,
+        "lateScoreShare": 0.23990498812351543
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000010,
+      "score": 120320,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 202,
+        "totalScore": 120320,
+        "lateScore": 47424
+      },
+      "behavior": {
+        "meanChainLength": 8.416666666666666,
+        "lateScoreShare": 0.3941489361702128
+      }
+    },
+    {
+      "policyId": "a61e8b8e23b7",
+      "layout": "two-center-stones",
+      "seed": 20000011,
+      "score": 120832,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 208,
+        "totalScore": 120832,
+        "lateScore": 26496
+      },
+      "behavior": {
+        "meanChainLength": 8.666666666666666,
+        "lateScoreShare": 0.21927966101694915
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000000,
+      "score": 108416,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 213,
+        "totalScore": 108416,
+        "lateScore": 13248
+      },
+      "behavior": {
+        "meanChainLength": 8.875,
+        "lateScoreShare": 0.12219598583234947
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000001,
+      "score": 123392,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 256,
+        "totalScore": 123392,
+        "lateScore": 28416
+      },
+      "behavior": {
+        "meanChainLength": 10.666666666666666,
+        "lateScoreShare": 0.23029045643153526
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000002,
+      "score": 151168,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 244,
+        "totalScore": 151168,
+        "lateScore": 59392
+      },
+      "behavior": {
+        "meanChainLength": 10.166666666666666,
+        "lateScoreShare": 0.392887383573243
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000003,
+      "score": 138880,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 236,
+        "totalScore": 138880,
+        "lateScore": 49728
+      },
+      "behavior": {
+        "meanChainLength": 9.833333333333334,
+        "lateScoreShare": 0.3580645161290323
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000004,
+      "score": 151552,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 271,
+        "totalScore": 151552,
+        "lateScore": 41408
+      },
+      "behavior": {
+        "meanChainLength": 11.291666666666666,
+        "lateScoreShare": 0.27322635135135137
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000005,
+      "score": 119168,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 241,
+        "totalScore": 119168,
+        "lateScore": 26560
+      },
+      "behavior": {
+        "meanChainLength": 10.041666666666666,
+        "lateScoreShare": 0.22287862513426424
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000006,
+      "score": 154432,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 245,
+        "totalScore": 154432,
+        "lateScore": 40960
+      },
+      "behavior": {
+        "meanChainLength": 10.208333333333334,
+        "lateScoreShare": 0.2652300041442188
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000007,
+      "score": 129216,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 240,
+        "totalScore": 129216,
+        "lateScore": 36864
+      },
+      "behavior": {
+        "meanChainLength": 10,
+        "lateScoreShare": 0.2852897473997028
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000008,
+      "score": 123648,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 240,
+        "totalScore": 123648,
+        "lateScore": 21440
+      },
+      "behavior": {
+        "meanChainLength": 10,
+        "lateScoreShare": 0.17339544513457558
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000009,
+      "score": 150016,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 246,
+        "totalScore": 150016,
+        "lateScore": 38592
+      },
+      "behavior": {
+        "meanChainLength": 10.25,
+        "lateScoreShare": 0.2572525597269625
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000010,
+      "score": 164352,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 250,
+        "totalScore": 164352,
+        "lateScore": 69056
+      },
+      "behavior": {
+        "meanChainLength": 10.416666666666666,
+        "lateScoreShare": 0.42017133956386293
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "open",
+      "seed": 20000011,
+      "score": 134720,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 251,
+        "totalScore": 134720,
+        "lateScore": 19712
+      },
+      "behavior": {
+        "meanChainLength": 10.458333333333334,
+        "lateScoreShare": 0.14631828978622327
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000000,
+      "score": 95680,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 186,
+        "totalScore": 95680,
+        "lateScore": 28864
+      },
+      "behavior": {
+        "meanChainLength": 7.75,
+        "lateScoreShare": 0.3016722408026756
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000001,
+      "score": 107840,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 219,
+        "totalScore": 107840,
+        "lateScore": 32000
+      },
+      "behavior": {
+        "meanChainLength": 9.125,
+        "lateScoreShare": 0.29673590504451036
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000002,
+      "score": 115072,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 206,
+        "totalScore": 115072,
+        "lateScore": 48832
+      },
+      "behavior": {
+        "meanChainLength": 8.583333333333334,
+        "lateScoreShare": 0.42436040044493883
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000003,
+      "score": 135680,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 239,
+        "totalScore": 135680,
+        "lateScore": 31936
+      },
+      "behavior": {
+        "meanChainLength": 9.958333333333334,
+        "lateScoreShare": 0.23537735849056604
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000004,
+      "score": 114752,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 233,
+        "totalScore": 114752,
+        "lateScore": 29696
+      },
+      "behavior": {
+        "meanChainLength": 9.708333333333334,
+        "lateScoreShare": 0.2587841606246514
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000005,
+      "score": 73920,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 180,
+        "totalScore": 73920,
+        "lateScore": 19712
+      },
+      "behavior": {
+        "meanChainLength": 7.5,
+        "lateScoreShare": 0.26666666666666666
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000006,
+      "score": 139136,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 235,
+        "totalScore": 139136,
+        "lateScore": 53824
+      },
+      "behavior": {
+        "meanChainLength": 9.791666666666666,
+        "lateScoreShare": 0.38684452621895127
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000007,
+      "score": 148224,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 249,
+        "totalScore": 148224,
+        "lateScore": 55680
+      },
+      "behavior": {
+        "meanChainLength": 10.375,
+        "lateScoreShare": 0.3756476683937824
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000008,
+      "score": 122112,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 237,
+        "totalScore": 122112,
+        "lateScore": 35584
+      },
+      "behavior": {
+        "meanChainLength": 9.875,
+        "lateScoreShare": 0.2914046121593291
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000009,
+      "score": 138496,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 238,
+        "totalScore": 138496,
+        "lateScore": 39104
+      },
+      "behavior": {
+        "meanChainLength": 9.916666666666666,
+        "lateScoreShare": 0.2823475046210721
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000010,
+      "score": 87296,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 188,
+        "totalScore": 87296,
+        "lateScore": 27072
+      },
+      "behavior": {
+        "meanChainLength": 7.833333333333333,
+        "lateScoreShare": 0.3101173020527859
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "one-center-stone",
+      "seed": 20000011,
+      "score": 141504,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 240,
+        "totalScore": 141504,
+        "lateScore": 44608
+      },
+      "behavior": {
+        "meanChainLength": 10,
+        "lateScoreShare": 0.3152419719583899
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000000,
+      "score": 107328,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 208,
+        "totalScore": 107328,
+        "lateScore": 21440
+      },
+      "behavior": {
+        "meanChainLength": 8.666666666666666,
+        "lateScoreShare": 0.1997614788312463
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000001,
+      "score": 78656,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 185,
+        "totalScore": 78656,
+        "lateScore": 15488
+      },
+      "behavior": {
+        "meanChainLength": 7.708333333333333,
+        "lateScoreShare": 0.1969080553295362
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000002,
+      "score": 74912,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 160,
+        "totalScore": 74912,
+        "lateScore": 9952
+      },
+      "behavior": {
+        "meanChainLength": 6.666666666666667,
+        "lateScoreShare": 0.1328492097394276
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000003,
+      "score": 76064,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 177,
+        "totalScore": 76064,
+        "lateScore": 14560
+      },
+      "behavior": {
+        "meanChainLength": 7.375,
+        "lateScoreShare": 0.19141775347076145
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000004,
+      "score": 82080,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 181,
+        "totalScore": 82080,
+        "lateScore": 9824
+      },
+      "behavior": {
+        "meanChainLength": 7.541666666666667,
+        "lateScoreShare": 0.11968810916179337
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000005,
+      "score": 82176,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 184,
+        "totalScore": 82176,
+        "lateScore": 25984
+      },
+      "behavior": {
+        "meanChainLength": 7.666666666666667,
+        "lateScoreShare": 0.3161993769470405
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000006,
+      "score": 93024,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 198,
+        "totalScore": 93024,
+        "lateScore": 24608
+      },
+      "behavior": {
+        "meanChainLength": 8.25,
+        "lateScoreShare": 0.26453388372893016
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000007,
+      "score": 88832,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 188,
+        "totalScore": 88832,
+        "lateScore": 17408
+      },
+      "behavior": {
+        "meanChainLength": 7.833333333333333,
+        "lateScoreShare": 0.19596541786743515
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000008,
+      "score": 96448,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 197,
+        "totalScore": 96448,
+        "lateScore": 21760
+      },
+      "behavior": {
+        "meanChainLength": 8.208333333333334,
+        "lateScoreShare": 0.22561380225613803
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000009,
+      "score": 99136,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 190,
+        "totalScore": 99136,
+        "lateScore": 17344
+      },
+      "behavior": {
+        "meanChainLength": 7.916666666666667,
+        "lateScoreShare": 0.17495158166559072
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000010,
+      "score": 75264,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 182,
+        "totalScore": 75264,
+        "lateScore": 14208
+      },
+      "behavior": {
+        "meanChainLength": 7.583333333333333,
+        "lateScoreShare": 0.18877551020408162
+      }
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "layout": "two-center-stones",
+      "seed": 20000011,
+      "score": 102848,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 205,
+        "totalScore": 102848,
+        "lateScore": 24256
+      },
+      "behavior": {
+        "meanChainLength": 8.541666666666666,
+        "lateScoreShare": 0.2358431860609832
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000000,
+      "score": 192128,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 263,
+        "totalScore": 192128,
+        "lateScore": 66112
+      },
+      "behavior": {
+        "meanChainLength": 10.958333333333334,
+        "lateScoreShare": 0.3441039307128581
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000001,
+      "score": 165824,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 283,
+        "totalScore": 165824,
+        "lateScore": 52736
+      },
+      "behavior": {
+        "meanChainLength": 11.791666666666666,
+        "lateScoreShare": 0.3180239289849479
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000002,
+      "score": 178944,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 265,
+        "totalScore": 178944,
+        "lateScore": 65856
+      },
+      "behavior": {
+        "meanChainLength": 11.041666666666666,
+        "lateScoreShare": 0.36802575107296137
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000003,
+      "score": 192576,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 265,
+        "totalScore": 192576,
+        "lateScore": 50560
+      },
+      "behavior": {
+        "meanChainLength": 11.041666666666666,
+        "lateScoreShare": 0.26254569624459956
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000004,
+      "score": 173248,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 268,
+        "totalScore": 173248,
+        "lateScore": 63296
+      },
+      "behavior": {
+        "meanChainLength": 11.166666666666666,
+        "lateScoreShare": 0.36534909493904694
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000005,
+      "score": 167936,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 268,
+        "totalScore": 167936,
+        "lateScore": 68608
+      },
+      "behavior": {
+        "meanChainLength": 11.166666666666666,
+        "lateScoreShare": 0.40853658536585363
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000006,
+      "score": 119008,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 208,
+        "totalScore": 119008,
+        "lateScore": 27936
+      },
+      "behavior": {
+        "meanChainLength": 8.666666666666666,
+        "lateScoreShare": 0.23474052164560366
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000007,
+      "score": 181888,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 263,
+        "totalScore": 181888,
+        "lateScore": 37888
+      },
+      "behavior": {
+        "meanChainLength": 10.958333333333334,
+        "lateScoreShare": 0.2083040112596763
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000008,
+      "score": 200064,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 293,
+        "totalScore": 200064,
+        "lateScore": 47104
+      },
+      "behavior": {
+        "meanChainLength": 12.208333333333334,
+        "lateScoreShare": 0.23544465770953296
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000009,
+      "score": 143808,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 222,
+        "totalScore": 143808,
+        "lateScore": 46976
+      },
+      "behavior": {
+        "meanChainLength": 9.25,
+        "lateScoreShare": 0.32665776591010237
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000010,
+      "score": 178688,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 253,
+        "totalScore": 178688,
+        "lateScore": 61632
+      },
+      "behavior": {
+        "meanChainLength": 10.541666666666666,
+        "lateScoreShare": 0.3449140401146132
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "open",
+      "seed": 20000011,
+      "score": 189952,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 276,
+        "totalScore": 189952,
+        "lateScore": 73728
+      },
+      "behavior": {
+        "meanChainLength": 11.5,
+        "lateScoreShare": 0.3881401617250674
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000000,
+      "score": 136128,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 237,
+        "totalScore": 136128,
+        "lateScore": 37888
+      },
+      "behavior": {
+        "meanChainLength": 9.875,
+        "lateScoreShare": 0.27832628114715563
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000001,
+      "score": 159744,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 244,
+        "totalScore": 159744,
+        "lateScore": 66048
+      },
+      "behavior": {
+        "meanChainLength": 10.166666666666666,
+        "lateScoreShare": 0.41346153846153844
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000002,
+      "score": 155264,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 237,
+        "totalScore": 155264,
+        "lateScore": 33728
+      },
+      "behavior": {
+        "meanChainLength": 9.875,
+        "lateScoreShare": 0.21723000824402308
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000003,
+      "score": 169856,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 257,
+        "totalScore": 169856,
+        "lateScore": 62272
+      },
+      "behavior": {
+        "meanChainLength": 10.708333333333334,
+        "lateScoreShare": 0.36661642803315747
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000004,
+      "score": 149056,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 234,
+        "totalScore": 149056,
+        "lateScore": 34496
+      },
+      "behavior": {
+        "meanChainLength": 9.75,
+        "lateScoreShare": 0.2314297981966509
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000005,
+      "score": 134208,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 218,
+        "totalScore": 134208,
+        "lateScore": 52224
+      },
+      "behavior": {
+        "meanChainLength": 9.083333333333334,
+        "lateScoreShare": 0.38912732474964234
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000006,
+      "score": 137472,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 230,
+        "totalScore": 137472,
+        "lateScore": 46208
+      },
+      "behavior": {
+        "meanChainLength": 9.583333333333334,
+        "lateScoreShare": 0.3361266294227188
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000007,
+      "score": 147456,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 232,
+        "totalScore": 147456,
+        "lateScore": 38848
+      },
+      "behavior": {
+        "meanChainLength": 9.666666666666666,
+        "lateScoreShare": 0.2634548611111111
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000008,
+      "score": 137600,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 243,
+        "totalScore": 137600,
+        "lateScore": 18688
+      },
+      "behavior": {
+        "meanChainLength": 10.125,
+        "lateScoreShare": 0.13581395348837208
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000009,
+      "score": 150752,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 218,
+        "totalScore": 150752,
+        "lateScore": 38240
+      },
+      "behavior": {
+        "meanChainLength": 9.083333333333334,
+        "lateScoreShare": 0.2536616429632774
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000010,
+      "score": 173824,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 243,
+        "totalScore": 173824,
+        "lateScore": 67136
+      },
+      "behavior": {
+        "meanChainLength": 10.125,
+        "lateScoreShare": 0.3862297496318115
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "one-center-stone",
+      "seed": 20000011,
+      "score": 170176,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 264,
+        "totalScore": 170176,
+        "lateScore": 44800
+      },
+      "behavior": {
+        "meanChainLength": 11,
+        "lateScoreShare": 0.2632568634825122
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000000,
+      "score": 113408,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 200,
+        "totalScore": 113408,
+        "lateScore": 31232
+      },
+      "behavior": {
+        "meanChainLength": 8.333333333333334,
+        "lateScoreShare": 0.27539503386004516
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000001,
+      "score": 130688,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 219,
+        "totalScore": 130688,
+        "lateScore": 40512
+      },
+      "behavior": {
+        "meanChainLength": 9.125,
+        "lateScoreShare": 0.3099902056807052
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000002,
+      "score": 111424,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 197,
+        "totalScore": 111424,
+        "lateScore": 37376
+      },
+      "behavior": {
+        "meanChainLength": 8.208333333333334,
+        "lateScoreShare": 0.33543940264215966
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000003,
+      "score": 132032,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 221,
+        "totalScore": 132032,
+        "lateScore": 17792
+      },
+      "behavior": {
+        "meanChainLength": 9.208333333333334,
+        "lateScoreShare": 0.13475521085797382
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000004,
+      "score": 137728,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 225,
+        "totalScore": 137728,
+        "lateScore": 37504
+      },
+      "behavior": {
+        "meanChainLength": 9.375,
+        "lateScoreShare": 0.27230483271375466
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000005,
+      "score": 148096,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 227,
+        "totalScore": 148096,
+        "lateScore": 64192
+      },
+      "behavior": {
+        "meanChainLength": 9.458333333333334,
+        "lateScoreShare": 0.4334485738980121
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000006,
+      "score": 117184,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 199,
+        "totalScore": 117184,
+        "lateScore": 37568
+      },
+      "behavior": {
+        "meanChainLength": 8.291666666666666,
+        "lateScoreShare": 0.3205898416166029
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000007,
+      "score": 161792,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 226,
+        "totalScore": 161792,
+        "lateScore": 63744
+      },
+      "behavior": {
+        "meanChainLength": 9.416666666666666,
+        "lateScoreShare": 0.3939873417721519
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000008,
+      "score": 94528,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 195,
+        "totalScore": 94528,
+        "lateScore": 22656
+      },
+      "behavior": {
+        "meanChainLength": 8.125,
+        "lateScoreShare": 0.23967501692620177
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000009,
+      "score": 112640,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 191,
+        "totalScore": 112640,
+        "lateScore": 36288
+      },
+      "behavior": {
+        "meanChainLength": 7.958333333333333,
+        "lateScoreShare": 0.3221590909090909
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000010,
+      "score": 139264,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 220,
+        "totalScore": 139264,
+        "lateScore": 37376
+      },
+      "behavior": {
+        "meanChainLength": 9.166666666666666,
+        "lateScoreShare": 0.26838235294117646
+      }
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "layout": "two-center-stones",
+      "seed": 20000011,
+      "score": 117312,
+      "movesUsed": 24,
+      "behaviorTotals": {
+        "chainCount": 24,
+        "chainTiles": 213,
+        "totalScore": 117312,
+        "lateScore": 38400
+      },
+      "behavior": {
+        "meanChainLength": 8.875,
+        "lateScoreShare": 0.32733224222585927
+      }
+    }
+  ],
+  "artifactIdentity": "70c8631efcf6f7311804e430e1b4c457ab91b2a9b7e82f3f43b4555dff205dac",
+  "registration": {
+    "exploratory": false,
+    "protocol": "RESULT-0023",
+    "protocolCommit": "bb89d75c569d33a646fd8a900fbfbe3224110a5d"
+  }
+}

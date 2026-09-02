@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0023",
+  "auditKind": "post-run-control-seam-challenge",
+  "controlsIdentity": "70c8631efcf6f7311804e430e1b4c457ab91b2a9b7e82f3f43b4555dff205dac",
+  "actualOutcomeChangedPairs": 48,
+  "actualPairCount": 48,
+  "controlledTwin": {
+    "mutation": "copy score, movesUsed, behaviorTotals, and behavior from each one-stone cell into its two-stone pair",
+    "outcomeChangedPairs": 0,
+    "frozenVerifierVerdict": "PASS",
+    "frozenVerifierReportedChangedPairs": 48
+  },
+  "finding": "C2_FALSE_PASS",
+  "artifactIdentity": "498811fbb7d0dd4a01ecc0b10d4984bdbe1921e3b11d2ccefdd5849e7f9796d5"
+}
