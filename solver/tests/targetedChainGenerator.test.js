@@ -1,5 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
+const { spawnSync } = require('node:child_process');
+const path = require('node:path');
 
 const { replay } = require('../recording-replay');
 const {
@@ -10,6 +12,10 @@ const {
   createLevelState,
   makeRng,
 } = require('../engine');
+const {
+  assessCoverage,
+  evaluateCoverage,
+} = require('../targeted-chain-coverage');
 
 const FIXTURE = require('../test-fixtures/level52-seed2000000-human-games.json');
 
@@ -118,4 +124,41 @@ test('caller node caps fail closed and are deterministic', () => {
   assert.deepEqual(stable(first), stable(second));
   assert.equal(first.complete, false);
   assert.deepEqual(first.telemetry.capReasons, ['maxNodes']);
+});
+
+test('the real-state coverage seam beats production and recovers both named anchors', () => {
+  const report = evaluateCoverage(FIXTURE, {
+    maxNodes: 100_000,
+    candidateLimit: 512,
+    pathWidth: 64,
+  });
+  const verdict = assessCoverage(report);
+
+  assert.equal(report.states, 39);
+  assert.deepEqual(report.production, { exact: 2, equivalent: 4 });
+  assert.ok(report.challenger.equivalent > report.production.equivalent);
+  assert.equal(report.anchors.opening24TileSum3456, true);
+  assert.equal(report.anchors.productionBotSecondDecisionSum2048, true);
+  assert.equal(verdict.pass, true, verdict.failures.join('; '));
+  assert.equal(report.search.states, 39);
+  assert.equal(report.search.completeStates + report.search.cappedStates, 39);
+  assert.ok(report.search.nodesVisited > 0);
+  assert.ok(report.search.elapsedMs >= 0);
+});
+
+test('a controlled broken cap fails the coverage CLI acceptance seam', () => {
+  const cli = path.join(__dirname, '..', 'targeted-chain-coverage.js');
+  const fixture = path.join(__dirname, '..', 'test-fixtures', 'level52-seed2000000-human-games.json');
+  const run = spawnSync(process.execPath, [
+    cli,
+    '--fixture', fixture,
+    '--max-nodes', '1',
+    '--candidate-limit', '1',
+    '--path-width', '1',
+  ], { encoding: 'utf8' });
+
+  assert.equal(run.status, 1);
+  const result = JSON.parse(run.stdout);
+  assert.equal(result.verdict, 'FAIL');
+  assert.ok(result.failures.some((failure) => failure.includes('opening anchor')));
 });

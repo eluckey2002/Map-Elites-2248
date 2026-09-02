@@ -43,11 +43,6 @@ function compareLongest(a, b) {
   return b.chain.length - a.chain.length || b.points - a.points || compareIdentity(a, b);
 }
 
-function compareLattice(a, b) {
-  return b.sum - a.sum || b.points - a.points || b.chain.length - a.chain.length
-    || compareIdentity(a, b);
-}
-
 function retain(pool, candidate, limit, compare) {
   if (pool.length === limit && compare(candidate, pool[pool.length - 1]) >= 0) return;
   let low = 0;
@@ -118,9 +113,9 @@ function generateTargetedChains(state, options = {}) {
   const objectiveLimit = Math.max(1, Math.ceil(candidateLimit / 3));
   const immediate = [];
   const longest = [];
-  const lattice = [];
+  const latticeBySum = new Map();
   const pathStates = new Set();
-  let frontier = [];
+  const stack = [];
   let nodesVisited = 0;
   let actionsConsidered = 0;
   let nodeLimitHit = false;
@@ -130,57 +125,65 @@ function generateTargetedChains(state, options = {}) {
       const tile = state.grid[y][x];
       if (!tile || isBlockedTile(tile)) continue;
       const mask = 1n << BigInt(y * state.gridWidth + x);
-      frontier.push({ chain: [tile], mask, sum: tile.value });
+      stack.push({ chain: [tile], mask, sum: tile.value });
       pathStates.add(`${y * state.gridWidth + x}:${mask}`);
     }
   }
+  stack.reverse();
 
-  search: while (frontier.length > 0) {
-    const next = [];
-    for (const path of frontier) {
-      if (nodesVisited >= maxNodes) {
-        nodeLimitHit = true;
-        break search;
-      }
-      nodesVisited += 1;
+  while (stack.length > 0) {
+    if (nodesVisited >= maxNodes) {
+      nodeLimitHit = true;
+      break;
+    }
+    const path = stack.pop();
+    nodesVisited += 1;
 
-      if (path.chain.length >= state.minChain) {
-        actionsConsidered += 1;
-        const candidate = {
-          chain: path.chain,
-          points: Math.floor(path.sum * chainMultiplier(path.chain.length)),
-          sum: path.sum,
-        };
-        retain(immediate, candidate, objectiveLimit, compareImmediate);
-        retain(longest, candidate, objectiveLimit, compareLongest);
-        if (isMergeableSum(path.sum, state.tileScale || 1)) {
-          retain(lattice, candidate, objectiveLimit, compareLattice);
-        }
-      }
-
-      const last = path.chain[path.chain.length - 1];
-      for (let dy = -1; dy <= 1; dy++) {
-        for (let dx = -1; dx <= 1; dx++) {
-          if (dx === 0 && dy === 0) continue;
-          const x = last.x + dx;
-          const y = last.y + dy;
-          if (x < 0 || x >= state.gridWidth || y < 0 || y >= state.gridHeight) continue;
-          const tile = state.grid[y][x];
-          if (!tile || isBlockedTile(tile) || !canExtendChain(path.chain, tile)) continue;
-          const bit = 1n << BigInt(y * state.gridWidth + x);
-          if (path.mask & bit) continue;
-          const mask = path.mask | bit;
-          const key = `${y * state.gridWidth + x}:${mask}`;
-          if (pathStates.has(key)) continue;
-          pathStates.add(key);
-          next.push({ chain: [...path.chain, tile], mask, sum: path.sum + tile.value });
+    if (path.chain.length >= state.minChain) {
+      actionsConsidered += 1;
+      const candidate = {
+        chain: path.chain,
+        points: Math.floor(path.sum * chainMultiplier(path.chain.length)),
+        sum: path.sum,
+      };
+      retain(immediate, candidate, objectiveLimit, compareImmediate);
+      retain(longest, candidate, objectiveLimit, compareLongest);
+      if (isMergeableSum(path.sum, state.tileScale || 1)) {
+        const previous = latticeBySum.get(path.sum);
+        if (!previous || compareImmediate(candidate, previous) < 0) {
+          latticeBySum.set(path.sum, candidate);
         }
       }
     }
-    frontier = next;
+
+    const last = path.chain[path.chain.length - 1];
+    const extensions = [];
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        if (dx === 0 && dy === 0) continue;
+        const x = last.x + dx;
+        const y = last.y + dy;
+        if (x < 0 || x >= state.gridWidth || y < 0 || y >= state.gridHeight) continue;
+        const tile = state.grid[y][x];
+        if (!tile || isBlockedTile(tile) || !canExtendChain(path.chain, tile)) continue;
+        const bit = 1n << BigInt(y * state.gridWidth + x);
+        if (path.mask & bit) continue;
+        extensions.push({ tile, bit });
+      }
+    }
+    extensions.sort((a, b) => a.tile.value - b.tile.value);
+    for (let index = extensions.length - 1; index >= 0; index--) {
+      const { tile, bit } = extensions[index];
+      const mask = path.mask | bit;
+      const key = `${tile.y * state.gridWidth + tile.x}:${mask}`;
+      if (pathStates.has(key)) continue;
+      pathStates.add(key);
+      stack.push({ chain: [...path.chain, tile], mask, sum: path.sum + tile.value });
+    }
   }
 
   const heuristic = heuristicCandidates(state, pathWidth, objectiveLimit);
+  const lattice = [...latticeBySum.values()].sort((a, b) => a.sum - b.sum || compareImmediate(a, b));
   const candidates = [];
   const byIdentity = new Map();
   const objectives = [
