@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "registration": {
+    "exploratory": false,
+    "protocol": "RESULT-0021",
+    "protocolCommit": "e63f83c70ad1cf0725237e37f82d41491676d778"
+  },
+  "sources": {
+    "levels": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
+    "engine": "4e2323b9218aed6a552017ca37eab16becf8ef0a314f7081d02717ef1f7a12c6",
+    "policy": "8d0dec5f6b0669ca7c039e6493b4014fdc5cefb4df9d93ad54dba2cb168b0b10",
+    "evaluator": "305731fbfd7e664075dc177e8be48f5bf530d1f8475f5fd8c501cef84149b257",
+    "selector": "2d08564b6b1829dd1230757744fc8fdf295974427850ca6ec5d07f5b9f9268b6",
+    "check": "d72de6e1703df39a40a2af65391968e3f214c0d6d7f78972f488d0f7091b4403"
+  },
+  "exactClaim": "structural candidate ranking is stable across two disjoint seed samples and single-seed reliability is sufficient for candidate differentiation",
+  "subject": {
+    "candidateCount": 53,
+    "gamesPerCandidate": 120,
+    "measurementCount": 6360,
+    "metric": "terminal achievable score before target stopping",
+    "sampleA": { "start": 30000000, "count": 60 },
+    "sampleB": { "start": 31000000, "count": 60 },
+    "executionSeam": "solver/seed-variance.js#measureSubject -> solver/level-author.js#playMeasured; solver/generate-levels.js#main -> selectShortlist -> rankShortlist"
+  },
+  "evidence": {
+    "measurement": {
+      "path": "experiments/RESULT-0021/measurement.json",
+      "sha256": "c40a14c2b77a222b239e0533c7c8935c0cfaf2ced66b31fb3a1cd8faa235bb9c",
+      "artifactIdentity": "73dfd91b04229cfcd2c60b4482f443ea73b9fa5a865cac9d170980b724f6710e"
+    },
+    "challengeBundle": {
+      "path": "experiments/RESULT-0021/evidence/challenge-bundle.json",
+      "sha256": "709ca3d8c3534337e88c01215a3512da921e15c6e72189c28fdffd121d946284",
+      "bundleIdentity": "c099d3a38caa989253bda46f67b6d634ec491255e54292d25b9c38000158af3d",
+      "receiptIdentity": "95d4552269c15c8ff8f61631c3c5c03b930071a93da59673fe77e03490d2ce86"
+    },
+    "decisionRule": {
+      "path": "experiments/RESULT-0021/decision-rule.json",
+      "sha256": "018c6a345355fa074c1999cd9043782779cce9e5c9cc4cbac0f315ae2d2af1ad"
+    }
+  },
+  "challenge": {
+    "validStatus": "PASS",
+    "brokenTwinStatus": "FAIL",
+    "consumerValidStatus": "PASS",
+    "consumerBrokenStatus": "FAIL",
+    "identityMutationStatus": "FAIL"
+  },
+  "statistics": {
+    "pearson": 0.999428550196873,
+    "withinLevelVariance": 84459875.40635273,
+    "betweenCandidateVariance": 2481397518.7769628,
+    "betweenToWithinVarianceRatio": 29.379601933326107,
+    "singleSeedReliability": 0.9670831763301346
+  },
+  "verdict": "NOT_SUPPORTED_AS_NECESSARY_FOR_SEED_CONTROL",
+  "historicalR098EvidenceStatus": "INCONCLUSIVE",
+  "artifactIdentity": "aae5beca8a054b5d495e62f3da6c9d689a41ec2c2496200ff6382f4b61518549"
+}
