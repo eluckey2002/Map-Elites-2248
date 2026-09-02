@@ -15,6 +15,13 @@ const {
   tickBlockers, checkBombs,
 } = require(`${ROOT}/solver/engine`);
 const { chooseMove } = require(`${ROOT}/solver/bot`);
+const {
+  addPostMoveTrace,
+  capturePostMove,
+  createPostMoveTotals,
+  summarizePostMoveTotals,
+  summarizePostMoveTrace,
+} = require(`${ROOT}/solver/behavior-descriptors`);
 
 const LOOKAHEAD_BASE = 987654321; // must match solver/sweep.js
 
@@ -44,6 +51,7 @@ function playToBudget(levelData, rng, params) {
   let moveIndex = 0;
   let reachedTarget = null;
   const behaviorTotals = { chainCount: 0, chainTiles: 0, totalScore: 0, lateScore: 0 };
+  const postMoveTrace = [];
   for (let i = 0; i < levelData.moves + 5; i++) {
     const chain = chooseMove(state, {
       params,
@@ -62,6 +70,7 @@ function playToBudget(levelData, rng, params) {
     applyGravity(state);
     spawnNewTiles(state, rng);
     tickBlockers(state);
+    postMoveTrace.push(capturePostMove(state));
     if (checkBombs(state)) break;
     if (reachedTarget === null && state.score >= state.targetScore) reachedTarget = state.moves;
     if (state.moves >= state.maxMoves) break;
@@ -72,6 +81,8 @@ function playToBudget(levelData, rng, params) {
     moves: state.moves,
     behaviorTotals,
     behavior: summarizeBehavior(behaviorTotals),
+    postMoveTrace,
+    postMoveDescriptors: summarizePostMoveTrace(postMoveTrace),
   };
 }
 
@@ -82,12 +93,14 @@ function evaluatePolicy(params, levels, seeds) {
   let wins = 0;
   let movesToTargetSum = 0;
   const behaviorTotals = { chainCount: 0, chainTiles: 0, totalScore: 0, lateScore: 0 };
+  const postMoveTotals = createPostMoveTotals();
   for (const levelData of levels) {
     for (const seed of seeds) {
       const r = playToBudget(levelData, makeRng(seed), params);
       scores.push(r.score);
       if (r.movesToTarget !== null) { wins += 1; movesToTargetSum += r.movesToTarget; }
       for (const key of Object.keys(behaviorTotals)) behaviorTotals[key] += r.behaviorTotals[key];
+      addPostMoveTrace(postMoveTotals, r.postMoveTrace);
     }
   }
   return {
@@ -96,6 +109,8 @@ function evaluatePolicy(params, levels, seeds) {
     avgMovesToTarget: wins ? movesToTargetSum / wins : null,
     behaviorTotals,
     behavior: summarizeBehavior(behaviorTotals),
+    postMoveTotals,
+    postMoveDescriptors: summarizePostMoveTotals(postMoveTotals),
   };
 }
 

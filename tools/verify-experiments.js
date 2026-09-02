@@ -287,6 +287,15 @@ function assessVersionFreeze(result, front, opened) {
   return problems;
 }
 
+function assessProtocolLifecycle(result, front, hasReport) {
+  if (hasReport && front.status === 'registered') {
+    return [
+      `${result.id}: protocol has report.md but status is still registered; completed evidence must use status: complete`,
+    ];
+  }
+  return [];
+}
+
 // A check is answered when it has a section of its own that states an outcome.
 // The previous test was `\bC1\b` anywhere in the report, which a report could
 // satisfy by naming the check and answering nothing — and which the real
@@ -356,10 +365,12 @@ function assessExperiments() {
       problems.push(`${result.id}: protocol declares result ${front.result}`);
     }
 
+    const reportPath = path.join(dir, 'report.md');
+    const hasReport = fs.existsSync(reportPath);
+    problems.push(...assessProtocolLifecycle(result, front, hasReport));
     problems.push(...assessVersionFreeze(result, front, opened));
 
-    const reportPath = path.join(dir, 'report.md');
-    if (fs.existsSync(reportPath)) {
+    if (hasReport) {
       const report = fs.readFileSync(reportPath, 'utf8');
       // Every check declared before the outcome must be answered, not just named.
       problems.push(...assessReportAnswers(result, protocol, report));
@@ -402,5 +413,6 @@ module.exports = {
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,
-  assessVersionFreeze, canonicalJson, openCitedArtifacts, reachableFromHead, reportSection,
+  assessProtocolLifecycle, assessVersionFreeze, canonicalJson, openCitedArtifacts,
+  reachableFromHead, reportSection,
 };

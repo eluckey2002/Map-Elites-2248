@@ -3,7 +3,8 @@ const assert = require('node:assert/strict');
 const { execFileSync } = require('node:child_process');
 const path = require('node:path');
 const {
-  addedIn, assessExperiments, declaredChecks, isStrictAncestor, parseFrontmatter, readLedgerResults,
+  addedIn, assessExperiments, assessProtocolLifecycle, declaredChecks, isStrictAncestor,
+  parseFrontmatter, readLedgerResults,
 } = require('../../tools/verify-experiments.js');
 
 test('a result claiming only direct evidence needs no protocol', () => {
@@ -59,6 +60,16 @@ test('frontmatter parses nested version freeze entries', () => {
   ].join('\n'));
   assert.equal(front.result, 'RESULT-0019');
   assert.deepEqual(front.version_freeze, { 'solver/bot.js': 'abc123', 'src/game.js': 'def456' });
+});
+
+test('a reported protocol cannot remain in the registered lifecycle state', () => {
+  const result = { id: 'RESULT-9999' };
+  assert.deepEqual(
+    assessProtocolLifecycle(result, { status: 'registered' }, true),
+    ['RESULT-9999: protocol has report.md but status is still registered; completed evidence must use status: complete'],
+  );
+  assert.deepEqual(assessProtocolLifecycle(result, { status: 'registered' }, false), []);
+  assert.deepEqual(assessProtocolLifecycle(result, { status: 'complete' }, true), []);
 });
 
 // The tests above are synthetic. This one runs the gate against this

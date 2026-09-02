@@ -671,6 +671,110 @@ that passed while inspecting nothing.
   real `solver/bot.js` and plants an uncovered source hash, with positive
   controls for both.
 
+### reported-protocol-lifecycle-is-complete · HARD
+
+- **Protects:** a finished, ledger-admitted experiment cannot retain
+  `status: registered` and remain silently coupled to the current working tree.
+  RESULT-0021 and RESULT-0024 did so until later measurement work changed two
+  frozen sources and made both accepted results fail as unfinished runs.
+- **Where:** `tools/verify-experiments.js#assessProtocolLifecycle`, called by
+  `assessExperiments`; exercised by `solver/tests/experiments.test.js`.
+- **Level:** one ledger result, its protocol frontmatter, and report presence.
+  A lifecycle defect in an experiment absent from the ledger slips past.
+- **Kind:** value. It checks the transition marker, not whether the report is
+  correct, entitled, or accepted at the right proof class; the remaining
+  experiment checks own those questions.
+- **Scope:** every result parsed from `EVIDENCE_LEDGER.md` that has both
+  `experiments/<RESULT-ID>/protocol.md` and `report.md`, including grandfathered
+  results if they carry a protocol. It reads only exact `registered` and
+  `complete` values; other unknown values are outside this check.
+- **Reads own output?:** no. The experiment workflow writes protocol and report;
+  this repository gate reads them afterward and does not mutate either.
+- **Sampling memory:** n/a — exhaustive over ledger result records. Silence
+  about a result not admitted to the ledger means it was never inspected.
+- **Does NOT catch:**
+  1. A completed or failed run with a report that is not in the ledger.
+  2. A falsely authored `status: complete`; artifact identity, report answers,
+     stamp ancestry, and source coverage remain separate checks.
+  3. A registered protocol with no report whose run actually happened
+     elsewhere or whose evidence was lost.
+  4. Unknown lifecycle values other than the exact stale `registered` state.
+  5. Whether a lifecycle transition and its report landed in the same commit.
+- **Crafted-bypass test:** `solver/tests/experiments.test.js`, case `a reported
+  protocol cannot remain in the registered lifecycle state`: reported plus
+  `registered` returns exactly one failure; no report plus `registered` and
+  report plus `complete` both pass. Before the implementation existed, this
+  test failed with `assessProtocolLifecycle is not a function` while the live
+  gate independently reproduced four freeze failures.
+- **Retires:** NO — `version-freeze-covers-the-evidence` detects this state only
+  after a frozen source drifts. This check closes the earlier silent interval by
+  failing as soon as an admitted report exists while the lifecycle remains
+  registered.
+- **Enforcement:** HARD in `tools/verify-experiments.js`; a lifecycle failure
+  blocks the experiment gate and therefore ledger admission checks.
+- **Decay:** run `node --test solver/tests/experiments.test.js`; the synthetic
+  three-state negative test and the live ledger gate execute together.
+- **Shipped:** 2026-09-02 · fix run
+  `2026-09-02-experiment-lifecycle-completion-fix`.
+
+---
+
+### stranded-cell-pressure-real-state-seam · HARD
+
+- **Protects:** `strandedCellPressure` cannot look qualified while reading only
+  hand-built snapshots or while returning the same value for an open board and
+  a topology change that creates an off-lattice remnant.
+- **Where:** `solver/tests/behaviorDescriptors.test.js`, calling the public
+  `playToBudget` seam in `solver/policy-eval.js`; the measure and registry live
+  in `solver/behavior-descriptors.js`.
+- **Level:** one completed move and its cells. Differences between observations
+  can still disappear when they are averaged across a whole game or corpus.
+- **Kind:** value. It checks exact pressure values and transition timing on
+  fixed subjects. Strategic meaning, usefulness, and human experience remain
+  owner/research questions.
+- **Scope:** a deterministic 2x2 open level, its one-stone twin, and a
+  duration-1 ice timing subject, constant RNG 0, one move, `minChain: 3`,
+  `tileScale: 1`; plus a two-cell scale-3 lattice fixture. The denominator is
+  the non-stone grid footprint. `playToBudget`
+  observes after `executeChain`, gravity, refill, and blocker ticking. Other
+  game runners, browser gameplay, bombs, multi-move accumulation, and sampled
+  level or policy populations are excluded.
+- **Reads own output?:** no. It executes the headless game transition and reads
+  the live state passed to the production descriptor. Expected values are
+  frozen literals (`0`, `1/3`, and `1/2`), not recomputed by the test.
+- **Sampling memory:** n/a — the subjects are exhaustive fixed worked examples,
+  not a sample. Silence about other boards means never measured.
+- **Does NOT catch:**
+  1. Whether the descriptor has useful range across levels, seeds, layouts, or
+     policies.
+  2. Whether it separates strategically or experientially distinct play.
+  3. Whether it predicts fun, difficulty, player identity, or score quality.
+  4. Whether it should replace or supplement either current MAP-Elites axis.
+  5. Browser/headless parity outside the transition behavior already owned by
+     the engine parity tests.
+  6. State paths that do not call `policy-eval.js#playToBudget`; those runners
+     receive no trace merely because this check passes.
+- **Crafted-bypass test:** `solver/tests/behaviorDescriptors.test.js`, case `the
+  real post-move seam distinguishes an open subject from its one-stone twin`.
+  The open subject reports zero; the otherwise-identical one-stone subject
+  creates a six-valued remnant and reports exactly `1/3`. The test first ran red
+  because the live path returned no trace, then passed only after the production
+  seam consumed both subjects. Its literal `1/3` assertion makes an always-zero
+  implementation fail.
+- **Retires:** NO — the existing behavior tests cover chain length and late
+  score, neither of which reads post-transition board state or the mergeable-sum
+  lattice. Widening either would mix distinct measurement units and still not
+  expose a reusable post-move descriptor registry.
+- **Enforcement:** HARD for the implementation claim only: the targeted Node
+  test must pass. It grants no evidence-admission, candidate-selection, or
+  MAP-Elites-axis entitlement. Any such promotion requires a separately
+  registered experiment and its own downstream-consumed verdict.
+- **Decay:** run
+  `node --test solver/tests/behaviorDescriptors.test.js solver/tests/policy-eval.test.js`;
+  both also run under `node --test solver/tests/*.test.js`.
+- **Shipped:** 2026-09-02 · run
+  `2026-09-02-stranded-cell-pressure-seam`, ticket `SCP-001`.
+
 ---
 
 ## Experiment-local entitlement checks

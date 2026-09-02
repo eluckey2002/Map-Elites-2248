@@ -2,8 +2,10 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { LEVELS } = require('../../src/game');
 const { DEFAULT_PARAMS } = require('../bot');
+const { summarizePostMoveTrace } = require('../behavior-descriptors');
+const { makeRng } = require('../engine');
 const {
-  evaluatePolicy, pairedLift, recordBehaviorMove, summarizeBehavior,
+  evaluatePolicy, pairedLift, playToBudget, recordBehaviorMove, summarizeBehavior,
 } = require('../policy-eval');
 
 // Cells are level-major: level 0's seeds, then level 1's, ...
@@ -104,4 +106,16 @@ test('policy evaluation exposes aggregate behavior beside uncensored scores', ()
   assert.deepEqual(result.behavior, summarizeBehavior(result.behaviorTotals));
   assert.ok(result.behavior.meanChainLength >= LEVELS[0].minChain);
   assert.ok(result.behavior.lateScoreShare >= 0 && result.behavior.lateScoreShare <= 1);
+});
+
+test('single-cell policy evaluation aggregates the same post-move descriptor as its real play trace', () => {
+  const level = LEVELS[0];
+  const seed = 0;
+  const played = playToBudget(level, makeRng(seed), DEFAULT_PARAMS);
+  const evaluated = evaluatePolicy(DEFAULT_PARAMS, [level], [seed]);
+
+  assert.deepEqual(played.postMoveDescriptors, summarizePostMoveTrace(played.postMoveTrace));
+  assert.deepEqual(evaluated.postMoveDescriptors, played.postMoveDescriptors);
+  assert.ok(evaluated.postMoveDescriptors.strandedCellPressure >= 0);
+  assert.ok(evaluated.postMoveDescriptors.strandedCellPressure <= 1);
 });

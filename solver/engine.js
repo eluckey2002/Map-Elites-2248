@@ -522,4 +522,5 @@ module.exports = {
   findGreedyChains,
   cloneState,
   isBlockedTile,
+  isMergeableSum,
 };
