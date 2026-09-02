@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0024",
+  "kind": "control-entitlement",
+  "authority": "confirmation-execution",
+  "controlsIdentity": "aa69b1233176124efc086300c11584eae0820971d1d4c1f0a5d84ca1acbf7bf5",
+  "sourcesIdentity": "36256c4c4510f5dde533c83bb8f9427ce28efed34fdfbfb4f06cc148a9110268",
+  "verifierIdentity": "8466cc76849c8f117b6e36820a997e2e93953898d209048f010492ed53462ac8",
+  "subjectCheck": {
+    "verdict": "PASS",
+    "policyCount": 4,
+    "layoutCount": 3,
+    "sourceCount": 11
+  },
+  "valid": {
+    "verdict": "PASS",
+    "positiveOutcomeChangedPairs": 48
+  },
+  "brokenTwin": {
+    "verdict": "FAIL",
+    "mutation": "copy score, movesUsed, behaviorTotals, and behavior from each one-stone cell into its two-stone pair",
+    "outcomeChangedPairs": 0,
+    "error": "positive control: zero gameplay outcome pairs differ"
+  },
+  "artifactIdentity": "dabcb1b3e8313b7b1f3fff0c920ca4370623ec92798a1a51217be486f22b40d5"
+}

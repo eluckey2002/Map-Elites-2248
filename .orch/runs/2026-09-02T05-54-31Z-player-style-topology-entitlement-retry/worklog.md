@@ -43,6 +43,22 @@ inside its isolated worktree.
    `4c56335`; worktree clean after the spec commit.
 2. Pre-change baseline: `node tools/verify-experiments.js` PASS and focused
    experiment tests 19/19 PASS before modifying the result-local control.
+3. `e6da102`: complete protocol, runner, two verifiers, permanent negative
+   tests, and Check Card committed before any RESULT-0024 game. Post-change
+   baseline PASS; focused tests 19/19 and RESULT-0024 tests 4/4 PASS.
+4. Control `aa69b123…`: 144 cells repeated exactly; all 48 outcome-only pairs
+   differed. Entitlement receipt `dabcb1b3…`: valid PASS and outcome-identical
+   twin with zero changed outcomes FAIL. Confirmation released only through
+   receipt consumption.
+5. Confirmation `77a8d7d6…`: one invocation, exactly 2,400 fresh cells, recorded
+   control receipt `dabcb1b3…`, runtime 145,197.92 ms.
+6. Primary verification `6634724c…` and independent recomputation `049534b5…`
+   agree on `INCONCLUSIVE`, style guard PASS, 0.0373308 interaction spread, and
+   unstable fixed-half extremes. Challenge `e04ae952…`: both controlled twins
+   FAIL.
+7. Precision defect: primary verification labeled its partial artifact-chain
+   result `ENTITLED` before reading the independent and challenge receipts. The
+   report narrows that field and assigns final P4 only at the six-artifact join.
 
 ## Blame classes
 
@@ -51,12 +67,16 @@ inside its isolated worktree.
 
 ## Failed approaches
 
-[]
+- Treating the primary verification receipt's `entitlementVerdict` as final was
+  rejected because that script does not read the independent recomputation or
+  final challenge receipts. Exact coverage is documented in the report.
 
 ## Queued scope
 
 - Decide later whether experiment-local entitlement receipts should become a
   reusable aggregate experiment-admission gate. This retry stays result-local.
+- When that aggregate gate is designed, reserve `ENTITLED` for its output;
+  component receipts should name only the checks they actually consumed.
 
 ## Terminal
 

@@ -1,0 +1,150 @@
+{
+  "status": "PASS",
+  "result": "RESULT-0024",
+  "entitlementVerdict": "ENTITLED",
+  "controlsIdentity": "aa69b1233176124efc086300c11584eae0820971d1d4c1f0a5d84ca1acbf7bf5",
+  "controlReceiptIdentity": "dabcb1b3e8313b7b1f3fff0c920ca4370623ec92798a1a51217be486f22b40d5",
+  "confirmationIdentity": "77a8d7d623d23d123cf383bd8b080db458574a7ef0a11a148f8291cb04ff84be",
+  "subjectControls": {
+    "verdict": "PASS",
+    "policyCount": 4,
+    "layoutCount": 3,
+    "sourceCount": 11
+  },
+  "subjectConfirmation": {
+    "verdict": "PASS",
+    "policyCount": 4,
+    "layoutCount": 3,
+    "sourceCount": 11
+  },
+  "controlCheck": {
+    "verdict": "PASS",
+    "negativeRepeatCells": 144,
+    "positiveOutcomeChangedPairs": 48
+  },
+  "matrixCheck": {
+    "verdict": "PASS",
+    "cells": 2400,
+    "controlReceiptConsumed": "dabcb1b3e8313b7b1f3fff0c920ca4370623ec92798a1a51217be486f22b40d5"
+  },
+  "verdictCheck": {
+    "verdict": "PASS",
+    "primaryVerdict": "INCONCLUSIVE",
+    "styleGuard": {
+      "chainRange": 1.9510416666666668,
+      "patienceRange": 0.05093181445622047,
+      "pass": true
+    },
+    "interactionSpread": 0.03733081406203867,
+    "stableOrdering": false,
+    "halfOrderings": [
+      {
+        "mostAffected": "0de51bc557de",
+        "leastAffected": "ebeb9e326a01"
+      },
+      {
+        "mostAffected": "a61e8b8e23b7",
+        "leastAffected": "0de51bc557de"
+      }
+    ],
+    "responses": [
+      {
+        "policyId": "0de51bc557de",
+        "response": -0.18337784227601625,
+        "oneVsOpen": -0.16572843965265152,
+        "earlyTerminationRate": {
+          "open": 0,
+          "one-center-stone": 0,
+          "two-center-stones": 0
+        },
+        "behavior": {
+          "open": {
+            "meanChainLength": 12.005208333333334,
+            "lateScoreShare": 0.3522696299402453
+          },
+          "one-center-stone": {
+            "meanChainLength": 10.650208333333333,
+            "lateScoreShare": 0.31826872469092043
+          },
+          "two-center-stones": {
+            "meanChainLength": 9.403958333333334,
+            "lateScoreShare": 0.30059975747511936
+          }
+        }
+      },
+      {
+        "policyId": "a61e8b8e23b7",
+        "response": -0.22070865633805492,
+        "oneVsOpen": -0.17810096916914173,
+        "earlyTerminationRate": {
+          "open": 0,
+          "one-center-stone": 0,
+          "two-center-stones": 0.005
+        },
+        "behavior": {
+          "open": {
+            "meanChainLength": 12.075833333333334,
+            "lateScoreShare": 0.34522522575887266
+          },
+          "one-center-stone": {
+            "meanChainLength": 10.668958333333334,
+            "lateScoreShare": 0.31618658518237247
+          },
+          "two-center-stones": {
+            "meanChainLength": 9.335904920767305,
+            "lateScoreShare": 0.2783932458702757
+          }
+        }
+      },
+      {
+        "policyId": "4cbec6509c34",
+        "response": -0.19865687390993184,
+        "oneVsOpen": -0.19500964331503873,
+        "earlyTerminationRate": {
+          "open": 0,
+          "one-center-stone": 0,
+          "two-center-stones": 0
+        },
+        "behavior": {
+          "open": {
+            "meanChainLength": 10.124791666666667,
+            "lateScoreShare": 0.30133781548402483
+          },
+          "one-center-stone": {
+            "meanChainLength": 8.870625,
+            "lateScoreShare": 0.2689870208520503
+          },
+          "two-center-stones": {
+            "meanChainLength": 7.7925,
+            "lateScoreShare": 0.2575673054032639
+          }
+        }
+      },
+      {
+        "policyId": "ebeb9e326a01",
+        "response": -0.19814799190792173,
+        "oneVsOpen": -0.13204117861598264,
+        "earlyTerminationRate": {
+          "open": 0,
+          "one-center-stone": 0,
+          "two-center-stones": 0
+        },
+        "behavior": {
+          "open": {
+            "meanChainLength": 10.936458333333333,
+            "lateScoreShare": 0.3311687511877195
+          },
+          "one-center-stone": {
+            "meanChainLength": 9.92,
+            "lateScoreShare": 0.31706117940069944
+          },
+          "two-center-stones": {
+            "meanChainLength": 8.691666666666666,
+            "lateScoreShare": 0.28044127873104174
+          }
+        }
+      }
+    ]
+  },
+  "artifactIdentity": "6634724c54ee448a57c5233d7b758e6fc89cf2eaba3549fc0a8dba75283e9ff6"
+}

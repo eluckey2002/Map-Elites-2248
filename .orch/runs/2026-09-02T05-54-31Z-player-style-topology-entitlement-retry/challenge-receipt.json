@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0024",
+  "verifierIdentity": "8466cc76849c8f117b6e36820a997e2e93953898d209048f010492ed53462ac8",
+  "valid": {
+    "verdict": "PASS",
+    "entitlementVerdict": "ENTITLED",
+    "confirmationIdentity": "77a8d7d623d23d123cf383bd8b080db458574a7ef0a11a148f8291cb04ff84be"
+  },
+  "controlTwin": {
+    "verdict": "FAIL",
+    "outcomeChangedPairs": 0,
+    "error": "positive control: zero gameplay outcome pairs differ"
+  },
+  "confirmationTwin": {
+    "verdict": "FAIL",
+    "mutation": "cells[0].score += 1",
+    "error": "/var/folders/bb/jgtk589s6f51m62dw2gc32300000gn/T/result-0024-broken-0ob8cb/confirmation-broken.json: artifact identity mismatch (470ce7af3e83532af2f26fe42e77e4f94343fd6f73a3fad844fc531f2d3cf354 != 77a8d7d623d23d123cf383bd8b080db458574a7ef0a11a148f8291cb04ff84be)"
+  },
+  "artifactIdentity": "e04ae952677fd59c851327329afe92455a8eecd9c2d9b30f7aa5208c362d560a"
+}
