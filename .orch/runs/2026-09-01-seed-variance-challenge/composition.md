@@ -59,3 +59,16 @@ The accepted persistent Goal Contract and tracked repository state at
 
 Status, terminal result identity, done-check verification, per-step result
 identities, changed artifacts, and unresolved gaps.
+
+## Result
+
+- **Status:** complete.
+- **Code result:** `b149eda598d59a9db3750cbbf721c3a9f6dad078`.
+- **Research/evidence result:** `1e5311ef53d9fbf5c3e694e1bce371fd18ca4381`.
+- **Done check:** `node experiments/RESULT-0021/verify.js` observes all six
+  required relationships against committed evidence; experiment gate PASS;
+  focused suite 43/43 PASS.
+- **Repository-wide baseline:** 280/284, unchanged four failures. These are
+  explicitly retained failures, not green checks and not caused by this run.
+- **Unresolved:** the historical exact `r = 0.98` remains provenance-
+  inconclusive; qualitative human-play need remains outside this result.
