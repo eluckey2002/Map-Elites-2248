@@ -30,6 +30,17 @@ async function start() {
   return { server, recordingsDir, base: `http://127.0.0.1:${port}` };
 }
 
+async function startWithOptions(options) {
+  const recordingsDir = fs.mkdtempSync(path.join(os.tmpdir(), '2248-recordings-'));
+  const server = createAuthoringServer({ ...options, recordingsDir });
+  openServers.push(server);
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', resolve);
+  });
+  return { recordingsDir, base: `http://127.0.0.1:${server.address().port}` };
+}
+
 // The live candidate store is a WORKING file -- whichever candidate is being
 // authored or played sits in it -- so these tests must read the level number
 // from the store rather than hard-code one. They previously hard-coded 51 while
@@ -152,4 +163,20 @@ test('refuses to overwrite conflicting bytes at a recording identity', async () 
   });
   assert.equal(response.status, 409);
   assert.equal(fs.readFileSync(path.join(recordingsDir, `${id}.json`), 'utf8'), '{"conflict":true}\n');
+});
+
+test('a fixed-seed authoring server refuses recordings from any other seed', async () => {
+  const { base } = await startWithOptions({ fixedSeed: 424242 });
+  const body = validRecording();
+  body.seed = 1;
+  const wrong = await fetch(`${base}/api/recordings`, {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+  });
+  assert.equal(wrong.status, 422);
+  assert.match((await wrong.json()).error, /pinned session/);
+  body.seed = 424242;
+  const right = await fetch(`${base}/api/recordings`, {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+  });
+  assert.equal(right.status, 201);
 });

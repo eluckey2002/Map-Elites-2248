@@ -1,0 +1,65 @@
+{
+  "artifactIdentity": "347094e403336abb1c2e08b3e39db025995fb227def5051c983f45439caaa808",
+  "nonClaims": [
+    "historically measured",
+    "ranked correctly",
+    "representative",
+    "calibrated",
+    "eligible",
+    "ready to ship",
+    "evidence about a human-performance distribution"
+  ],
+  "pilot": "HUMAN-PILOT-0001",
+  "recordingDestination": "pilots/HUMAN-PILOT-0001/recordings/",
+  "runtimeBundle": {
+    "identity": "f5ee9c46ad0e5bd10d0f626de3eb158b4f29f7143150e56666e7116658069af6",
+    "members": [
+      {
+        "identity": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
+        "path": "src/game.js"
+      },
+      {
+        "identity": "4e2323b9218aed6a552017ca37eab16becf8ef0a314f7081d02717ef1f7a12c6",
+        "path": "solver/engine.js"
+      },
+      {
+        "identity": "b4f19332b2e15c559c4b4d07b6884321271ad9f1b4cbcd906f4711333fdfa73a",
+        "path": "solver/authoring-server.js"
+      },
+      {
+        "identity": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4",
+        "path": "solver/recording-replay.js"
+      },
+      {
+        "identity": "c33ea9219db679a92c96a6abca53e0953bc2f4e51d875e3094929fd6b9c303f9",
+        "path": "tools/human-pilot.js"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  "schemaVersion": 1,
+  "selectionAuthority": "deterministic convenience for this single exploratory owner pilot only",
+  "sessionProtocol": {
+    "declaration": {
+      "automatedPlayer": false,
+      "ownerAttestation": "Owner identity and protocol compliance require later explicit owner attestation; file identity proves neither.",
+      "ownerCount": 1,
+      "ownerRole": "project owner",
+      "subjectIdentity": "55b57be2805413f2e0466fad8b7272d9ee6caa89ae6e1da674ff0c158a7ff257",
+      "terminalRecordingCount": 1
+    },
+    "identity": "ee461bf4bfa8853d395fb5cf477cde7a75272fb99c6cd1da6e41d183471f1c28"
+  },
+  "source": {
+    "baseCommit": "5090098337be5e8cfd8f78ee6ee2971cd843cf52",
+    "batch": "solver/generated-batch-04.json",
+    "batchIdentity": "5b0dd3bfd0d79a977d68f54ad1c59cc736b50c98459a3113e05f1ef2fa5a4c1f"
+  },
+  "subject": {
+    "candidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+    "candidateName": "gen-0008",
+    "level": 53,
+    "seed": 424242,
+    "subjectIdentity": "55b57be2805413f2e0466fad8b7272d9ee6caa89ae6e1da674ff0c158a7ff257"
+  }
+}

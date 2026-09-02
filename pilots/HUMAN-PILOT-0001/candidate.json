@@ -1,0 +1,36 @@
+{
+  "candidates": [
+    {
+      "blockers": [
+        {
+          "duration": 10,
+          "type": "ice",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "duration": 6,
+          "type": "ice",
+          "x": 2,
+          "y": 1
+        },
+        {
+          "type": "stone",
+          "x": 2,
+          "y": 2
+        }
+      ],
+      "gridH": 8,
+      "gridW": 4,
+      "level": 53,
+      "minChain": 3,
+      "moves": 24,
+      "name": "gen-0008",
+      "schemaVersion": 1,
+      "sourceShapeIdentity": "32ab430d79a42ab17993568b2a32d9fe7bdc4724a1370f676c492f46ec26d073",
+      "target": 126000,
+      "tileScale": 32
+    }
+  ],
+  "schemaVersion": 1
+}

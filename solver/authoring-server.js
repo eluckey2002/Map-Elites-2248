@@ -31,7 +31,7 @@ function requireInteger(value, name, min, max) {
   if (!Number.isInteger(value) || value < min || value > max) throw new Error(`${name} is invalid`);
 }
 
-function validateRecording(recording, candidate, candidateIdentity) {
+function validateRecording(recording, candidate, candidateIdentity, fixedSeed = null) {
   if (!recording || typeof recording !== 'object' || Array.isArray(recording)) throw new Error('recording must be an object');
   if (recording.schemaVersion !== 1) throw new Error('recording schemaVersion must be 1');
   if (recording.candidateIdentity !== candidateIdentity || recording.candidateLevel !== candidate.level) {
@@ -40,6 +40,7 @@ function validateRecording(recording, candidate, candidateIdentity) {
     throw error;
   }
   requireInteger(recording.seed, 'seed', 0, 0xffffffff);
+  if (fixedSeed !== null && recording.seed !== fixedSeed) throw new Error('recording seed does not match pinned session');
   if (!['win', 'lose'].includes(recording.outcome)) throw new Error('outcome is invalid');
   if (typeof recording.reason !== 'string' || recording.reason.length < 1 || recording.reason.length > 100) throw new Error('reason is invalid');
   requireInteger(recording.score, 'score', 0, Number.MAX_SAFE_INTEGER);
@@ -100,6 +101,8 @@ function createAuthoringServer(options = {}) {
   const store = options.store || readJson(path.join(__dirname, 'candidate-levels.json'));
   const receipt = options.receipt || readJson(path.join(__dirname, 'candidate-levels.receipt.json'));
   const recordingsDir = path.resolve(options.recordingsDir || path.join(ROOT, 'recordings'));
+  const fixedSeed = options.fixedSeed === undefined ? null : options.fixedSeed;
+  if (fixedSeed !== null) requireInteger(fixedSeed, 'fixed seed', 0, 0xffffffff);
   if (!Array.isArray(store.candidates) || store.candidates.length !== 1) throw new Error('candidate store must contain one candidate');
   const candidate = validateCandidate(store.candidates[0]);
   if (identity(candidate) !== receipt.candidateIdentity) throw new Error('candidate receipt binding mismatch');
@@ -153,7 +156,7 @@ function createAuthoringServer(options = {}) {
         return;
       }
       try {
-        validateRecording(recording, candidate, receipt.candidateIdentity);
+        validateRecording(recording, candidate, receipt.candidateIdentity, fixedSeed);
       } catch (error) {
         jsonResponse(response, error.code === 'UNKNOWN_CANDIDATE' ? 404 : 422, { error: error.message });
         return;

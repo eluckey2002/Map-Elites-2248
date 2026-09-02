@@ -1,0 +1,20 @@
+{
+  "artifactIdentity": "4c19345972b1bec86e4d61ae6c6579a9315757e939b63748e7b1eb529746b514",
+  "authority": "deterministic convenience for this single exploratory owner pilot only",
+  "candidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+  "manifestIdentity": "347094e403336abb1c2e08b3e39db025995fb227def5051c983f45439caaa808",
+  "nonClaims": [
+    "historically measured",
+    "ranked correctly",
+    "representative",
+    "calibrated",
+    "eligible",
+    "ready to ship",
+    "evidence about a human-performance distribution"
+  ],
+  "protocolIdentity": "ee461bf4bfa8853d395fb5cf477cde7a75272fb99c6cd1da6e41d183471f1c28",
+  "runtimeBundleIdentity": "f5ee9c46ad0e5bd10d0f626de3eb158b4f29f7143150e56666e7116658069af6",
+  "schemaVersion": 1,
+  "sourceBatchIdentity": "5b0dd3bfd0d79a977d68f54ad1c59cc736b50c98459a3113e05f1ef2fa5a4c1f",
+  "sourceReceiptIdentity": "59e9c32f9beffba01a9a3e3b1d1fea3f5f34a1777f0d2ada33961674ddd37a62"
+}

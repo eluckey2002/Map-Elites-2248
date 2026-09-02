@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const sharedReplay = require('../recording-replay');
 
 const {
   makeRng,
@@ -220,6 +221,13 @@ test('at least one recording is replayable', () => {
       'replayed. Zero replayable recordings must fail rather than pass silently — ' +
       'otherwise this whole file goes green having checked nothing.',
   );
+});
+
+test('the reusable replay predicate passes a real recording and refuses its broken twin', () => {
+  const entry = firstReplayable();
+  assert.deepEqual(sharedReplay.replay(entry.candidate, entry.recording).problems, []);
+  const brokenTwin = { ...entry.recording, score: entry.recording.score + 1 };
+  assert.ok(sharedReplay.replay(entry.candidate, brokenTwin).problems.some((problem) => /final score .* recording claims/.test(problem)));
 });
 
 for (const entry of REPLAYABLE) {

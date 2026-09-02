@@ -1,0 +1,59 @@
+{
+  "artifactIdentity": "85dbc51d6bef9d89bd96a25f861c9f773070e7f352dee1fa9fb2700f5e4b269c",
+  "brokenTwin": {
+    "location": "temporary directory, removed after check",
+    "mutation": "recording.score + 1",
+    "observedProblem": "final score 110208, recording claims 110209",
+    "verdict": "FAIL"
+  },
+  "checker": {
+    "identity": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4",
+    "path": "solver/recording-replay.js"
+  },
+  "claim": "A browser-produced recording replays exactly against its content-bound candidate through the headless engine.",
+  "downstreamConsumer": {
+    "scope": "binds replay qualification to the execution receipt; does not determine, verify, or record the separate owner-authored qualitative disposition",
+    "technicalConsumer": "tools/human-pilot.js executionReceipt",
+    "workflow": "HUMAN-PILOT-0001 post-session qualification"
+  },
+  "invalidation": {
+    "challengeReceipt": {
+      "identityField": "artifactIdentity",
+      "rule": "sha256 canonical JSON excluding artifactIdentity"
+    },
+    "checker": {
+      "identity": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4",
+      "path": "solver/recording-replay.js"
+    },
+    "realCandidate": {
+      "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "candidateSource": "candidate-levels.json"
+    },
+    "realRecording": {
+      "recordingFileIdentity": "7666abeada41cec51a3a87dca1f5cb249d475d102f001488bb1f6149478aff1e",
+      "recordingIdentity": "1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea"
+    }
+  },
+  "nonClaims": [
+    "historically measured",
+    "ranked correctly",
+    "representative",
+    "calibrated",
+    "eligible",
+    "ready to ship",
+    "evidence about a human-performance distribution"
+  ],
+  "realSubject": {
+    "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+    "candidateSource": "candidate-levels.json",
+    "recording": "recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json",
+    "recordingFileIdentity": "7666abeada41cec51a3a87dca1f5cb249d475d102f001488bb1f6149478aff1e",
+    "recordingIdentity": "1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea"
+  },
+  "schemaVersion": 1,
+  "seam": "src/game.js AuthoringCapture -> recording JSON -> solver/recording-replay.js -> solver/engine.js",
+  "validObservation": {
+    "problems": [],
+    "verdict": "PASS"
+  }
+}
