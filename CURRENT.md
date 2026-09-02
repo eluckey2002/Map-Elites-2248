@@ -4,6 +4,20 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
+## Current decision frontier — 2026-09-02
+
+The latest trustworthy sequence is now visible in the ledger:
+
+- [RESULT-0021](EVIDENCE_LEDGER.md#result-0021--structural-level-ranking-is-stable-across-disjoint-seed-samples) found that repeated human plays are not supported as necessary merely to average seed noise when differentiating candidates. It does not remove qualitative human review.
+- [RESULT-0025](EVIDENCE_LEDGER.md#result-0025--one-owner-pilot-session-replays-exactly-on-its-identified-subject) qualifies one exact owner-play session. [DECISION-0005](EVIDENCE_LEDGER.md#decision-0005--route-the-qualified-owner-pilot-to-variantrepair) disposes that candidate as `variant/repair`: preserve the narrow-board direction, treat blocker benefit as topology-dependent, and resolve or explicitly accept the stone/refill behavior before relying on it.
+- The first topology study, [RESULT-0023](experiments/RESULT-0023/report.md), remains a retained failed run because its positive control could false-PASS. It is not a ledger-admitted result. [RESULT-0024](EVIDENCE_LEDGER.md#result-0024--the-repaired-topology-response-study-is-entitled-but-inconclusive) repaired that control, consumed its receipt, used fresh seeds, and produced entitled evidence with empirical verdict `INCONCLUSIVE`.
+
+Do **not** repeat RESULT-0024's same one-stone/two-stone policy interaction with more seeds. The four policies remained behaviorally distinct, but their response to that exact contrast did not show the stable predeclared five-point separation needed to justify scale-up.
+
+**Selected next descriptor to test: `stranded-cell pressure`.** After each completed move, once gravity, refill, and blocker ticking have run, count playable cells occupied by a tile whose value is not `tileScale × 2^n` and divide by the number of currently playable cells; the descriptor is that fraction averaged across the played moves. `FACT-0006` makes the numerator mechanically meaningful: those off-lattice tiles can never be matched again and permanently consume maneuvering space. This directly tests the planning pressure reported in the pilot and is distinct from the existing mean-chain-length and late-score-share axes.
+
+This is a selected research direction, not an accepted measurement. No evidence yet shows that `stranded-cell pressure` has useful range, separates policies, predicts fun, or should become a MAP-Elites axis. Its next proof should be a cheap range and negative-control check on existing deterministic play seams before any new large experiment.
+
 ## Active milestone
 
 Author new levels. The curve is fixed, so new levels can be born calibrated rather than hand-guessed. [BL-0004](docs/backlog/BL-0004-build-level-authoring-tracer.md)'s tracer is complete and its one candidate is shipped: Level 51, the first level whose target was never hand-picked (measured demand, `DECISION-0003`) and the first with direct human playtest evidence, not just a bot win rate (`RESULT-0009`). The historical design remains at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md); measurement is grounded in `solver/game-tester.js`.
@@ -92,4 +106,4 @@ node solver/chain-coverage.js                           # how much of the best m
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
-Last reviewed: 2026-08-31
+Last reviewed: 2026-09-02

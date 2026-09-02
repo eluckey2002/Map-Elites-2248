@@ -8,8 +8,8 @@
   },
   "sourceIdentities": {
     "contractSha256": "372ac90f35f69d38c96ee37be4fddf6f19e322bd5ecaf732df2e142fe5828ac1",
-    "ledgerSha256": "1b098e8e56b2910c2ea1b2252a673c3d8809fdfb14de38010f683327e41fbde9",
-    "currentNavigationSha256": "98f70286efa7f14862c2c03e2cb859b4e18f9b4015a14c70be6222d03a8d8af4",
+    "ledgerSha256": "c4590ff9dac207730c44c88517e399ec40b9e10fabd13e634004af7da64a3882",
+    "currentNavigationSha256": "41b7409e16d03c4a234ed937c319cc972c58971325907c40057d436e837fab26",
     "shippedGameSha256": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
     "latestArtifactSha256": "ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22",
     "latestArtifactVerificationSha256": "701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790",
@@ -131,7 +131,7 @@
     "acceptedRecord": "RESULT-0017",
     "latestArtifact": "not-admitted",
     "currentNavigation": "current",
-    "currentNavigationLastReviewed": "2026-08-31"
+    "currentNavigationLastReviewed": "2026-09-02"
   },
   "currentFrontier": [
     {

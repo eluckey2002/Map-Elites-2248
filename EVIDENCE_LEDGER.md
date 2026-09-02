@@ -18,6 +18,8 @@ As of 2026-08-12 the level curve has been retuned and every level is winnable: n
 
 As of 2026-08-30, the owner has promoted the target-aware immediate-finish policy as the current engineering champion at main commit `b82a9b6` (`DECISION-0004`). The decision uses `RESULT-0018` at its accepted bounded heuristic standing; it does not turn the observation into a universal proof or rewrite historical MAP, Universe Map, level, target, receipt, or authoring evidence.
 
+As of 2026-09-02, one identity-bound owner pilot has an exact replay and an explicit `variant/repair` disposition (`RESULT-0025`, `DECISION-0005`). A retained failed study report, `RESULT-0023`, exposed a false-PASS control and remains lineage rather than an admitted ledger result. The question was then repeated on fresh seeds with a challenged outcome-only control and downstream receipt consumption (`RESULT-0024`). The repaired run is entitled evidence, but its empirical verdict is **`INCONCLUSIVE`**: these four policies remained behaviorally distinct yet did not show a stable, predeclared five-point difference in response to the exact one-stone/two-stone contrast. More seeds on that same contrast are not the active next step.
+
 Two candidate remedies were priced before that retune and neither rescues the late levels on its own. Enriching the spawn pool is the wrong lever — a 76% increase in spawned value buys 13% more score (`RESULT-0006`). Enlarging the move budget works in the mid game and saturates in the late game, where the board reaches a terminal state before extra moves can be spent (`RESULT-0007`). Levels past roughly 31 are short of their targets by two to four times with no parameter fix available, so their targets are the thing that has to move.
 
 Repository baseline for this documentation run is `main` at `10a849d5336bdda89d2d3f5ed1f1ca87e536811d`, with pre-existing dirty work preserved. Recheck with `git status --short --branch` and `git log -1 --format='%H %s'`. (`.orch/runs/game-evidence-ledger-2026-08-11/worklog.md`, **State**)
@@ -520,6 +522,36 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** The current `r = 0.99943` is a new registered result, not evidence for the exact historical `r = 0.98`. Human repetition may still be appropriate for learning, fun, frustration, strategy discovery, or reliability of subjective judgments; this result removes only seed averaging as an independently supported requirement.
 
+### RESULT-0024 — The repaired topology-response study is entitled but inconclusive
+
+- **type:** result
+- **status:** accepted
+- **scope:** four fixed policy identities on open, one-center-stone, and two-adjacent-center-stone 4x8 layouts; 48 control seeds and 200 fresh confirmation seeds `23000000..23000199`; exactly 2,400 reportable cells under one evaluator and 24-move budget; protocol, source identities, outcome-only control receipt, and downstream consumption frozen before confirmation
+- **statement:** The valid real control passed with gameplay outcomes differing in all 48 one-stone/two-stone pairs; an outcome-identical twin had zero changed outcomes and failed the same check before confirmation. The confirmation runner consumed that exact qualified receipt. On fresh confirmation seeds, two-stone versus one-stone score responses ranged from **-18.338%** to **-22.071%**, an interaction spread of **0.0373308141** or **3.733 percentage points**. The policies remained behaviorally distinct on the open layout, clearing both style guards, but the most- and least-affected policies changed between fixed seed halves. The predeclared empirical verdict is therefore **`INCONCLUSIVE`**: this exact contrast neither supports nor falsifies a stable five-point policy-by-topology interaction. Aggregate evidence entitlement is **PASS**, but it does not authorize treating this topology response as a MAP-Elites axis or scaling it into OpenEvolve or co-evolution.
+- **evidence:** protocol `experiments/RESULT-0024/protocol.md` registered at commit `e6da102cfbbfb6605bfb1c21c3c7e46a72565002`; report `experiments/RESULT-0024/report.md`; controls identity `aa69b1233176124efc086300c11584eae0820971d1d4c1f0a5d84ca1acbf7bf5`; control-entitlement identity `dabcb1b3e8313b7b1f3fff0c920ca4370623ec92798a1a51217be486f22b40d5`; confirmation identity `77a8d7d623d23d123cf383bd8b080db458574a7ef0a11a148f8291cb04ff84be`; primary verification identity `6634724c54ee448a57c5233d7b758e6fc89cf2eaba3549fc0a8dba75283e9ff6`; independent recomputation identity `049534b508eeedd748cdc57b7e8d40072dfadc1b558bfce91f050dc67d0e6d2c`; challenge receipt identity `e04ae952677fd59c851327329afe92455a8eecd9c2d9b30f7aa5208c362d560a`.
+- **proof_class:** `heuristic_observation` for the empirical response over these fixed policies, layouts, and seeds; `direct_source` for identities, complete matrix, protocol ordering, valid-control PASS, same-check broken-control FAIL, downstream receipt consumption, independent recomputation, and confirmation-identity twin failure. No policy-independent topology law, human-persona claim, or product decision follows.
+- **as_of:** 2026-09-02
+- **reverify:** Call `verifyAll` from `experiments/RESULT-0024/verify.js` on the committed controls, control-entitlement, and confirmation artifacts; expect PASS, confirmation `77a8d7d6...`, empirical verdict `INCONCLUSIVE`, interaction spread `0.03733081406203867`, style guard true, and stable ordering false. Run `node --test experiments/RESULT-0024/control-gate.test.js` and `node tools/verify-experiments.js`; expect 4/4 and `EXPERIMENT GATE PASS`.
+- **updated:** 2026-09-02
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** `verification.json` says `ENTITLED` before reading the independent recomputation or final challenge receipt. The report narrows that component field to primary artifact-chain PASS; final entitlement is the report-level join over all six identified artifacts. The frozen component receipt is retained unchanged. The rejected `RESULT-0023` report preserves the predecessor's false-PASS finding and diagnostic arithmetic but is not admitted as its own ledger result; `RESULT-0022` contains only an unused incomplete protocol template and produced no measurement.
+
+### RESULT-0025 — One owner pilot session replays exactly on its identified subject
+
+- **type:** result
+- **status:** accepted
+- **scope:** `HUMAN-PILOT-0001`; one owner, candidate `gen-0008` identity `4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d`, fixed seed `424242`, subject identity `55b57be2805413f2e0466fad8b7272d9ee6caa89ae6e1da674ff0c158a7ff257`, one terminal browser recording; not the shipped Level 53 identity and not a population sample
+- **statement:** The browser-produced recording replays through the headless engine to **164,096 points in 19 moves** with no replay problems. The execution receipt binds the candidate, subject, recording, checker, runtime bundle, and reusable replay challenge receipt. This pilot recording passes the qualified replay predicate; the reusable checker challenge separately passed its real qualification subject and failed a controlled broken twin through that same predicate. The owner attested that the session was personally played with no automated player. This establishes one exact replayable session and nothing about calibration, representativeness, eligibility, ranking, shipping readiness, or a human-performance distribution.
+- **evidence:** execution receipt `pilots/HUMAN-PILOT-0001/execution-receipt.json`, identity `1f45d07cc9a8a2b38493e9f6d022c9549cf60e3c0ba57a057ef5e3ea5d4f89bb`; recording file identity `687dfd7d9bc25a858e50d398830b7b6bb52b697e5364e3b104824047adb3a903`, recording identity `3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b`; reusable replay challenge `pilots/HUMAN-PILOT-0001/replay-challenge.json`, identity `85dbc51d6bef9d89bd96a25f861c9f773070e7f352dee1fa9fb2700f5e4b269c`; owner attestation and disposition `pilots/HUMAN-PILOT-0001/owner-disposition.json`, identity `284c9d4aa6223f965c206714ab5f833a387ac27f7015bc7181223c856a748dfb`.
+- **proof_class:** `exact_result` for replay on the identified subject; `direct_source` for bound identities, challenge outcomes, and owner attestation. Qualitative interpretation remains the owner decision in `DECISION-0005`.
+- **as_of:** 2026-09-02
+- **reverify:** Run `node tools/human-pilot.js verify-execution` and `node --test solver/tests/humanPilot.test.js solver/tests/recordingReplay.test.js`; expect execution PASS and all focused tests PASS, including real-subject PASS, broken-twin FAIL, and covered-identity invalidation.
+- **updated:** 2026-09-02
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Candidate labels are batch-local. Use the candidate and subject identities, not bare `gen-0008` or the pilot's presentation level, to refer to this session. The challenge receipt qualifies the reusable checker on its own real recording and broken twin; the execution receipt is the per-invocation application to this pilot's distinct recording.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
@@ -580,6 +612,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** This decision changes which policy is current; it does not change the historical standing or identity of any earlier result. The evidence under it is now reproducible: `RESULT-0020` (2026-09-01) registered a protocol before running and reproduced RESULT-0018 holdout counts exactly, so this decision no longer rests solely on a grandfathered result. That replication also found that the promotion copied the target-aware policy into `solver/bot.js` rather than moving it — `chooseMove` and `chooseTargetAwareMove` are now byte-identical apart from their identifiers, and the experimental challenger called the promoted one, evaluating the override twice per move. The challenger was repointed at `chooseBaseMove` on 2026-09-01 (`c37c83a`), verified play-identical on 1,040 games; `solver/bot.js` still carries its own copy of the rule, which is a code question for this decision to answer, not a change this measurement makes.
+
+### DECISION-0005 — Route the qualified owner pilot to variant/repair
+
+- **type:** decision
+- **status:** accepted
+- **scope:** disposition of the one exact `HUMAN-PILOT-0001` session in `RESULT-0025`; no candidate admission, shipping, rule change, or population claim
+- **statement:** The owner disposes the played candidate as **`variant/repair`**. Preserve the narrow-board direction because it amplified the existing planning challenge while remaining fun. Treat blocker benefit as topology-dependent rather than assuming any blocker placement is beneficial. Resolve or explicitly accept the stone and below-stone refill behavior before relying on that pressure as a desired level property. This is a qualitative owner decision about what to explore next, not an empirical claim that the candidate is calibrated, representative, eligible, or ready to ship.
+- **evidence:** owner-authored `pilots/HUMAN-PILOT-0001/owner-disposition.json`, identity `284c9d4aa6223f965c206714ab5f833a387ac27f7015bc7181223c856a748dfb`, consuming execution receipt `1f45d07cc9a8a2b38493e9f6d022c9549cf60e3c0ba57a057ef5e3ea5d4f89bb`, recording identity `3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b`, candidate identity `4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d`, and subject identity `55b57be2805413f2e0466fad8b7272d9ee6caa89ae6e1da674ff0c158a7ff257`.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-09-02
+- **reverify:** Confirm the disposition artifact identity and that all four consumed identities match `RESULT-0025`; no gameplay rerun is required to re-establish the recorded owner decision.
+- **updated:** 2026-09-02
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The disposition chooses a direction for another bounded iteration. It does not select a particular repair, change blocker mechanics, or admit the candidate.
 
 ## Hypothesis registry
 
@@ -726,6 +773,8 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ## Resume boundary
 
 Level tuning is done (`DECISION-0003`, `RESULT-0008`). Active work resumes at authoring new levels, against the design at `docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md` and the measurement harness at `solver/game-tester.js`.
+
+The latest authoring branch is now narrower: the qualified pilot routes its exact candidate to `variant/repair` (`RESULT-0025`, `DECISION-0005`), and the first repaired automated topology-response study is entitled but empirically `INCONCLUSIVE` (`RESULT-0024`). Do not repeat that same one-stone/two-stone contrast with more seeds. The next research question must either name a mechanically stronger contrast or test a different behavior descriptor tied to the planning pressure observed in play.
 
 Two things are knowingly left open. The reference bot remains a weak proxy for a skilled player, so every recorded win rate is a floor on human success and not an estimate of it; the margin is unquantified. And roughly 15 levels carry a target lower than the level before, accepted rather than fixed, because the remaining lever is the move budget and spending it would make a level's pacing a side effect of target cosmetics (`DECISION-0003`).
 
