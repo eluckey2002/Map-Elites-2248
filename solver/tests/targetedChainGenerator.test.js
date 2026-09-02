@@ -2,6 +2,14 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 
 const { replay } = require('../recording-replay');
+const {
+  actionIdentity,
+  generateTargetedChains,
+} = require('../targeted-chain-generator');
+const {
+  createLevelState,
+  makeRng,
+} = require('../engine');
 
 const FIXTURE = require('../test-fixtures/level52-seed2000000-human-games.json');
 
@@ -33,4 +41,81 @@ test('four compacted owner sessions replay through the real engine to exact outc
   }
 
   assert.deepEqual(outcomes.sort(), ['110464/9', '113536/9', '119808/11', '120256/10']);
+});
+
+function smallState() {
+  return {
+    grid: [
+      [
+        { x: 0, y: 0, value: 2, blocker: null },
+        { x: 1, y: 0, value: 2, blocker: null },
+      ],
+      [
+        { x: 0, y: 1, value: 2, blocker: null },
+        { x: 1, y: 1, value: 2, blocker: null },
+      ],
+    ],
+    gridWidth: 2,
+    gridHeight: 2,
+    minChain: 3,
+    tileScale: 1,
+  };
+}
+
+test('targeted generation dedupes real legal actions and can finish a small search', () => {
+  const result = generateTargetedChains(smallState(), {
+    maxNodes: 1_000,
+    candidateLimit: 1_000,
+    pathWidth: 8,
+  });
+
+  assert.equal(result.complete, true);
+  assert.deepEqual(result.telemetry.capReasons, []);
+  assert.ok(result.candidates.length > 0);
+  assert.equal(
+    new Set(result.candidates.map(({ chain }) => actionIdentity(chain))).size,
+    result.candidates.length,
+  );
+  for (const { chain } of result.candidates) {
+    assert.ok(chain.length >= 3);
+    assert.equal(chain[0].value, chain[1].value);
+  }
+});
+
+test('the real opening search recovers the missed 24-tile, sum-3456 action', () => {
+  const opening = createLevelState(FIXTURE.level, makeRng(FIXTURE.sessions[0].seed));
+  const anchor = FIXTURE.sessions.find(({ sourceFile }) => sourceFile.startsWith('64eef933')).chains[0];
+  const result = generateTargetedChains(opening, {
+    maxNodes: 100_000,
+    candidateLimit: 512,
+    pathWidth: 64,
+  });
+
+  assert.ok(result.candidates.some(({ chain }) => actionIdentity(chain) === actionIdentity(anchor.tiles)));
+  assert.equal(anchor.tiles.reduce((sum, tile) => sum + tile.value, 0), 3456);
+  assert.equal(anchor.tiles.length, 24);
+  assert.ok(result.telemetry.nodesVisited <= 100_000);
+});
+
+test('caller node caps fail closed and are deterministic', () => {
+  const first = generateTargetedChains(smallState(), {
+    maxNodes: 1,
+    candidateLimit: 100,
+    pathWidth: 1,
+  });
+  const second = generateTargetedChains(smallState(), {
+    maxNodes: 1,
+    candidateLimit: 100,
+    pathWidth: 1,
+  });
+  const stable = ({ complete, candidates, telemetry }) => ({
+    complete,
+    candidateIds: candidates.map(({ chain }) => actionIdentity(chain)),
+    nodesVisited: telemetry.nodesVisited,
+    capReasons: telemetry.capReasons,
+  });
+
+  assert.deepEqual(stable(first), stable(second));
+  assert.equal(first.complete, false);
+  assert.deepEqual(first.telemetry.capReasons, ['maxNodes']);
 });
