@@ -670,3 +670,53 @@ that passed while inspecting nothing.
 - **Rung:** blocking. **Decay:** live test breaks a registered freeze against the
   real `solver/bot.js` and plants an uncovered source hash, with positive
   controls for both.
+
+---
+
+## Experiment-local entitlement checks
+
+### topology-control-outcomes-differ · HARD
+
+- **Protects:** RESULT-0024 confirmation cannot start merely because the
+  one-stone and two-stone cells carry different layout labels. RESULT-0023's C2
+  did exactly that and false-passed an outcome-identical twin.
+- **Where:** `experiments/RESULT-0024/verify.js`,
+  `countOutcomeChangedPairs`, `verifyControls`, `issueControlReceipt`, and
+  `validateControlEntitlement`; consumed by
+  `experiments/RESULT-0024/run.js` before confirmation.
+- **Level:** paired gameplay-outcome record. Metadata differences between
+  records intentionally slip past this comparison.
+- **Kind:** value. It proves at least one recorded gameplay outcome changed and
+  that an outcome-identical twin fails. Simulator correctness and strategic
+  meaning remain owned by their separate checks and P1/P2.
+- **Scope:** the 48 fixed policy-seed pairs on RESULT-0024's
+  `one-center-stone` and `two-center-stones` control layouts; compares exactly
+  `score`, `movesUsed`, `behaviorTotals`, and `behavior`. It excludes identity
+  fields, the open layout, confirmation seeds, and unrecorded runtime state.
+- **Reads own output?:** yes — it reads the result-local runner's control
+  artifact. This is informative only because the permanent crafted twin and
+  real control receipt challenge the same function, and the confirmation runner
+  consumes that receipt.
+- **Sampling memory:** fixed seeds `22000000..22000011`; silence means only that
+  this 12-seed control did not observe a gameplay difference, never that no
+  difference exists elsewhere.
+- **Does NOT catch:**
+  1. A difference too small, unstable, or irrelevant to strategy; P1 owns
+     magnitude and fixed-half stability.
+  2. Identically wrong outcomes produced on both arms by a broken simulator.
+  3. A topology effect outside the four policies, two compared layouts, or 12
+     control seeds.
+  4. A changed gameplay property absent from the four serialized outcome fields.
+- **Crafted-bypass test:**
+  `experiments/RESULT-0024/control-gate.test.js`, case `outcome-identical twin
+  fails even though layout identity fields differ`; the fixture asserts zero
+  gameplay differences before requiring the check to fail.
+- **Retires:** RESULT-0023's whole-cell C2 comparison at
+  `experiments/RESULT-0023/verify.js#verifyControls`; the historical file and
+  failed receipt remain unchanged.
+- **Enforcement:** blocking. `run.js confirmation` requires an identity-bound
+  receipt carrying valid-subject PASS and outcome-identical-twin FAIL.
+- **Decay:** run `node --test experiments/RESULT-0024/control-gate.test.js`;
+  the negative test and receipt-refusal assertions execute together.
+- **Shipped:** 2026-09-02 · run
+  `2026-09-02T05-54-31Z-player-style-topology-entitlement-retry`.
