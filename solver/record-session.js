@@ -1,12 +1,13 @@
 const path = require('path');
 const fs = require('fs');
+const crypto = require('node:crypto');
 
 const ROOT = path.join(__dirname, '..');
 const {
   makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles,
   tickBlockers, checkBombs,
 } = require('./engine');
-const { chooseMove } = require('./bot');
+const { analyzeMove, DEFAULT_PARAMS } = require('./bot');
 const { LEVELS } = require(`${ROOT}/src/game`);
 
 // Same fixed rollout base sweep.js uses, so a recorded session picks the
@@ -22,12 +23,56 @@ function snapshotBoard(state) {
   } : null)));
 }
 
+function stable(value) {
+  if (Array.isArray(value)) return value.map(stable);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])]));
+  }
+  return value;
+}
+
+function identity(value) {
+  return crypto.createHash('sha256').update(JSON.stringify(stable(value))).digest('hex');
+}
+
+function fileIdentity(relativePath) {
+  return crypto.createHash('sha256')
+    .update(fs.readFileSync(path.join(ROOT, relativePath)))
+    .digest('hex');
+}
+
+function codeIdentities() {
+  return {
+    bot: { path: 'solver/bot.js', sha256: fileIdentity('solver/bot.js') },
+    engine: { path: 'solver/engine.js', sha256: fileIdentity('solver/engine.js') },
+    recorder: { path: 'solver/record-session.js', sha256: fileIdentity('solver/record-session.js') },
+    levels: { path: 'src/game.js', sha256: fileIdentity('src/game.js') },
+  };
+}
+
+function mapChainToState(state, chain) {
+  return chain.map(({ x, y }) => state.grid[y][x]);
+}
+
+function spawnedTiles(boardAfterGravity, state) {
+  const spawned = [];
+  for (let y = 0; y < state.gridHeight; y++) {
+    for (let x = 0; x < state.gridWidth; x++) {
+      if (boardAfterGravity[y][x] !== null) continue;
+      const tile = state.grid[y][x];
+      if (tile) spawned.push({ x, y, value: tile.value });
+    }
+  }
+  return spawned;
+}
+
 // Plays one level to completion like sweep.js's playLevel, but keeps the
 // board before every move and the chain the bot picked, so the full session
 // can be replayed/viewed afterward instead of just its win/loss outcome.
-function recordSession(levelData, seed) {
+function recordSession(levelData, seed, options = {}) {
   const rng = makeRng(seed);
   const state = createLevelState(levelData, rng);
+  const params = { ...DEFAULT_PARAMS, ...options.params };
   const hardCap = levelData.moves + 5;
   const moves = [];
   let moveIndex = 0;
@@ -36,26 +81,35 @@ function recordSession(levelData, seed) {
   for (let i = 0; i < hardCap; i++) {
     const lookaheadRngFactory = () => makeRng(LOOKAHEAD_BASE + moveIndex);
     const boardBefore = snapshotBoard(state);
-    const chain = chooseMove(state, { lookaheadRngFactory });
+    const scoreBefore = state.score;
+    const decision = analyzeMove(state, { lookaheadRngFactory, params });
     moveIndex += 1;
 
-    if (!chain) {
+    if (!decision.selectedChain) {
       outcome = { result: 'lose', reason: 'no valid moves', movesUsed: state.moves };
       break;
     }
 
-    const chainSnapshot = chain.map((tile) => ({ x: tile.x, y: tile.y, value: tile.value }));
+    const chain = mapChainToState(state, decision.selectedChain);
+    const chainSnapshot = decision.selectedChain.map(({ x, y, value }) => ({ x, y, value }));
     const points = executeChain(state, chain);
     applyGravity(state);
+    const boardAfterGravity = snapshotBoard(state);
     spawnNewTiles(state, rng);
+    const spawnDelta = spawnedTiles(boardAfterGravity, state);
     tickBlockers(state);
 
     moves.push({
       index: moves.length,
       boardBefore,
+      boardAfter: snapshotBoard(state),
+      boardAfterGravity,
+      spawnDelta,
       chain: chainSnapshot,
       points,
+      scoreBefore,
       scoreAfter: state.score,
+      decision,
     });
 
     if (checkBombs(state)) {
@@ -76,7 +130,9 @@ function recordSession(levelData, seed) {
     outcome = { result: 'lose', reason: 'hard cap exceeded (engine bug?)', movesUsed: state.moves };
   }
 
-  return {
+  const session = {
+    schemaVersion: 2,
+    generatedBy: 'solver/record-session.js',
     level: levelData.level,
     seed,
     gridW: levelData.gridW,
@@ -85,10 +141,22 @@ function recordSession(levelData, seed) {
     maxMoves: levelData.moves,
     targetScore: levelData.target,
     tileScale: levelData.tileScale || 1,
+    policy: {
+      label: options.policyLabel || 'current-default',
+      params,
+      identity: identity(params),
+    },
+    identities: {
+      level: identity(levelData),
+      code: codeIdentities(),
+      lookahead: `mulberry32:${LOOKAHEAD_BASE}+moveIndex`,
+    },
     moves,
     finalBoard: snapshotBoard(state),
     outcome: { ...outcome, finalScore: state.score },
   };
+  session.sessionIdentity = identity(session);
+  return session;
 }
 
 function parseArgs(argv) {
@@ -125,4 +193,4 @@ if (require.main === module) {
   console.log(`Wrote ${sessions.length} session(s) to ${outPath}`);
 }
 
-module.exports = { recordSession, snapshotBoard };
+module.exports = { recordSession, snapshotBoard, identity };

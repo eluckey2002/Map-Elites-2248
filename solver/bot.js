@@ -198,6 +198,86 @@ function rolloutValue(outcome) {
   return next ? next.points : 0;
 }
 
+function snapshotTile(tile) {
+  if (!tile) return null;
+  return {
+    x: tile.x,
+    y: tile.y,
+    value: tile.value,
+    blocker: tile.blocker || null,
+    blockerDuration: tile.blockerDuration || 0,
+    bombTimer: tile.bombTimer || 0,
+  };
+}
+
+function snapshotGrid(state) {
+  return state.grid.map((row) => row.map(snapshotTile));
+}
+
+function chainSnapshot(chain) {
+  return chain.map(snapshotTile);
+}
+
+function chainKey(chain) {
+  return chain.map((tile) => `${tile.x},${tile.y}`).join('|');
+}
+
+// Bot Vision deliberately instruments the chooser through a separate seam.
+// `chooseMove` remains the production fast path below; this richer description
+// is paid for only by callers that explicitly ask to inspect a decision.
+function describeCandidate(state, candidate, lookaheadRngFactory, params, generationRank) {
+  const immediate = candidate.points;
+  const chain = chainSnapshot(candidate.chain);
+  const base = {
+    id: chainKey(candidate.chain),
+    generationRank,
+    chain,
+    chainLength: chain.length,
+    chainSum: chain.reduce((sum, tile) => sum + tile.value, 0),
+    immediatePoints: immediate,
+    twoMovePoints: immediate,
+    lookaheadApplied: Boolean(lookaheadRngFactory),
+    predictedNext: null,
+    survivor: chain[chain.length - 1],
+    boardAfterPrediction: null,
+    raw: { immediate, rollout: 0, placement: 0, turnover: 0, harvest: 0 },
+    weights: { immediate: 1, wRoll: params.wRoll, wPlace: params.wPlace, turnover: params.turnover, wHarvest: params.wHarvest },
+    contributions: { immediate, rollout: 0, placement: 0, turnover: 0, harvest: 0 },
+    policyScore: immediate,
+  };
+
+  if (!lookaheadRngFactory) return base;
+
+  const outcome = simulateCandidate(state, candidate, lookaheadRngFactory);
+  const exploded = checkBombs(outcome.sim);
+  const next = exploded ? null : findGreedyChains(outcome.sim, { limit: 1 })[0];
+  const rollout = next ? next.points : 0;
+  const placement = remnantPlacementValueFromOutcome(outcome);
+  const turnover = (state.tileScale || 1) * (candidate.chain.length - 1);
+  const harvest = harvestValue(outcome.sim, outcome.survivor);
+  const contributions = {
+    immediate,
+    rollout: params.wRoll * rollout,
+    placement: params.wPlace * placement,
+    turnover: params.turnover * turnover,
+    harvest: params.wHarvest * harvest,
+  };
+
+  return {
+    ...base,
+    twoMovePoints: immediate + rollout,
+    predictedNext: next ? {
+      chain: chainSnapshot(next.chain),
+      points: next.points,
+    } : null,
+    survivor: snapshotTile(outcome.survivor),
+    boardAfterPrediction: snapshotGrid(outcome.sim),
+    raw: { immediate, rollout, placement, turnover, harvest },
+    contributions,
+    policyScore: Object.values(contributions).reduce((sum, value) => sum + value, 0),
+  };
+}
+
 // Scores only a legal future chain that begins at the merge survivor after
 // execute -> gravity -> spawn. A valid longer chain necessarily has a valid
 // minChain prefix, so the depth cap proves chainability without turning this
@@ -362,11 +442,70 @@ function chooseBaseMove(state, options = {}) {
   return bestCandidate.chain;
 }
 
+// Replays the exact candidate generation and ranking rules used by
+// `chooseBaseMove`, but returns the evidence needed to inspect the decision.
+// Candidate order is retained because ties in the production chooser resolve
+// to the first generated candidate.
+function analyzeBaseMove(state, options = {}) {
+  const { lookaheadRngFactory } = options;
+  const params = { ...DEFAULT_PARAMS, ...options.params };
+  const bombs = findBombTiles(state).sort((a, b) => a.bombTimer - b.bombTimer);
+
+  for (const bomb of bombs) {
+    const result = findBestChain(state, { mustEndAt: bomb, maxLength: params.bombMax });
+    if (!result) continue;
+    const candidate = describeCandidate(state, result, null, params, 0);
+    candidate.policyScore = null;
+    candidate.selectionMode = 'bomb-override';
+    return {
+      reason: 'bomb-priority',
+      poolType: 'reachable-bomb chain',
+      selectedId: candidate.id,
+      selectedChain: candidate.chain,
+      params,
+      candidates: [candidate],
+    };
+  }
+
+  const generated = collectCandidates(state, params);
+  if (generated.length === 0) {
+    return {
+      reason: 'no-valid-move',
+      poolType: 'bot candidate pool',
+      selectedId: null,
+      selectedChain: null,
+      params,
+      candidates: [],
+    };
+  }
+
+  const candidates = generated.map((candidate, index) => (
+    describeCandidate(state, candidate, lookaheadRngFactory, params, index)
+  ));
+  let selected = candidates[0];
+  if (lookaheadRngFactory && candidates.length > 1) {
+    for (const candidate of candidates) {
+      if (candidate.policyScore > selected.policyScore) selected = candidate;
+    }
+  }
+
+  return {
+    reason: lookaheadRngFactory && candidates.length > 1
+      ? 'normal-weighted-ranking'
+      : 'immediate-points-ranking',
+    poolType: 'bot candidate pool',
+    selectedId: selected.id,
+    selectedChain: selected.chain,
+    params,
+    candidates,
+  };
+}
+
 function hasBomb(state) {
   return state.grid.some((row) => row.some((tile) => tile && tile.blocker === 'bomb'));
 }
 
-function immediateWinningUntrimmed(state, params = DEFAULT_PARAMS) {
+function immediateWinningUntrimmedCandidate(state, params = DEFAULT_PARAMS) {
   if (!Number.isFinite(state.targetScore) || state.score >= state.targetScore || hasBomb(state)) return null;
   const resolved = { ...DEFAULT_PARAMS, ...params };
   const candidates = findGreedyChains(state, {
@@ -375,7 +514,11 @@ function immediateWinningUntrimmed(state, params = DEFAULT_PARAMS) {
     pathWidth: resolved.pathWidth,
     preferMergeableSum: false,
   });
-  const winner = candidates.find(({ points }) => state.score + points >= state.targetScore);
+  return candidates.find(({ points }) => state.score + points >= state.targetScore) || null;
+}
+
+function immediateWinningUntrimmed(state, params = DEFAULT_PARAMS) {
+  const winner = immediateWinningUntrimmedCandidate(state, params);
   return winner ? winner.chain : null;
 }
 
@@ -385,6 +528,36 @@ function chooseMove(state, options = {}) {
   return immediateWinningUntrimmed(state, options.params) || champion;
 }
 
+function analyzeMove(state, options = {}) {
+  const analysis = analyzeBaseMove(state, options);
+  if (!analysis.selectedChain) return analysis;
+
+  const winner = immediateWinningUntrimmedCandidate(state, options.params);
+  if (!winner) return analysis;
+
+  const winnerId = chainKey(winner.chain);
+  let candidate = analysis.candidates.find(({ id }) => id === winnerId);
+  if (!candidate) {
+    candidate = describeCandidate(
+      state,
+      winner,
+      options.lookaheadRngFactory,
+      analysis.params,
+      analysis.candidates.length,
+    );
+    analysis.candidates.push(candidate);
+  }
+  candidate.selectionMode = 'target-override';
+  return {
+    ...analysis,
+    reason: 'immediate-target-win',
+    poolType: 'bot candidate pool plus target override',
+    selectedId: candidate.id,
+    selectedChain: candidate.chain,
+  };
+}
+
 module.exports = {
-  chooseMove, chooseBaseMove, remnantPlacementValue, harvestValue, DEFAULT_PARAMS,
+  chooseMove, chooseBaseMove, analyzeMove, analyzeBaseMove,
+  remnantPlacementValue, harvestValue, DEFAULT_PARAMS,
 };
