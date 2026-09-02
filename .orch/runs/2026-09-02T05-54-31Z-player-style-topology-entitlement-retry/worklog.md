@@ -59,6 +59,10 @@ inside its isolated worktree.
 7. Precision defect: primary verification labeled its partial artifact-chain
    result `ENTITLED` before reading the independent and challenge receipts. The
    report narrows that field and assigns final P4 only at the six-artifact join.
+8. One review gate at fixed revision `773c4a9`: support, implementation
+   independence, coverage, disagreement handling, source policy, and rigor PASS;
+   weakest oracle class `evidence`. No correction pass: changing frozen source
+   after execution would invalidate the result.
 
 ## Blame classes
 
@@ -80,4 +84,8 @@ inside its isolated worktree.
 
 ## Terminal
 
-[]
+- **complete** — empirical verdict `INCONCLUSIVE`; aggregate evidence verdict
+  `PASS — ENTITLED`; confirmation identity `77a8d7d623d23d12…`; control receipt
+  `dabcb1b3e8313b7b…`; independent recomputation `049534b508eeedd7…`;
+  challenge receipt `e04ae952677fd59c…`; review gate fixed revision `773c4a9`,
+  weakest oracle class `evidence`.
