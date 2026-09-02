@@ -1,0 +1,35 @@
+{
+  "attestation": {
+    "attestedAt": "2026-09-02T04:32:54Z",
+    "automatedPlayer": false,
+    "ownerRole": "project owner",
+    "personallyPlayed": true,
+    "statement": "I personally played the recorded session with no automated player. Disposition: variant/repair.",
+    "terminalRecordingCount": 1
+  },
+  "authority": "Owner qualitative judgment bound to one verified session; it does not convert the session into a population or calibration claim.",
+  "artifactIdentity": "284c9d4aa6223f965c206714ab5f833a387ac27f7015bc7181223c856a748dfb",
+  "consumes": {
+    "candidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+    "executionReceiptIdentity": "1f45d07cc9a8a2b38493e9f6d022c9549cf60e3c0ba57a057ef5e3ea5d4f89bb",
+    "recordingIdentity": "3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b",
+    "subjectIdentity": "55b57be2805413f2e0466fad8b7272d9ee6caa89ae6e1da674ff0c158a7ff257"
+  },
+  "disposition": "variant/repair",
+  "nonClaims": [
+    "historically measured",
+    "ranked correctly",
+    "representative",
+    "calibrated",
+    "eligible",
+    "ready to ship",
+    "evidence about a human-performance distribution"
+  ],
+  "pilot": "HUMAN-PILOT-0001",
+  "rationale": [
+    "Keep the narrow-board direction because it amplified the existing planning challenge while remaining fun.",
+    "Treat blocker benefit as topology-dependent rather than assuming any blocker placement is beneficial.",
+    "Resolve or explicitly accept the stone and below-stone refill behavior before relying on that pressure as a desired level property."
+  ],
+  "schemaVersion": 1
+}

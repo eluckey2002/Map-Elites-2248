@@ -1,0 +1,19 @@
+{
+  "artifactIdentity": "1f45d07cc9a8a2b38493e9f6d022c9549cf60e3c0ba57a057ef5e3ea5d4f89bb",
+  "candidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+  "challengeReceiptIdentity": "85dbc51d6bef9d89bd96a25f861c9f773070e7f352dee1fa9fb2700f5e4b269c",
+  "checkerIdentity": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4",
+  "manifestIdentity": "347094e403336abb1c2e08b3e39db025995fb227def5051c983f45439caaa808",
+  "protocolIdentity": "ee461bf4bfa8853d395fb5cf477cde7a75272fb99c6cd1da6e41d183471f1c28",
+  "recordingFileIdentity": "687dfd7d9bc25a858e50d398830b7b6bb52b697e5364e3b104824047adb3a903",
+  "recordingIdentity": "3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b",
+  "replay": {
+    "moves": 19,
+    "problems": [],
+    "score": 164096
+  },
+  "runtimeBundleIdentity": "f5ee9c46ad0e5bd10d0f626de3eb158b4f29f7143150e56666e7116658069af6",
+  "schemaVersion": 1,
+  "subjectIdentity": "55b57be2805413f2e0466fad8b7272d9ee6caa89ae6e1da674ff0c158a7ff257",
+  "verdict": "PASS"
+}
