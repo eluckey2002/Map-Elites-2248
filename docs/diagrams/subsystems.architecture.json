@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "2248 Challenge: Subsystems",
+    "output": "subsystems.html",
+    "quality_profile": "showcase",
+    "repository": { "url": "https://github.com/eluckey2002/Map-Elites-2248", "revision": "4dd93219f69d5288654dd2aee395f6e6388bda4a" },
+    "views": [
+      { "id": "measurement", "label": "Measurement path", "focus": ["game", "engine", "policysearch"], "note": "The browser game is the source of truth; the headless engine measures it; policy search runs on the engine." },
+      { "id": "evidence", "label": "Evidence path", "focus": ["policysearch", "guard", "ledger", "universemap"], "note": "Nothing becomes evidence without a registered protocol and a gate that checks the ledger." },
+      { "id": "authoring", "label": "Level authoring loop", "focus": ["engine", "authoring", "game"], "note": "New levels are measured on the engine and ship back into game.js with a receipt." }
+    ]
+  },
+  "components": [
+    { "id": "game", "type": "frontend", "label": "Browser game", "sublabel": "src/game.js · 53 levels", "tag": "source of truth", "pos": [40, 250], "size": [150, 68], "sources": [{ "path": "src/game.js" }] },
+    { "id": "human", "type": "external", "label": "Human play", "sublabel": "recordings/ · human-vs-bot.js", "pos": [40, 410], "size": [170, 60], "sources": [{ "path": "solver/human-vs-bot.js" }, { "path": "solver/record-session.js" }] },
+    { "id": "engine", "type": "backend", "label": "Headless engine + bot", "sublabel": "engine.js · bot.js · sweep.js", "tag": "seeded RNG", "pos": [320, 250], "size": [170, 68], "sources": [{ "path": "solver/engine.js" }, { "path": "solver/bot.js" }, { "path": "solver/sweep.js" }] },
+    { "id": "proofs", "type": "backend", "label": "Exact proofs", "sublabel": "exact-score.js · certify-level26.py", "tag": "parked", "pos": [320, 410], "size": [190, 68], "sources": [{ "path": "solver/exact-score.js" }, { "path": "solver/upper-bound.js" }] },
+    { "id": "authoring", "type": "backend", "label": "Level authoring", "sublabel": "level-author.js · generate-levels.js", "pos": [600, 90], "size": [200, 60], "sources": [{ "path": "solver/level-author.js" }, { "path": "solver/generate-levels.js" }] },
+    { "id": "policysearch", "type": "backend", "label": "Policy search", "sublabel": "map-elites.js · policy-search.js", "tag": "champion vs challenger", "pos": [600, 250], "size": [200, 68], "sources": [{ "path": "solver/map-elites.js" }, { "path": "solver/policy-search.js" }, { "path": "solver/target-aware-evaluation.js" }] },
+    { "id": "guard", "type": "security", "label": "Experiment guard", "sublabel": "experiment-guard.js · verify-experiments.js", "pos": [900, 410], "size": [230, 60], "sources": [{ "path": "solver/experiment-guard.js" }, { "path": "tools/verify-experiments.js" }] },
+    { "id": "ledger", "type": "database", "label": "Evidence ledger", "sublabel": "EVIDENCE_LEDGER.md · experiments/", "tag": "append-only", "pos": [900, 250], "size": [200, 68], "sources": [{ "path": "EVIDENCE_LEDGER.md" }, { "path": "experiments/README.md" }] },
+    { "id": "universemap", "type": "frontend", "label": "Universe map", "sublabel": "UNIVERSE.md · universe/map.html", "pos": [900, 90], "size": [200, 60], "sources": [{ "path": "tools/build-universe-map.js" }, { "path": "UNIVERSE.md" }] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "solver/ — headless measurement", "wraps": ["engine", "authoring", "policysearch", "proofs"] },
+    { "kind": "security-group", "label": "Evidence governance", "wraps": ["guard", "ledger"] }
+  ],
+  "connections": [
+    { "id": "rules-ported", "from": "game", "to": "engine", "label": "ported rules + LEVELS", "variant": "emphasis" },
+    { "id": "human-sessions", "from": "human", "to": "game", "label": "plays; sessions recorded", "variant": "dashed", "fromSide": "top", "toSide": "bottom" },
+    { "id": "sweep-shapes", "from": "engine", "to": "authoring", "label": "win rates per shape", "fromSide": "top", "toSide": "left" },
+    { "id": "plays-games", "from": "engine", "to": "policysearch", "label": "plays seeded games", "variant": "emphasis" },
+    { "id": "witness-replay", "from": "engine", "to": "proofs", "label": "witness replay", "variant": "dashed", "fromSide": "bottom", "toSide": "top" },
+    { "id": "ships-level", "from": "authoring", "to": "game", "label": "ships calibrated level", "variant": "dashed", "fromSide": "top", "toSide": "top" },
+    { "id": "authoring-receipt", "from": "authoring", "to": "ledger", "label": "receipt", "fromSide": "top", "toSide": "right" },
+    { "id": "artifact-report", "from": "policysearch", "to": "ledger", "label": "artifact + report", "variant": "emphasis" },
+    { "id": "refuse-unregistered", "from": "guard", "to": "policysearch", "label": "refuses run without protocol", "variant": "security", "fromSide": "left", "toSide": "bottom" },
+    { "id": "gate-ledger", "from": "guard", "to": "ledger", "label": "checks every record", "variant": "security", "fromSide": "top", "toSide": "bottom" },
+    { "id": "projection", "from": "ledger", "to": "universemap", "label": "projection", "variant": "emphasis", "fromSide": "top", "toSide": "bottom", "labelDy": -34 }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "One source of truth", "items": ["src/game.js holds the levels; solver/engine.js is a seeded port", "Every measurement runs on the engine, never the browser"] },
+    { "dot": "emerald", "title": "Two measuring loops", "items": ["Authoring: shape in, measured target out, level ships with a receipt", "Policy search: selection set, then disjoint holdout, against the champion"] },
+    { "dot": "rose", "title": "Evidence is gated", "items": ["Generalizing claims need a protocol committed before the run", "The ledger is append-only; the universe map is only a projection"] }
+  ]
+}
