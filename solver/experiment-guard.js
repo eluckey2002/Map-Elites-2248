@@ -11,7 +11,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const {
-  addedIn, parseFrontmatter, sha16,
+  addedIn, canonicalJson, freezeProblem, parseFrontmatter, sha16, showAtCommit,
 } = require('../tools/verify-experiments.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -25,7 +25,7 @@ function flagValue(argv, name) {
   return next && !next.startsWith('--') ? next : null;
 }
 
-function requireProtocol(argv, { name = 'this experiment' } = {}) {
+function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
   if (argv.includes('--exploratory')) {
     return { exploratory: true, protocolCommit: null, resultId: null };
   }
@@ -45,7 +45,7 @@ function requireProtocol(argv, { name = 'this experiment' } = {}) {
   }
 
   const rel = path.join('experiments', resultId, 'protocol.md');
-  const abs = path.join(ROOT, rel);
+  const abs = path.join(root, rel);
   if (!fs.existsSync(abs)) {
     throw new UnregisteredExperiment(
       `No protocol at ${rel}. Register it before running, not after:\n`
@@ -53,7 +53,7 @@ function requireProtocol(argv, { name = 'this experiment' } = {}) {
     );
   }
 
-  const protocolCommit = addedIn(rel);
+  const protocolCommit = addedIn(rel, root);
   if (!protocolCommit) {
     throw new UnregisteredExperiment(
       `${rel} exists but is not committed. An uncommitted protocol records no point in time,\n`
@@ -66,23 +66,55 @@ function requireProtocol(argv, { name = 'this experiment' } = {}) {
   if (front.result !== resultId) {
     throw new UnregisteredExperiment(`${rel} declares result ${front.result}, not ${resultId}`);
   }
+  if (front.status !== 'registered') {
+    throw new UnregisteredExperiment(
+      `${rel} is status: ${front.status}. A finished or superseded protocol cannot mint new evidence;\n`
+      + '  register a new one that supersedes it.',
+    );
+  }
 
-  const freeze = front.version_freeze;
-  if (freeze && typeof freeze === 'object') {
-    for (const [file, expected] of Object.entries(freeze)) {
-      if (String(expected).startsWith('<')) continue;
-      const target = path.join(ROOT, file);
-      if (!fs.existsSync(target)) {
-        throw new UnregisteredExperiment(`${rel} freezes ${file}, which is missing`);
-      }
-      const actual = sha16(target);
-      if (actual !== expected) {
-        throw new UnregisteredExperiment(
-          `Version freeze broken before the run: ${file} is ${actual}, registered as ${expected}.\n`
-          + '  This record is invalid. Supersede it with a new protocol against the current code;\n'
-          + '  do not edit the frozen one. (This is what invalidated chain-offer-v1.)',
-        );
-      }
+  // The freeze is read from the registration commit, not from disk. The
+  // working-tree copy is whatever the experimenter last wrote; the committed
+  // copy is the one that provably predates the data. If the two disagree, the
+  // protocol was rewritten after registration, which is the edit the freeze
+  // exists to make impossible.
+  const registered = parseFrontmatter(showAtCommit(protocolCommit, rel, root) || '');
+  const commit8 = protocolCommit.slice(0, 8);
+  if (!registered) {
+    throw new UnregisteredExperiment(`${rel} has no frontmatter at its registration commit ${commit8}`);
+  }
+  if (registered.result !== resultId) {
+    throw new UnregisteredExperiment(`${rel} at ${commit8} declares result ${registered.result}, not ${resultId}`);
+  }
+  const emptiness = freezeProblem(registered.version_freeze);
+  if (emptiness) {
+    throw new UnregisteredExperiment(
+      `${rel} at registration ${commit8} ${emptiness}.\n`
+      + '  A protocol that freezes nothing cannot show what code the evidence came from.\n'
+      + `  Register with: node tools/new-experiment.js ${resultId}  (it records real hashes)`,
+    );
+  }
+  const freeze = registered.version_freeze;
+  if (canonicalJson(front.version_freeze || null) !== canonicalJson(freeze)) {
+    throw new UnregisteredExperiment(
+      `${rel} version_freeze on disk differs from the copy registered at ${commit8}.\n`
+      + '  A protocol rewritten after registration is a reconstruction, not a pre-registration.\n'
+      + '  Restore the registered copy, or supersede it with a new protocol against the current code.',
+    );
+  }
+
+  for (const [file, expected] of Object.entries(freeze)) {
+    const target = path.join(root, file);
+    if (!fs.existsSync(target)) {
+      throw new UnregisteredExperiment(`${rel} freezes ${file}, which is missing`);
+    }
+    const actual = sha16(target);
+    if (actual !== expected) {
+      throw new UnregisteredExperiment(
+        `Version freeze broken before the run: ${file} is ${actual}, registered as ${expected}.\n`
+        + '  This record is invalid. Supersede it with a new protocol against the current code;\n'
+        + '  do not edit the frozen one. (This is what invalidated chain-offer-v1.)',
+      );
     }
   }
 

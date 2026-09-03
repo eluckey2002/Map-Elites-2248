@@ -104,10 +104,10 @@ function grandfathered() {
 
 // The commit that FIRST added a path (oldest), so delete-and-re-add cannot
 // reset the clock. Null when the path is not committed yet.
-function addedIn(relPath) {
+function addedIn(relPath, cwd = ROOT) {
   try {
     const out = execFileSync('git', ['log', '--diff-filter=A', '--format=%H', '--', relPath], {
-      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+      cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
     }).trim().split('\n').filter(Boolean);
     return out.length ? out[out.length - 1] : null;
   } catch { return null; }
@@ -151,6 +151,33 @@ function pathExistsAtCommit(sha, relPath) {
     execFileSync('git', ['cat-file', '-e', `${sha}:${relPath}`], { cwd: ROOT, stdio: 'ignore' });
     return true;
   } catch { return false; }
+}
+
+// The file as it was at a commit, or null. The registration commit is the only
+// copy of a protocol that carries a point in time, so it is the only copy whose
+// freeze means anything; the working tree is whatever the experimenter last
+// wrote.
+function showAtCommit(sha, relPath, cwd = ROOT) {
+  try {
+    return execFileSync('git', ['show', `${sha}:${relPath}`], {
+      cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    });
+  } catch { return null; }
+}
+
+// A freeze that is missing, empty, or still holds TEMPLATE.md placeholders
+// enforces nothing: every hash comparison is skipped and the protocol passes
+// as if it had frozen the code. Only tools/new-experiment.js writes real
+// hashes; a hand-copied template is the way a protocol ends up like this.
+function freezeProblem(freeze) {
+  if (!freeze || typeof freeze !== 'object' || Object.keys(freeze).length === 0) {
+    return 'freezes nothing: version_freeze is missing or empty';
+  }
+  const placeholders = Object.entries(freeze).filter(([, value]) => String(value).startsWith('<'));
+  if (placeholders.length) {
+    return `still holds template placeholders in version_freeze (${placeholders.map(([file]) => file).join(', ')})`;
+  }
+  return null;
 }
 
 // One read per cited artifact, shared by every artifact-level assertion below,
@@ -247,15 +274,31 @@ function assessStampProvenance(result, opened, reportCommit) {
 //     protocol froze. That is the durable half: it stays checkable after a
 //     frozen file legitimately moves on, and it goes red if the freeze list
 //     never covered the files that carried the measurement.
-function assessVersionFreeze(result, front, opened) {
+// `registeredFront` is the frontmatter at the protocol's registration commit.
+// When given, the freeze is read from there, not from `front` (the working
+// tree): a freeze rewritten after registration is a reconstruction, and the
+// registration commit is the only copy that cannot have been written after
+// the data. Callers without git access pass nothing and get the old behaviour.
+function assessVersionFreeze(result, front, opened, registeredFront = null) {
   const problems = [];
-  const freeze = front.version_freeze;
+  const registered = registeredFront || front;
+  const freeze = registered.version_freeze;
   if (!freeze || typeof freeze !== 'object') return problems;
+  const emptiness = freezeProblem(freeze);
+  if (emptiness) {
+    problems.push(`${result.id}: protocol ${emptiness}. Register with tools/new-experiment.js, which records real hashes.`);
+    return problems;
+  }
+  if (registeredFront && canonicalJson(front.version_freeze || null) !== canonicalJson(freeze)) {
+    problems.push(
+      `${result.id}: protocol.md version_freeze on disk differs from the copy at its registration commit. `
+      + 'A freeze rewritten after registration is a reconstruction; supersede the record instead of editing it.',
+    );
+  }
   const frozenValues = new Set(Object.values(freeze).map((value) => String(value)));
 
   if (front.status === 'registered') {
     for (const [file, expected] of Object.entries(freeze)) {
-      if (String(expected).startsWith('<')) continue;
       const target = path.join(ROOT, file);
       if (!fs.existsSync(target)) {
         problems.push(`${result.id}: version_freeze names ${file}, which is missing`);
@@ -368,7 +411,10 @@ function assessExperiments() {
     const reportPath = path.join(dir, 'report.md');
     const hasReport = fs.existsSync(reportPath);
     problems.push(...assessProtocolLifecycle(result, front, hasReport));
-    problems.push(...assessVersionFreeze(result, front, opened));
+    const protoRel = path.join('experiments', result.id, 'protocol.md');
+    const protoCommit = addedIn(protoRel);
+    const registeredFront = protoCommit ? parseFrontmatter(showAtCommit(protoCommit, protoRel) || '') : null;
+    problems.push(...assessVersionFreeze(result, front, opened, registeredFront));
 
     if (hasReport) {
       const report = fs.readFileSync(reportPath, 'utf8');
@@ -376,7 +422,6 @@ function assessExperiments() {
       problems.push(...assessReportAnswers(result, protocol, report));
       // A protocol is a PRE-registration only if it was committed before the
       // report it justifies. Same commit means no ordering was ever recorded.
-      const protoCommit = addedIn(path.join('experiments', result.id, 'protocol.md'));
       const reportCommit = addedIn(path.join('experiments', result.id, 'report.md'));
       if (needs && !exempt.has(result.id)) {
         problems.push(...assessStampProvenance(result, opened, reportCommit));
@@ -413,6 +458,6 @@ module.exports = {
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,
-  assessProtocolLifecycle, assessVersionFreeze, canonicalJson, openCitedArtifacts,
-  reachableFromHead, reportSection,
+  assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem, openCitedArtifacts,
+  reachableFromHead, reportSection, showAtCommit,
 };

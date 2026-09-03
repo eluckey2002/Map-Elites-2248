@@ -637,13 +637,23 @@ that passed while inspecting nothing.
 - **Protects:** `experiments/README.md` item 4, which claimed the gate enforced
   the freeze while `tools/verify-experiments.js` said in its own header that it
   deliberately did not. A record asserted a property no check inspected.
-- **Where:** `assessVersionFreeze`. Two clauses.
+- **Where:** `assessVersionFreeze` at ledger time and `requireProtocol` in
+  `solver/experiment-guard.js` at run time. Three clauses.
   **(a)** while `status: registered`, every frozen file must still match the
   tree — literally what README item 4 always claimed.
   **(b)** once complete, every hash in the artifact's `sources` must be covered
   by a `version_freeze` entry. This is the durable half: it stays checkable
   after a frozen file legitimately moves on, and goes red if the freeze list
   never covered a file that carried the measurement.
+  **(c)** since 2026-09-02, the freeze both clauses read is the one at the
+  protocol's **registration commit** (`git show <commit>:protocol.md`), and the
+  working-tree copy must equal it. Before this, both read the working tree
+  while the artifact was stamped with the registration commit: edit a frozen
+  file, rewrite the hash line to match, and guard and gate both passed, with
+  the original commit stamped as provenance. Two independent gate-check
+  reviews found it on the same day. A freeze that is empty or still holds
+  `TEMPLATE.md` placeholders is refused outright (it was silently skipped), and
+  the guard refuses any protocol whose status is not `registered`.
 - **Level:** file hash, first 16 hex of sha256.
 - **Kind:** value. Whether the frozen *set* is the right set is unchecked —
   clause (b) is the only pressure on that, and only for files the artifact
@@ -654,7 +664,9 @@ that passed while inspecting nothing.
   its 7 frozen files.
 - **Reads own output?:** clause (b) yes — `sources` is written by the evaluator
   and the freeze by `tools/new-experiment.js`. They are independent writers, so
-  agreement is informative.
+  agreement is informative. Clause (c) exists because the previous version read
+  `protocol.md` from the working tree — a file the experimenter controls after
+  registration — while vouching for it with a commit it had not read.
 - **Does NOT catch:**
   1. **A frozen file moving after a completed run.** Deliberate: that is a fact
      about the present, not about the evidence. `solver/target-aware-challenger.js`
@@ -667,9 +679,24 @@ that passed while inspecting nothing.
      loaded by the measurement. Freezing an irrelevant file costs nothing and
      proves nothing.
   4. **A 64-bit truncation collision.** `sha16` is the first 16 hex chars.
+  5. **The wrong instrument under a valid protocol.** The guard's `name` is
+     message text; any of the six guarded scripts accepts any registered id.
+     Nothing ties a protocol to the script it describes.
+  6. **Scripts that never call the guard**, and numbers transcribed from stdout
+     into the ledger with no artifact cited. The guard is opt-in per script and
+     fires only on the artifact-writing flag.
+  7. **`--exploratory` alongside `--protocol`.** Exploratory wins silently; the
+     compute is spent and the artifact cannot back a claim. A wasted run, not
+     bad evidence.
+  8. **A protocol body that describes a different experiment.** Only `result`
+     and `version_freeze` are compared against the registration commit; the
+     question, checks, and stopping rules can be rewritten after the fact.
 - **Rung:** blocking. **Decay:** live test breaks a registered freeze against the
   real `solver/bot.js` and plants an uncovered source hash, with positive
-  controls for both.
+  controls for both; `solver/tests/experiments.test.js` builds a throwaway git
+  repository and plants the rewrite as real commits (uncommitted, committed,
+  placeholder, empty, finished), each with a positive control. Mutation check
+  2026-09-02: removing only the rewrite comparison turns exactly that test red.
 
 ### reported-protocol-lifecycle-is-complete · HARD
 

@@ -294,3 +294,93 @@ test('LIVE: version freeze is enforced while registered, and against what the ar
   const honest = { status: 'registered', version_freeze: { 'solver/bot.js': sha16(path.join(ROOT, 'solver/bot.js')) } };
   assert.deepEqual(assessVersionFreeze(result, honest, []), []);
 });
+
+// ---------------------------------------------------------------------------
+// The guard reads the freeze from the registration commit, not from disk.
+// Found 2026-09-02 by two independent gate-check reviews: edit a frozen file,
+// rewrite the protocol's hash line to match, and the old guard passed and
+// stamped the original registration commit, whose freeze said otherwise. The
+// ledger gate passed it too. These run in a throwaway git repository so the
+// planted faults are real commits, not hand-built frontmatter.
+const fsg = require('node:fs');
+const os = require('node:os');
+const { assessVersionFreeze: assessFreeze, sha16: hash16, showAtCommit } = require('../../tools/verify-experiments.js');
+
+function registrationRepo({ freezeLine } = {}) {
+  const root = fsg.mkdtempSync(path.join(os.tmpdir(), 'guard-'));
+  const git = (...args) => execFileSync('git', [
+    '-c', 'user.name=t', '-c', 'user.email=t@example.invalid', '-c', 'commit.gpgsign=false', ...args,
+  ], { cwd: root, encoding: 'utf8' }).trim();
+  git('init', '-q');
+  const bot = path.join(root, 'solver', 'bot.js');
+  fsg.mkdirSync(path.dirname(bot), { recursive: true });
+  fsg.writeFileSync(bot, 'module.exports = 1;\n');
+  const hash = hash16(bot);
+  const protocolPath = path.join(root, 'experiments', 'RESULT-0001', 'protocol.md');
+  fsg.mkdirSync(path.dirname(protocolPath), { recursive: true });
+  const protocol = (freeze, status = 'registered') => `---\nresult: RESULT-0001\nstatus: ${status}\nversion_freeze:\n${freeze}\n---\n\n# p\n`;
+  fsg.writeFileSync(protocolPath, protocol(freezeLine === undefined ? `  solver/bot.js: ${hash}` : freezeLine));
+  git('add', '-A');
+  git('commit', '-q', '-m', 'register');
+  const argv = ['node', 'x', '--protocol', 'RESULT-0001'];
+  return { root, git, bot, hash, protocolPath, protocol, argv, registration: git('rev-parse', 'HEAD') };
+}
+
+test('an honest registration passes and stamps its own commit', () => {
+  const repo = registrationRepo();
+  const reg = requireProtocol(repo.argv, { root: repo.root });
+  assert.equal(reg.exploratory, false);
+  assert.equal(reg.protocolCommit, repo.registration);
+});
+
+test('a freeze rewritten after registration is refused, uncommitted or committed', () => {
+  const repo = registrationRepo();
+  fsg.appendFileSync(repo.bot, '// moved\n');
+  const moved = hash16(repo.bot);
+  assert.notEqual(moved, repo.hash, 'the planted fault must actually change the hash');
+  // Rewriting the protocol to match the moved file: the bypass.
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${moved}`));
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /differs from the copy registered at/);
+  // Committing the rewrite does not launder it: addedIn still dates the protocol
+  // from the original registration, whose freeze still names the old hash.
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'rewrite freeze');
+  assert.equal(addedIn('experiments/RESULT-0001/protocol.md', repo.root), repo.registration);
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /differs from the copy registered at/);
+  // Positive control: restoring the registered copy exposes the real breach.
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`));
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /Version freeze broken before the run/);
+});
+
+test('a protocol registered with placeholders or an empty freeze is refused', () => {
+  const placeholders = registrationRepo({ freezeLine: '  solver/bot.js: <sha256-first-16>' });
+  assert.throws(() => requireProtocol(placeholders.argv, { root: placeholders.root }), /template placeholders/);
+  const empty = registrationRepo({ freezeLine: '' });
+  assert.throws(() => requireProtocol(empty.argv, { root: empty.root }), /freezes nothing/);
+});
+
+test('a finished protocol cannot mint new evidence', () => {
+  const repo = registrationRepo();
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete'));
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /status: complete/);
+});
+
+test('the ledger gate reads the freeze from the registration commit too', () => {
+  const repo = registrationRepo();
+  const registered = parseFrontmatter(showAtCommit(repo.registration, 'experiments/RESULT-0001/protocol.md', repo.root));
+  const result = { id: 'RESULT-0001' };
+  // Positive control: disk and registration agree, nothing to report. Status
+  // is complete so clause (a) does not look for solver/bot.js under the real ROOT.
+  const honest = { status: 'complete', version_freeze: { ...registered.version_freeze } };
+  assert.deepEqual(assessFreeze(result, honest, [], registered), []);
+  // The bypass: disk freeze rewritten, registration untouched.
+  const rewritten = { status: 'complete', version_freeze: { 'solver/bot.js': 'f'.repeat(16) } };
+  const problems = assessFreeze(result, rewritten, [], registered);
+  assert.equal(problems.length, 1);
+  assert.match(problems[0], /differs from the copy at its registration commit/);
+  // And a registration that froze nothing is a problem on its own.
+  const hollow = { status: 'complete', version_freeze: { 'solver/bot.js': '<sha256-first-16>' } };
+  const hollowProblems = assessFreeze(result, hollow, [], hollow);
+  assert.equal(hollowProblems.length, 1);
+  assert.match(hollowProblems[0], /template placeholders/);
+});

@@ -32,7 +32,11 @@ generalize from a sample without having declared the test first.
    nothing.
 4. While `status: registered`, the `version_freeze` hashes still match. If a
    frozen file moves before the run, the record is invalid — supersede it,
-   never edit it. This is what invalidated `chain-offer-v1`. Once
+   never edit it. This is what invalidated `chain-offer-v1`. The freeze that
+   is checked is the one in the **registration commit**, and the working-tree
+   copy must equal it; a freeze rewritten after registration, committed or
+   not, is refused by the guard and flagged by the gate. A freeze that is
+   empty or still holds template placeholders is refused, not skipped. Once
    `status: complete`, the freeze is instead checked against the artifact:
    every hash in its `sources` must be one the protocol froze, which stays true
    after a frozen file legitimately moves on.
