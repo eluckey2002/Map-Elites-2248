@@ -824,3 +824,68 @@ that passed while inspecting nothing.
   the negative test and receipt-refusal assertions execute together.
 - **Shipped:** 2026-09-02 · run
   `2026-09-02T05-54-31Z-player-style-topology-entitlement-retry`.
+
+### policy-comparison-admission · HARD
+
+- **Protects:** RESULT-0026 cannot spend its reserved confirmation seeds or
+  become ledger-admissible unless the exact reference and frozen handmade
+  policies are replayed through the real move budget by a checker already
+  challenged on a real subject and a controlled wrong-outcome twin.
+- **Where:** `experiments/RESULT-0026/gate.js#verifyArtifact`,
+  `issueChallengeReceipt`, and `validateChallengeReceipt`; consumed before
+  fresh compute by `run.js` and before admission by `admit.js`.
+- **Level:** one paired policy/level/seed record plus its complete move trace.
+  A shared semantic error inside the engine or both policy implementations can
+  remain invisible between records.
+- **Kind:** value. It checks exact identities, matrix closure, every selected
+  chain and transition, registered provenance, arithmetic, and receipt
+  consumption. Human strategic interpretation and cross-domain truth remain
+  owned by review and the bounded experiment verdict.
+- **Scope:** policies `reference` and `handmade`; qualification levels 5 and 50
+  at burned seed 7000000; confirmation levels 5, 11, 17, 23, 29, 35, 41, 47,
+  and 50 at seeds 24000000..24000024; current `solver/bot.js`,
+  `solver/engine.js`, `src/game.js`, registration guard, result-local runner,
+  frozen policy, gate, independent recomputation, and admission consumer. It
+  accepts JSON schema version 1 only and excludes exploratory confirmation.
+- **Reads own output?:** yes — the gate reads the result-local runner's JSON.
+  This is informative because it independently re-executes every chooser
+  decision and transition, the arithmetic path shares no result-local imports,
+  and downstream consumers freshly regenerate the Challenge Receipt and
+  independent recomputation before accepting either.
+- **Sampling memory:** the real qualification subject is fixed and deliberately
+  non-reportable. Silence means only that the gate was qualified on its four
+  cells; performance inference comes only from the registered 225 paired
+  confirmation cells.
+- **Does NOT catch:**
+  1. A bug shared by `src/game.js`, `solver/engine.js`, and both execution paths.
+  2. Whether the frozen bomb-first, pre-gravity placement heuristic is the best
+     reading of the owner's strategy or should ship.
+  3. Performance outside the nine named levels, 25 reserved seeds, current
+     policy identities, or current game rules.
+  4. Whether the 150,000-node exact-sum cap bound on a particular move; the
+     frozen policy exposes no cap-hit telemetry.
+  5. A compute-matched explanation for any gain; runtime is diagnostic only.
+  6. Dishonest protocol authorship before its commit; git proves ordering, not
+     what a human or agent had already seen elsewhere.
+- **Crafted-bypass test:**
+  `experiments/RESULT-0026/policy-comparison-gate.test.js`, cases `real
+  qualification subject passes and a resigned wrong-outcome twin fails the
+  same gate`, `a re-signed forged receipt still fails because consumers rerun
+  the challenge`, `a caller-fabricated independent receipt cannot substitute
+  for executing recompute.js`, and `two-way clustered intersection correction
+  blocks the additive false-SUPPORTED panel`.
+- **Retires:** NO — the repository experiment gate owns protocol presence,
+  report completeness, citation resolution, artifact hashes, and commit
+  ordering. It does not replay policy decisions, qualify a measurement
+  instrument, or require the result-local admission consumer to use that
+  qualification.
+- **Enforcement:** blocking for RESULT-0026. The confirmation runner requires
+  the freshly regenerated PASS/FAIL/FAIL Challenge Receipt; `admit.js` requires
+  the same receipt, its identity in the confirmation artifact, full replay, and
+  exact agreement from the independently implemented arithmetic path.
+- **Decay:** run
+  `node --test experiments/RESULT-0026/policy-comparison-gate.test.js`, then
+  `node experiments/RESULT-0026/admit.js` with the committed artifacts. Any
+  covered source change invalidates both commands by identity.
+- **Shipped:** pending RESULT-0026 preregistration and qualification; run
+  `2026-09-02-result-0026-confirmation`, ticket `DGS-001`.
