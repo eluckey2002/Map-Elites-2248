@@ -1,0 +1,39 @@
+{
+  "root": "/Users/eluckey/Developer/research and games/2248-challenge",
+  "fingerprint_sha256": "35eca5401cf9211a25b4cf45b72ef6fcc5ad14f28e0c1f045b602d4c058aa5b0",
+  "stats": {
+    "markdown_files": 30,
+    "wikilinks": 0,
+    "findings": 4,
+    "frontmatter_types": {},
+    "finding_codes": {
+      "duplicate-stem": 4
+    }
+  },
+  "findings": [
+    {
+      "code": "duplicate-stem",
+      "path": ".recovery/2026-08-28/pre-switch-shadow/docs/ASSISTANT-FAILURE-LEDGER.md; docs/ASSISTANT-FAILURE-LEDGER.md",
+      "locator": "",
+      "detail": "shared stem: ASSISTANT-FAILURE-LEDGER"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": ".recovery/2026-08-28/pre-switch-tracked-shadow/docs/CHECK-CARDS.md; docs/CHECK-CARDS.md",
+      "locator": "",
+      "detail": "shared stem: CHECK-CARDS"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": ".recovery/2026-08-28/pre-switch-tracked-shadow/solver/candidates-archive/README.md; docs/backlog/README.md; experiments/README.md; solver/candidates-archive/README.md; solver/README.md",
+      "locator": "",
+      "detail": "shared stem: README"
+    },
+    {
+      "code": "duplicate-stem",
+      "path": "AGENTS.md; solver/AGENTS.md",
+      "locator": "",
+      "detail": "shared stem: AGENTS"
+    }
+  ]
+}

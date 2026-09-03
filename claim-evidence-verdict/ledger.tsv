@@ -1,0 +1,3 @@
+round	angle	tested	confirmed	new_classes	total_classes
+1	artifact-recomputation-and-provenance	7	0	(none)	0
+2	scope-source-version-and-gate-limit-attack	3	2	source-version-drift;invalid-evidence-state	2

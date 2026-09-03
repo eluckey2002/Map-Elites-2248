@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-09-01T16-47-45Z-adhoc-claim-evidence-verdict",
+  "created_at": "2026-09-01T16:51:32Z",
+  "target_root": "/Users/eluckey/Developer/research and games/2248-challenge",
+  "target_fingerprint": "35eca5401cf9211a25b4cf45b72ef6fcc5ad14f28e0c1f045b602d4c058aa5b0",
+  "policy_files": [
+    "AGENTS.md",
+    "EVIDENCE_LEDGER.md",
+    "experiments/README.md",
+    "/Users/eluckey/.codex/skills/adversarial-evidence-audit/SKILL.md",
+    "/Users/eluckey/.codex/skills/adversarial-evidence-audit/references/artifacts.md",
+    "/Users/eluckey/.codex/skills/adversarial-evidence-audit/references/failure-taxonomy.md"
+  ],
+  "source_access": "local-only",
+  "producer_id": "gpt_5_6_sol_high",
+  "mode": "focused",
+  "budget": 2,
+  "patience": 2,
+  "status": "snapshot"
+}

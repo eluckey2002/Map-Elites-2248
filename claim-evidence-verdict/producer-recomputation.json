@@ -1,0 +1,46 @@
+{
+  "producer_id": "gpt_5_6_sol_high",
+  "created_at": "2026-09-01T16:51:32Z",
+  "frozen_head": "4dd93219f69d5288654dd2aee395f6e6388bda4a",
+  "artifact_path": ".orch/runs/result-0020-target-aware-replication-2026-09-01/evidence/holdout.json",
+  "artifact_file_sha256": "43faa3c3c5344e0d5aa6f87d0d9617e1ce69e78c75da55f00ef2eefe7cf0ea3d",
+  "validateArtifact": {
+    "cells": 15600,
+    "identity": "90c4dc6fffc4aab824a6ca557a201c48ca10fe35dc9edaeb077b902163610ca8"
+  },
+  "independent_reduction": {
+    "cells": 15600,
+    "faster_both_win": 9354,
+    "tied_both_win": 6186,
+    "slower_both_win": 0,
+    "champion_only_wins": 0,
+    "challenger_only_wins": 9,
+    "levels_with_faster_case": 52,
+    "all_cell_terminal_move_saving_sum": 19827,
+    "mean_all_cell_terminal_move_saving_rounded_3dp": 1.271
+  },
+  "registration": {
+    "exploratory": false,
+    "protocol": "RESULT-0020",
+    "protocol_commit": "b09737b58e30e9263bb1ccc82c605a22f5f8b8ab",
+    "protocol_commit_is_strict_ancestor_of_report_commit": true,
+    "report_commit": "1fe26ee87a889d13d6c48159eef054f767feaedf"
+  },
+  "experiment_gate": {
+    "command": "node tools/verify-experiments.js",
+    "exit_code": 0,
+    "output": "EXPERIMENT GATE PASS",
+    "interpretation": "experiment custody and structural checks only; not evaluator or policy truth"
+  },
+  "source_sha256": {
+    "EVIDENCE_LEDGER.md": "e1a069c2bd705f20c0f2e1632ff11398afe186be8557f2961feeb6c3f5a0c112",
+    "experiments/RESULT-0020/protocol.md": "0a49142515185090b35bf7a8e3f16bacda1211c1d40f977cb049f7b67aaff9f5",
+    "experiments/RESULT-0020/report.md": "98ac1ce24779d522468dd61c9672fa84a98c107cd1feb2ae8a48a315ba69caa7",
+    "tools/verify-experiments.js": "c3617b9d734f4d783e59160b7b2f9e37de8235d86cec8c60e05d9ba26f5f076c",
+    "solver/target-aware-evaluation.js": "07bc3a167f99a90681b7e2297bb1101d21ae326014a285b7084a4ffd1a6b9a8b",
+    "solver/target-aware-challenger.js": "3467c1a256cdd81a05835d877672acb04091687733f519d19541ca554cd1a8e8",
+    "solver/bot.js": "8d0dec5f6b0669ca7c039e6493b4014fdc5cefb4df9d93ad54dba2cb168b0b10"
+  },
+  "verifier_id": null,
+  "verifier_state": "pending-independent-check"
+}
