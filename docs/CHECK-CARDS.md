@@ -557,10 +557,11 @@ card in the same commit.
 > someone had to remember to run. Pull request #1 admitted `RESULT-0027` with
 > the gate red and merged ten minutes later; nothing ran it. The gate now runs
 > in `.github/workflows/experiment-gate.yml` on every pull request and every
-> push to `main`. GitHub branch protection, which would make that job a
-> required check, is unavailable on this private repository's plan (HTTP 403,
-> "Upgrade to GitHub Pro or make this repository public"), so CI is a visible
-> red mark, not a refusal. The refusal is local: `tools/hooks/pre-push`,
+> push to `main`. Since 2026-09-03 the repository is public and `main` is
+> protected: the `experiment gate` job is a required status check, enforced
+> for admins, so every change reaches `main` through a pull request whose
+> gate run is green, and a direct push is refused by GitHub (proven: an empty
+> probe commit was rejected). A second, local refusal remains: `tools/hooks/pre-push`,
 > installed into the clone's shared hooks directory by
 > `node tools/hooks/install.js`, runs the gate on any push to `main` and exits
 > non-zero on failure. Worktrees share that directory, so every session on the
