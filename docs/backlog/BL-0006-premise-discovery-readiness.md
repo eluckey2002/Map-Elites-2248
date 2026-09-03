@@ -66,8 +66,11 @@ Choose which bounded action class to shape next. A human pilot requires the owne
 
 Merged with this note after review against current `main`; the body above is
 unchanged and describes the frozen baseline `5090098` it was written at.
+Premise numbers below follow the four-item list in **Desired outcome**;
+premise 1 (seed variance) was resolved by `RESULT-0021` before this campaign
+and is not revisited here.
 
-- **Premise 1 is closed, not open.** The measurement-authority finding
+- **Premise 2 (measurement authority) is closed, not open.** The finding
   (`LIVE_AUTHORING_PATH_AUTHORITATIVE`, calib-1 declared but not wired) was
   true at the baseline and is false on `main` since `RESULT-0027`
   (2026-09-03): `solver/level-author.js` now imports the frozen
@@ -75,13 +78,13 @@ unchanged and describes the frozen baseline `5090098` it was written at.
   `PD-001R` row names. The repair this record framed as an open owner decision
   had already been selected by the owner on 2026-08-29
   (`docs/goals/evaluator-foundation/INTENT_BRIEF.md`), before this campaign ran.
-- **Premise 2 holds, with a live caveat.** The 15-member `generated-batch-04`
+- **Premise 3 (eligible population) holds, with a live caveat.** The 15-member `generated-batch-04`
   population is unchanged (batch identity `5b0dd3bf…`), and `RESULT-0021` is
   unchanged apart from its lifecycle flag. The re-authored `gen-0014` in
   `solver/candidate-levels.json` (identity `a6c3e360…`) is a different
   candidate from batch member `gen-0014` (identity `e355a401…`); the warning
   that bare names collide across batches is no longer hypothetical.
-- **Premise 3 holds.** No accepted qualitative acceptance dimensions,
+- **Premise 4 (acceptance authority) holds.** No accepted qualitative acceptance dimensions,
   thresholds, or repair-versus-reject rule exist on `main`.
 - **Decision surface, reduced.** The `Repair` route is moot. What remains is
   an experiment or a human pilot, and the one missing owner input is the
