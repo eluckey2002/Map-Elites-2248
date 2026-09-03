@@ -104,6 +104,7 @@ node solver/game-tester.js --seeds 150                  # compare tile-scaling p
 node solver/game-tester.js --policy powers2 --detail    # the shipped policy, per level
 node --test solver/tests/*.test.js
 node solver/chain-coverage.js                           # how much of the best move the walk finds
+node solver/human-replay.js --from .orch/runs/2026-08-29-human-replay-exploratory/evidence/human-replay-01.json   # recorded human play vs the exact best move (exploratory)
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
