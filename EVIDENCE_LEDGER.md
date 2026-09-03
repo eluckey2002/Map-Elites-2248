@@ -586,6 +586,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** This freezes a level-authoring evaluator and admits one reproducible candidate receipt. It does **not** ship the 102,000 candidate, retarget Level 53, validate human difficulty, establish optimality, or constitute a MAP-Elites result. The archived 101,000 receipt's old bot measurements remain stale and non-quotable; its board, target, identity, provenance, and exact human replays remain valid. The historical evaluator branch used the label `RESULT-0015`, which is not imported because main already assigned that stable ID to a different accepted result; this record is the non-colliding main-ledger admission.
 
+
+### RESULT-0028 — A second owner pilot session replays exactly on its identified subject
+
+- **type:** result
+- **status:** accepted
+- **scope:** `HUMAN-PILOT-0002`; one owner, exploratory candidate `prototype-central-choke` identity `0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4` (the HUMAN-PILOT-0001 board with its blockers replaced by two horizontally adjacent permanent center stones), fixed seed `424242`, subject identity `d06b1679b0984eaec4e6193b51e0216768a7f2dcb48029e2d149c6ba046cd595`, one terminal browser recording; not a shipped level and not a population sample
+- **statement:** The browser-produced recording replays through the headless engine to **140,544 points in 20 moves** with no replay problems. The execution receipt binds the candidate, subject, seed, recording, checker, runtime files, and a replay challenge receipt; the challenge passed the real subject and failed a controlled score-plus-one twin through the same predicate, using the same checker identity `c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4` that `RESULT-0025` qualified. The owner attested that the session was personally played with no automated player. This establishes one exact replayable session and nothing about calibration (the 126,000 target is inherited from `HUMAN-PILOT-0001` and uncalibrated for this layout), causal blocker-position effect, representativeness, eligibility, ranking, shipping readiness, or a human-performance distribution.
+- **evidence:** execution receipt `pilots/HUMAN-PILOT-0002/execution-receipt.json`, identity `c84a8481498fbdc37cd59c028c9ce8a4627c53e89731776a07f4c083a6b59e5e`; recording file identity `846513bc9a0e1e31d5f42b9378ba12a0bad092e9e95b8bc6ebc5c7e9dbfec48a`, recording identity `c50b34f85e9ee53762ab3093bc4af0839965dd8c275bdc7893c31e011e0a32f6`; replay challenge `pilots/HUMAN-PILOT-0002/replay-challenge.json`, identity `e1416049da8fac5224e2f1b592c4d700e7afdf6f27e30116bee3f71d13070d6f`; owner attestation `pilots/HUMAN-PILOT-0002/owner-attestation.json`, identity `d5807f5f18bd2e6fc4989941597cd57c7ed84d0a2b459fe5d73118161dedf340`; manifest limitations in `pilots/HUMAN-PILOT-0002/manifest.json`.
+- **proof_class:** `exact_result` for replay on the identified subject; `direct_source` for bound identities, challenge outcomes, and owner attestation. No qualitative disposition is recorded; any interpretation of the chokepoint contrast is a separate owner decision.
+- **as_of:** 2026-09-03
+- **reverify:** Run `node pilots/HUMAN-PILOT-0002/qualify.js verify` and `node --test solver/tests/humanPilot0002.test.js solver/tests/recordingReplay.test.js`; expect PASS and all focused tests PASS, including real-subject PASS, broken-twin FAIL, and receipt invalidation on a changed recording file, checker identity, or forged verdict.
+- **updated:** 2026-09-03
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The recording was recovered on 2026-09-02 from an untracked worktree (`.orch/tickets/2026-09-02-adhoc-remote-branch-triage`) and committed byte-for-byte before qualification. Unlike `RESULT-0025`, this pilot has no runtime-bundle manifest from before the session; the receipt binds the runtime files as they were at qualification, which is a weaker provenance claim and is why the scope is replay exactness only.
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

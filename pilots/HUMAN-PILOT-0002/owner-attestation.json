@@ -1,0 +1,31 @@
+{
+  "artifactIdentity": "d5807f5f18bd2e6fc4989941597cd57c7ed84d0a2b459fe5d73118161dedf340",
+  "attestation": {
+    "attestedAt": "2026-09-03T22:40:44Z",
+    "automatedPlayer": false,
+    "channel": "owner reply in the Claude Code session on 2026-09-03, recorded by the assistant at the owner's instruction",
+    "ownerRole": "project owner",
+    "personallyPlayed": true,
+    "statement": "I personally played the recorded session with no automated player.",
+    "terminalRecordingCount": 1
+  },
+  "authority": "Owner attestation of authorship bound to one verified session; it does not convert the session into a population, calibration, or causal-topology claim.",
+  "consumes": {
+    "candidateIdentity": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4",
+    "executionReceiptIdentity": "c84a8481498fbdc37cd59c028c9ce8a4627c53e89731776a07f4c083a6b59e5e",
+    "recordingIdentity": "c50b34f85e9ee53762ab3093bc4af0839965dd8c275bdc7893c31e011e0a32f6",
+    "subjectIdentity": "d06b1679b0984eaec4e6193b51e0216768a7f2dcb48029e2d149c6ba046cd595"
+  },
+  "disposition": "none recorded",
+  "nonClaims": [
+    "calibrated",
+    "representative",
+    "eligible",
+    "ready to ship",
+    "causal blocker-position effect",
+    "evidence about a human-performance distribution",
+    "owner qualitative disposition"
+  ],
+  "pilot": "HUMAN-PILOT-0002",
+  "schemaVersion": 1
+}
