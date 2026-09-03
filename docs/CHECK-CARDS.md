@@ -494,6 +494,63 @@ card in the same commit.
 
 ---
 
+### engine-mirrors-game · HARD
+
+- **Protects:** the eight "Mirrors game.js" comments in `solver/engine.js`. Until
+  2026-09-01 they were claims nothing enforced, and they had drifted: the
+  engine has no end-of-level logic, and its comment that a bomb can only be
+  removed by ending a chain on it was false (a bomb in any non-final position
+  is deleted with the rest of the chain). Every solver number rests on the
+  engine playing the same game the browser plays.
+- **Where:** `solver/tests/mirrors-game.test.js`, driving `solver/engine.js` and
+  `src/game.js` with identical inputs and comparing outputs: RNG sequence,
+  opening board, chain extension and validity, blocked tiles, multiplier tiers,
+  merge scoring and board mutation, bomb final/non-final handling, gravity
+  across stones/ice/bombs, spawn values/positions/draw count, blocker ticking,
+  and `checkBombs` in both directions.
+- **Level:** one engine function against its `Game` counterpart on fixed
+  boards. Whole-game equivalence over many moves is not asserted.
+- **Kind:** value. It checks that both sides produce the same state and score;
+  it does not check that either side is the intended game.
+- **Scope:** the eleven compared behaviours above. The test's last case is a
+  guard on its own honesty: it names what is game-only (`checkWinLose`,
+  `hasValidMoves`, `undo`, `saveState`) and what the engine has that is NOT
+  compared (`findTopChains`, `findBestChain`, `findGreedyChains`,
+  `buildGreedyChain`), and fails if either list goes stale.
+- **Reads own output?:** no. Both sides are production code; neither is a
+  fixture written by the test.
+- **Sampling memory:** fixed hand-built boards and lengths 0-30; silence about
+  a board shape means it was never compared.
+- **Does NOT catch:**
+  1. A divergence in the four uncompared chain-search functions, which is
+     where `solver/bot.js` spends its time.
+  2. End-of-level, undo, and save behaviour: the engine has none, so nothing
+     is compared.
+  3. A bug shared by both sides, or a change to `src/game.js` that the browser
+     never exercises.
+  4. Multi-move drift that only appears after several transitions on one
+     board; each comparison is a single transition.
+  5. Rendering and animation, which the engine deliberately omits.
+- **Crafted-bypass test:** planted through the real seam on 2026-09-02, on the
+  merged tree, before merge. Raising the engine's length-9 multiplier from 5
+  to 6 failed `chain multiplier agrees for lengths 0-30` and `merges agree at
+  every multiplier tier` (12 pass, 2 fail). Making engine gravity treat ice
+  like stone failed the gravity comparison. Engine restored byte-identical
+  afterwards, 14 of 14 green. The adversarial review of the first version
+  planted 21 defects and 17 survived; the second commit closed every hole it
+  named. No Challenge Receipt: this is a local parity invariant, not evidence
+  admission.
+- **Retires:** the line-number references in the engine's mirror comments,
+  which rotted whenever `src/game.js` moved.
+- **Enforcement:** HARD via `node --test solver/tests/*.test.js`.
+- **Decay:** if you extend `solver/engine.js`, plant a break in the new code and
+  watch this file go red before trusting it; shrink the `uncompared` list to
+  improve coverage.
+- **Shipped:** 2026-09-02 · branch `fix/engine-mirrors-game-test`, merged in
+  the remote-branch triage run `2026-09-02-adhoc-remote-branch-triage`.
+
+---
+
 ## The experiment gate
 
 `tools/verify-experiments.js`, run live by `solver/tests/experiments.test.js`.
