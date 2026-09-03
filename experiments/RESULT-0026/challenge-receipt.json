@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0026",
+  "claim": "identified reference and handmade policies produce the recorded full-game outcomes under the real move budget",
+  "realSubject": {
+    "kind": "qualification",
+    "artifactIdentity": "3a30456161b7f1cbbe9005b86a98fc4e50bd5007acaa2e0a873e794c3a4190c5",
+    "levels": [
+      5,
+      50
+    ],
+    "seeds": [
+      7000000
+    ],
+    "policyIds": [
+      "ec59341e1a98",
+      "338be26be2b8"
+    ]
+  },
+  "executionPath": "run.js -> policy chooseMove -> solver/engine transition; gate.js independently repeats every chooser decision and transition",
+  "verifierIdentity": "059e5fb9fe0d66b74c8ddfa9933e5c91c21e958bd7ffd4079a3c1e6e5c7b575d",
+  "sourceIdentities": {
+    "experiments/RESULT-0026/frozen-handmade-policy.js": "f25337aeb412256961be6e64860f6b46ab62adcb31e9ecfad483c824ae368e0b",
+    "experiments/RESULT-0026/subject.js": "0dd1c274d1a5e144ec8183971a935a4c3cd7aa2f7eab2a499b6a9d4411d9ea0f",
+    "experiments/RESULT-0026/run.js": "371b723f014fd906e8a30bcd2d86a947ece826e4996bf3326c1b2ba90497ade8",
+    "experiments/RESULT-0026/gate.js": "059e5fb9fe0d66b74c8ddfa9933e5c91c21e958bd7ffd4079a3c1e6e5c7b575d",
+    "experiments/RESULT-0026/recompute.js": "d44bbd7127553ca47b183f53ec5c9849227c0f86d5e5b677402af3a57a695a41",
+    "experiments/RESULT-0026/admit.js": "147f0d8c4ef0b4d4d6cfa2ec80d8f3a1e1c2ad4bf006d320d12fe78e185b4e09",
+    "solver/bot.js": "1f1a554f3a022ebaaec2386eab5f4abc9136b1f8b2292c653670ca78cf82b7bc",
+    "solver/engine.js": "451bea941dd1971e8556df32da822f9dd38637177d52709a988197b74c4f581f",
+    "solver/experiment-guard.js": "8dd7b3497f8d2b0f031f2f8a47d5cf2b94b27bfee382dd15f0f8101b7c9a8177",
+    "src/game.js": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
+    "tools/verify-experiments.js": "e958d0e052a1fd637cadc0ceb069cee2dfe933ad0fdcafc21f524f163b01464a"
+  },
+  "valid": {
+    "verdict": "PASS",
+    "cells": 4
+  },
+  "brokenTwin": {
+    "mutation": "cells[0].score += 1 with artifact identity recomputed",
+    "verdict": "FAIL",
+    "error": "policy outcome mismatch for reference/5/7000000"
+  },
+  "invalidationTwin": {
+    "mutation": "frozen handmade policy source identity replaced with zeros and artifact identity recomputed",
+    "verdict": "FAIL",
+    "error": "source identity closure mismatch"
+  },
+  "downstreamConsumers": {
+    "confirmationRunner": {
+      "path": "experiments/RESULT-0026/run.js",
+      "identity": "371b723f014fd906e8a30bcd2d86a947ece826e4996bf3326c1b2ba90497ade8"
+    },
+    "admission": {
+      "path": "experiments/RESULT-0026/admit.js",
+      "identity": "147f0d8c4ef0b4d4d6cfa2ec80d8f3a1e1c2ad4bf006d320d12fe78e185b4e09"
+    }
+  },
+  "receiptIdentity": "56b8b29e8acca8c98fd45acd1001a87e20b041405e8b1c630fd371d2498f3ed2"
+}

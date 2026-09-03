@@ -1,0 +1,3960 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0026",
+  "kind": "qualification",
+  "reportable": false,
+  "subjects": [
+    {
+      "name": "reference",
+      "policyId": "ec59341e1a98",
+      "params": {
+        "wRoll": 1,
+        "wPlace": 1,
+        "turnover": 40,
+        "width": 24,
+        "bombMax": 9,
+        "tieBreak": "degree",
+        "wHarvest": 2,
+        "offerFull": 0,
+        "pathWidth": 8
+      }
+    },
+    {
+      "name": "handmade",
+      "policyId": "338be26be2b8",
+      "params": {
+        "wRoll": 1,
+        "wPlace": 1,
+        "turnover": 40,
+        "width": 24,
+        "bombMax": 9,
+        "tieBreak": "degree",
+        "wHarvest": 2,
+        "offerFull": 0,
+        "pathWidth": 8
+      }
+    }
+  ],
+  "levelNumbers": [
+    5,
+    50
+  ],
+  "seeds": [
+    7000000
+  ],
+  "sources": {
+    "experiments/RESULT-0026/frozen-handmade-policy.js": "f25337aeb412256961be6e64860f6b46ab62adcb31e9ecfad483c824ae368e0b",
+    "experiments/RESULT-0026/subject.js": "0dd1c274d1a5e144ec8183971a935a4c3cd7aa2f7eab2a499b6a9d4411d9ea0f",
+    "experiments/RESULT-0026/run.js": "371b723f014fd906e8a30bcd2d86a947ece826e4996bf3326c1b2ba90497ade8",
+    "experiments/RESULT-0026/gate.js": "059e5fb9fe0d66b74c8ddfa9933e5c91c21e958bd7ffd4079a3c1e6e5c7b575d",
+    "experiments/RESULT-0026/recompute.js": "d44bbd7127553ca47b183f53ec5c9849227c0f86d5e5b677402af3a57a695a41",
+    "experiments/RESULT-0026/admit.js": "147f0d8c4ef0b4d4d6cfa2ec80d8f3a1e1c2ad4bf006d320d12fe78e185b4e09",
+    "solver/bot.js": "1f1a554f3a022ebaaec2386eab5f4abc9136b1f8b2292c653670ca78cf82b7bc",
+    "solver/engine.js": "451bea941dd1971e8556df32da822f9dd38637177d52709a988197b74c4f581f",
+    "solver/experiment-guard.js": "8dd7b3497f8d2b0f031f2f8a47d5cf2b94b27bfee382dd15f0f8101b7c9a8177",
+    "src/game.js": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
+    "tools/verify-experiments.js": "e958d0e052a1fd637cadc0ceb069cee2dfe933ad0fdcafc21f524f163b01464a"
+  },
+  "execution": {
+    "runtimeMs": 1977.5625,
+    "policySemantics": "real move budget; stop at target; losses never receive extra play"
+  },
+  "cells": [
+    {
+      "policy": "reference",
+      "policyId": "ec59341e1a98",
+      "level": 5,
+      "seed": 7000000,
+      "target": 2300,
+      "moveBudget": 25,
+      "targetReached": true,
+      "movesToTarget": 7,
+      "movesUsed": 7,
+      "score": 2400,
+      "terminationReason": "target-reached",
+      "chooserRuntimeMs": 120.121916,
+      "trace": [
+        {
+          "move": 1,
+          "chain": [
+            {
+              "x": 0,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 7,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 4
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 4
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 320
+        },
+        {
+          "move": 2,
+          "chain": [
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 7,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 4
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 4
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 8
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 640
+        },
+        {
+          "move": 3,
+          "chain": [
+            {
+              "x": 0,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 5,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 2
+            }
+          ],
+          "points": 160,
+          "scoreAfter": 800
+        },
+        {
+          "move": 4,
+          "chain": [
+            {
+              "x": 4,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "value": 8
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 8
+            },
+            {
+              "x": 4,
+              "y": 6,
+              "value": 8
+            },
+            {
+              "x": 3,
+              "y": 7,
+              "value": 8
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 8
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 1120
+        },
+        {
+          "move": 5,
+          "chain": [
+            {
+              "x": 4,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 8
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 8
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 8
+            },
+            {
+              "x": 0,
+              "y": 7,
+              "value": 8
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 1440
+        },
+        {
+          "move": 6,
+          "chain": [
+            {
+              "x": 0,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 6,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 7,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 4
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 1760
+        },
+        {
+          "move": 7,
+          "chain": [
+            {
+              "x": 3,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 7,
+              "value": 64
+            }
+          ],
+          "points": 640,
+          "scoreAfter": 2400
+        }
+      ]
+    },
+    {
+      "policy": "reference",
+      "policyId": "ec59341e1a98",
+      "level": 50,
+      "seed": 7000000,
+      "target": 75900,
+      "moveBudget": 28,
+      "targetReached": true,
+      "movesToTarget": 20,
+      "movesUsed": 20,
+      "score": 76704,
+      "terminationReason": "target-reached",
+      "chooserRuntimeMs": 155.53096,
+      "trace": [
+        {
+          "move": 1,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            }
+          ],
+          "points": 2880,
+          "scoreAfter": 2880
+        },
+        {
+          "move": 2,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 5,
+              "value": 128
+            }
+          ],
+          "points": 3040,
+          "scoreAfter": 5920
+        },
+        {
+          "move": 3,
+          "chain": [
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 32
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 8480
+        },
+        {
+          "move": 4,
+          "chain": [
+            {
+              "x": 0,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 128
+            }
+          ],
+          "points": 4000,
+          "scoreAfter": 12480
+        },
+        {
+          "move": 5,
+          "chain": [
+            {
+              "x": 0,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 15040
+        },
+        {
+          "move": 6,
+          "chain": [
+            {
+              "x": 2,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 32
+            }
+          ],
+          "points": 768,
+          "scoreAfter": 15808
+        },
+        {
+          "move": 7,
+          "chain": [
+            {
+              "x": 2,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 256
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 512
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 512
+            }
+          ],
+          "points": 10240,
+          "scoreAfter": 26048
+        },
+        {
+          "move": 8,
+          "chain": [
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 64
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 28608
+        },
+        {
+          "move": 9,
+          "chain": [
+            {
+              "x": 0,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 64
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 31168
+        },
+        {
+          "move": 10,
+          "chain": [
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "x": 4,
+              "y": 5,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 128
+            }
+          ],
+          "points": 4640,
+          "scoreAfter": 35808
+        },
+        {
+          "move": 11,
+          "chain": [
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 64
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 38368
+        },
+        {
+          "move": 12,
+          "chain": [
+            {
+              "x": 4,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 128
+            }
+          ],
+          "points": 3040,
+          "scoreAfter": 41408
+        },
+        {
+          "move": 13,
+          "chain": [
+            {
+              "x": 0,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 128
+            }
+          ],
+          "points": 5120,
+          "scoreAfter": 46528
+        },
+        {
+          "move": 14,
+          "chain": [
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 32
+            }
+          ],
+          "points": 768,
+          "scoreAfter": 47296
+        },
+        {
+          "move": 15,
+          "chain": [
+            {
+              "x": 4,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 64
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 49856
+        },
+        {
+          "move": 16,
+          "chain": [
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 128
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 52416
+        },
+        {
+          "move": 17,
+          "chain": [
+            {
+              "x": 2,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            }
+          ],
+          "points": 768,
+          "scoreAfter": 53184
+        },
+        {
+          "move": 18,
+          "chain": [
+            {
+              "x": 4,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 256
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 512
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 512
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 1024
+            }
+          ],
+          "points": 18880,
+          "scoreAfter": 72064
+        },
+        {
+          "move": 19,
+          "chain": [
+            {
+              "x": 0,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 64
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 74624
+        },
+        {
+          "move": 20,
+          "chain": [
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 64
+            }
+          ],
+          "points": 2080,
+          "scoreAfter": 76704
+        }
+      ]
+    },
+    {
+      "policy": "handmade",
+      "policyId": "338be26be2b8",
+      "level": 5,
+      "seed": 7000000,
+      "target": 2300,
+      "moveBudget": 25,
+      "targetReached": true,
+      "movesToTarget": 7,
+      "movesUsed": 7,
+      "score": 2688,
+      "terminationReason": "target-reached",
+      "chooserRuntimeMs": 704.523542,
+      "trace": [
+        {
+          "move": 1,
+          "chain": [
+            {
+              "x": 1,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 7,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 6,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 3,
+              "value": 4
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 320
+        },
+        {
+          "move": 2,
+          "chain": [
+            {
+              "x": 3,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "value": 8
+            },
+            {
+              "x": 3,
+              "y": 7,
+              "value": 8
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 640
+        },
+        {
+          "move": 3,
+          "chain": [
+            {
+              "x": 1,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 8
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 960
+        },
+        {
+          "move": 4,
+          "chain": [
+            {
+              "x": 1,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 5,
+              "value": 8
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 8
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "value": 8
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 1280
+        },
+        {
+          "move": 5,
+          "chain": [
+            {
+              "x": 0,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 4,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 8
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 8
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 8
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 1600
+        },
+        {
+          "move": 6,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 2
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 3,
+              "value": 2
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 2
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 4
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 4
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 4
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 8
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 8
+            }
+          ],
+          "points": 320,
+          "scoreAfter": 1920
+        },
+        {
+          "move": 7,
+          "chain": [
+            {
+              "x": 1,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 6,
+              "value": 64
+            }
+          ],
+          "points": 768,
+          "scoreAfter": 2688
+        }
+      ]
+    },
+    {
+      "policy": "handmade",
+      "policyId": "338be26be2b8",
+      "level": 50,
+      "seed": 7000000,
+      "target": 75900,
+      "moveBudget": 28,
+      "targetReached": true,
+      "movesToTarget": 19,
+      "movesUsed": 19,
+      "score": 76320,
+      "terminationReason": "target-reached",
+      "chooserRuntimeMs": 993.662334,
+      "trace": [
+        {
+          "move": 1,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            }
+          ],
+          "points": 2880,
+          "scoreAfter": 2880
+        },
+        {
+          "move": 2,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 5,
+              "value": 128
+            }
+          ],
+          "points": 3040,
+          "scoreAfter": 5920
+        },
+        {
+          "move": 3,
+          "chain": [
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 128
+            }
+          ],
+          "points": 5120,
+          "scoreAfter": 11040
+        },
+        {
+          "move": 4,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 64
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 13600
+        },
+        {
+          "move": 5,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 5,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 32
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 16160
+        },
+        {
+          "move": 6,
+          "chain": [
+            {
+              "x": 4,
+              "y": 4,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 64
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 18720
+        },
+        {
+          "move": 7,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 128
+            }
+          ],
+          "points": 5120,
+          "scoreAfter": 23840
+        },
+        {
+          "move": 8,
+          "chain": [
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 128
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 26400
+        },
+        {
+          "move": 9,
+          "chain": [
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 128
+            }
+          ],
+          "points": 1536,
+          "scoreAfter": 27936
+        },
+        {
+          "move": 10,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 128
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 30496
+        },
+        {
+          "move": 11,
+          "chain": [
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 128
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 33056
+        },
+        {
+          "move": 12,
+          "chain": [
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 128
+            }
+          ],
+          "points": 1536,
+          "scoreAfter": 34592
+        },
+        {
+          "move": 13,
+          "chain": [
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 64
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 37152
+        },
+        {
+          "move": 14,
+          "chain": [
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 128
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 39712
+        },
+        {
+          "move": 15,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 128
+            }
+          ],
+          "points": 2560,
+          "scoreAfter": 42272
+        },
+        {
+          "move": 16,
+          "chain": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 32
+            }
+          ],
+          "points": 768,
+          "scoreAfter": 43040
+        },
+        {
+          "move": 17,
+          "chain": [
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 64
+            }
+          ],
+          "points": 512,
+          "scoreAfter": 43552
+        },
+        {
+          "move": 18,
+          "chain": [
+            {
+              "x": 1,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 32
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 256
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 512
+            }
+          ],
+          "points": 2048,
+          "scoreAfter": 45600
+        },
+        {
+          "move": 19,
+          "chain": [
+            {
+              "x": 2,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 256
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 512
+            },
+            {
+              "x": 2,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "x": 1,
+              "y": 3,
+              "value": 512
+            },
+            {
+              "x": 1,
+              "y": 4,
+              "value": 512
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 512
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 512
+            },
+            {
+              "x": 3,
+              "y": 4,
+              "value": 1024
+            },
+            {
+              "x": 2,
+              "y": 3,
+              "value": 1024
+            }
+          ],
+          "points": 30720,
+          "scoreAfter": 76320
+        }
+      ]
+    }
+  ],
+  "registration": {
+    "exploratory": false,
+    "protocol": "RESULT-0026",
+    "protocolCommit": "3d02387347c7872a2ce6d8052ade46836f6d874b"
+  },
+  "artifactIdentity": "3a30456161b7f1cbbe9005b86a98fc4e50bd5007acaa2e0a873e794c3a4190c5"
+}
