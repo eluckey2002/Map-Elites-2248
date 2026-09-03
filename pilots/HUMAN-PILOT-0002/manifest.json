@@ -1,0 +1,21 @@
+{
+  "baseCandidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+  "evidenceStanding": "exploratory",
+  "exactUrl": "http://127.0.0.1:2249/index.html?candidate=54&seed=424242",
+  "limitations": [
+    "The target of 126000 is inherited from HUMAN-PILOT-0001 and is not calibrated for this blocker layout.",
+    "This contrast changes blocker type, count, and placement; it does not isolate a causal blocker-position effect.",
+    "A recording is not accepted evidence until it replays against this exact candidate and seed through the qualified checker.",
+    "This exploratory subject cannot select, ship, or reject a level."
+  ],
+  "pilot": "HUMAN-PILOT-0002",
+  "question": "Does a horizontal pair of permanent center blockers create a meaningful chokepoint on the retained four-column board?",
+  "recordingDestination": "pilots/HUMAN-PILOT-0002/recordings/",
+  "schemaVersion": 1,
+  "subject": {
+    "candidateIdentity": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4",
+    "level": 54,
+    "seed": 424242,
+    "subjectIdentity": "d06b1679b0984eaec4e6193b51e0216768a7f2dcb48029e2d149c6ba046cd595"
+  }
+}

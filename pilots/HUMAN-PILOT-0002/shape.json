@@ -1,0 +1,24 @@
+{
+  "baseCandidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+  "blockers": [
+    {
+      "type": "stone",
+      "x": 1,
+      "y": 3
+    },
+    {
+      "type": "stone",
+      "x": 2,
+      "y": 3
+    }
+  ],
+  "gridH": 8,
+  "gridW": 4,
+  "kind": "exploratory-blocker-topology",
+  "minChain": 3,
+  "moves": 24,
+  "question": "Does a horizontal pair of permanent center blockers create a meaningful chokepoint on the retained four-column board?",
+  "schemaVersion": 1,
+  "seed": 424242,
+  "tileScale": 32
+}

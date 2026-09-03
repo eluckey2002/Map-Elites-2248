@@ -1,0 +1,29 @@
+{
+  "candidates": [
+    {
+      "blockers": [
+        {
+          "type": "stone",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "type": "stone",
+          "x": 2,
+          "y": 3
+        }
+      ],
+      "gridH": 8,
+      "gridW": 4,
+      "level": 54,
+      "minChain": 3,
+      "moves": 24,
+      "name": "prototype-central-choke",
+      "schemaVersion": 1,
+      "sourceShapeIdentity": "bbf619d8b0789111e4d2b29c5c82853e78cf198f445683c6ca972f940052a963",
+      "target": 126000,
+      "tileScale": 32
+    }
+  ],
+  "schemaVersion": 1
+}
