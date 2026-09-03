@@ -32,9 +32,11 @@ evidence is a reconstruction, not a preregistration.
 ## Landing changes on `main`
 
 `main` is protected. Every change reaches it through a pull request whose
-`experiment gate` check is green; a direct push is refused by GitHub and, on
-this machine, by `tools/hooks/pre-push`. Two more rules the protection cannot
-enforce:
+`experiment gate` check is green; a direct push to `main` is refused by GitHub.
+`tools/hooks/pre-push` is a second, narrower safeguard, not a substitute: where
+it has been installed (`node tools/hooks/install.js`, once per clone) it
+refuses to push a red gate to `main` before the push leaves the machine, and
+it lets a green push through. Two more rules no mechanism enforces:
 
 1. **Do not merge until the Codex review has completed.** Codex reviews every
    pull request when it opens and either leaves inline findings or reacts 👍.
