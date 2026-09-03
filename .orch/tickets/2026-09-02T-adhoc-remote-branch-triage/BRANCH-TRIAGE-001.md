@@ -50,3 +50,15 @@ Owner-ordered triage of the 17 remote branches, in this order:
 Remaining remote branches (all tagged, none deleted): codex/2026-08-29T10-29-19Z-adhoc-session-workspace, codex/preserve-pre-promotion-untracked-2026-08-30, codex/research-session-2026-08-28, codex/target-aware-promotion-rehearsal-2026-08-30, fix/experiment-guard-reads-registration-commit (now merged), map-elites-learning, worktree-archify-diagrams, worktree-deterministic-2048-solver.
 
 Not in scope: nine local-only branches checked out in worktrees under /private/tmp (e.g. codex/human-pilot-evidence, codex/player-style-cross-eval) never reached the remote and were not touched.
+
+## Second pass — local worktrees and untracked files (2026-09-02, later)
+
+Preservation commits: `0543ded` HUMAN-PILOT-0002 (six files, byte-identical to `/private/tmp/2248-human-pilot-20260901`, verified source == commit == tree); `4377e92` premise-discovery tickets and worklog on main (preservation only, BL-0006 not accepted); `78a2f84` Archify visual-check PNGs on `worktree-archify-diagrams` (not merged); `f8adb81` worktree-local PD-003 packet on `codex/premise-discovery-readiness`; `c409e05` claim-evidence-verdict snapshot plus ticket CVE-0001 on branch `archive/claim-evidence-verdict-2026-09-01` (not an accepted artifact).
+
+Merged: `0b744f5` engine/game mirror test (two commits from `fix/engine-mirrors-game-test` plus check card `engine-mirrors-game`). Qualification: planted multiplier cap 5→6 (12 pass, 2 fail) and gravity-treats-ice-as-stone (13 pass, 1 fail), engine restored byte-identical; then 14/14 focused, EXPERIMENT GATE PASS, full suite 324/329 with only the five known failures.
+
+Guard-fix record narrowed to clause (c): `0fb76dd`, follow-ups in `docs/backlog/BL-0007-experiment-guard-follow-ups.md`.
+
+Deleted (each: clean status, archive tag on remote, tip ancestor of main): worktrees and local branches `fix/experiment-guard-reads-registration-commit`, `fix/engine-mirrors-game-test`, `codex/player-style-cross-eval`, `codex/seed-variance-challenge`, `codex/targeted-chain-generator`; local branches `review/experiment-gate-hardening`, `codex/git-baseline-stabilization`, `codex/level-authoring-tracer`, `codex/map-elites-measurement-controls`, `codex/universe-map-v1`, `level-curve-retune`; remote branch `fix/experiment-guard-reads-registration-commit`.
+
+Kept: worktree `codex/human-pilot-evidence` (six untracked files, all preserved on main, but status not empty); worktrees `codex/openevolve-2248-matched-control-spec`, `codex/premise-discovery-readiness`, `worktree-archify-diagrams` (unmerged tips, tagged).
