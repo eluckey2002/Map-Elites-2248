@@ -1,0 +1,45 @@
+{
+  "artifactIdentity": "e1416049da8fac5224e2f1b592c4d700e7afdf6f27e30116bee3f71d13070d6f",
+  "brokenTwin": {
+    "location": "temporary directory, removed after check",
+    "mutation": "recording.score + 1",
+    "observedProblem": "final score 140544, recording claims 140545",
+    "verdict": "FAIL"
+  },
+  "checker": {
+    "identity": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4",
+    "path": "solver/recording-replay.js"
+  },
+  "claim": "The browser-produced recording replays exactly against its content-bound candidate and pinned seed through the headless engine.",
+  "downstreamConsumer": {
+    "scope": "binds replay qualification to the execution receipt; does not determine, verify, or record any owner qualitative disposition",
+    "technicalConsumer": "pilots/HUMAN-PILOT-0002/qualify.js executionReceipt",
+    "workflow": "HUMAN-PILOT-0002 post-session replay qualification"
+  },
+  "nonClaims": [
+    "calibrated",
+    "representative",
+    "eligible",
+    "ready to ship",
+    "causal blocker-position effect",
+    "evidence about a human-performance distribution",
+    "owner qualitative disposition"
+  ],
+  "pilot": "HUMAN-PILOT-0002",
+  "realSubject": {
+    "candidateIdentity": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4",
+    "recording": "recordings/c50b34f85e9ee53762ab3093bc4af0839965dd8c275bdc7893c31e011e0a32f6.json",
+    "recordingFileIdentity": "846513bc9a0e1e31d5f42b9378ba12a0bad092e9e95b8bc6ebc5c7e9dbfec48a",
+    "recordingIdentity": "c50b34f85e9ee53762ab3093bc4af0839965dd8c275bdc7893c31e011e0a32f6",
+    "seed": 424242,
+    "subjectIdentity": "d06b1679b0984eaec4e6193b51e0216768a7f2dcb48029e2d149c6ba046cd595"
+  },
+  "schemaVersion": 1,
+  "seam": "src/game.js AuthoringCapture -> recording JSON -> solver/recording-replay.js -> solver/engine.js",
+  "validObservation": {
+    "moves": 20,
+    "problems": [],
+    "score": 140544,
+    "verdict": "PASS"
+  }
+}
