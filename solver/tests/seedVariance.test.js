@@ -143,7 +143,7 @@ test('a bounded artifact measured through real playMeasured reaches PASS and its
   const artifact = measureSubject({
     claim: 'bounded real-seam fixture only',
     candidates: [LEVELS[0], LEVELS[14], LEVELS[25]],
-    samples: { a: { start: 9100000, count: 2 }, b: { start: 9200000, count: 2 } },
+    samples: { a: { start: 9100000, count: 2 }, b: { start: 9200004, count: 2 } },
     protocol: PROTOCOL,
     play: playMeasured,
     coveredIdentities: sourceIdentities(),
@@ -193,6 +193,17 @@ test('standalone, failed, malformed, and identity-stale materials fail closed', 
   assert.throws(() => verifyEntitlement(valid, {
     currentIdentities: { ...identities, evaluator: 'f'.repeat(64) },
   }), /covered identity mismatch/);
+});
+
+test('a frozen calibration identity mutation invalidates the entitlement', () => {
+  const identities = sourceIdentities();
+  const entitlement = issue(syntheticArtifact(identities), identities);
+  assert.throws(
+    () => verifyEntitlement(entitlement, {
+      currentIdentities: { ...identities, calibrationSolver: '0'.repeat(64) },
+    }),
+    /covered identity mismatch/,
+  );
 });
 
 test('the production CLI selects only from a verified bundle bound to the exact batch', () => {
@@ -269,7 +280,7 @@ test('receipt verifier cross-binds claim, subjects, protocol, execution path, an
     assert.throws(() => verifyChallengeReceipt(resignReceipt(bundle.receipt, mutate), args), pattern);
   }
   assert.throws(() => verifyChallengeBundle(bundle, verifyOptions(fixture, {
-    ...sourceIdentities(), selector: 'e'.repeat(64),
+    ...sourceIdentities(), calibrationSolver: 'e'.repeat(64),
   })), /covered identity mismatch/);
 });
 

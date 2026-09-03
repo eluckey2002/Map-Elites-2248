@@ -11,13 +11,15 @@ const {
   tickBlockers,
   checkBombs,
 } = require('./engine');
-const { chooseMove } = require('./bot');
+const { chooseMove } = require('./calibrations/calib-1');
+const { calibrationStamp } = require('./calibration');
 
 const LOOKAHEAD_BASE = 987654321;
 const FIT_SEEDS = Object.freeze({ start: 0, count: 150 });
 const HOLDOUT_SEEDS = Object.freeze({ start: 100000, count: 300 });
 const DEFAULT_GATES = Object.freeze({ minWinRate: 0.20, maxBombRate: 0.05, requireZeroLockouts: true });
 const ROOT = path.join(__dirname, '..');
+const OUTPUT_NEWLINE = process.platform === 'win32' ? '\r\n' : '\n';
 
 function canonicalJson(value) {
   if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
@@ -33,12 +35,12 @@ function identity(value) {
 }
 
 function fileIdentity(file) {
-  return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+  const canonicalSource = fs.readFileSync(file, 'utf8').replace(/\r\n?/g, '\n');
+  return crypto.createHash('sha256').update(canonicalSource, 'utf8').digest('hex');
 }
 
 function defaultInputIdentities() {
   return {
-    bot: fileIdentity(path.join(__dirname, 'bot.js')),
     engine: fileIdentity(path.join(__dirname, 'engine.js')),
     levelAuthor: fileIdentity(__filename),
   };
@@ -217,6 +219,7 @@ function deriveCandidate(shapeInput, options = {}) {
     shapeIdentity,
     candidateIdentity,
     inputIdentities,
+    calibration: calibrationStamp(),
     fitting,
     targetDerivation: {
       policy: 'median-times-demand-rounded-down',
@@ -260,6 +263,9 @@ function verifyCandidate(store, receipt, options = {}) {
   if (identity(unsigned) !== receipt.receiptIdentity) throw new Error('receipt identity mismatch');
   if (identity(candidate) !== receipt.candidateIdentity) throw new Error('candidate identity mismatch');
   if (candidate.sourceShapeIdentity !== receipt.shapeIdentity) throw new Error('shape identity mismatch');
+  if (canonicalJson(receipt.calibration) !== canonicalJson(calibrationStamp())) {
+    throw new Error('calibration stamp mismatch');
+  }
   const inputIdentities = options.inputIdentities || defaultInputIdentities();
   if (canonicalJson(inputIdentities) !== canonicalJson(receipt.inputIdentities)) throw new Error('code/input identity mismatch');
   assertSeedRanges(receipt);
@@ -316,7 +322,7 @@ function verifyCandidate(store, receipt, options = {}) {
 }
 
 function serialize(value) {
-  return `${JSON.stringify(JSON.parse(canonicalJson(value)), null, 2)}\n`;
+  return `${JSON.stringify(JSON.parse(canonicalJson(value)), null, 2)}\n`.replace(/\n/g, OUTPUT_NEWLINE);
 }
 
 module.exports = {

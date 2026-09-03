@@ -38,6 +38,8 @@ function resign(receipt) {
   return { ...unsigned, receiptIdentity: identity(unsigned) };
 }
 
+const TEST_INPUT_IDENTITIES = { levelAuthor: 'a', engine: 'b' };
+
 test('validateShape accepts one named target-free proposal shape', () => {
   assert.deepEqual(validateShape(SHAPE), SHAPE);
 });
@@ -57,7 +59,7 @@ test('validateShape rejects malformed dimensions, blockers, and proposal labelin
 test('deriveCandidate uses fixed fitting and disjoint holdout seeds with measured target rounding', () => {
   const { store, receipt } = deriveCandidate(SHAPE, {
     play: measuredOutcome,
-    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    inputIdentities: TEST_INPUT_IDENTITIES,
   });
   const candidate = store.candidates[0];
 
@@ -78,6 +80,9 @@ test('deriveCandidate uses fixed fitting and disjoint holdout seeds with measure
   assert.match(receipt.shapeIdentity, /^[a-f0-9]{64}$/);
   assert.match(receipt.candidateIdentity, /^[a-f0-9]{64}$/);
   assert.match(receipt.receiptIdentity, /^[a-f0-9]{64}$/);
+  assert.deepEqual(receipt.calibration.params, {
+    wRoll: 1, wPlace: 1, turnover: 40, width: 24, bombMax: 9, tieBreak: 'degree', wHarvest: 0,
+  });
 });
 
 test('deriveCandidate refuses an incomplete fitting run', () => {
@@ -90,19 +95,19 @@ test('deriveCandidate refuses an incomplete fitting run', () => {
 test('verifyCandidate passes a bound receipt and rejects tampering, invalid data, overlap, and incomplete totals', () => {
   const authored = deriveCandidate(SHAPE, {
     play: measuredOutcome,
-    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    inputIdentities: TEST_INPUT_IDENTITIES,
   });
   const permissive = { minWinRate: 0, maxBombRate: 1, requireZeroLockouts: true };
 
   assert.equal(verifyCandidate(authored.store, authored.receipt, {
     play: measuredOutcome,
-    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    inputIdentities: TEST_INPUT_IDENTITIES,
     gates: permissive,
   }).status, 'PASS');
 
   assert.throws(() => verifyCandidate(authored.store, { ...authored.receipt, shapeIdentity: '0'.repeat(64) }, {
     play: measuredOutcome,
-    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    inputIdentities: TEST_INPUT_IDENTITIES,
     gates: permissive,
   }), /receipt identity|shape identity/i);
 
@@ -115,7 +120,7 @@ test('verifyCandidate passes a bound receipt and rejects tampering, invalid data
   overlap = resign(overlap);
   assert.throws(() => verifyCandidate(authored.store, overlap, {
     play: measuredOutcome,
-    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    inputIdentities: TEST_INPUT_IDENTITIES,
   }), /overlap/);
 
   let incomplete = structuredClone(authored.receipt);
@@ -123,18 +128,18 @@ test('verifyCandidate passes a bound receipt and rejects tampering, invalid data
   incomplete = resign(incomplete);
   assert.throws(() => verifyCandidate(authored.store, incomplete, {
     play: measuredOutcome,
-    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    inputIdentities: TEST_INPUT_IDENTITIES,
   }), /terminal total/);
 });
 
 test('verifyCandidate remeasures fitting evidence and enforces target and tile-scale derivation', () => {
   const authored = deriveCandidate(SHAPE, {
     play: measuredOutcome,
-    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    inputIdentities: TEST_INPUT_IDENTITIES,
   });
   const options = {
     play: measuredOutcome,
-    inputIdentities: { levelAuthor: 'a', engine: 'b', bot: 'c' },
+    inputIdentities: TEST_INPUT_IDENTITIES,
     gates: { minWinRate: 0, maxBombRate: 1, requireZeroLockouts: true },
   };
 
@@ -163,4 +168,41 @@ test('verifyCandidate remeasures fitting evidence and enforces target and tile-s
   falseScale.targetDerivation.tileScale = 16;
   falseScale = resign(falseScale);
   assert.throws(() => verifyCandidate(falseScaleStore, falseScale, options), /tile scale/i);
+});
+
+test('authored receipts carry the exact frozen calibration stamp', () => {
+  const { calibrationStamp } = require('../calibration');
+  const authored = deriveCandidate(SHAPE, {
+    play: measuredOutcome,
+    inputIdentities: TEST_INPUT_IDENTITIES,
+  });
+  assert.deepEqual(authored.receipt.calibration, calibrationStamp());
+});
+
+test('verification rejects missing or re-signed mismatched calibration stamps', () => {
+  const authored = deriveCandidate(SHAPE, {
+    play: measuredOutcome,
+    inputIdentities: TEST_INPUT_IDENTITIES,
+  });
+  const options = {
+    play: measuredOutcome,
+    inputIdentities: TEST_INPUT_IDENTITIES,
+    gates: { minWinRate: 0, maxBombRate: 1, requireZeroLockouts: true },
+  };
+
+  const missing = structuredClone(authored.receipt);
+  delete missing.calibration;
+  assert.throws(() => verifyCandidate(authored.store, resign(missing), options), /calibration/i);
+
+  const wrongVersion = structuredClone(authored.receipt);
+  wrongVersion.calibration.version = 'calib-other';
+  assert.throws(() => verifyCandidate(authored.store, resign(wrongVersion), options), /calibration/i);
+
+  const wrongParams = structuredClone(authored.receipt);
+  wrongParams.calibration.params.width = 23;
+  assert.throws(() => verifyCandidate(authored.store, resign(wrongParams), options), /calibration/i);
+
+  const wrongIdentity = structuredClone(authored.receipt);
+  wrongIdentity.calibration.solverIdentity = '0'.repeat(64);
+  assert.throws(() => verifyCandidate(authored.store, resign(wrongIdentity), options), /calibration/i);
 });

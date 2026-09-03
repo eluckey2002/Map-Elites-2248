@@ -8,8 +8,8 @@
   },
   "sourceIdentities": {
     "contractSha256": "372ac90f35f69d38c96ee37be4fddf6f19e322bd5ecaf732df2e142fe5828ac1",
-    "ledgerSha256": "c4590ff9dac207730c44c88517e399ec40b9e10fabd13e634004af7da64a3882",
-    "currentNavigationSha256": "fa227e2164621799df92bfa060cd71de17122352e74cd9f8d7d11fffb6fc736d",
+    "ledgerSha256": "298ff7d535809ae26cceaaa6d72cd1e572901d7567b03578c827afed89b3b447",
+    "currentNavigationSha256": "4ee7fde389950e391d14b8904d8700967c53324907ea7c8ef76f37cd5a6ba4a0",
     "shippedGameSha256": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
     "latestArtifactSha256": "ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22",
     "latestArtifactVerificationSha256": "701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790",

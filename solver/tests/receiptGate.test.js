@@ -1,12 +1,16 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 
+const { calibrationStamp } = require('../calibration');
 const { defaultInputIdentities, verifyCandidate } = require('../level-author');
 
 const SOLVER_DIR = path.join(__dirname, '..');
+const ARCHIVE_DIR = path.join(SOLVER_DIR, 'candidates-archive');
+const SHIPPED_LEVEL_53_ARCHIVE = 'candidate-levels-gen0014-wide-sprint-043ca53f.json';
 
 // Every candidate store that ships in solver/ must carry a receipt that still
 // verifies against the code as it stands right now. verifyCandidate has always
@@ -194,25 +198,42 @@ test('the walk inspected the whole corpus', () => {
   );
 });
 
-// The identity set is only as complete as the file list it hashes. Today the
-// closure happens to be complete -- bot.js pulls in only engine.js, and
-// level-author.js pulls in only those two -- but that holds by luck of the
-// current import graph, not by construction. The day a new local require lands
-// in one of these files, the drift check would go quietly blind instead of
-// failing. This test makes that a loud failure.
-const HASHED_FILES = Object.freeze({
-  bot: 'bot.js',
+// Receipt coverage is split across two identities. inputIdentities hashes the
+// engine and level-author directly, while calibration.solverIdentity hashes
+// the engine together with the frozen evaluator. calibration.js constructs
+// and verifies that stamp but does not participate in playMeasured itself.
+// Pinning that one receipt-only module by name keeps the distinction explicit:
+// any new local dependency still lands as an uncovered measurement input.
+const DIRECT_INPUT_FILES = Object.freeze({
   engine: 'engine.js',
   levelAuthor: 'level-author.js',
 });
+const CALIBRATION_INPUT_FILES = Object.freeze([
+  'engine.js',
+  'calibrations/calib-1.js',
+]);
+const RECEIPT_ONLY_FILES = Object.freeze(['calibration.js']);
 
-function localRequires(file) {
+function normalizedFileIdentity(relativePath) {
+  const source = fs.readFileSync(path.join(SOLVER_DIR, relativePath), 'utf8').replace(/\r\n?/g, '\n');
+  return crypto.createHash('sha256').update(source, 'utf8').digest('hex');
+}
+
+function joinedFileIdentity(relativePaths) {
+  const hash = crypto.createHash('sha256');
+  for (const relativePath of relativePaths) hash.update(fs.readFileSync(path.join(SOLVER_DIR, relativePath)));
+  return hash.digest('hex');
+}
+
+function localRequires(file, root = SOLVER_DIR) {
   const source = fs.readFileSync(file, 'utf8');
   const found = new Set();
-  const pattern = /require\(\s*['"]\.\/([\w./-]+)['"]\s*\)/g;
+  const pattern = /require\(\s*['"](\.\.?\/[\w./-]+)['"]\s*\)/g;
   let match;
   while ((match = pattern.exec(source)) !== null) {
-    found.add(match[1].endsWith('.js') ? match[1] : `${match[1]}.js`);
+    const required = match[1].endsWith('.js') ? match[1] : `${match[1]}.js`;
+    const absolute = path.resolve(path.dirname(file), required);
+    found.add(path.relative(root, absolute).split(path.sep).join('/'));
   }
   return found;
 }
@@ -232,7 +253,7 @@ function requireClosure(roots, dir = SOLVER_DIR) {
     // A require pointing at a file that is not there is still an edge worth
     // reporting, so record it and stop rather than throwing.
     if (!fs.existsSync(file)) continue;
-    for (const dep of localRequires(file)) {
+    for (const dep of localRequires(file, dir)) {
       if (!seen.has(dep)) queue.push(dep);
     }
   }
@@ -240,23 +261,41 @@ function requireClosure(roots, dir = SOLVER_DIR) {
 }
 
 test('every file the measurement depends on is one of the hashed inputs', () => {
+  const directIdentities = defaultInputIdentities();
   assert.deepEqual(
-    Object.keys(defaultInputIdentities()).sort(),
-    Object.keys(HASHED_FILES).sort(),
-    'defaultInputIdentities() changed shape; update HASHED_FILES to match, ' +
+    Object.keys(directIdentities).sort(),
+    Object.keys(DIRECT_INPUT_FILES).sort(),
+    'defaultInputIdentities() changed shape; update DIRECT_INPUT_FILES to match, ' +
       'otherwise this closure check stops covering the real input set',
   );
+  for (const [name, relativePath] of Object.entries(DIRECT_INPUT_FILES)) {
+    assert.equal(
+      directIdentities[name],
+      normalizedFileIdentity(relativePath),
+      `${name} must identify ${relativePath}`,
+    );
+  }
 
-  const hashed = new Set(Object.values(HASHED_FILES));
-  const reached = requireClosure([HASHED_FILES.levelAuthor]);
-  const unhashed = [...reached].filter((name) => !hashed.has(name)).sort();
+  assert.equal(
+    calibrationStamp().solverIdentity,
+    joinedFileIdentity(CALIBRATION_INPUT_FILES),
+    'calibration.solverIdentity must cover engine.js and calibrations/calib-1.js in order',
+  );
+
+  const hashed = new Set([...Object.values(DIRECT_INPUT_FILES), ...CALIBRATION_INPUT_FILES]);
+  const reached = requireClosure([DIRECT_INPUT_FILES.levelAuthor]);
+  const receiptOnly = [...reached].filter((name) => RECEIPT_ONLY_FILES.includes(name)).sort();
+  const measurementInputs = [...reached].filter((name) => !RECEIPT_ONLY_FILES.includes(name)).sort();
 
   assert.deepEqual(
-    unhashed,
-    [],
-    `these files feed the measurement but are not hashed into inputIdentities: ${unhashed.join(', ')}. ` +
-      'Add them to defaultInputIdentities() in solver/level-author.js, or the ' +
-      'drift check will pass while the code underneath it changes.',
+    receiptOnly,
+    [...RECEIPT_ONLY_FILES],
+    'the only local level-author dependency outside measurement must remain calibration.js',
+  );
+  assert.deepEqual(
+    measurementInputs,
+    [...hashed].sort(),
+    `measurement closure changed: reached ${measurementInputs.join(', ')}; hashed ${[...hashed].sort().join(', ')}`,
   );
 });
 
@@ -334,12 +373,12 @@ test('an empty corpus fails the floor instead of reading as clean', () => {
 test('a receipt whose code has drifted is refused, not verified', () => {
   const store = readJson(path.join(SOLVER_DIR, 'candidate-levels.json'));
   const receipt = readJson(path.join(SOLVER_DIR, receiptFor('candidate-levels.json')));
-  const drifted = { ...defaultInputIdentities(), bot: '0'.repeat(64) };
+  const drifted = { ...defaultInputIdentities(), engine: '0'.repeat(64) };
 
   assert.throws(
     () => verifyCandidate(store, receipt, { inputIdentities: drifted }),
     /code\/input identity mismatch/i,
-    'a moved bot.js must fail the drift comparison, not slip through',
+    'a moved engine.js must fail the drift comparison, not slip through',
   );
 
   // Positive control: with the real identities, this same store and receipt
@@ -360,9 +399,11 @@ test('a new unhashed require in the measurement path is detected', () => {
   fs.writeFileSync(path.join(dir, 'engine.js'), '// leaf\n');
   fs.writeFileSync(path.join(dir, 'heuristics.js'), '// newly added, never hashed\n');
 
-  const hashed = new Set(Object.values(HASHED_FILES));
+  const hashed = new Set([...Object.values(DIRECT_INPUT_FILES), ...CALIBRATION_INPUT_FILES]);
   const reached = requireClosure(['level-author.js'], dir);
-  const unhashed = [...reached].filter((name) => !hashed.has(name)).sort();
+  const unhashed = [...reached]
+    .filter((name) => !RECEIPT_ONLY_FILES.includes(name) && !hashed.has(name))
+    .sort();
 
   assert.deepEqual(
     unhashed,
@@ -519,9 +560,14 @@ test('the real exemption facts hold for the shipped corpus', () => {
   // keeps that state change visible instead of erasing it.
   assert.equal(shipped.has(53), true, 'level 53 shipped 2026-08-21');
   assert.equal(
-    exemptionForStore(SOLVER_DIR, 'candidate-levels.json').exempt,
+    exemptionForStore(ARCHIVE_DIR, SHIPPED_LEVEL_53_ARCHIVE).exempt,
     true,
-    'level 53 ships and three winning recordings bind to it, so its exemption is armed',
+    'level 53 ships and three winning recordings bind to its archived 101000 identity',
+  );
+  assert.deepEqual(
+    exemptionForStore(SOLVER_DIR, 'candidate-levels.json'),
+    { exempt: false, ships: true, played: false },
+    'the active 102000 authoring candidate has a different, unplayed identity and is not exempt',
   );
 
   assert.equal(

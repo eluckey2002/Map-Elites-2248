@@ -6,11 +6,11 @@ measurement records. They sit outside the receipt gate
 outside the corpus manifest (`solver/candidate-corpus.json`).
 
 **The rule that makes this archive honest: do not quote a number from anything
-in here.** Every receipt below fails `verifyCandidate` with
-`code/input identity mismatch` — each was measured against a `bot.js` that has
-since changed, so its win rates, medians, and terminal counts describe a bot
-that no longer exists. That is a checked statement, not a standing assumption:
-re-run it against all four stores with
+in here.** Every receipt below fails the current `verifyCandidate`: each was
+measured before the frozen evaluator stamp existed and against evaluator code
+that has since changed, so its win rates, medians, and terminal counts describe
+a ruler that is no longer used. That is a checked statement, not a standing
+assumption: re-run it against every archived store with
 
 ```
 node -e "const fs=require('fs'),path=require('path');const{verifyCandidate}=require('./solver/level-author.js');
@@ -20,9 +20,10 @@ try{verifyCandidate(rj(path.join(A,b)),rj(path.join(A,b.replace(/\.json$/,'.rece
 catch(e){console.log('FAILS    '+b+' -> '+e.message);}}"
 ```
 
-All four printed `FAILS ... code/input identity mismatch` on 2026-08-21. A store
-here that starts printing `VERIFIES` is not thereby quotable — it means someone
-refreshed a receipt in the archive, which is not what the archive is for.
+All five stores printed `FAILS ... calibration stamp mismatch` on 2026-09-03.
+A store here that starts printing `VERIFIES` is not thereby quotable — it means
+someone refreshed a receipt in the archive, which is not what the archive is
+for.
 
 A **target** is not a measurement, and neither is a **board**. Those are the
 level as authored, and a human playthrough recorded against them stays valid
@@ -101,3 +102,18 @@ tells them apart.
 Everything above about these two — targets, boards, recorded scores — is
 quotable. Their receipts' win rates and medians are not, same as the rest of
 this directory.
+
+## Recovered shipped Level 53 identity
+
+`candidate-levels-gen0014-wide-sprint-043ca53f.*` preserves the exact Level 53
+candidate that shipped at target 101000. Both files are byte-identical to
+`8de076a000ead141d45f2a34629f51ea5aa1cbfe:solver/candidate-levels.json` and
+`8de076a000ead141d45f2a34629f51ea5aa1cbfe:solver/candidate-levels.receipt.json`.
+Its candidate identity is
+`043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16`.
+
+The active `solver/candidate-levels.json` now holds a separately measured 102000
+authoring candidate with a different identity. The archived 101000 board and
+target remain the subject of the three Level 53 human recordings, so those
+replays remain valid and replayable. Its old bot measurements — including its
+median, win rate, and terminal counts — are stale and must not be quoted.
