@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0026",
+  "confirmationIdentity": "4a5ce7674faabab4a3b39ee47efb86d8adee93cf73c7cd2c65b8440b58b7d90b",
+  "recomputeSourceIdentity": "d44bbd7127553ca47b183f53ec5c9849227c0f86d5e5b677402af3a57a695a41",
+  "summary": {
+    "primaryVerdict": "FALSIFIED",
+    "meanSavings": 0.68,
+    "standardError": 0.4881769708313658,
+    "seLevel": 0.4956701412117628,
+    "seSeed": 0.25029365469433484,
+    "seCell": 0.2646111252745198,
+    "t": 1.3929374809343413,
+    "effectiveN": 9,
+    "pairedCells": 225,
+    "referenceWins": 222,
+    "handmadeWins": 216,
+    "winNonRegression": false,
+    "regressions": [
+      {
+        "level": 47,
+        "seed": 24000000
+      },
+      {
+        "level": 47,
+        "seed": 24000008
+      },
+      {
+        "level": 47,
+        "seed": 24000011
+      },
+      {
+        "level": 50,
+        "seed": 24000010
+      },
+      {
+        "level": 50,
+        "seed": 24000019
+      },
+      {
+        "level": 50,
+        "seed": 24000023
+      }
+    ],
+    "byLevel": {
+      "5": 0.6,
+      "11": 1.96,
+      "17": 2.04,
+      "23": 0.12,
+      "29": 2.88,
+      "35": -0.64,
+      "41": 1.44,
+      "47": -1.36,
+      "50": -0.92
+    }
+  },
+  "artifactIdentity": "8f9916dcd88e27d4220dc3964da19eb7617bc74a2113aae527cf31139b06760e"
+}
