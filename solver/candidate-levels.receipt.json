@@ -9,7 +9,7 @@
       "wRoll": 1,
       "width": 24
     },
-    "solverIdentity": "9be686646189feb3d255b3516ad7ab1e66be5cb9e1cc30a608e02dfb34056f27",
+    "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed",
     "version": "calib-1"
   },
   "candidateIdentity": "a6c3e36031a17276354ba0d8b16e796d4338038fb984a581ffbe96cb9c3387f7",
@@ -56,10 +56,10 @@
     }
   },
   "inputIdentities": {
-    "engine": "1327e13f7db9060ff6e54eb176d5f0cdd953c3f619330f115aed9abe6a57ae7a",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
     "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
   },
-  "receiptIdentity": "ceee608e194c291c122aa50bfaca22495c3382468d0109301692928a11886347",
+  "receiptIdentity": "3b83de41726b57d5d39d5c83bb44fda412fb6413da7bdaa7aaf11a7db8953bc1",
   "schemaVersion": 1,
   "shapeIdentity": "129c358075bb4cca00678ebc597be45bf59dea7b8c661a2372b2e4b3ee2be0a4",
   "shapeName": "gen-0014-wide-sprint",

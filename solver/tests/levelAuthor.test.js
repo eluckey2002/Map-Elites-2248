@@ -82,7 +82,6 @@ test('deriveCandidate uses fixed fitting and disjoint holdout seeds with measure
   assert.match(receipt.receiptIdentity, /^[a-f0-9]{64}$/);
   assert.deepEqual(receipt.calibration.params, {
     wRoll: 1, wPlace: 1, turnover: 40, width: 24, bombMax: 9, tieBreak: 'degree', wHarvest: 0,
-    offerFull: 0, pathWidth: 1,
   });
 });
 

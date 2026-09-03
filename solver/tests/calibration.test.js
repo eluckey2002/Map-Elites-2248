@@ -15,8 +15,7 @@ const { DEFAULT_PARAMS } = require('../bot');
 
 const SOLVER = path.join(__dirname, '..');
 
-test('the frozen ruler pins every live-bot parameter name', () => {
-  assert.deepEqual(Object.keys(CALIBRATION_PARAMS).sort(), Object.keys(DEFAULT_PARAMS).sort());
+test('the frozen ruler preserves its historical parameter snapshot independently of the live bot', () => {
   assert.deepEqual(CALIBRATION_PARAMS, {
     wRoll: 1,
     wPlace: 1,
@@ -25,10 +24,10 @@ test('the frozen ruler pins every live-bot parameter name', () => {
     bombMax: 9,
     tieBreak: 'degree',
     wHarvest: 0,
-    offerFull: 0,
-    pathWidth: 1,
   });
   assert.notEqual(CALIBRATION_PARAMS, DEFAULT_PARAMS);
+  assert.equal(DEFAULT_PARAMS.offerFull, 0);
+  assert.equal(DEFAULT_PARAMS.pathWidth, 8);
 });
 
 test('calibration identity covers the engine and versioned evaluator but not the live bot', () => {
@@ -88,8 +87,6 @@ test('the stamp carries the exact frozen version, parameters, and solver identit
       bombMax: 9,
       tieBreak: 'degree',
       wHarvest: 0,
-      offerFull: 0,
-      pathWidth: 1,
     },
     solverIdentity: calibrationIdentity(),
   });

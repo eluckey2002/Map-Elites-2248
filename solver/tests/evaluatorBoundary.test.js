@@ -64,8 +64,6 @@ if (control) {
       bombMax: 9,
       tieBreak: 'degree',
       wHarvest: 0,
-      offerFull: 0,
-      pathWidth: 1,
     });
     const source = fs.readFileSync(path.join(SOLVER, 'calibrations', 'calib-1.js'), 'utf8');
     assert.match(source, /\{\s*\.\.\.CALIBRATION_PARAMS\s*\}/);
