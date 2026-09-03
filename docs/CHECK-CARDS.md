@@ -553,6 +553,14 @@ card in the same commit.
 
 ## The experiment gate
 
+> **Enforcement wiring, 2026-09-03.** Until this date the gate was a script
+> someone had to remember to run. Pull request #1 admitted `RESULT-0027` with
+> the gate red and merged ten minutes later; nothing ran it. The gate now runs
+> in `.github/workflows/experiment-gate.yml` on every pull request and every
+> push to `main`. It blocks a merge only once the `experiment gate` job is a
+> required status check in branch protection; until then it is a visible red
+> mark, not a refusal.
+
 `tools/verify-experiments.js`, run live by `solver/tests/experiments.test.js`.
 It shipped 2026-08-31 with **no cards at all**; the five below were written
 2026-09-01 when an adversarial review found that four of its five promises were

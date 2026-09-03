@@ -1,0 +1,44 @@
+# The experiment gate is a script (tools/verify-experiments.js) that nobody was
+# required to run. On 2026-09-03 a pull request admitted RESULT-0027 to the
+# ledger with the gate red and merged ten minutes later; the check had fired,
+# nothing was listening. This workflow is the listener.
+#
+# Job 1 is the gate and is meant to be a required status check on main.
+# Job 2 is the full test suite, reported but not blocking, because main
+# carries five known failures (three deliberately visible receipt mismatches,
+# one linked-worktree check, one generated-view staleness check) that are
+# tracked elsewhere and must not mask a red gate.
+name: experiment-gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  experiment-gate:
+    name: experiment gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the gate reads registration commits and ancestry
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: EXPERIMENT GATE
+        run: node tools/verify-experiments.js
+
+  test-suite:
+    name: full test suite (informational until the five known failures are retired)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: node --test
+        run: node --test solver/tests/*.test.js
