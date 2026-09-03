@@ -748,6 +748,15 @@ that passed while inspecting nothing.
   8. **A protocol body that describes a different experiment.** Only `result`
      and `version_freeze` are compared against the registration commit; the
      question, checks, and stopping rules can be rewritten after the fact.
+     Open follow-up, not fixed by the 2026-09-02 merge: `BL-0007`.
+  9. **A protocol with no `version_freeze` at all, at ledger time.**
+     `assessVersionFreeze` returns no problems when the registered frontmatter
+     has no freeze object, so the ledger gate false-PASSes it; only the run-time
+     guard refuses it. Open follow-up: `BL-0007`.
+- **Qualified 2026-09-02:** the merged fix (`de3ef93`) qualifies clause (c)
+  only — the registration-commit read of `version_freeze`, its working-tree
+  equality, and the empty/placeholder refusal. Items 8 and 9 above are what
+  that merge deliberately did not touch.
 - **Rung:** blocking. **Decay:** live test breaks a registered freeze against the
   real `solver/bot.js` and plants an uncovered source hash, with positive
   controls for both; `solver/tests/experiments.test.js` builds a throwaway git
