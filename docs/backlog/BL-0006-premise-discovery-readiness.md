@@ -4,7 +4,7 @@ title: Resolve the premises for the next level-authoring action
 status: done
 milestone: next-action-readiness
 depends_on: []
-updated: 2026-09-01
+updated: 2026-09-03
 ---
 
 # BL-0006 — Resolve the premises for the next level-authoring action
@@ -61,3 +61,32 @@ Choose which bounded action class to shape next. A human pilot requires the owne
 - 2026-09-01 — Activated after owner authorization. Based at commit `5090098337be5e8cfd8f78ee6ee2971cd843cf52`, which includes the completed RESULT-0021 retrospective. Scope deliberately excludes execution, repair, candidate generation, gameplay interpretation, and permanent process-rule changes.
 - 2026-09-01 — Completed after three initial results failed the canonical ticket-location join, three persistence-first recovery packets succeeded, one planner synthesized them, one fresh checker restored an omitted downstream-consumption constraint, and one further verifier rendered five of five criteria `PASS`. The failure records were retained rather than rewritten.
 - 2026-09-01 — Corrected finalization sequencing. The first full-file verifier identity was invalidated when the caller set terminal status; the next verifier correctly failed because the management worktree had advanced; a further child verifier was rejected for setting its own terminal status and imprecise evidence text. Final `PD-004V4` reused only unchanged independent judged entries and reran the invalidated workspace criterion against clean checkout `5090098`, producing five of five `PASS` without weakening any receipt.
+
+## Status — 2026-09-03, on merge to main
+
+Merged with this note after review against current `main`; the body above is
+unchanged and describes the frozen baseline `5090098` it was written at.
+
+- **Premise 1 is closed, not open.** The measurement-authority finding
+  (`LIVE_AUTHORING_PATH_AUTHORITATIVE`, calib-1 declared but not wired) was
+  true at the baseline and is false on `main` since `RESULT-0027`
+  (2026-09-03): `solver/level-author.js` now imports the frozen
+  `calibrations/calib-1` evaluator. This is the exact staleness boundary the
+  `PD-001R` row names. The repair this record framed as an open owner decision
+  had already been selected by the owner on 2026-08-29
+  (`docs/goals/evaluator-foundation/INTENT_BRIEF.md`), before this campaign ran.
+- **Premise 2 holds, with a live caveat.** The 15-member `generated-batch-04`
+  population is unchanged (batch identity `5b0dd3bf…`), and `RESULT-0021` is
+  unchanged apart from its lifecycle flag. The re-authored `gen-0014` in
+  `solver/candidate-levels.json` (identity `a6c3e360…`) is a different
+  candidate from batch member `gen-0014` (identity `e355a401…`); the warning
+  that bare names collide across batches is no longer hypothetical.
+- **Premise 3 holds.** No accepted qualitative acceptance dimensions,
+  thresholds, or repair-versus-reject rule exist on `main`.
+- **Decision surface, reduced.** The `Repair` route is moot. What remains is
+  an experiment or a human pilot, and the one missing owner input is the
+  qualitative acceptance bar. `READY_TO_CHOOSE` still means evidence
+  sufficiency to choose, not authorization to execute.
+
+Merging this record accepts it as planning history at its baseline. It admits
+no evidence; `EVIDENCE_LEDGER.md` is unchanged by this merge.
