@@ -28,3 +28,24 @@ copy `experiments/TEMPLATE.md` to start one. The gate is
 
 Commit the protocol before the experiment runs. A protocol committed after its
 evidence is a reconstruction, not a preregistration.
+
+## Landing changes on `main`
+
+`main` is protected. Every change reaches it through a pull request whose
+`experiment gate` check is green; a direct push is refused by GitHub and, on
+this machine, by `tools/hooks/pre-push`. Two more rules the protection cannot
+enforce:
+
+1. **Do not merge until the Codex review has completed.** Codex reviews every
+   pull request when it opens and either leaves inline findings or reacts 👍.
+   Wait for one or the other. On 2026-09-03 PR #3 was merged thirty seconds
+   before its review landed; the finding was correct and `main` carried a
+   mislabelled record until PR #4.
+2. **The agent that opened the pull request owns it to the end.** Address every
+   inline finding with a fix commit or a written rebuttal on the thread,
+   resolve the thread, then merge. Do not ask Codex to push fixes into a pull
+   request another agent opened: two writers on one branch is the concurrent
+   writer problem again.
+
+A red gate is fixed in the ledger or the protocol, never by editing the gate,
+grandfathering the record, or `--no-verify`.
