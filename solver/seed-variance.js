@@ -75,7 +75,8 @@ function sourceIdentities() {
   return {
     levels: fileIdentity('src/game.js'),
     engine: fileIdentity('solver/engine.js'),
-    policy: fileIdentity('solver/bot.js'),
+    calibration: fileIdentity('solver/calibration.js'),
+    calibrationSolver: fileIdentity('solver/calibrations/calib-1.js'),
     evaluator: fileIdentity('solver/level-author.js'),
     selector: fileIdentity('solver/generate-levels.js'),
     check: fileIdentity('solver/seed-variance.js'),
@@ -510,7 +511,7 @@ function challengeCommand(flags) {
     valid: observeShortlist(batch.results, validEntitlement, consumerSubject.batchIdentity),
     broken: observeShortlist(batch.results, brokenEntitlement, consumerSubject.batchIdentity),
   };
-  const mutatedIdentities = { ...currentIdentities, evaluator: '0'.repeat(64) };
+  const mutatedIdentities = { ...currentIdentities, calibrationSolver: '0'.repeat(64) };
   let mutationError = null;
   try {
     verifyEntitlement(validEntitlement, { currentIdentities: mutatedIdentities });
@@ -529,7 +530,7 @@ function challengeCommand(flags) {
     consumerObservation,
     identityMutationObservation: {
       status: mutationError ? 'FAIL' : 'PASS',
-      changedIdentity: 'evaluator',
+      changedIdentity: 'calibrationSolver',
       error: mutationError,
     },
   });
@@ -574,7 +575,7 @@ function verifyCommand(flags) {
   if (replay.status !== 'PASS' || canonicalJson(replay.selected) !== canonicalJson(receipt.consumerObservation.valid.selected)) {
     throw new Error('valid consumer CLI replay mismatch');
   }
-  const mutated = { ...currentIdentities, evaluator: '0'.repeat(64) };
+  const mutated = { ...currentIdentities, calibrationSolver: '0'.repeat(64) };
   let mutationFailed = false;
   try {
     verifyChallengeBundle(bundle, { currentIdentities: mutated, executionPath: EXECUTION_PATH, consumerSubject, consumerObservation });

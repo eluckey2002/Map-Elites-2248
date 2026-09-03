@@ -1,0 +1,63 @@
+{
+  "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+  "fitting": {
+    "scoreQuantiles": {
+      "maximum": 170240,
+      "median": 107200,
+      "minimum": 47872,
+      "p25": 94464,
+      "p75": 120512
+    },
+    "seedRange": {
+      "count": 150,
+      "start": 0
+    },
+    "terminalCounts": {
+      "bombExploded": 0,
+      "incomplete": 0,
+      "noValidMoves": 0,
+      "outOfMoves": 150,
+      "total": 150,
+      "win": 0
+    }
+  },
+  "holdout": {
+    "scoreQuantiles": {
+      "maximum": 156864,
+      "median": 103232,
+      "minimum": 49824,
+      "p25": 93696,
+      "p75": 109120
+    },
+    "seedRange": {
+      "count": 300,
+      "start": 100000
+    },
+    "terminalCounts": {
+      "bombExploded": 0,
+      "incomplete": 0,
+      "noValidMoves": 0,
+      "outOfMoves": 109,
+      "total": 300,
+      "win": 191
+    }
+  },
+  "inputIdentities": {
+    "bot": "c6ca87d430a5cfebb02738241a098eac41b1d08912ad68f4150c1b71b15e64b3",
+    "engine": "1327e13f7db9060ff6e54eb176d5f0cdd953c3f619330f115aed9abe6a57ae7a",
+    "levelAuthor": "305731fbfd7e664075dc177e8be48f5bf530d1f8475f5fd8c501cef84149b257"
+  },
+  "receiptIdentity": "f1bb12b1b8716b6fe8e5608bf840257f3f5a31505b70e79c76126181132da5f2",
+  "schemaVersion": 1,
+  "shapeIdentity": "129c358075bb4cca00678ebc597be45bf59dea7b8c661a2372b2e4b3ee2be0a4",
+  "shapeName": "gen-0014-wide-sprint",
+  "targetDerivation": {
+    "demand": 0.95,
+    "demandStatus": "provisional-proposal",
+    "measuredMedian": 107200,
+    "policy": "median-times-demand-rounded-down",
+    "roundedTarget": 101000,
+    "tileScale": 32,
+    "tileScalePolicy": "2 ** floor((level - 1) / 10)"
+  }
+}
