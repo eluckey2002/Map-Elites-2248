@@ -1,0 +1,21 @@
+#!/bin/sh
+# Refuse to push a red experiment gate to main.
+#
+# GitHub branch protection is unavailable on this private repository, so this
+# hook is the refusal. Install once per clone (worktrees share it):
+#   node tools/hooks/install.js
+# It runs tools/verify-experiments.js against the tree being pushed whenever
+# any ref is pushed to refs/heads/main, and exits non-zero on failure.
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+remote="$1"
+zero=0000000000000000000000000000000000000000
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$remote_ref" = "refs/heads/main" ] || continue
+  [ "$local_sha" = "$zero" ] && continue   # deleting main is refused elsewhere
+  echo "pre-push: experiment gate on $local_sha for $remote/main" >&2
+  if ! node tools/verify-experiments.js >&2; then
+    echo "pre-push: REFUSED — EXPERIMENT GATE FAILED. Fix the ledger before pushing to main." >&2
+    exit 1
+  fi
+done
+exit 0

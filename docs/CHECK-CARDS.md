@@ -557,9 +557,17 @@ card in the same commit.
 > someone had to remember to run. Pull request #1 admitted `RESULT-0027` with
 > the gate red and merged ten minutes later; nothing ran it. The gate now runs
 > in `.github/workflows/experiment-gate.yml` on every pull request and every
-> push to `main`. It blocks a merge only once the `experiment gate` job is a
-> required status check in branch protection; until then it is a visible red
-> mark, not a refusal.
+> push to `main`. GitHub branch protection, which would make that job a
+> required check, is unavailable on this private repository's plan (HTTP 403,
+> "Upgrade to GitHub Pro or make this repository public"), so CI is a visible
+> red mark, not a refusal. The refusal is local: `tools/hooks/pre-push`,
+> installed into the clone's shared hooks directory by
+> `node tools/hooks/install.js`, runs the gate on any push to `main` and exits
+> non-zero on failure. Worktrees share that directory, so every session on the
+> machine is covered. Proven 2026-09-03: green main passed; a scratch worktree
+> with `RESULT-0028` re-labelled `heuristic_observation` was refused, exit 1.
+> Does NOT catch: a push from another machine without the hook, a merge
+> clicked in the GitHub web UI, or `git push --no-verify`.
 
 `tools/verify-experiments.js`, run live by `solver/tests/experiments.test.js`.
 It shipped 2026-08-31 with **no cards at all**; the five below were written
