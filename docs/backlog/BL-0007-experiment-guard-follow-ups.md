@@ -1,10 +1,10 @@
 ---
 id: BL-0007
 title: Two holes the registration-commit freeze fix left open
-status: open
+status: done
 milestone: experiment-discipline
 depends_on: []
-updated: 2026-09-02
+updated: 2026-09-03
 ---
 
 # BL-0007 — Experiment-guard follow-ups
@@ -38,3 +38,24 @@ uncaught.
 
 Fixing either defect. Each needs its own gate-check pass with a planted bad
 input observed failing, per `docs/CHECK-CARDS.md`.
+
+## Done — 2026-09-03
+
+Both closed in one change, reviewed under `gate-check`:
+
+1. `protocolDrift` in `tools/verify-experiments.js` compares the whole
+   `protocol.md` on disk against its registration commit and allows only the
+   frontmatter `status:` line to differ. The guard refuses on drift; the gate
+   reports it (`assessProtocolDrift`). Every real protocol on `main` passed
+   this on first run, which matches the audit that found only `status:` had
+   ever changed after registration.
+2. `assessVersionFreeze` now reports a registered protocol with no
+   `version_freeze` instead of returning nothing. The no-git fallback keeps the
+   old behaviour and the check card says so.
+
+Negative tests: `solver/tests/experiments.test.js`, cases `a protocol body
+rewritten after registration is refused, uncommitted or committed`, `the
+ledger gate refuses a registered protocol that freezes nothing`, and the live
+sweep `every protocol in experiments/ matches its registration commit apart
+from status`. Check card `version-freeze-covers-the-evidence`, clauses (d) and
+(e), lists what remains uncaught.

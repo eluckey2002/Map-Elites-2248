@@ -384,3 +384,57 @@ test('the ledger gate reads the freeze from the registration commit too', () => 
   assert.equal(hollowProblems.length, 1);
   assert.match(hollowProblems[0], /template placeholders/);
 });
+
+// BL-0007, closed 2026-09-03. Item 1: only `version_freeze` and `result` were
+// compared against the registration commit, so the question, checks,
+// thresholds, stopping rules and seeds could be rewritten after the data was
+// seen. Item 2: the ledger-side check returned no problems for a protocol with
+// no freeze at all. Both planted here as real commits, each with a positive
+// control.
+const { assessProtocolDrift, protocolDrift } = require('../../tools/verify-experiments.js');
+
+test('a protocol body rewritten after registration is refused, uncommitted or committed', () => {
+  const repo = registrationRepo();
+  const registered = showAtCommit(repo.registration, 'experiments/RESULT-0001/protocol.md', repo.root);
+  // Positive control: untouched, the guard passes.
+  assert.equal(requireProtocol(repo.argv, { root: repo.root }).protocolCommit, repo.registration);
+  // The bypass: freeze untouched, body rewritten (a threshold, a stopping rule, the question).
+  fsg.writeFileSync(repo.protocolPath, `${repo.protocol(`  solver/bot.js: ${repo.hash}`)}\n## Stopping rule\n\nrewritten after seeing the data\n`);
+  assert.notEqual(fsg.readFileSync(repo.protocolPath, 'utf8'), registered, 'the planted edit must actually change the file');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /beyond the status line/);
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'rewrite body');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /beyond the status line/);
+  // The ledger gate sees the same drift, and tolerates a status-only change.
+  const onDisk = fsg.readFileSync(repo.protocolPath, 'utf8');
+  assert.equal(assessProtocolDrift({ id: 'RESULT-0001' }, onDisk, registered).length, 1);
+  assert.equal(protocolDrift(repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete'), registered), null);
+  assert.match(protocolDrift(onDisk, registered), /first divergence at line/);
+});
+
+test('the ledger gate refuses a registered protocol that freezes nothing', () => {
+  const result = { id: 'RESULT-0001' };
+  const registeredNoFreeze = { result: 'RESULT-0001', status: 'registered' };
+  const problems = assessFreeze(result, { status: 'complete' }, [], registeredNoFreeze);
+  assert.equal(problems.length, 1);
+  assert.match(problems[0], /freezes nothing: version_freeze is missing/);
+  // Positive control: a real freeze at registration reports nothing.
+  const registeredWithFreeze = { result: 'RESULT-0001', status: 'registered', version_freeze: { 'solver/bot.js': 'a'.repeat(16) } };
+  assert.deepEqual(assessFreeze(result, { status: 'complete', version_freeze: { 'solver/bot.js': 'a'.repeat(16) } }, [], registeredWithFreeze), []);
+  // Without a registration commit the old behaviour stands, and is declared in the card.
+  assert.deepEqual(assessFreeze(result, { status: 'complete' }, [], null), []);
+});
+
+test('LIVE: every protocol in experiments/ matches its registration commit apart from status', () => {
+  const dir = path.join(ROOT, 'experiments');
+  let checked = 0;
+  for (const id of fsg.readdirSync(dir).filter((name) => /^RESULT-\d+$/.test(name))) {
+    const rel = path.join('experiments', id, 'protocol.md');
+    const commit = addedIn(rel);
+    if (!commit) continue;
+    const registered = showAtCommit(commit, rel);
+    assert.equal(protocolDrift(fsg.readFileSync(path.join(ROOT, rel), 'utf8'), registered), null, id);
+    checked += 1;
+  }
+  assert.ok(checked >= 6, `expected to inspect the real protocols, inspected ${checked}`);
+});

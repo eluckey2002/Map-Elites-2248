@@ -11,7 +11,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const {
-  addedIn, canonicalJson, freezeProblem, parseFrontmatter, sha16, showAtCommit,
+  addedIn, canonicalJson, freezeProblem, parseFrontmatter, protocolDrift, sha16, showAtCommit,
 } = require('../tools/verify-experiments.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -61,7 +61,8 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
     );
   }
 
-  const front = parseFrontmatter(fs.readFileSync(abs, 'utf8'));
+  const diskText = fs.readFileSync(abs, 'utf8');
+  const front = parseFrontmatter(diskText);
   if (!front) throw new UnregisteredExperiment(`${rel} has no frontmatter`);
   if (front.result !== resultId) {
     throw new UnregisteredExperiment(`${rel} declares result ${front.result}, not ${resultId}`);
@@ -78,7 +79,8 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
   // copy is the one that provably predates the data. If the two disagree, the
   // protocol was rewritten after registration, which is the edit the freeze
   // exists to make impossible.
-  const registered = parseFrontmatter(showAtCommit(protocolCommit, rel, root) || '');
+  const registeredText = showAtCommit(protocolCommit, rel, root) || '';
+  const registered = parseFrontmatter(registeredText);
   const commit8 = protocolCommit.slice(0, 8);
   if (!registered) {
     throw new UnregisteredExperiment(`${rel} has no frontmatter at its registration commit ${commit8}`);
@@ -100,6 +102,19 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
       `${rel} version_freeze on disk differs from the copy registered at ${commit8}.\n`
       + '  A protocol rewritten after registration is a reconstruction, not a pre-registration.\n'
       + '  Restore the registered copy, or supersede it with a new protocol against the current code.',
+    );
+  }
+
+  // Beyond the freeze: the question, checks, thresholds, stopping rules and
+  // seeds are the pre-registration. Only `status:` may differ from the
+  // registration commit. (BL-0007 item 1, closed 2026-09-03.)
+  const drift = protocolDrift(diskText, registeredText);
+  if (drift) {
+    throw new UnregisteredExperiment(
+      `${rel} differs from the copy registered at ${commit8} beyond the status line\n`
+      + `  (${drift}).\n`
+      + '  A protocol edited after registration is a reconstruction, not a pre-registration.\n'
+      + '  Restore the registered copy, or supersede it with a new protocol.',
     );
   }
 

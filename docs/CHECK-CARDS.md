@@ -728,7 +728,16 @@ that passed while inspecting nothing.
   reviews found it on the same day. A freeze that is empty or still holds
   `TEMPLATE.md` placeholders is refused outright (it was silently skipped), and
   the guard refuses any protocol whose status is not `registered`.
-- **Level:** file hash, first 16 hex of sha256.
+  **(d)** since 2026-09-03 (BL-0007 item 1), the whole `protocol.md` on disk
+  must equal its registration-commit copy apart from the frontmatter
+  `status:` line; the question, checks, thresholds, stopping rules, seeds and
+  prose are the pre-registration, and any other byte differing is refused by
+  the guard and reported by the gate (`protocolDrift`, `assessProtocolDrift`).
+  **(e)** since 2026-09-03 (BL-0007 item 2), a protocol whose registration
+  commit carries no `version_freeze` at all is reported by the gate instead of
+  silently passing; before this `assessVersionFreeze` returned no problems for
+  it.
+- **Level:** file hash, first 16 hex of sha256; for clause (d), whole-file text.
 - **Kind:** value. Whether the frozen *set* is the right set is unchecked —
   clause (b) is the only pressure on that, and only for files the artifact
   happens to record.
@@ -762,24 +771,33 @@ that passed while inspecting nothing.
   7. **`--exploratory` alongside `--protocol`.** Exploratory wins silently; the
      compute is spent and the artifact cannot back a claim. A wasted run, not
      bad evidence.
-  8. **A protocol body that describes a different experiment.** Only `result`
-     and `version_freeze` are compared against the registration commit; the
-     question, checks, and stopping rules can be rewritten after the fact.
-     Open follow-up, not fixed by the 2026-09-02 merge: `BL-0007`.
-  9. **A protocol with no `version_freeze` at all, at ledger time.**
-     `assessVersionFreeze` returns no problems when the registered frontmatter
-     has no freeze object, so the ledger gate false-PASSes it; only the run-time
-     guard refuses it. Open follow-up: `BL-0007`.
-- **Qualified 2026-09-02:** the merged fix (`de3ef93`) qualifies clause (c)
-  only — the registration-commit read of `version_freeze`, its working-tree
-  equality, and the empty/placeholder refusal. Items 8 and 9 above are what
-  that merge deliberately did not touch.
+  8. **A protocol that was dishonest at its registration commit.** Clause (d)
+     proves the file has not changed since registration; git proves the
+     ordering. Neither proves the author had not already seen the data
+     elsewhere before writing it.
+  9. **A missing freeze when the gate runs without git.** Clause (e) fires only
+     when a registration commit could be read; the no-git fallback path still
+     returns no problems for a protocol with no `version_freeze`.
+  10. **A rewritten registration commit.** Clause (d) reads `git show
+     <registration>:protocol.md`; a force-push that replaces that commit would
+     move the baseline with it. `main` forbids force pushes since 2026-09-03,
+     so this is reachable only on an unprotected branch.
+- **Qualified 2026-09-02:** the merged fix (`de3ef93`) qualified clause (c)
+  only. **Qualified 2026-09-03:** clauses (d) and (e), closing `BL-0007`.
+  Garbage tests on the real seam: rewriting one heading in
+  `experiments/RESULT-0026/protocol.md` on disk turned the live gate red at
+  that line; changing only `status:` in `RESULT-0022` left it green. Mutation
+  checks: neutering the guard's drift comparison and, separately, the gate's
+  missing-freeze branch each turned exactly their own new test red.
 - **Rung:** blocking. **Decay:** live test breaks a registered freeze against the
   real `solver/bot.js` and plants an uncovered source hash, with positive
   controls for both; `solver/tests/experiments.test.js` builds a throwaway git
   repository and plants the rewrite as real commits (uncommitted, committed,
-  placeholder, empty, finished), each with a positive control. Mutation check
-  2026-09-02: removing only the rewrite comparison turns exactly that test red.
+  placeholder, empty, finished), each with a positive control, plus (2026-09-03)
+  a body rewrite uncommitted and committed, a registered protocol with no
+  freeze, and a live sweep asserting every real protocol matches its
+  registration commit apart from `status:`. Mutation check 2026-09-02:
+  removing only the rewrite comparison turns exactly that test red.
 
 ### reported-protocol-lifecycle-is-complete · HARD
 

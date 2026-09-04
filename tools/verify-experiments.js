@@ -165,6 +165,28 @@ function showAtCommit(sha, relPath, cwd = ROOT) {
   } catch { return null; }
 }
 
+// The protocol as a whole, not just its freeze, is what was pre-registered.
+// Exactly one line may legitimately change after registration: the lifecycle
+// marker `status:` in the frontmatter (registered -> complete). Every other
+// byte -- question, checks, thresholds, stopping rules, seeds, prose -- must
+// equal the registration commit, or the record is a reconstruction. Returns
+// null when they agree, else a one-line description of the first divergence.
+function protocolDrift(diskText, registeredText) {
+  if (typeof diskText !== 'string' || typeof registeredText !== 'string') return 'protocol text unavailable';
+  const strip = (text) => text.replace(/^(---\n[\s\S]*?)^status:[^\n]*\n([\s\S]*?\n---)/m, '$1$2');
+  const a = strip(diskText);
+  const b = strip(registeredText);
+  if (a === b) return null;
+  const al = a.split('\n');
+  const bl = b.split('\n');
+  for (let i = 0; i < Math.max(al.length, bl.length); i++) {
+    if (al[i] !== bl[i]) {
+      return `first divergence at line ${i + 1}: registered ${JSON.stringify(bl[i] ?? '<end>')}, on disk ${JSON.stringify(al[i] ?? '<end>')}`;
+    }
+  }
+  return 'texts differ only in length';
+}
+
 // A freeze that is missing, empty, or still holds TEMPLATE.md placeholders
 // enforces nothing: every hash comparison is skipped and the protocol passes
 // as if it had frozen the code. Only tools/new-experiment.js writes real
@@ -283,7 +305,15 @@ function assessVersionFreeze(result, front, opened, registeredFront = null) {
   const problems = [];
   const registered = registeredFront || front;
   const freeze = registered.version_freeze;
-  if (!freeze || typeof freeze !== 'object') return problems;
+  if (!freeze || typeof freeze !== 'object') {
+    // Without a registration commit to read, a missing freeze is out of this
+    // check's reach (callers without git get the old behaviour). With one, a
+    // protocol that froze nothing is a defect, not an exemption: until
+    // 2026-09-03 this returned no problems and the ledger gate passed it.
+    if (!registeredFront) return problems;
+    problems.push(`${result.id}: protocol at its registration commit freezes nothing: version_freeze is missing. Register with tools/new-experiment.js, which records real hashes.`);
+    return problems;
+  }
   const emptiness = freezeProblem(freeze);
   if (emptiness) {
     problems.push(`${result.id}: protocol ${emptiness}. Register with tools/new-experiment.js, which records real hashes.`);
@@ -328,6 +358,17 @@ function assessVersionFreeze(result, front, opened, registeredFront = null) {
     }
   }
   return problems;
+}
+
+// The whole protocol, not only its freeze, must match the registration commit
+// apart from the `status:` line. Closes BL-0007 item 1.
+function assessProtocolDrift(result, diskText, registeredText) {
+  const drift = protocolDrift(diskText, registeredText);
+  if (!drift) return [];
+  return [
+    `${result.id}: protocol.md differs from its registration commit beyond the status line (${drift}). `
+    + 'A protocol edited after registration is a reconstruction; supersede the record instead of editing it.',
+  ];
 }
 
 function assessProtocolLifecycle(result, front, hasReport) {
@@ -413,7 +454,9 @@ function assessExperiments() {
     problems.push(...assessProtocolLifecycle(result, front, hasReport));
     const protoRel = path.join('experiments', result.id, 'protocol.md');
     const protoCommit = addedIn(protoRel);
-    const registeredFront = protoCommit ? parseFrontmatter(showAtCommit(protoCommit, protoRel) || '') : null;
+    const registeredText = protoCommit ? showAtCommit(protoCommit, protoRel) : null;
+    const registeredFront = registeredText ? parseFrontmatter(registeredText) : null;
+    if (registeredText) problems.push(...assessProtocolDrift(result, protocol, registeredText));
     problems.push(...assessVersionFreeze(result, front, opened, registeredFront));
 
     if (hasReport) {
@@ -458,6 +501,6 @@ module.exports = {
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,
-  assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem, openCitedArtifacts,
-  reachableFromHead, reportSection, showAtCommit,
+  assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
+  openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit,
 };
