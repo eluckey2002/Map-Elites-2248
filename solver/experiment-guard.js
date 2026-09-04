@@ -74,6 +74,24 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
       + '  register a new one that supersedes it.',
     );
   }
+  // A finished protocol reopened on disk is still finished: if a report exists
+  // (on disk or committed), or the committed copy already says complete, the
+  // registered status on disk is a rewrite, not a registration (Codex review
+  // on PR #7, eighth round).
+  const reportRel = path.join('experiments', resultId, 'report.md');
+  if (fs.existsSync(path.join(root, reportRel)) || showAtCommit('HEAD', reportRel, root) !== null) {
+    throw new UnregisteredExperiment(
+      `${rel} already has a report (${reportRel}). A protocol that produced a report cannot mint new evidence;\n`
+      + '  register a new one that supersedes it.',
+    );
+  }
+  const committed = parseFrontmatter(showAtCommit('HEAD', rel, root) || '');
+  if (committed && committed.status && committed.status !== 'registered') {
+    throw new UnregisteredExperiment(
+      `${rel} is committed as status: ${committed.status}; the registered status on disk is a reopening, not a registration.\n`
+      + '  Register a new protocol that supersedes it.',
+    );
+  }
 
   // The freeze is read from the registration commit, not from disk. The
   // working-tree copy is whatever the experimenter last wrote; the committed

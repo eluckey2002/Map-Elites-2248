@@ -471,6 +471,26 @@ test('an empty placeholder registered first and filled in later is refused by th
   assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /no frontmatter at its registration commit/);
 });
 
+test('a completed protocol reopened on disk cannot mint new evidence', () => {
+  const repo = registrationRepo();
+  // Finish the run: status complete plus a report, committed.
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete'));
+  fsg.writeFileSync(path.join(path.dirname(repo.protocolPath), 'report.md'), '# report\n');
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'complete with report');
+  // The bypass: flip status back to registered on disk only. Drift would
+  // tolerate it because only the status line differs from registration.
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered'));
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /already has a report/);
+  // Same reopening with the report deleted from disk: HEAD still has it.
+  fsg.unlinkSync(path.join(path.dirname(repo.protocolPath), 'report.md'));
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /already has a report/);
+  // No report anywhere, but committed as complete: still a reopening.
+  repo.git('rm', '-q', '--cached', 'experiments/RESULT-0001/report.md');
+  repo.git('commit', '-q', '-m', 'drop report');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /committed as status: complete/);
+});
+
 test('the ledger gate refuses a registered protocol that freezes nothing', () => {
   const result = { id: 'RESULT-0001' };
   const registeredNoFreeze = { result: 'RESULT-0001', status: 'registered' };
