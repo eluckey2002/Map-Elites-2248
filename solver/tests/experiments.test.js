@@ -384,3 +384,151 @@ test('the ledger gate reads the freeze from the registration commit too', () => 
   assert.equal(hollowProblems.length, 1);
   assert.match(hollowProblems[0], /template placeholders/);
 });
+
+// BL-0007, closed 2026-09-03. Item 1: only `version_freeze` and `result` were
+// compared against the registration commit, so the question, checks,
+// thresholds, stopping rules and seeds could be rewritten after the data was
+// seen. Item 2: the ledger-side check returned no problems for a protocol with
+// no freeze at all. Both planted here as real commits, each with a positive
+// control.
+const { assessProtocolDrift, protocolDrift } = require('../../tools/verify-experiments.js');
+
+test('a protocol body rewritten after registration is refused, uncommitted or committed', () => {
+  const repo = registrationRepo();
+  const registered = showAtCommit(repo.registration, 'experiments/RESULT-0001/protocol.md', repo.root);
+  // Positive control: untouched, the guard passes.
+  assert.equal(requireProtocol(repo.argv, { root: repo.root }).protocolCommit, repo.registration);
+  // The bypass: freeze untouched, body rewritten (a threshold, a stopping rule, the question).
+  fsg.writeFileSync(repo.protocolPath, `${repo.protocol(`  solver/bot.js: ${repo.hash}`)}\n## Stopping rule\n\nrewritten after seeing the data\n`);
+  assert.notEqual(fsg.readFileSync(repo.protocolPath, 'utf8'), registered, 'the planted edit must actually change the file');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /beyond the status line/);
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'rewrite body');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /beyond the status line/);
+  // The ledger gate sees the same drift, and tolerates a status-only change.
+  const onDisk = fsg.readFileSync(repo.protocolPath, 'utf8');
+  assert.equal(assessProtocolDrift({ id: 'RESULT-0001' }, onDisk, registered).length, 1);
+  assert.equal(protocolDrift(repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete'), registered), null);
+  assert.match(protocolDrift(onDisk, registered), /first divergence at line/);
+  // Deleting the status line is not "no change": both copies must carry one
+  // before it is normalised away (Codex review on PR #7).
+  const noStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`).replace(/^status: registered\n/m, '');
+  assert.ok(!/^status:/m.test(noStatus), 'the planted deletion must actually remove the line');
+  assert.match(protocolDrift(noStatus, registered), /on-disk copy has 0 status: lines/);
+  assert.match(protocolDrift(registered, noStatus), /registration commit has 0 status: lines/);
+  const unknownStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'draft');
+  assert.match(protocolDrift(unknownStatus, registered), /on-disk copy has no status/);
+  // Relocating the status line into the body, ahead of a horizontal rule, is
+  // not a frontmatter status (Codex review on PR #7, second round).
+  const relocated = `${noStatus}\nstatus: complete\n\n---\n\nmore\n`;
+  assert.match(protocolDrift(relocated, registered), /on-disk copy has 0 status: lines/);
+  // Positive control: a body containing a horizontal rule is fine when the
+  // frontmatter status is where it belongs.
+  const ruleInBody = `${repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete')}\n---\n\nsection\n`;
+  const ruleInBodyRegistered = `${registered}\n---\n\nsection\n`;
+  assert.equal(protocolDrift(ruleInBody, ruleInBodyRegistered), null);
+  // A bare CR or a Unicode line separator after the status value is a line end
+  // to `$` but not to `[^\n]`; it is drift, not a line (Codex review, round 3).
+  for (const sep of ['\r', '\u2028', '\u2029']) {
+    const smuggled = repo.protocol(`  solver/bot.js: ${repo.hash}`, `complete${sep}question: rewritten after data`);
+    assert.match(protocolDrift(smuggled, registered), /CR or Unicode line terminator/);
+    assert.match(protocolDrift(registered, smuggled), /CR or Unicode line terminator/);
+  }
+  // Two status lines, one annotated: the annotation could carry an edit, so
+  // exactly one plain lifecycle line is required (Codex review, round 4).
+  const twoStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered # threshold=20\nstatus: registered');
+  assert.equal((twoStatus.match(/^status:/gm) || []).length, 2, 'the planted duplicate must actually exist');
+  assert.match(protocolDrift(twoStatus, registered), /has 2 status: lines/);
+  const annotated = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered # threshold=20');
+  assert.match(protocolDrift(annotated, registered), /has no status: registered\|complete line/);
+  // Invalid UTF-8 decodes to U+FFFD, so 0x80 and 0x81 would read as equal;
+  // raw bytes are compared and a non-UTF-8 copy is drift (Codex review, round 7).
+  const regBytes = Buffer.from(registered, 'utf8');
+  const bad80 = Buffer.concat([regBytes, Buffer.from([0x80])]);
+  const bad81 = Buffer.concat([regBytes, Buffer.from([0x81])]);
+  assert.equal(bad80.toString('utf8'), bad81.toString('utf8'), 'the two planted copies must decode identically');
+  assert.match(protocolDrift(bad80, bad81), /registration commit is not valid UTF-8/);
+  assert.match(protocolDrift(bad80, regBytes), /on-disk copy is not valid UTF-8/);
+  assert.equal(protocolDrift(regBytes, regBytes), null);
+  // The guard reads bytes too.
+  fsg.writeFileSync(repo.protocolPath, bad80);
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /not valid UTF-8/);
+});
+
+test('an empty placeholder registered first and filled in later is refused by the guard', () => {
+  const repo = registrationRepo();
+  // Rewrite history in the throwaway repo so the FIRST commit of the protocol
+  // is empty, then a later commit fills it in.
+  fsg.writeFileSync(repo.protocolPath, '');
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '--amend', '-m', 'register placeholder');
+  const placeholderCommit = repo.git('rev-parse', 'HEAD');
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`));
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'fill in after the data');
+  assert.equal(addedIn('experiments/RESULT-0001/protocol.md', repo.root), placeholderCommit);
+  assert.equal(showAtCommit(placeholderCommit, 'experiments/RESULT-0001/protocol.md', repo.root), '');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /no frontmatter at its registration commit/);
+});
+
+test('a completed protocol reopened on disk cannot mint new evidence', () => {
+  const repo = registrationRepo();
+  // Finish the run: status complete plus a report, committed.
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete'));
+  fsg.writeFileSync(path.join(path.dirname(repo.protocolPath), 'report.md'), '# report\n');
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'complete with report');
+  // The bypass: flip status back to registered on disk only. Drift would
+  // tolerate it because only the status line differs from registration.
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered'));
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /already has a report/);
+  // Same reopening with the report deleted from disk: HEAD still has it.
+  fsg.unlinkSync(path.join(path.dirname(repo.protocolPath), 'report.md'));
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /already has a report/);
+  // The scrub: delete the report in a later commit AND commit the protocol
+  // back as registered. HEAD looks clean; history does not (round nine).
+  repo.git('rm', '-q', '--cached', 'experiments/RESULT-0001/report.md');
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'scrub: drop report, reopen protocol');
+  assert.equal(showAtCommit('HEAD', 'experiments/RESULT-0001/report.md', repo.root), null, 'the scrub must actually remove the report from HEAD');
+  assert.match(showAtCommit('HEAD', 'experiments/RESULT-0001/protocol.md', repo.root), /status: registered/);
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /already has a report .*first committed at/);
+});
+
+test('a protocol once committed as complete stays finished even with no report in history', () => {
+  const repo = registrationRepo();
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete'));
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'complete, no report');
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered'));
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'reopen');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /was committed as status: complete at/);
+});
+
+test('the ledger gate refuses a registered protocol that freezes nothing', () => {
+  const result = { id: 'RESULT-0001' };
+  const registeredNoFreeze = { result: 'RESULT-0001', status: 'registered' };
+  const problems = assessFreeze(result, { status: 'complete' }, [], registeredNoFreeze);
+  assert.equal(problems.length, 1);
+  assert.match(problems[0], /freezes nothing: version_freeze is missing/);
+  // Positive control: a real freeze at registration reports nothing.
+  const registeredWithFreeze = { result: 'RESULT-0001', status: 'registered', version_freeze: { 'solver/bot.js': 'a'.repeat(16) } };
+  assert.deepEqual(assessFreeze(result, { status: 'complete', version_freeze: { 'solver/bot.js': 'a'.repeat(16) } }, [], registeredWithFreeze), []);
+  // Without a registration commit the old behaviour stands, and is declared in the card.
+  assert.deepEqual(assessFreeze(result, { status: 'complete' }, [], null), []);
+});
+
+test('LIVE: every protocol in experiments/ matches its registration commit apart from status', () => {
+  const dir = path.join(ROOT, 'experiments');
+  let checked = 0;
+  for (const id of fsg.readdirSync(dir).filter((name) => /^RESULT-\d+$/.test(name))) {
+    const rel = path.join('experiments', id, 'protocol.md');
+    const commit = addedIn(rel);
+    if (!commit) continue;
+    const registered = showAtCommit(commit, rel);
+    assert.equal(protocolDrift(fsg.readFileSync(path.join(ROOT, rel), 'utf8'), registered), null, id);
+    checked += 1;
+  }
+  assert.ok(checked >= 6, `expected to inspect the real protocols, inspected ${checked}`);
+});

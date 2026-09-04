@@ -11,7 +11,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const {
-  addedIn, canonicalJson, freezeProblem, parseFrontmatter, sha16, showAtCommit,
+  addedIn, canonicalJson, committedVersions, freezeProblem, parseFrontmatter, protocolDrift, sha16, showAtCommit,
 } = require('../tools/verify-experiments.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -61,7 +61,9 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
     );
   }
 
-  const front = parseFrontmatter(fs.readFileSync(abs, 'utf8'));
+  const diskBytes = fs.readFileSync(abs);
+  const diskText = diskBytes.toString('utf8');
+  const front = parseFrontmatter(diskText);
   if (!front) throw new UnregisteredExperiment(`${rel} has no frontmatter`);
   if (front.result !== resultId) {
     throw new UnregisteredExperiment(`${rel} declares result ${front.result}, not ${resultId}`);
@@ -72,13 +74,39 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
       + '  register a new one that supersedes it.',
     );
   }
+  // A finished protocol reopened on disk is still finished: if a report exists
+  // (on disk or committed), or the committed copy already says complete, the
+  // registered status on disk is a rewrite, not a registration (Codex review
+  // on PR #7, eighth round).
+  // History, not just HEAD: a report deleted in a later commit, or a protocol
+  // committed back to registered after being complete, is still finished
+  // (Codex review on PR #7, rounds eight and nine).
+  const reportRel = path.join('experiments', resultId, 'report.md');
+  const reportAdded = addedIn(reportRel, root);
+  if (fs.existsSync(path.join(root, reportRel)) || reportAdded) {
+    throw new UnregisteredExperiment(
+      `${rel} already has a report (${reportRel}${reportAdded ? `, first committed at ${reportAdded.slice(0, 8)}` : ''}).\n`
+      + '  A protocol that produced a report cannot mint new evidence; register a new one that supersedes it.',
+    );
+  }
+  const finished = committedVersions(rel, root)
+    .map((v) => ({ sha: v.sha, status: (parseFrontmatter(v.text) || {}).status }))
+    .find((v) => v.status && v.status !== 'registered');
+  if (finished) {
+    throw new UnregisteredExperiment(
+      `${rel} was committed as status: ${finished.status} at ${finished.sha.slice(0, 8)}; a registered status on disk or in a later commit is a reopening, not a registration.\n`
+      + '  Register a new protocol that supersedes it.',
+    );
+  }
 
   // The freeze is read from the registration commit, not from disk. The
   // working-tree copy is whatever the experimenter last wrote; the committed
   // copy is the one that provably predates the data. If the two disagree, the
   // protocol was rewritten after registration, which is the edit the freeze
   // exists to make impossible.
-  const registered = parseFrontmatter(showAtCommit(protocolCommit, rel, root) || '');
+  const registeredBytes = showAtCommit(protocolCommit, rel, root, { raw: true }) || Buffer.alloc(0);
+  const registeredText = registeredBytes.toString('utf8');
+  const registered = parseFrontmatter(registeredText);
   const commit8 = protocolCommit.slice(0, 8);
   if (!registered) {
     throw new UnregisteredExperiment(`${rel} has no frontmatter at its registration commit ${commit8}`);
@@ -100,6 +128,19 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
       `${rel} version_freeze on disk differs from the copy registered at ${commit8}.\n`
       + '  A protocol rewritten after registration is a reconstruction, not a pre-registration.\n'
       + '  Restore the registered copy, or supersede it with a new protocol against the current code.',
+    );
+  }
+
+  // Beyond the freeze: the question, checks, thresholds, stopping rules and
+  // seeds are the pre-registration. Only `status:` may differ from the
+  // registration commit. (BL-0007 item 1, closed 2026-09-03.)
+  const drift = protocolDrift(diskBytes, registeredBytes);
+  if (drift) {
+    throw new UnregisteredExperiment(
+      `${rel} differs from the copy registered at ${commit8} beyond the status line\n`
+      + `  (${drift}).\n`
+      + '  A protocol edited after registration is a reconstruction, not a pre-registration.\n'
+      + '  Restore the registered copy, or supersede it with a new protocol.',
     );
   }
 

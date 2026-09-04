@@ -157,12 +157,99 @@ function pathExistsAtCommit(sha, relPath) {
 // copy of a protocol that carries a point in time, so it is the only copy whose
 // freeze means anything; the working tree is whatever the experimenter last
 // wrote.
-function showAtCommit(sha, relPath, cwd = ROOT) {
+function showAtCommit(sha, relPath, cwd = ROOT, { raw = false } = {}) {
   try {
-    return execFileSync('git', ['show', `${sha}:${relPath}`], {
-      cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    const out = execFileSync('git', ['show', `${sha}:${relPath}`], {
+      cwd, stdio: ['ignore', 'pipe', 'ignore'], ...(raw ? {} : { encoding: 'utf8' }),
     });
+    return out;
   } catch { return null; }
+}
+
+// The protocol as a whole, not just its freeze, is what was pre-registered.
+// Exactly one line may legitimately change after registration: the lifecycle
+// marker `status:` in the frontmatter (registered -> complete). Every other
+// byte -- question, checks, thresholds, stopping rules, seeds, prose -- must
+// equal the registration commit, or the record is a reconstruction. Returns
+// null when they agree, else a one-line description of the first divergence.
+// Accepts a Buffer (preferred: exact bytes) or a string. Invalid UTF-8 decodes
+// to U+FFFD, so two different byte strings could compare equal after
+// decoding (Codex review on PR #7, seventh round); a copy that does not
+// round-trip through UTF-8 is drift, not text.
+function utf8Text(input, label) {
+  if (typeof input === 'string') return { text: input };
+  if (!Buffer.isBuffer(input)) return { problem: `${label} unavailable` };
+  const text = input.toString('utf8');
+  if (!Buffer.from(text, 'utf8').equals(input)) return { problem: `${label} is not valid UTF-8; protocols are UTF-8 text` };
+  return { text };
+}
+
+function protocolDrift(diskInput, registeredInput) {
+  const reg = utf8Text(registeredInput, 'registration commit');
+  if (reg.problem) return reg.problem;
+  const disk = utf8Text(diskInput, 'on-disk copy');
+  if (disk.problem) return disk.problem;
+  const diskText = disk.text;
+  const registeredText = reg.text;
+  // Protocols are LF text. A bare CR, or a Unicode line separator, is a line
+  // end to `$` in multiline mode but not to `[^\n]`, so one could hide a
+  // rewritten key behind the status line (Codex review on PR #7, third
+  // round). Any such terminator is drift, whichever copy carries it.
+  const oddTerminator = /[\r\u2028\u2029]/;
+  if (oddTerminator.test(registeredText)) return 'registration commit contains a CR or Unicode line terminator; protocols are LF text';
+  if (oddTerminator.test(diskText)) return 'on-disk copy contains a CR or Unicode line terminator; protocols are LF text';
+  // Work on the frontmatter block alone (same delimiter rule as
+  // parseFrontmatter), so a status line relocated into the body, or a
+  // horizontal rule later in the body, cannot be mistaken for it (Codex
+  // reviews on PR #7, 2026-09-03).
+  const block = (text) => {
+    const m = /^---\n([\s\S]*?)\n---/.exec(text);
+    return m ? { inner: m[1], start: m.index, end: m.index + m[0].length } : null;
+  };
+  // Exactly one status line, and it must be the plain lifecycle value; the
+  // line removed is that validated line and no other (Codex review on PR #7,
+  // fourth round: a second, annotated status line could carry an edit).
+  const lifecycle = /^status:[ \t]*(registered|complete)[ \t]*$/;
+  const statusLines = (fm) => fm.inner.split('\n').filter((line) => /^status:/.test(line));
+  const problem = (label, fm) => {
+    if (!fm) return `${label} has no frontmatter`;
+    const lines = statusLines(fm);
+    if (lines.length !== 1) return `${label} has ${lines.length} status: lines in its frontmatter; exactly one is required`;
+    if (!lifecycle.test(lines[0])) return `${label} has no status: registered|complete line in its frontmatter`;
+    return null;
+  };
+  const r = block(registeredText);
+  const d = block(diskText);
+  const rp = problem('registration commit', r);
+  if (rp) return rp;
+  const dp = problem('on-disk copy', d);
+  if (dp) return dp;
+  const normalise = (text, fm) => `${text.slice(0, fm.start)}---\n${fm.inner.split('\n').filter((line) => !/^status:/.test(line)).join('\n')}\n---${text.slice(fm.end)}`;
+  const a = normalise(diskText, d);
+  const b = normalise(registeredText, r);
+  if (a === b) return null;
+  const al = a.split('\n');
+  const bl = b.split('\n');
+  for (let i = 0; i < Math.max(al.length, bl.length); i++) {
+    if (al[i] !== bl[i]) {
+      return `first divergence at line ${i + 1}: registered ${JSON.stringify(bl[i] ?? '<end>')}, on disk ${JSON.stringify(al[i] ?? '<end>')}`;
+    }
+  }
+  return 'texts differ only in length';
+}
+
+// Every committed version of a path, newest first, as { sha, text }. Used to
+// ask whether a protocol was EVER committed in a non-registered state, which
+// a later commit cannot undo (Codex review on PR #7, ninth round: delete the
+// report, commit the protocol back to registered, run again).
+function committedVersions(relPath, cwd = ROOT) {
+  let shas = [];
+  try {
+    shas = execFileSync('git', ['log', '--format=%H', '--', relPath], {
+      cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim().split('\n').filter(Boolean);
+  } catch { return []; }
+  return shas.map((sha) => ({ sha, text: showAtCommit(sha, relPath, cwd) })).filter((v) => v.text !== null);
 }
 
 // A freeze that is missing, empty, or still holds TEMPLATE.md placeholders
@@ -283,7 +370,15 @@ function assessVersionFreeze(result, front, opened, registeredFront = null) {
   const problems = [];
   const registered = registeredFront || front;
   const freeze = registered.version_freeze;
-  if (!freeze || typeof freeze !== 'object') return problems;
+  if (!freeze || typeof freeze !== 'object') {
+    // Without a registration commit to read, a missing freeze is out of this
+    // check's reach (callers without git get the old behaviour). With one, a
+    // protocol that froze nothing is a defect, not an exemption: until
+    // 2026-09-03 this returned no problems and the ledger gate passed it.
+    if (!registeredFront) return problems;
+    problems.push(`${result.id}: protocol at its registration commit freezes nothing: version_freeze is missing. Register with tools/new-experiment.js, which records real hashes.`);
+    return problems;
+  }
   const emptiness = freezeProblem(freeze);
   if (emptiness) {
     problems.push(`${result.id}: protocol ${emptiness}. Register with tools/new-experiment.js, which records real hashes.`);
@@ -328,6 +423,17 @@ function assessVersionFreeze(result, front, opened, registeredFront = null) {
     }
   }
   return problems;
+}
+
+// The whole protocol, not only its freeze, must match the registration commit
+// apart from the `status:` line. Closes BL-0007 item 1.
+function assessProtocolDrift(result, diskText, registeredText) {
+  const drift = protocolDrift(diskText, registeredText);
+  if (!drift) return [];
+  return [
+    `${result.id}: protocol.md differs from its registration commit beyond the status line (${drift}). `
+    + 'A protocol edited after registration is a reconstruction; supersede the record instead of editing it.',
+  ];
 }
 
 function assessProtocolLifecycle(result, front, hasReport) {
@@ -413,7 +519,20 @@ function assessExperiments() {
     problems.push(...assessProtocolLifecycle(result, front, hasReport));
     const protoRel = path.join('experiments', result.id, 'protocol.md');
     const protoCommit = addedIn(protoRel);
-    const registeredFront = protoCommit ? parseFrontmatter(showAtCommit(protoCommit, protoRel) || '') : null;
+    // A registration commit that holds an empty or unreadable protocol is a
+    // defect, not a reason to skip: an empty placeholder committed first and
+    // filled in after the data would otherwise fall back to the on-disk copy
+    // (Codex review on PR #7, sixth round).
+    const registeredBytes = protoCommit ? showAtCommit(protoCommit, protoRel, ROOT, { raw: true }) : null;
+    const registeredText = registeredBytes && registeredBytes.length ? registeredBytes.toString('utf8') : null;
+    if (protoCommit && !registeredText) {
+      problems.push(`${result.id}: protocol.md at its registration commit ${protoCommit.slice(0, 8)} is empty or unreadable; a placeholder registered first and filled in later is not a pre-registration.`);
+    }
+    const registeredFront = registeredText ? parseFrontmatter(registeredText) : null;
+    if (protoCommit && registeredText && !registeredFront) {
+      problems.push(`${result.id}: protocol.md at its registration commit ${protoCommit.slice(0, 8)} has no frontmatter.`);
+    }
+    if (registeredText) problems.push(...assessProtocolDrift(result, fs.readFileSync(path.join(dir, 'protocol.md')), registeredBytes));
     problems.push(...assessVersionFreeze(result, front, opened, registeredFront));
 
     if (hasReport) {
@@ -458,6 +577,6 @@ module.exports = {
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,
-  assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem, openCitedArtifacts,
-  reachableFromHead, reportSection, showAtCommit,
+  assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
+  committedVersions, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };

@@ -1,0 +1,4 @@
+# Protocols are compared byte-for-byte against their registration commit
+# (tools/verify-experiments.js protocolDrift), so git must never rewrite their
+# line endings on checkout, whatever core.autocrlf says.
+experiments/** text eol=lf
