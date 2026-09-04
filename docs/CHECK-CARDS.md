@@ -733,6 +733,14 @@ that passed while inspecting nothing.
   `status:` line; the question, checks, thresholds, stopping rules, seeds and
   prose are the pre-registration, and any other byte differing is refused by
   the guard and reported by the gate (`protocolDrift`, `assessProtocolDrift`).
+  The comparison works on the frontmatter block alone when finding the status
+  line, requires exactly one plain `status: registered|complete` line, strips
+  only that line, and treats any CR or Unicode line separator in either copy
+  as drift; `.gitattributes` pins `experiments/**` to LF so a checkout cannot
+  introduce one. Each of those four rules closed a bypass Codex found on PR
+  #7 before merge: a deleted status line, a status line relocated into the
+  body ahead of a horizontal rule, a bare CR hiding a rewritten key, and a
+  second annotated status line.
   **(e)** since 2026-09-03 (BL-0007 item 2), a protocol whose registration
   commit carries no `version_freeze` at all is reported by the gate instead of
   silently passing; before this `assessVersionFreeze` returned no problems for
