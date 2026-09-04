@@ -12,10 +12,11 @@ file and the repository before declaring a range fresh.
 
 | Seeds | Used for | Date | Source |
 |---|---|---|---|
-| 0–149 | candidate fitting (level authoring) | 2026-08 | `solver/level-author.js` |
+| 0–199 | target calibration and move-budget measurements (RESULT-0005, RESULT-0006, RESULT-0007) iterate seeds 0–199; candidate fitting uses 0–149 | 2026-08 | `solver/target-calibration.js`, `solver/move-budget.js`, `solver/level-author.js` |
 | 100,000–100,299 | candidate verification holdout | 2026-08 | `solver/level-author.js` |
+| 200,000–200,039 | shape profiling, 40 seeds | 2026-08 | `solver/profile-shapes.js`, `solver/README.md`, `HANDOFF.md` |
 | 500,000–500,023 | generator screen | 2026-08-20 | `solver/generate-levels.js` |
-| 1,000,000+ | policy search holdout | 2026-08 | `solver/routing-ablation.js` header |
+| 1,000,000–1,000,249 | policy-search holdout, 250 seeds (`--holdout-seeds` default) | 2026-08 | `solver/policy-search.js`, `.orch/policy-search-02.cells.json` |
 | 2,000,000–2,000,299 | width ablation, third disjoint set | 2026-08-20 | `solver/policy-ablation.js` |
 | 2,000,000 | Level 52 owner-game replay corpus, 4 sessions | 2026-09-02 | `solver/test-fixtures/level52-seed2000000-human-games.json` |
 | 3,000,000–3,000,299 | routing-ablation confirmation (default `--first`) | 2026-08-20 | `solver/routing-ablation.js` |
