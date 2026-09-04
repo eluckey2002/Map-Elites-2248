@@ -88,5 +88,8 @@ already exist and neither needs a hatch — record a `direct_source` observation
 of the single run you actually did, which carries no protocol requirement, or
 register a protocol and run it again. Seeds are cheap.
 
+Burned ranges are listed in [SEEDS.md](SEEDS.md); a new protocol declares
+its ranges there before it runs.
+
 If a future session genuinely resents the absence of a hatch on a real case,
 that is the evidence to reopen this. Anticipating the need is not.
