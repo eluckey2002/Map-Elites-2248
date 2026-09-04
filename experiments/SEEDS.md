@@ -12,7 +12,7 @@ file and the repository before declaring a range fresh.
 
 | Seeds | Used for | Date | Source |
 |---|---|---|---|
-| 0–399 | board search screened and measured 400 boards on seeds 0–399; target calibration and move-budget measurements (RESULT-0005, RESULT-0006, RESULT-0007) iterate 0–199; candidate fitting uses 0–149; policy-search screen uses 0–39 | 2026-08 | `solver/board-search-01.json`, `solver/target-calibration.js`, `solver/move-budget.js`, `solver/level-author.js`, `.orch/policy-search-02.cells.json` |
+| 0–499 | the historical 500-seed Level 26 sample (RESULT-0005) through `solver/sweep.js`, which like `solver/game-tester.js` counts from seed 0, so any `--seeds N` run exposes 0–N-1; board search screened and measured 400 boards on seeds 0–399; target calibration and move-budget measurements (RESULT-0005, RESULT-0006, RESULT-0007) iterate 0–199; candidate fitting uses 0–149; policy-search screen uses 0–39 | 2026-08 | `solver/sweep.js`, `EVIDENCE_LEDGER.md` RESULT-0005, `solver/board-search-01.json`, `solver/target-calibration.js`, `solver/move-budget.js`, `solver/level-author.js`, `.orch/policy-search-02.cells.json` |
 | 1–40 and 10,001–10,060 | board-search per-board variant fitting and holdout ranges | 2026-08-20 | `solver/board-search-01.json` (`receipt.fitting.variantRange`, `receipt.holdout.variantRange`) |
 | 100,000–100,299 | candidate verification holdout | 2026-08 | `solver/level-author.js` |
 | 200,000–200,039 | shape profiling, 40 seeds | 2026-08 | `solver/profile-shapes.js`, `solver/README.md`, `HANDOFF.md` |
