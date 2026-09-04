@@ -173,6 +173,13 @@ function showAtCommit(sha, relPath, cwd = ROOT) {
 // null when they agree, else a one-line description of the first divergence.
 function protocolDrift(diskText, registeredText) {
   if (typeof diskText !== 'string' || typeof registeredText !== 'string') return 'protocol text unavailable';
+  // Protocols are LF text. A bare CR, or a Unicode line separator, is a line
+  // end to `$` in multiline mode but not to `[^\n]`, so one could hide a
+  // rewritten key behind the status line (Codex review on PR #7, third
+  // round). Any such terminator is drift, whichever copy carries it.
+  const oddTerminator = /[\r\u2028\u2029]/;
+  if (oddTerminator.test(registeredText)) return 'registration commit contains a CR or Unicode line terminator; protocols are LF text';
+  if (oddTerminator.test(diskText)) return 'on-disk copy contains a CR or Unicode line terminator; protocols are LF text';
   // Work on the frontmatter block alone (same delimiter rule as
   // parseFrontmatter), so a status line relocated into the body, or a
   // horizontal rule later in the body, cannot be mistaken for it (Codex

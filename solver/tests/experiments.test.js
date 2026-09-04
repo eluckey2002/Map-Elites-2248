@@ -427,6 +427,13 @@ test('a protocol body rewritten after registration is refused, uncommitted or co
   const ruleInBody = `${repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete')}\n---\n\nsection\n`;
   const ruleInBodyRegistered = `${registered}\n---\n\nsection\n`;
   assert.equal(protocolDrift(ruleInBody, ruleInBodyRegistered), null);
+  // A bare CR or a Unicode line separator after the status value is a line end
+  // to `$` but not to `[^\n]`; it is drift, not a line (Codex review, round 3).
+  for (const sep of ['\r', '\u2028', '\u2029']) {
+    const smuggled = repo.protocol(`  solver/bot.js: ${repo.hash}`, `complete${sep}question: rewritten after data`);
+    assert.match(protocolDrift(smuggled, registered), /CR or Unicode line terminator/);
+    assert.match(protocolDrift(registered, smuggled), /CR or Unicode line terminator/);
+  }
 });
 
 test('the ledger gate refuses a registered protocol that freezes nothing', () => {
