@@ -434,6 +434,13 @@ test('a protocol body rewritten after registration is refused, uncommitted or co
     assert.match(protocolDrift(smuggled, registered), /CR or Unicode line terminator/);
     assert.match(protocolDrift(registered, smuggled), /CR or Unicode line terminator/);
   }
+  // Two status lines, one annotated: the annotation could carry an edit, so
+  // exactly one plain lifecycle line is required (Codex review, round 4).
+  const twoStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered # threshold=20\nstatus: registered');
+  assert.equal((twoStatus.match(/^status:/gm) || []).length, 2, 'the planted duplicate must actually exist');
+  assert.match(protocolDrift(twoStatus, registered), /has 2 status: lines/);
+  const annotated = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered # threshold=20');
+  assert.match(protocolDrift(annotated, registered), /has no status: registered\|complete line/);
 });
 
 test('the ledger gate refuses a registered protocol that freezes nothing', () => {

@@ -188,14 +188,25 @@ function protocolDrift(diskText, registeredText) {
     const m = /^---\n([\s\S]*?)\n---/.exec(text);
     return m ? { inner: m[1], start: m.index, end: m.index + m[0].length } : null;
   };
-  const lifecycle = /^status:[ \t]*(registered|complete)[ \t]*$/m;
+  // Exactly one status line, and it must be the plain lifecycle value; the
+  // line removed is that validated line and no other (Codex review on PR #7,
+  // fourth round: a second, annotated status line could carry an edit).
+  const lifecycle = /^status:[ \t]*(registered|complete)[ \t]*$/;
+  const statusLines = (fm) => fm.inner.split('\n').filter((line) => /^status:/.test(line));
+  const problem = (label, fm) => {
+    if (!fm) return `${label} has no frontmatter`;
+    const lines = statusLines(fm);
+    if (lines.length !== 1) return `${label} has ${lines.length} status: lines in its frontmatter; exactly one is required`;
+    if (!lifecycle.test(lines[0])) return `${label} has no status: registered|complete line in its frontmatter`;
+    return null;
+  };
   const r = block(registeredText);
   const d = block(diskText);
-  if (!r) return 'registration commit has no frontmatter';
-  if (!d) return 'on-disk copy has no frontmatter';
-  if (!lifecycle.test(r.inner)) return 'registration commit has no status: registered|complete line in its frontmatter';
-  if (!lifecycle.test(d.inner)) return 'on-disk copy has no status: registered|complete line in its frontmatter';
-  const normalise = (text, fm) => `${text.slice(0, fm.start)}---\n${fm.inner.replace(/^status:[^\n]*(\n|$)/m, '')}\n---${text.slice(fm.end)}`;
+  const rp = problem('registration commit', r);
+  if (rp) return rp;
+  const dp = problem('on-disk copy', d);
+  if (dp) return dp;
+  const normalise = (text, fm) => `${text.slice(0, fm.start)}---\n${fm.inner.split('\n').filter((line) => !/^status:/.test(line)).join('\n')}\n---${text.slice(fm.end)}`;
   const a = normalise(diskText, d);
   const b = normalise(registeredText, r);
   if (a === b) return null;
