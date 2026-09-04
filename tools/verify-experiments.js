@@ -487,8 +487,18 @@ function assessExperiments() {
     problems.push(...assessProtocolLifecycle(result, front, hasReport));
     const protoRel = path.join('experiments', result.id, 'protocol.md');
     const protoCommit = addedIn(protoRel);
+    // A registration commit that holds an empty or unreadable protocol is a
+    // defect, not a reason to skip: an empty placeholder committed first and
+    // filled in after the data would otherwise fall back to the on-disk copy
+    // (Codex review on PR #7, sixth round).
     const registeredText = protoCommit ? showAtCommit(protoCommit, protoRel) : null;
+    if (protoCommit && !registeredText) {
+      problems.push(`${result.id}: protocol.md at its registration commit ${protoCommit.slice(0, 8)} is empty or unreadable; a placeholder registered first and filled in later is not a pre-registration.`);
+    }
     const registeredFront = registeredText ? parseFrontmatter(registeredText) : null;
+    if (protoCommit && registeredText && !registeredFront) {
+      problems.push(`${result.id}: protocol.md at its registration commit ${protoCommit.slice(0, 8)} has no frontmatter.`);
+    }
     if (registeredText) problems.push(...assessProtocolDrift(result, protocol, registeredText));
     problems.push(...assessVersionFreeze(result, front, opened, registeredFront));
 

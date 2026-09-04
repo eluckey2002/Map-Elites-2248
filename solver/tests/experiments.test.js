@@ -443,6 +443,22 @@ test('a protocol body rewritten after registration is refused, uncommitted or co
   assert.match(protocolDrift(annotated, registered), /has no status: registered\|complete line/);
 });
 
+test('an empty placeholder registered first and filled in later is refused by the guard', () => {
+  const repo = registrationRepo();
+  // Rewrite history in the throwaway repo so the FIRST commit of the protocol
+  // is empty, then a later commit fills it in.
+  fsg.writeFileSync(repo.protocolPath, '');
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '--amend', '-m', 'register placeholder');
+  const placeholderCommit = repo.git('rev-parse', 'HEAD');
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`));
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'fill in after the data');
+  assert.equal(addedIn('experiments/RESULT-0001/protocol.md', repo.root), placeholderCommit);
+  assert.equal(showAtCommit(placeholderCommit, 'experiments/RESULT-0001/protocol.md', repo.root), '');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /no frontmatter at its registration commit/);
+});
+
 test('the ledger gate refuses a registered protocol that freezes nothing', () => {
   const result = { id: 'RESULT-0001' };
   const registeredNoFreeze = { result: 'RESULT-0001', status: 'registered' };
