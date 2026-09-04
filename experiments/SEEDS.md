@@ -31,6 +31,7 @@ file and the repository before declaring a range fresh.
 | 13,000,000–13,000,299 | target-aware holdout (RESULT-0018, RESULT-0020) | 2026-08-30 | `solver/target-aware-evaluation.js` |
 | 14,000,000–14,000,299 | Level 53 champion baseline for the invalidated promotion rehearsal | 2026-08-30 | tag `archive/codex/target-aware-promotion-rehearsal-2026-08-30` |
 | 20,000,000–22,999,999 | generated-corpus protocol (never executed) and topology controls; 21,000,000 spent by the topology cross-eval, 22,000,000–22,000,011 by RESULT-0024 controls | 2026-08-29, 2026-09-02 | `experiments/RESULT-0024/protocol.md`, `.orch/runs/2026-09-02T05-30-18Z-player-style-topology-cross-eval` |
+| 23,000,000–23,000,199 | RESULT-0024 confirmation, executed and reported | 2026-09-02 | `experiments/RESULT-0024/protocol.md`, `report.md` |
 | 24,000,000–24,000,024 | RESULT-0026 confirmation | 2026-09-02 | `experiments/RESULT-0026/protocol.md` |
 | 30,000,000–30,000,059 | RESULT-0021 sample A | 2026-09-01 | `experiments/RESULT-0021/protocol.md` |
 | 31,000,000–31,000,059 | RESULT-0021 sample B | 2026-09-01 | `experiments/RESULT-0021/protocol.md` |
