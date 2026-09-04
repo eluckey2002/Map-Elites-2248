@@ -61,7 +61,8 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
     );
   }
 
-  const diskText = fs.readFileSync(abs, 'utf8');
+  const diskBytes = fs.readFileSync(abs);
+  const diskText = diskBytes.toString('utf8');
   const front = parseFrontmatter(diskText);
   if (!front) throw new UnregisteredExperiment(`${rel} has no frontmatter`);
   if (front.result !== resultId) {
@@ -79,7 +80,8 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
   // copy is the one that provably predates the data. If the two disagree, the
   // protocol was rewritten after registration, which is the edit the freeze
   // exists to make impossible.
-  const registeredText = showAtCommit(protocolCommit, rel, root) || '';
+  const registeredBytes = showAtCommit(protocolCommit, rel, root, { raw: true }) || Buffer.alloc(0);
+  const registeredText = registeredBytes.toString('utf8');
   const registered = parseFrontmatter(registeredText);
   const commit8 = protocolCommit.slice(0, 8);
   if (!registered) {
@@ -108,7 +110,7 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
   // Beyond the freeze: the question, checks, thresholds, stopping rules and
   // seeds are the pre-registration. Only `status:` may differ from the
   // registration commit. (BL-0007 item 1, closed 2026-09-03.)
-  const drift = protocolDrift(diskText, registeredText);
+  const drift = protocolDrift(diskBytes, registeredBytes);
   if (drift) {
     throw new UnregisteredExperiment(
       `${rel} differs from the copy registered at ${commit8} beyond the status line\n`

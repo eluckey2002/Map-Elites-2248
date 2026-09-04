@@ -441,6 +441,18 @@ test('a protocol body rewritten after registration is refused, uncommitted or co
   assert.match(protocolDrift(twoStatus, registered), /has 2 status: lines/);
   const annotated = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered # threshold=20');
   assert.match(protocolDrift(annotated, registered), /has no status: registered\|complete line/);
+  // Invalid UTF-8 decodes to U+FFFD, so 0x80 and 0x81 would read as equal;
+  // raw bytes are compared and a non-UTF-8 copy is drift (Codex review, round 7).
+  const regBytes = Buffer.from(registered, 'utf8');
+  const bad80 = Buffer.concat([regBytes, Buffer.from([0x80])]);
+  const bad81 = Buffer.concat([regBytes, Buffer.from([0x81])]);
+  assert.equal(bad80.toString('utf8'), bad81.toString('utf8'), 'the two planted copies must decode identically');
+  assert.match(protocolDrift(bad80, bad81), /registration commit is not valid UTF-8/);
+  assert.match(protocolDrift(bad80, regBytes), /on-disk copy is not valid UTF-8/);
+  assert.equal(protocolDrift(regBytes, regBytes), null);
+  // The guard reads bytes too.
+  fsg.writeFileSync(repo.protocolPath, bad80);
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /not valid UTF-8/);
 });
 
 test('an empty placeholder registered first and filled in later is refused by the guard', () => {

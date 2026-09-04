@@ -157,11 +157,12 @@ function pathExistsAtCommit(sha, relPath) {
 // copy of a protocol that carries a point in time, so it is the only copy whose
 // freeze means anything; the working tree is whatever the experimenter last
 // wrote.
-function showAtCommit(sha, relPath, cwd = ROOT) {
+function showAtCommit(sha, relPath, cwd = ROOT, { raw = false } = {}) {
   try {
-    return execFileSync('git', ['show', `${sha}:${relPath}`], {
-      cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    const out = execFileSync('git', ['show', `${sha}:${relPath}`], {
+      cwd, stdio: ['ignore', 'pipe', 'ignore'], ...(raw ? {} : { encoding: 'utf8' }),
     });
+    return out;
   } catch { return null; }
 }
 
@@ -171,8 +172,25 @@ function showAtCommit(sha, relPath, cwd = ROOT) {
 // byte -- question, checks, thresholds, stopping rules, seeds, prose -- must
 // equal the registration commit, or the record is a reconstruction. Returns
 // null when they agree, else a one-line description of the first divergence.
-function protocolDrift(diskText, registeredText) {
-  if (typeof diskText !== 'string' || typeof registeredText !== 'string') return 'protocol text unavailable';
+// Accepts a Buffer (preferred: exact bytes) or a string. Invalid UTF-8 decodes
+// to U+FFFD, so two different byte strings could compare equal after
+// decoding (Codex review on PR #7, seventh round); a copy that does not
+// round-trip through UTF-8 is drift, not text.
+function utf8Text(input, label) {
+  if (typeof input === 'string') return { text: input };
+  if (!Buffer.isBuffer(input)) return { problem: `${label} unavailable` };
+  const text = input.toString('utf8');
+  if (!Buffer.from(text, 'utf8').equals(input)) return { problem: `${label} is not valid UTF-8; protocols are UTF-8 text` };
+  return { text };
+}
+
+function protocolDrift(diskInput, registeredInput) {
+  const reg = utf8Text(registeredInput, 'registration commit');
+  if (reg.problem) return reg.problem;
+  const disk = utf8Text(diskInput, 'on-disk copy');
+  if (disk.problem) return disk.problem;
+  const diskText = disk.text;
+  const registeredText = reg.text;
   // Protocols are LF text. A bare CR, or a Unicode line separator, is a line
   // end to `$` in multiline mode but not to `[^\n]`, so one could hide a
   // rewritten key behind the status line (Codex review on PR #7, third
@@ -491,7 +509,8 @@ function assessExperiments() {
     // defect, not a reason to skip: an empty placeholder committed first and
     // filled in after the data would otherwise fall back to the on-disk copy
     // (Codex review on PR #7, sixth round).
-    const registeredText = protoCommit ? showAtCommit(protoCommit, protoRel) : null;
+    const registeredBytes = protoCommit ? showAtCommit(protoCommit, protoRel, ROOT, { raw: true }) : null;
+    const registeredText = registeredBytes && registeredBytes.length ? registeredBytes.toString('utf8') : null;
     if (protoCommit && !registeredText) {
       problems.push(`${result.id}: protocol.md at its registration commit ${protoCommit.slice(0, 8)} is empty or unreadable; a placeholder registered first and filled in later is not a pre-registration.`);
     }
@@ -499,7 +518,7 @@ function assessExperiments() {
     if (protoCommit && registeredText && !registeredFront) {
       problems.push(`${result.id}: protocol.md at its registration commit ${protoCommit.slice(0, 8)} has no frontmatter.`);
     }
-    if (registeredText) problems.push(...assessProtocolDrift(result, protocol, registeredText));
+    if (registeredText) problems.push(...assessProtocolDrift(result, fs.readFileSync(path.join(dir, 'protocol.md')), registeredBytes));
     problems.push(...assessVersionFreeze(result, front, opened, registeredFront));
 
     if (hasReport) {
@@ -545,5 +564,5 @@ module.exports = {
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
-  openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit,
+  openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };
