@@ -418,6 +418,15 @@ test('a protocol body rewritten after registration is refused, uncommitted or co
   assert.match(protocolDrift(registered, noStatus), /registration commit has no status/);
   const unknownStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'draft');
   assert.match(protocolDrift(unknownStatus, registered), /on-disk copy has no status/);
+  // Relocating the status line into the body, ahead of a horizontal rule, is
+  // not a frontmatter status (Codex review on PR #7, second round).
+  const relocated = `${noStatus}\nstatus: complete\n\n---\n\nmore\n`;
+  assert.match(protocolDrift(relocated, registered), /on-disk copy has no status/);
+  // Positive control: a body containing a horizontal rule is fine when the
+  // frontmatter status is where it belongs.
+  const ruleInBody = `${repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete')}\n---\n\nsection\n`;
+  const ruleInBodyRegistered = `${registered}\n---\n\nsection\n`;
+  assert.equal(protocolDrift(ruleInBody, ruleInBodyRegistered), null);
 });
 
 test('the ledger gate refuses a registered protocol that freezes nothing', () => {

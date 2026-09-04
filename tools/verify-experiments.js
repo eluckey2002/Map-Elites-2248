@@ -173,15 +173,24 @@ function showAtCommit(sha, relPath, cwd = ROOT) {
 // null when they agree, else a one-line description of the first divergence.
 function protocolDrift(diskText, registeredText) {
   if (typeof diskText !== 'string' || typeof registeredText !== 'string') return 'protocol text unavailable';
-  // Both copies must carry a status line before it is normalised away;
-  // otherwise deleting the line on disk would read as "no drift" (Codex
-  // review on PR #7, 2026-09-03).
-  const statusLine = /^---\n[\s\S]*?^status:[ \t]*(registered|complete)[ \t]*$[\s\S]*?\n---/m;
-  if (!statusLine.test(registeredText)) return 'registration commit has no status: registered|complete line in its frontmatter';
-  if (!statusLine.test(diskText)) return 'on-disk copy has no status: registered|complete line in its frontmatter';
-  const strip = (text) => text.replace(/^(---\n[\s\S]*?)^status:[^\n]*\n([\s\S]*?\n---)/m, '$1$2');
-  const a = strip(diskText);
-  const b = strip(registeredText);
+  // Work on the frontmatter block alone (same delimiter rule as
+  // parseFrontmatter), so a status line relocated into the body, or a
+  // horizontal rule later in the body, cannot be mistaken for it (Codex
+  // reviews on PR #7, 2026-09-03).
+  const block = (text) => {
+    const m = /^---\n([\s\S]*?)\n---/.exec(text);
+    return m ? { inner: m[1], start: m.index, end: m.index + m[0].length } : null;
+  };
+  const lifecycle = /^status:[ \t]*(registered|complete)[ \t]*$/m;
+  const r = block(registeredText);
+  const d = block(diskText);
+  if (!r) return 'registration commit has no frontmatter';
+  if (!d) return 'on-disk copy has no frontmatter';
+  if (!lifecycle.test(r.inner)) return 'registration commit has no status: registered|complete line in its frontmatter';
+  if (!lifecycle.test(d.inner)) return 'on-disk copy has no status: registered|complete line in its frontmatter';
+  const normalise = (text, fm) => `${text.slice(0, fm.start)}---\n${fm.inner.replace(/^status:[^\n]*(\n|$)/m, '')}\n---${text.slice(fm.end)}`;
+  const a = normalise(diskText, d);
+  const b = normalise(registeredText, r);
   if (a === b) return null;
   const al = a.split('\n');
   const bl = b.split('\n');
