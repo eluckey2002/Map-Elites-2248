@@ -737,10 +737,23 @@ that passed while inspecting nothing.
   line, requires exactly one plain `status: registered|complete` line, strips
   only that line, and treats any CR or Unicode line separator in either copy
   as drift; `.gitattributes` pins `experiments/**` to LF so a checkout cannot
-  introduce one. Each of those four rules closed a bypass Codex found on PR
-  #7 before merge: a deleted status line, a status line relocated into the
-  body ahead of a horizontal rule, a bare CR hiding a rewritten key, and a
-  second annotated status line.
+  introduce one. Both copies are read as raw bytes and a copy that does not
+  round-trip through UTF-8 is drift; an empty or frontmatter-less copy at the
+  registration commit is reported by the gate, not skipped. The guard also
+  refuses a protocol that is finished by history: a `report.md` ever added
+  under its id, or any committed version of the protocol with a status other
+  than `registered`, even if HEAD now shows `registered` and no report. Each
+  of those rules closed a bypass Codex found on PR #7 before merge, nine
+  rounds in all: a deleted status line; a status line relocated into the body
+  ahead of a horizontal rule; a bare CR hiding a rewritten key; a second
+  annotated status line; a CRLF checkout (answered by `.gitattributes`); an
+  empty placeholder committed first and filled in later; two byte strings
+  that decode to the same U+FFFD text; a completed protocol flipped back to
+  `registered` on disk; and the same flip with the report deleted in a later
+  commit. Live effect on merge day: `RESULT-0023` (report present, status
+  still `registered`) and `RESULT-0022` (frozen `solver/bot.js` has moved)
+  are both refused by the guard, which is the correct standing for two
+  retained studies that must not mint new evidence.
   **(e)** since 2026-09-03 (BL-0007 item 2), a protocol whose registration
   commit carries no `version_freeze` at all is reported by the gate instead of
   silently passing; before this `assessVersionFreeze` returned no problems for
