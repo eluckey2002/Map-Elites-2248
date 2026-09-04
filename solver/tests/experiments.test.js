@@ -414,14 +414,14 @@ test('a protocol body rewritten after registration is refused, uncommitted or co
   // before it is normalised away (Codex review on PR #7).
   const noStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`).replace(/^status: registered\n/m, '');
   assert.ok(!/^status:/m.test(noStatus), 'the planted deletion must actually remove the line');
-  assert.match(protocolDrift(noStatus, registered), /on-disk copy has no status/);
-  assert.match(protocolDrift(registered, noStatus), /registration commit has no status/);
+  assert.match(protocolDrift(noStatus, registered), /on-disk copy has 0 status: lines/);
+  assert.match(protocolDrift(registered, noStatus), /registration commit has 0 status: lines/);
   const unknownStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'draft');
   assert.match(protocolDrift(unknownStatus, registered), /on-disk copy has no status/);
   // Relocating the status line into the body, ahead of a horizontal rule, is
   // not a frontmatter status (Codex review on PR #7, second round).
   const relocated = `${noStatus}\nstatus: complete\n\n---\n\nmore\n`;
-  assert.match(protocolDrift(relocated, registered), /on-disk copy has no status/);
+  assert.match(protocolDrift(relocated, registered), /on-disk copy has 0 status: lines/);
   // Positive control: a body containing a horizontal rule is fine when the
   // frontmatter status is where it belongs.
   const ruleInBody = `${repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete')}\n---\n\nsection\n`;
