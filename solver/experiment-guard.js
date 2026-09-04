@@ -11,7 +11,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const {
-  addedIn, canonicalJson, freezeProblem, parseFrontmatter, protocolDrift, sha16, showAtCommit,
+  addedIn, canonicalJson, committedVersions, freezeProblem, parseFrontmatter, protocolDrift, sha16, showAtCommit,
 } = require('../tools/verify-experiments.js');
 
 const ROOT = path.join(__dirname, '..');
@@ -78,17 +78,23 @@ function requireProtocol(argv, { name = 'this experiment', root = ROOT } = {}) {
   // (on disk or committed), or the committed copy already says complete, the
   // registered status on disk is a rewrite, not a registration (Codex review
   // on PR #7, eighth round).
+  // History, not just HEAD: a report deleted in a later commit, or a protocol
+  // committed back to registered after being complete, is still finished
+  // (Codex review on PR #7, rounds eight and nine).
   const reportRel = path.join('experiments', resultId, 'report.md');
-  if (fs.existsSync(path.join(root, reportRel)) || showAtCommit('HEAD', reportRel, root) !== null) {
+  const reportAdded = addedIn(reportRel, root);
+  if (fs.existsSync(path.join(root, reportRel)) || reportAdded) {
     throw new UnregisteredExperiment(
-      `${rel} already has a report (${reportRel}). A protocol that produced a report cannot mint new evidence;\n`
-      + '  register a new one that supersedes it.',
+      `${rel} already has a report (${reportRel}${reportAdded ? `, first committed at ${reportAdded.slice(0, 8)}` : ''}).\n`
+      + '  A protocol that produced a report cannot mint new evidence; register a new one that supersedes it.',
     );
   }
-  const committed = parseFrontmatter(showAtCommit('HEAD', rel, root) || '');
-  if (committed && committed.status && committed.status !== 'registered') {
+  const finished = committedVersions(rel, root)
+    .map((v) => ({ sha: v.sha, status: (parseFrontmatter(v.text) || {}).status }))
+    .find((v) => v.status && v.status !== 'registered');
+  if (finished) {
     throw new UnregisteredExperiment(
-      `${rel} is committed as status: ${committed.status}; the registered status on disk is a reopening, not a registration.\n`
+      `${rel} was committed as status: ${finished.status} at ${finished.sha.slice(0, 8)}; a registered status on disk or in a later commit is a reopening, not a registration.\n`
       + '  Register a new protocol that supersedes it.',
     );
   }

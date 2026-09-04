@@ -238,6 +238,20 @@ function protocolDrift(diskInput, registeredInput) {
   return 'texts differ only in length';
 }
 
+// Every committed version of a path, newest first, as { sha, text }. Used to
+// ask whether a protocol was EVER committed in a non-registered state, which
+// a later commit cannot undo (Codex review on PR #7, ninth round: delete the
+// report, commit the protocol back to registered, run again).
+function committedVersions(relPath, cwd = ROOT) {
+  let shas = [];
+  try {
+    shas = execFileSync('git', ['log', '--format=%H', '--', relPath], {
+      cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim().split('\n').filter(Boolean);
+  } catch { return []; }
+  return shas.map((sha) => ({ sha, text: showAtCommit(sha, relPath, cwd) })).filter((v) => v.text !== null);
+}
+
 // A freeze that is missing, empty, or still holds TEMPLATE.md placeholders
 // enforces nothing: every hash comparison is skipped and the protocol passes
 // as if it had frozen the code. Only tools/new-experiment.js writes real
@@ -564,5 +578,5 @@ module.exports = {
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
-  openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
+  committedVersions, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };

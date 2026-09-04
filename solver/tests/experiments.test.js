@@ -485,10 +485,25 @@ test('a completed protocol reopened on disk cannot mint new evidence', () => {
   // Same reopening with the report deleted from disk: HEAD still has it.
   fsg.unlinkSync(path.join(path.dirname(repo.protocolPath), 'report.md'));
   assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /already has a report/);
-  // No report anywhere, but committed as complete: still a reopening.
+  // The scrub: delete the report in a later commit AND commit the protocol
+  // back as registered. HEAD looks clean; history does not (round nine).
   repo.git('rm', '-q', '--cached', 'experiments/RESULT-0001/report.md');
-  repo.git('commit', '-q', '-m', 'drop report');
-  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /committed as status: complete/);
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'scrub: drop report, reopen protocol');
+  assert.equal(showAtCommit('HEAD', 'experiments/RESULT-0001/report.md', repo.root), null, 'the scrub must actually remove the report from HEAD');
+  assert.match(showAtCommit('HEAD', 'experiments/RESULT-0001/protocol.md', repo.root), /status: registered/);
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /already has a report .*first committed at/);
+});
+
+test('a protocol once committed as complete stays finished even with no report in history', () => {
+  const repo = registrationRepo();
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete'));
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'complete, no report');
+  fsg.writeFileSync(repo.protocolPath, repo.protocol(`  solver/bot.js: ${repo.hash}`, 'registered'));
+  repo.git('add', '-A');
+  repo.git('commit', '-q', '-m', 'reopen');
+  assert.throws(() => requireProtocol(repo.argv, { root: repo.root }), /was committed as status: complete at/);
 });
 
 test('the ledger gate refuses a registered protocol that freezes nothing', () => {
