@@ -410,6 +410,14 @@ test('a protocol body rewritten after registration is refused, uncommitted or co
   assert.equal(assessProtocolDrift({ id: 'RESULT-0001' }, onDisk, registered).length, 1);
   assert.equal(protocolDrift(repo.protocol(`  solver/bot.js: ${repo.hash}`, 'complete'), registered), null);
   assert.match(protocolDrift(onDisk, registered), /first divergence at line/);
+  // Deleting the status line is not "no change": both copies must carry one
+  // before it is normalised away (Codex review on PR #7).
+  const noStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`).replace(/^status: registered\n/m, '');
+  assert.ok(!/^status:/m.test(noStatus), 'the planted deletion must actually remove the line');
+  assert.match(protocolDrift(noStatus, registered), /on-disk copy has no status/);
+  assert.match(protocolDrift(registered, noStatus), /registration commit has no status/);
+  const unknownStatus = repo.protocol(`  solver/bot.js: ${repo.hash}`, 'draft');
+  assert.match(protocolDrift(unknownStatus, registered), /on-disk copy has no status/);
 });
 
 test('the ledger gate refuses a registered protocol that freezes nothing', () => {

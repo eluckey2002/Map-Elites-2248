@@ -173,6 +173,12 @@ function showAtCommit(sha, relPath, cwd = ROOT) {
 // null when they agree, else a one-line description of the first divergence.
 function protocolDrift(diskText, registeredText) {
   if (typeof diskText !== 'string' || typeof registeredText !== 'string') return 'protocol text unavailable';
+  // Both copies must carry a status line before it is normalised away;
+  // otherwise deleting the line on disk would read as "no drift" (Codex
+  // review on PR #7, 2026-09-03).
+  const statusLine = /^---\n[\s\S]*?^status:[ \t]*(registered|complete)[ \t]*$[\s\S]*?\n---/m;
+  if (!statusLine.test(registeredText)) return 'registration commit has no status: registered|complete line in its frontmatter';
+  if (!statusLine.test(diskText)) return 'on-disk copy has no status: registered|complete line in its frontmatter';
   const strip = (text) => text.replace(/^(---\n[\s\S]*?)^status:[^\n]*\n([\s\S]*?\n---)/m, '$1$2');
   const a = strip(diskText);
   const b = strip(registeredText);
