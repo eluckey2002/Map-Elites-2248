@@ -1,5 +1,18 @@
 # Project evidence instructions
 
+## Before you edit anything
+
+Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
+
+- **`node --test solver/tests/*.test.js` passes 344 of 348. The four failures are deliberate.** Two stale candidate receipts, a generated-view staleness check, and a date-drift check. One of them carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
+- **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still reads PASS, 140,544 points in 20 moves — only the two identity fields should change.
+- **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
+- **Shipped-level win rate cannot rank two policies.** The bot wins 71-100% of every shipped level, so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
+- **The bot and a human are not playing the same game unless you make them.** The shipped policy stops the move it crosses the target; a human plays on for score. Comparing their scores without removing the target measures the objective, not the skill. `human-benchmark.js` prints both arms for this reason.
+- **Never compare one seed against a median over other seeds.** That measures the seed. Pair on identical seeds instead.
+- **`node solver/board-trace.js`** renders a recorded game as text boards with both players' chains drawn on the same position. Chain-value strings hide where the tiles are, which is the thing this game is about.
+- **`play-sessions/` is not the evidence corpus.** `tools/play-server.js` captures ordinary play there, bound to a level and a seed. `recordings/` holds receipted candidate evidence bound to a candidate identity; mixing them puts unresolvable entries where candidate resolution is expected.
+
 Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) before substantive reasoning about game rules, solver results, score feasibility, or experiment status. Use the ledger for current project status and follow its citations to primary repository evidence for factual support.
 
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
