@@ -1,0 +1,22 @@
+{
+  "file": "solver/map-elites-output/archive.json",
+  "sha256": "11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c",
+  "fitnessDefinition": "Paired geometric score lift versus the unchanged champion on identical games. Selection fitness is never reported as holdout evidence.",
+  "representatives": [
+    {
+      "policyId": "a61e8b8e23b7",
+      "storedHoldoutLift": -0.03572341696285384,
+      "recomputedHoldoutLift": -0.03572341696285384
+    },
+    {
+      "policyId": "4cbec6509c34",
+      "storedHoldoutLift": -0.36546835217512097,
+      "recomputedHoldoutLift": -0.36546835217512097
+    },
+    {
+      "policyId": "ebeb9e326a01",
+      "storedHoldoutLift": -0.11925220113880432,
+      "recomputedHoldoutLift": -0.11925220113880432
+    }
+  ]
+}

@@ -1,0 +1,829 @@
+{
+  "kind": "exact-recording-diagnostic",
+  "sourceSha256": {
+    "src/game.js": "22ebc237b6750fff04251c1b123cc6be749b8b75f3146d6e42576c509dc97bf2",
+    "solver/engine.js": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "solver/bot.js": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "solver/human-benchmark.js": "833ffd97f18ef0969584a824c7c460fad30633ef980564baa5ceacfdbb0429c6",
+    "solver/recording-replay.js": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4"
+  },
+  "methodology": "Existing live playBot with original target; with target Infinity/full budget; with target Infinity/human recorded move count. Human replay through existing replay(). No fitting, policy edits, or population claim.",
+  "summary": {
+    "benchmark": {
+      "recordings": 12,
+      "candidateSeedSubjects": 9,
+      "distinctGameConfigurationsAndSeeds": 9,
+      "distinctStartingGrids": 8,
+      "duplicateGroups": [
+        [
+          "recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json",
+          "recordings/7ad0978f96196c4ffe7ac15035340454d8e79ab23ea98003a84443bdcbd01526.json"
+        ],
+        [
+          "recordings/1c87356748ee23c9388d27f6c66ae60ed7d448f2f327f27dbe4d36a46ea6a0d0.json",
+          "recordings/78749fc07834f892542e7abd3317e9ed0b124082fe5b9b36876dac5918aa4b40.json",
+          "recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json"
+        ]
+      ],
+      "replayProblems": [],
+      "humanStopsOnFirstTargetCrossing": 11,
+      "humanUsesLessThanFullBudget": 11,
+      "humanWins": 11,
+      "botWins": 12,
+      "scoring": {
+        "fullBudgetPct": {
+          "botHigher": 12,
+          "humanHigher": 0,
+          "ties": 0,
+          "meanPerRecordingPct": 65.7123931950839,
+          "meanWithEqualSubjectWeightPct": 49.26824388893347
+        },
+        "matchedMovesPct": {
+          "botHigher": 7,
+          "humanHigher": 5,
+          "ties": 0,
+          "meanPerRecordingPct": 20.46648436837181,
+          "meanWithEqualSubjectWeightPct": 6.234189336059137
+        },
+        "targetStopPct": {
+          "botHigher": 7,
+          "humanHigher": 5,
+          "ties": 0,
+          "meanPerRecordingPct": 9.332086305162104,
+          "meanWithEqualSubjectWeightPct": 3.3091511343777875
+        }
+      },
+      "firstTargetCrossingBothWon": {
+        "pairs": 11,
+        "botFaster": 6,
+        "humanFaster": 3,
+        "ties": 2,
+        "meanHumanMinusBotMoves": 0.45454545454545453
+      }
+    },
+    "ordinaryPlay": {
+      "recordings": 3,
+      "candidateSeedSubjects": 3,
+      "distinctGameConfigurationsAndSeeds": 3,
+      "distinctStartingGrids": 3,
+      "duplicateGroups": [],
+      "replayProblems": [],
+      "humanStopsOnFirstTargetCrossing": 3,
+      "humanUsesLessThanFullBudget": 3,
+      "humanWins": 3,
+      "botWins": 3,
+      "scoring": {
+        "fullBudgetPct": {
+          "botHigher": 3,
+          "humanHigher": 0,
+          "ties": 0,
+          "meanPerRecordingPct": 43.597814183552735,
+          "meanWithEqualSubjectWeightPct": 43.597814183552735
+        },
+        "matchedMovesPct": {
+          "botHigher": 0,
+          "humanHigher": 3,
+          "ties": 0,
+          "meanPerRecordingPct": -25.538369383870233,
+          "meanWithEqualSubjectWeightPct": -25.538369383870233
+        },
+        "targetStopPct": {
+          "botHigher": 2,
+          "humanHigher": 1,
+          "ties": 0,
+          "meanPerRecordingPct": -0.6818733049632911,
+          "meanWithEqualSubjectWeightPct": -0.6818733049632911
+        }
+      },
+      "firstTargetCrossingBothWon": {
+        "pairs": 3,
+        "botFaster": 0,
+        "humanFaster": 2,
+        "ties": 1,
+        "meanHumanMinusBotMoves": -1.3333333333333333
+      }
+    }
+  },
+  "rows": [
+    {
+      "file": "recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-gen0014-wide-sprint-043ca53f.json",
+      "fileSha256": "7666abeada41cec51a3a87dca1f5cb249d475d102f001488bb1f6149478aff1e",
+      "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "candidateSha256": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "subjectKey": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16:10",
+      "gameKey": "f83d3dacaed59d2df3768451eb3507ec0d07ed8d5f57f3040fcec38d24479f29",
+      "startingGridSha256": "d13ea5fa75e07b3a7b6acea5eef9e9e61faae85615c36d6fddfb804cf444e19a",
+      "level": 53,
+      "seed": 10,
+      "dimensions": [
+        6,
+        5
+      ],
+      "target": 101000,
+      "budget": 16,
+      "human": {
+        "score": 110208,
+        "moves": 13,
+        "outcome": "win",
+        "firstWinMove": 13,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 110208,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 109376,
+        "moves": 12,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 169472,
+        "moves": 16,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 114496,
+        "moves": 13,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 53.7746806039489,
+      "matchedMovesPct": 3.890824622531941,
+      "targetStopPct": -0.7549361207897842
+    },
+    {
+      "file": "recordings/1c87356748ee23c9388d27f6c66ae60ed7d448f2f327f27dbe4d36a46ea6a0d0.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-51-split-channel-524f37c0.json",
+      "fileSha256": "335bdcf43b446fa6ed9f1a35df221f9a9bfcb4eb4a4c440c9cbb06774af78bb9",
+      "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "candidateSha256": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "subjectKey": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c:1",
+      "gameKey": "9143f80b79bd59866892604d13a1a2bd28bbc95fb0aa4c3d0709df7adb6378dc",
+      "startingGridSha256": "779d0e10310e86446ec70788ad12515eeb26688bf4049ef3be3bf17c26c57e50",
+      "level": 51,
+      "seed": 1,
+      "dimensions": [
+        5,
+        7
+      ],
+      "target": 124000,
+      "budget": 24,
+      "human": {
+        "score": 127040,
+        "moves": 12,
+        "outcome": "win",
+        "firstWinMove": 12,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 127040,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 130240,
+        "moves": 13,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 226368,
+        "moves": 24,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 120320,
+        "moves": 12,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 78.18639798488664,
+      "matchedMovesPct": -5.289672544080604,
+      "targetStopPct": 2.5188916876574208
+    },
+    {
+      "file": "recordings/3d3ba1f05b08030337e805c61c0584e99d157caade3e7e62298769219806258a.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-54-tighter-pace-56c8eab0.json",
+      "fileSha256": "d10f50a26b0eb69cec12dcf54194c13450c960a73e5a8f4574612629067d5c85",
+      "candidateIdentity": "56c8eab00e4a6e2dbf836d0d9aecc041fda4226a53f965e51ac6eaaf837a262f",
+      "candidateSha256": "56c8eab00e4a6e2dbf836d0d9aecc041fda4226a53f965e51ac6eaaf837a262f",
+      "subjectKey": "56c8eab00e4a6e2dbf836d0d9aecc041fda4226a53f965e51ac6eaaf837a262f:1",
+      "gameKey": "ccd4e6e51f4edec5e18d3aea2c6aac551f567236c17e03759e0348c2d0d6bba4",
+      "startingGridSha256": "779d0e10310e86446ec70788ad12515eeb26688bf4049ef3be3bf17c26c57e50",
+      "level": 54,
+      "seed": 1,
+      "dimensions": [
+        5,
+        7
+      ],
+      "target": 150000,
+      "budget": 24,
+      "human": {
+        "score": 152704,
+        "moves": 16,
+        "outcome": "win",
+        "firstWinMove": 16,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 152704,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 162496,
+        "moves": 16,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 226368,
+        "moves": 24,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 142016,
+        "moves": 16,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 48.239731768650465,
+      "matchedMovesPct": -6.9991617770326915,
+      "targetStopPct": 6.412405699916168
+    },
+    {
+      "file": "recordings/44d3802d551202d19d8833768f7ee60562797bbdc874fb4d785ee819c54271f2.json",
+      "corpus": "benchmark",
+      "source": "generated-batch-02.json (gen-0017)",
+      "fileSha256": "036a2af07a1d88026022a2ffbc6928062aea59194b0c78f7b883692e910edd23",
+      "candidateIdentity": "5b12806fa862b5308496fc3897148973203f550e7c1a6e7a78235038bb735b15",
+      "candidateSha256": "5b12806fa862b5308496fc3897148973203f550e7c1a6e7a78235038bb735b15",
+      "subjectKey": "5b12806fa862b5308496fc3897148973203f550e7c1a6e7a78235038bb735b15:777",
+      "gameKey": "29f1a53e4b6479bd00de4d8a1a8c4e71b65f4e70a88294034d0275e592899b46",
+      "startingGridSha256": "ee63a8812d24a3bcda46521b22b85ffafe6c44bc611be7edfd461f16e66b88d6",
+      "level": 52,
+      "seed": 777,
+      "dimensions": [
+        5,
+        5
+      ],
+      "target": 69000,
+      "budget": 16,
+      "human": {
+        "score": 69888,
+        "moves": 11,
+        "outcome": "win",
+        "firstWinMove": 11,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 69888,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 77248,
+        "moves": 10,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 122240,
+        "moves": 16,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 82368,
+        "moves": 11,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 74.9084249084249,
+      "matchedMovesPct": 17.85714285714286,
+      "targetStopPct": 10.531135531135538
+    },
+    {
+      "file": "recordings/7061bbf0132f36d071d6aa1367653116bbac064777a13461cda3e5e170f39af0.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-gen0014-wide-sprint-043ca53f.json",
+      "fileSha256": "24ec42431143886b81678f37793621d68ca6904a52a3c6518e598dabb6d2eddf",
+      "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "candidateSha256": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "subjectKey": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16:2",
+      "gameKey": "61a66edc90b05adfb201dd9ba9e3a1df9013b7065ebf7b1039c759cba1362795",
+      "startingGridSha256": "10617cc8e09124839688d38711807797f35e5eaf53212c81f7cc2f02085af2ee",
+      "level": 53,
+      "seed": 2,
+      "dimensions": [
+        6,
+        5
+      ],
+      "target": 101000,
+      "budget": 16,
+      "human": {
+        "score": 101120,
+        "moves": 13,
+        "outcome": "win",
+        "firstWinMove": 13,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 101120,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 106432,
+        "moves": 11,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 137344,
+        "moves": 16,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 110784,
+        "moves": 13,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 35.82278481012657,
+      "matchedMovesPct": 9.556962025316462,
+      "targetStopPct": 5.253164556962031
+    },
+    {
+      "file": "recordings/78749fc07834f892542e7abd3317e9ed0b124082fe5b9b36876dac5918aa4b40.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-51-split-channel-524f37c0.json",
+      "fileSha256": "ffbf55ae111b4f71fe608c34336585ea3a05e898873d3b5a304d80d4cd0d9de3",
+      "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "candidateSha256": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "subjectKey": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c:1",
+      "gameKey": "9143f80b79bd59866892604d13a1a2bd28bbc95fb0aa4c3d0709df7adb6378dc",
+      "startingGridSha256": "779d0e10310e86446ec70788ad12515eeb26688bf4049ef3be3bf17c26c57e50",
+      "level": 51,
+      "seed": 1,
+      "dimensions": [
+        5,
+        7
+      ],
+      "target": 124000,
+      "budget": 24,
+      "human": {
+        "score": 130496,
+        "moves": 14,
+        "outcome": "win",
+        "firstWinMove": 14,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 130496,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 130240,
+        "moves": 13,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 226368,
+        "moves": 24,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 135360,
+        "moves": 14,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 73.46738597351643,
+      "matchedMovesPct": 3.7273173124080516,
+      "targetStopPct": -0.19617459538989745
+    },
+    {
+      "file": "recordings/7ad0978f96196c4ffe7ac15035340454d8e79ab23ea98003a84443bdcbd01526.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-gen0014-wide-sprint-043ca53f.json",
+      "fileSha256": "b0be97d7ce940b4620157b1fef677014d791f3d3756f25add7a2ace650743776",
+      "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "candidateSha256": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "subjectKey": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16:10",
+      "gameKey": "f83d3dacaed59d2df3768451eb3507ec0d07ed8d5f57f3040fcec38d24479f29",
+      "startingGridSha256": "d13ea5fa75e07b3a7b6acea5eef9e9e61faae85615c36d6fddfb804cf444e19a",
+      "level": 53,
+      "seed": 10,
+      "dimensions": [
+        6,
+        5
+      ],
+      "target": 101000,
+      "budget": 16,
+      "human": {
+        "score": 105216,
+        "moves": 12,
+        "outcome": "win",
+        "firstWinMove": 12,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 105216,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 109376,
+        "moves": 12,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 169472,
+        "moves": 16,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 109376,
+        "moves": 12,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 61.0705596107056,
+      "matchedMovesPct": 3.953771289537711,
+      "targetStopPct": 3.953771289537711
+    },
+    {
+      "file": "recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-51-split-channel-524f37c0.json",
+      "fileSha256": "ed367f1e504cd241ecf215a4845a16aa1e18ffd773ad5aa0e02087d95bbb34b5",
+      "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "candidateSha256": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "subjectKey": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c:1",
+      "gameKey": "9143f80b79bd59866892604d13a1a2bd28bbc95fb0aa4c3d0709df7adb6378dc",
+      "startingGridSha256": "779d0e10310e86446ec70788ad12515eeb26688bf4049ef3be3bf17c26c57e50",
+      "level": 51,
+      "seed": 1,
+      "dimensions": [
+        5,
+        7
+      ],
+      "target": 124000,
+      "budget": 24,
+      "human": {
+        "score": 59584,
+        "moves": 24,
+        "outcome": "lose",
+        "firstWinMove": null,
+        "movesAfterFirstWin": null,
+        "sumOfChainPoints": 59584,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 130240,
+        "moves": 13,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 226368,
+        "moves": 24,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 226368,
+        "moves": 24,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 279.91407089151454,
+      "matchedMovesPct": 279.91407089151454,
+      "targetStopPct": 118.58216970998927
+    },
+    {
+      "file": "recordings/d36e875d08396c3d17bd3137478625f713f8fd3e7c35274f2ccfc5de0273841c.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-gen0010.json",
+      "fileSha256": "f20246723c0ca89a9eb77782b5cabdc14fb9277f99c1a3819e3fec918eb2833e",
+      "candidateIdentity": "7dfcb0568b983691486a122ee02bdad383ed230a4d39bcd2d91c19865cf20d86",
+      "candidateSha256": "7dfcb0568b983691486a122ee02bdad383ed230a4d39bcd2d91c19865cf20d86",
+      "subjectKey": "7dfcb0568b983691486a122ee02bdad383ed230a4d39bcd2d91c19865cf20d86:777",
+      "gameKey": "3975b57c09b00db7ba870fdd10d137fdb737d0417af62d591c2ff9641e99e034",
+      "startingGridSha256": "8bb514fd28ac8b16c7dd4c58d6bb2196391f234ed63be373247cb7b6ed8cdf06",
+      "level": 52,
+      "seed": 777,
+      "dimensions": [
+        6,
+        5
+      ],
+      "target": 114000,
+      "budget": 21,
+      "human": {
+        "score": 114944,
+        "moves": 16,
+        "outcome": "win",
+        "firstWinMove": 16,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 114944,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 121536,
+        "moves": 19,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 152192,
+        "moves": 21,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 83776,
+        "moves": 16,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 32.40534521158129,
+      "matchedMovesPct": -27.11581291759465,
+      "targetStopPct": 5.734966592427626
+    },
+    {
+      "file": "recordings/f0ae3e75fe38b75b961d564b767e1937da54e3be5517e5a121a4e8cb45521d61.json",
+      "corpus": "benchmark",
+      "source": "candidate-levels-52.json",
+      "fileSha256": "c776f73b8044e19fe82ff5265b4019f836f7b4212a9630fe2224077bfe139602",
+      "candidateIdentity": "6f99c09bfae98500617b27af62ac28385e0c99036af41919c54a4ddbb429b084",
+      "candidateSha256": "6f99c09bfae98500617b27af62ac28385e0c99036af41919c54a4ddbb429b084",
+      "subjectKey": "6f99c09bfae98500617b27af62ac28385e0c99036af41919c54a4ddbb429b084:1",
+      "gameKey": "16d2a661e98e4314408d1567d1fe3c79219d1dc09b74b452b5d91263ae37371e",
+      "startingGridSha256": "deafff84aba54799033be298fec2b8fcf2ef932ed3e99a525d0d81826f557918",
+      "level": 52,
+      "seed": 1,
+      "dimensions": [
+        5,
+        7
+      ],
+      "target": 102000,
+      "budget": 24,
+      "human": {
+        "score": 124864,
+        "moves": 15,
+        "outcome": "win",
+        "firstWinMove": 15,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 124864,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 104256,
+        "moves": 16,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 170112,
+        "moves": 24,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 91968,
+        "moves": 15,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 36.23782675550999,
+      "matchedMovesPct": -26.34546386468478,
+      "targetStopPct": -16.504356740133264
+    },
+    {
+      "file": "pilots/HUMAN-PILOT-0001/recordings/3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b.json",
+      "corpus": "benchmark",
+      "source": "generated-batch-04.json (gen-0008)",
+      "fileSha256": "687dfd7d9bc25a858e50d398830b7b6bb52b697e5364e3b104824047adb3a903",
+      "candidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+      "candidateSha256": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+      "subjectKey": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d:424242",
+      "gameKey": "0a5fd5c5c1417e6d316a50a930267a225272126b90fa3a19270e3fab47690659",
+      "startingGridSha256": "c0ba960e9caa61c93354d6925bd1e7f1b554fa4ebdbd201be9b8e9da827a8598",
+      "level": 53,
+      "seed": 424242,
+      "dimensions": [
+        4,
+        8
+      ],
+      "target": 126000,
+      "budget": 24,
+      "human": {
+        "score": 164096,
+        "moves": 19,
+        "outcome": "win",
+        "firstWinMove": 19,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 164096,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 129792,
+        "moves": 15,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 174400,
+        "moves": 24,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 149312,
+        "moves": 19,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 6.279251170046796,
+      "matchedMovesPct": -9.009360374414976,
+      "targetStopPct": -20.90483619344774
+    },
+    {
+      "file": "pilots/HUMAN-PILOT-0002/recordings/c50b34f85e9ee53762ab3093bc4af0839965dd8c275bdc7893c31e011e0a32f6.json",
+      "corpus": "benchmark",
+      "source": "pilots/HUMAN-PILOT-0002/candidate.json",
+      "fileSha256": "846513bc9a0e1e31d5f42b9378ba12a0bad092e9e95b8bc6ebc5c7e9dbfec48a",
+      "candidateIdentity": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4",
+      "candidateSha256": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4",
+      "subjectKey": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4:424242",
+      "gameKey": "8b1d96d963765bfe4498771c0de67995f1d2b79dea158ecb6e1f75139107d3a8",
+      "startingGridSha256": "8eec8b05639f6b0751ce1639ca9da51ee6521d656cbd7222971c5ad88ccf749e",
+      "level": 54,
+      "seed": 424242,
+      "dimensions": [
+        4,
+        8
+      ],
+      "target": 126000,
+      "budget": 24,
+      "human": {
+        "score": 140544,
+        "moves": 20,
+        "outcome": "win",
+        "firstWinMove": 20,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 140544,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 136832,
+        "moves": 19,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 152128,
+        "moves": 24,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 142592,
+        "moves": 20,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 8.242258652094714,
+      "matchedMovesPct": 1.4571948998178597,
+      "targetStopPct": -2.64116575591985
+    },
+    {
+      "file": "play-sessions/31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232.json",
+      "corpus": "ordinary-play",
+      "source": "src/game.js current LEVELS",
+      "fileSha256": "31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232",
+      "candidateIdentity": null,
+      "candidateSha256": "921c6d79588014e2345743f8d546d0cfacb20028cb926a80cc4590fa3c4c528d",
+      "subjectKey": "b18c96bc8b745ff046ae544be466631b540c843a5ab039375fb27c7835640d66:3504920448",
+      "gameKey": "ed8cc39393d453a75bd1376af66127bdcdf06f61bac0da902d9f72754618790c",
+      "startingGridSha256": "e3d883b3a7a21551064f70d17b75e53918480eaefdd69bde2c32c3c241cf9998",
+      "level": 56,
+      "seed": 3504920448,
+      "dimensions": [
+        6,
+        5
+      ],
+      "target": 108000,
+      "budget": 18,
+      "human": {
+        "score": 109120,
+        "moves": 11,
+        "outcome": "win",
+        "firstWinMove": 11,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 109120,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 111680,
+        "moves": 12,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 160768,
+        "moves": 18,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 60480,
+        "moves": 11,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 47.33137829912024,
+      "matchedMovesPct": -44.57478005865103,
+      "targetStopPct": 2.346041055718473
+    },
+    {
+      "file": "play-sessions/640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6.json",
+      "corpus": "ordinary-play",
+      "source": "src/game.js current LEVELS",
+      "fileSha256": "640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6",
+      "candidateIdentity": null,
+      "candidateSha256": "fbb65acde193f6c60f43c97b55a8609e0a2f3be8cf73ba13ee77338e8be4781c",
+      "subjectKey": "0f90c667d3e0e1ecc96166fb7b3e3b04fadb7b8947cef1d6e46106c949c36671:4255346895",
+      "gameKey": "ac1b620cada0bd50a19ef9ef4215324e4b37ed6b0d3d7d98ee089055d7502fda",
+      "startingGridSha256": "823a7cc2fce16ab0b25f929fae701df321ad2be9f62e198eb1cc4a03e54c5a8e",
+      "level": 58,
+      "seed": 4255346895,
+      "dimensions": [
+        5,
+        7
+      ],
+      "target": 162000,
+      "budget": 28,
+      "human": {
+        "score": 170240,
+        "moves": 16,
+        "outcome": "win",
+        "firstWinMove": 16,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 170240,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 162112,
+        "moves": 19,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 234944,
+        "moves": 28,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 139072,
+        "moves": 16,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 38.00751879699249,
+      "matchedMovesPct": -18.30827067669173,
+      "targetStopPct": -4.7744360902255645
+    },
+    {
+      "file": "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json",
+      "corpus": "ordinary-play",
+      "source": "src/game.js current LEVELS",
+      "fileSha256": "b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab",
+      "candidateIdentity": null,
+      "candidateSha256": "7560669733a835e4c831f52a8f8365dfbdb8235fe710ee693d7df1ec72d70d6d",
+      "subjectKey": "d76068de9df5ee71a22a3cb4dc06fc0a59062f3cafdcec70a25e69d6962407c3:2389915636",
+      "gameKey": "82fab1db221b66564d62f96332ceb2afe9c8511a953b64aadf76b89d368d50fe",
+      "startingGridSha256": "3df5c9b08158f585065891468327ef00804c9504931a2cc817d8429d9721834f",
+      "level": 57,
+      "seed": 2389915636,
+      "dimensions": [
+        5,
+        8
+      ],
+      "target": 129000,
+      "budget": 26,
+      "human": {
+        "score": 133760,
+        "moves": 15,
+        "outcome": "win",
+        "firstWinMove": 15,
+        "movesAfterFirstWin": 0,
+        "sumOfChainPoints": 133760,
+        "replayProblems": []
+      },
+      "botTarget": {
+        "score": 134272,
+        "moves": 15,
+        "outcome": "win"
+      },
+      "botFullBudget": {
+        "score": 194560,
+        "moves": 26,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "botMatchedMoves": {
+        "score": 115392,
+        "moves": 15,
+        "outcome": "lose",
+        "reason": "out of moves"
+      },
+      "fullBudgetPct": 45.45454545454546,
+      "matchedMovesPct": -13.73205741626794,
+      "targetStopPct": 0.382775119617218
+    }
+  ]
+}
