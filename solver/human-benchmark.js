@@ -62,10 +62,17 @@ function pilotCandidates() {
   return byIdentity;
 }
 
-function playBot(candidate, seed) {
+// The two players do not share an objective, and comparing their scores
+// without saying so measures the objective, not the skill. The shipped policy
+// is target-aware immediate-finish: it stops the move it crosses the target.
+// A human playing on past the target is not beating it, just answering a
+// different question. `uncapped` removes the target so the bot spends its full
+// move budget on score, which is the arm that compares like with like.
+function playBot(candidate, seed, { uncapped = false } = {}) {
+  const level = uncapped ? { ...candidate, target: Infinity } : candidate;
   const rng = makeRng(seed);
-  const state = createLevelState(candidate, rng);
-  for (let moveIndex = 0; moveIndex < candidate.moves; moveIndex++) {
+  const state = createLevelState(level, rng);
+  for (let moveIndex = 0; moveIndex < level.moves; moveIndex++) {
     const chain = chooseMove(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex) });
     if (!chain) return { score: state.score, moves: state.moves, outcome: 'lose', reason: 'no valid moves' };
     executeChain(state, chain);
@@ -97,6 +104,7 @@ function collect() {
         continue;
       }
       const bot = playBot(candidate, recording.seed);
+      const scoring = playBot(candidate, recording.seed, { uncapped: true });
       rows.push({
         file: name.slice(0, 8),
         level: recording.candidateLevel,
@@ -105,8 +113,11 @@ function collect() {
         target: candidate.target,
         human: { score: recording.score, moves: recording.movesUsed, outcome: recording.outcome },
         bot,
+        scoring,
         scoreDelta: bot.score - recording.score,
         scorePct: ((bot.score - recording.score) / recording.score) * 100,
+        scoringDelta: scoring.score - recording.score,
+        scoringPct: ((scoring.score - recording.score) / recording.score) * 100,
       });
     }
   }
@@ -120,13 +131,14 @@ function main() {
     return 0;
   }
 
-  console.log('board     lvl     seed    target      human          bot        bot - human');
+  console.log('board     lvl     seed      human            bot (stops at target)      bot (plays for score)');
   for (const r of rows) {
     const h = `${r.human.score} / ${r.human.moves}mv ${r.human.outcome === 'win' ? 'W' : 'L'}`;
     const b = `${r.bot.score} / ${r.bot.moves}mv ${r.bot.outcome === 'win' ? 'W' : 'L'}`;
+    const s = `${r.scoring.score} (${(r.scoringPct >= 0 ? '+' : '') + r.scoringPct.toFixed(0)}%)`;
     console.log(
-      `${r.file}  ${String(r.level).padStart(3)}  ${String(r.seed).padStart(7)}  ${String(r.target).padStart(7)}  `
-      + `${h.padStart(18)}  ${b.padStart(18)}  ${(r.scoreDelta >= 0 ? '+' : '') + r.scoreDelta} (${r.scorePct.toFixed(1)}%)`,
+      `${r.file}  ${String(r.level).padStart(3)}  ${String(r.seed).padStart(7)}  `
+      + `${h.padStart(18)}  ${b.padStart(18)} ${((r.scoreDelta >= 0 ? '+' : '') + r.scoreDelta).padStart(8)}  ${s.padStart(18)}`,
     );
   }
 
@@ -136,7 +148,11 @@ function main() {
   const meanPct = rows.reduce((s, r) => s + r.scorePct, 0) / (rows.length || 1);
   console.log(`\n${rows.length} paired boards`);
   console.log(`  outcome:  human won ${humanWins}, bot won ${botWins}`);
-  console.log(`  score:    bot ahead on ${botAhead}/${rows.length} boards, mean difference ${meanPct.toFixed(1)}%`);
+  console.log(`  score, same objective as the human (bot plays its full budget): bot ahead on `
+    + `${rows.filter((r) => r.scoringDelta > 0).length}/${rows.length} boards, `
+    + `mean ${(rows.reduce((s2, r) => s2 + r.scoringPct, 0) / (rows.length || 1)).toFixed(1)}%`);
+  console.log(`  score, as shipped (bot stops at the target): bot ahead on ${botAhead}/${rows.length}, `
+    + `mean ${meanPct.toFixed(1)}% -- this arm compares different objectives and is kept only to show that`);
   if (unresolved.length) {
     console.log(`\n${unresolved.length} recording(s) could not be resolved to a board:`);
     for (const u of unresolved) console.log(`  ${u.file.slice(0, 8)} level ${u.level} identity ${u.identity.slice(0, 12)}`);

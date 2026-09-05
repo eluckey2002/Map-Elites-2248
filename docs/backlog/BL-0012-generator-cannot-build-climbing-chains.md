@@ -1,6 +1,6 @@
 ---
 id: BL-0012
-title: Understand the two boards where the human substantially outscores the bot
+title: The bot's chain generator cannot build long climbing chains
 status: proposed
 milestone: policy-strategy
 depends_on: [BL-0011]
@@ -28,25 +28,43 @@ The paired benchmark across all 12 recorded sessions shows the bot is broadly
 competitive: bot ahead on score on 7 of 12 boards, mean difference +9.3% in the
 bot's favour, and the bot won 12 of 12 where the human won 11 of 12.
 
-Two boards run the other way, and by a lot:
+Two boards appeared to run the other way (`3823dfce` level 53 seed 424242,
+human +20.9%; `f0ae3e75` level 52 seed 1, human +16.5%) — and that appearance
+was **also an artifact**, of a second and more basic kind. The shipped policy
+is target-aware immediate-finish: it stops the move it crosses the target. The
+human kept playing for score. Comparing the two measures the objective, not
+the skill.
 
-| board | level | seed | human | bot | human margin |
-|---|---|---|---|---|---|
-| `3823dfce` | 53 | 424242 | 164,096 / 19mv | 129,792 / 15mv | **+20.9%** |
-| `f0ae3e75` | 52 | 1 | 124,864 / 15mv | 104,256 / 16mv | **+16.5%** |
+Removing the target so the bot spends its full move budget, measured with the
+live bot on the same 12 seeds: **the bot outscores the human on 12 of 12
+boards, mean +65.7%**, ranging from +6% to +280%. The bot is not weaker at
+this game. It is playing a different game, and it wins the human's game too.
 
-## Why this is the interesting question
+## What survives, and is worth acting on
 
-The move-by-move walk of HUMAN-PILOT-0002 shows the two players are not doing
-the same thing at all: on 20 moves they never once chose the same chain, and
-on 3 of those moves the human's chain out-scored **everything the bot
-generated** — not just what it picked. The human's late-game moves are large
-off-lattice climbs (the final move alone scored 37,760, over a quarter of the
-game's total) that the bot's candidate generator trims away by design.
+One finding survives both corrections, because it is about capability rather
+than score: on 3 of the pilot's 20 moves the human's chain out-scored
+**everything the bot generated** — not merely what it chose. The generator is
+a greedy, no-backtracking walk with a beam of 8 per start tile, and it cannot
+construct a long climbing chain.
 
-So the open question is not "is the bot weak" — on average it is not — but
-"what is available on those two boards that the bot's generator never offers
-itself," and whether that is a board property worth detecting.
+Demonstrated concretely at the pilot's final board. The human played a 15-tile
+climbing chain for 37,760 points. The shipped bot played 8 tiles for 1,536.
+Turning off the lattice trimming (`offerFull: 1`) only got it to 3,520, so
+trimming is not the constraint — generation is. The engine's exhaustive
+`findTopChains`, currently reserved for bomb defusal, finds the human's exact
+37,760 chain **in 2ms**, because an endgame board is full of dead tiles and
+barely branches.
+
+**Tested and rejected as an upgrade:** swapping the greedy generator for the
+exhaustive search on the final move only. Measured over 440 games across 11
+levels: mean gain 12 points per game, zero losses converted to wins. The
+trigger almost never fires, because the bot wins long before its last move.
+Search cost was never the problem (median 0.3ms, max 1.6ms). Recorded so the
+idea is not re-attempted on the assumption it was never tried.
+
+The open question is therefore narrower: is there any position where the
+generator's blind spot costs a *win* rather than points it did not need?
 
 ## Acceptance criteria
 
