@@ -126,6 +126,36 @@ const LEVELS = [
     // minChain is 3: the first time the chain requirement steps back down
     // since level 11 raised it. Shipped exactly as authored.
     { level: 53, target: 101000, tileScale: 32, moves: 16, minChain: 3, gridW: 6, gridH: 5, blockers: [] },
+
+    // Levels 54-58, added 2026-09-05. Targets follow the same rule the
+    // authoring pipeline uses -- roundTarget(measured median achievable x
+    // demand) -- measured with the frozen calib-1 evaluator over the standard
+    // 150 fit seeds, then checked over 120 fresh seeds (200000-200119) at the
+    // derived target. Every one came back with zero lockouts and zero bomb
+    // losses. These carry no authoring receipt: they were calibrated by the
+    // pipeline's rule, not produced through `deriveCandidate`, so they are
+    // shipped play content rather than receipted authoring evidence.
+    //
+    // 54 is the exception to the demand rule, deliberately. Its geometry is
+    // the HUMAN-PILOT-0002 board, and the owner has an exact replayed 140,544
+    // on it (`pilots/HUMAN-PILOT-0002`). Bot median there is only 105,664, so
+    // the pipeline rule would have set 89,800 -- a target the owner beats by
+    // over 50%. It ships at 126,000 instead, which the owner's recorded run
+    // clears and the bot wins 23.3% of the time (120 seeds), above the 20%
+    // authoring gate. This is the one level whose difficulty is set from human
+    // evidence rather than bot measurement.
+    { level: 54, target: 126000, tileScale: 32, moves: 24, minChain: 3, gridW: 4, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 3 }, { type: BLOCKER_TYPES.STONE, x: 2, y: 3 }], intro: "A narrow board with a blocked centre." },
+    // Bot median 152,832, demand 0.80, win rate 88.3%.
+    { level: 55, target: 122000, tileScale: 32, moves: 26, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 2 }, { type: BLOCKER_TYPES.BOMB, x: 3, y: 4, timer: 8 }], intro: "Bombs are back, and the board is tighter." },
+    // Bot median 120,832, demand 0.90, win rate 71.7%. The shortest board in
+    // the game at 18 moves, and the second 6-wide one after 53.
+    { level: 56, target: 108000, tileScale: 32, moves: 18, minChain: 3, gridW: 6, gridH: 5, blockers: [], intro: "Wide and shallow. Fewer moves than you want." },
+    // Bot median 152,640, demand 0.85, win rate 77.5%. First board to pair
+    // stone walls with ice between them.
+    { level: 57, target: 129000, tileScale: 32, moves: 26, minChain: 4, gridW: 5, gridH: 8, blockers: [{ type: BLOCKER_TYPES.STONE, x: 1, y: 4 }, { type: BLOCKER_TYPES.STONE, x: 3, y: 4 }, { type: BLOCKER_TYPES.ICE, x: 2, y: 2, duration: 4 }], intro: "Stone walls with a frozen gate between them." },
+    // Bot median 191,104, demand 0.85, win rate 85.8%. Two live bomb timers,
+    // as level 50 did, but on the scale-32 chapter.
+    { level: 58, target: 162000, tileScale: 32, moves: 28, minChain: 4, gridW: 5, gridH: 7, blockers: [{ type: BLOCKER_TYPES.BOMB, x: 1, y: 2, timer: 7 }, { type: BLOCKER_TYPES.BOMB, x: 3, y: 5, timer: 9 }], intro: "Two timers running at once." },
 ];
 
 // ============================================================================
