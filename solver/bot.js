@@ -111,10 +111,16 @@ const CHAIN_PATH_WIDTH = 8;
 // up -- a list cut by exactly the criterion the lookahead exists to override.
 // Turning this on removes a filter; it adds no rule and no tuned weight.
 //
-// Default off pending the measurement pre-registered at
-// `.orch/runs/chain-offer-2026-08-21/preregistration.md`. Adoption is a
-// separate decision from clearing the bar, because a stronger bot re-prices
-// every future level target.
+// Default off. Measured and FALSIFIED decisively, not merely untried:
+// `.orch/runs/chain-offer-2026-08-23/stop-record.md` (100 seeds, 53 levels,
+// 5,300 games/arm) found offering the untrimmed candidates costs 23.14% score
+// (t = -17.8) and loses win rate on all 53 levels (99.4% -> 88.9%). The
+// untrimmed list can hand the lookahead a chain landing off the mergeable
+// lattice (FACT-0006), which bricks the board -- the trimmed list exists to
+// keep that from ever being an option. Turning this on is not an open
+// question. (An earlier, abandoned pre-registration at
+// `.orch/runs/chain-offer-2026-08-21/` never produced a measurement; the
+// 2026-08-23 run above is the one that settled this.)
 const OFFER_FULL_CHAINS = 0;
 
 // Points a candidate earns per cell it empties, beyond its own score.
