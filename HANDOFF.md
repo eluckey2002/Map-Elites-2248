@@ -1,6 +1,130 @@
-> **Current authority:** This document is the snapshot stopped on 2026-08-21. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
+> **Current authority:** This document is the snapshot stopped on 2026-09-05. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
 
 # 2248 Challenge — Handoff
+
+## 2026-09-05: four wrong answers, and the two findings that survived
+
+**Read the mistakes section first. Four separate conclusions in this session were
+wrong, all from the same root cause, and the corrections are more useful than the
+findings.**
+
+### What landed
+
+- **Levels 54-58 ship.** `src/game.js` now carries 58 levels;
+  `solver/tests/gameLevels.test.js` pins that count. Targets follow the
+  authoring rule (measured median achievable x demand, frozen `calib-1`
+  evaluator, 150 fit seeds), then checked over 120 fresh seeds. Zero lockouts,
+  zero bomb losses. Level 54 is the deliberate exception: its geometry is the
+  `HUMAN-PILOT-0002` board where the owner has a replayed 140,544 against a bot
+  median of 105,664, so the rule's 89,800 would be trivial. It ships at 126,000,
+  which the owner has cleared and the bot wins 23.3% of. It is the only level
+  whose difficulty comes from human evidence rather than bot measurement.
+- **`solver/bot.js`'s `rolloutValue` was using the weakest search settings.** It
+  called `findGreedyChains` with no `tieBreak`/`pathWidth`, so the bot's estimate
+  of "how good is the board I'm leaving myself" was computed by a weaker searcher
+  than the bot itself. Fixing it changes which chain is played on 30% of
+  decisions (834 sampled). Five tests pinned exact decisions and were updated.
+  Note this also means **Bot Vision was showing a wrong `rollout` column** — any
+  earlier session spent asking "why did it pick that move" was reading one of
+  five ranking terms wrong.
+- **Ordinary play is now seeded and captured.** It previously drew from
+  `Math.random` with no seed and attached no recorder, so played boards were not
+  reproducible and every session was discarded. `tools/play-server.js` serves the
+  game and writes to `play-sessions/`, kept deliberately separate from
+  `recordings/` (see mistakes).
+- **`solver/human-benchmark.js`** — the bot replayed against every recorded human
+  session on the same board and seed. Shipped levels are won 71-100% by the bot,
+  so they cannot rank two policies; these boards can.
+- **`solver/board-trace.js`** — renders a recorded game as text boards, move by
+  move, with the human's chain and the bot's choice drawn on the same position.
+  Chain-shape strings hide geometry; this was what made the real finding visible.
+- Two game-rule fixes: a bomb exploding on the same move the target is crossed no
+  longer fires a contradictory win (it could record a winning session as a loss),
+  and a `LOCK` blocker — declared but never implemented in `createInitialGrid` —
+  is now refused by the validator instead of silently becoming a plain tile.
+
+### The two findings that survived replication
+
+**1. The bot has no concept of building, and that is the real gap.** The owner's
+highest-scoring moves chain tiles summing 264-356 — tiles they built. Every bot
+chain sums near 64: dealt 2s and 4s. The multiplier caps at 5x past nine tiles,
+so length stops paying and only sum does, which makes building the only route to
+large scores. `turnover` pays the bot 40 points per cell cleared, a standing
+incentive to harvest immediately and never accumulate. `harvestValue` was added
+to approximate the strategy and fires about once per game. Written up as
+`BL-0013` with three proposed terms.
+
+**2. Lattice discipline is conditional, and nothing in the policy knows it.**
+Taking the maximum chain every move wins 12/12 on levels 51, 52, 53, 56 and 58 —
+zero lockouts — and 1/12 on level 54, 6/12 on level 50. Lockouts appear past
+roughly 19 dead tiles, which only occurs in games running past 20 moves. Short
+open boards never get there; long or cramped ones do. The trimming is
+unconditional, so it pays insurance on boards where the game ends first.
+
+### Mistakes
+
+**All four had one root cause: comparing things that were not comparable.**
+
+1. **One seed against a median over different seeds.** Claimed the owner beat the
+   bot by 33% on the pilot board, from one human session (140,544) against the
+   bot's median over 150 unrelated seeds (105,664). On the same seed the bot
+   scores 136,832. That is a 2.6% gap, in the bot's favour on move count.
+2. **Two different objectives.** Corrected to a paired same-seed benchmark, got
+   "bot ahead on 7 of 12, +9.3%", and reported it. Still wrong: the shipped
+   policy is target-aware immediate-finish and stops the move it crosses the
+   target, while the human plays on for score. With the target removed so both
+   maximise score, **the bot outscores the human on 12 of 12 boards, mean
+   +65.7%.** The apparent human advantage was the bot stopping early.
+3. **Two different bots.** The first attempt to fix (2) used `playMeasured`,
+   which runs the frozen `calib-1` evaluator, not the live bot — so it mixed an
+   objective change with a policy change.
+4. **One board.** "Greedy-max beats the bot" held on one level 53 game and died
+   under replication: 88/120 wins against the shipped bot's 108/120.
+
+The habit that caught all four was replicating before reporting. The habit that
+caused all four was reporting a single measurement as a finding.
+
+**A fifth, different in kind:** told the owner their move counter was mislabelled
+and changed it. It was not — `Moves: 8/18` is moves remaining, the completion
+modal shows moves used, 8 + 10 = 18, both correct. Reverted. Do not "fix" the
+owner's understanding of their own game from an inference.
+
+### Operational knowledge worth having before you edit anything
+
+- **`src/game.js` is hash-pinned into `HUMAN-PILOT-0002`'s runtime identity.**
+  Any edit, including a comment, breaks that receipt. Re-derive with
+  `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay result
+  is unchanged (PASS, 140,544 in 20 moves). That is the sanctioned path, not a
+  workaround: only the two identity fields change.
+- **`solver/level-author.js` and `solver/engine.js` are hashed into every
+  candidate receipt** via `defaultInputIdentities()`. A comment-only edit to
+  `level-author.js` was tried here and broke `candidate-levels.json`'s receipt
+  gate, which asks for a full re-authoring of a shipped level. It was reverted
+  and the note moved to `BL-0010` instead. Documentation that would touch those
+  two files belongs somewhere nothing hashes.
+- **Shipping a level number half-arms a receipt-gate exemption.**
+  `exemptionFor` keys `ships` on the level number alone, so shipping level 54 as
+  `central-choke` satisfied that half for `candidate-levels-54.json`, which holds
+  the unrelated `tighter-pace` board. It stayed non-exempt only because no
+  winning recording binds to its identity. All three parts are now pinned in
+  `receiptGate.test.js` so a future recording binding to it stays visible.
+- **`play-sessions/` is not the evidence corpus.** Those files carry a level and
+  a seed, not a candidate identity. Putting them in `recordings/` would place
+  unresolvable entries where candidate resolution is expected and would break the
+  human-benchmark coverage guard.
+- **Exhaustive `findTopChains` is cheap late and expensive early.** 2ms on a
+  cluttered endgame board where dead tiles stop the branching; minutes across a
+  full game's worth of opening positions.
+
+### Where to pick up
+
+`BL-0013` is the next piece of work and it has a decision in it that is not made:
+**the search needs a fitness function.** Score, moves-to-win, and win rate give
+different answers, and conflating them caused mistake 2 above. Moves-to-win on
+the human-benchmark boards is the suggestion, since winning fast is what the
+shipped policy is for, but it is an owner call and it determines what any search
+optimises toward. Per `AGENTS.md` a scoring change is also measured against the
+shipped curve with `solver/game-tester.js` before it lands.
 
 ## 2026-08-21: the bot got 8% stronger, and both gains were structural
 

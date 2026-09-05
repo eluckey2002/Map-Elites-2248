@@ -551,7 +551,22 @@ test('a losing recording does not license an exemption', () => {
 test('the real exemption facts hold for the shipped corpus', () => {
   const shipped = shippedLevels();
   assert.equal(shipped.has(52), true, 'level 52 must ship for its exemption to be legitimate');
-  assert.equal(shipped.has(54), false, 'level 54 does not ship; it must never be exempt');
+  // Level 54 shipped on 2026-09-05, but NOT as this candidate. The shipped
+  // board is "central-choke" (4x8, two stones, target 126000); this store
+  // holds "level-54-tighter-pace" (5x7, open, target 160000). They share only
+  // a level number. `ships` keys on the number alone, so shipping satisfied
+  // that half for a board that never shipped -- which is exactly why the other
+  // half matters: no winning recording binds to this candidate's identity, so
+  // `played` stays false, the store stays non-exempt, and its stale receipt
+  // keeps failing with the honest "re-author or archive it" message rather
+  // than the known-and-decided one. Pinning all three parts so that if a
+  // future recording ever does bind to this identity, the change is visible
+  // instead of silently relabelling a live failure.
+  assert.equal(shipped.has(54), true, 'level 54 shipped 2026-09-05 as central-choke');
+  const tighterPace = exemptionForStore(SOLVER_DIR, 'candidate-levels-54.json');
+  assert.equal(tighterPace.ships, true, 'shipped.has(54) is satisfied by level number alone');
+  assert.equal(tighterPace.played, false, 'no winning recording binds to the tighter-pace identity');
+  assert.equal(tighterPace.exempt, false, 'a different board sharing the number must not exempt this store');
   // Level 53 shipped on 2026-08-21. Pinning the consequence rather than flipping
   // false to true: shipping it ARMS its exemption, because three winning
   // recordings bind to its identity. That is inert while its receipt verifies --
