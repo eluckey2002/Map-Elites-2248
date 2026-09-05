@@ -1,5 +1,5 @@
 {
-  "artifactIdentity": "9ac77400ccacf583ccd3d22008cc37054c1b4e8b200c26377ce6bd2667ef1068",
+  "artifactIdentity": "96752137f1e163841e81d573cdd2d72eabba0347627742fe70b6888766470565",
   "candidateIdentity": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4",
   "challengeReceiptIdentity": "e1416049da8fac5224e2f1b592c4d700e7afdf6f27e30116bee3f71d13070d6f",
   "checkerIdentity": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4",
@@ -22,7 +22,7 @@
     "problems": [],
     "score": 140544
   },
-  "runtimeBundleIdentity": "b0a01b35a4de436ed9dfed1d596f3ff68c806c45f02b25e1e8918e80158c3543",
+  "runtimeBundleIdentity": "20ea9871daaa101b733c87807f460119ad69dfe2ab051373017fcd50f1e37299",
   "schemaVersion": 1,
   "seed": 424242,
   "subjectIdentity": "d06b1679b0984eaec4e6193b51e0216768a7f2dcb48029e2d149c6ba046cd595",

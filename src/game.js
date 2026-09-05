@@ -837,10 +837,31 @@ class Game {
         this.render();
     }
 
+    // Ordinary play used to draw from Math.random and record nothing, so a
+    // played board could not be reproduced and the moves were discarded. Human
+    // sessions are the only benchmark in this project that is not saturated by
+    // the bot, so throwing them away was expensive. Every session now gets a
+    // seed -- the level's own if it pins one, otherwise a fresh random one, so
+    // retrying still re-rolls the board exactly as before -- and is captured
+    // and offered to /api/play-sessions. A server that does not accept it
+    // (a plain static file server) just fails the POST quietly; play is
+    // unaffected.
     loadLevel(levelNum) {
         this.customSession = null;
         const levelData = LEVELS.find(l => l.level === levelNum) || LEVELS[0];
-        this.initializeLevel(levelData, rngForLevel(levelData));
+        const seed = Number.isInteger(levelData.seed)
+            ? levelData.seed
+            : Math.floor(Math.random() * 0x100000000);
+        this.sessionSeed = seed;
+        const capture = new AuthoringCapture({
+            candidateIdentity: null,
+            candidateLevel: levelData.level,
+            seed,
+            submit: (payload) => this.submitPlaySession(payload),
+        });
+        this.initializeLevel(levelData, makeSeededRng(seed), capture);
+        const seedEl = document.getElementById('seedValue');
+        if (seedEl) seedEl.textContent = String(seed);
     }
 
     startCustomLevel(session) {
@@ -863,6 +884,22 @@ class Game {
     finishAuthoring(outcome, reason) {
         if (!this.authoringCapture) return;
         this.authoringCapture.finish({ outcome, reason, score: this.score, movesUsed: this.moves });
+    }
+
+    // Separate endpoint and separate store from /api/recordings on purpose.
+    // Those are receipted candidate-authoring evidence bound to a candidate
+    // identity; these are ordinary play bound only to a level number and seed.
+    // Mixing them would put unresolvable entries into the evidence corpus.
+    async submitPlaySession(payload) {
+        try {
+            await fetch('/api/play-sessions', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+        } catch (error) {
+            // A static server has no such endpoint. Never interrupt play for it.
+        }
     }
 
     async submitRecording(payload) {
