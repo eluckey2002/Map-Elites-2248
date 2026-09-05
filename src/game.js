@@ -238,6 +238,11 @@ function validatePlayableLevel(levelData) {
     if (!Array.isArray(levelData.blockers)) throw new Error('blockers must be an array');
     levelData.blockers.forEach((blocker) => {
         if (!blocker || !Object.values(BLOCKER_TYPES).includes(blocker.type)) throw new Error('blocker type is invalid');
+        // LOCK is declared in BLOCKER_TYPES and treated as blocking by
+        // Tile.isBlocked(), but createInitialGrid has no branch that ever
+        // applies it -- a LOCK entry would silently become a plain numbered
+        // tile. Refuse it here rather than let a broken level pass validation.
+        if (blocker.type === BLOCKER_TYPES.LOCK) throw new Error('blocker type "lock" is declared but not implemented in createInitialGrid');
         requirePlayableInteger(blocker.x, 'blocker x', 0, levelData.gridW - 1);
         requirePlayableInteger(blocker.y, 'blocker y', 0, levelData.gridH - 1);
         if (blocker.type === BLOCKER_TYPES.ICE) requirePlayableInteger(blocker.duration, 'ice duration', 1, 100);
@@ -665,6 +670,10 @@ class Game {
     }
 
     checkWinLose() {
+        // A bomb exploding this same move already ended the game (checkBombs
+        // runs first); don't also fire a contradictory win outcome on top of it.
+        if (this.gameOver || this.levelComplete) return;
+
         // Check win
         if (this.score >= this.targetScore) {
             this.levelComplete = true;
