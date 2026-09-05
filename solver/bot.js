@@ -192,9 +192,9 @@ function simulateCandidate(state, candidate, lookaheadRngFactory) {
 
 // Returns the best chain points achievable anywhere on an already-simulated
 // result (0 if the bomb exploded or no chain exists).
-function rolloutValue(outcome) {
+function rolloutValue(outcome, { tieBreak, pathWidth } = {}) {
   if (checkBombs(outcome.sim)) return 0;
-  const next = findGreedyChains(outcome.sim, { limit: 1 })[0];
+  const next = findGreedyChains(outcome.sim, { limit: 1, tieBreak, pathWidth })[0];
   return next ? next.points : 0;
 }
 
@@ -250,7 +250,7 @@ function describeCandidate(state, candidate, lookaheadRngFactory, params, genera
 
   const outcome = simulateCandidate(state, candidate, lookaheadRngFactory);
   const exploded = checkBombs(outcome.sim);
-  const next = exploded ? null : findGreedyChains(outcome.sim, { limit: 1 })[0];
+  const next = exploded ? null : findGreedyChains(outcome.sim, { limit: 1, tieBreak: params.tieBreak, pathWidth: params.pathWidth })[0];
   const rollout = next ? next.points : 0;
   const placement = remnantPlacementValueFromOutcome(outcome);
   const turnover = (state.tileScale || 1) * (candidate.chain.length - 1);
@@ -430,7 +430,7 @@ function chooseBaseMove(state, options = {}) {
     const emptiedCells = candidate.chain.length - 1; // the last tile survives
     const outcome = simulateCandidate(state, candidate, lookaheadRngFactory);
     const total = candidate.points
-      + wRoll * rolloutValue(outcome)
+      + wRoll * rolloutValue(outcome, { tieBreak, pathWidth })
       + wPlace * remnantPlacementValueFromOutcome(outcome)
       + turnover * (state.tileScale || 1) * emptiedCells
       + wHarvest * harvestValue(outcome.sim, outcome.survivor);

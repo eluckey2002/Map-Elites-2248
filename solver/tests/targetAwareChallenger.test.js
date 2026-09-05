@@ -42,8 +42,8 @@ test('target-aware challenger cashes out the Level 51 teaching board on move 13'
   const level = LEVELS.find(({ level: number }) => number === 51);
   const champion = play(level, 1, chooseBaseMove);
   const challenger = play(level, 1, chooseTargetAwareMove);
-  assert.deepEqual({ moves: champion.state.moves, score: champion.state.score }, { moves: 17, score: 125952 });
-  assert.deepEqual({ moves: challenger.state.moves, score: challenger.state.score }, { moves: 13, score: 130048 });
+  assert.deepEqual({ moves: champion.state.moves, score: champion.state.score }, { moves: 13, score: 125440 });
+  assert.deepEqual({ moves: challenger.state.moves, score: challenger.state.score }, { moves: 13, score: 130240 });
   assert.notEqual(challenger.moves[12], champion.moves[12]);
 });
 

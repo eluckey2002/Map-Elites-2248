@@ -65,7 +65,7 @@ test('chooseMove: public chooser cashes out the Level 51 teaching board on move 
 
   assert.deepEqual({ moves: result.state.moves, score: result.state.score }, {
     moves: 13,
-    score: 130048,
+    score: 130240,
   });
 });
 

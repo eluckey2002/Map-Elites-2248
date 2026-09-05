@@ -48,7 +48,7 @@ test('the champion arm is the pre-promotion chooser, not the promoted bot', () =
   assert.ok(cells[0].changedMoveCount > 0, 'champion and challenger must not be the same policy');
   assert.deepEqual(
     { champion: cells[0].champion.movesToTarget, challenger: cells[0].challenger.movesToTarget },
-    { champion: 17, challenger: 13 },
+    { champion: 13, challenger: 13 },
   );
 });
 

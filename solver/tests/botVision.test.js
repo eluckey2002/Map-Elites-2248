@@ -66,8 +66,8 @@ test('the known short Level 52 session remains exact and deterministic', () => {
   const first = recordSession(level, 2000000);
   const second = recordSession(level, 2000000);
 
-  assert.deepEqual(first.outcome, { result: 'win', movesUsed: 12, finalScore: 109440 });
-  assert.equal(first.moves.length, 12);
+  assert.deepEqual(first.outcome, { result: 'win', movesUsed: 14, finalScore: 116288 });
+  assert.equal(first.moves.length, 14);
   assert.equal(first.sessionIdentity, second.sessionIdentity);
   assert.equal(first.sessionIdentity.length, 64);
   assert.equal(first.policy.identity.length, 64);
@@ -154,8 +154,8 @@ test('Bot Vision server returns the exact session and rejects malformed identiti
   const response = await fetch(`${origin}/api/session?level=52&seed=2000000`);
   assert.equal(response.status, 200);
   const session = await response.json();
-  assert.deepEqual(session.outcome, { result: 'win', movesUsed: 12, finalScore: 109440 });
-  assert.equal(session.moves.length, 12);
+  assert.deepEqual(session.outcome, { result: 'win', movesUsed: 14, finalScore: 116288 });
+  assert.equal(session.moves.length, 14);
 
   for (const url of [
     '/api/session?level=52&seed=not-a-seed',
