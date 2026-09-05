@@ -132,7 +132,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **status:** accepted
 - **scope:** shipped game rules
 - **statement:** Tiles connect by king-move adjacency. The first extension must equal the starting tile. Later extensions may equal or double the preceding tile. A tile cannot be reused, and a valid chain must meet the level's minimum length.
-- **evidence:** `src/game.js`, `Game.handleMove` at lines 277-300 and `Game.isAdjacent`, `Game.canExtendChain`, and `Game.isValidChain` at lines 319-348; parity coverage in `solver/tests/engine.test.js:53-79`.
+- **evidence:** `src/game.js`, `Game.handleTileClick` at line 428 and `Game.isAdjacent`, `Game.canExtendChain`, and `Game.isValidChain` at lines 490, 496, 510; parity coverage in `solver/tests/engine.test.js:53-79`.
 - **proof_class:** `direct_source`
 - **as_of:** 2026-08-11
 - **reverify:** Run `node --test solver/tests/engine.test.js`; expect all tests to pass, then inspect the cited symbols.
@@ -146,7 +146,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **status:** accepted
 - **scope:** shipped game rules
 - **statement:** A legal chain scores `floor(chain sum × length multiplier)`. Multipliers are 1 for fewer than 3 tiles, 1.5 for 3-4, 2 for 5-6, 3 for 7-8, and 5 for 9 or more. The final selected tile survives with the chain sum; the other selected tiles are removed; one move is spent.
-- **evidence:** `src/game.js`, `Game.calculateChainValue`, `Game.getChainMultiplier`, and `Game.executeChain` at lines 350-410; headless parity surface `solver/engine.js:77-113`; tests `solver/tests/engine.test.js:81-132`.
+- **evidence:** `src/game.js`, `Game.calculateChainValue`, `Game.getChainMultiplier`, and `Game.executeChain` at lines 521, 529, 538; headless parity surface `solver/engine.js:77-113`; tests `solver/tests/engine.test.js:81-132`.
 - **proof_class:** `direct_source`
 - **as_of:** 2026-08-11
 - **reverify:** Run `node --test solver/tests/engine.test.js`; expect all tests to pass, then inspect the cited symbols.
@@ -160,7 +160,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **status:** superseded
 - **scope:** blocker-free Level 26 transition
 - **statement:** Unselected tiles persist. After a length-`L` merge, gravity acts by column and exactly `L - 1` empty cells are refilled in column-major order. Refill values are 2, 4, or 8 with probabilities 0.6, 0.3, and 0.1. The merge conserves board value; only refills add value.
-- **evidence:** `src/game.js`, `Game.applyGravity` and `Game.spawnNewTiles` at lines 416-470; `solver/engine.js:115-151`; parity tests `solver/tests/engine.test.js:134-182`; concrete conservation replay in `.orch/tickets/level26-move1-envelope-2026-08-11.md:65-80`.
+- **evidence:** `src/game.js`, `Game.applyGravity` and `Game.spawnNewTiles` at lines 607, 628; `solver/engine.js:115-151`; parity tests `solver/tests/engine.test.js:134-182`; concrete conservation replay in `.orch/tickets/level26-move1-envelope-2026-08-11.md:65-80`.
 - **proof_class:** `direct_source`
 - **as_of:** 2026-08-11
 - **reverify:** Run `node --test solver/tests/engine.test.js solver/tests/exact-score.test.js`; expect all tests to pass, then inspect the cited symbols.
