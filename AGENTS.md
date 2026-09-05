@@ -16,6 +16,8 @@ Not every remark is a directive. Owner messages mix thinking-out-loud with instr
 
 Change game rules systematically, never ad hoc. A rule or scoring change is measured with `solver/game-tester.js` against the shipped curve before it lands, and gets a ledger record when it does.
 
+A captured play session is work to do, not a question to ask. When a new file appears in `play-sessions/`, analyse it and report — do not ask whether the owner wants it looked at.
+
 ## Experiments
 
 A claim that generalizes beyond what it measured needs a protocol registered
