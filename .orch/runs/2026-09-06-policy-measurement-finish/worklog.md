@@ -29,4 +29,7 @@ The same independent whole context then checks these closure-only edits and link
 
 ## Terminal
 
-Open; not whole Step2 acceptance.
+Whole W1/W2/W3 PASS at49214e5, weakest judged, independently returned within
+bound and lease released. Root accepted this evidence and applied only the
+predeclared closure metadata. Closure-only independent recheck pending;
+baseline, ledger claims and all protected inputs remain unchanged.

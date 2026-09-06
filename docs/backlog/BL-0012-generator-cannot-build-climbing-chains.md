@@ -28,7 +28,8 @@ chain found by the recording and exhaustive search. This is a generation miss
 on a human position, not the final allowed move or the bot's own trajectory.
 The scorer already values future opportunities. See
 [CORRECTION-0006](../../EVIDENCE_LEDGER.md#correction-0006--current-policy-capabilities-and-the-pilot-generation-miss).
-Step 3's bot-trajectory audit remains blocked on Step 2.
+Step 3's bot-trajectory audit is ready but unexecuted after
+[Step 2 acceptance](../evaluation/POLICY-EVAL-0001/measurement-acceptance.md).
 
 ## Historical account — what was found, including a correction
 

@@ -1,0 +1,144 @@
+{
+  "documentCommit": "747723a840932d838d23a181133a4ce14ba2eb13",
+  "documentBase": "a248deb",
+  "documents": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "0e2534986fc183c40cb8c4fb68337359cabf23983dc57dce3d71861963841866"
+    },
+    {
+      "path": "CURRENT.md",
+      "sha256": "cd6baead4d49aefa546eb4e0f306b0b2ad0182b3e176cbf85a9bdf9b6232b65b"
+    },
+    {
+      "path": "EVIDENCE_LEDGER.md",
+      "sha256": "95a93ebdcced0379329e128e34b172078a627bd6ed2003baa48501990c156cbb"
+    },
+    {
+      "path": "HANDOFF.md",
+      "sha256": "ffa6800721a222d99c4c6431ef435fe991288ce37d3dfea289b36d436e914a4d"
+    },
+    {
+      "path": "docs/CHECK-CARDS.md",
+      "sha256": "4c90b3390cbe7fd568e5110e1c7e6795a7e5a85de9c4e842a6c6e116e912a38d"
+    },
+    {
+      "path": "docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md",
+      "sha256": "baedc88f51d73f1f836a76a7d897691a3c5505d7ae38f99e3045e6507b097643"
+    },
+    {
+      "path": "docs/backlog/BL-0012-generator-cannot-build-climbing-chains.md",
+      "sha256": "d75145a3d1f40ac03f2f5e24e5d8dbdb9cf1bb7016a5089091cb67a8d86f4a6d"
+    },
+    {
+      "path": "docs/backlog/BL-0013-policy-vocabulary-gaps.md",
+      "sha256": "dfcbafe73b20483bd49d50410f82d1c202d731b5dcac322a3df6c0f879ed1460"
+    },
+    {
+      "path": "docs/backlog/BL-0014-policy-improvement-sequence.md",
+      "sha256": "30904705eda93d506512f0e65fe1f45cebad022d8e92080209931560d48bb183"
+    },
+    {
+      "path": "docs/evaluation/POLICY-EVAL-0001/baseline.md",
+      "sha256": "ea97c81ac72406244d45156fd4af4451e726bbd9ba8bb2f2b3d812495720ea6f"
+    },
+    {
+      "path": "docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md",
+      "sha256": "c85b6e97aa1b2c2d3ac74d42e4f55f11bb1168c607f13f68db7fc9c654eb7eda"
+    }
+  ],
+  "fixedArtifacts": [
+    {
+      "path": "docs/plans/2026-09-05-policy-improvement-sequence.md",
+      "sha256": "6310780fa70e31951345f3fa35f1160b3b13fa5bc39bc22410e49a9765fadfb2"
+    },
+    {
+      "path": "docs/evaluation/POLICY-EVAL-0001/contract.md",
+      "sha256": "3d4cf0f65e88cb597855233738355d49bf7b4176160345a8e2346bb8e3a3935f"
+    },
+    {
+      "path": "docs/evaluation/POLICY-EVAL-0001/inputs.json",
+      "sha256": "1030d17804010f218b2776c0e4b3f0eeec7e2fe6d65affd1c60d5c6ad0821fbb"
+    },
+    {
+      "path": "docs/evaluation/POLICY-EVAL-0001/review.md",
+      "sha256": "1a7f19c93db2eb440213c1f98f757c3c0ded575e802cbb4be7569f153b9ec6d1"
+    },
+    {
+      "path": "src/game.js",
+      "sha256": "22ebc237b6750fff04251c1b123cc6be749b8b75f3146d6e42576c509dc97bf2"
+    },
+    {
+      "path": "solver/engine.js",
+      "sha256": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873"
+    },
+    {
+      "path": "solver/bot.js",
+      "sha256": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65"
+    },
+    {
+      "path": "solver/level-author.js",
+      "sha256": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+    },
+    {
+      "path": "solver/human-benchmark.js",
+      "sha256": "ca9f83b7a77d115d42b4a2ab155edb27c28aac0e67d0d79a9bdfa2131017affb"
+    },
+    {
+      "path": "solver/benchmark-inputs.js",
+      "sha256": "970217cc40b35de490f4f60a79e072c54401203d127cc2ef29d81ca6d1ff7d73"
+    },
+    {
+      "path": "solver/benchmark-metrics.js",
+      "sha256": "9590bb536f9f85614777905f6b1f211bd38f1f65bf689be771cad17961b8cf7a"
+    },
+    {
+      "path": "solver/tests/humanBenchmark.test.js",
+      "sha256": "cf742c9bca6aed1d2f264622cbde7547f007466b4b31ca7256b8223ecb070841"
+    },
+    {
+      "path": "solver/tests/policyBenchmark.test.js",
+      "sha256": "4038a8e688ef4fe0a0b843ebd9b20bf0f5c1a67185f9c8a2fe6323a4967f68a5"
+    },
+    {
+      "path": "docs/evaluation/POLICY-EVAL-0001/measurement-checks.md",
+      "sha256": "eae537c28fd2f25e336d202a39deae0eb5af3ef8d7d3153923bf09fd93ee5260"
+    },
+    {
+      "path": ".orch/runs/2026-09-05-policy-measurement-extra-repair/baseline-c61d443.json",
+      "sha256": "a79fe73494dbff59dc7bc8a822c558caf18f3ce0b194412f4e02cbf38b03889e"
+    },
+    {
+      "path": ".orch/runs/2026-09-05-policy-measurement-extra-repair/baseline-c61d443.txt",
+      "sha256": "5f6651d8d95dc970a476b75360a34bd89afb330b29611c1a1a4b2b217ede1b94"
+    },
+    {
+      "path": ".orch/runs/2026-09-05-policy-measurement-extra-repair/suite-c61d443.txt",
+      "sha256": "a7c70fa561bd2bbac8c75114f9bec8487177d5035674ce6a0f7a797b45f85bfb"
+    },
+    {
+      "path": ".orch/runs/2026-09-05-policy-grounding/recording-diagnostic.json",
+      "sha256": "e3a0bf010300123d9f9d77221fb181faa2625e6746f281d68b408e30622edcae"
+    },
+    {
+      "path": ".orch/runs/2026-09-05-policy-grounding/pilot-position.json",
+      "sha256": "8b81ffd5e8af13723864a58c09ade8d50af9d6ce296dcfc242a976d2374e85b2"
+    },
+    {
+      "path": ".orch/runs/2026-09-05-policy-grounding/archive-diagnostic.json",
+      "sha256": "6bce154de924a3710188293c7f92c9728a88d153f0934b7caa74bf60a5154987"
+    },
+    {
+      "path": "solver/map-elites-output/archive.json",
+      "sha256": "11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c"
+    }
+  ],
+  "integratedCommit": "d6b6e05",
+  "scope": "Step 2 accepted; Step 3 ready and unexecuted; no new empirical claim",
+  "phase": "Acceptance metadata after independent WHOLE-001 PASS; closure recheck follows",
+  "reviewedBase": "49214e5435592007924f28230fa0d6b862039ead",
+  "cleanSuite": {
+    "path": ".orch/runs/2026-09-06-policy-measurement-finish/suite-clean-6a4d4f0.txt",
+    "sha256": "04bd75e52c96ea15d0b109f3e542adb2d90dcd28cc4baceb078da105599f2bf2"
+  }
+}

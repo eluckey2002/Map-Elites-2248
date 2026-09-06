@@ -31,15 +31,15 @@ Policy changes follow the accepted measurement and investigation order, so a pro
 - [Grounding report](../../.orch/runs/2026-09-05-policy-grounding/report.md), fixed at commit `505a6be20ae1a514bb83a6a80aebaef73e855db1`.
 - [BL-0013](BL-0013-policy-vocabulary-gaps.md), prior proposal retained and paused pending this sequence's disposition.
 - [Step 2 descriptive baseline](../evaluation/POLICY-EVAL-0001/baseline.md), raw JSON SHA-256 `a79fe73494dbff59dc7bc8a822c558caf18f3ce0b194412f4e02cbf38b03889e`.
-- [Step 2 measurement acceptance boundary](../evaluation/POLICY-EVAL-0001/measurement-acceptance.md), pending final content and whole-composition checks.
+- [Step 2 measurement acceptance](../evaluation/POLICY-EVAL-0001/measurement-acceptance.md), independently accepted; exact final document/source identities linked there.
 
 ## Stage record
 
 | Step | State | Completion evidence |
 | --- | --- | --- |
 | 1. Evaluation contract | Complete; accepted | [POLICY-EVAL-0001 acceptance](../evaluation/POLICY-EVAL-0001/acceptance.md); frozen at `e415df78b77a8f32ec2d97912ccd198bfaad2d21` |
-| 2. Measurement corrections and benchmark | Incomplete; code prerequisite accepted, final composition pending | Independent [VERIFY-002](../../.orch/tickets/2026-09-05-policy-measurement-extra-repair/VERIFY-002.md), source `c61d443...`, accepted at `36b0455...`; baseline/corrections drafted; final content and whole checks pending |
-| 3. Bot-trajectory audit | Blocked on Step 2 | None |
+| 2. Measurement corrections and benchmark | Complete; accepted | [Measurement acceptance](../evaluation/POLICY-EVAL-0001/measurement-acceptance.md); source `c61d443...`, baseline `a79fe734...`, independent WHOLE-001 PASS, final envelope linked there |
+| 3. Bot-trajectory audit | Ready; unexecuted | Accepted Step 2 predecessor; no audit result |
 | 4. Supported change and validation | Blocked on Step 3 | None |
 
 Planning this sequence and the earlier grounding report did not complete any row.
@@ -54,11 +54,11 @@ Accepted Step 1 package at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`:
 
 ## Next action
 
-Run the independent content and whole-composition checks over the eleven-document
-bundle. Accept Step 2 only if those checks confirm the corrections, all baseline
-dispositions/arithmetic, links, word bounds, allowed paths, frozen identities,
-experiment gate, and document-sensitive tests. Do not start Step 3 before that
-acceptance. The earlier next-action text below is retained as stage history.
+Recheck the accepted Step 1 and Step 2 identities, then define the bounded
+Step 3 audit of the unchanged bot's own trajectories before collecting any
+new measurements. Register and commit a protocol before any generalizing run.
+No audit or policy change has run in this closeout. The earlier next-action
+text below is retained as stage history.
 
 Consult the [Atlas support shortlist](../plans/2026-09-05-policy-improvement-atlas-support.md) when executing the relevant step. It is advisory, not another stage or an amendment to the required order. The whole plan is pinned to commit `85d8684`, SHA-256 `6310780fa70e31951345f3fa35f1160b3b13fa5bc39bc22410e49a9765fadfb2`; the consultation leaves that file and every stage state unchanged.
 
@@ -72,6 +72,12 @@ session. Do not start the bot-trajectory audit or policy implementation until
 their corresponding prerequisites close.
 
 ## History
+
+- 2026-09-05 - Owner resumed the six-title correction and final verification.
+  Independent content verification passed; the eleven-document bundle landed
+  locally at `d6b6e05`. Whole verification at `49214e5` passed with weakest
+  class judged; the fresh clean suite passed 378/382 with the same four known
+  failures. Step 2 accepted, Step 3 ready-unexecuted, Step 4 still blocked.
 
 - 2026-09-05 - The extra repair at `c61d443...` passed independent VERIFY-002 and was accepted at `36b0455...`. METHOD-003 carried the unchanged contract/input identities; METHOD-029 exercised real and controlled bad collect/render paths. The source corrections and baseline are now drafted for independent final composition checks. Step 2 remains incomplete; METHOD-025 and Step 3 remain blocked.
 

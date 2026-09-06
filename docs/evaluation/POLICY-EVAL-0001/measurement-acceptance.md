@@ -1,13 +1,13 @@
 ---
 id: POLICY-EVAL-0001-MEASUREMENT-ACCEPTANCE
-status: pending-final-composition-check
+status: accepted
 created: 2026-09-05
 ---
 
 # Step 2 measurement acceptance boundary
 
-The code prerequisite is accepted. Step 2 still awaits final content and
-whole-composition checks; Step 3 remains blocked.
+Step 2 is accepted after independent content and whole-composition verification.
+Step 3 is ready, not executed; Step 4 remains blocked on its disposition.
 
 ## Accepted code prerequisite
 
@@ -42,8 +42,23 @@ bad collect/render paths, which failed before repair. This follows the
 [`Atlas support shortlist`](../../plans/2026-09-05-policy-improvement-atlas-support.md),
 not an Atlas edit or effectiveness claim. METHOD-025 remains for Step 3.
 
-## Pending final acceptance
+## Whole Step 2 acceptance
 
-Final review must confirm the three corrections, 15 rows, history signposts,
-links, scope, hashes, and gates. Until then, this inventory releases no Step 3/4
-work.
+Independent [WHOLE-001](../../../.orch/tickets/2026-09-06-policy-measurement-finish/WHOLE-001.md)
+passed all three criteria at `49214e5`: deterministic identity/check coverage,
+source-backed arithmetic/corrections, and judged whole-result coherence.
+The overall verdict's weakest class is `judged`, not a universal proof.
+The [reviewed envelope](../../../.orch/runs/2026-09-06-policy-measurement-finish/envelope.json)
+pins all eleven document blobs and protected source/raw inputs. The
+[closure envelope](../../../.orch/runs/2026-09-06-policy-measurement-finish/envelope-accepted.json)
+pins the final documents after acceptance metadata only.
+
+A fresh [integrated full suite](../../../.orch/runs/2026-09-06-policy-measurement-finish/suite-clean-6a4d4f0.txt)
+at `6a4d4f0` passed 378/382 with exactly the same four known failures; both
+live custody tests passed. The prior bookkeeping/remote-timeout failure
+run is retained separately and is not clean acceptance evidence. No receipt,
+generated view, gate, bot, game rule, recording or frozen contract was changed.
+
+The accepted baseline and three append-only ledger corrections close Step 2.
+Before Step 3 runs, recheck these predecessor identities and define its bounded
+bot-own-trajectory audit. METHOD-025 is next-stage guidance, not an audit result.

@@ -8,14 +8,14 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 [BL-0014](docs/backlog/BL-0014-policy-improvement-sequence.md) is the active policy item, governed by [the required four-step plan](docs/plans/2026-09-05-policy-improvement-sequence.md) and `DECISION-0006`.
 Step 1 is complete: [POLICY-EVAL-0001 acceptance](docs/evaluation/POLICY-EVAL-0001/acceptance.md) identifies the reviewed contract/input package frozen at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`.
-Step 2, measurement corrections and benchmark, is still incomplete. The code
-prerequisite is now accepted: the repair source `c61d443...` passed independent
-review in [VERIFY-002](.orch/tickets/2026-09-05-policy-measurement-extra-repair/VERIFY-002.md)
-and was admitted at `36b0455...`. The [descriptive baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md),
-[measurement acceptance boundary](docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md),
-and ledger corrections are the pending document bundle; final content and
-whole-composition checks have not accepted them yet. Step 3 and policy
-implementation remain blocked. No new game or policy result follows.
+Step 2, measurement corrections and benchmark, is complete and accepted.
+The [measurement acceptance](docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md)
+records the independent whole-result PASS, unchanged measurement source
+`c61d443...`, [descriptive baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md),
+ledger corrections and exact artifact identities. The fresh integrated suite
+passed 378/382 with only the four known failures. Step 3 is ready but unexecuted:
+recheck the accepted predecessor, then define its bounded bot-trajectory audit.
+Policy implementation remains blocked on Step 3. No new game or policy result follows.
 The earlier policy sections below are retained as history. Their active-looking
 BL-0013 direction cannot bypass the sequence; `CORRECTION-0005` through
 `CORRECTION-0007` control any conflicting measurement premise.
@@ -41,7 +41,7 @@ The following section is retained to preserve the prior rationale and wording.
 It is not current guidance. See
 [CORRECTION-0006](EVIDENCE_LEDGER.md#correction-0006--current-policy-capabilities-and-the-pilot-generation-miss)
 and [CORRECTION-0007](EVIDENCE_LEDGER.md#correction-0007--result-0017-attribution-and-objective);
-BL-0013 remains blocked pending Steps 2 and 3.
+BL-0013 remains blocked pending the Step 3 disposition.
 
 [BL-0013](docs/backlog/BL-0013-policy-vocabulary-gaps.md) is the live piece of work. `RESULT-0017`'s MAP-Elites search over the existing weights returned -0.64%, usually read as the weights being near optimal; the 2026-09-05 session found evidence for a second reading, that the answer is not in the space being searched. The policy has no term for holding value now to build a larger chain later, which is the strategy measurably outscoring it in owner play — owner chains sum 264-356, bot chains sum near 64. Three replacement terms are specified there.
 

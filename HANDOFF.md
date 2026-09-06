@@ -7,8 +7,10 @@
 Step 2's measurement code prerequisite is accepted at `36b0455...` for source
 `c61d443...`. The [descriptive baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md)
 and [measurement acceptance boundary](docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md)
-carry the current source-pinned account. Step 2 as a whole still awaits final
-content and whole-composition checks; Step 3 remains blocked.
+carry the current source-pinned account. Step 2 as a whole is now accepted by
+independent WHOLE-001; the integrated suite passed 378/382 with only the four
+known failures. Step 3 is ready, not executed. Recheck the accepted artifact
+identities before defining its bounded audit; policy implementation remains blocked.
 
 The section immediately below is retained history, including its original
 headings and next-action language. Do not treat “the two findings” or “Where to

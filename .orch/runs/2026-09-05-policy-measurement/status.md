@@ -1,4 +1,14 @@
-# Step 2 remains incomplete
+# Step 2 accepted
+
+## Completed resumption - 2026-09-05
+
+The title repair and independent content verification are complete. All eleven
+documents are integrated atd6b6e05, with fresh clean full suite378/382 and only
+the four known failures. Independent whole verification at49214e5 passed,
+weakest class judged. Final acceptance and exact identities are recorded in
+[measurement-acceptance](../../../docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md).
+Step3 is ready but unexecuted; Step4 remains blocked. All sections below are
+retained history, including the usage-limit suspension.
 
 ## Latest resumption boundary - 2026-09-05
 
