@@ -1,13 +1,13 @@
 ---
 id: BL-0013
-title: Define the policy terms the bot is missing before searching its parameters again
+title: Historical proposal — Define the policy terms the bot is missing before searching its parameters again
 status: blocked
 milestone: policy-strategy
 depends_on: [BL-0011, BL-0012]
 updated: 2026-09-05
 ---
 
-# BL-0013 — The terms the policy cannot express
+# BL-0013 — Historical claim — The terms the policy cannot express
 
 ## Current disposition - 2026-09-05
 
