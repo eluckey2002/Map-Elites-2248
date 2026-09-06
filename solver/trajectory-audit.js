@@ -198,6 +198,11 @@ function positiveLimit(value, name) {
   return value;
 }
 
+function nonNegativeLimit(value, name) {
+  if (!Number.isSafeInteger(value) || value < 0) throw new Error(`${name} must be a non-negative integer`);
+  return value;
+}
+
 function rngAt({ seed, draws }) {
   validateSeed(seed);
   if (!Number.isSafeInteger(draws) || draws < 0) throw new Error('rng draws must be a non-negative integer');
@@ -227,7 +232,7 @@ function replayAction(state, chain, rngState) {
 function searchImmediateWin(state, rngState, options = {}) {
   const now = options.now || Date.now;
   const limits = {
-    maxNodes: positiveLimit(options.maxNodes === undefined ? 100_000 : options.maxNodes, 'maxNodes'),
+    maxNodes: nonNegativeLimit(options.maxNodes === undefined ? 100_000 : options.maxNodes, 'maxNodes'),
     maxElapsedMs: positiveLimit(
       options.maxElapsedMs === undefined ? 1_000 : options.maxElapsedMs,
       'maxElapsedMs',
@@ -307,6 +312,10 @@ function searchImmediateWin(state, rngState, options = {}) {
     };
   }
 
+  observedAt = now();
+  if (!witness && observedAt - startedAt >= limits.maxElapsedMs && !capReasons.includes('maxElapsedMs')) {
+    capReasons.push('maxElapsedMs');
+  }
   return {
     disposition: witness ? 'FOUND' : capReasons.length ? 'UNKNOWN' : 'NONE',
     complete: !witness && capReasons.length === 0,
@@ -320,4 +329,95 @@ function searchImmediateWin(state, rngState, options = {}) {
   };
 }
 
-module.exports = { searchImmediateWin, verifySessionArtifact };
+function classifyAttribution(witness, decision, trace) {
+  if (!witness) return null;
+  if (trace.selectedActionIdentity === witness.actionIdentity) return 'production-choice';
+  if (trace.offeredActionIdentities.includes(witness.actionIdentity)) return 'ranking';
+  if (decision.reason === 'bomb-priority') return 'control-flow';
+  if (['normal-weighted-ranking', 'immediate-points-ranking', 'no-valid-move', 'immediate-target-win']
+    .includes(decision.reason)) return 'generation';
+  return 'unresolved';
+}
+
+function auditSessionArtifact(artifactPath, subject, options = {}) {
+  const replayNow = options.replayNow || Date.now;
+  const replayStartedAt = replayNow();
+  const verification = verifySessionArtifact(artifactPath, subject);
+  const replayElapsedMs = replayNow() - replayStartedAt;
+  if (verification.status !== 'VERIFIED') {
+    return {
+      status: 'UNRESOLVED',
+      reasons: verification.reasons,
+      positions: [],
+      denominators: {
+        sessionsRequested: 1,
+        sessionsVerified: 0,
+        unresolvedSessions: 1,
+        positionsRequested: null,
+        positionsReported: 0,
+        foundPositions: 0,
+        nonePositions: 0,
+        unknownPositions: 0,
+      },
+      timing: { replayAndChooserMs: replayElapsedMs, searchMs: 0 },
+    };
+  }
+
+  const positions = verification.positions.map((position) => {
+    const search = searchImmediateWin(position.state, position.liveRng, {
+      maxNodes: options.maxNodes,
+      maxElapsedMs: options.maxElapsedMs,
+      now: options.searchNow,
+    });
+    const selectedActionIdentity = actionIdentity(position.productionChoice);
+    const offeredActionIdentities = position.decision.candidates
+      .map(({ chain }) => actionIdentity(chain));
+    const attribution = classifyAttribution(search.witness, position.decision, {
+      selectedActionIdentity,
+      offeredActionIdentities,
+    });
+    return {
+      sessionIdentity: verification.session.identity,
+      subjectIdentity: verification.session.subjectIdentity,
+      seed: verification.session.seed,
+      moveIndex: position.moveIndex,
+      precedingMoves: position.precedingMoves,
+      production: {
+        reason: position.decision.reason,
+        poolType: position.decision.poolType,
+        selectedActionIdentity,
+        offeredActionIdentities,
+      },
+      search,
+      attribution,
+    };
+  });
+  const count = (disposition) => positions.filter(({ search }) => search.disposition === disposition).length;
+  return {
+    status: 'COMPLETE',
+    reasons: [],
+    session: verification.session,
+    positions,
+    denominators: {
+      sessionsRequested: 1,
+      sessionsVerified: 1,
+      unresolvedSessions: 0,
+      positionsRequested: verification.positions.length,
+      positionsReported: positions.length,
+      foundPositions: count('FOUND'),
+      nonePositions: count('NONE'),
+      unknownPositions: count('UNKNOWN'),
+    },
+    timing: {
+      replayAndChooserMs: replayElapsedMs,
+      searchMs: positions.reduce((sum, { search }) => sum + search.searchElapsedMs, 0),
+    },
+  };
+}
+
+module.exports = {
+  auditSessionArtifact,
+  classifyAttribution,
+  searchImmediateWin,
+  verifySessionArtifact,
+};
