@@ -1,7 +1,7 @@
 ---
 id: REPAIR-001
 run: 2026-09-06-policy-trajectory-instrument
-status: claimed
+status: needs-verify
 executor: orch-repair
 pack: orch-code-pack
 profile: orch-worker
@@ -53,13 +53,64 @@ outcomes in ticket; if raw output only exists in tool transcript, name it.
 
 ## Result
 
-Pending.
+Correction committed as `bbf5fdec2553717c23bece400531cd619cdb2486`
+(`Repair trajectory audit qualification defects`). Exact changed artifacts are
+the same three granted paths: `solver/trajectory-audit.js`,
+`solver/tests/trajectoryAudit.test.js`, and
+`docs/evaluation/POLICY-AUDIT-0001/instrument-checks.md`.
+
+- F1: the public consumer now replays the production-selected action from the
+  verified position and live RNG state. The exact subject-9001/seed-0 producer
+  artifact retains a different exhaustive witness but reports
+  `production-choice` because the selected action also reaches target. Bomb and
+  immediate-target override traces that do not establish the relevant offered
+  pool now return `unresolved`; normal-stage ranking/generation coverage remains.
+- F2: initial, traversal, and final clock/search faults are caught at the search
+  seam and returned as `UNKNOWN` with declared limits, known telemetry, and a
+  `fault` reason. Public-consumer controls retain requested position dispositions
+  and denominators when the injected clock throws.
+- F3: a legitimate untouched `recordSession` artifact for the exact 1x1,
+  no-legal, seed-0 subject is rejected as `UNRESOLVED` because it contains no
+  auditable positions. This remains distinct from the existing corrupted and
+  truncated nonempty controls. The check card now states the nonempty scope and
+  actual producer-empty, clock-fault, and already-winning-production controls.
+
+All protected hashes are preserved: `src/game.js` `22ebc237...`,
+`solver/engine.js` `0ed4b310...`, `solver/level-author.js` `c0eef4a5...`,
+`solver/bot.js` `3efd50ce...`, `solver/record-session.js` `c14ec394...`,
+`solver/benchmark-replay.js` `a714232d...`, `solver/benchmark-inputs.js`
+`970217cc...`, and `solver/targeted-chain-generator.js` `45eb66c7...`.
 
 ## Verification
 
-Pending.
+Producer rerun result: **F1-F3 PASS at fixed commit `bbf5fde`; downstream
+affected independent verification remains required.**
+
+- Red: the four named repaired controls failed 4/4 at `0c6b250`: ambiguous
+  override returned `control-flow`; selected transition was absent and the
+  already-winning production case could not be recognized; initial clock fault
+  threw; untouched producer zero-move artifact returned `VERIFIED`.
+- Green focused command: `node --test solver/tests/trajectoryAudit.test.js
+  solver/tests/botVision.test.js solver/tests/policyBenchmark.test.js` — 45
+  tests, 45 pass, 0 fail.
+- `node tools/verify-experiments.js` — `EXPERIMENT GATE PASS`.
+- `git diff --check c8ad993..HEAD` — exit 0, no output.
+- Clean full suite: `node --test --test-reporter=spec solver/tests/*.test.js` —
+  395 tests, 391 pass, 4 fail, duration 82202.431166 ms. Exact unchanged failure
+  titles: `candidate-levels-52.json has a receipt that verifies against the
+  current bot`; `candidate-levels-54.json has a receipt that verifies against
+  the current bot`; `the builder is byte-stable and the committed generated
+  views are current`; `verification observations derive from rebound evidence
+  instead of copied metrics in code`. No new failure identity appeared.
+- Raw focused output is in this agent's tool transcript. Raw full output is only
+  in unified exec session `74707`, chunks `af91a5` and `2873dc`; no output file
+  was created.
 
 ## Feedback
+
+Root join08:45:23Z: matching claimant returned within bound, released both
+leases, and changed exactly three allowed files. Producer checks atbbf5fde
+cover F1-F3; independent affected verification is the only qualification gap.
 
 Owner stopped the prior claim before any repair edits landed. On approving the
 read-only accounting, owner authorized one20minute correction-and-verification
@@ -70,9 +121,12 @@ delivery time bound, not its scope or criteria. Worker8minute slice now ends
 One combined correction only; surviving defects return as findings, never a
 second correction. Root integrated build blobs unchanged at7a06ab5.
 
+No additional defect was repaired or queued by this producer. Independent
+affected review owns qualification of the corrected seams.
+
 ## Risks
 
-You are not alone. Own only three worktree files and canonical ROOT REPAIR-001
-result sections. No root target edits/commits, no redelegation. Root read-only
-during lease. Use apply_patch. Return by08:49:26Z; overall09:01:26Z hardstop.
-No fresh audit sample, protocol, policy, PR/push/main, Atlas or scope expansion.
+- Producer-authored negatives do not independently qualify the instrument.
+  Override-pool ambiguity is deliberately `unresolved`; protected chooser
+  internals were not widened. No fresh audit sample, protocol, policy,
+  PR/push/main, Atlas, protected-source change, or scope expansion occurred.

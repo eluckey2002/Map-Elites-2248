@@ -218,3 +218,22 @@ JSON/scripts live only under `/private/tmp` and are not delivery artifacts.
 Lease **RELEASED** by `/root/trajectory_gate_gpt_5_6_sol_ultra` at
 `2026-09-06T08:33:45Z`; no further canonical-ticket or target writes are owned
 by this reviewer. Root retains terminal status and adjudication.
+
+## Affected verification request — approved restart
+
+Fixed repairbbf5fdec2553717c23bece400531cd619cdb2486 in the same read-only
+worktree; compare0c6b250..bbf5fde. Reuse unchanged gate coverage, and perform
+one orch-verify on F1-F3 and their affected A1-A6 criteria, including corrected
+card and permanent tests. Rerun your exact independent good/bad/empty/clock
+controls, initial/final clock paths and ambiguous attribution. Do not repeat
+unaffected/full-suite checks: fresh producer full391/395 retains four exact
+known identities; focused45/45, experiment/diff PASS. Judge from frozen spec.
+This is affected verification, not a second review/repair cycle. No code edits,
+new findings repair, sampling or scope expansion. Append results below only.
+Lease /root/trajectory_gate_gpt_5_6_sol_ultra,6minutes from08:45:40Z through
+08:51:40Z; owner overall hardstop09:01:26Z. Root read-only during lease;
+release explicitly and return PASS/FAIL/UNVERIFIED with exact coverage.
+
+## Affected verification result
+
+Pending.
