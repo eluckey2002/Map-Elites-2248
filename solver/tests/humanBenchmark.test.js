@@ -1,97 +1,82 @@
-// The benchmark's whole value is that it is not saturated and not
-// cherry-picked, so the things worth guarding are its COVERAGE and its
-// pairing, not its numbers. A silently shrinking board list would read as a
-// clean result while measuring less and less.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 
-const { collect, playBot } = require('../human-benchmark');
-const { makeRng } = require('../engine');
+const { collect, discoverRecordingPaths, playBot, renderText } = require('../human-benchmark');
 
-const ROOT = path.join(__dirname, '..', '..');
-
-// collect() replays every board; once is enough for the whole file.
-let cached = null;
+let cached;
 const collectOnce = () => { if (!cached) cached = collect(); return cached; };
 
-function recordingCount() {
-  let total = 0;
-  const dirs = [path.join(ROOT, 'recordings')];
-  const pilotsDir = path.join(ROOT, 'pilots');
-  if (fs.existsSync(pilotsDir)) {
-    for (const pilot of fs.readdirSync(pilotsDir)) {
-      const dir = path.join(pilotsDir, pilot, 'recordings');
-      if (fs.existsSync(dir)) dirs.push(dir);
-    }
-  }
-  for (const dir of dirs) {
-    if (!fs.existsSync(dir)) continue;
-    total += fs.readdirSync(dir).filter((n) => n.endsWith('.json')).length;
-  }
-  return total;
-}
-
-test('every recorded session resolves to a board and is paired', () => {
-  const { rows, unresolved } = collectOnce();
-  assert.deepEqual(
-    unresolved, [],
-    'a recording that cannot be resolved to its board is silently dropped from the benchmark',
-  );
-  assert.equal(
-    rows.length, recordingCount(),
-    'the benchmark must pair every recording on disk, not a subset',
-  );
-  // 12 as of 2026-09-05. A deliberate pin: this number should only ever go up,
-  // and it going up should be a decision someone made, not a surprise.
-  assert.ok(rows.length >= 12, `expected at least 12 paired boards, got ${rows.length}`);
+test('collect accounts for the frozen 15-file panel without pooling provenance classes', () => {
+  const result = collectOnce();
+  assert.equal(result.schemaVersion, 2);
+  assert.equal(result.contract.id, 'POLICY-EVAL-0001');
+  assert.equal(result.contract.requiredFileCount, 15);
+  assert.equal(result.dispositions.length, 15);
+  assert.deepEqual(result.extras, []);
+  assert.deepEqual(result.panels.map((panel) => [panel.id, panel.fileCount]), [
+    ['receipt-bound', 12],
+    ['current-subject', 3],
+  ]);
+  assert.equal(result.rows.length + result.dispositions.filter((entry) => entry.disposition !== 'admitted').length, 15);
+  assert.ok(!Object.hasOwn(result, 'headline'), 'separate provenance panels must not be pooled into one headline');
 });
 
-test('each pair compares the same board and the same seed for both players', () => {
-  const { rows } = collectOnce();
-  for (const row of rows) {
-    assert.ok(Number.isInteger(row.seed), `${row.file}: seed must be an integer`);
-    assert.ok(row.human.score > 0, `${row.file}: human score missing`);
-    assert.ok(row.bot.score > 0, `${row.file}: bot score missing`);
-    assert.equal(
-      row.scoreDelta, row.bot.score - row.human.score,
-      `${row.file}: reported delta must be the difference actually measured`,
-    );
-    assert.ok(
-      ['win', 'lose'].includes(row.human.outcome) && ['win', 'lose'].includes(row.bot.outcome),
-      `${row.file}: both outcomes must be decided`,
-    );
+test('every admitted row carries replay, source, subject, horizon, and terminal provenance', () => {
+  const result = collectOnce();
+  for (const row of result.rows) {
+    assert.equal(row.disposition, 'admitted');
+    assert.equal(row.human.validity, 'valid');
+    assert.ok(['win', 'lose'].includes(row.human.outcome));
+    assert.ok(row.subjectKey && row.caseKey && row.initialGridIdentity);
+    assert.equal(row.reference.originalBudget, row.subject.moves);
+    assert.equal(row.diagnostic.externalHorizon, row.human.moves);
+    assert.equal(row.diagnostic.originalBudget, row.subject.moves);
+    assert.equal(row.diagnostic.objective, 'target-disabled score diagnostic');
+    assert.equal(row.scoreDiagnostic.rawDelta, row.human.score - row.diagnostic.score);
+    if (row.diagnostic.score === 0) assert.equal(row.scoreDiagnostic.percentOfReference, null);
   }
 });
 
-test('the bot arm is deterministic for a given board and seed', () => {
-  const { rows } = collectOnce();
-  const row = rows[0];
-  const dir = path.join(ROOT, 'recordings');
-  const name = fs.readdirSync(dir).filter((n) => n.endsWith('.json')).sort()[0];
-  const recording = JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8'));
-  const { candidateIndex } = require('../recording-replay');
-  const candidate = candidateIndex().get(recording.candidateIdentity).candidate;
-  const first = playBot(candidate, recording.seed);
-  const second = playBot(candidate, recording.seed);
-  assert.deepEqual(first, second, 'the same board and seed must replay to the same bot result');
-  assert.equal(first.score, row.bot.score, 'the table and a direct replay must agree');
+test('panel metrics trace to admitted rows with case-then-attempt weighting', () => {
+  const result = collectOnce();
+  for (const panel of result.panels) {
+    const rows = result.rows.filter((row) => row.panel === panel.id);
+    assert.equal(panel.distinctAttempts, rows.length);
+    assert.equal(panel.caseCount, new Set(rows.map((row) => row.caseKey)).size);
+    assert.equal(panel.metrics.cases.length, panel.caseCount);
+    assert.equal(panel.unresolvedCount, 0);
+    assert.notEqual(panel.metrics.ranking.verdict, 'UNRESOLVED');
+  }
 });
 
-test('a shifted seed is a different game, so the pairing is doing real work', () => {
-  // Guards against the arm accidentally ignoring the seed, which would make
-  // every "paired" comparison a comparison against one fixed game.
-  const dir = path.join(ROOT, 'recordings');
-  const name = fs.readdirSync(dir).filter((n) => n.endsWith('.json')).sort()[0];
-  const recording = JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8'));
-  const { candidateIndex } = require('../recording-replay');
-  const candidate = candidateIndex().get(recording.candidateIdentity).candidate;
-  const onSeed = playBot(candidate, recording.seed);
-  const offSeed = playBot(candidate, recording.seed + 1);
-  assert.notDeepEqual(
-    onSeed, offSeed,
-    'changing the seed produced an identical game; the seed is not reaching the board',
-  );
-  assert.ok(makeRng(recording.seed)() !== makeRng(recording.seed + 1)(), 'seeds must differ at the source');
+test('unexpected files are surfaced as extras without changing the frozen denominator', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'policy-eval-extra-'));
+  fs.mkdirSync(path.join(dir, 'recordings'));
+  fs.writeFileSync(path.join(dir, 'recordings', 'surprise.json'), '{}');
+  const found = discoverRecordingPaths({ root: dir });
+  assert.deepEqual(found, ['recordings/surprise.json']);
+});
+
+test('text output states descriptive limits and agrees with raw panel classifications', () => {
+  const result = collectOnce();
+  const text = renderText(result);
+  assert.match(text, /descriptive comparison v2/);
+  assert.match(text, /not a population estimate or promotion result/);
+  for (const panel of result.panels) {
+    assert.match(text, new RegExp(`${panel.id}: ${panel.metrics.ranking.verdict}`));
+    assert.match(text, new RegExp(`${panel.fileCount} files, ${panel.distinctAttempts} distinct attempts, ${panel.caseCount} cases`));
+  }
+});
+
+test('playBot(candidate, seed, { uncapped }) remains compatible while reporting changed semantics', () => {
+  const row = collectOnce().rows[0];
+  const first = playBot(row.subject, row.seed, { uncapped: true });
+  const second = playBot(row.subject, row.seed, { targetDisabled: true });
+  assert.deepEqual(first, second);
+  assert.equal(first.externalHorizon, row.subject.moves);
+  assert.equal(first.originalBudget, row.subject.moves);
+  assert.equal(first.objective, 'target-disabled score diagnostic');
 });

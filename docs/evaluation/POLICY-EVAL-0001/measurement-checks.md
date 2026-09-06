@@ -66,3 +66,19 @@ qualify a generalized policy claim.
 - **Enforcement:** HARD for Step 2 row admission and live reference classification only.
 - **Decay:** focused tests use a real receipt-bound recording plus permanent bad twins; source hash drift blocks collection before replay.
 - **Shipped:** run `2026-09-05-policy-measurement-code`.
+
+### Frozen panel assembly and output · HARD
+
+- **Protects:** the CLI accounts for every required path, separates provenance panels, and keeps later files outside the frozen denominator.
+- **Where:** `solver/human-benchmark.js#collect` and `renderText`; `node --test solver/tests/humanBenchmark.test.js`.
+- **Level:** file, attempt, and case — it reports initialized-grid collisions but does not turn selected cases into independent population samples.
+- **Kind:** shape and value; POLICY-EVAL-0001 owns interpretation and a future registered protocol owns generalization.
+- **Scope:** exactly 15 required manifest paths split 12 receipt-bound and 3 current-subject; admitted/duplicate/unresolved dispositions; files discovered under `recordings/`, `play-sessions/`, and `pilots/*/recordings/`; JSON and text v2 output.
+- **Reads own output?:** no; text rendering consumes the same returned object exposed by `collect`, and tests compare its literal classifications to that object.
+- **Sampling memory:** n/a; all required and discovered recording paths in the named directories are inventoried, with extras excluded from the denominator.
+- **Does NOT catch:** recording-shaped JSON outside the named directories; population-selection bias; historical runtime identity absent from ordinary play; semantic errors already frozen into the contract.
+- **Crafted-bypass test:** `solver/tests/humanBenchmark.test.js`, `unexpected files are surfaced as extras without changing the frozen denominator`.
+- **Retires:** the prior mutable-directory minimum-count benchmark check; the frozen inventory plus explicit supplement makes silent growth and shrinkage visible.
+- **Enforcement:** HARD for deterministic Step 2 descriptive output; no generalized or promotion claim is admitted.
+- **Decay:** focused tests and both CLI modes run at the result commit; successor inventories require a new frozen inputs identity.
+- **Shipped:** run `2026-09-05-policy-measurement-code`.
