@@ -1,0 +1,56 @@
+{
+  "checkedSourceCommit": "c0c781c",
+  "implementationCommit": "ce21196aca799b0c72c1e9b3025692dd45c3e861",
+  "command": "node --test --test-reporter=spec solver/tests/*.test.js",
+  "exitCode": 1,
+  "tests": 382,
+  "pass": 378,
+  "fail": 4,
+  "durationMs": 104918.201542,
+  "failureNames": [
+    "candidate-levels-52.json has a receipt that verifies against the current bot",
+    "candidate-levels-54.json has a receipt that verifies against the current bot",
+    "the builder is byte-stable and the committed generated views are current",
+    "verification observations derive from rebound evidence instead of copied metrics in code"
+  ],
+  "conclusion": "No additional failure identity; not an all-green suite",
+  "experimentGate": {
+    "command": "node tools/verify-experiments.js",
+    "exitCode": 0,
+    "output": "EXPERIMENT GATE PASS"
+  },
+  "rawCommand": "node solver/human-benchmark.js --json",
+  "rawWorkingDirectory": "/private/tmp/2248-policy-measurement-2026-09-05",
+  "rawExitCode": 0,
+  "rawSha256": "034fedbb03486239208ca70a9028e6e16de90790ecaa899c1242dd217a182c60",
+  "arithmetic": [
+    {
+      "panel": "receipt-bound",
+      "checks": true,
+      "files": 12,
+      "cases": 9,
+      "grids": 8,
+      "humanWinRate": 0.9629629629629629,
+      "regressionPaths": [
+        "recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json"
+      ],
+      "meanMovesSaved": null,
+      "caseWeightedMeanRawDelta": 682.6666666666666,
+      "caseWeightedMeanPercentOfReference": 4.1577153551513515
+    },
+    {
+      "panel": "current-subject",
+      "checks": true,
+      "files": 3,
+      "cases": 3,
+      "grids": 3,
+      "humanWinRate": 1,
+      "regressionPaths": [],
+      "meanMovesSaved": 1.3333333333333333,
+      "caseWeightedMeanRawDelta": 32725.333333333332,
+      "caseWeightedMeanPercentOfReference": 39.58420260115114
+    }
+  ],
+  "baseline": "checks-f407d9c.json#/startup",
+  "independentGate": "pending VERIFY-001"
+}
