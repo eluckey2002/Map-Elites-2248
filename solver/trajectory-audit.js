@@ -4,13 +4,14 @@ const path = require('node:path');
 const { isDeepStrictEqual } = require('node:util');
 
 const {
-  makeRng, createLevelState, cloneState, executeChain, applyGravity,
-  spawnNewTiles, tickBlockers, checkBombs,
+  makeRng, createLevelState, cloneState, canExtendChain, isValidChain,
+  isBlockedTile, executeChain, applyGravity, spawnNewTiles, tickBlockers,
 } = require('./engine');
 const { chooseMove, analyzeMove, DEFAULT_PARAMS } = require('./bot');
 const { validateSeed } = require('./benchmark-inputs');
 const { classifyTerminal } = require('./benchmark-replay');
 const { identity, snapshotBoard } = require('./record-session');
+const { actionIdentity } = require('./targeted-chain-generator');
 
 const ROOT = path.join(__dirname, '..');
 const LOOKAHEAD_BASE = 987654321;
@@ -192,4 +193,131 @@ function verifySessionArtifact(artifactPath, subject) {
   }
 }
 
-module.exports = { verifySessionArtifact };
+function positiveLimit(value, name) {
+  if (!Number.isSafeInteger(value) || value < 1) throw new Error(`${name} must be a positive integer`);
+  return value;
+}
+
+function rngAt({ seed, draws }) {
+  validateSeed(seed);
+  if (!Number.isSafeInteger(draws) || draws < 0) throw new Error('rng draws must be a non-negative integer');
+  const rng = makeRng(seed);
+  for (let index = 0; index < draws; index++) rng();
+  return rng;
+}
+
+function replayAction(state, chain, rngState) {
+  const replay = cloneState(state);
+  const liveChain = chain.map(({ x, y }) => replay.grid[y][x]);
+  const points = executeChain(replay, liveChain);
+  applyGravity(replay);
+  const boardAfterGravity = snapshotBoard(replay);
+  spawnNewTiles(replay, rngAt(rngState));
+  tickBlockers(replay);
+  const outcome = classifyTerminal(replay, { hasLegalMove: true });
+  return {
+    points,
+    boardAfterGravity,
+    boardAfter: snapshotBoard(replay),
+    scoreAfter: replay.score,
+    outcome,
+  };
+}
+
+function searchImmediateWin(state, rngState, options = {}) {
+  const now = options.now || Date.now;
+  const limits = {
+    maxNodes: positiveLimit(options.maxNodes === undefined ? 100_000 : options.maxNodes, 'maxNodes'),
+    maxElapsedMs: positiveLimit(
+      options.maxElapsedMs === undefined ? 1_000 : options.maxElapsedMs,
+      'maxElapsedMs',
+    ),
+  };
+  const startedAt = now();
+  let observedAt = startedAt;
+  let nodes = 0;
+  const capReasons = [];
+  const testedActions = new Set();
+  let witness = null;
+
+  function capped() {
+    if (nodes >= limits.maxNodes) {
+      capReasons.push('maxNodes');
+      return true;
+    }
+    observedAt = now();
+    if (observedAt - startedAt >= limits.maxElapsedMs) {
+      capReasons.push('maxElapsedMs');
+      return true;
+    }
+    return false;
+  }
+
+  function visit(chain, seen) {
+    if (capped()) return true;
+    nodes += 1;
+    if (isValidChain(chain, state.minChain)) {
+      const actionId = actionIdentity(chain);
+      if (!testedActions.has(actionId)) {
+        testedActions.add(actionId);
+        const transition = replayAction(state, chain, rngState);
+        if (transition.outcome && transition.outcome.outcome === 'win') {
+          witness = {
+            actionIdentity: actionId,
+            chain: chainSnapshot(chain),
+            transition,
+          };
+          return true;
+        }
+      }
+    }
+    const last = chain[chain.length - 1];
+    for (let dy = -1; dy <= 1; dy++) {
+      for (let dx = -1; dx <= 1; dx++) {
+        if (dx === 0 && dy === 0) continue;
+        const x = last.x + dx;
+        const y = last.y + dy;
+        if (x < 0 || x >= state.gridWidth || y < 0 || y >= state.gridHeight) continue;
+        const tile = state.grid[y][x];
+        const key = `${x},${y}`;
+        if (!tile || isBlockedTile(tile) || seen.has(key) || !canExtendChain(chain, tile)) continue;
+        chain.push(tile);
+        seen.add(key);
+        if (visit(chain, seen)) return true;
+        seen.delete(key);
+        chain.pop();
+      }
+    }
+    return false;
+  }
+
+  try {
+    rngAt(rngState);
+    outer: for (const row of state.grid) {
+      for (const tile of row) {
+        if (!tile || isBlockedTile(tile)) continue;
+        if (visit([tile], new Set([`${tile.x},${tile.y}`]))) break outer;
+      }
+    }
+  } catch (error) {
+    return {
+      disposition: 'UNKNOWN', complete: false, witness: null,
+      nodes, actionsTested: testedActions.size, searchElapsedMs: observedAt - startedAt,
+      testedActionIdentities: [...testedActions], limits, capReasons: ['fault'], fault: error.message,
+    };
+  }
+
+  return {
+    disposition: witness ? 'FOUND' : capReasons.length ? 'UNKNOWN' : 'NONE',
+    complete: !witness && capReasons.length === 0,
+    witness,
+    nodes,
+    actionsTested: testedActions.size,
+    testedActionIdentities: [...testedActions],
+    searchElapsedMs: observedAt - startedAt,
+    limits,
+    capReasons: [...new Set(capReasons)],
+  };
+}
+
+module.exports = { searchImmediateWin, verifySessionArtifact };
