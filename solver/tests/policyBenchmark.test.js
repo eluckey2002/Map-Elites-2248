@@ -195,7 +195,7 @@ test('a forged candidate receipt key does not resolve content under that identit
   assert.match(index.invalid[0].reason, /candidate content identity mismatch/);
 });
 
-test('exact candidate content with a receipt lacking both self identities is rejected', () => {
+test('exact candidate content with an absent or forged receipt self-identity is rejected', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'policy-eval-unsigned-receipt-'));
   const solverDir = path.join(dir, 'solver');
   fs.mkdirSync(solverDir);
@@ -206,6 +206,13 @@ test('exact candidate content with a receipt lacking both self identities is rej
   const index = buildCandidateIndex({ root: dir });
   assert.equal(index.candidates.size, 0);
   assert.equal(index.invalid[0].reason, 'receipt missing receiptIdentity or artifactIdentity');
+
+  fs.writeFileSync(path.join(solverDir, 'candidate-levels.receipt.json'), JSON.stringify({
+    schemaVersion: 1, candidateIdentity, receiptIdentity: 'f'.repeat(64),
+  }));
+  const forged = buildCandidateIndex({ root: dir });
+  assert.equal(forged.candidates.size, 0);
+  assert.equal(forged.invalid[0].reason, 'receipt self-identity mismatch');
 });
 
 test('a real recording replays exactly; altered coordinates and missing traces become unresolved', () => {

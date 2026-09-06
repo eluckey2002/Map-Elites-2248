@@ -149,6 +149,25 @@ test('a collect-level runtime fault stays unresolved and cannot become wins or s
   assert.match(result.unresolved[0].reasons[0], /reference runtime unresolved: measurement fault: controlled runtime fault/);
 });
 
+test('a diagnostic runtime fault stays unresolved and its unavailable score is not aggregated', () => {
+  const diagnosticFault = (candidate, seed, options = {}) => options.targetDisabled
+    ? {
+      validity: 'unresolved', outcome: null, reason: 'measurement fault: controlled diagnostic fault',
+      score: null, moves: null, firstCrossing: null,
+    }
+    : stubPlay(candidate, seed, options);
+  const result = collect({ playBotFn: diagnosticFault });
+  assert.equal(result.unresolved.length, 15);
+  for (const panel of result.panels) {
+    assert.equal(panel.metrics.ranking.verdict, 'UNRESOLVED');
+    assert.equal(panel.metrics.ranking.convertedWins, null);
+    assert.equal(panel.scoreDiagnostic.percentAvailable, 0);
+    assert.equal(panel.scoreDiagnostic.availableAttempts, 0);
+    assert.equal(panel.scoreDiagnostic.requiredFiles, panel.fileCount);
+  }
+  assert.match(result.unresolved[0].reasons[0], /diagnostic runtime unresolved: measurement fault: controlled diagnostic fault/);
+});
+
 test('missing required and actual extra files stay visible through collect and render', () => {
   const missingPath = 'recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json';
   const root = stageCorpus({ missingPath, extra: true });
