@@ -26,6 +26,11 @@ validate an audit population or authorize a policy change.
   production choice, analysis, refills, transitions, score, terminal outcome,
   and live source hashes. It does not trust claimed spawn deltas, candidates, or
   the self-hash as replay evidence.
+- **Reads own output?:** No. Verification recomputes the entire session — RNG
+  draws, production choice, analysis, board, chain, spawn, score, and terminal
+  — from the seed and pinned code, and compares every field against the
+  artifact. It never trusts the artifact's own claimed spawn deltas,
+  candidates, decision trace, or self-hash as evidence.
 - **Sampling memory:** No sampler. Silence means no artifact was requested, not
   audited clean.
 - **Enforcement:** Local report eligibility only; independent A6 review is
@@ -62,6 +67,10 @@ validate an audit population or authorize a policy change.
 - **Supply chain:** Positions and RNG draw state come only from verified replay;
   witness transitions are cloned and replayed. Production candidate lists are
   used only for attribution, never for absence.
+- **Reads own output?:** No. The search clones and replays its own witness
+  rather than trusting a claim, and attribution compares against the freshly
+  recomputed production decision from `verifySessionArtifact`, never the
+  artifact's raw recorded one.
 - **Sampling memory:** Every requested verified position gets `FOUND`, `NONE`,
   or `UNKNOWN`; output counts all three. It does not remember positions never
   requested.
