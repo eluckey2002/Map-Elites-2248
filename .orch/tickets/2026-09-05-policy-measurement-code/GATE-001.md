@@ -1,10 +1,10 @@
 ---
 id: GATE-001
 run: 2026-09-05-policy-measurement-code
-status: integrated
+status: complete
 executor: orch-critique
 pack: orch-code-pack
-independence: context
+independence: checker
 depends_on: [MEASURE-001]
 write_scope: []
 bound: 25 minutes

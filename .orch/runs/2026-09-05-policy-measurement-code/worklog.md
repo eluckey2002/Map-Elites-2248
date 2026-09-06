@@ -56,9 +56,21 @@ will independently review the produced revision. Implementation lease 85m.
 
 ## queued_scope
 
-[]
+One caller-decision item: explicit empty/unresolved regression reporting and
+permanent renderText controls for separate reference and diagnostic faults.
+No second correction is authorized by this run. Content corrections/report and
+whole-composition verification remain unexecuted successor work.
 
 ## terminal
+
+terminal: failed
+
+Deciding evidence: verification-ce21196.md, independent orch-verify plus root
+reproduction. C1-C4/C6 PASS; C5/C7 FAIL. The single correction pass was spent;
+no second pass or later-stage work ran. Full final suite 382/378 with exactly
+the four starting failure identities, experiment gate PASS, protected hashes
+unchanged. The descriptive raw baseline is preserved but Step 2 is not accepted.
+Intermediate chronological notes below do not override this terminal standing.
 
 02:12 UTC: joined REPAIR-001 clean at ce21196 (implementation 4602cd1,
 supplemental tests 86a016a, ticket evidence ce21196). One correction pass spent.

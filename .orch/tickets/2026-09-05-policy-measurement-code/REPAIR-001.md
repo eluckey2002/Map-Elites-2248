@@ -1,7 +1,7 @@
 ---
 id: REPAIR-001
 run: 2026-09-05-policy-measurement-code
-status: integrated
+status: failed
 executor: orch-repair
 pack: orch-code-pack
 independence: gate
@@ -57,6 +57,12 @@ Return commits, changed_artifacts, per-F disposition, exact red/green evidence,
 CLI summary/raw identity, no-worse failure names, limits and queued uncertainties.
 
 ## Result
+
+Final join: F1/F5 remain incomplete at ce21196 because all-unresolved rendering
+prints undefined regression counts. F2-F4 pass. Independent evidence and the
+exact reproduction are in the run's verification-ce21196.md. No second repair
+pass ran. Earlier "fixed" statements below are producer observations superseded
+where the final verification finds a survivor.
 
 Root joined the returned clean ce21196aca799b0c72c1e9b3025692dd45c3e861
 revision; worker explicitly released its write lease with no running sessions.

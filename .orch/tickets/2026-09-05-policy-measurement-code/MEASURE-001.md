@@ -1,7 +1,7 @@
 ---
 id: MEASURE-001
 run: 2026-09-05-policy-measurement-code
-status: integrated
+status: failed
 executor: orch-tdd
 pack: orch-code-pack
 independence: gate
@@ -61,6 +61,10 @@ limits, compatibility changes. Write progress into this ticket as it is produced
 root will not edit it during the dispatch. Do not set terminal status.
 
 ## Result
+
+Final join: instrument acceptance remains failed after the single repair pass.
+C5/C7 survivor and current source identity are in the run's
+verification-ce21196.md. Intermediate progress below is retained, not acceptance.
 
 In progress in isolated worktree `/private/tmp/2248-policy-measurement-2026-09-05`
 at clean baseline `e0ed5a15f982b6584428de031f778ceb008c1d19`. Writer check found no

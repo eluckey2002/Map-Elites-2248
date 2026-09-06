@@ -36,7 +36,7 @@ Policy changes follow the accepted measurement and investigation order, so a pro
 | Step | State | Completion evidence |
 | --- | --- | --- |
 | 1. Evaluation contract | Complete; accepted | [POLICY-EVAL-0001 acceptance](../evaluation/POLICY-EVAL-0001/acceptance.md); frozen at `e415df78b77a8f32ec2d97912ccd198bfaad2d21` |
-| 2. Measurement corrections and benchmark | Active; not accepted | [Bounded delivery](../../.orch/runs/2026-09-05-policy-measurement/composition.md); benchmark implementation and baseline awaiting review and source-record corrections |
+| 2. Measurement corrections and benchmark | Incomplete; not accepted | [Final verification](../../.orch/runs/2026-09-05-policy-measurement-code/verification-ce21196.md), code `ce21196`; C5/C7 fail on all-unresolved reporting; corrections/report still pending |
 | 3. Bot-trajectory audit | Blocked on Step 2 | None |
 | 4. Supported change and validation | Blocked on Step 3 | None |
 
@@ -52,6 +52,13 @@ Accepted Step 1 package at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`:
 
 ## Next action
 
+Current hold: the code gate's single correction pass left undefined regression
+counts in all-unresolved rendered output. A new caller decision is needed for
+one narrow repair plus verification. Then, and only after code acceptance,
+finish Step 2's source-record corrections and final baseline report. The exact
+resume point is in [status.md](../../.orch/runs/2026-09-05-policy-measurement/status.md).
+Do not start Step 3. Earlier next-action text below is retained as stage history.
+
 Consult the [Atlas support shortlist](../plans/2026-09-05-policy-improvement-atlas-support.md) when executing the relevant step. It is advisory, not another stage or an amendment to the required order. The whole plan is pinned to commit `85d8684`, SHA-256 `6310780fa70e31951345f3fa35f1160b3b13fa5bc39bc22410e49a9765fadfb2`; the consultation leaves that file and every stage state unchanged.
 
 Begin Step 2 only after citing and rechecking the accepted Step 1 package and
@@ -62,6 +69,8 @@ session. Do not start the bot-trajectory audit or policy implementation until
 their corresponding prerequisites close.
 
 ## History
+
+- 2026-09-05 - Step 2 implementation and one independent review/repair cycle ran. Final code `ce21196` preserves all 15 inputs and protected sources; full suite 378/382 retains the same four failures. Independent final verification leaves C5/C7 failed on the all-unresolved renderer. No Step 2 acceptance, record-correction delivery, bot audit, or policy change is claimed.
 
 - 2026-09-05 - Owner's next "proceed" opened Step 2. Rechecked the frozen predecessor and 27 source/recording hashes. Code and records are sequential delivery kinds; no Step 3 audit or policy change has begun. Intermediate implementation/test output is not Step 2 acceptance.
 

@@ -1,10 +1,10 @@
 ---
 id: VERIFY-001
 run: 2026-09-05-policy-measurement-code
-status: ready
+status: failed
 executor: orch-verify
 pack: orch-code-pack
-independence: context
+independence: checker
 depends_on: [REPAIR-001]
 write_scope: []
 bound: 15 minutes
@@ -41,4 +41,8 @@ run stays incomplete; no second correction pass is silently authorized.
 
 ## Result
 
-Pending.
+Fixed ce21196 independently verified: C1-C4/C6 PASS; C5/C7 FAIL. Complete
+oracle/evidence/coverage, per-F dispositions and reproduction are in
+../../runs/2026-09-05-policy-measurement-code/verification-ce21196.md.
+Reviewer changed_artifacts=[]; root reproduced the survivor. One correction
+pass is spent; the code run and Step 2 remain incomplete.
