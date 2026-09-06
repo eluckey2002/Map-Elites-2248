@@ -1,0 +1,195 @@
+const crypto = require('node:crypto');
+const fs = require('node:fs');
+const path = require('node:path');
+const { isDeepStrictEqual } = require('node:util');
+
+const {
+  makeRng, createLevelState, cloneState, executeChain, applyGravity,
+  spawnNewTiles, tickBlockers, checkBombs,
+} = require('./engine');
+const { chooseMove, analyzeMove, DEFAULT_PARAMS } = require('./bot');
+const { validateSeed } = require('./benchmark-inputs');
+const { classifyTerminal } = require('./benchmark-replay');
+const { identity, snapshotBoard } = require('./record-session');
+
+const ROOT = path.join(__dirname, '..');
+const LOOKAHEAD_BASE = 987654321;
+
+function fileIdentity(relativePath) {
+  return crypto.createHash('sha256')
+    .update(fs.readFileSync(path.join(ROOT, relativePath)))
+    .digest('hex');
+}
+
+function expectedCodeIdentities() {
+  return {
+    bot: { path: 'solver/bot.js', sha256: fileIdentity('solver/bot.js') },
+    engine: { path: 'solver/engine.js', sha256: fileIdentity('solver/engine.js') },
+    recorder: { path: 'solver/record-session.js', sha256: fileIdentity('solver/record-session.js') },
+    levels: { path: 'src/game.js', sha256: fileIdentity('src/game.js') },
+  };
+}
+
+function same(actual, expected, label, reasons) {
+  if (!isDeepStrictEqual(actual, expected)) reasons.push(`${label} mismatch`);
+}
+
+function chainSnapshot(chain) {
+  return chain && chain.map(({ x, y, value }) => ({ x, y, value }));
+}
+
+function trackedRng(seed) {
+  const source = makeRng(seed);
+  let draws = 0;
+  return {
+    next() {
+      draws += 1;
+      return source();
+    },
+    draws: () => draws,
+  };
+}
+
+function spawnedTiles(boardAfterGravity, state) {
+  const spawned = [];
+  for (let y = 0; y < state.gridHeight; y++) {
+    for (let x = 0; x < state.gridWidth; x++) {
+      if (boardAfterGravity[y][x] === null && state.grid[y][x]) {
+        spawned.push({ x, y, value: state.grid[y][x].value });
+      }
+    }
+  }
+  return spawned;
+}
+
+function unresolved(reasons, extra = {}) {
+  return { status: 'UNRESOLVED', reasons, session: null, positions: [], ...extra };
+}
+
+function readArtifact(artifactPath) {
+  if (typeof artifactPath !== 'string' || !artifactPath) throw new Error('artifact path is required');
+  return JSON.parse(fs.readFileSync(artifactPath, 'utf8'));
+}
+
+function verifySessionArtifact(artifactPath, subject) {
+  const reasons = [];
+  let session;
+  try {
+    session = readArtifact(artifactPath);
+  } catch (error) {
+    return unresolved([`artifact unreadable: ${error.message}`]);
+  }
+
+  try {
+    validateSeed(session.seed);
+    if (!subject || typeof subject !== 'object') throw new Error('subject is required');
+    same(session.schemaVersion, 2, 'schemaVersion', reasons);
+    same(session.generatedBy, 'solver/record-session.js', 'generatedBy', reasons);
+    same(session.level, subject.level, 'level', reasons);
+    same(session.gridW, subject.gridW, 'gridW', reasons);
+    same(session.gridH, subject.gridH, 'gridH', reasons);
+    same(session.minChain, subject.minChain, 'minChain', reasons);
+    same(session.maxMoves, subject.moves, 'maxMoves', reasons);
+    same(session.targetScore, subject.target, 'targetScore', reasons);
+    same(session.tileScale, subject.tileScale || 1, 'tileScale', reasons);
+    same(session.policy && session.policy.params, DEFAULT_PARAMS, 'policy params', reasons);
+    same(session.policy && session.policy.identity, identity(DEFAULT_PARAMS), 'policy identity', reasons);
+    same(session.identities && session.identities.level, identity(subject), 'subject identity', reasons);
+    same(session.identities && session.identities.code, expectedCodeIdentities(), 'source identity', reasons);
+    same(session.identities && session.identities.lookahead,
+      `mulberry32:${LOOKAHEAD_BASE}+moveIndex`, 'lookahead convention', reasons);
+    const withoutIdentity = structuredClone(session);
+    delete withoutIdentity.sessionIdentity;
+    same(session.sessionIdentity, identity(withoutIdentity), 'session identity', reasons);
+    if (!Array.isArray(session.moves)) reasons.push('moves must be an array');
+    if (reasons.length) return unresolved(reasons);
+
+    const live = trackedRng(session.seed);
+    const state = createLevelState(subject, live.next);
+    const positions = [];
+    let terminal = null;
+
+    for (let index = 0; index < session.moves.length; index++) {
+      const recorded = session.moves[index];
+      if (terminal) {
+        reasons.push(`move ${index}: continuation after terminal ${terminal.reason}`);
+        break;
+      }
+      const beforeState = cloneState(state);
+      const rngDraws = live.draws();
+      const options = {
+        lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + index),
+        params: DEFAULT_PARAMS,
+      };
+      const productionChoice = chooseMove(state, options);
+      const analysis = analyzeMove(state, options);
+      same(recorded.index, index, `move ${index} index`, reasons);
+      same(recorded.boardBefore, snapshotBoard(state), `move ${index} boardBefore`, reasons);
+      same(recorded.scoreBefore, state.score, `move ${index} scoreBefore`, reasons);
+      same(recorded.chain, chainSnapshot(productionChoice), `move ${index} production choice`, reasons);
+      same(recorded.decision, analysis, `move ${index} decision`, reasons);
+      if (!productionChoice) {
+        reasons.push(`move ${index}: artifact records a move after production returned no choice`);
+        break;
+      }
+
+      const chain = productionChoice.map(({ x, y }) => state.grid[y][x]);
+      const points = executeChain(state, chain);
+      same(recorded.points, points, `move ${index} points`, reasons);
+      same(recorded.scoreAfter, state.score, `move ${index} scoreAfter`, reasons);
+      applyGravity(state);
+      const afterGravity = snapshotBoard(state);
+      same(recorded.boardAfterGravity, afterGravity, `move ${index} boardAfterGravity`, reasons);
+      spawnNewTiles(state, live.next);
+      same(recorded.spawnDelta, spawnedTiles(afterGravity, state), `move ${index} spawnDelta`, reasons);
+      tickBlockers(state);
+      same(recorded.boardAfter, snapshotBoard(state), `move ${index} boardAfter`, reasons);
+      terminal = classifyTerminal(state, { hasLegalMove: true });
+      positions.push({
+        moveIndex: index,
+        precedingMoves: index,
+        state: beforeState,
+        liveRng: { seed: session.seed, draws: rngDraws },
+        decision: analysis,
+        productionChoice: chainSnapshot(productionChoice),
+      });
+    }
+
+    if (!terminal && reasons.length === 0) {
+      const nextIndex = session.moves.length;
+      const choice = chooseMove(state, {
+        lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + nextIndex),
+        params: DEFAULT_PARAMS,
+      });
+      if (!choice) terminal = { outcome: 'lose', reason: 'no valid moves', firstCrossing: null };
+      else reasons.push('incomplete session before terminal event');
+    }
+    const expectedOutcome = terminal && {
+      result: terminal.outcome,
+      ...(terminal.outcome === 'lose' ? { reason: terminal.reason } : {}),
+      movesUsed: state.moves,
+      finalScore: state.score,
+    };
+    same(session.finalBoard, snapshotBoard(state), 'finalBoard', reasons);
+    same(session.outcome, expectedOutcome, 'outcome', reasons);
+    if (reasons.length) return unresolved(reasons);
+
+    return {
+      status: 'VERIFIED',
+      reasons: [],
+      session: {
+        identity: session.sessionIdentity,
+        subjectIdentity: session.identities.level,
+        seed: session.seed,
+        params: session.policy.params,
+        moves: session.moves.length,
+        outcome: session.outcome,
+      },
+      positions,
+    };
+  } catch (error) {
+    return unresolved([...reasons, `verification fault: ${error.message}`]);
+  }
+}
+
+module.exports = { verifySessionArtifact };
