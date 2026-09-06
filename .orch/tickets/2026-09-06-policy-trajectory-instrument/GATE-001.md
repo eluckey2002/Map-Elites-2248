@@ -236,4 +236,89 @@ release explicitly and return PASS/FAIL/UNVERIFIED with exact coverage.
 
 ## Affected verification result
 
-Pending.
+**Overall: FAIL (weakest oracle class: judged). Gate-check: REVISE, rung
+`none`.** The repair closes F1 and F3 and the A2 disposition/denominator part of
+F2, but F2 still fails A4 because an unknown clock-fault duration is published
+as aggregate zero search time. This is one affected verification, not a second
+gate; no new audit sample or repair was run.
+
+Fixed covers:
+
+- repaired read-only target
+  `bbf5fdec2553717c23bece400531cd619cdb2486`, compared with failed subject
+  `0c6b250ce300c76797308ea295ee2e6f48832ae0`; root integration
+  `ee2bc2627e5856007f284209f3daa31eac58931e` carries the same three blobs;
+- `solver/trajectory-audit.js`: SHA-256
+  `9f0a0ce7f256aecef23cdcc149370e41a61cbfc7b61ea2fbbb14fba6214d7804`,
+  blob `2b06f720e60822f6ccffec8c6bffc659629b8326`;
+- `solver/tests/trajectoryAudit.test.js`: SHA-256
+  `d721a71b3a08c224d8b43f1999f495bd131e08e0e2c5897063b827b13e149512`,
+  blob `8d3564cbc8c253332c224c9dd074346a23e31318`;
+- `docs/evaluation/POLICY-AUDIT-0001/instrument-checks.md`: SHA-256
+  `2c300f740395a274c6905e615e28363f9280dafb0a7c9dc3138b27ed2d55018b`,
+  blob `798bbed7b76b7a6ed4aff2e8bccd2e0be28683e5`.
+
+Finding/criterion map:
+
+| Item | Verdict | Oracle / class | Exact affected evidence |
+| --- | --- | --- | --- |
+| F1 / A3 production-already-wins and ambiguous override attribution | **PASS** | retained `/private/tmp/gate001-probe.js` plus direct `classifyAttribution` controls / deterministic | Fresh subject 9001 seed 0 artifact returned `COMPLETE`; production action `1,1;0,0\|0,1\|1,0` replayed to target win/12 points while exhaustive witness remained `1,0;0,0`; attribution is now `production-choice`. A self-rehashed score-bad twin remained `UNRESOLVED`, zero positions. With `productionImmediateWin:false`, both `bomb-priority` and `immediate-target-win` returned `unresolved` even when the witness identity was supplied in the offered list; no unsupported cause was forced. |
+| F2 / A2 fault disposition | **PASS** | initial/final throwing-clock controls / deterministic | Initial clock fault returned `UNKNOWN`, `capReasons:[fault]`, `searchElapsedMs:null`; final clock fault returned `UNKNOWN`, `capReasons:[fault]`, `searchElapsedMs:0`. Through a freshly generated good artifact, the public consumer returned `COMPLETE`, requested/reported 1/1, `unknownPositions:1`, and retained `fault:"consumer clock fault"`. |
+| F2 / A4 timing truth | **FAIL (P1 survivor)** | same public-consumer initial-clock control / deterministic | The faulted position correctly carries `searchElapsedMs:null`, but `positions.reduce((sum, search) => sum + search.searchElapsedMs, 0)` coerces `null` to zero, so top-level `timing.searchMs` is `0`. Impact: an unmeasurable search duration is reported as measured zero, violating A4's separate search-time record and making later cost reporting falsely precise. Location: `solver/trajectory-audit.js` lines 438-440 at this identity. The new permanent clock test asserts the disposition/denominator but not this aggregate, and the card does not declare the loss. No second correction is authorized or attempted. |
+| F3 / A1 real producer-created empty session | **PASS** | fresh `recordSession` subject 9999 seed 0 through verifier and consumer / deterministic | Producer output remained a legitimate zero-move `no valid moves` artifact. Verification now returns `UNRESOLVED` with `session contains no auditable positions`; consumer returns `UNRESOLVED`, sessions verified 0, `positionsRequested:null`, positions reported 0. The card now distinguishes this from a truncated formerly nonempty trace. |
+
+Mapped frozen criteria:
+
+| Criterion | Verdict | Covers/evidence |
+| --- | --- | --- |
+| A1 | **PASS** | F3 passes; unchanged good/self-rehashed replay coverage is reused from the original independent gate. |
+| A2 | **PASS** | F2 initial/final fault dispositions pass; unchanged exhaustive legality, collision, bomb order, NONE/cap and non-mutation coverage is reused. |
+| A3 | **PASS** | F1 passes both production-selected-win and conservative override ambiguity controls; corrupt artifacts remain excluded. |
+| A4 | **FAIL** | Requested faulted positions and denominators are retained, but unknown per-position duration is aggregated as numeric zero. |
+| A5 | **PASS** | `0c6b250..bbf5fde` changes exactly the same three allowed paths; target clean; all three blobs match root `ee2bc26`; affected file test 13/13 and independent diff check PASS. Producer evidence reused as authorized: focused 45/45, experiment/diff PASS, full 391/395 with exactly the four known failures (`candidate-levels-52.json`, `candidate-levels-54.json`, Universe Map generated-view staleness, Universe Map date drift). Full suite was not rerun. |
+| A6 | **FAIL** | Fresh affected judgment from the frozen spec finds the A4 survivor; therefore the report-only instrument is not independently qualified. |
+
+Commands and retained outputs:
+
+```text
+node /private/tmp/gate001-probe.js
+good COMPLETE; production transition target win; witness differs;
+attribution=production-choice
+bad UNRESOLVED; positions=0; reason="move 0 scoreAfter mismatch"
+
+node <inline affected F2/F3/override probe>
+empty: moves=0; verify=UNRESOLVED; audit=UNRESOLVED;
+  reason="session contains no auditable positions"; positionsRequested=null
+clock initial: UNKNOWN/fault/searchElapsedMs=null
+clock final: UNKNOWN/fault/searchElapsedMs=0
+clock consumer: COMPLETE; requested=1; reported=1; unknown=1;
+  position searchElapsedMs=null; aggregate timing.searchMs=0
+override bomb=unresolved; target=unresolved
+
+node --test solver/tests/trajectoryAudit.test.js
+tests 13; pass 13; fail 0
+
+git diff --name-only 0c6b250..HEAD
+docs/evaluation/POLICY-AUDIT-0001/instrument-checks.md
+solver/tests/trajectoryAudit.test.js
+solver/trajectory-audit.js
+
+git diff --check 0c6b250..HEAD
+(no output; exit 0)
+```
+
+Exact regenerated diagnostic artifacts are
+`/private/tmp/gate001-good-9001-0.json`,
+`/private/tmp/gate001-bad-score.json`,
+`/private/tmp/gate001-fixed-empty.json`, and
+`/private/tmp/gate001-fixed-clock-good.json`. Unchanged limits remain those in
+the original gate: shared engine/game correctness, normal-path exhaustive scan,
+multi-move/corpus/population/performance allowance and policy benefit were not
+rerun or inferred. Bomb/target override behavior was checked conservatively at
+the public classifier seam; no protected chooser source changed. Changed
+artifact: this appended canonical ticket result only; repaired target remained
+read-only.
+
+Lease **RELEASED** by `/root/trajectory_gate_gpt_5_6_sol_ultra` at
+`2026-09-06T08:48:50Z`; no further target or canonical-ticket write is owned by
+this verifier. Root retains adjudication and the authorized hard stop.

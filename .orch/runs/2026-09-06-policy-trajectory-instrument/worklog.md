@@ -52,3 +52,13 @@ Actual audit protocol/panel/seed/cost declarations and collection follow the
 accepted instrument, not this code delivery. Step4 remains blocked.
 
 ## Terminal
+
+STOPPED — qualification FAIL, no second correction. Owner stopped the original
+delivery, then approved one20minute correction/verification attempt starting
+08:41:26Z, hardstop09:01:26Z. Repairbbf5fde, integratedee2bc26, corrected the
+false miss, empty-session admission and thrown clock fault. Independent affected
+verification at08:48:50Z retained A4/A6 FAIL: null search duration becomes zero
+in aggregate timing. Focused45/45; full391/395 with exactly four known failures;
+protected sources unchanged. All leases released. No fresh audit, protocol,
+policy change, PR/push/main action or additional correction. The next decision
+belongs to the owner; code and evidence are preserved, not accepted for audit.

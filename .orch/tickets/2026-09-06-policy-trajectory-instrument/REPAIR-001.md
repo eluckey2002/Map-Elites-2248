@@ -1,7 +1,7 @@
 ---
 id: REPAIR-001
 run: 2026-09-06-policy-trajectory-instrument
-status: needs-verify
+status: failed
 executor: orch-repair
 pack: orch-code-pack
 profile: orch-worker
@@ -107,6 +107,12 @@ affected independent verification remains required.**
   was created.
 
 ## Feedback
+
+Final root join08:49Z: affected independent verification accepted as evidence;
+repair qualification FAIL. F1/F3 and clock fault containment pass, but F2/A4
+retains a timing-reporting defect: null per-position duration becomes aggregate
+zero. Exact evidence is GATE-001 affected result atbbf5fde (rootee2bc26).
+No second correction authorized or attempted. Work stopped; code preserved.
 
 Root join08:45:23Z: matching claimant returned within bound, released both
 leases, and changed exactly three allowed files. Producer checks atbbf5fde

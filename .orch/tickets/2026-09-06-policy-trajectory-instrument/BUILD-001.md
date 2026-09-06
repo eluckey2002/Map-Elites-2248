@@ -1,7 +1,7 @@
 ---
 id: BUILD-001
 run: 2026-09-06-policy-trajectory-instrument
-status: needs-verify
+status: failed
 executor: orch-tdd
 pack: orch-code-pack
 profile: orch-worker
@@ -153,6 +153,10 @@ gate.**
   remain downstream; no producer self-acceptance is claimed.
 
 ## Feedback
+
+Final qualification after approved bounded correction: A4/A6 FAIL on unknown
+duration aggregated as zero. See REPAIR-001 and GATE-001 affected verification.
+Instrument remains unqualified; no bot audit or policy changes were performed.
 
 - Root integration 2026-09-06T08:25:23Z: matching claimant returned within its
   bound and released both leases. Exact three-path diff confirmed. A1-A5
