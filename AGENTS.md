@@ -13,7 +13,7 @@ The known factual corrections belong to Step 2; recording this sequence does not
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
-- **Step 2 is accepted; Step 3 is ready but unexecuted.**
+- **Step 2 is accepted; Step 3 has begun with instrument design, not audit measurements.**
   The repaired source `c61d443...` passed independent
   [VERIFY-002](.orch/tickets/2026-09-05-policy-measurement-extra-repair/VERIFY-002.md)
   and was admitted at `36b0455...`. Its recorded full suite is 378/382 with
@@ -23,7 +23,9 @@ Each line here is a fact you can check in a minute. Check it rather than trust i
   [acceptance boundary](docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md)
   identify the independent whole-result PASS and final artifact identities.
   The fresh integrated full suite at `6a4d4f0` also passed 378/382 with exactly
-  those four failures. Recheck accepted predecessor identities before Step 3.
+  those four failures. All 33 accepted hashes matched at Step 3 intake; subsequent
+  navigation-only progress edits do not change that historical accepted artifact.
+  The active instrument scope is linked from BL-0014; no policy change is authorized.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still reads PASS, 140,544 points in 20 moves — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
 - **Historical benchmark premise, corrected:** all 14 winning human recordings

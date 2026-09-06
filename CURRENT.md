@@ -13,8 +13,11 @@ The [measurement acceptance](docs/evaluation/POLICY-EVAL-0001/measurement-accept
 records the independent whole-result PASS, unchanged measurement source
 `c61d443...`, [descriptive baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md),
 ledger corrections and exact artifact identities. The fresh integrated suite
-passed 378/382 with only the four known failures. Step 3 is ready but unexecuted:
-recheck the accepted predecessor, then define its bounded bot-trajectory audit.
+passed 378/382 with only the four known failures. Step 3 has begun: all 33 accepted
+predecessor hashes matched at intake. Source inspection identified the need for
+a bounded immediate-win search and independent bot-session replay instrument;
+its [implementation scope](.orch/runs/2026-09-06-policy-trajectory-instrument/spec.md)
+is ready. No instrument implementation or audit measurements have run yet.
 Policy implementation remains blocked on Step 3. No new game or policy result follows.
 The earlier policy sections below are retained as history. Their active-looking
 BL-0013 direction cannot bypass the sequence; `CORRECTION-0005` through

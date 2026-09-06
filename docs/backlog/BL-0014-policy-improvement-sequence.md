@@ -39,7 +39,7 @@ Policy changes follow the accepted measurement and investigation order, so a pro
 | --- | --- | --- |
 | 1. Evaluation contract | Complete; accepted | [POLICY-EVAL-0001 acceptance](../evaluation/POLICY-EVAL-0001/acceptance.md); frozen at `e415df78b77a8f32ec2d97912ccd198bfaad2d21` |
 | 2. Measurement corrections and benchmark | Complete; accepted | [Measurement acceptance](../evaluation/POLICY-EVAL-0001/measurement-acceptance.md); source `c61d443...`, baseline `a79fe734...`, independent WHOLE-001 PASS, final envelope linked there |
-| 3. Bot-trajectory audit | Ready; unexecuted | Accepted Step 2 predecessor; no audit result |
+| 3. Bot-trajectory audit | In progress: instrument specified; no measurements | [Source intake](../../.orch/tickets/2026-09-06-policy-trajectory-intake/GROUND-001.md), [instrument scope](../../.orch/runs/2026-09-06-policy-trajectory-instrument/spec.md); accepted predecessor freshly checked |
 | 4. Supported change and validation | Blocked on Step 3 | None |
 
 Planning this sequence and the earlier grounding report did not complete any row.
@@ -54,11 +54,13 @@ Accepted Step 1 package at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`:
 
 ## Next action
 
-Recheck the accepted Step 1 and Step 2 identities, then define the bounded
-Step 3 audit of the unchanged bot's own trajectories before collecting any
-new measurements. Register and commit a protocol before any generalizing run.
-No audit or policy change has run in this closeout. The earlier next-action
-text below is retained as stage history.
+Implement and independently qualify the narrowly scoped audit instrument first.
+Its [composition](../../.orch/runs/2026-09-06-policy-trajectory-intake/composition.md)
+then passes the accepted executable identity into the research protocol. Fix
+the finite panel, seed policy, search/runtime bounds, attribution and justification
+criteria before collection; commit the protocol before running it. This first
+audit is a bounded diagnostic, not a population-strength claim. No audit or
+policy change has run. Earlier next actions remain stage history.
 
 Consult the [Atlas support shortlist](../plans/2026-09-05-policy-improvement-atlas-support.md) when executing the relevant step. It is advisory, not another stage or an amendment to the required order. The whole plan is pinned to commit `85d8684`, SHA-256 `6310780fa70e31951345f3fa35f1160b3b13fa5bc39bc22410e49a9765fadfb2`; the consultation leaves that file and every stage state unchanged.
 
@@ -72,6 +74,14 @@ session. Do not start the bot-trajectory audit or policy implementation until
 their corresponding prerequisites close.
 
 ## History
+
+- 2026-09-06 - Owner requested beginning Step 3. All 33 Step 2 envelope hashes matched
+  at91337e5 before navigation updates. Bounded source intake identified reusable
+  recorder/chooser/transition primitives but two missing trustworthy audit seams.
+  Instrument scope and advisory check designs are recorded; implementation,
+  qualification, protocol registration and measurements remain to do. No policy
+  defect has been inferred, and Step4 remains blocked. METHOD-025 narrows the
+  question to missed legal immediate wins; METHOD-029 constrains qualification.
 
 - 2026-09-05 - Owner resumed the six-title correction and final verification.
   Independent content verification passed; the eleven-document bundle landed
