@@ -8,6 +8,16 @@ Cards are written when a check is created or modified, per the `gate-check`
 skill. A stale card is worse than no card: if you change a check, update its
 card in the same commit.
 
+## POLICY-EVAL measurement navigation
+
+POLICY-EVAL-0001's five scoped instrument cards remain in
+[`measurement-checks.md`](evaluation/POLICY-EVAL-0001/measurement-checks.md):
+frozen identity, case-weighted arithmetic, subject resolution, replay/runtime
+semantics, and frozen-panel output. The current
+[`measurement-acceptance.md`](evaluation/POLICY-EVAL-0001/measurement-acceptance.md)
+links them to accepted source `c61d443...` and states the pending Step 2
+boundary. This navigation adds no check or Challenge Receipt.
+
 ---
 
 ### receipt-verifies-against-current-code · HARD

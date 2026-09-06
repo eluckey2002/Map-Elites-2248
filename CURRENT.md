@@ -8,8 +8,17 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 [BL-0014](docs/backlog/BL-0014-policy-improvement-sequence.md) is the active policy item, governed by [the required four-step plan](docs/plans/2026-09-05-policy-improvement-sequence.md) and `DECISION-0006`.
 Step 1 is complete: [POLICY-EVAL-0001 acceptance](docs/evaluation/POLICY-EVAL-0001/acceptance.md) identifies the reviewed contract/input package frozen at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`.
-Step 2, measurement corrections and benchmark, is incomplete: [final verification](.orch/runs/2026-09-05-policy-measurement-code/verification-ce21196.md) found that all-unresolved CLI output still prints undefined regression counts. The single repair pass is spent; another narrow pass needs a caller decision. The code and raw baseline are committed at `ce21196`, but the instrument is not accepted and the source-record corrections/report have not started. The bot-trajectory audit and policy implementation remain blocked in order. See the [resume status](.orch/runs/2026-09-05-policy-measurement/status.md). No new game result follows from the Step 1 document acceptance.
-The earlier vocabulary section below is retained as history; its BL-0013 implementation direction is paused and cannot bypass this sequence.
+Step 2, measurement corrections and benchmark, is still incomplete. The code
+prerequisite is now accepted: the repair source `c61d443...` passed independent
+review in [VERIFY-002](.orch/tickets/2026-09-05-policy-measurement-extra-repair/VERIFY-002.md)
+and was admitted at `36b0455...`. The [descriptive baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md),
+[measurement acceptance boundary](docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md),
+and ledger corrections are the pending document bundle; final content and
+whole-composition checks have not accepted them yet. Step 3 and policy
+implementation remain blocked. No new game or policy result follows.
+The earlier policy sections below are retained as history. Their active-looking
+BL-0013 direction cannot bypass the sequence; `CORRECTION-0005` through
+`CORRECTION-0007` control any conflicting measurement premise.
 
 ## Current decision frontier — 2026-09-05
 
@@ -26,7 +35,13 @@ Do **not** repeat RESULT-0024's same one-stone/two-stone policy interaction with
 
 The implementation check now distinguishes an open 2x2 real play from its one-stone twin (`0` versus `1/3`) and pins a non-power-of-two scale fixture, but this is still only a mechanized candidate descriptor—not an accepted MAP-Elites axis. The completed [48-game range probe](.orch/tickets/2026-09-02-stranded-pressure-range-probe/SPR-001.md) observed four distinct rounded policy aggregates but only `0.02385060610977495` total range, below its predeclared `0.05` promising threshold. Its exact verdict is `AMBIGUOUS_ON_EXACT_PROBE`: it does not justify a preregistered policy-range experiment and does not establish separation of play styles, prediction of fun, or fitness value. If pursued, the next cheap discriminator should use one stronger topology contrast rather than add seeds to this same panel or repeat RESULT-0024.
 
-## Open now — the policy vocabulary, not its parameters
+## Historical policy-vocabulary proposal — blocked
+
+The following section is retained to preserve the prior rationale and wording.
+It is not current guidance. See
+[CORRECTION-0006](EVIDENCE_LEDGER.md#correction-0006--current-policy-capabilities-and-the-pilot-generation-miss)
+and [CORRECTION-0007](EVIDENCE_LEDGER.md#correction-0007--result-0017-attribution-and-objective);
+BL-0013 remains blocked pending Steps 2 and 3.
 
 [BL-0013](docs/backlog/BL-0013-policy-vocabulary-gaps.md) is the live piece of work. `RESULT-0017`'s MAP-Elites search over the existing weights returned -0.64%, usually read as the weights being near optimal; the 2026-09-05 session found evidence for a second reading, that the answer is not in the space being searched. The policy has no term for holding value now to build a larger chain later, which is the strategy measurably outscoring it in owner play — owner chains sum 264-356, bot chains sum near 64. Three replacement terms are specified there.
 
@@ -103,7 +118,7 @@ The Level 26 exact-proof track, by [DECISION-0002](EVIDENCE_LEDGER.md#decision-0
 ## Accepted, not fixed
 
 - **Roughly 15 levels have a target lower than the level before.** The remaining lever is the move budget, and spending it would make a level's pacing a side effect of target cosmetics. Revisit from playtest feel, not from a monotonicity rule.
-- **The reference bot is a weak proxy for a skilled player.** Every recorded win rate is a floor on human success, not an estimate. The margin is still unquantified in general, but it is no longer unmeasured: on Level 51 the owner reached the target in 12 moves where the bot's median is 16 across 120 seeds, and the bot matches that 12-move pace on 8 of 120 boards. The gap narrowed with `RESULT-0011` and did not close.
+- **Historical inference, not established by the current panels: the reference bot is a weak proxy for a skilled player.** The retained account said every recorded win rate is a floor on human success, not an estimate. The margin was described as unquantified in general but not wholly unmeasured: on Level 51 the owner reached the target in 12 moves where the bot's median is 16 across 120 seeds, and the bot matched that 12-move pace on 8 of 120 boards. The gap was described as narrowing with `RESULT-0011`. Do not use this cross-seed comparison as current human-strength evidence; `CORRECTION-0005` and the fixed baseline govern the selected panels.
 - **Lockouts persist at up to ~5% on the late levels.** A lockout is a dead board, not a fair loss. Bounded by `solver/verify-loop.js`.
 
 ## Priced and rejected — do not re-propose without new evidence

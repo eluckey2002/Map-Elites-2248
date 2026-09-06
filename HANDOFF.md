@@ -2,6 +2,21 @@
 
 # 2248 Challenge — Handoff
 
+## 2026-09-05: corrected policy-measurement status
+
+Step 2's measurement code prerequisite is accepted at `36b0455...` for source
+`c61d443...`. The [descriptive baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md)
+and [measurement acceptance boundary](docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md)
+carry the current source-pinned account. Step 2 as a whole still awaits final
+content and whole-composition checks; Step 3 remains blocked.
+
+The section immediately below is retained history, including its original
+headings and next-action language. Do not treat “the two findings” or “Where to
+pick up” as current authority. `CORRECTION-0005` through `CORRECTION-0007` in
+[EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md#correction-0005--recorded-stopping-horizons-repeats-and-provenance)
+correct stopping/horizons, policy capability, the pilot miss, and RESULT-0017
+attribution without changing the underlying recordings or accepted result.
+
 ## 2026-09-05: four wrong answers, and the two findings that survived
 
 **Read the mistakes section first. Four separate conclusions in this session were
@@ -117,6 +132,9 @@ owner's understanding of their own game from an inference.
   full game's worth of opening positions.
 
 ### Where to pick up
+
+> **Historical next action — not authorized now.** Preserve this proposal as
+> session history. Follow BL-0014 and the pending Step 2 acceptance boundary.
 
 `BL-0013` is the next piece of work and it has a decision in it that is not made:
 **the search needs a fitness function.** Score, moves-to-win, and win rate give

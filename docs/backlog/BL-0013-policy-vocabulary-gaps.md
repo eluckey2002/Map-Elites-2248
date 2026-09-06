@@ -16,13 +16,24 @@ Its implementation direction is paused by `DECISION-0006` and [BL-0014](BL-0014-
 Follow [the required sequence](../plans/2026-09-05-policy-improvement-sequence.md): this record may be re-scoped or replaced only after the Step 3 disposition supports work in Step 4.
 The completion of planning alone does not release it for implementation.
 The factual corrections identified in the grounding report are assigned to Step 2.
+Those corrections are now source-pinned in
+[CORRECTION-0005](../../EVIDENCE_LEDGER.md#correction-0005--recorded-stopping-horizons-repeats-and-provenance),
+[CORRECTION-0006](../../EVIDENCE_LEDGER.md#correction-0006--current-policy-capabilities-and-the-pilot-generation-miss),
+and [CORRECTION-0007](../../EVIDENCE_LEDGER.md#correction-0007--result-0017-attribution-and-objective).
+They do not authorize this proposal. Current source has future-opportunity
+terms; the pilot shows one generation miss on a human position, not a bot-own
+defect or proof these terms are needed. RESULT-0017 stays unchanged: its cited
+representative is -3.5723% on disjoint score holdout; -0.64% is unresolved.
 
 ## Authority
 
 This record is intent, not evidence. Proof standing lives in the
 [evidence ledger](../../EVIDENCE_LEDGER.md); nothing here upgrades a claim.
 
-## Why this comes before another parameter search
+## Historical rationale — why this was proposed before another search
+
+The following is retained history: candidate terms, not current source findings
+or implementation scope.
 
 `RESULT-0017`'s MAP-Elites search over the existing weights returned -0.64%
 against the champion — no improvement. The usual reading is that the weights
@@ -41,7 +52,7 @@ Adding terms one at a time is also the wrong shape. Terms interact:
 built-tile chain roughly once per game. Each term added separately also costs
 its own ~15,000-game validation and never tests the interaction.
 
-## The gaps, each grounded in a measured divergence
+## Historical proposed gaps
 
 **1. Build potential across the board, not just the survivor.**
 `harvestValue` scores only the tile just created. Nothing scores the board's
@@ -72,7 +83,7 @@ of `HUMAN-PILOT-0002` the bot took 1,536 where 37,760 existed, still protecting
 a board with no future. If 3 is defined properly this disappears into it, which
 is the reason to define the vocabulary as a set rather than as four patches.
 
-## Acceptance criteria
+## Historical proposal acceptance criteria
 
 - Each term above is implemented as a parameter defaulting to the current
   behaviour, so the shipped policy is unchanged until a search moves it.
@@ -85,7 +96,7 @@ is the reason to define the vocabulary as a set rather than as four patches.
   before it is proposed for promotion, and goes through a registered protocol,
   since it is a generalising claim.
 
-## Current evidence
+## Historical evidence list
 
 - `solver/bot.js` — `DEFAULT_PARAMS`, `turnover` at 40/cell, `harvestValue`
 - `EVIDENCE_LEDGER.md` `RESULT-0017` (the MAP-Elites wash)
@@ -93,7 +104,7 @@ is the reason to define the vocabulary as a set rather than as four patches.
 - Session measurements: greedy-max 88/120 wins vs shipped 108/120, lockouts
   concentrated on long and cramped boards
 
-## Next action
+## Historical next action — blocked and not authorized
 
 Implement the three terms as inert-by-default parameters, then one search over
 the whole space. Not one term at a time.
