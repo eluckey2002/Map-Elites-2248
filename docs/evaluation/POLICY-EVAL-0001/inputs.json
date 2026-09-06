@@ -1,0 +1,1469 @@
+{
+  "schemaVersion": 1,
+  "contractId": "POLICY-EVAL-0001",
+  "sourceRevision": "76d4e82b967ec1370b83bd8195c646ff4c27e9e0",
+  "scope": "Step 1 input inventory only; no games or replays run; no candidate receipt qualified",
+  "hashConvention": "UTF-8 bytes for files; compact JSON with recursively sorted object keys, array order preserved for sourceObjectSha256",
+  "reference": {
+    "module": "solver/bot.js",
+    "entrypoint": "chooseMove",
+    "params": {
+      "wRoll": 1,
+      "wPlace": 1,
+      "turnover": 40,
+      "width": 24,
+      "bombMax": 9,
+      "tieBreak": "degree",
+      "wHarvest": 2,
+      "offerFull": 0,
+      "pathWidth": 8
+    },
+    "authoringEvaluator": "calib-1 is excluded as the reference; solver/level-author.js is a separate source boundary"
+  },
+  "randomness": {
+    "live": "engine.makeRng(effective uint32 seed), one private stream per arm; initialization consumes from same stream before refill",
+    "lookahead": "fresh engine.makeRng(987654321 + zero-based moveIndex) for each factory call; never share live RNG",
+    "sameSeedMeaning": "same initial condition and RNG scheme, not identical later boards after different choices"
+  },
+  "sources": [
+    {
+      "path": "src/game.js",
+      "sha256": "22ebc237b6750fff04251c1b123cc6be749b8b75f3146d6e42576c509dc97bf2",
+      "role": "behavior-binding"
+    },
+    {
+      "path": "solver/engine.js",
+      "sha256": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+      "role": "behavior-binding"
+    },
+    {
+      "path": "solver/bot.js",
+      "sha256": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+      "role": "behavior-binding"
+    },
+    {
+      "path": "solver/human-benchmark.js",
+      "sha256": "833ffd97f18ef0969584a824c7c460fad30633ef980564baa5ceacfdbb0429c6",
+      "role": "source-navigation-not-a-global-freeze"
+    },
+    {
+      "path": "solver/recording-replay.js",
+      "sha256": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4",
+      "role": "source-navigation-not-a-global-freeze"
+    },
+    {
+      "path": "solver/record-session.js",
+      "sha256": "c14ec394d3323ee2b4182f7f59e90c81972039d03e8133fb5fd4dedf1b787799",
+      "role": "source-navigation-not-a-global-freeze"
+    },
+    {
+      "path": "solver/level-author.js",
+      "sha256": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4",
+      "role": "source-navigation-not-a-global-freeze"
+    },
+    {
+      "path": "experiments/README.md",
+      "sha256": "515f125ac95759577e23b22c996bb9528dd8e301e4dd40d2924d9758d5d68cd7",
+      "role": "source-navigation-not-a-global-freeze"
+    },
+    {
+      "path": "experiments/SEEDS.md",
+      "sha256": "927e336d092c0d8574acd50b09820d537108789026891c2fd335b05da4a6c16a",
+      "role": "source-navigation-not-a-global-freeze"
+    },
+    {
+      "path": "play-sessions/README.md",
+      "sha256": "e8ca386290ba8235ec43c3153c216afdc9fcbafedf020a4c64f3f12dc1aeb4e0",
+      "role": "source-navigation-not-a-global-freeze"
+    },
+    {
+      "path": "docs/plans/2026-09-05-policy-improvement-sequence.md",
+      "sha256": "6310780fa70e31951345f3fa35f1160b3b13fa5bc39bc22410e49a9765fadfb2",
+      "role": "source-navigation-not-a-global-freeze"
+    },
+    {
+      "path": "docs/plans/2026-09-05-policy-improvement-atlas-support.md",
+      "sha256": "4b37b30a2895150ba2e2e7c106fcb311bb79f1378732b6846a8d91b8ff6ade83",
+      "role": "source-navigation-not-a-global-freeze"
+    }
+  ],
+  "shippedSubjects": [
+    {
+      "levelLabel": 1,
+      "sourceObject": {
+        "level": 1,
+        "target": 520,
+        "tileScale": 1,
+        "moves": 25,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [],
+        "intro": "Connect matching numbers!"
+      },
+      "sourceObjectSha256": "e87284cf9954fcac6e1db27c0d13767416c85dfcb8f33dd62f77bcde9b750a44"
+    },
+    {
+      "levelLabel": 2,
+      "sourceObject": {
+        "level": 2,
+        "target": 970,
+        "tileScale": 1,
+        "moves": 25,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "d715c277a3c34201f3a539e4a5fb160d3c8224b5e682253b9cb810a210b6139a"
+    },
+    {
+      "levelLabel": 3,
+      "sourceObject": {
+        "level": 3,
+        "target": 1400,
+        "tileScale": 1,
+        "moves": 25,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "faa5c086b94f5a3207fd4901ef2f40f7000dc91d923e23a75c67e3c84beaf296"
+    },
+    {
+      "levelLabel": 4,
+      "sourceObject": {
+        "level": 4,
+        "target": 1850,
+        "tileScale": 1,
+        "moves": 25,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "4e6f4b7bc2c420d5b43e1cdfefdf8a5d1266043cc1392a488a35c44d9c26edc1"
+    },
+    {
+      "levelLabel": 5,
+      "sourceObject": {
+        "level": 5,
+        "target": 2300,
+        "tileScale": 1,
+        "moves": 25,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [],
+        "intro": "Longer chains = more points!"
+      },
+      "sourceObjectSha256": "7e688a31ab4f99cb84f310ead2741b84dbf37b2c2faa7faec80191ec830a181b"
+    },
+    {
+      "levelLabel": 6,
+      "sourceObject": {
+        "level": 6,
+        "target": 2650,
+        "tileScale": 1,
+        "moves": 24,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "b653e8d9af6ee92fa171dc0a8531079b0070e24a796ea9f616b7a6c5b3aeab12"
+    },
+    {
+      "levelLabel": 7,
+      "sourceObject": {
+        "level": 7,
+        "target": 3050,
+        "tileScale": 1,
+        "moves": 24,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "b8dfdea28b09798ae3cdb16ff9a20bf25b22886f20aef714e8bf68c8a5f9e171"
+    },
+    {
+      "levelLabel": 8,
+      "sourceObject": {
+        "level": 8,
+        "target": 3350,
+        "tileScale": 1,
+        "moves": 23,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "a5b3dec98213c3a72af989ec848802a1b32cd22eef088f5fc8ed6fb32a8f2e74"
+    },
+    {
+      "levelLabel": 9,
+      "sourceObject": {
+        "level": 9,
+        "target": 3750,
+        "tileScale": 1,
+        "moves": 23,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "010851be11bb068eb305f25aa0293306281dcd75e4e38f8c75f753c4d66ec8bc"
+    },
+    {
+      "levelLabel": 10,
+      "sourceObject": {
+        "level": 10,
+        "target": 4000,
+        "tileScale": 1,
+        "moves": 22,
+        "minChain": 2,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "67aa2c22baed1c4e33b72ac13a99f47f5d2b04b038d61cd83bfceca8a07ba936"
+    },
+    {
+      "levelLabel": 11,
+      "sourceObject": {
+        "level": 11,
+        "target": 7500,
+        "tileScale": 2,
+        "moves": 28,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [],
+        "intro": "Now you need chains of 3+!"
+      },
+      "sourceObjectSha256": "504df063a4c8c4a742af0b2611a9daf69c5fd28fc30594f3fa14a45f12974d03"
+    },
+    {
+      "levelLabel": 12,
+      "sourceObject": {
+        "level": 12,
+        "target": 7700,
+        "tileScale": 2,
+        "moves": 27,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "9fe097e7107c2a302c74d87f1685b4a2712e66f16e2fb38c6fccaa0c16506cb9"
+    },
+    {
+      "levelLabel": 13,
+      "sourceObject": {
+        "level": 13,
+        "target": 8150,
+        "tileScale": 2,
+        "moves": 27,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "83bfa2721a1c1fc254485cf75e25c84e87e75a29e1deb682f94c45dbafae9677"
+    },
+    {
+      "levelLabel": 14,
+      "sourceObject": {
+        "level": 14,
+        "target": 8250,
+        "tileScale": 2,
+        "moves": 26,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "b6eb28ec3ef1cf06fc6827eb2608f4231cdf7310743661cb991c2fdf4eb35c2d"
+    },
+    {
+      "levelLabel": 15,
+      "sourceObject": {
+        "level": 15,
+        "target": 8100,
+        "tileScale": 2,
+        "moves": 28,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "intro": "Stone blocks the way!"
+      },
+      "sourceObjectSha256": "8ec1cdc16afb215c96f10cf790c5e5be470c3adfd343d99a0124df2d24b6297b"
+    },
+    {
+      "levelLabel": 16,
+      "sourceObject": {
+        "level": 16,
+        "target": 8300,
+        "tileScale": 2,
+        "moves": 27,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "4ccf0c04acb1790db605e651de035905f0ab52be62ff47d60e2ad72881ccabfb"
+    },
+    {
+      "levelLabel": 17,
+      "sourceObject": {
+        "level": 17,
+        "target": 8800,
+        "tileScale": 2,
+        "moves": 27,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 2
+          }
+        ]
+      },
+      "sourceObjectSha256": "9c589260a63c2d1dc345fbbe5606918b50565c9f66d3856c52089c2f97fd7bf0"
+    },
+    {
+      "levelLabel": 18,
+      "sourceObject": {
+        "level": 18,
+        "target": 8050,
+        "tileScale": 2,
+        "moves": 26,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 4
+          },
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 5
+          }
+        ]
+      },
+      "sourceObjectSha256": "2c04caaca7d235f7a06a11f64da368653f74444d39803541883d81ce0775bbc2"
+    },
+    {
+      "levelLabel": 19,
+      "sourceObject": {
+        "level": 19,
+        "target": 7750,
+        "tileScale": 2,
+        "moves": 26,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 5
+          }
+        ]
+      },
+      "sourceObjectSha256": "4c35f43aafb186cd529cbc00aad02ba911b09c18d4371e74531b30465ec40e72"
+    },
+    {
+      "levelLabel": 20,
+      "sourceObject": {
+        "level": 20,
+        "target": 9150,
+        "tileScale": 2,
+        "moves": 25,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "7e57f7ae8544c59f12e727b2cf4f8d3cf4f31ed157b19182aeebce0483cd5ffe"
+    },
+    {
+      "levelLabel": 21,
+      "sourceObject": {
+        "level": 21,
+        "target": 13600,
+        "tileScale": 4,
+        "moves": 28,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 2
+          }
+        ]
+      },
+      "sourceObjectSha256": "176f7b0f3046089f961bff583217c5a9eee7ae9ca3e764e1d8e7861a6c3edd27"
+    },
+    {
+      "levelLabel": 22,
+      "sourceObject": {
+        "level": 22,
+        "target": 13500,
+        "tileScale": 4,
+        "moves": 27,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      "sourceObjectSha256": "637358dcb0bcbebce6be0b6a944c1ebfe61d92705b7cd4a754e62379b373d505"
+    },
+    {
+      "levelLabel": 23,
+      "sourceObject": {
+        "level": 23,
+        "target": 14800,
+        "tileScale": 4,
+        "moves": 27,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "565a87330daeae3c18be62632b550325eb7e8ed403b1acddb10a34f4365516cf"
+    },
+    {
+      "levelLabel": 24,
+      "sourceObject": {
+        "level": 24,
+        "target": 13600,
+        "tileScale": 4,
+        "moves": 26,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 5
+          }
+        ]
+      },
+      "sourceObjectSha256": "b5cd29e69e6d904eb633614d6b7e7f9f6edb8a314765dde31b7697a5f99d2c44"
+    },
+    {
+      "levelLabel": 25,
+      "sourceObject": {
+        "level": 25,
+        "target": 18300,
+        "tileScale": 4,
+        "moves": 26,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 2,
+            "y": 3,
+            "duration": 3
+          }
+        ],
+        "intro": "Ice thaws after 3 moves!"
+      },
+      "sourceObjectSha256": "04afe4698e6875960fec733a3e492c0549604d49145fde41b452ca1b6baacacb"
+    },
+    {
+      "levelLabel": 26,
+      "sourceObject": {
+        "level": 26,
+        "target": 23700,
+        "tileScale": 4,
+        "moves": 32,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [],
+        "intro": "Chains of 4+ required now!"
+      },
+      "sourceObjectSha256": "b2299708da1609691e22138b7067cf2e5e7699ff952c82c480583fdfdff84226"
+    },
+    {
+      "levelLabel": 27,
+      "sourceObject": {
+        "level": 27,
+        "target": 23800,
+        "tileScale": 4,
+        "moves": 31,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": []
+      },
+      "sourceObjectSha256": "bb7ad01114cfa7097bf9f8d2f4eb5632332329a1555fc102f38faf512d6f066d"
+    },
+    {
+      "levelLabel": 28,
+      "sourceObject": {
+        "level": 28,
+        "target": 21000,
+        "tileScale": 4,
+        "moves": 31,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "258080fce2ab51fe49e09f44ecb74dc6e75550b64b7a117a0ba4a7312fb3f717"
+    },
+    {
+      "levelLabel": 29,
+      "sourceObject": {
+        "level": 29,
+        "target": 21600,
+        "tileScale": 4,
+        "moves": 30,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 3
+          }
+        ]
+      },
+      "sourceObjectSha256": "d148c78f76ce5355f8225ca510ac0b0b4c6a5067d21cd5618540800c95fc8116"
+    },
+    {
+      "levelLabel": 30,
+      "sourceObject": {
+        "level": 30,
+        "target": 22300,
+        "tileScale": 4,
+        "moves": 30,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          },
+          {
+            "type": "ice",
+            "x": 2,
+            "y": 5,
+            "duration": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "848847c61134a3623b1db5f1dbc72eaf148b691a1c6232c6363eec3ff82e8da5"
+    },
+    {
+      "levelLabel": 31,
+      "sourceObject": {
+        "level": 31,
+        "target": 33700,
+        "tileScale": 8,
+        "moves": 30,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [],
+        "intro": "The grid is smaller now!"
+      },
+      "sourceObjectSha256": "a4e70a23f64eb84b67ab0e16cb0bb7daa515374c35f7112e4ac22516f08e2357"
+    },
+    {
+      "levelLabel": 32,
+      "sourceObject": {
+        "level": 32,
+        "target": 29400,
+        "tileScale": 8,
+        "moves": 30,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      "sourceObjectSha256": "a47011bf12d89d1086a0f14d8a0ad5106249143da1eaa13005dad642d58aacd3"
+    },
+    {
+      "levelLabel": 33,
+      "sourceObject": {
+        "level": 33,
+        "target": 29900,
+        "tileScale": 8,
+        "moves": 29,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 2
+          }
+        ]
+      },
+      "sourceObjectSha256": "fa19c8d7a7e5beba778060661a21cb0d26960f1357adb3c7db78264d8bdca79f"
+    },
+    {
+      "levelLabel": 34,
+      "sourceObject": {
+        "level": 34,
+        "target": 32700,
+        "tileScale": 8,
+        "moves": 29,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 4
+          },
+          {
+            "type": "ice",
+            "x": 3,
+            "y": 2,
+            "duration": 3
+          }
+        ]
+      },
+      "sourceObjectSha256": "8ba29366b33e1cca044fe00b2385222f2ed641b3bb802d1e18d8174cc946c2fe"
+    },
+    {
+      "levelLabel": 35,
+      "sourceObject": {
+        "level": 35,
+        "target": 26700,
+        "tileScale": 8,
+        "moves": 28,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "90c4b004e3da621dc10cb3c5c69ad596149e771636e4b0636415c62e40f353b5"
+    },
+    {
+      "levelLabel": 36,
+      "sourceObject": {
+        "level": 36,
+        "target": 37200,
+        "tileScale": 8,
+        "moves": 28,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 3
+          },
+          {
+            "type": "ice",
+            "x": 4,
+            "y": 3,
+            "duration": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "8ba7762f5f8242fe231d2aa963cc658e254a6de5583df83527b093fe60b33dff"
+    },
+    {
+      "levelLabel": 37,
+      "sourceObject": {
+        "level": 37,
+        "target": 29900,
+        "tileScale": 8,
+        "moves": 27,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 2
+          },
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "c893d2b64c0154c2353adb41f232361289e87c93311df6eff155d30adf58c8cb"
+    },
+    {
+      "levelLabel": 38,
+      "sourceObject": {
+        "level": 38,
+        "target": 34500,
+        "tileScale": 8,
+        "moves": 27,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 3
+          },
+          {
+            "type": "ice",
+            "x": 3,
+            "y": 3,
+            "duration": 3
+          }
+        ]
+      },
+      "sourceObjectSha256": "f3527505790a0dd1b3e4315ad29003a263ee3a99d6cd8906a39955b4a3bc80ae"
+    },
+    {
+      "levelLabel": 39,
+      "sourceObject": {
+        "level": 39,
+        "target": 32500,
+        "tileScale": 8,
+        "moves": 26,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 5
+          }
+        ]
+      },
+      "sourceObjectSha256": "4185e8c48afb57f459484f71d2ac647e837952410b000d7b0a2b5da5e5aa76dd"
+    },
+    {
+      "levelLabel": 40,
+      "sourceObject": {
+        "level": 40,
+        "target": 47200,
+        "tileScale": 8,
+        "moves": 30,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 3,
+            "timer": 8
+          }
+        ],
+        "intro": "Bombs explode! Merge them fast!"
+      },
+      "sourceObjectSha256": "2db6915546ec55e8ab3a80a469fb18e8c043fee7ea0d7b4020eaf95339c8a9f5"
+    },
+    {
+      "levelLabel": 41,
+      "sourceObject": {
+        "level": 41,
+        "target": 53000,
+        "tileScale": 16,
+        "moves": 29,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "type": "bomb",
+            "x": 3,
+            "y": 4,
+            "timer": 7
+          }
+        ]
+      },
+      "sourceObjectSha256": "d18f43c11e4e3b2d7e50ab90e88354d0141aad518c5306e8faa8948df5341f41"
+    },
+    {
+      "levelLabel": 42,
+      "sourceObject": {
+        "level": 42,
+        "target": 67300,
+        "tileScale": 16,
+        "moves": 29,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 3,
+            "timer": 8
+          }
+        ]
+      },
+      "sourceObjectSha256": "275aff115ac5f8f08224d939319552d26420b50bd5dcfb28dea9ab06fc4e8e14"
+    },
+    {
+      "levelLabel": 43,
+      "sourceObject": {
+        "level": 43,
+        "target": 60100,
+        "tileScale": 16,
+        "moves": 28,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 2
+          },
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 5,
+            "timer": 7
+          }
+        ]
+      },
+      "sourceObjectSha256": "bba37b870e0e3cbef383b7e47b295cc7e6d37c418ba09b4f08bd95c6479d50b7"
+    },
+    {
+      "levelLabel": 44,
+      "sourceObject": {
+        "level": 44,
+        "target": 74000,
+        "tileScale": 16,
+        "moves": 28,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 1,
+            "y": 3,
+            "duration": 3
+          },
+          {
+            "type": "bomb",
+            "x": 3,
+            "y": 3,
+            "timer": 6
+          }
+        ]
+      },
+      "sourceObjectSha256": "aafae50ec79a636c6de710caa036086d25cc1c10a1aef7b68a81eecc210fa02a"
+    },
+    {
+      "levelLabel": 45,
+      "sourceObject": {
+        "level": 45,
+        "target": 63900,
+        "tileScale": 16,
+        "moves": 27,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 3
+          },
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 4,
+            "timer": 8
+          }
+        ]
+      },
+      "sourceObjectSha256": "793625ca1f2ec9baa4f829ce17ecf0bb33f15279864c25e17e760d3d986ab9df"
+    },
+    {
+      "levelLabel": 46,
+      "sourceObject": {
+        "level": 46,
+        "target": 71500,
+        "tileScale": 16,
+        "moves": 27,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 2
+          },
+          {
+            "type": "ice",
+            "x": 2,
+            "y": 5,
+            "duration": 4
+          }
+        ]
+      },
+      "sourceObjectSha256": "b7f4f80f9cdf55e5168eeac6702881ddd8998e9e82ab6c7e89c0cc606b519cb9"
+    },
+    {
+      "levelLabel": 47,
+      "sourceObject": {
+        "level": 47,
+        "target": 67800,
+        "tileScale": 16,
+        "moves": 26,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 3
+          },
+          {
+            "type": "bomb",
+            "x": 3,
+            "y": 4,
+            "timer": 6
+          }
+        ]
+      },
+      "sourceObjectSha256": "690b832ff86cc55a2a97a2289210600189df539a9cffaba48b6ced915c4fc670"
+    },
+    {
+      "levelLabel": 48,
+      "sourceObject": {
+        "level": 48,
+        "target": 66400,
+        "tileScale": 16,
+        "moves": 26,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 4
+          },
+          {
+            "type": "ice",
+            "x": 1,
+            "y": 5,
+            "duration": 3
+          }
+        ]
+      },
+      "sourceObjectSha256": "f73e14e22842b4495224b71bea80915f4a079416eb214be7bcc66b8e2987cfa2"
+    },
+    {
+      "levelLabel": 49,
+      "sourceObject": {
+        "level": 49,
+        "target": 63100,
+        "tileScale": 16,
+        "moves": 25,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 5
+          },
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 3,
+            "timer": 7
+          }
+        ]
+      },
+      "sourceObjectSha256": "6c9755c1f1d825fd29e4a375c33c053f6c016a5ac71217af1047157a8d8a9ba7"
+    },
+    {
+      "levelLabel": 50,
+      "sourceObject": {
+        "level": 50,
+        "target": 75900,
+        "tileScale": 16,
+        "moves": 28,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 3
+          },
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 2,
+            "timer": 6
+          },
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 5,
+            "timer": 8
+          }
+        ]
+      },
+      "sourceObjectSha256": "3a04e80edf47409211049fcc2a534819e3d7b96d7a81b0c218ba6cfc949b9b5a"
+    },
+    {
+      "levelLabel": 51,
+      "sourceObject": {
+        "level": 51,
+        "target": 124000,
+        "tileScale": 32,
+        "moves": 24,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": []
+      },
+      "sourceObjectSha256": "02210fafd517269c84dd594848e152c54faf6b4e96764fd7e2172c7f59bf4348"
+    },
+    {
+      "levelLabel": 52,
+      "sourceObject": {
+        "level": 52,
+        "target": 102000,
+        "tileScale": 32,
+        "moves": 24,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          }
+        ]
+      },
+      "sourceObjectSha256": "3685cf0d25b394bc7dee7c1ad8ef59226a81db7c3416ab61924060bd9d6164c9"
+    },
+    {
+      "levelLabel": 53,
+      "sourceObject": {
+        "level": 53,
+        "target": 101000,
+        "tileScale": 32,
+        "moves": 16,
+        "minChain": 3,
+        "gridW": 6,
+        "gridH": 5,
+        "blockers": []
+      },
+      "sourceObjectSha256": "1c5c8468b0884c75fad1206f207f23bcd4ffe28f493349a0f771cfa3b3855be7"
+    },
+    {
+      "levelLabel": 54,
+      "sourceObject": {
+        "level": 54,
+        "target": 126000,
+        "tileScale": 32,
+        "moves": 24,
+        "minChain": 3,
+        "gridW": 4,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 3
+          },
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "intro": "A narrow board with a blocked centre."
+      },
+      "sourceObjectSha256": "92ae1389f3ce23d63ed3f9b23c64a2ada8c94811d164a0b09c32760e68af6963"
+    },
+    {
+      "levelLabel": 55,
+      "sourceObject": {
+        "level": 55,
+        "target": 122000,
+        "tileScale": 32,
+        "moves": 26,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "type": "bomb",
+            "x": 3,
+            "y": 4,
+            "timer": 8
+          }
+        ],
+        "intro": "Bombs are back, and the board is tighter."
+      },
+      "sourceObjectSha256": "e72d3655a8afc5f9f03ab342fba50cd5b54cfa78c4ab795d69d88634a7794615"
+    },
+    {
+      "levelLabel": 56,
+      "sourceObject": {
+        "level": 56,
+        "target": 108000,
+        "tileScale": 32,
+        "moves": 18,
+        "minChain": 3,
+        "gridW": 6,
+        "gridH": 5,
+        "blockers": [],
+        "intro": "Wide and shallow. Fewer moves than you want."
+      },
+      "sourceObjectSha256": "5dc20e91bd2c9178b150af10317df472b546812d1f4f0dcefc1aa54e11d7dbb4"
+    },
+    {
+      "levelLabel": 57,
+      "sourceObject": {
+        "level": 57,
+        "target": 129000,
+        "tileScale": 32,
+        "moves": 26,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 1,
+            "y": 4
+          },
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 4
+          },
+          {
+            "type": "ice",
+            "x": 2,
+            "y": 2,
+            "duration": 4
+          }
+        ],
+        "intro": "Stone walls with a frozen gate between them."
+      },
+      "sourceObjectSha256": "0255ff08c9b3030a60a61fc12fcd897ff0c3735bdb9a67bb0e82d78ac9c002c4"
+    },
+    {
+      "levelLabel": 58,
+      "sourceObject": {
+        "level": 58,
+        "target": 162000,
+        "tileScale": 32,
+        "moves": 28,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "bomb",
+            "x": 1,
+            "y": 2,
+            "timer": 7
+          },
+          {
+            "type": "bomb",
+            "x": 3,
+            "y": 5,
+            "timer": 9
+          }
+        ],
+        "intro": "Two timers running at once."
+      },
+      "sourceObjectSha256": "b670a90445421e276f59d1fc96617f89fb0e1ddb9c1155f890eaa4dafa5e67a7"
+    }
+  ],
+  "requiredAttemptSources": [
+    {
+      "path": "recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json",
+      "sha256": "7666abeada41cec51a3a87dca1f5cb249d475d102f001488bb1f6149478aff1e",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "levelLabel": 53,
+      "seed": 10,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/1c87356748ee23c9388d27f6c66ae60ed7d448f2f327f27dbe4d36a46ea6a0d0.json",
+      "sha256": "335bdcf43b446fa6ed9f1a35df221f9a9bfcb4eb4a4c440c9cbb06774af78bb9",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "levelLabel": 51,
+      "seed": 1,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/3d3ba1f05b08030337e805c61c0584e99d157caade3e7e62298769219806258a.json",
+      "sha256": "d10f50a26b0eb69cec12dcf54194c13450c960a73e5a8f4574612629067d5c85",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "56c8eab00e4a6e2dbf836d0d9aecc041fda4226a53f965e51ac6eaaf837a262f",
+      "levelLabel": 54,
+      "seed": 1,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/44d3802d551202d19d8833768f7ee60562797bbdc874fb4d785ee819c54271f2.json",
+      "sha256": "036a2af07a1d88026022a2ffbc6928062aea59194b0c78f7b883692e910edd23",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "5b12806fa862b5308496fc3897148973203f550e7c1a6e7a78235038bb735b15",
+      "levelLabel": 52,
+      "seed": 777,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/7061bbf0132f36d071d6aa1367653116bbac064777a13461cda3e5e170f39af0.json",
+      "sha256": "24ec42431143886b81678f37793621d68ca6904a52a3c6518e598dabb6d2eddf",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "levelLabel": 53,
+      "seed": 2,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/78749fc07834f892542e7abd3317e9ed0b124082fe5b9b36876dac5918aa4b40.json",
+      "sha256": "ffbf55ae111b4f71fe608c34336585ea3a05e898873d3b5a304d80d4cd0d9de3",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "levelLabel": 51,
+      "seed": 1,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/7ad0978f96196c4ffe7ac15035340454d8e79ab23ea98003a84443bdcbd01526.json",
+      "sha256": "b0be97d7ce940b4620157b1fef677014d791f3d3756f25add7a2ace650743776",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+      "levelLabel": 53,
+      "seed": 10,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json",
+      "sha256": "ed367f1e504cd241ecf215a4845a16aa1e18ffd773ad5aa0e02087d95bbb34b5",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+      "levelLabel": 51,
+      "seed": 1,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/d36e875d08396c3d17bd3137478625f713f8fd3e7c35274f2ccfc5de0273841c.json",
+      "sha256": "f20246723c0ca89a9eb77782b5cabdc14fb9277f99c1a3819e3fec918eb2833e",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "7dfcb0568b983691486a122ee02bdad383ed230a4d39bcd2d91c19865cf20d86",
+      "levelLabel": 52,
+      "seed": 777,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "recordings/f0ae3e75fe38b75b961d564b767e1937da54e3be5517e5a121a4e8cb45521d61.json",
+      "sha256": "c776f73b8044e19fe82ff5265b4019f836f7b4212a9630fe2224077bfe139602",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "6f99c09bfae98500617b27af62ac28385e0c99036af41919c54a4ddbb429b084",
+      "levelLabel": 52,
+      "seed": 1,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "play-sessions/31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232.json",
+      "sha256": "31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232",
+      "provenanceClass": "ordinary-current-replay-only-unqualified",
+      "candidateIdentity": null,
+      "levelLabel": 56,
+      "seed": 3504920448,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "play-sessions/640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6.json",
+      "sha256": "640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6",
+      "provenanceClass": "ordinary-current-replay-only-unqualified",
+      "candidateIdentity": null,
+      "levelLabel": 58,
+      "seed": 4255346895,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json",
+      "sha256": "b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab",
+      "provenanceClass": "ordinary-current-replay-only-unqualified",
+      "candidateIdentity": null,
+      "levelLabel": 57,
+      "seed": 2389915636,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "pilots/HUMAN-PILOT-0001/recordings/3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b.json",
+      "sha256": "687dfd7d9bc25a858e50d398830b7b6bb52b697e5364e3b104824047adb3a903",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+      "levelLabel": 53,
+      "seed": 424242,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    },
+    {
+      "path": "pilots/HUMAN-PILOT-0002/recordings/c50b34f85e9ee53762ab3093bc4af0839965dd8c275bdc7893c31e011e0a32f6.json",
+      "sha256": "846513bc9a0e1e31d5f42b9378ba12a0bad092e9e95b8bc6ebc5c7e9dbfec48a",
+      "provenanceClass": "candidate-receipt-resolution-required",
+      "candidateIdentity": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4",
+      "levelLabel": 54,
+      "seed": 424242,
+      "exposure": "already-inspected-not-fresh",
+      "admission": "pending-Step-2-replay-and-identity-checks"
+    }
+  ]
+}
