@@ -1,0 +1,126 @@
+{
+  "sourceCommit": "c61d4430c08fd4e47c9b25bb9885b6b585becd95",
+  "measurementSourceIdentity": "9b9ecd4db90d60d71b9e83c59348d790ffcf802eedb3f518ca79cc74aa3cefee",
+  "baselineSha256": "a79fe73494dbff59dc7bc8a822c558caf18f3ce0b194412f4e02cbf38b03889e",
+  "commands": {
+    "focused": {
+      "command": "node --test solver/tests/humanBenchmark.test.js solver/tests/policyBenchmark.test.js",
+      "tests": 38,
+      "pass": 38,
+      "fail": 0,
+      "ms": 58351.071333,
+      "scopeNote": "Started with final production code; later added missing-file regression assertions also passed individually and in final full suite."
+    },
+    "fullSuite": {
+      "command": "node --test --test-reporter=spec solver/tests/*.test.js",
+      "tests": 382,
+      "pass": 378,
+      "fail": 4,
+      "ms": 75729.258583,
+      "failures": [
+        "candidate-levels-52.json has a receipt that verifies against the current bot",
+        "candidate-levels-54.json has a receipt that verifies against the current bot",
+        "the builder is byte-stable and the committed generated views are current",
+        "verification observations derive from rebound evidence instead of copied metrics in code"
+      ]
+    },
+    "experiments": {
+      "command": "node tools/verify-experiments.js",
+      "exit": 0,
+      "output": "EXPERIMENT GATE PASS"
+    },
+    "diff": {
+      "command": "git diff --check 236b03f..c61d443",
+      "exit": 0
+    }
+  },
+  "rowArithmetic": [
+    {
+      "id": "receipt-bound",
+      "files": 12,
+      "attempts": 12,
+      "cases": 9,
+      "grids": 8,
+      "humanWins": 11,
+      "referenceWins": 12,
+      "regressions": 1,
+      "caseWeightedHumanWinRate": 0.9629629629629629,
+      "caseWeightedMeanHumanMinusBotScore": 682.6666666666666,
+      "caseWeightedMeanPercentOfBot": 4.157715355151352,
+      "speedByCase": [
+        {
+          "caseKey": "5536cbfee1bd3caaa857af9fba8a9f36d44dbaf7d00a8ed55f796973e045a82f",
+          "movesSaved": -0.5
+        },
+        {
+          "caseKey": "121b79c6f926cb7fbb7a35b411034287fc7582370b1299c4a5f524034ca90a67",
+          "movesSaved": null
+        },
+        {
+          "caseKey": "0f7f7f5ab47c57bee1a0f99151168a1613447455da6249da36ff457becc91670",
+          "movesSaved": 0
+        },
+        {
+          "caseKey": "e22b4e696465dfb58a813e8a7d16d6ab57855cd9ef2dec4176a41f172a1d5c48",
+          "movesSaved": -1
+        },
+        {
+          "caseKey": "c45d5c6d7b7a723c2efe56777f8fe31b5ae9ea84796a9a502bdb04a67782a9d6",
+          "movesSaved": -2
+        },
+        {
+          "caseKey": "bddfd7cd36259bb0c63458047810fcf933a22aef745de707488e21f5f728525b",
+          "movesSaved": 3
+        },
+        {
+          "caseKey": "2c840e70c920c10751587799b667ab1d92787a306398f1b6d7234a677d6a7326",
+          "movesSaved": 1
+        },
+        {
+          "caseKey": "655fd3746ea25ad06358c596f5a24cc4ab0a4e4f5224f3ece6a9780b56a063c9",
+          "movesSaved": -4
+        },
+        {
+          "caseKey": "4e15f50a1980df3c992dc4953de2b9926adbcfc4d5db4064a2b3a9d36966471b",
+          "movesSaved": -1
+        }
+      ],
+      "allHorizonsMatch": true,
+      "winsStopAtFirstCrossing": true
+    },
+    {
+      "id": "current-subject",
+      "files": 3,
+      "attempts": 3,
+      "cases": 3,
+      "grids": 3,
+      "humanWins": 3,
+      "referenceWins": 3,
+      "regressions": 0,
+      "caseWeightedHumanWinRate": 1,
+      "caseWeightedMeanHumanMinusBotScore": 32725.333333333332,
+      "caseWeightedMeanPercentOfBot": 39.58420260115114,
+      "speedByCase": [
+        {
+          "caseKey": "e6daf504b8222aee5783086d1f2c35e8202309fd6fbbf1e6eb1c4be16e3c14b4",
+          "movesSaved": 1
+        },
+        {
+          "caseKey": "7dfdf0ee01a3b43174587cb94de950c4372b4e079f8456b40a9c910e82a3f944",
+          "movesSaved": 3
+        },
+        {
+          "caseKey": "97b1f9019436812ee8f7ead7a994b18f22ea2f991ad0f4b57b51282307e9a91f",
+          "movesSaved": 0
+        }
+      ],
+      "allHorizonsMatch": true,
+      "winsStopAtFirstCrossing": true
+    }
+  ],
+  "limits": [
+    "Exact inspected corpus only; no policy promotion or population inference",
+    "Curve-check evidence reused only because covered game/engine/bot sources are unchanged",
+    "JSON captured at clean c61d443; later text may disclose pending .orch bookkeeping."
+  ]
+}

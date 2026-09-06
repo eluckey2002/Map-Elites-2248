@@ -1,6 +1,6 @@
 {
   "counters": {
-    "checks": 2,
+    "checks": 4,
     "owner_review_required": 0,
     "progress_required": 0,
     "status_required": 0
@@ -10,7 +10,10 @@
       "at": "2026-09-06T02:35:31Z",
       "evidence": "artifact:solver/benchmark-metrics.js"
     },
-    "status": null
+    "status": {
+      "at": "2026-09-06T02:38:10Z",
+      "evidence": "commentary:repair-baseline-and-suite-results"
+    }
   },
   "run": "2026-09-05-policy-measurement-extra-repair",
   "schema": "orchflows.execution-guard.v1",
