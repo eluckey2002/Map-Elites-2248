@@ -23,13 +23,13 @@ goal by reference, never independently edited here.
    the intake commit; starting document identities are Git blobs at that commit.
    No decision gap or uncovered criterion. Child bounds inherit parent clock.
 
-## Blame classes
-
 Iteration 2: DRAFT-001 joined for the frontier at 4a8e5c2: eleven document
 blobs, T1/T2 evidence complete, T3 deferred to the final independent gate.
 Exactly eleven allowed documents, clean worktree, 95 links resolved, 2,986
 added-word conservative bound. Scope/source gap remains none. Both leases
 released. EDIT-001 is the sole newly ready item; no later step is released.
+
+## Blame classes
 
 []
 
