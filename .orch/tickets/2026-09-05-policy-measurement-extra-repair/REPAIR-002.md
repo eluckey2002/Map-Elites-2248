@@ -1,7 +1,7 @@
 ---
 id: REPAIR-002
 run: 2026-09-05-policy-measurement-extra-repair
-status: claimed
+status: complete
 executor: orch-repair
 independence: gate
 depends_on: []
@@ -84,7 +84,14 @@ and final source-pinned checks remain pending.
 
 ## Verification
 
-Pending independent acceptance.
+Root join accepted the independent VERIFY-002 return at the unchanged
+c61d443 source and b54e6ec evidence. R1/R2 PASS via V1; R3 PASS via the
+recorded full suite, protected hashes and V2; R4 PASS via fresh V3. Overall
+PASS, weakest oracle class judged. Verifier changed only its canonical
+ticket and explicitly released the lease. No covered artifact changed.
+This accepts the code prerequisite only; Step 2 records/report and whole
+composition acceptance remain required. Earlier ce21196 failures remain
+retained rather than rewritten into a pass.
 
 ## Feedback
 

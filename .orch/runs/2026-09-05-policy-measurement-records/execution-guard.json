@@ -1,0 +1,15 @@
+{
+  "counters": {
+    "checks": 1,
+    "owner_review_required": 0,
+    "progress_required": 0,
+    "status_required": 0
+  },
+  "marks": {
+    "progress": null,
+    "status": null
+  },
+  "run": "2026-09-05-policy-measurement-records",
+  "schema": "orchflows.execution-guard.v1",
+  "started_at": "2026-09-06T02:44:49Z"
+}

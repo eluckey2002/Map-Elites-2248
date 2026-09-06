@@ -1,14 +1,14 @@
 {
   "counters": {
-    "checks": 4,
+    "checks": 5,
     "owner_review_required": 0,
     "progress_required": 0,
     "status_required": 0
   },
   "marks": {
     "progress": {
-      "at": "2026-09-06T02:35:31Z",
-      "evidence": "artifact:solver/benchmark-metrics.js"
+      "at": "2026-09-06T02:44:49Z",
+      "evidence": "artifact:.orch/tickets/2026-09-05-policy-measurement-extra-repair/VERIFY-002.md"
     },
     "status": {
       "at": "2026-09-06T02:38:10Z",

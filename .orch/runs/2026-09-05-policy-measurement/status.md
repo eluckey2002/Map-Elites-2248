@@ -1,5 +1,15 @@
 # Step 2 remains incomplete
 
+## Authorized resumption - 2026-09-05
+
+The owner's `yes` authorized one additional narrow repair, recorded before
+the action in REPAIR-002. Code `c61d443` is now independently accepted by
+[VERIFY-002](../../tickets/2026-09-05-policy-measurement-extra-repair/VERIFY-002.md).
+The successor source-record corrections/report may now start. The whole
+Step 2 result is not yet accepted; Steps 3-4 remain unexecuted.
+
+## Retained failed closeout
+
 - Measurement delivery: failed acceptance at fixed code `ce21196aca799b0c72c1e9b3025692dd45c3e861`.
 - Deciding evidence: [independent final verification](../2026-09-05-policy-measurement-code/verification-ce21196.md); C5 and C7 FAIL, C1-C4/C6 PASS.
 - Remaining defect: all-unresolved CLI output prints undefined regression counts; collector-level tests do not inspect that rendering.
