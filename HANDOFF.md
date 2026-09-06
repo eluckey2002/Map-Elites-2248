@@ -1,6 +1,71 @@
-> **Current authority:** This document is the snapshot stopped on 2026-09-05. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
+> **Current authority:** This document is the snapshot stopped on 2026-09-06. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
 
 # 2248 Challenge — Handoff
+
+## 2026-09-06: PR #18 merged; a human-play descriptor pair that needs more than one loss before it's trusted
+
+### What landed
+
+- **PR #18 merged to `main` at `321123f`.** Ships `solver/trajectory-audit.js`,
+  the independent bot-session audit instrument for Step 3 of the policy-improvement
+  sequence, plus its three dependencies (`solver/benchmark-inputs.js`,
+  `solver/benchmark-replay.js`, `solver/benchmark-metrics.js`) that were sitting
+  on branches but had never reached `main`. Two independent reviews caught real
+  defects before merge: a session-timing aggregate that silently turned an
+  unknown duration into zero, and (from Codex) a stale receipt-resolution path
+  and a frozen-input loader that referenced two files absent from the repo —
+  both trimmed out rather than completed, since neither is called by anything
+  this PR ships. See the PR for the full record.
+
+### A two-axis descriptor pair, computed on all 15 captured human games — exploratory, not evidence
+
+Two candidate MAP-Elites-style behavior descriptors, defined by the owner and
+computed on every game in `play-sessions/`, `recordings/`, and
+`pilots/*/recordings/`:
+
+- **Half-score move**: the move index by which half the final score is in,
+  divided by moves used. ~0.5 for steady scoring, 0.8+ for a late "build, then
+  cash in."
+- **Greed ratio**: points taken on a move, divided by the most points *any*
+  legal chain on that exact board would have given (via
+  `solver/exact-score.js#enumerateLegalChains`, the verified enumerator behind
+  `solver/chain-coverage.js`), averaged over the game.
+
+Plotted together, the project's one captured human loss (level 51, seed 1 — the
+same board two other sessions won) sits in a cell no win occupies: the worst
+greed ratio of all 15 games (0.279) paired with only average timing (0.50, not
+late). Every win with a similarly low greed ratio is also a late-scoring game —
+a real build-then-cash-in pattern. The loss delayed nothing and still didn't
+take the biggest available chain; neither axis alone shows that, only both
+together.
+
+**This is one loss. It is not a result and nothing has been written into the
+ledger.** The honest next step, not yet started, is testing whether the pair
+predicts outcome on more than one example — most directly, a scripted player
+that takes a controlled percentile of the best available chain, run across many
+seeds, checking whether win rate actually tracks greed ratio out of sample.
+
+### Two gotchas worth having before touching this again
+
+- **`solver/exact-score.js#enumerateLegalChains` is correct but genuinely
+  expensive.** Move 1 of the level-51-seed-1 board alone took 38 seconds and
+  found 8,284,580 distinct legal chains — matches `chain-coverage.js`'s own
+  documented worst case ("a 5x7 opening can hold over 8 million distinct
+  chains"). It has no yield points, so an in-process timer cannot preempt it;
+  a real per-board timeout needs a separate child process
+  (`child_process.spawnSync(..., {timeout})`), not a time check inside the
+  loop. The simpler `solver/engine.js#findBestChain` is worse: unbounded, no
+  memoization, didn't finish in 30+ seconds on the same board.
+- **Some `recordings/` files are bound to a candidate board, not the shipped
+  level with the same number.** Three different "level 52" recordings turned
+  out to be three different boards. Resolving by `LEVELS.find(level)` silently
+  reconstructs the wrong board for the ones that aren't the shipped level,
+  diverges a few moves in, and (if nothing checks for divergence) can produce a
+  confidently wrong "final board." Resolve by the artifact's own
+  `candidateIdentity` against `solver/candidate-levels*.json`,
+  `solver/candidates-archive/`, and `solver/generated-batch*.json` first; fall
+  back to shipped `LEVELS` only when `candidateIdentity` is null (ordinary play
+  sessions have no candidate).
 
 ## 2026-09-05: four wrong answers, and the two findings that survived
 
