@@ -1,7 +1,7 @@
 ---
 id: BUILD-001
 run: 2026-09-06-policy-trajectory-instrument
-status: claimed
+status: needs-verify
 executor: orch-tdd
 pack: orch-code-pack
 profile: orch-worker
@@ -94,25 +94,76 @@ Incremental implementation evidence:
   `c14ec394...`, `solver/benchmark-replay.js` `a714232d...`,
   `solver/benchmark-inputs.js` `970217cc...`, and
   `solver/targeted-chain-generator.js` `45eb66c7...`.
+- Final result identity is
+  `0c6b250ce300c76797308ea295ee2e6f48832ae0`, comprising `503bab1`,
+  `624f912`, `ec3c1c4`, and `0c6b250`. The exact diff from `c8ad993` contains
+  only the three granted paths: `solver/trajectory-audit.js`,
+  `solver/tests/trajectoryAudit.test.js`, and
+  `docs/evaluation/POLICY-AUDIT-0001/instrument-checks.md`.
+- Final protected hashes match the starting envelope exactly: `src/game.js`
+  `22ebc237b6750fff04251c1b123cc6be749b8b75f3146d6e42576c509dc97bf2`;
+  `solver/engine.js` `0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873`;
+  `solver/level-author.js` `c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4`;
+  `solver/bot.js` `3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65`;
+  `solver/record-session.js` `c14ec394d3323ee2b4182f7f59e90c81972039d03e8133fb5fd4dedf1b787799`;
+  `solver/benchmark-replay.js` `a714232d4e4bf308c7c6231d792ee90259f5bc9b4f33d9d1a2c21f0157e15167`;
+  `solver/benchmark-inputs.js` `970217cc40b35de490f4f60a79e072c54401203d127cc2ef29d81ca6d1ff7d73`;
+  `solver/targeted-chain-generator.js`
+  `45eb66c7788cd14b1057ba020218af6aeea5ceedd27ba238456cb7af50a6ef14`.
+- Final live custody outcomes at clean `0c6b250`: focused suite 42/42;
+  `EXPERIMENT GATE PASS`; both diff checks PASS; full suite 388/392. The ten
+  additional tests over the accepted 378/382 baseline are the trajectory suite.
+  The same exact four failures remain: receipt calibration-stamp mismatches for
+  `candidate-levels-52.json` and `candidate-levels-54.json`, Universe Map
+  generated-view staleness, and Universe Map date drift (`asOf 2026-08-28`,
+  current `2026-09-06`). No new failure identity appeared.
+- Coverage limit: this report-only instrument processes one explicit schema-2
+  artifact/subject at a time. It does not sample a population, authenticate a
+  historical runtime, independently prove shared engine semantics, find
+  multi-move opportunities, establish speed or population effects, or authorize
+  a policy change. `FOUND` is existence only; `NONE` requires exhaustion;
+  cap/fault without a witness stays `UNKNOWN`.
 
 ## Verification
 
-- A1: incremental PASS at `503bab1`; final fixed-result verification pending.
-- A2: incremental PASS at `624f912`; final fixed-result verification pending.
-- A3-A4: incremental PASS at `ec3c1c4`; final fixed-result verification pending.
-- A5: named focused command PASS 42/42 and `git diff --check` PASS at committed
-  worktree revision `0c6b250`; experiment and full-suite custody checks pending.
-- A6: deferred to downstream independent qualification as required.
+Fixed-result `orch-verify` verdict at `0c6b250`: **PASS A1-A5; overall
+deterministic PASS. A6 remains deferred to its downstream independent judged
+gate.**
+
+- A1: PASS; oracle_class=deterministic; provenance=authored-here. Real artifact
+  positive plus self-rehashed spawn/chain/score/outcome/source/params/seed/
+  subject/empty/truncated/continuation negatives cover full independent replay;
+  invalid intake emits no positions.
+- A2: PASS; oracle_class=deterministic; provenance=authored-here. Hand controls
+  cover move-B FOUND, deliberate coarse-identity collision, bomb-before-target,
+  exhausted NONE, zero/tiny node and injected-time UNKNOWN, explicit caps,
+  cloned transitions, and non-mutation.
+- A3: PASS; oracle_class=deterministic; provenance=authored-here. Verified-only
+  consumer binding covers session, subject, seed, preceding moves, live RNG
+  state, sound offered/selected identities, and trace-supported attribution.
+- A4: PASS; oracle_class=deterministic; provenance=authored-here. Complete,
+  capped and invalid fixtures retain explicit denominators, every verified
+  disposition, and separate replay/chooser versus search timing; no population,
+  speedup, promotion, or policy verdict exists.
+- A5: PASS; oracle_class=deterministic; provenance=pre-existing. Exact path
+  envelope and protected hashes match; focused 42/42, experiment gate, diff
+  checks, and full 388/392 outcome are recorded above with no new failure.
+- A6: DEFERRED; oracle_class=judged. Independent source/test review,
+  nine-question gate-check review, and retained actual good/bad qualification
+  remain downstream; no producer self-acceptance is claimed.
 
 ## Feedback
 
-[]
+- Root integration 2026-09-06T08:25:23Z: matching claimant returned within its
+  bound and released both leases. Exact three-path diff confirmed. A1-A5
+  producer evidence remains covered at0c6b250; A6 is uncovered and required.
+  Disposition: needs-verify, not accepted for audit use.
+- The first bomb controls admitted legitimate longer bomb-defusing chains; the
+  controls were isolated before acceptance and the observation was friction-
+  logged.
 
 ## Risks
 
-You are not alone; preserve other changes. Only own three worktree files and
-canonical ROOT ticket result sections; never root target edits/commit or a
-worktree-copy ticket. Root read-only during lease. No redelegation. apply_patch
-only. Commit verified slices in worktree. Parent hardstop08:52:18Z; this claim
-ends08:36:18Z. No framework expansion, protected source changes, global gates,
-fresh measurement, Atlas, PR/push/main action. Reply_to=/root.
+- A6 has not run, so the instrument is not qualified for fresh audit sampling.
+  Numeric caps, panel/seed choice, population inference, policy mutation, fresh
+  measurement, PR/push/main and external operations remain out of scope.

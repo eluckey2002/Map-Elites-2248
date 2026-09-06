@@ -27,6 +27,14 @@ No uncovered criterion or new owner decision blocks this instrument scope.
 
 []
 
+## Integration
+
+BUILD-001 returned08:25:23Z at0c6b250 within its24minute claim, exact three
+allowed files and no protected-source changes. Both leases released. Disposition
+needs-verify A6; A1-A5 producer checks are reusable at unchanged identities,
+not independent acceptance. Focused42/42 and full388/392 retain four known
+failure identities. One fresh code-lens/gate-check review follows.
+
 ## Failed approaches
 
 None in this delivery. Source intake already ruled out treating filtered search
@@ -38,5 +46,4 @@ Actual audit protocol/panel/seed/cost declarations and collection follow the
 accepted instrument, not this code delivery. Step4 remains blocked.
 
 ## Terminal
-
 
