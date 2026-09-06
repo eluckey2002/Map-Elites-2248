@@ -14,6 +14,9 @@ const {
   verifySessionArtifact,
 } = require('../trajectory-audit');
 
+const CHECK_CARD = path.join(__dirname, '..', '..', 'docs', 'evaluation',
+  'POLICY-AUDIT-0001', 'instrument-checks.md');
+
 function writeSession(session) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'trajectory-audit-'));
   const artifactPath = path.join(directory, 'session.json');
@@ -229,4 +232,15 @@ test('public consumer admits only verified sessions and retains complete/capped/
   assert.deepEqual(invalid.positions, []);
   assert.equal(invalid.denominators.sessionsVerified, 0);
   assert.equal(invalid.denominators.positionsRequested, null);
+});
+
+test('the local report-only check card declares its scope and blind spots', () => {
+  const card = fs.readFileSync(CHECK_CARD, 'utf8');
+  for (const field of [
+    'Granularity', 'Kind', 'Garbage tests', 'Scope', 'Supply chain',
+    'Sampling memory', 'Enforcement', 'Decay', 'Retires', 'Does NOT catch',
+  ]) assert.match(card, new RegExp(`\\*\\*${field}:\\*\\*`), field);
+  assert.match(card, /report-only/);
+  assert.match(card, /UNRESOLVED/);
+  assert.match(card, /UNKNOWN/);
 });
