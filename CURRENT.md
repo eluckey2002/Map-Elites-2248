@@ -6,9 +6,9 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 ## Owner-required policy sequence - 2026-09-05
 
-[BL-0014](docs/backlog/BL-0014-policy-improvement-sequence.md) is the ready policy item, governed by [the required four-step plan](docs/plans/2026-09-05-policy-improvement-sequence.md) and `DECISION-0006`.
-Step 1 is to define the evaluation contract; no stage has been executed under this plan.
-Measurement corrections, the bot-trajectory audit, and implementation remain blocked in that order until their predecessors close.
+[BL-0014](docs/backlog/BL-0014-policy-improvement-sequence.md) is the active policy item, governed by [the required four-step plan](docs/plans/2026-09-05-policy-improvement-sequence.md) and `DECISION-0006`.
+Step 1 is complete: [POLICY-EVAL-0001 acceptance](docs/evaluation/POLICY-EVAL-0001/acceptance.md) identifies the reviewed contract/input package frozen at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`.
+Step 2, measurement corrections and benchmark, is ready but unstarted; recheck that predecessor before beginning. The bot-trajectory audit and implementation remain blocked in order. No new game result follows from this document acceptance.
 The earlier vocabulary section below is retained as history; its BL-0013 implementation direction is paused and cannot bypass this sequence.
 
 ## Current decision frontier — 2026-09-05

@@ -1,7 +1,7 @@
 ---
 id: BL-0014
 title: Follow the required sequence for reliable and faster policy improvement
-status: ready
+status: active
 milestone: policy-strategy
 depends_on: []
 updated: 2026-09-05
@@ -35,22 +35,34 @@ Policy changes follow the accepted measurement and investigation order, so a pro
 
 | Step | State | Completion evidence |
 | --- | --- | --- |
-| 1. Evaluation contract | Ready; not executed | None |
-| 2. Measurement corrections and benchmark | Blocked on Step 1 | None |
+| 1. Evaluation contract | Complete; accepted | [POLICY-EVAL-0001 acceptance](../evaluation/POLICY-EVAL-0001/acceptance.md); frozen at `e415df78b77a8f32ec2d97912ccd198bfaad2d21` |
+| 2. Measurement corrections and benchmark | Ready; not executed | Accepted Step 1 is the prerequisite; no Step 2 result yet |
 | 3. Bot-trajectory audit | Blocked on Step 2 | None |
 | 4. Supported change and validation | Blocked on Step 3 | None |
 
-Planning this sequence and the earlier grounding report do not complete any row.
-This record becomes active when Step 1 begins; this turn only established the requirement.
+Planning this sequence and the earlier grounding report did not complete any row.
+Step 1 closed only after the independent review and committed freeze below;
+its document acceptance is not a new policy result or a benchmark baseline.
+
+Accepted Step 1 package at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`:
+
+- [contract.md](../evaluation/POLICY-EVAL-0001/contract.md), whole-file SHA-256 `3d4cf0f65e88cb597855233738355d49bf7b4176160345a8e2346bb8e3a3935f`.
+- [inputs.json](../evaluation/POLICY-EVAL-0001/inputs.json), whole-file SHA-256 `1030d17804010f218b2776c0e4b3f0eeec7e2fe6d65affd1c60d5c6ad0821fbb`.
+- [Independent review](../evaluation/POLICY-EVAL-0001/review.md): contract readiness and all 18 worked examples PASS. Source inventory checks covered 58 shipped objects and 15 raw recording paths, not 15 qualified cases.
 
 ## Next action
 
 Consult the [Atlas support shortlist](../plans/2026-09-05-policy-improvement-atlas-support.md) when executing the relevant step. It is advisory, not another stage or an amendment to the required order. The whole plan is pinned to commit `85d8684`, SHA-256 `6310780fa70e31951345f3fa35f1160b3b13fa5bc39bc22410e49a9765fadfb2`; the consultation leaves that file and every stage state unchanged.
 
-Write and review the Step 1 evaluation contract, including loss eligibility, paired speed, separate score diagnostics, case identity, and weighting.
-Do not begin Step 2 corrections, a fresh audit, or policy implementation before the corresponding prerequisite closes.
+Begin Step 2 only after citing and rechecking the accepted Step 1 package and
+relevant subject/reference inputs. Correct the source-pinned premises and
+benchmark under that contract, verify real and controlled-misleading inputs,
+and reproduce the descriptive baseline. No Step 2 work ran in the contract
+session. Do not start the bot-trajectory audit or policy implementation until
+their corresponding prerequisites close.
 
 ## History
 
 - 2026-09-05 - Owner accepted the four-step order as a requirement: "Great. Lets keep this order a requirement so we do not deviate. For each of these what are the steps needed?" Recorded the plan, stage prerequisites, and routing instructions together.
 - 2026-09-05 - Owner reaffirmed the plan and requested an Atlas consultation. Preserved the exact whole-plan identity and attached three source-pinned method recommendations with limits; no stage executed or released.
+- 2026-09-05 - Executed Step 1 after the owner's "proceed": froze POLICY-EVAL-0001 at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`, preserved an independent PASS review, and recorded acceptance. METHOD-003 supplies the whole-contract/input freeze and successor reference; no Atlas change or effectiveness claim. Released Step 2 as ready, not executed; Steps 3-4 stay blocked. No games, benchmark changes, or policy edits.

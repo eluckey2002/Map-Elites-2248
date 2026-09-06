@@ -1,7 +1,7 @@
 ---
 id: CONTRACT-001
 run: 2026-09-05-policy-contract
-status: claimed
+status: complete
 executor: orch-draft
 depends_on: []
 write_scope:
@@ -100,6 +100,15 @@ changed_artifacts, limits, and next action.
 
 ## Result
 
+Accepted Step 1 only. Frozen contract, input inventory, and verbatim review
+are committed at `e415df78b77a8f32ec2d97912ccd198bfaad2d21`.
+`docs/evaluation/POLICY-EVAL-0001/acceptance.md` records the package and
+verification; BL-0014 and CURRENT release Step 2 as ready, not executed.
+Steps 3-4 remain blocked. No gameplay source, historical claim, or pinned
+plan changed. No new game, replay, benchmark, or experiment was run.
+
+The drafting and dispatch notes below are retained as execution history.
+
 Draft contract and input inventory produced; no game execution occurred.
 Draft review identity: contract SHA-256
 `3d4cf0f65e88cb597855233738355d49bf7b4176160345a8e2346bb8e3a3935f`;
@@ -127,7 +136,7 @@ The frozen contract/input identities still match, C2 used a fresh judged
 oracle against the fixed failure anchors, and C3 applied all 18 examples.
 The reviewer reported no writes and expressly excluded C1, C4, and C5;
 its PASS is not a whole-ticket or benchmark verdict. No second review is
-needed. Final C4/C5 and the committed acceptance record remain pending.
+needed. The final C4/C5 checks and acceptance now close the ticket below.
 
 - C1 mechanical/source portion, PASS at the draft identities: all 12
   source hashes and all 15 recording-file hashes match; all 58 exported
@@ -148,6 +157,36 @@ Arithmetic reproduction (not a benchmark implementation): compute
 it is -1. The deliberately wrong pooled oracle target is
 `mean([4,2,0,-4])`, which is +0.5 and must not equal the contract result.
 These are document/example checks, not a fresh policy experiment.
+
+Final verification and join disposition, 2026-09-05:
+
+- C1 PASS: rechecked all 12 source files, 15 recording files, 58 shipped
+  level objects/canonical hashes, and DEFAULT_PARAMS at the freeze commit.
+- C2 PASS and C3 PASS: accepted the independent review at its exact
+  recorded contract/input identities. No author self-verdict substituted.
+- C4 PASS: git diff from 76d4e82 plus untracked inventory stays within the
+  seven named artifacts below. The original plan hash and all source and
+  recording hashes remain equal. Step 2 was not executed.
+- C5 PASS: git show of contract, inputs, and review at e415df78 equals live
+  bytes; review covers those identities; acceptance and BL-0014 name the
+  full package hashes and commit; local linked files exist; git diff
+  --check passes. No repository-wide gate claim is made.
+- orch-integrate: ACCEPT CONTRACT-001; all five fixed criteria satisfied,
+  no return exceeds the ticket's authority or Step 1 scope. Status complete
+  is set by the root join, not the draft executor or the scoped reviewer.
+
+Changed artifacts:
+
+- .orch/tickets/2026-09-05-policy-contract/CONTRACT-001.md
+- docs/evaluation/POLICY-EVAL-0001/contract.md
+- docs/evaluation/POLICY-EVAL-0001/inputs.json
+- docs/evaluation/POLICY-EVAL-0001/review.md
+- docs/evaluation/POLICY-EVAL-0001/acceptance.md
+- docs/backlog/BL-0014-policy-improvement-sequence.md
+- CURRENT.md
+
+Next action: Step 2's bounded benchmark/record correction, beginning with
+the predecessor identity check. It is not part of this ticket.
 
 ## Feedback
 
