@@ -36,7 +36,7 @@ Policy changes follow the accepted measurement and investigation order, so a pro
 | Step | State | Completion evidence |
 | --- | --- | --- |
 | 1. Evaluation contract | Complete; accepted | [POLICY-EVAL-0001 acceptance](../evaluation/POLICY-EVAL-0001/acceptance.md); frozen at `e415df78b77a8f32ec2d97912ccd198bfaad2d21` |
-| 2. Measurement corrections and benchmark | Ready; not executed | Accepted Step 1 is the prerequisite; no Step 2 result yet |
+| 2. Measurement corrections and benchmark | Active; not accepted | [Bounded delivery](../../.orch/runs/2026-09-05-policy-measurement/composition.md); benchmark implementation and baseline awaiting review and source-record corrections |
 | 3. Bot-trajectory audit | Blocked on Step 2 | None |
 | 4. Supported change and validation | Blocked on Step 3 | None |
 
@@ -62,6 +62,8 @@ session. Do not start the bot-trajectory audit or policy implementation until
 their corresponding prerequisites close.
 
 ## History
+
+- 2026-09-05 - Owner's next "proceed" opened Step 2. Rechecked the frozen predecessor and 27 source/recording hashes. Code and records are sequential delivery kinds; no Step 3 audit or policy change has begun. Intermediate implementation/test output is not Step 2 acceptance.
 
 - 2026-09-05 - Owner accepted the four-step order as a requirement: "Great. Lets keep this order a requirement so we do not deviate. For each of these what are the steps needed?" Recorded the plan, stage prerequisites, and routing instructions together.
 - 2026-09-05 - Owner reaffirmed the plan and requested an Atlas consultation. Preserved the exact whole-plan identity and attached three source-pinned method recommendations with limits; no stage executed or released.
