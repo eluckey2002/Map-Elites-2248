@@ -240,6 +240,8 @@ test('initial and final clock faults stay UNKNOWN through search and public cons
   assert.equal(consumed.status, 'COMPLETE');
   assert.equal(consumed.denominators.unknownPositions, consumed.denominators.positionsRequested);
   assert.ok(consumed.positions.every(({ search }) => search.disposition === 'UNKNOWN'));
+  assert.ok(consumed.positions.every(({ search }) => search.searchElapsedMs === null));
+  assert.equal(consumed.timing.searchMs, null);
 });
 
 test('a real producer-created zero-move session is unresolved, not vacuously complete', () => {

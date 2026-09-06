@@ -437,7 +437,9 @@ function auditSessionArtifact(artifactPath, subject, options = {}) {
     },
     timing: {
       replayAndChooserMs: replayElapsedMs,
-      searchMs: positions.reduce((sum, { search }) => sum + search.searchElapsedMs, 0),
+      searchMs: positions.some(({ search }) => search.searchElapsedMs === null)
+        ? null
+        : positions.reduce((sum, { search }) => sum + search.searchElapsedMs, 0),
     },
   };
 }
