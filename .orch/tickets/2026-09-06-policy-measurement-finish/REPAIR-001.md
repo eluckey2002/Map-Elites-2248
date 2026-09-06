@@ -1,7 +1,7 @@
 ---
 id: REPAIR-001
 run: 2026-09-06-policy-measurement-finish
-status: claimed
+status: complete
 executor: orch-repair
 independence: gate
 depends_on: []
@@ -44,11 +44,17 @@ Commit, changed artifacts, per-criterion verdicts and exact covered identities.
 
 ## Result
 
-Pending.
+747723a840932d838d23a181133a4ce14ba2eb13 changes only six titles in the three
+granted backlog files; each old title remains after its historical qualifier.
+Root accepted the outside-context VERIFY-001 result04:24Z; clean document
+worktree and exact scope confirmed. No body or source edits.
 
 ## Verification
 
-Pending.
+R1 PASS, judged: fresh VERIFY-001 V1; R2 PASS, deterministic: VERIFY-001 V2.
+Both cover4a8e5c2..747723a and the three exact document blobs. Overall PASS,
+weakest judged. Original suspended dispatch made no edits; this is its
+owner-authorized new resumption, not a second repair of a repaired result.
 
 ## Feedback
 
