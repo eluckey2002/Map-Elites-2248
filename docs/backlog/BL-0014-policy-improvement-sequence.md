@@ -45,9 +45,12 @@ This record becomes active when Step 1 begins; this turn only established the re
 
 ## Next action
 
+Consult the [Atlas support shortlist](../plans/2026-09-05-policy-improvement-atlas-support.md) when executing the relevant step. It is advisory, not another stage or an amendment to the required order. The whole plan is pinned to commit `85d8684`, SHA-256 `6310780fa70e31951345f3fa35f1160b3b13fa5bc39bc22410e49a9765fadfb2`; the consultation leaves that file and every stage state unchanged.
+
 Write and review the Step 1 evaluation contract, including loss eligibility, paired speed, separate score diagnostics, case identity, and weighting.
 Do not begin Step 2 corrections, a fresh audit, or policy implementation before the corresponding prerequisite closes.
 
 ## History
 
 - 2026-09-05 - Owner accepted the four-step order as a requirement: "Great. Lets keep this order a requirement so we do not deviate. For each of these what are the steps needed?" Recorded the plan, stage prerequisites, and routing instructions together.
+- 2026-09-05 - Owner reaffirmed the plan and requested an Atlas consultation. Preserved the exact whole-plan identity and attached three source-pinned method recommendations with limits; no stage executed or released.
