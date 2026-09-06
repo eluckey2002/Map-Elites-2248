@@ -1,7 +1,7 @@
 ---
 id: GATE-001
 run: 2026-09-05-policy-measurement-code
-status: ready
+status: integrated
 executor: orch-critique
 pack: orch-code-pack
 independence: context
@@ -44,4 +44,5 @@ date-drift verification. Do not repair or exempt these.
 
 ## Result
 
-Pending.
+Read-only result integrated in ../../runs/2026-09-05-policy-measurement-code/gate-f407d9c.md.
+Five evidenced findings accepted; no gate PASS. REPAIR-001 is the single correction pass.

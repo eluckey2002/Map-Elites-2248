@@ -60,6 +60,12 @@ will independently review the produced revision. Implementation lease 85m.
 
 ## terminal
 
+01:58 UTC: independent GATE-001 returned five evidenced findings (one HIGH),
+integrated and adjudicated in gate-f407d9c.md. The complete raw baseline remains
+retained but is not an accepted instrument. REPAIR-001 owns the single correction
+pass, F1-F5 only. The pilot receipt-selection suspicion was withdrawn as a finding
+after its source linkage was inspected; it is not included in repair scope.
+
 01:48 UTC: joined MEASURE-001 at f407d9c8e85eb407fea3cb2483c1720e7d7daaec,
 exactly seven authorized artifacts. Fast-forwarded only the foreground
 chore/startup-checks-2026-09-05 branch. No main/external operation. Child lease
