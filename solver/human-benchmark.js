@@ -416,6 +416,6 @@ function main() {
   }
 }
 
-if (require.main === module) process.exit(main());
+if (require.main === module) process.exitCode = main();
 
 module.exports = { collect, discoverRecordingPaths, playBot, renderText };

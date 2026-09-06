@@ -77,7 +77,7 @@ qualify a generalized policy claim.
 - **Reads own output?:** no; text rendering consumes the same returned object exposed by `collect`, and tests compare its literal classifications to that object.
 - **Sampling memory:** n/a; all required and discovered recording paths in the named directories are inventoried, with extras excluded from the denominator.
 - **Does NOT catch:** recording-shaped JSON outside the named directories; population-selection bias; historical runtime identity absent from ordinary play; semantic errors already frozen into the contract; an uncommitted run is identified as such rather than forbidden.
-- **Crafted-bypass test:** `solver/tests/humanBenchmark.test.js`, `unexpected files are surfaced as extras without changing the frozen denominator`.
+- **Crafted-bypass test:** `solver/tests/humanBenchmark.test.js`, `unexpected files are surfaced as extras without changing the frozen denominator` and `--json flushes one complete JSON document larger than the default pipe buffer`.
 - **Retires:** the prior mutable-directory minimum-count benchmark check; the frozen inventory plus explicit supplement makes silent growth and shrinkage visible.
 - **Enforcement:** HARD for deterministic Step 2 descriptive output; no generalized or promotion claim is admitted.
 - **Decay:** focused tests and both CLI modes run at the result commit; successor inventories require a new frozen inputs identity.

@@ -1,5 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const childProcess = require('node:child_process');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
@@ -90,4 +91,16 @@ test('playBot(candidate, seed, { uncapped }) remains compatible while reporting 
   assert.equal(first.externalHorizon, row.subject.moves);
   assert.equal(first.originalBudget, row.subject.moves);
   assert.equal(first.objective, 'target-disabled score diagnostic');
+});
+
+test('--json flushes one complete JSON document larger than the default pipe buffer', () => {
+  const stdout = childProcess.execFileSync(process.execPath, [path.join(__dirname, '..', 'human-benchmark.js'), '--json'], {
+    cwd: path.join(__dirname, '..', '..'),
+    encoding: 'utf8',
+    maxBuffer: 10 * 1024 * 1024,
+  });
+  assert.ok(Buffer.byteLength(stdout) > 65536, 'control must cross the pipe-buffer size that exposed truncation');
+  const parsed = JSON.parse(stdout);
+  assert.equal(parsed.dispositions.length, 15);
+  assert.equal(parsed.measurementSourceIdentity, valueIdentity(parsed.measurementSources));
 });
