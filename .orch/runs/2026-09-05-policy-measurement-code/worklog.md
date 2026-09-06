@@ -40,6 +40,13 @@ Objective: The human comparison CLI produces identity-bound, replay-validated, c
 
 ## failed_approaches
 
+Dispatch armed at 01:21 UTC: MEASURE-001 to measurement_gpt_5_6_sol_high,
+orch-tdd / orch-worker in /tmp/2248-policy-measurement-2026-09-05 from e0ed5a1.
+Root rechecks the durable ticket at <=60-second cadence while doing read-only
+source inspection. Root performs no tree writes until that child returns;
+only the child writes the root ticket's permitted result sections. Gate
+will independently review the produced revision. Implementation lease 85m.
+
 - None in implementation. Intake guessed pack paths were absent; resolved through
   pack inventory. Large combined output was truncated; relevant reads narrowed.
 
@@ -52,3 +59,10 @@ Objective: The human comparison CLI produces identity-bound, replay-validated, c
 []
 
 ## terminal
+
+01:48 UTC: joined MEASURE-001 at f407d9c8e85eb407fea3cb2483c1720e7d7daaec,
+exactly seven authorized artifacts. Fast-forwarded only the foreground
+chore/startup-checks-2026-09-05 branch. No main/external operation. Child lease
+closed. C6 provisional because the live custody check found this deliberately
+uncommitted bookkeeping during worker execution; commit now and rerun.
+One independent fixed-revision code lens gate is GATE-001; no acceptance yet.
