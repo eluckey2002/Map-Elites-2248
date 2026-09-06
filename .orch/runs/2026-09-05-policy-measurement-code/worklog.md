@@ -60,6 +60,12 @@ will independently review the produced revision. Implementation lease 85m.
 
 ## terminal
 
+02:12 UTC: joined REPAIR-001 clean at ce21196 (implementation 4602cd1,
+supplemental tests 86a016a, ticket evidence ce21196). One correction pass spent.
+VERIFY-001 is the affected-criteria final gate verification. Root recaptures final
+raw CLI and runs the complete final suite; worker's interrupted duplicate final
+suite is excluded. No content successor, acceptance, or Step 3 release yet.
+
 01:58 UTC: independent GATE-001 returned five evidenced findings (one HIGH),
 integrated and adjudicated in gate-f407d9c.md. The complete raw baseline remains
 retained but is not an accepted instrument. REPAIR-001 owns the single correction

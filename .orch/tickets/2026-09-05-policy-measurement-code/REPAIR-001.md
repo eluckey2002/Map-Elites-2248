@@ -1,7 +1,7 @@
 ---
 id: REPAIR-001
 run: 2026-09-05-policy-measurement-code
-status: in_progress
+status: integrated
 executor: orch-repair
 pack: orch-code-pack
 independence: gate
@@ -57,6 +57,11 @@ Return commits, changed_artifacts, per-F disposition, exact red/green evidence,
 CLI summary/raw identity, no-worse failure names, limits and queued uncertainties.
 
 ## Result
+
+Root joined the returned clean ce21196aca799b0c72c1e9b3025692dd45c3e861
+revision; worker explicitly released its write lease with no running sessions.
+One final-head full-suite attempt was interrupted and is not accepted evidence;
+root owns a fresh complete run. Gate verification remains pending.
 
 Claimed in isolated worktree at `a28b4df`; exclusivity checked before the first
 write. Repair implementation is `4602cd1` and the strengthened permanent
