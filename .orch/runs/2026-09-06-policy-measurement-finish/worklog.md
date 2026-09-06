@@ -29,7 +29,12 @@ The same independent whole context then checks these closure-only edits and link
 
 ## Terminal
 
-Whole W1/W2/W3 PASS at49214e5, weakest judged, independently returned within
-bound and lease released. Root accepted this evidence and applied only the
-predeclared closure metadata. Closure-only independent recheck pending;
-baseline, ledger claims and all protected inputs remain unchanged.
+Complete. Whole W1/W2/W3 PASS at49214e5, followed by closure-only C1/C2 PASS
+at3fe1254, weakest class judged. Both returns were independent, in-bound,
+scope-conforming and lease-released; root accepted them. Result identity is
+the11document hashes in envelope-accepted.json (closure document sourcec40c2f0)
+plus its unchanged fixed-artifact hashes. Baseline, ledger claims and protected
+inputs remain unchanged. Full clean suite378/382, closure subset57/59: exactly
+the four known full-suite failures and their two relevant Universe failures.
+Both custody checks pass. Step3ready-unexecuted; Step4blocked. No external push,
+PR, main merge, Atlas change, experiment or bot change in this resumption.

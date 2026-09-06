@@ -1,5 +1,10 @@
 # Step 2 records worklog
 
+Subsequent owner-authorized completion: the unexecuted title repair, content
+verification, integration and whole check finished in
+[the final resumption](../2026-09-06-policy-measurement-finish/worklog.md).
+This run's original blocked terminal state below remains history.
+
 ## Goal
 
 Readers have one source-pinned account of the corrected measurement premises

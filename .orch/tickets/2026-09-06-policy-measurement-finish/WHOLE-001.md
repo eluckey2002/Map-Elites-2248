@@ -1,7 +1,7 @@
 ---
 id: WHOLE-001
 run: 2026-09-06-policy-measurement-finish
-status: claimed
+status: complete
 executor: orch-verify
 profile: orch-planner
 depends_on: []
@@ -89,6 +89,11 @@ Overall verdict: **PASS**. Weakest oracle class: **judged**. Completed at
   +39.58420260115114%. All 14 wins end at first crossing; the sole loss uses
   its full B=24; all diagnostic H values equal recorded moves while original B
   is preserved.
+
+Closure-only recheck overall verdict: **PASS**. Weakest oracle class:
+**judged**. Initial W1-W3 remain valid and are reused unchanged. Checked at
+2026-09-06T04:43:04Z against reviewed base `49214e5`, closure source `c40c2f0`,
+and root HEAD `3fe1254`.
 
 ## Verification
 
@@ -185,6 +190,63 @@ Overall verdict: **PASS**. Weakest oracle class: **judged**. Completed at
 WHOLE-001 result-section write lease at 2026-09-06T04:36:12Z. No further verifier
 writes are authorized unless root returns the declared closure-only recheck.
 
+### Closure C1
+
+- **verdict:** PASS
+- **oracle:** Exact `49214e5..c40c2f0` path/diff comparison, recomputed
+  `envelope-accepted.json` hashes, protected-file no-diff check, local file and
+  fragment resolution, `git diff --check`, and independent parsing of the
+  recorded closure-focused test output.
+- **oracle_class:** deterministic
+- **evidence:** Closure source changes exactly the six predeclared project
+  documents (AGENTS, CURRENT, HANDOFF, BL-0012 dependency/status sentence,
+  BL-0014, measurement-acceptance) plus the declared orchestration closeouts
+  (status, worklog, WHOLE-001, and accepted envelope). From `c40c2f0` to HEAD,
+  only the closure-check output and this canonical ticket changed. All 11 final
+  document hashes, all 21 original fixed-artifact hashes, and the original clean
+  suite hash recomputed equal the accepted envelope. Ledger, baseline, plan,
+  contract, inputs, game, engine, bot, author, benchmark source/tests, and raw
+  evidence have no closure diff. `git diff --check` passed. All 99 local links
+  and all 23 fragment links in the final eleven documents resolve. Independent
+  raw parsing of `closure-checks-c40c2f0.txt` (SHA-256 `0332fd04968ef2ee...`)
+  yields 59 tests, 57 pass, exactly the two known Universe failures, and both
+  live root/linked-worktree custody checks PASS.
+- **covers:** unchanged W1-W3 identities; reviewed base
+  `49214e5435592007924f28230fa0d6b862039ead`; closure documents
+  `c40c2f0`; final root HEAD `3fe12542663956a3569eb5f0a30f43f0a5d77749`;
+  `envelope-accepted.json`; `closure-checks-c40c2f0.txt`.
+
+### Closure C2
+
+- **verdict:** PASS
+- **oracle:** Fresh same-context coherence judgment limited to the predeclared
+  acceptance/navigation/dependency metadata and exact closure-check outcomes.
+- **oracle_class:** judged
+- **evidence:** Current sections in AGENTS, CURRENT, HANDOFF,
+  measurement-acceptance, BL-0012, and BL-0014 consistently state Step 2
+  accepted, Step 3 ready but unexecuted, and Step 4/policy implementation
+  blocked on Step 3. They require predecessor identity recheck before Step 3,
+  preserve historical sections as history, make no new empirical claim, and
+  expose 378/382 plus the same four known full-suite failures. The acceptance
+  record names initial WHOLE-001's weakest class as judged, links both reviewed
+  and closure envelopes, and does not claim an all-green repository. The two
+  expected Universe failures remain visible in the focused closure output;
+  custody tests pass.
+- **covers:** initial W1-W3 PASS without changed covered blobs; exact closure
+  metadata at `c40c2f0`; final hashes and links at HEAD `3fe1254`; plan R1-R6
+  successor boundary.
+
+### Closure findings and uncertainties
+
+1. No closure-blocking finding.
+2. Initial uncertainties remain unchanged. In particular, this recheck does
+   not clear the four known full-suite failures or the two corresponding
+   Universe failures in the focused closure run, and it does not execute Step 3.
+
+**Closure lease release:** `/root/whole_verify_gpt_5_6_sol_ultra` releases the
+same-context closure-only WHOLE-001 result-section lease at
+2026-09-06T04:43:04Z. No further writes are authorized.
+
 ## Feedback
 
 Root accepted W1-W3 at the recorded fixed identities: correct child, in-bound
@@ -207,6 +269,16 @@ match initial W1-W3 PASS and expose test limitations; oracle=fresh closure-only
 coherence check and exact raw closure-check outcomes, oracle_class=judged,
 provenance=pre-existing. Reuse unchanged W1-W3 coverage; no whole audit rerun.
 Append C1/C2 with evidence/covers and explicit lease release. Root stays read-only.
+
+### Closure-only recheck return
+
+C1 PASS (deterministic); C2 PASS (judged); overall PASS, weakest class judged.
+No blocking findings. Exact evidence and covers are appended under Verification,
+and the lease is released.
+
+Root final join: accepted C1/C2 with exact unchanged covers, correct returning
+identity, in-bound lease and only authorized ticket writes. W1-W3 remain valid.
+Whole Step2 complete; no remaining required work in this resumption.
 
 ## Risks
 
