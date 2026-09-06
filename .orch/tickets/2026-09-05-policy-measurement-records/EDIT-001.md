@@ -1,7 +1,7 @@
 ---
 id: EDIT-001
 run: 2026-09-05-policy-measurement-records
-status: pending
+status: claimed
 executor: orch-edit
 pack: orch-content-pack
 independence: gate
@@ -9,8 +9,8 @@ depends_on: [DRAFT-001]
 write_scope:
   - corrected-measurement outline bundle in the spec's eleven affected document surfaces
 bound: 6 minutes
-claimed_by: null
-claimed_at: null
+claimed_by: /root/records_edit_gpt_5_6_sol_high
+claimed_at: 2026-09-06T02:59:15Z
 ---
 
 ## Objective
@@ -21,7 +21,9 @@ source-linked document bundle without adding claims.
 ## Fixed inputs
 
 The complete records spec and the completed DRAFT-001 result at its exact
-commit, supplied by root at claim. Same document worktree, sources, eleven
+commit 4a8e5c23cf1b5f4b4d74ad475576b1ce0c8b97d3. Workspace:
+/private/tmp/2248-policy-records-20260905.LA1VFm,
+branch work/policy-measurement-records-2026-09-05. Same sources, eleven
 slots and binding constraints. Craft is the pack's references/craft.md.
 Voice contract: register plain technical; person impersonal except named owner
 decisions; stance evidence-bounded, corrections explicit; cadence short

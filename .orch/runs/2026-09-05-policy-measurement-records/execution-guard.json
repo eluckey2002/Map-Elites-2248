@@ -1,13 +1,19 @@
 {
   "counters": {
-    "checks": 2,
+    "checks": 5,
     "owner_review_required": 0,
     "progress_required": 0,
     "status_required": 0
   },
   "marks": {
-    "progress": null,
-    "status": null
+    "progress": {
+      "at": "2026-09-06T02:59:16Z",
+      "evidence": "artifact:4a8e5c23cf1b5f4b4d74ad475576b1ce0c8b97d3"
+    },
+    "status": {
+      "at": "2026-09-06T02:59:16Z",
+      "evidence": "commentary:eleven-document-draft-complete"
+    }
   },
   "run": "2026-09-05-policy-measurement-records",
   "schema": "orchflows.execution-guard.v1",
