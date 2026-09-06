@@ -1,0 +1,65 @@
+{
+  "sourceCommit": "7b94cf5",
+  "implementationCommit": "f407d9c8e85eb407fea3cb2483c1720e7d7daaec",
+  "command": "node --test --test-reporter=spec solver/tests/*.test.js",
+  "exitCode": 1,
+  "tests": 377,
+  "pass": 373,
+  "fail": 4,
+  "durationMs": 92748.34275,
+  "failureNames": [
+    "candidate-levels-52.json has a receipt that verifies against the current bot",
+    "candidate-levels-54.json has a receipt that verifies against the current bot",
+    "the builder is byte-stable and the committed generated views are current",
+    "verification observations derive from rebound evidence instead of copied metrics in code"
+  ],
+  "conclusion": "No additional failure identities against startup baseline; not an all-green suite",
+  "experimentGate": {
+    "command": "node tools/verify-experiments.js",
+    "exitCode": 0,
+    "output": "EXPERIMENT GATE PASS"
+  },
+  "startup": {
+    "sourceCommit": "1a01263",
+    "suite": {
+      "command": "node --test --test-reporter=spec solver/tests/*.test.js",
+      "exit": 1,
+      "tests": 348,
+      "pass": 344,
+      "fail": 4,
+      "durationMs": 56366.158792,
+      "failures": [
+        "candidate-levels-52.json has a receipt that verifies against the current bot",
+        "candidate-levels-54.json has a receipt that verifies against the current bot",
+        "the builder is byte-stable and the committed generated views are current",
+        "verification observations derive from rebound evidence instead of copied metrics in code"
+      ]
+    },
+    "legacy": {
+      "command": "node solver/human-benchmark.js",
+      "exit": 0,
+      "rows": 12,
+      "referenceWins": 12,
+      "humanWins": 11,
+      "fullBudgetBotPercentMean": 65.7,
+      "interpretation": "retained wrong equal-objective/full-opportunity claim; current contract not applied"
+    },
+    "archive": {
+      "sha256": "11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c",
+      "recomputedPercent": [
+        -3.5723416962853825,
+        -36.54683521751211,
+        -11.92522011388043
+      ],
+      "method": "independently mean log(max(C,1)/max(R,1)), expm1; 144 cells each",
+      "historicalSource": "git show 52f500c:solver/policy-eval.js playToBudget full-budget not target-censored"
+    },
+    "curve": {
+      "chunk_id": "b590b7",
+      "wall_time_seconds": 0.000001041,
+      "exit_code": 0,
+      "original_token_count": 305,
+      "output": "Level curve verify (60 seeds from 100000, sampled levels 1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50):\n  [PASS] every level has a target and a tileScale: 58/58 (a missing tileScale silently reverts that level to 1x)\n  [PASS] tile scale doubles and never steps back: 1,2,4,8,16,32 (the game deals 2/4/8 times the scale; a non-power-of-two would deal off-family tiles)\n  [PASS] level 1 is a guaranteed win: 1 (the tutorial must not be losable)\n  [PASS] hardest sampled level stays winnable: 97% at level 50 (floor 20%; before the retune 34 levels sat at 0%)\n  [PASS] board lockouts stay rare: 0% at level 50 (ceiling 10%; a lockout is a dead board, not a fair loss)\n  [PASS] bomb explosions stay rare on 40-50: 0% at level 50 (ceiling 5%)\n  [PASS] late levels are harder than early ones: 100% early vs 99% late (the curve must actually descend, not just wobble)\n\nlvl   target   win   lockout\n  1      520  100%        0%\n  5     2300  100%        0%\n 10     4000  100%        0%\n 15     8100  100%        0%\n 20     9150  100%        0%\n 25    18300  100%        0%\n 30    22300  100%        0%\n 35    26700  100%        0%\n 40    47200  100%        0%\n 45    63900  100%        0%\n 50    75900   97%        0%\n\nRESULT: PASS\n"
+    }
+  }
+}
