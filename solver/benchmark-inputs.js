@@ -113,10 +113,12 @@ function readJson(file) {
 
 function receiptIdentityValid(receipt) {
   const field = receipt.receiptIdentity ? 'receiptIdentity' : (receipt.artifactIdentity ? 'artifactIdentity' : null);
-  if (!field) return true;
+  if (!field) return { ok: false, reason: 'receipt missing receiptIdentity or artifactIdentity' };
   const unsigned = { ...receipt };
   delete unsigned[field];
-  return valueIdentity(unsigned) === receipt[field];
+  return valueIdentity(unsigned) === receipt[field]
+    ? { ok: true }
+    : { ok: false, reason: 'receipt self-identity mismatch' };
 }
 
 function addCandidate(index, candidate, receipt, candidateSource, receiptSource) {
@@ -126,8 +128,9 @@ function addCandidate(index, candidate, receipt, candidateSource, receiptSource)
     index.invalid.push({ source: candidateSource, receiptSource, reason: 'candidate content identity mismatch' });
     return;
   }
-  if (!receiptIdentityValid(receipt)) {
-    index.invalid.push({ source: candidateSource, receiptSource, reason: 'receipt self-identity mismatch' });
+  const receiptIdentity = receiptIdentityValid(receipt);
+  if (!receiptIdentity.ok) {
+    index.invalid.push({ source: candidateSource, receiptSource, reason: receiptIdentity.reason });
     return;
   }
   const existing = index.candidates.get(claimed);

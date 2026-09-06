@@ -99,7 +99,7 @@ test('canonical JSON sorts object keys recursively but preserves array order', (
 
 test('E01-E05 and E18 enforce reliability then wins then fixed-set speed', () => {
   assert.deepEqual(comparison([{ reference: outcome('win', 12), comparisons: [outcome('win', 10)] }]).ranking,
-    { eligibility: 'ELIGIBLE', verdict: 'FASTER_ON_THIS_SET', convertedWins: 0, meanMovesSaved: 2 });
+    { eligibility: 'ELIGIBLE', verdict: 'FASTER_ON_THIS_SET', convertedWins: 0, convertedWinFraction: 0, caseCount: 1, meanMovesSaved: 2 });
   assert.equal(comparison([
     { reference: outcome('win', 12), comparisons: [outcome('win', 8)] },
     { reference: outcome('win', 12), comparisons: [outcome('lose')] },
@@ -108,12 +108,12 @@ test('E01-E05 and E18 enforce reliability then wins then fixed-set speed', () =>
     { reference: outcome('win', 10), comparisons: [outcome('win', 12)] },
     { reference: outcome('lose'), comparisons: [outcome('win', 20)] },
   ]).ranking;
-  assert.deepEqual(e03, { eligibility: 'ELIGIBLE', verdict: 'BETTER_ON_THIS_SET_BY_WINS', convertedWins: 1, meanMovesSaved: -2 });
+  assert.deepEqual(e03, { eligibility: 'ELIGIBLE', verdict: 'BETTER_ON_THIS_SET_BY_WINS', convertedWins: 1, convertedWinFraction: 0.5, caseCount: 2, meanMovesSaved: -2 });
   assert.equal(comparison([{ reference: outcome('win', 10), comparisons: [outcome('win', 10)] }]).ranking.verdict, 'TIED_ON_THIS_SET');
   assert.deepEqual(comparison([{ reference: outcome('lose'), comparisons: [outcome('lose')] }]).ranking,
-    { eligibility: 'ELIGIBLE', verdict: 'NO_SUCCESS_OBSERVED', convertedWins: 0, meanMovesSaved: null });
+    { eligibility: 'ELIGIBLE', verdict: 'NO_SUCCESS_OBSERVED', convertedWins: 0, convertedWinFraction: 0, caseCount: 1, meanMovesSaved: null });
   assert.deepEqual(comparison([{ reference: outcome('lose'), comparisons: [outcome('win', 9)] }]).ranking,
-    { eligibility: 'ELIGIBLE', verdict: 'BETTER_ON_THIS_SET_BY_WINS', convertedWins: 1, meanMovesSaved: null });
+    { eligibility: 'ELIGIBLE', verdict: 'BETTER_ON_THIS_SET_BY_WINS', convertedWins: 1, convertedWinFraction: 1, caseCount: 1, meanMovesSaved: null });
 });
 
 test('E06 weights attempts within a case before weighting cases', () => {
@@ -193,6 +193,19 @@ test('a forged candidate receipt key does not resolve content under that identit
   const index = buildCandidateIndex({ root: dir });
   assert.equal(index.candidates.size, 0);
   assert.match(index.invalid[0].reason, /candidate content identity mismatch/);
+});
+
+test('exact candidate content with a receipt lacking both self identities is rejected', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'policy-eval-unsigned-receipt-'));
+  const solverDir = path.join(dir, 'solver');
+  fs.mkdirSync(solverDir);
+  const candidate = { schemaVersion: 1, name: 'unsigned', level: 1, target: 10, tileScale: 1, moves: 2, minChain: 2, gridW: 2, gridH: 2, blockers: [] };
+  const candidateIdentity = valueIdentity(candidate);
+  fs.writeFileSync(path.join(solverDir, 'candidate-levels.json'), JSON.stringify({ schemaVersion: 1, candidates: [candidate] }));
+  fs.writeFileSync(path.join(solverDir, 'candidate-levels.receipt.json'), JSON.stringify({ schemaVersion: 1, candidateIdentity }));
+  const index = buildCandidateIndex({ root: dir });
+  assert.equal(index.candidates.size, 0);
+  assert.equal(index.invalid[0].reason, 'receipt missing receiptIdentity or artifactIdentity');
 });
 
 test('a real recording replays exactly; altered coordinates and missing traces become unresolved', () => {

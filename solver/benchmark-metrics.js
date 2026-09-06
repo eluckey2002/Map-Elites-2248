@@ -21,14 +21,14 @@ function compareCases(cases) {
   if (cases.length === 0) {
     return {
       cases: [],
-      ranking: { eligibility: 'EMPTY', verdict: 'EMPTY', convertedWins: null, meanMovesSaved: null },
+      ranking: { eligibility: 'EMPTY', verdict: 'EMPTY', convertedWins: null, convertedWinFraction: null, caseCount: 0, meanMovesSaved: null },
       speedCounts: { faster: 0, slower: 0, tied: 0 },
     };
   }
   if (cases.some((entry) => entry.unresolved && entry.unresolved.length > 0)) {
     return {
       cases,
-      ranking: { eligibility: 'UNRESOLVED', verdict: 'UNRESOLVED', convertedWins: null, meanMovesSaved: null },
+      ranking: { eligibility: 'UNRESOLVED', verdict: 'UNRESOLVED', convertedWins: null, convertedWinFraction: null, caseCount: cases.length, meanMovesSaved: null },
       speedCounts: { faster: 0, slower: 0, tied: 0 },
     };
   }
@@ -79,7 +79,14 @@ function compareCases(cases) {
 
   return {
     cases: normalized,
-    ranking: { eligibility, verdict, convertedWins, meanMovesSaved },
+    ranking: {
+      eligibility,
+      verdict,
+      convertedWins,
+      convertedWinFraction: convertedWins / normalized.length,
+      caseCount: normalized.length,
+      meanMovesSaved,
+    },
     winRates: {
       reference: normalized.filter((entry) => entry.referenceWin).length / normalized.length,
       comparison: normalized.reduce((sum, entry) => sum + entry.comparisonWinFraction, 0) / normalized.length,

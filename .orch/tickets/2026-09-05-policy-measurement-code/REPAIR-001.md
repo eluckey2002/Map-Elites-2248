@@ -1,7 +1,7 @@
 ---
 id: REPAIR-001
 run: 2026-09-05-policy-measurement-code
-status: ready
+status: in_progress
 executor: orch-repair
 pack: orch-code-pack
 independence: gate
@@ -58,4 +58,11 @@ CLI summary/raw identity, no-worse failure names, limits and queued uncertaintie
 
 ## Result
 
-Pending.
+Claimed in isolated worktree at `a28b4df`; exclusivity checked before the first
+write. Red controls were added for F1-F5 before implementation. The accepted
+failures reproduced through the public seams: missing receipt self-identity was
+admitted, runtime failure was not injected into collection, missing required
+evidence could shrink the displayed denominator, reporting omitted required
+N/n and identity context, and existing check cards did not name these public-path
+controls. Repair code and permanent controls are now under focused green
+verification; no terminal acceptance is claimed here.

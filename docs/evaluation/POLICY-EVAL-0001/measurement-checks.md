@@ -13,7 +13,7 @@ qualify a generalized policy claim.
 - **Reads own output?:** no; it reads frozen repository inputs and actual subject files.
 - **Sampling memory:** n/a; all manifest rows are checked, while later files are reported as extras rather than sampled.
 - **Does NOT catch:** a bad definition accepted into contract v1; historical runtime identity absent from ordinary-play receipts; meaning changes that preserve every pinned byte; files outside the manifest except as named extras.
-- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, `a real pinned file passes and a filesystem-mutated twin fails by hash`, plus invalid-seed and target-distinct subject cases.
+- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, `a real pinned file passes and a filesystem-mutated twin fails by hash`, plus invalid-seed and target-distinct subject cases; `solver/tests/humanBenchmark.test.js`, `corrupted frozen package bytes produce an explicit unresolved collect/render result`, drives the public collector and renderer with changed contract bytes and requires the exact hash-mismatch reason without a crash.
 - **Retires:** NO — the existing benchmark coverage check follows mutable directories and does not bind the accepted manifest or content hashes.
 - **Enforcement:** HARD in the Step 2 focused test; promotion beyond local instrument status would require an independently reviewed admission boundary.
 - **Decay:** focused tests re-run on every benchmark change; changing frozen identities requires a preserved successor contract version.
@@ -45,7 +45,7 @@ qualify a generalized policy claim.
 - **Reads own output?:** no; candidate and attempt artifacts predate this instrument.
 - **Sampling memory:** n/a; every frozen attempt is resolved and later discovered recording files are an explicit supplement.
 - **Does NOT catch:** full historical candidate qualification; whether ordinary play actually used today's shipped subject; source files outside named stores/batches/pilots; a semantically bad candidate whose content and receipt deliberately agree.
-- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, `a forged candidate receipt key does not resolve content under that identity`.
+- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, `a forged candidate receipt key does not resolve content under that identity` and `exact candidate content with a receipt lacking both self identities is rejected`; the latter preserves correct candidate bytes while removing both receipt self-identity fields and requires the exact rejection reason.
 - **Retires:** NO — `recording-replay.candidateIndex` trusts receipt keys without recomputing candidate content identity and cannot resolve ordinary current-subject play.
 - **Enforcement:** HARD for admission into this descriptive benchmark; it does not regenerate or upgrade stale candidate receipts.
 - **Decay:** the focused tests resolve all 15 real rows and fail on content/receipt drift; successor manifests require an updated inventory identity.
@@ -61,7 +61,7 @@ qualify a generalized policy claim.
 - **Reads own output?:** no; replay reads real recordings and source transitions, while live arms are compared only through returned observations.
 - **Sampling memory:** n/a; every admitted frozen attempt is replayed, and deterministic controls exercise each declared failure family.
 - **Does NOT catch:** UI-only behavior absent from the headless transition; historical runtime identity for ordinary play; a policy-quality defect that still returns legal moves; generalized reliability beyond the fixed panel.
-- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, altered-coordinate, false-win/premature-loss/post-terminal, missing-trace, seed/subject mismatch, bomb/target/B=H precedence, illegal choice, thrown-harness, RNG-consumption, and no-choice-with-legal-move cases.
+- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, altered-coordinate, false-win/premature-loss/post-terminal, missing-trace, seed/subject mismatch, bomb/target/B=H precedence, illegal choice, thrown-harness, RNG-consumption, and no-choice-with-legal-move cases; `solver/tests/humanBenchmark.test.js`, `a collect-level runtime fault stays unresolved and cannot become wins or score data`, injects an unresolved reference result through the public collector and requires every affected file to remain unresolved with unavailable ranking and score values.
 - **Retires:** NO — the existing reusable replay remains unchanged; this stricter wrapper is scoped to the POLICY-EVAL-0001 instrument because the global helper is outside the ticket.
 - **Enforcement:** HARD for Step 2 row admission and live reference classification only.
 - **Decay:** focused tests use a real receipt-bound recording plus permanent bad twins; source hash drift blocks collection before replay.
@@ -77,7 +77,7 @@ qualify a generalized policy claim.
 - **Reads own output?:** no; text rendering consumes the same returned object exposed by `collect`, and tests compare its literal classifications to that object.
 - **Sampling memory:** n/a; all required and discovered recording paths in the named directories are inventoried, with extras excluded from the denominator.
 - **Does NOT catch:** recording-shaped JSON outside the named directories; population-selection bias; historical runtime identity absent from ordinary play; semantic errors already frozen into the contract; an uncommitted run is identified as such rather than forbidden.
-- **Crafted-bypass test:** `solver/tests/humanBenchmark.test.js`, `unexpected files are surfaced as extras without changing the frozen denominator` and `--json flushes one complete JSON document larger than the default pipe buffer`.
+- **Crafted-bypass test:** `solver/tests/humanBenchmark.test.js`, `missing required and actual extra files stay visible through collect and render` stages the real corpus with one required receipt-bound recording absent and an actual extra file present, then requires a 12-file denominator, 11 available attempts, an unresolved full panel, a labeled resolved subset, and both filenames in public text output; `--json flushes one complete JSON document larger than the default pipe buffer` protects complete machine-readable output.
 - **Retires:** the prior mutable-directory minimum-count benchmark check; the frozen inventory plus explicit supplement makes silent growth and shrinkage visible.
 - **Enforcement:** HARD for deterministic Step 2 descriptive output; no generalized or promotion claim is admitted.
 - **Decay:** focused tests and both CLI modes run at the result commit; successor inventories require a new frozen inputs identity.

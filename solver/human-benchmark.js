@@ -186,7 +186,7 @@ function collisionReport(rows) {
     .map(([initialGridIdentity, cases]) => ({ initialGridIdentity, caseKeys: [...cases].sort() }));
 }
 
-function summarizeScores(rows) {
+function summarizeScores(rows, requiredFiles) {
   const byCase = new Map();
   for (const row of rows) {
     if (!byCase.has(row.caseKey)) byCase.set(row.caseKey, []);
@@ -204,14 +204,60 @@ function summarizeScores(rows) {
       ? percentCases.reduce((sum, entry) => sum + entry.percentages.reduce((inner, value) => inner + value, 0) / entry.percentages.length, 0) / percentCases.length
       : null,
     percentAvailable: rows.filter((row) => row.scoreDiagnostic.percentOfReference !== null).length,
-    totalAttempts: rows.length,
+    availableAttempts: rows.length,
+    requiredFiles,
     percentCases: percentCases.length,
     totalCases: cases.length,
   };
 }
 
-function collect({ root = ROOT } = {}) {
-  const frozen = loadFrozenInputs({ root });
+function measurementIdentity(root, gitRoot) {
+  const measurementPaths = [
+    'solver/human-benchmark.js',
+    'solver/benchmark-inputs.js',
+    'solver/benchmark-metrics.js',
+    'solver/benchmark-replay.js',
+  ];
+  const measurementSources = Object.fromEntries(measurementPaths.map((relative) => [relative, fileSha256(path.join(root, relative))]));
+  const measurementSourceTreeState = childProcess.execFileSync(
+    'git', ['status', '--porcelain', '--', ...measurementPaths], { cwd: gitRoot, encoding: 'utf8' },
+  ).trim() || 'clean';
+  return {
+    executableSourceCommit: executableCommit(gitRoot),
+    measurementSources,
+    measurementSourceIdentity: valueIdentity(measurementSources),
+    measurementSourceTreeState,
+  };
+}
+
+function unavailableRuntime(result) {
+  return !result || result.validity !== 'valid' || result.outcome === null || result.outcome === 'unresolved';
+}
+
+function failedCollection(error, root, gitRoot) {
+  return {
+    schemaVersion: 2,
+    outputSemantics: OUTPUT_VERSION,
+    validity: 'unresolved',
+    scope: 'fixed descriptive panels; not a population estimate or promotion result',
+    ...measurementIdentity(root, gitRoot),
+    failure: { reason: error.message },
+    contract: { id: 'POLICY-EVAL-0001', requiredFileCount: 15 },
+    dispositions: [],
+    extras: [],
+    panels: [],
+    rows: [],
+    unresolved: [{ path: null, panel: null, disposition: 'unresolved', reasons: [error.message] }],
+  };
+}
+
+function collect({ root = ROOT, gitRoot = root, playBotFn = playBot } = {}) {
+  let frozen;
+  try {
+    frozen = loadFrozenInputs({ root });
+  } catch (error) {
+    return failedCollection(error, root, gitRoot);
+  }
   const { manifest } = frozen;
   const index = buildCandidateIndex({ root });
   const expectedPaths = new Set(manifest.requiredAttemptSources.map((entry) => entry.path));
@@ -252,11 +298,29 @@ function collect({ root = ROOT } = {}) {
     canonicalAttempts.set(duplicateKey, expected.path);
 
     try {
-      const reference = playBot(resolved.candidate, expected.seed);
-      const diagnostic = playBot(resolved.candidate, expected.seed, {
+      const reference = playBotFn(resolved.candidate, expected.seed);
+      if (unavailableRuntime(reference)) {
+        dispositions.push({
+          path: expected.path,
+          panel,
+          disposition: 'unresolved',
+          reasons: [`reference runtime unresolved: ${reference && reference.reason ? reference.reason : 'missing result'}`],
+        });
+        continue;
+      }
+      const diagnostic = playBotFn(resolved.candidate, expected.seed, {
         targetDisabled: true,
         externalHorizon: replay.moves,
       });
+      if (unavailableRuntime(diagnostic) || !Number.isFinite(diagnostic.score)) {
+        dispositions.push({
+          path: expected.path,
+          panel,
+          disposition: 'unresolved',
+          reasons: [`diagnostic runtime unresolved: ${diagnostic && diagnostic.reason ? diagnostic.reason : 'score unavailable'}`],
+        });
+        continue;
+      }
       const subject = subjectPayload(resolved.candidate);
       const rowSubjectKey = subjectKey(resolved.candidate);
       const caseKey = valueIdentity({
@@ -314,7 +378,10 @@ function collect({ root = ROOT } = {}) {
     const resolvedSubsetMetrics = compareCases(cases);
     const metrics = unresolved.length === 0 ? resolvedSubsetMetrics : {
       ...resolvedSubsetMetrics,
-      ranking: { eligibility: 'UNRESOLVED', verdict: 'UNRESOLVED', convertedWins: null, meanMovesSaved: null },
+      ranking: {
+        eligibility: 'UNRESOLVED', verdict: 'UNRESOLVED', convertedWins: null,
+        convertedWinFraction: null, caseCount: cases.length, meanMovesSaved: null,
+      },
     };
     return {
       id,
@@ -327,29 +394,17 @@ function collect({ root = ROOT } = {}) {
       duplicateCount: panelDispositions.filter((entry) => entry.disposition === 'duplicate').length,
       metrics,
       resolvedSubsetMetrics: unresolved.length ? resolvedSubsetMetrics : null,
-      scoreDiagnostic: summarizeScores(panelRows),
+      scoreDiagnostic: summarizeScores(panelRows, manifest.requiredAttemptSources.filter((entry) => panelForSource(entry) === id).length),
+      metricsLabel: unresolved.length ? 'resolved-subset metrics; full panel UNRESOLVED' : 'complete-panel metrics',
     };
   });
-
-  const measurementPaths = [
-    'solver/human-benchmark.js',
-    'solver/benchmark-inputs.js',
-    'solver/benchmark-metrics.js',
-    'solver/benchmark-replay.js',
-  ];
-  const measurementSources = Object.fromEntries(measurementPaths.map((relative) => [relative, fileSha256(path.join(root, relative))]));
-  const measurementSourceTreeState = childProcess.execFileSync(
-    'git', ['status', '--porcelain', '--', ...measurementPaths], { cwd: root, encoding: 'utf8' },
-  ).trim() || 'clean';
 
   return {
     schemaVersion: 2,
     outputSemantics: OUTPUT_VERSION,
     scope: 'fixed descriptive panels; not a population estimate or promotion result',
-    executableSourceCommit: executableCommit(root),
-    measurementSources,
-    measurementSourceIdentity: valueIdentity(measurementSources),
-    measurementSourceTreeState,
+    validity: 'valid',
+    ...measurementIdentity(root, gitRoot),
     contract: {
       id: manifest.contractId,
       sha256: frozen.contractSha256,
@@ -367,6 +422,9 @@ function collect({ root = ROOT } = {}) {
 }
 
 function renderText(result) {
+  if (result.validity === 'unresolved' && result.failure) {
+    return `${result.outputSemantics}\nmeasurement UNRESOLVED: ${result.failure.reason}\n`;
+  }
   const lines = [
     result.outputSemantics,
     `${result.scope}.`,
@@ -377,16 +435,24 @@ function renderText(result) {
   for (const panel of result.panels) {
     lines.push('');
     lines.push(`${panel.id}: ${panel.metrics.ranking.verdict}`);
+    lines.push(panel.metricsLabel);
     lines.push(`${panel.fileCount} files, ${panel.distinctAttempts} distinct attempts, ${panel.caseCount} cases; ${panel.unresolvedCount} unresolved, ${panel.duplicateCount} duplicates`);
     lines.push(`reference win rate ${formatPercent(panel.metrics.winRates && panel.metrics.winRates.reference)}; human win rate ${formatPercent(panel.metrics.winRates && panel.metrics.winRates.comparison)}`);
-    lines.push(`converted wins ${formatNumber(panel.metrics.ranking.convertedWins)}; mean moves saved ${formatNumber(panel.metrics.ranking.meanMovesSaved)}`);
+    lines.push(`converted wins N=${formatNumber(panel.metrics.ranking.convertedWins)}; N/n=${formatNumber(panel.metrics.ranking.convertedWins)}/${panel.fileCount === 0 ? 'unavailable' : panel.caseCount}=${formatNumber(panel.metrics.ranking.convertedWinFraction)}; mean moves saved ${formatNumber(panel.metrics.ranking.meanMovesSaved)}`);
     lines.push(`regressions ${panel.metrics.regressionAttempts} attempts in ${panel.metrics.regressionCases} cases`);
-    lines.push(`score: matched-horizon, mixed/unknown-intent diagnostic; target disabled for bot, original B retained; percent coverage ${panel.scoreDiagnostic.percentAvailable}/${panel.scoreDiagnostic.totalAttempts}`);
+    lines.push(`faster/slower/tied=${panel.metrics.speedCounts.faster}/${panel.metrics.speedCounts.slower}/${panel.metrics.speedCounts.tied}`);
+    lines.push(`score: matched-horizon, mixed/unknown-intent diagnostic; target disabled for bot, original B retained; score coverage: ${panel.scoreDiagnostic.availableAttempts} available attempts across ${panel.scoreDiagnostic.requiredFiles} required files; percentages ${panel.scoreDiagnostic.percentAvailable}/${panel.scoreDiagnostic.availableAttempts}`);
     for (const row of result.rows.filter((entry) => entry.panel === panel.id)) {
       const percentage = row.scoreDiagnostic.percentOfReference === null
         ? 'unavailable'
         : `${row.scoreDiagnostic.percentOfReference >= 0 ? '+' : ''}${row.scoreDiagnostic.percentOfReference.toFixed(1)}%`;
-      lines.push(`  ${row.file} L${row.level} seed ${row.seed} T=${row.subject.target} B=${row.subject.moves}: human ${row.human.outcome} ${row.human.score}/${row.human.moves} crossing=${formatNumber(row.human.firstCrossing)}; reference ${row.reference.outcome} ${row.reference.score}/${row.reference.moves} crossing=${formatNumber(row.reference.firstCrossing)}; diagnostic ${row.diagnostic.outcome} ${row.diagnostic.score}/${row.diagnostic.moves} H=${row.diagnostic.externalHorizon}; score delta ${row.scoreDiagnostic.rawDelta >= 0 ? '+' : ''}${row.scoreDiagnostic.rawDelta}; percent of bot reference ${percentage}`);
+      const sourceIdentity = row.panel === 'receipt-bound'
+        ? `candidate=${row.candidateIdentity} receipt=${row.receiptIdentity}`
+        : `subject=${row.subjectKey} source=${row.candidateSource}`;
+      lines.push(`  ${row.file} ${sourceIdentity} L${row.level} seed ${row.seed} T=${row.subject.target} B=${row.subject.moves}: human ${row.human.outcome} ${row.human.score}/${row.human.moves} crossing=${formatNumber(row.human.firstCrossing)}; reference ${row.reference.outcome} ${row.reference.score}/${row.reference.moves} crossing=${formatNumber(row.reference.firstCrossing)}; diagnostic ${row.diagnostic.outcome} ${row.diagnostic.score}/${row.diagnostic.moves} H=${row.diagnostic.externalHorizon}; score delta ${row.scoreDiagnostic.rawDelta >= 0 ? '+' : ''}${row.scoreDiagnostic.rawDelta}; percent of bot reference ${percentage}`);
+    }
+    for (const unresolved of result.unresolved.filter((entry) => entry.panel === panel.id)) {
+      lines.push(`  ${path.basename(unresolved.path || 'unknown').slice(0, 8)} unresolved: ${unresolved.reasons.join('; ')}`);
     }
   }
   if (result.extras.length) {

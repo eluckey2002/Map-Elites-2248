@@ -8,6 +8,8 @@ const path = require('node:path');
 const { collect, discoverRecordingPaths, playBot, renderText } = require('../human-benchmark');
 const { fileSha256, valueIdentity } = require('../benchmark-inputs');
 
+const ROOT = path.join(__dirname, '..', '..');
+
 let cached;
 const collectOnce = () => { if (!cached) cached = collect(); return cached; };
 
@@ -56,7 +58,9 @@ test('panel metrics trace to admitted rows with case-then-attempt weighting', ()
     assert.equal(panel.unresolvedCount, 0);
     assert.notEqual(panel.metrics.ranking.verdict, 'UNRESOLVED');
     assert.equal(panel.scoreDiagnostic.percentAvailable, rows.filter((row) => row.scoreDiagnostic.percentOfReference !== null).length);
-    assert.equal(panel.scoreDiagnostic.totalAttempts, rows.length);
+    assert.equal(panel.scoreDiagnostic.availableAttempts, rows.length);
+    assert.equal(panel.scoreDiagnostic.requiredFiles, panel.fileCount);
+    assert.equal(panel.metrics.ranking.convertedWinFraction, panel.metrics.ranking.convertedWins / panel.caseCount);
   }
 });
 
@@ -81,6 +85,98 @@ test('text output states descriptive limits and agrees with raw panel classifica
   assert.match(text, /T=\d+ B=\d+/);
   assert.match(text, /crossing=/);
   assert.match(text, /score delta [+-]?\d+; percent of bot reference/);
+  assert.match(text, /N\/n=/);
+  assert.match(text, /faster\/slower\/tied=/);
+  assert.match(text, /candidate=[0-9a-f]{64}/);
+  assert.match(text, /subject=[0-9a-f]{64}/);
+});
+
+function stubPlay(candidate, seed, options = {}) {
+  const targetDisabled = options.targetDisabled || options.uncapped;
+  const moves = Math.min(options.externalHorizon ?? candidate.moves, 1);
+  return {
+    validity: 'valid',
+    score: targetDisabled ? 100 : candidate.target,
+    moves,
+    outcome: targetDisabled ? 'horizon-complete' : 'win',
+    reason: targetDisabled ? 'external horizon reached' : 'target reached',
+    firstCrossing: targetDisabled ? null : moves,
+    originalBudget: candidate.moves,
+    externalHorizon: options.externalHorizon ?? candidate.moves,
+    initialGridIdentity: `controlled-grid-${seed}`,
+    initialGrid: [],
+    liveRngDrawsAfterInitialization: candidate.gridW * candidate.gridH,
+    objective: targetDisabled ? 'target-disabled score diagnostic' : 'target-seeking reference',
+    rngScheme: 'controlled test seam',
+  };
+}
+
+function stageCorpus({ missingPath = null, extra = false, corruptContract = false } = {}) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'policy-eval-corpus-'));
+  fs.symlinkSync(path.join(ROOT, 'solver'), path.join(root, 'solver'));
+  fs.symlinkSync(path.join(ROOT, 'src'), path.join(root, 'src'));
+  fs.symlinkSync(path.join(ROOT, 'pilots'), path.join(root, 'pilots'));
+  fs.symlinkSync(path.join(ROOT, 'play-sessions'), path.join(root, 'play-sessions'));
+  fs.mkdirSync(path.join(root, 'recordings'));
+  for (const name of fs.readdirSync(path.join(ROOT, 'recordings'))) {
+    if (!name.endsWith('.json') || `recordings/${name}` === missingPath) continue;
+    fs.symlinkSync(path.join(ROOT, 'recordings', name), path.join(root, 'recordings', name));
+  }
+  if (extra) fs.writeFileSync(path.join(root, 'recordings', 'unexpected-extra.json'), '{}');
+  const evalDir = path.join(root, 'docs', 'evaluation', 'POLICY-EVAL-0001');
+  fs.mkdirSync(evalDir, { recursive: true });
+  for (const name of ['contract.md', 'inputs.json']) {
+    fs.copyFileSync(path.join(ROOT, 'docs', 'evaluation', 'POLICY-EVAL-0001', name), path.join(evalDir, name));
+  }
+  if (corruptContract) fs.appendFileSync(path.join(evalDir, 'contract.md'), '\ncorrupt\n');
+  return root;
+}
+
+test('a collect-level runtime fault stays unresolved and cannot become wins or score data', () => {
+  const fault = () => ({
+    validity: 'unresolved', outcome: null, reason: 'measurement fault: controlled runtime fault',
+    score: null, moves: null, firstCrossing: null,
+  });
+  const result = collect({ playBotFn: fault });
+  assert.equal(result.unresolved.length, 15);
+  for (const panel of result.panels) {
+    assert.equal(panel.metrics.ranking.verdict, 'UNRESOLVED');
+    assert.equal(panel.metrics.ranking.convertedWins, null);
+    assert.equal(panel.scoreDiagnostic.percentAvailable, 0);
+    assert.equal(panel.scoreDiagnostic.availableAttempts, 0);
+    assert.equal(panel.scoreDiagnostic.requiredFiles, panel.fileCount);
+  }
+  assert.match(result.unresolved[0].reasons[0], /reference runtime unresolved: measurement fault: controlled runtime fault/);
+});
+
+test('missing required and actual extra files stay visible through collect and render', () => {
+  const missingPath = 'recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json';
+  const root = stageCorpus({ missingPath, extra: true });
+  const result = collect({ root, gitRoot: ROOT, playBotFn: stubPlay });
+  assert.equal(result.dispositions.length, 15);
+  assert.deepEqual(result.extras.map((entry) => entry.path), ['recordings/unexpected-extra.json']);
+  const missing = result.dispositions.find((entry) => entry.path === missingPath);
+  assert.deepEqual(missing.reasons, ['missing']);
+  const panel = result.panels.find((entry) => entry.id === 'receipt-bound');
+  assert.equal(panel.fileCount, 12);
+  assert.equal(panel.distinctAttempts, 11);
+  assert.equal(panel.metrics.ranking.verdict, 'UNRESOLVED');
+  assert.equal(panel.scoreDiagnostic.availableAttempts, 11);
+  assert.equal(panel.scoreDiagnostic.requiredFiles, 12);
+  const text = renderText(result);
+  assert.match(text, /resolved-subset metrics; full panel UNRESOLVED/);
+  assert.match(text, /score coverage: 11 available attempts across 12 required files/);
+  assert.match(text, /unexpected-extra\.json/);
+  assert.match(text, /1352aa7a.*unresolved: missing/);
+});
+
+test('corrupted frozen package bytes produce an explicit unresolved collect/render result', () => {
+  const root = stageCorpus({ corruptContract: true });
+  const result = collect({ root, gitRoot: ROOT, playBotFn: stubPlay });
+  assert.equal(result.validity, 'unresolved');
+  assert.equal(result.failure.reason, 'frozen contract sha256-mismatch');
+  assert.equal(result.rows.length, 0);
+  assert.match(renderText(result), /measurement UNRESOLVED: frozen contract sha256-mismatch/);
 });
 
 test('playBot(candidate, seed, { uncapped }) remains compatible while reporting changed semantics', () => {
