@@ -31,7 +31,7 @@ function compareCases(cases) {
     const referenceWin = entry.reference.outcome === 'win';
     const lostReferenceWin = referenceWin && comparisonWinFraction < 1;
     const convertedWin = referenceWin ? 0 : comparisonWinFraction;
-    const speed = referenceWin
+    const speed = referenceWin && !lostReferenceWin
       ? entry.comparisons.reduce((sum, item) => sum + (entry.reference.moves - item.moves), 0) / entry.comparisons.length
       : null;
     return { ...entry, comparisonWinFraction, referenceWin, lostReferenceWin, convertedWin, speed };
@@ -39,10 +39,12 @@ function compareCases(cases) {
 
   const convertedWins = normalized.reduce((sum, entry) => sum + entry.convertedWin, 0);
   const fixedSpeedSet = normalized.filter((entry) => entry.referenceWin);
-  const meanMovesSaved = fixedSpeedSet.length
+  const eligible = !normalized.some((entry) => entry.lostReferenceWin);
+  const meanMovesSaved = eligible && fixedSpeedSet.length
     ? fixedSpeedSet.reduce((sum, entry) => sum + entry.speed, 0) / fixedSpeedSet.length
     : null;
   const speedCounts = fixedSpeedSet.reduce((counts, entry) => {
+    if (entry.speed === null) return counts;
     if (entry.speed > 0) counts.faster += 1;
     else if (entry.speed < 0) counts.slower += 1;
     else counts.tied += 1;
@@ -51,7 +53,7 @@ function compareCases(cases) {
 
   let eligibility = 'ELIGIBLE';
   let verdict;
-  if (normalized.some((entry) => entry.lostReferenceWin)) {
+  if (!eligible) {
     eligibility = 'INELIGIBLE';
     verdict = 'INELIGIBLE';
   } else if (convertedWins > 0) verdict = 'BETTER_ON_THIS_SET_BY_WINS';
@@ -59,6 +61,13 @@ function compareCases(cases) {
   else if (meanMovesSaved > 0) verdict = 'FASTER_ON_THIS_SET';
   else if (meanMovesSaved < 0) verdict = 'SLOWER_ON_THIS_SET';
   else verdict = 'TIED_ON_THIS_SET';
+
+  const jointWins = normalized.flatMap((entry) => entry.referenceWin
+    ? entry.comparisons.filter((item) => item.outcome === 'win').map((item) => ({
+      caseKey: entry.caseKey,
+      movesSaved: entry.reference.moves - item.moves,
+    })) : []);
+  const jointWinCases = new Set(jointWins.map((item) => item.caseKey));
 
   return {
     cases: normalized,
@@ -71,6 +80,16 @@ function compareCases(cases) {
       ? entry.comparisons.filter((item) => item.outcome !== 'win').length : 0), 0),
     regressionCases: normalized.filter((entry) => entry.lostReferenceWin).length,
     speedCounts,
+    jointWinDiagnostic: {
+      label: 'joint-win diagnostic; cannot rescue eligibility or replace D',
+      meanMovesSaved: jointWins.length
+        ? jointWins.reduce((sum, item) => sum + item.movesSaved, 0) / jointWins.length
+        : null,
+      jointWinAttempts: jointWins.length,
+      totalAttempts: normalized.reduce((sum, entry) => sum + entry.comparisons.length, 0),
+      affectedCases: jointWinCases.size,
+      totalCases: normalized.length,
+    },
   };
 }
 

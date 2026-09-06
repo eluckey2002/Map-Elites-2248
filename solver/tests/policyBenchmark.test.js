@@ -13,8 +13,13 @@ const {
   subjectKey,
   validateSeed,
   verifyPinnedFile,
+  buildCandidateIndex,
+  resolveAttemptSource,
 } = require('../benchmark-inputs');
 const { compareCases, scoreDiagnostic } = require('../benchmark-metrics');
+const { classifyTerminal, replayRecording } = require('../benchmark-replay');
+const { findBestChain } = require('../engine');
+const { playBot } = require('../human-benchmark');
 
 const ROOT = path.join(__dirname, '..', '..');
 
@@ -116,9 +121,144 @@ test('E08 unresolved evidence blocks a full-panel verdict', () => {
   }]);
   assert.equal(result.ranking.eligibility, 'UNRESOLVED');
   assert.equal(result.ranking.verdict, 'UNRESOLVED');
+  assert.equal(result.ranking.meanMovesSaved, null);
+});
+
+test('E02 keeps losing-attempt moves out of primary D and labels a joint-win diagnostic', () => {
+  const result = comparison([
+    { reference: outcome('win', 12), comparisons: [outcome('win', 8)] },
+    { reference: outcome('win', 12), comparisons: [outcome('lose')] },
+  ]);
+  assert.equal(result.ranking.verdict, 'INELIGIBLE');
+  assert.equal(result.ranking.meanMovesSaved, null);
+  assert.deepEqual(result.jointWinDiagnostic, {
+    label: 'joint-win diagnostic; cannot rescue eligibility or replace D',
+    meanMovesSaved: 4,
+    jointWinAttempts: 1,
+    totalAttempts: 2,
+    affectedCases: 1,
+    totalCases: 2,
+  });
 });
 
 test('E16 percentages use the reference score and zero reference yields null', () => {
   assert.deepEqual(scoreDiagnostic(0, 20), { referenceScore: 0, comparisonScore: 20, rawDelta: 20, percentOfReference: null });
   assert.deepEqual(scoreDiagnostic(100, 120), { referenceScore: 100, comparisonScore: 120, rawDelta: 20, percentOfReference: 20 });
+});
+
+test('all 15 frozen attempts resolve through content-bound subjects in their separate provenance panels', () => {
+  const { manifest } = loadFrozenInputs({ root: ROOT });
+  const index = buildCandidateIndex({ root: ROOT });
+  const resolved = manifest.requiredAttemptSources.map((source) => resolveAttemptSource(source, manifest, { root: ROOT, index }));
+  assert.equal(resolved.length, 15);
+  assert.equal(resolved.filter((entry) => entry.ok).length, 15, JSON.stringify(resolved.filter((entry) => !entry.ok), null, 2));
+  assert.equal(resolved.filter((entry) => entry.panel === 'receipt-bound').length, 12);
+  assert.equal(resolved.filter((entry) => entry.panel === 'current-subject').length, 3);
+  for (const entry of resolved.filter((item) => item.panel === 'receipt-bound')) {
+    assert.equal(entry.candidateIdentity, entry.expected.candidateIdentity);
+    assert.equal(entry.candidateIdentity, entry.contentIdentity);
+    assert.ok(entry.receiptSource, `${entry.expected.path}: receipt provenance missing`);
+  }
+});
+
+test('a forged candidate receipt key does not resolve content under that identity', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'policy-eval-candidate-'));
+  const solverDir = path.join(dir, 'solver');
+  fs.mkdirSync(solverDir);
+  const candidate = { schemaVersion: 1, name: 'forged', level: 1, target: 10, tileScale: 1, moves: 2, minChain: 2, gridW: 2, gridH: 2, blockers: [] };
+  fs.writeFileSync(path.join(solverDir, 'candidate-levels.json'), JSON.stringify({ schemaVersion: 1, candidates: [candidate] }));
+  fs.writeFileSync(path.join(solverDir, 'candidate-levels.receipt.json'), JSON.stringify({ schemaVersion: 1, candidateIdentity: 'f'.repeat(64) }));
+  const index = buildCandidateIndex({ root: dir });
+  assert.equal(index.candidates.size, 0);
+  assert.match(index.invalid[0].reason, /candidate content identity mismatch/);
+});
+
+test('a real recording replays exactly; altered coordinates and missing traces become unresolved', () => {
+  const { manifest } = loadFrozenInputs({ root: ROOT });
+  const expected = manifest.requiredAttemptSources.find((entry) => entry.path.startsWith('recordings/'));
+  const resolved = resolveAttemptSource(expected, manifest, { root: ROOT });
+  const valid = replayRecording(resolved.candidate, resolved.recording, { expectedSeed: expected.seed, expectedCandidateIdentity: expected.candidateIdentity });
+  assert.equal(valid.validity, 'valid');
+  assert.equal(valid.outcome, 'win');
+  assert.equal(valid.score, resolved.recording.score);
+  assert.equal(valid.moves, resolved.recording.movesUsed);
+
+  const altered = structuredClone(resolved.recording);
+  altered.chains[0].tiles[0].x = resolved.candidate.gridW + 1;
+  const badCoordinate = replayRecording(resolved.candidate, altered, { expectedSeed: expected.seed, expectedCandidateIdentity: expected.candidateIdentity });
+  assert.equal(badCoordinate.validity, 'unresolved');
+  assert.match(badCoordinate.reasons.join('\n'), /coordinate .* out of bounds/);
+
+  const missing = { ...resolved.recording };
+  delete missing.chains;
+  const missingTrace = replayRecording(resolved.candidate, missing, { expectedSeed: expected.seed, expectedCandidateIdentity: expected.candidateIdentity });
+  assert.equal(missingTrace.validity, 'unresolved');
+  assert.match(missingTrace.reasons.join('\n'), /missing trace/);
+});
+
+test('seed and subject-binding mismatches are unresolved without crashing', () => {
+  const { manifest } = loadFrozenInputs({ root: ROOT });
+  const expected = manifest.requiredAttemptSources[0];
+  const resolved = resolveAttemptSource(expected, manifest, { root: ROOT });
+  assert.match(replayRecording(resolved.candidate, { ...resolved.recording, seed: expected.seed + 1 }, {
+    expectedSeed: expected.seed, expectedCandidateIdentity: expected.candidateIdentity,
+  }).reasons.join('\n'), /seed mismatch/);
+  assert.match(replayRecording(resolved.candidate, { ...resolved.recording, candidateIdentity: '0'.repeat(64) }, {
+    expectedSeed: expected.seed, expectedCandidateIdentity: expected.candidateIdentity,
+  }).reasons.join('\n'), /candidate identity mismatch/);
+});
+
+test('E09-E10 terminal precedence is bomb then target then budget then no-legal-move', () => {
+  const base = { score: 100, targetScore: 100, moves: 20, maxMoves: 20 };
+  assert.deepEqual(classifyTerminal(base, { bomb: true, hasLegalMove: false, targetEnabled: true }),
+    { outcome: 'lose', reason: 'bomb exploded', firstCrossing: null });
+  assert.deepEqual(classifyTerminal(base, { bomb: false, hasLegalMove: false, targetEnabled: true }),
+    { outcome: 'win', reason: 'target reached', firstCrossing: 20 });
+  assert.deepEqual(classifyTerminal({ ...base, score: 99 }, { bomb: false, hasLegalMove: false, targetEnabled: true }),
+    { outcome: 'lose', reason: 'out of moves', firstCrossing: null });
+  assert.deepEqual(classifyTerminal({ ...base, score: 99, moves: 19 }, { bomb: false, hasLegalMove: false, targetEnabled: true }),
+    { outcome: 'lose', reason: 'no legal moves', firstCrossing: null });
+});
+
+test('target-disabled external horizon keeps original B visible and labels completion, E12-E14', () => {
+  const candidate = { gridW: 3, gridH: 3, minChain: 2, tileScale: 1, target: 1, moves: 20, blockers: [] };
+  const observed = [];
+  const chooseMoveFn = (state) => {
+    observed.push({ maxMoves: state.maxMoves, targetScore: state.targetScore });
+    return findBestChain(state).chain;
+  };
+  const result = playBot(candidate, 4, { targetDisabled: true, externalHorizon: 1, chooseMoveFn });
+  assert.deepEqual(observed, [{ maxMoves: 20, targetScore: Infinity }]);
+  assert.equal(result.outcome, 'horizon-complete');
+  assert.equal(result.reason, 'external horizon reached');
+  assert.equal(result.moves, 1);
+  assert.equal(result.originalBudget, 20);
+  assert.equal(result.externalHorizon, 1);
+  assert.equal(result.objective, 'target-disabled score diagnostic');
+});
+
+test('lookahead factories cannot consume the live refill RNG', () => {
+  const candidate = { gridW: 3, gridH: 3, minChain: 2, tileScale: 1, target: 999999, moves: 4, blockers: [] };
+  const quiet = playBot(candidate, 7, {
+    targetDisabled: true,
+    externalHorizon: 2,
+    chooseMoveFn: (state) => findBestChain(state).chain,
+  });
+  const noisy = playBot(candidate, 7, {
+    targetDisabled: true,
+    externalHorizon: 2,
+    chooseMoveFn: (state, options) => {
+      for (let i = 0; i < 100; i++) options.lookaheadRngFactory()();
+      return findBestChain(state).chain;
+    },
+  });
+  assert.deepEqual(noisy, quiet);
+});
+
+test('no choice on a valid live input is policy-failure, not proof of no legal move', () => {
+  const candidate = { gridW: 3, gridH: 3, minChain: 2, tileScale: 1, target: 999999, moves: 4, blockers: [] };
+  const result = playBot(candidate, 7, { chooseMoveFn: () => null });
+  assert.equal(result.validity, 'valid');
+  assert.equal(result.outcome, 'policy-failure');
+  assert.equal(result.reason, 'policy returned no choice while a legal move exists');
 });

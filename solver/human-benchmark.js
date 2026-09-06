@@ -25,6 +25,8 @@ const {
 } = require('./engine');
 const { chooseMove } = require('./bot');
 const { candidateIndex } = require('./recording-replay');
+const { classifyTerminal, hasLegalMove } = require('./benchmark-replay');
+const { validateSeed } = require('./benchmark-inputs');
 
 const ROOT = path.join(__dirname, '..');
 const LOOKAHEAD_BASE = 987654321;
@@ -68,22 +70,55 @@ function pilotCandidates() {
 // A human playing on past the target is not beating it, just answering a
 // different question. `uncapped` removes the target so the bot spends its full
 // move budget on score, which is the arm that compares like with like.
-function playBot(candidate, seed, { uncapped = false } = {}) {
-  const level = uncapped ? { ...candidate, target: Infinity } : candidate;
+function playBot(candidate, seed, options = {}) {
+  validateSeed(seed);
+  const {
+    uncapped = false,
+    targetDisabled = uncapped,
+    externalHorizon = targetDisabled ? candidate.moves : candidate.moves,
+    chooseMoveFn = chooseMove,
+  } = options;
+  if (!Number.isInteger(externalHorizon) || externalHorizon < 0 || externalHorizon > candidate.moves) {
+    throw new Error(`external horizon must be an integer from 0 through original budget ${candidate.moves}`);
+  }
+  const level = candidate;
   const rng = makeRng(seed);
   const state = createLevelState(level, rng);
-  for (let moveIndex = 0; moveIndex < level.moves; moveIndex++) {
-    const chain = chooseMove(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex) });
-    if (!chain) return { score: state.score, moves: state.moves, outcome: 'lose', reason: 'no valid moves' };
+  if (targetDisabled) state.targetScore = Infinity;
+  const initialGridIdentity = require('./benchmark-inputs').valueIdentity(
+    state.grid.map((row) => row.map((tile) => ({ value: tile.value, blocker: tile.blocker, blockerDuration: tile.blockerDuration, bombTimer: tile.bombTimer }))),
+  );
+  for (let moveIndex = 0; moveIndex < externalHorizon; moveIndex++) {
+    const chain = chooseMoveFn(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex) });
+    if (!chain) {
+      const legal = hasLegalMove(state);
+      return {
+        validity: 'valid', score: state.score, moves: state.moves,
+        outcome: legal ? 'policy-failure' : 'lose',
+        reason: legal ? 'policy returned no choice while a legal move exists' : 'no legal moves',
+        originalBudget: candidate.moves, externalHorizon, initialGridIdentity,
+        objective: targetDisabled ? 'target-disabled score diagnostic' : 'target-seeking reference',
+      };
+    }
     executeChain(state, chain);
     applyGravity(state);
     spawnNewTiles(state, rng);
     tickBlockers(state);
-    if (checkBombs(state)) return { score: state.score, moves: state.moves, outcome: 'lose', reason: 'bomb exploded' };
-    if (state.score >= state.targetScore) return { score: state.score, moves: state.moves, outcome: 'win' };
-    if (state.moves >= state.maxMoves) return { score: state.score, moves: state.moves, outcome: 'lose', reason: 'out of moves' };
+    const terminal = classifyTerminal(state, { targetEnabled: !targetDisabled });
+    if (terminal) return {
+      validity: 'valid', score: state.score, moves: state.moves, ...terminal,
+      originalBudget: candidate.moves, externalHorizon, initialGridIdentity,
+      objective: targetDisabled ? 'target-disabled score diagnostic' : 'target-seeking reference',
+    };
   }
-  return { score: state.score, moves: state.moves, outcome: 'lose', reason: 'out of moves' };
+  return {
+    validity: 'valid', score: state.score, moves: state.moves,
+    outcome: targetDisabled ? 'horizon-complete' : 'unresolved',
+    reason: targetDisabled ? 'external horizon reached' : 'external horizon reached before terminal',
+    firstCrossing: null,
+    originalBudget: candidate.moves, externalHorizon, initialGridIdentity,
+    objective: targetDisabled ? 'target-disabled score diagnostic' : 'target-seeking reference',
+  };
 }
 
 function collect() {

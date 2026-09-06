@@ -34,3 +34,35 @@ qualify a generalized policy claim.
 - **Enforcement:** HARD for exact Step 2 descriptive output only; never an experiment-admission or promotion gate.
 - **Decay:** every benchmark test run replays all fixed arithmetic examples; contract version changes require a new card or explicit update.
 - **Shipped:** run `2026-09-05-policy-measurement-code`.
+
+### Receipt-bound and current-subject resolution · HARD
+
+- **Protects:** every frozen attempt resolves to the exact candidate content plus receipt, or to the pinned current shipped subject, before replay.
+- **Where:** `solver/benchmark-inputs.js#buildCandidateIndex` and `resolveAttemptSource`; `node --test solver/tests/policyBenchmark.test.js`.
+- **Level:** file and record — it validates content/receipt binding, not whether an old candidate's calibration remains current.
+- **Kind:** shape and value; the evidence ledger and candidate verifier own the historical meaning and calibration standing.
+- **Scope:** candidate stores and sibling receipts in `solver/` and `solver/candidates-archive/`, embedded receipts in `solver/generated-batch*.json`, pilot candidate/execution receipts, all 15 manifest attempts, and `src/game.js#LEVELS` for the three ordinary-play rows.
+- **Reads own output?:** no; candidate and attempt artifacts predate this instrument.
+- **Sampling memory:** n/a; every frozen attempt is resolved and later discovered recording files are an explicit supplement.
+- **Does NOT catch:** full historical candidate qualification; whether ordinary play actually used today's shipped subject; source files outside named stores/batches/pilots; a semantically bad candidate whose content and receipt deliberately agree.
+- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, `a forged candidate receipt key does not resolve content under that identity`.
+- **Retires:** NO — `recording-replay.candidateIndex` trusts receipt keys without recomputing candidate content identity and cannot resolve ordinary current-subject play.
+- **Enforcement:** HARD for admission into this descriptive benchmark; it does not regenerate or upgrade stale candidate receipts.
+- **Decay:** the focused tests resolve all 15 real rows and fail on content/receipt drift; successor manifests require an updated inventory identity.
+- **Shipped:** run `2026-09-05-policy-measurement-code`.
+
+### Replay and paired runtime semantics · HARD
+
+- **Protects:** recorded chains and live reference runs obey real transitions, terminal precedence, first crossing, separate RNG streams, and original-budget score horizons.
+- **Where:** `solver/benchmark-replay.js`, `solver/human-benchmark.js#playBot`; `node --test solver/tests/policyBenchmark.test.js`.
+- **Level:** move and terminal event — it does not infer a human's unrecorded intent or historical browser runtime.
+- **Kind:** value; `engine.js`, `game.js`, and POLICY-EVAL-0001 own the rules and meaning.
+- **Scope:** coordinate/value/uniqueness/adjacency/extension/minimum-chain checks; merge, score, gravity, refill, blocker tick; bomb-target-budget-no-legal precedence; uint32 seed; target-seeking and target-disabled reference modes through external `H <= B`.
+- **Reads own output?:** no; replay reads real recordings and source transitions, while live arms are compared only through returned observations.
+- **Sampling memory:** n/a; every admitted frozen attempt is replayed, and deterministic controls exercise each declared failure family.
+- **Does NOT catch:** UI-only behavior absent from the headless transition; historical runtime identity for ordinary play; a policy-quality defect that still returns legal moves; generalized reliability beyond the fixed panel.
+- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, altered-coordinate, missing-trace, seed/subject mismatch, bomb/target precedence, RNG-consumption, and no-choice-with-legal-move cases.
+- **Retires:** NO — the existing reusable replay remains unchanged; this stricter wrapper is scoped to the POLICY-EVAL-0001 instrument because the global helper is outside the ticket.
+- **Enforcement:** HARD for Step 2 row admission and live reference classification only.
+- **Decay:** focused tests use a real receipt-bound recording plus permanent bad twins; source hash drift blocks collection before replay.
+- **Shipped:** run `2026-09-05-policy-measurement-code`.
