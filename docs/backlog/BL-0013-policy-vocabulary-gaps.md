@@ -1,13 +1,21 @@
 ---
 id: BL-0013
 title: Define the policy terms the bot is missing before searching its parameters again
-status: proposed
+status: blocked
 milestone: policy-strategy
 depends_on: [BL-0011, BL-0012]
 updated: 2026-09-05
 ---
 
 # BL-0013 — The terms the policy cannot express
+
+## Current disposition - 2026-09-05
+
+The prior proposal and rationale below are retained.
+Its implementation direction is paused by `DECISION-0006` and [BL-0014](BL-0014-policy-improvement-sequence.md).
+Follow [the required sequence](../plans/2026-09-05-policy-improvement-sequence.md): this record may be re-scoped or replaced only after the Step 3 disposition supports work in Step 4.
+The completion of planning alone does not release it for implementation.
+The factual corrections identified in the grounding report are assigned to Step 2.
 
 ## Authority
 
@@ -95,3 +103,4 @@ the whole space. Not one term at a time.
 - 2026-09-05 — captured at the owner's direction, after agreeing that
   enumerating the missing vocabulary should precede any further parameter
   search.
+- 2026-09-05 - Owner required the four-step sequence in DECISION-0006. Changed this proposal to blocked and retained its earlier text; a supported Step 4 scope will determine whether these terms are implemented at all.

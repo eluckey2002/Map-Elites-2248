@@ -1,5 +1,14 @@
 # Project evidence instructions
 
+## Required order for policy improvement
+
+The owner requires the sequence in [the policy improvement plan](docs/plans/2026-09-05-policy-improvement-sequence.md), R1-R6, recorded by `DECISION-0006`.
+Consult [BL-0014](docs/backlog/BL-0014-policy-improvement-sequence.md) for the current step and accepted predecessor evidence.
+The order is: define the evaluation contract; correct measurement premises and the benchmark; investigate the bot's own trajectories; then select and validate the supported change.
+Do not start a later step before its predecessor's completion evidence is accepted, or reorder the steps without an explicit owner amendment recorded with the action.
+This requirement controls over older next-action suggestions, including BL-0013's instruction to implement three terms.
+The known factual corrections belong to Step 2; recording this sequence does not execute them or upgrade any existing claim.
+
 ## Before you edit anything
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.

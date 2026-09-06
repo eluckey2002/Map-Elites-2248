@@ -4,6 +4,13 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
+## Owner-required policy sequence - 2026-09-05
+
+[BL-0014](docs/backlog/BL-0014-policy-improvement-sequence.md) is the ready policy item, governed by [the required four-step plan](docs/plans/2026-09-05-policy-improvement-sequence.md) and `DECISION-0006`.
+Step 1 is to define the evaluation contract; no stage has been executed under this plan.
+Measurement corrections, the bot-trajectory audit, and implementation remain blocked in that order until their predecessors close.
+The earlier vocabulary section below is retained as history; its BL-0013 implementation direction is paused and cannot bypass this sequence.
+
 ## Current decision frontier — 2026-09-05
 
 The latest trustworthy sequence is now visible in the ledger:

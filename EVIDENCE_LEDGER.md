@@ -681,6 +681,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** The disposition chooses a direction for another bounded iteration. It does not select a particular repair, change blocker mechanics, or admit the candidate.
 
+### DECISION-0006 — Require the policy improvement sequence
+
+- **type:** decision
+- **status:** accepted
+- **scope:** policy-improvement work following the 2026-09-05 grounding review; no game-rule change, experiment result, or champion promotion
+- **statement:** The owner requires the ordered approach and no-bypass conditions in `docs/plans/2026-09-05-policy-improvement-sequence.md`, R1-R6. The four steps are evaluation-contract definition, measurement correction, investigation on the bot's own trajectories, and selection/validation of the supported change. BL-0014 tracks accepted predecessor evidence; BL-0013's older implementation direction is paused. Reliable winning has priority over speed, with score reported separately; Step 1 must define the operational comparison contract before later work starts.
+- **evidence:** owner instruction in this session, preserved verbatim in `.orch/tickets/2026-09-05-policy-sequence/SEQ-001.md` and `docs/backlog/BL-0014-policy-improvement-sequence.md` History: "Great. Lets keep this order a requirement so we do not deviate. For each of these what are the steps needed?"; the preceding four-part recommendation is recorded in the same ticket's Fixed inputs.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-09-05
+- **reverify:** not_applicable
+- **updated:** 2026-09-05
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This records a work-order decision, not evidence that a particular policy change is needed or would improve results. No stage is completed by writing the plan. The existing requirement for an owner decision before champion promotion is unchanged.
+
 ## Hypothesis registry
 
 ### HYPOTHESIS-0001 — Compact state may guide an approximate search
