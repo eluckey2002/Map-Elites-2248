@@ -31,7 +31,9 @@ released. EDIT-001 is the sole newly ready item; no later step is released.
 
 ## Blame classes
 
-[]
+GATE-001 finding1: child, skim-layer titles left unqualified. D1/D2/D5 covered;
+D3/D4 fail only this title layer. Root accepted one narrow REPAIR-001, followed
+by final verification of affected covers; no second gate.
 
 ## Failed approaches
 

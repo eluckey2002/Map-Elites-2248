@@ -1,18 +1,18 @@
 {
   "counters": {
-    "checks": 14,
+    "checks": 18,
     "owner_review_required": 0,
     "progress_required": 0,
     "status_required": 1
   },
   "marks": {
     "progress": {
-      "at": "2026-09-06T03:02:49Z",
-      "evidence": "artifact:.orch/tickets/2026-09-05-policy-measurement-records/EDIT-001.md"
+      "at": "2026-09-06T03:12:00Z",
+      "evidence": "artifact:.orch/tickets/2026-09-05-policy-measurement-records/GATE-001.md"
     },
     "status": {
-      "at": "2026-09-06T03:02:49Z",
-      "evidence": "commentary:terminal-assembly-no-edit-complete"
+      "at": "2026-09-06T03:07:01Z",
+      "evidence": "commentary:code-repair-accepted-documents-assembled-independent-content-and-whole-check-next"
     }
   },
   "run": "2026-09-05-policy-measurement-extra-repair",
