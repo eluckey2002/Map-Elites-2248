@@ -10,7 +10,7 @@ depends_on: [GATE-001]
 write_scope: [solver/trajectory-audit.js, solver/tests/trajectoryAudit.test.js, docs/evaluation/POLICY-AUDIT-0001/instrument-checks.md]
 bound: 8 minutes
 claimed_by: /root/trajectory_build_gpt_5_6_sol_high
-claimed_at: 2026-09-06T08:34:30Z
+claimed_at: 2026-09-06T08:41:26Z
 ---
 
 ## Objective
@@ -61,6 +61,12 @@ Pending.
 
 ## Feedback
 
+Owner stopped the prior claim before any repair edits landed. On approving the
+read-only accounting, owner authorized one20minute correction-and-verification
+attempt starting08:41:26Z, hardstop09:01:26Z. This supersedes the old interrupted
+delivery time bound, not its scope or criteria. Worker8minute slice now ends
+08:49:26Z; remaining time is reserved for independent checks and closeout.
+
 One combined correction only; surviving defects return as findings, never a
 second correction. Root integrated build blobs unchanged at7a06ab5.
 
@@ -68,5 +74,5 @@ second correction. Root integrated build blobs unchanged at7a06ab5.
 
 You are not alone. Own only three worktree files and canonical ROOT REPAIR-001
 result sections. No root target edits/commits, no redelegation. Root read-only
-during lease. Use apply_patch. Return by08:42:30Z; overall08:52:18Z hardstop.
+during lease. Use apply_patch. Return by08:49:26Z; overall09:01:26Z hardstop.
 No fresh audit sample, protocol, policy, PR/push/main, Atlas or scope expansion.
