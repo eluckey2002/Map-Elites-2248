@@ -1,0 +1,18 @@
+{
+  "counters": {
+    "checks": 2,
+    "owner_review_required": 0,
+    "progress_required": 0,
+    "status_required": 0
+  },
+  "marks": {
+    "progress": {
+      "at": "2026-09-06T02:35:31Z",
+      "evidence": "artifact:solver/benchmark-metrics.js"
+    },
+    "status": null
+  },
+  "run": "2026-09-05-policy-measurement-extra-repair",
+  "schema": "orchflows.execution-guard.v1",
+  "started_at": "2026-09-06T02:34:38Z"
+}

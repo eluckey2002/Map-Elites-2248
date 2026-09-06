@@ -139,13 +139,21 @@ test('a collect-level runtime fault stays unresolved and cannot become wins or s
   });
   const result = collect({ playBotFn: fault });
   assert.equal(result.unresolved.length, 15);
+  assert.equal(result.rows.length, 0);
+  const text = renderText(result);
   for (const panel of result.panels) {
     assert.equal(panel.metrics.ranking.verdict, 'UNRESOLVED');
     assert.equal(panel.metrics.ranking.convertedWins, null);
     assert.equal(panel.scoreDiagnostic.percentAvailable, 0);
     assert.equal(panel.scoreDiagnostic.availableAttempts, 0);
     assert.equal(panel.scoreDiagnostic.requiredFiles, panel.fileCount);
+    assert.equal(panel.metrics.regressionAttempts, null);
+    assert.equal(panel.metrics.regressionCases, null);
+    assert.ok(text.includes(`${panel.id}: UNRESOLVED`));
   }
+  assert.equal(text.split('regressions unavailable attempts in unavailable cases').length - 1, 2);
+  assert.doesNotMatch(text, /undefined|regressions 0 attempts|: ELIGIBLE/);
+  assert.match(text, /resolved-subset metrics; full panel UNRESOLVED/);
   assert.match(result.unresolved[0].reasons[0], /reference runtime unresolved: measurement fault: controlled runtime fault/);
 });
 
@@ -158,13 +166,21 @@ test('a diagnostic runtime fault stays unresolved and its unavailable score is n
     : stubPlay(candidate, seed, options);
   const result = collect({ playBotFn: diagnosticFault });
   assert.equal(result.unresolved.length, 15);
+  assert.equal(result.rows.length, 0);
+  const text = renderText(result);
   for (const panel of result.panels) {
     assert.equal(panel.metrics.ranking.verdict, 'UNRESOLVED');
     assert.equal(panel.metrics.ranking.convertedWins, null);
     assert.equal(panel.scoreDiagnostic.percentAvailable, 0);
     assert.equal(panel.scoreDiagnostic.availableAttempts, 0);
     assert.equal(panel.scoreDiagnostic.requiredFiles, panel.fileCount);
+    assert.equal(panel.metrics.regressionAttempts, null);
+    assert.equal(panel.metrics.regressionCases, null);
+    assert.ok(text.includes(`${panel.id}: UNRESOLVED`));
   }
+  assert.equal(text.split('regressions unavailable attempts in unavailable cases').length - 1, 2);
+  assert.doesNotMatch(text, /undefined|regressions 0 attempts|: ELIGIBLE/);
+  assert.match(text, /resolved-subset metrics; full panel UNRESOLVED/);
   assert.match(result.unresolved[0].reasons[0], /diagnostic runtime unresolved: measurement fault: controlled diagnostic fault/);
 });
 
@@ -182,8 +198,11 @@ test('missing required and actual extra files stay visible through collect and r
   assert.equal(panel.metrics.ranking.verdict, 'UNRESOLVED');
   assert.equal(panel.scoreDiagnostic.availableAttempts, 11);
   assert.equal(panel.scoreDiagnostic.requiredFiles, 12);
+  assert.equal(panel.metrics.regressionAttempts, 1);
+  assert.equal(panel.metrics.regressionCases, 1);
   const text = renderText(result);
   assert.match(text, /resolved-subset metrics; full panel UNRESOLVED/);
+  assert.match(text, /regressions 1 attempts in 1 cases/);
   assert.match(text, /score coverage: 11 available attempts across 12 required files/);
   assert.match(text, /unexpected-extra\.json/);
   assert.match(text, /1352aa7a.*unresolved: missing/);

@@ -22,6 +22,8 @@ function compareCases(cases) {
     return {
       cases: [],
       ranking: { eligibility: 'EMPTY', verdict: 'EMPTY', convertedWins: null, convertedWinFraction: null, caseCount: 0, meanMovesSaved: null },
+      regressionAttempts: null,
+      regressionCases: null,
       speedCounts: { faster: 0, slower: 0, tied: 0 },
     };
   }
@@ -29,6 +31,8 @@ function compareCases(cases) {
     return {
       cases,
       ranking: { eligibility: 'UNRESOLVED', verdict: 'UNRESOLVED', convertedWins: null, convertedWinFraction: null, caseCount: cases.length, meanMovesSaved: null },
+      regressionAttempts: null,
+      regressionCases: null,
       speedCounts: { faster: 0, slower: 0, tied: 0 },
     };
   }

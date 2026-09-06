@@ -439,7 +439,7 @@ function renderText(result) {
     lines.push(`${panel.fileCount} files, ${panel.distinctAttempts} distinct attempts, ${panel.caseCount} cases; ${panel.unresolvedCount} unresolved, ${panel.duplicateCount} duplicates`);
     lines.push(`reference win rate ${formatPercent(panel.metrics.winRates && panel.metrics.winRates.reference)}; human win rate ${formatPercent(panel.metrics.winRates && panel.metrics.winRates.comparison)}`);
     lines.push(`converted wins N=${formatNumber(panel.metrics.ranking.convertedWins)}; N/n=${formatNumber(panel.metrics.ranking.convertedWins)}/${panel.fileCount === 0 ? 'unavailable' : panel.caseCount}=${formatNumber(panel.metrics.ranking.convertedWinFraction)}; mean moves saved ${formatNumber(panel.metrics.ranking.meanMovesSaved)}`);
-    lines.push(`regressions ${panel.metrics.regressionAttempts} attempts in ${panel.metrics.regressionCases} cases`);
+    lines.push(`regressions ${formatNumber(panel.metrics.regressionAttempts)} attempts in ${formatNumber(panel.metrics.regressionCases)} cases`);
     lines.push(`faster/slower/tied=${panel.metrics.speedCounts.faster}/${panel.metrics.speedCounts.slower}/${panel.metrics.speedCounts.tied}`);
     lines.push(`score: matched-horizon, mixed/unknown-intent diagnostic; target disabled for bot, original B retained; score coverage: ${panel.scoreDiagnostic.availableAttempts} available attempts across ${panel.scoreDiagnostic.requiredFiles} required files; percentages ${panel.scoreDiagnostic.percentAvailable}/${panel.scoreDiagnostic.availableAttempts}`);
     for (const row of result.rows.filter((entry) => entry.panel === panel.id)) {
