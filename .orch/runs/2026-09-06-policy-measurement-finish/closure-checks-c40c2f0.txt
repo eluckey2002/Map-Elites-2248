@@ -1,0 +1,118 @@
+Command: node --test --test-reporter=spec solver/tests/experiments.test.js solver/tests/universeMap.test.js solver/tests/repoBaseline.test.js
+Source c40c2f0, clean tree throughout; exit1, only the two known Universe Map failures.
+✔ a result claiming only direct evidence needs no protocol (1.686709ms)
+✔ a result claiming generalization is detected as needing one (0.173666ms)
+✔ a heading between records ends the record (0.119666ms)
+✔ declared checks are parsed by name, primes and em-dashes included (1.273083ms)
+✔ frontmatter parses nested version freeze entries (0.410833ms)
+✔ a reported protocol cannot remain in the registered lifecycle state (0.150959ms)
+✔ LIVE: every generalizing result in this ledger has a protocol or a grandfather entry (1041.26525ms)
+✔ a commit is never a strict ancestor of itself — same-commit backfill fails (65.952375ms)
+✔ addedIn returns the OLDEST add, so delete-and-re-add cannot reset the clock (95.984583ms)
+✔ an unregistered run is refused before any compute (0.709375ms)
+✔ exploratory runs are allowed but stamped as such (0.129917ms)
+✔ a malformed or unregistered protocol id is refused (0.233292ms)
+✔ a real registration stamps the protocol commit into the artifact (0.078458ms)
+✔ the registration stamp rides outside the hashed body, so old artifacts still verify (137.834375ms)
+✔ an exploratory artifact cannot back a generalizing claim (0.314917ms)
+✔ LIVE: tampering with one cell of the real holdout breaks its identity (130.622667ms)
+✔ LIVE: a citation that resolves to nothing fails; a filename in prose does not (19.595083ms)
+✔ LIVE: a forged, unreachable, or out-of-order protocolCommit is caught (525.301625ms)
+✔ LIVE: a report that names a check without answering it is caught (0.99525ms)
+✔ LIVE: version freeze is enforced while registered, and against what the artifact recorded (39.127584ms)
+✔ an honest registration passes and stamps its own commit (193.206417ms)
+✔ a freeze rewritten after registration is refused, uncommitted or committed (483.486917ms)
+✔ a protocol registered with placeholders or an empty freeze is refused (369.702458ms)
+✔ a finished protocol cannot mint new evidence (114.384917ms)
+✔ the ledger gate reads the freeze from the registration commit too (111.080292ms)
+✔ a protocol body rewritten after registration is refused, uncommitted or committed (545.948959ms)
+✔ an empty placeholder registered first and filled in later is refused by the guard (342.43ms)
+✔ a completed protocol reopened on disk cannot mint new evidence (346.198416ms)
+✔ a protocol once committed as complete stays finished even with no report in history (292.26475ms)
+✔ the ledger gate refuses a registered protocol that freezes nothing (0.299167ms)
+✔ LIVE: every protocol in experiments/ matches its registration commit apart from status (424.689958ms)
+✔ a clean canonical checkout with protected recovery refs passes (2.255125ms)
+✔ a dirty consequential checkout fails closed and names its paths (0.177083ms)
+✔ a dirty linked worktree fails closed (0.108292ms)
+✔ a discovered but unregistered worktree fails closed (0.102334ms)
+✔ a missing or moved remote safety ref fails closed (0.112833ms)
+✔ a checkout outside the declared ancestry fails closed (0.085375ms)
+✔ canonical mode requires main and exact remote equality (0.084041ms)
+✔ candidate mode permits a non-main branch but keeps every safety check (0.075791ms)
+✔ porcelain parsing preserves a leading dot on the first unstaged path (0.133666ms)
+✔ discovery distinguishes linked worktree pointers from standalone repositories (3.557459ms)
+✔ LIVE: no durable .orch state is left uncommitted in this checkout (640.8255ms)
+✔ LIVE: no linked worktree is holding uncommitted .orch state (441.335458ms)
+✔ the contract has exactly the five load-bearing cards and no copied claim fields (2.670208ms)
+✔ the selected ledger parser resolves one record without pretending to parse the whole ledger (1.518708ms)
+✔ one resolved model keeps admitted evidence separate from the later verified artifact (7.919542ms)
+✔ the stale-navigation warning fires when CURRENT.md ages past the contract limit (23.262834ms)
+✖ the builder is byte-stable and the committed generated views are current (9.836042ms)
+✔ generated Markdown exposes the load-bearing distinctions in one screen (0.448042ms)
+✔ the static HTML uses real headings for all five card titles (0.186208ms)
+✔ CURRENT links the generated control panel without erasing its historical milestone (0.165291ms)
+✔ verification fails closed for a missing card (11.207417ms)
+✔ verification fails closed for an unresolved ledger record (13.13375ms)
+✔ verification fails closed when selected current evidence is not accepted (9.287375ms)
+✔ verification fails closed for receipt hash mismatch (11.1675ms)
+✔ verification fails closed when the artifact verification evidence drifts (8.350667ms)
+✖ verification observations derive from rebound evidence instead of copied metrics in code (19.233792ms)
+✔ verification fails closed for protected champion identity mismatch even with a rebound hash (18.18875ms)
+✔ verification fails closed when a generated view drifts (10.913333ms)
+ℹ tests 59
+ℹ suites 0
+ℹ pass 57
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5433.351291
+
+✖ failing tests:
+
+test at solver/tests/universeMap.test.js:138:1
+✖ the builder is byte-stable and the committed generated views are current (9.836042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  4 !== 0
+  
+      at TestContext.<anonymous> (/Users/eluckey/Developer/research and games/2248-challenge/solver/tests/universeMap.test.js:143:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at solver/tests/universeMap.test.js:236:1
+✖ verification observations derive from rebound evidence instead of copied metrics in code (19.233792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'Universe Map stale: contract asOf 2026-08-28, today 2026-09-06'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (/Users/eluckey/Developer/research and games/2248-challenge/solver/tests/universeMap.test.js:264:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'Universe Map stale: contract asOf 2026-08-28, today 2026-09-06' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+

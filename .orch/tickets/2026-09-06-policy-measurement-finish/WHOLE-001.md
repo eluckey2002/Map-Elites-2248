@@ -187,7 +187,26 @@ writes are authorized unless root returns the declared closure-only recheck.
 
 ## Feedback
 
-[]
+Root accepted W1-W3 at the recorded fixed identities: correct child, in-bound
+return, only canonical ticket writes, covered blobs unchanged. No invalidation
+except the predeclared post-PASS closure metadata.
+
+### Closure-only recheck lease
+
+Authorized at 2026-09-06T04:41:35Z, same independent context, bound4minutes;
+resumption cap04:50Z. Fixed closure document source c40c2f0; compare49214e5..c40c2f0.
+Final hashes: .orch/runs/2026-09-06-policy-measurement-finish/envelope-accepted.json.
+Fresh closure-check output: same directory closure-checks-c40c2f0.txt.
+Only this ticket's result sections may be appended; no target edits.
+
+C1: Verify only predeclared acceptance/navigation/dependency metadata changed,
+links and final hashes match, baseline/ledger/protected inputs unchanged;
+oracle=exact diff/hash/link check, oracle_class=deterministic, provenance=pre-existing.
+C2: Step2accepted / Step3ready-unexecuted / Step4blocked states consistently
+match initial W1-W3 PASS and expose test limitations; oracle=fresh closure-only
+coherence check and exact raw closure-check outcomes, oracle_class=judged,
+provenance=pre-existing. Reuse unchanged W1-W3 coverage; no whole audit rerun.
+Append C1/C2 with evidence/covers and explicit lease release. Root stays read-only.
 
 ## Risks
 
