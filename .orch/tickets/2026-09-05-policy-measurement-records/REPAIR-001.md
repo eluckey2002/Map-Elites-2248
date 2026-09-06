@@ -1,7 +1,7 @@
 ---
 id: REPAIR-001
 run: 2026-09-05-policy-measurement-records
-status: claimed
+status: suspended
 executor: orch-repair
 profile: orch-worker
 depends_on: [GATE-001]
@@ -43,11 +43,17 @@ records absolute deadline03:19:49Z. Reply_to=/root.
 
 ## Result
 
-Pending. Return changed artifacts and exact commit/hashes; no self acceptance.
+Executor terminated on a usage limit before producing a result. At root's
+2026-09-06T03:18:05Z inspection, root and document worktree were clean, and
+document HEAD remained 4a8e5c23cf1b5f4b4d74ad475576b1ce0c8b97d3.
+changed_artifacts=[]; no repair commit exists. Root reclaims the errored
+executor's leases; no active child writer remains for this ticket.
 
 ## Verification
 
-Pending. R1 may defer to independent final verification.
+R1 UNVERIFIED (judged): no repaired result or independent final verification.
+R2 UNVERIFIED (deterministic): unchanged clean worktree is confirmed, but no
+repair was executed. No completion or whole-Step-2 acceptance is claimed.
 
 ## Feedback
 
@@ -56,3 +62,22 @@ Pending. R1 may defer to independent final verification.
 ## Risks
 
 One repair only; no second gate. Explicitly release document and ticket leases.
+
+## Handoff
+
+Suspended for unavailable delegated execution, not a new content defect.
+The original claim bound ended at03:15:00Z; it has not been extended or reset.
+Records run bound ends03:19:49Z; parent cap remains03:34:38Z. Resume only with
+an available executor and an explicitly recorded new bound, preserving the
+frozen finding/scope and both earlier failed reviews.
+
+1. Recheck unchanged document HEAD4a8e5c2 and sole-writer custody.
+2. Execute this same six-title historical qualification repair in its existing
+   dedicated worktree; preserve every body and old title wording.
+3. Independently verify affected D3/D4 and scope; reuse unaffected GATE-001
+   D1/D2/D5 covers. This is final affected verification, not a second gate.
+4. Integrate the accepted document commits into root's working branch, run
+   document-sensitive and live custody checks, then dispatch the composition's
+   fresh whole check. No acceptance metadata before its PASS.
+5. Keep Step3 unexecuted and Step4 blocked. No bot, game, receipt, experiment,
+   Atlas, main, PR or external change is included.

@@ -1,6 +1,6 @@
 {
   "counters": {
-    "checks": 13,
+    "checks": 14,
     "owner_review_required": 0,
     "progress_required": 0,
     "status_required": 0
@@ -11,8 +11,8 @@
       "evidence": "artifact:.orch/tickets/2026-09-05-policy-measurement-records/GATE-001.md"
     },
     "status": {
-      "at": "2026-09-06T03:07:01Z",
-      "evidence": "commentary:code-repair-accepted-documents-assembled-independent-content-and-whole-check-next"
+      "at": "2026-09-06T03:18:41Z",
+      "evidence": "commentary:executor-usage-limit-no-writes-step2-incomplete-resumable-handoff"
     }
   },
   "run": "2026-09-05-policy-measurement-records",

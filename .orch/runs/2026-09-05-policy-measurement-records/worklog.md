@@ -46,4 +46,9 @@ Steps 3-4, new policies, source edits, generalized experiments and promotion.
 
 ## Terminal
 
-Open.
+Blocked at 2026-09-06T03:18Z: delegated REPAIR-001 executor terminated on a
+usage limit without edits. Ticket suspended with exact resumption handoff;
+document worktree remains clean at4a8e5c2. No content acceptance or integration
+into root, no final verification, and no whole-composition acceptance.
+The one identified title-layer repair remains unexecuted. Original bounds
+remain recorded; no clock reset or substitute self-verification.
