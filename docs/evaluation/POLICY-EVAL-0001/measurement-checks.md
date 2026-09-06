@@ -9,7 +9,7 @@ qualify a generalized policy claim.
 - **Where:** `solver/benchmark-inputs.js`; `node --test solver/tests/policyBenchmark.test.js`.
 - **Level:** file and record — a semantically wrong value whose containing file still has the accepted hash requires a new accepted contract version, not detection here.
 - **Kind:** shape and value; acceptance review owns whether the frozen values are true and sufficient.
-- **Scope:** the two POLICY-EVAL-0001 frozen files, manifest-listed source and attempt paths, uint32 seeds, and subject fields `gridW`, `gridH`, `minChain`, `tileScale`, `target`, `moves`, and blocker coordinates/type/duration/timer.
+- **Scope:** the two POLICY-EVAL-0001 frozen files, all three behavior-binding source hashes, exact exported `chooseMove` defaults, manifest-listed attempt paths, uint32 seeds, and subject fields `gridW`, `gridH`, `minChain`, `tileScale`, `target`, `moves`, and blocker coordinates/type/duration/timer.
 - **Reads own output?:** no; it reads frozen repository inputs and actual subject files.
 - **Sampling memory:** n/a; all manifest rows are checked, while later files are reported as extras rather than sampled.
 - **Does NOT catch:** a bad definition accepted into contract v1; historical runtime identity absent from ordinary-play receipts; meaning changes that preserve every pinned byte; files outside the manifest except as named extras.
@@ -61,7 +61,7 @@ qualify a generalized policy claim.
 - **Reads own output?:** no; replay reads real recordings and source transitions, while live arms are compared only through returned observations.
 - **Sampling memory:** n/a; every admitted frozen attempt is replayed, and deterministic controls exercise each declared failure family.
 - **Does NOT catch:** UI-only behavior absent from the headless transition; historical runtime identity for ordinary play; a policy-quality defect that still returns legal moves; generalized reliability beyond the fixed panel.
-- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, altered-coordinate, missing-trace, seed/subject mismatch, bomb/target precedence, RNG-consumption, and no-choice-with-legal-move cases.
+- **Crafted-bypass test:** `solver/tests/policyBenchmark.test.js`, altered-coordinate, false-win/premature-loss/post-terminal, missing-trace, seed/subject mismatch, bomb/target/B=H precedence, illegal choice, thrown-harness, RNG-consumption, and no-choice-with-legal-move cases.
 - **Retires:** NO — the existing reusable replay remains unchanged; this stricter wrapper is scoped to the POLICY-EVAL-0001 instrument because the global helper is outside the ticket.
 - **Enforcement:** HARD for Step 2 row admission and live reference classification only.
 - **Decay:** focused tests use a real receipt-bound recording plus permanent bad twins; source hash drift blocks collection before replay.
@@ -73,10 +73,10 @@ qualify a generalized policy claim.
 - **Where:** `solver/human-benchmark.js#collect` and `renderText`; `node --test solver/tests/humanBenchmark.test.js`.
 - **Level:** file, attempt, and case — it reports initialized-grid collisions but does not turn selected cases into independent population samples.
 - **Kind:** shape and value; POLICY-EVAL-0001 owns interpretation and a future registered protocol owns generalization.
-- **Scope:** exactly 15 required manifest paths split 12 receipt-bound and 3 current-subject; admitted/duplicate/unresolved dispositions; files discovered under `recordings/`, `play-sessions/`, and `pilots/*/recordings/`; JSON and text v2 output.
+- **Scope:** exactly 15 required manifest paths split 12 receipt-bound and 3 current-subject; admitted/duplicate/unresolved dispositions; files discovered under `recordings/`, `play-sessions/`, and `pilots/*/recordings/`; JSON and text v2 output; actual measurement-source hashes plus Git commit/tree state.
 - **Reads own output?:** no; text rendering consumes the same returned object exposed by `collect`, and tests compare its literal classifications to that object.
 - **Sampling memory:** n/a; all required and discovered recording paths in the named directories are inventoried, with extras excluded from the denominator.
-- **Does NOT catch:** recording-shaped JSON outside the named directories; population-selection bias; historical runtime identity absent from ordinary play; semantic errors already frozen into the contract.
+- **Does NOT catch:** recording-shaped JSON outside the named directories; population-selection bias; historical runtime identity absent from ordinary play; semantic errors already frozen into the contract; an uncommitted run is identified as such rather than forbidden.
 - **Crafted-bypass test:** `solver/tests/humanBenchmark.test.js`, `unexpected files are surfaced as extras without changing the frozen denominator`.
 - **Retires:** the prior mutable-directory minimum-count benchmark check; the frozen inventory plus explicit supplement makes silent growth and shrinkage visible.
 - **Enforcement:** HARD for deterministic Step 2 descriptive output; no generalized or promotion claim is admitted.

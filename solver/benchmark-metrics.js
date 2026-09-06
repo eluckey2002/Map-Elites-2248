@@ -1,11 +1,19 @@
-function scoreDiagnostic(referenceScore, comparisonScore) {
+function scoreDiagnostic(referenceScore, comparisonScore, options = {}) {
+  const { referenceHorizon, comparisonHorizon } = options;
+  const unequalHorizon = referenceHorizon !== undefined && comparisonHorizon !== undefined
+    && referenceHorizon !== comparisonHorizon;
   return {
     referenceScore,
     comparisonScore,
     rawDelta: comparisonScore - referenceScore,
-    percentOfReference: referenceScore > 0
+    percentOfReference: !unequalHorizon && referenceScore > 0
       ? ((comparisonScore - referenceScore) / referenceScore) * 100
       : null,
+    ...(referenceHorizon === undefined ? {} : { referenceHorizon }),
+    ...(comparisonHorizon === undefined ? {} : { comparisonHorizon }),
+    ...(referenceHorizon === undefined || comparisonHorizon === undefined ? {} : {
+      comparability: unequalHorizon ? 'unequal-horizon-no-inference' : 'matched-horizon diagnostic',
+    }),
   };
 }
 

@@ -86,9 +86,15 @@ function loadFrozenInputs({ root = ROOT } = {}) {
   if (manifest.contractId !== 'POLICY-EVAL-0001' || manifest.schemaVersion !== 1) {
     throw new Error('frozen manifest contract identity mismatch');
   }
+  const behaviorSources = {};
   for (const source of manifest.sources.filter((entry) => entry.role === 'behavior-binding')) {
     const result = verifyPinnedFile(path.join(root, source.path), source.sha256);
     if (!result.ok) throw new Error(`behavior-binding source ${source.path} ${result.reason}`);
+    behaviorSources[source.path] = result.actualSha256;
+  }
+  const { DEFAULT_PARAMS } = require('./bot');
+  if (canonicalJson(DEFAULT_PARAMS) !== canonicalJson(manifest.reference.params)) {
+    throw new Error('reference chooseMove defaults mismatch');
   }
   return {
     contractPath,
@@ -96,6 +102,8 @@ function loadFrozenInputs({ root = ROOT } = {}) {
     contractSha256: contract.actualSha256,
     inputsSha256: inputs.actualSha256,
     manifest,
+    behaviorSources,
+    referenceDefaults: { ...DEFAULT_PARAMS },
   };
 }
 

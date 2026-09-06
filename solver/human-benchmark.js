@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const {
-  makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles, tickBlockers,
+  makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles, tickBlockers, checkBombs,
 } = require('./engine');
 const { chooseMove } = require('./bot');
 const {
@@ -19,7 +19,7 @@ const {
   valueIdentity,
 } = require('./benchmark-inputs');
 const { compareCases, scoreDiagnostic } = require('./benchmark-metrics');
-const { classifyTerminal, hasLegalMove, replayRecording } = require('./benchmark-replay');
+const { classifyTerminal, hasLegalMove, policyChainProblems, replayRecording } = require('./benchmark-replay');
 
 const LOOKAHEAD_BASE = 987654321;
 const OUTPUT_VERSION = 'POLICY-EVAL-0001 descriptive comparison v2';
@@ -35,28 +35,43 @@ function playBot(candidate, seed, options = {}) {
   if (!Number.isInteger(externalHorizon) || externalHorizon < 0 || externalHorizon > candidate.moves) {
     throw new Error(`external horizon must be an integer from 0 through original budget ${candidate.moves}`);
   }
-  const rng = makeRng(seed);
+  const liveRng = makeRng(seed);
+  let liveRngDraws = 0;
+  const rng = () => {
+    liveRngDraws += 1;
+    return liveRng();
+  };
   const state = createLevelState(candidate, rng);
   if (targetDisabled) state.targetScore = Infinity;
-  const initialGridIdentity = valueIdentity(
-    state.grid.map((row) => row.map((tile) => ({
+  const initialGrid = state.grid.map((row) => row.map((tile) => ({
       value: tile.value,
       blocker: tile.blocker,
       blockerDuration: tile.blockerDuration,
       bombTimer: tile.bombTimer,
-    }))),
-  );
+    })));
+  const initialGridIdentity = valueIdentity(initialGrid);
   const common = {
     validity: 'valid',
     originalBudget: candidate.moves,
     externalHorizon,
     initialGridIdentity,
+    initialGrid,
+    liveRngDrawsAfterInitialization: liveRngDraws,
     objective: targetDisabled ? 'target-disabled score diagnostic' : 'target-seeking reference',
     rngScheme: 'private live makeRng(seed); fresh lookahead makeRng(987654321 + moveIndex)',
   };
 
+  if (externalHorizon === 0) {
+    return { ...common, score: 0, moves: 0, outcome: 'horizon-complete', reason: 'external horizon reached', firstCrossing: null };
+  }
+
   for (let moveIndex = 0; moveIndex < externalHorizon; moveIndex++) {
-    const chain = chooseMoveFn(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex) });
+    let chain;
+    try {
+      chain = chooseMoveFn(state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex) });
+    } catch (error) {
+      return { ...common, validity: 'unresolved', score: state.score, moves: state.moves, outcome: null, reason: `measurement fault: ${error.message}`, firstCrossing: null };
+    }
     if (!chain) {
       const legal = hasLegalMove(state);
       return {
@@ -68,12 +83,39 @@ function playBot(candidate, seed, options = {}) {
         firstCrossing: null,
       };
     }
-    executeChain(state, chain);
-    applyGravity(state);
-    spawnNewTiles(state, rng);
-    tickBlockers(state);
-    const terminal = classifyTerminal(state, { targetEnabled: !targetDisabled });
-    if (terminal) return { ...common, score: state.score, moves: state.moves, ...terminal };
+    const chainProblems = policyChainProblems(state, chain);
+    if (chainProblems.length) {
+      return {
+        ...common,
+        score: state.score,
+        moves: state.moves,
+        outcome: 'policy-failure',
+        reason: `policy returned illegal choice: ${chainProblems.join('; ')}`,
+        firstCrossing: null,
+      };
+    }
+    try {
+      executeChain(state, chain);
+      applyGravity(state);
+      spawnNewTiles(state, rng);
+      tickBlockers(state);
+    } catch (error) {
+      return { ...common, validity: 'unresolved', score: state.score, moves: state.moves, outcome: null, reason: `measurement fault: ${error.message}`, firstCrossing: null };
+    }
+    if (targetDisabled) {
+      if (checkBombs(state)) {
+        return { ...common, score: state.score, moves: state.moves, outcome: 'lose', reason: 'bomb exploded', firstCrossing: null };
+      }
+      if (state.moves >= externalHorizon) {
+        return { ...common, score: state.score, moves: state.moves, outcome: 'horizon-complete', reason: 'external horizon reached', firstCrossing: null };
+      }
+      if (!hasLegalMove(state)) {
+        return { ...common, score: state.score, moves: state.moves, outcome: 'lose', reason: 'no legal moves', firstCrossing: null };
+      }
+    } else {
+      const terminal = classifyTerminal(state, { targetEnabled: true });
+      if (terminal) return { ...common, score: state.score, moves: state.moves, ...terminal };
+    }
   }
   return {
     ...common,
@@ -142,6 +184,30 @@ function collisionReport(rows) {
   return [...grids.entries()]
     .filter(([, cases]) => cases.size > 1)
     .map(([initialGridIdentity, cases]) => ({ initialGridIdentity, caseKeys: [...cases].sort() }));
+}
+
+function summarizeScores(rows) {
+  const byCase = new Map();
+  for (const row of rows) {
+    if (!byCase.has(row.caseKey)) byCase.set(row.caseKey, []);
+    byCase.get(row.caseKey).push(row.scoreDiagnostic);
+  }
+  const cases = [...byCase.values()].map((attempts) => ({
+    rawDelta: attempts.reduce((sum, item) => sum + item.rawDelta, 0) / attempts.length,
+    percentages: attempts.filter((item) => item.percentOfReference !== null).map((item) => item.percentOfReference),
+  }));
+  const percentCases = cases.filter((entry) => entry.percentages.length > 0);
+  return {
+    label: 'matched-horizon, mixed/unknown-intent diagnostic',
+    caseWeightedMeanRawDelta: cases.length ? cases.reduce((sum, entry) => sum + entry.rawDelta, 0) / cases.length : null,
+    caseWeightedMeanPercentOfReference: percentCases.length
+      ? percentCases.reduce((sum, entry) => sum + entry.percentages.reduce((inner, value) => inner + value, 0) / entry.percentages.length, 0) / percentCases.length
+      : null,
+    percentAvailable: rows.filter((row) => row.scoreDiagnostic.percentOfReference !== null).length,
+    totalAttempts: rows.length,
+    percentCases: percentCases.length,
+    totalCases: cases.length,
+  };
 }
 
 function collect({ root = ROOT } = {}) {
@@ -220,7 +286,10 @@ function collect({ root = ROOT } = {}) {
         human: replay,
         reference,
         diagnostic,
-        scoreDiagnostic: scoreDiagnostic(diagnostic.score, replay.score),
+        scoreDiagnostic: scoreDiagnostic(diagnostic.score, replay.score, {
+          referenceHorizon: diagnostic.externalHorizon,
+          comparisonHorizon: replay.moves,
+        }),
         diagnosticLabel: 'matched-horizon, mixed/unknown-intent diagnostic',
       };
       rows.push(row);
@@ -258,14 +327,29 @@ function collect({ root = ROOT } = {}) {
       duplicateCount: panelDispositions.filter((entry) => entry.disposition === 'duplicate').length,
       metrics,
       resolvedSubsetMetrics: unresolved.length ? resolvedSubsetMetrics : null,
+      scoreDiagnostic: summarizeScores(panelRows),
     };
   });
+
+  const measurementPaths = [
+    'solver/human-benchmark.js',
+    'solver/benchmark-inputs.js',
+    'solver/benchmark-metrics.js',
+    'solver/benchmark-replay.js',
+  ];
+  const measurementSources = Object.fromEntries(measurementPaths.map((relative) => [relative, fileSha256(path.join(root, relative))]));
+  const measurementSourceTreeState = childProcess.execFileSync(
+    'git', ['status', '--porcelain', '--', ...measurementPaths], { cwd: root, encoding: 'utf8' },
+  ).trim() || 'clean';
 
   return {
     schemaVersion: 2,
     outputSemantics: OUTPUT_VERSION,
     scope: 'fixed descriptive panels; not a population estimate or promotion result',
     executableSourceCommit: executableCommit(root),
+    measurementSources,
+    measurementSourceIdentity: valueIdentity(measurementSources),
+    measurementSourceTreeState,
     contract: {
       id: manifest.contractId,
       sha256: frozen.contractSha256,
@@ -287,6 +371,7 @@ function renderText(result) {
     result.outputSemantics,
     `${result.scope}.`,
     `executable source commit: ${result.executableSourceCommit}`,
+    `measurement source identity: ${result.measurementSourceIdentity}; tree state: ${result.measurementSourceTreeState}`,
     `contract: ${result.contract.sha256}; inputs: ${result.contract.inputsSha256}`,
   ];
   for (const panel of result.panels) {
@@ -295,9 +380,13 @@ function renderText(result) {
     lines.push(`${panel.fileCount} files, ${panel.distinctAttempts} distinct attempts, ${panel.caseCount} cases; ${panel.unresolvedCount} unresolved, ${panel.duplicateCount} duplicates`);
     lines.push(`reference win rate ${formatPercent(panel.metrics.winRates && panel.metrics.winRates.reference)}; human win rate ${formatPercent(panel.metrics.winRates && panel.metrics.winRates.comparison)}`);
     lines.push(`converted wins ${formatNumber(panel.metrics.ranking.convertedWins)}; mean moves saved ${formatNumber(panel.metrics.ranking.meanMovesSaved)}`);
-    lines.push('score: matched-horizon, mixed/unknown-intent diagnostic; target disabled for bot, original B retained');
+    lines.push(`regressions ${panel.metrics.regressionAttempts} attempts in ${panel.metrics.regressionCases} cases`);
+    lines.push(`score: matched-horizon, mixed/unknown-intent diagnostic; target disabled for bot, original B retained; percent coverage ${panel.scoreDiagnostic.percentAvailable}/${panel.scoreDiagnostic.totalAttempts}`);
     for (const row of result.rows.filter((entry) => entry.panel === panel.id)) {
-      lines.push(`  ${row.file} L${row.level} seed ${row.seed}: human ${row.human.outcome} ${row.human.score}/${row.human.moves}; reference ${row.reference.outcome} ${row.reference.score}/${row.reference.moves}; diagnostic ${row.diagnostic.outcome} ${row.diagnostic.score}/${row.diagnostic.moves} H=${row.diagnostic.externalHorizon}`);
+      const percentage = row.scoreDiagnostic.percentOfReference === null
+        ? 'unavailable'
+        : `${row.scoreDiagnostic.percentOfReference >= 0 ? '+' : ''}${row.scoreDiagnostic.percentOfReference.toFixed(1)}%`;
+      lines.push(`  ${row.file} L${row.level} seed ${row.seed} T=${row.subject.target} B=${row.subject.moves}: human ${row.human.outcome} ${row.human.score}/${row.human.moves} crossing=${formatNumber(row.human.firstCrossing)}; reference ${row.reference.outcome} ${row.reference.score}/${row.reference.moves} crossing=${formatNumber(row.reference.firstCrossing)}; diagnostic ${row.diagnostic.outcome} ${row.diagnostic.score}/${row.diagnostic.moves} H=${row.diagnostic.externalHorizon}; score delta ${row.scoreDiagnostic.rawDelta >= 0 ? '+' : ''}${row.scoreDiagnostic.rawDelta}; percent of bot reference ${percentage}`);
     }
   }
   if (result.extras.length) {

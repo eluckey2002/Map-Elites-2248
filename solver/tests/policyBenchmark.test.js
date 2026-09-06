@@ -15,10 +15,11 @@ const {
   verifyPinnedFile,
   buildCandidateIndex,
   resolveAttemptSource,
+  valueIdentity,
 } = require('../benchmark-inputs');
 const { compareCases, scoreDiagnostic } = require('../benchmark-metrics');
 const { classifyTerminal, replayRecording } = require('../benchmark-replay');
-const { findBestChain } = require('../engine');
+const { findBestChain, findTopChains } = require('../engine');
 const { playBot } = require('../human-benchmark');
 
 const ROOT = path.join(__dirname, '..', '..');
@@ -42,6 +43,15 @@ test('the accepted frozen package is read by byte identity', () => {
   assert.equal(frozen.manifest.contractId, 'POLICY-EVAL-0001');
   assert.equal(frozen.manifest.requiredAttemptSources.length, 15);
   assert.equal(frozen.manifest.shippedSubjects.length, 58);
+  assert.deepEqual(frozen.referenceDefaults, frozen.manifest.reference.params);
+  assert.deepEqual(Object.keys(frozen.behaviorSources).sort(), ['solver/bot.js', 'solver/engine.js', 'src/game.js']);
+});
+
+test('E07 canonical captured payload dedupes key order but not distinct session content', () => {
+  const source = JSON.parse(fs.readFileSync(path.join(ROOT, 'recordings', '1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json'), 'utf8'));
+  const reordered = Object.fromEntries(Object.entries(source).reverse());
+  assert.equal(valueIdentity(source), valueIdentity(reordered));
+  assert.notEqual(valueIdentity(source), valueIdentity({ ...source, sessionId: 'distinct-session' }));
 });
 
 test('a real pinned file passes and a filesystem-mutated twin fails by hash', () => {
@@ -67,7 +77,7 @@ test('seed validation refuses aliases outside uint32 instead of normalizing them
   }
 });
 
-test('subject identity ignores labels but distinguishes target and budget', () => {
+test('E17 subject identity ignores labels but distinguishes target and budget', () => {
   const base = { gridW: 5, gridH: 8, minChain: 3, tileScale: 32, target: 100, moves: 20, blockers: [] };
   assert.equal(subjectKey({ ...base, level: 51, name: 'a' }), subjectKey({ ...base, level: 99, name: 'b' }));
   assert.notEqual(subjectKey(base), subjectKey({ ...base, target: 101 }));
@@ -146,6 +156,18 @@ test('E16 percentages use the reference score and zero reference yields null', (
   assert.deepEqual(scoreDiagnostic(100, 120), { referenceScore: 100, comparisonScore: 120, rawDelta: 20, percentOfReference: 20 });
 });
 
+test('E11 unequal score horizons are explicitly non-comparable', () => {
+  assert.deepEqual(scoreDiagnostic(150, 100, { referenceHorizon: 20, comparisonHorizon: 10 }), {
+    referenceScore: 150,
+    comparisonScore: 100,
+    rawDelta: -50,
+    percentOfReference: null,
+    referenceHorizon: 20,
+    comparisonHorizon: 10,
+    comparability: 'unequal-horizon-no-inference',
+  });
+});
+
 test('all 15 frozen attempts resolve through content-bound subjects in their separate provenance panels', () => {
   const { manifest } = loadFrozenInputs({ root: ROOT });
   const index = buildCandidateIndex({ root: ROOT });
@@ -208,6 +230,32 @@ test('seed and subject-binding mismatches are unresolved without crashing', () =
   }).reasons.join('\n'), /candidate identity mismatch/);
 });
 
+test('false win, premature loss, and continuation after terminal are unresolved', () => {
+  const { manifest } = loadFrozenInputs({ root: ROOT });
+  const index = buildCandidateIndex({ root: ROOT });
+  const winningExpected = manifest.requiredAttemptSources.find((entry) => entry.path.startsWith('recordings/1352'));
+  const losingExpected = manifest.requiredAttemptSources.find((entry) => entry.path.startsWith('recordings/8ac6'));
+  const winning = resolveAttemptSource(winningExpected, manifest, { root: ROOT, index });
+  const losing = resolveAttemptSource(losingExpected, manifest, { root: ROOT, index });
+  const prematureLoss = replayRecording(winning.candidate, { ...winning.recording, outcome: 'lose', reason: 'out of moves' }, {
+    expectedSeed: winningExpected.seed, expectedCandidateIdentity: winningExpected.candidateIdentity,
+  });
+  assert.equal(prematureLoss.validity, 'unresolved');
+  assert.match(prematureLoss.reasons.join('\n'), /recording claims lose, replay is win/);
+  const falseWin = replayRecording(losing.candidate, { ...losing.recording, outcome: 'win', reason: 'target reached' }, {
+    expectedSeed: losingExpected.seed, expectedCandidateIdentity: losingExpected.candidateIdentity,
+  });
+  assert.equal(falseWin.validity, 'unresolved');
+  assert.match(falseWin.reasons.join('\n'), /recording claims win, replay is lose/);
+  const continued = structuredClone(winning.recording);
+  continued.chains.push(continued.chains[0]);
+  const postTerminal = replayRecording(winning.candidate, continued, {
+    expectedSeed: winningExpected.seed, expectedCandidateIdentity: winningExpected.candidateIdentity,
+  });
+  assert.equal(postTerminal.validity, 'unresolved');
+  assert.match(postTerminal.reasons.join('\n'), /continuation after terminal target reached/);
+});
+
 test('E09-E10 terminal precedence is bomb then target then budget then no-legal-move', () => {
   const base = { score: 100, targetScore: 100, moves: 20, maxMoves: 20 };
   assert.deepEqual(classifyTerminal(base, { bomb: true, hasLegalMove: false, targetEnabled: true }),
@@ -235,6 +283,35 @@ test('target-disabled external horizon keeps original B visible and labels compl
   assert.equal(result.originalBudget, 20);
   assert.equal(result.externalHorizon, 1);
   assert.equal(result.objective, 'target-disabled score diagnostic');
+  assert.equal(result.liveRngDrawsAfterInitialization, candidate.gridW * candidate.gridH);
+  assert.equal(result.initialGrid.length, candidate.gridH);
+});
+
+test('E13 B equal to H is horizon completion, not target-disabled out-of-moves loss', () => {
+  const candidate = { gridW: 2, gridH: 2, minChain: 2, tileScale: 1, target: 100000, moves: 1, blockers: [] };
+  const result = playBot(candidate, 1, {
+    targetDisabled: true,
+    externalHorizon: 1,
+    chooseMoveFn: (state) => findBestChain(state).chain,
+  });
+  assert.equal(result.outcome, 'horizon-complete');
+  assert.equal(result.reason, 'external horizon reached');
+});
+
+test('E14 a score-mode bomb retains its terminal score as the absorbing score', () => {
+  const candidate = {
+    gridW: 3, gridH: 3, minChain: 2, tileScale: 1, target: 100000, moves: 3,
+    blockers: [{ type: 'bomb', x: 0, y: 0, timer: 1 }],
+  };
+  const result = playBot(candidate, 1, {
+    targetDisabled: true,
+    externalHorizon: 2,
+    chooseMoveFn: (state) => findTopChains(state).find(({ chain }) => chain.every((tile) => tile.x !== 0 || tile.y !== 0)).chain,
+  });
+  assert.equal(result.outcome, 'lose');
+  assert.equal(result.reason, 'bomb exploded');
+  assert.equal(result.moves, 1);
+  assert.ok(result.score > 0, 'the real terminal score is retained rather than replaced by zero');
 });
 
 test('lookahead factories cannot consume the live refill RNG', () => {
@@ -261,4 +338,22 @@ test('no choice on a valid live input is policy-failure, not proof of no legal m
   assert.equal(result.validity, 'valid');
   assert.equal(result.outcome, 'policy-failure');
   assert.equal(result.reason, 'policy returned no choice while a legal move exists');
+});
+
+test('an illegal policy chain is reproduced as policy-failure before it can score', () => {
+  const candidate = { gridW: 2, gridH: 2, minChain: 3, tileScale: 1, target: 1, moves: 1, blockers: [] };
+  const result = playBot(candidate, 1, {
+    chooseMoveFn: (state) => [state.grid[0][0], state.grid[0][0], state.grid[0][0]],
+  });
+  assert.equal(result.outcome, 'policy-failure');
+  assert.equal(result.score, 0);
+  assert.match(result.reason, /illegal choice/);
+});
+
+test('E15 a thrown measurement path is unresolved, not a detected bad policy', () => {
+  const candidate = { gridW: 2, gridH: 2, minChain: 2, tileScale: 1, target: 100, moves: 2, blockers: [] };
+  const result = playBot(candidate, 1, { chooseMoveFn: () => { throw new Error('harness fault'); } });
+  assert.equal(result.validity, 'unresolved');
+  assert.equal(result.outcome, null);
+  assert.match(result.reason, /measurement fault: harness fault/);
 });

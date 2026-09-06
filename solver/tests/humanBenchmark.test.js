@@ -5,6 +5,7 @@ const os = require('node:os');
 const path = require('node:path');
 
 const { collect, discoverRecordingPaths, playBot, renderText } = require('../human-benchmark');
+const { fileSha256, valueIdentity } = require('../benchmark-inputs');
 
 let cached;
 const collectOnce = () => { if (!cached) cached = collect(); return cached; };
@@ -22,6 +23,10 @@ test('collect accounts for the frozen 15-file panel without pooling provenance c
   ]);
   assert.equal(result.rows.length + result.dispositions.filter((entry) => entry.disposition !== 'admitted').length, 15);
   assert.ok(!Object.hasOwn(result, 'headline'), 'separate provenance panels must not be pooled into one headline');
+  assert.equal(result.measurementSourceIdentity, valueIdentity(result.measurementSources));
+  for (const [relative, sha256] of Object.entries(result.measurementSources)) {
+    assert.equal(sha256, fileSha256(path.join(__dirname, '..', '..', relative)));
+  }
 });
 
 test('every admitted row carries replay, source, subject, horizon, and terminal provenance', () => {
@@ -49,6 +54,8 @@ test('panel metrics trace to admitted rows with case-then-attempt weighting', ()
     assert.equal(panel.metrics.cases.length, panel.caseCount);
     assert.equal(panel.unresolvedCount, 0);
     assert.notEqual(panel.metrics.ranking.verdict, 'UNRESOLVED');
+    assert.equal(panel.scoreDiagnostic.percentAvailable, rows.filter((row) => row.scoreDiagnostic.percentOfReference !== null).length);
+    assert.equal(panel.scoreDiagnostic.totalAttempts, rows.length);
   }
 });
 
@@ -68,7 +75,11 @@ test('text output states descriptive limits and agrees with raw panel classifica
   for (const panel of result.panels) {
     assert.match(text, new RegExp(`${panel.id}: ${panel.metrics.ranking.verdict}`));
     assert.match(text, new RegExp(`${panel.fileCount} files, ${panel.distinctAttempts} distinct attempts, ${panel.caseCount} cases`));
+    assert.match(text, new RegExp(`regressions ${panel.metrics.regressionAttempts} attempts in ${panel.metrics.regressionCases} cases`));
   }
+  assert.match(text, /T=\d+ B=\d+/);
+  assert.match(text, /crossing=/);
+  assert.match(text, /score delta [+-]?\d+; percent of bot reference/);
 });
 
 test('playBot(candidate, seed, { uncapped }) remains compatible while reporting changed semantics', () => {

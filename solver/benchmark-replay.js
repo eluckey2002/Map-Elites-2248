@@ -56,6 +56,34 @@ function classifyTerminal(state, { bomb = checkBombs(state), hasLegalMove: legal
   return null;
 }
 
+function policyChainProblems(state, chain) {
+  const problems = [];
+  if (!Array.isArray(chain)) return ['choice is not a chain'];
+  const seen = new Set();
+  for (let index = 0; index < chain.length; index++) {
+    const tile = chain[index];
+    if (!tile || !Number.isInteger(tile.x) || !Number.isInteger(tile.y)
+      || tile.x < 0 || tile.x >= state.gridWidth || tile.y < 0 || tile.y >= state.gridHeight) {
+      problems.push(`coordinate at index ${index} is out of bounds`);
+      continue;
+    }
+    const key = `${tile.x},${tile.y}`;
+    if (seen.has(key)) problems.push(`revisits (${key})`);
+    seen.add(key);
+    const live = state.grid[tile.y][tile.x];
+    if (live !== tile) problems.push(`tile (${key}) is not the live state tile`);
+    if (live && isBlockedTile(live)) problems.push(`tile (${key}) is blocked`);
+    if (index > 0) {
+      const previous = chain[index - 1];
+      if (previous && Math.abs(previous.x - tile.x) <= 1 && Math.abs(previous.y - tile.y) <= 1) {
+        if (!canExtendChain(chain.slice(0, index), tile)) problems.push(`illegal value extension to ${tile.value}`);
+      } else problems.push(`non-adjacent step at index ${index}`);
+    }
+  }
+  if (!isValidChain(chain, state.minChain)) problems.push(`chain is invalid at minChain ${state.minChain}`);
+  return problems;
+}
+
 function liveChain(state, recordedTiles, move, reasons) {
   if (!Array.isArray(recordedTiles)) {
     reasons.push(`move ${move}: chain tiles missing`);
@@ -164,4 +192,4 @@ function replayRecording(candidate, recording, { expectedSeed, expectedCandidate
   }
 }
 
-module.exports = { classifyTerminal, hasLegalMove, replayRecording };
+module.exports = { classifyTerminal, hasLegalMove, policyChainProblems, replayRecording };
