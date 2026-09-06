@@ -14,10 +14,11 @@ validate an audit population or authorize a policy change.
   and historical runtime events are not inspected.
 - **Kind:** Value and transition truth under the pinned engine and chooser;
   independent game-model correctness remains owned by engine/game parity checks.
-- **Garbage tests:** A real file written from `recordSession` returns `VERIFIED`.
+- **Garbage tests:** A real nonempty file written from `recordSession` returns `VERIFIED`.
   Self-rehashed false spawn, chain, score, outcome, source, params, seed, subject,
-  empty/truncated trace, and post-terminal continuation return `UNRESOLVED`.
-- **Scope:** JSON files containing one schema-2 `recordSession` object, one
+  truncated trace, and post-terminal continuation return `UNRESOLVED`. A real
+  producer-created 1x1 no-legal session with zero moves is also `UNRESOLVED`.
+- **Scope:** JSON files containing one nonempty schema-2 `recordSession` object, one
   explicit subject object, uint32 seed, `DEFAULT_PARAMS`, and the four recorder
   code identities. Human recordings, wrapper collections, and other schemas are
   excluded.
@@ -51,8 +52,10 @@ validate an audit population or authorize a policy change.
 - **Garbage tests:** Hand controls retain two actions sharing coarse
   endpoint/length/score identity, reject a target crossing when a bomb explodes,
   return `NONE` only after exhaustion, and return `UNKNOWN` at zero/tiny node or
-  injected-time caps. The public consumer rejects a corrupted artifact and
-  retains capped positions and denominators.
+  injected-time caps. Initial/final clock faults return `UNKNOWN`. The public
+  consumer rejects a corrupted artifact, retains capped/faulted positions and
+  denominators, and does not call a different witness a miss when production
+  already wins.
 - **Scope:** Legal king-adjacent equal-or-double chains on the verified position,
   exact action identity, cloned merge/gravity/refill/tick, bomb-before-target
   terminal order, caller node/time limits. No audit corpus is sampled here.

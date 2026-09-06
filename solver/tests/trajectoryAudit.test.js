@@ -187,11 +187,73 @@ test('attribution uses offered action identity and preserves ambiguous control f
     selectedActionIdentity: 'other', offeredActionIdentities: [],
   }), 'generation');
   assert.equal(classifyAttribution(witness, { reason: 'bomb-priority' }, {
-    selectedActionIdentity: 'other', offeredActionIdentities: [],
-  }), 'control-flow');
+    selectedActionIdentity: 'other', offeredActionIdentities: [], productionImmediateWin: false,
+  }), 'unresolved');
+  assert.equal(classifyAttribution(witness, { reason: 'immediate-target-win' }, {
+    selectedActionIdentity: 'other', offeredActionIdentities: [], productionImmediateWin: false,
+  }), 'unresolved');
   assert.equal(classifyAttribution(witness, { reason: 'unexpected' }, {
     selectedActionIdentity: 'other', offeredActionIdentities: [],
   }), 'unresolved');
+});
+
+test('a different exhaustive witness is not a miss when production already wins', () => {
+  const subject = {
+    level: 9001, target: 4, tileScale: 1, moves: 1, minChain: 2,
+    gridW: 2, gridH: 2, blockers: [],
+  };
+  const session = recordSession(subject, 0);
+  const result = auditSessionArtifact(writeSession(session), subject, {
+    maxNodes: 1_000, maxElapsedMs: 100, searchNow: () => 0, replayNow: () => 0,
+  });
+  const position = result.positions[0];
+  assert.equal(position.production.transition.outcome.reason, 'target reached');
+  assert.notEqual(position.production.selectedActionIdentity, position.search.witness.actionIdentity);
+  assert.equal(position.attribution, 'production-choice');
+});
+
+test('initial and final clock faults stay UNKNOWN through search and public consumer', () => {
+  const state = stateFrom([[2, 2], [2, 2]]);
+  const initial = searchImmediateWin(state, { seed: 0, draws: 4 }, {
+    maxNodes: 100, maxElapsedMs: 100, now: () => { throw new Error('initial clock fault'); },
+  });
+  assert.equal(initial.disposition, 'UNKNOWN');
+  assert.deepEqual(initial.capReasons, ['fault']);
+  assert.equal(initial.searchElapsedMs, null);
+
+  let calls = 0;
+  const final = searchImmediateWin(state, { seed: 0, draws: 4 }, {
+    maxNodes: 0, maxElapsedMs: 100,
+    now: () => { calls += 1; if (calls === 2) throw new Error('final clock fault'); return 0; },
+  });
+  assert.equal(final.disposition, 'UNKNOWN');
+  assert.deepEqual(final.capReasons, ['fault']);
+
+  const subject = {
+    level: 9001, target: 4, tileScale: 1, moves: 1, minChain: 2,
+    gridW: 2, gridH: 2, blockers: [],
+  };
+  const consumed = auditSessionArtifact(writeSession(recordSession(subject, 0)), subject, {
+    maxNodes: 100, maxElapsedMs: 100, replayNow: () => 0,
+    searchNow: () => { throw new Error('consumer clock fault'); },
+  });
+  assert.equal(consumed.status, 'COMPLETE');
+  assert.equal(consumed.denominators.unknownPositions, consumed.denominators.positionsRequested);
+  assert.ok(consumed.positions.every(({ search }) => search.disposition === 'UNKNOWN'));
+});
+
+test('a real producer-created zero-move session is unresolved, not vacuously complete', () => {
+  const subject = {
+    level: 9999, target: 100, tileScale: 1, moves: 3, minChain: 2,
+    gridW: 1, gridH: 1, blockers: [],
+  };
+  const session = recordSession(subject, 0);
+  assert.equal(session.moves.length, 0);
+  assert.equal(session.outcome.reason, 'no valid moves');
+  assert.equal(verifySessionArtifact(writeSession(session), subject).status, 'UNRESOLVED');
+  const consumed = auditSessionArtifact(writeSession(session), subject);
+  assert.equal(consumed.status, 'UNRESOLVED');
+  assert.equal(consumed.denominators.positionsRequested, null);
 });
 
 test('public consumer admits only verified sessions and retains complete/capped/invalid denominators', () => {

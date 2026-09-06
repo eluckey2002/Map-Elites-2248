@@ -103,6 +103,7 @@ function verifySessionArtifact(artifactPath, subject) {
     delete withoutIdentity.sessionIdentity;
     same(session.sessionIdentity, identity(withoutIdentity), 'session identity', reasons);
     if (!Array.isArray(session.moves)) reasons.push('moves must be an array');
+    else if (session.moves.length === 0) reasons.push('session contains no auditable positions');
     if (reasons.length) return unresolved(reasons);
 
     const live = trackedRng(session.seed);
@@ -238,12 +239,29 @@ function searchImmediateWin(state, rngState, options = {}) {
       'maxElapsedMs',
     ),
   };
-  const startedAt = now();
-  let observedAt = startedAt;
   let nodes = 0;
   const capReasons = [];
   const testedActions = new Set();
   let witness = null;
+  let startedAt = null;
+  let observedAt = null;
+
+  function faultResult(error) {
+    return {
+      disposition: 'UNKNOWN', complete: false, witness: null,
+      nodes, actionsTested: testedActions.size,
+      testedActionIdentities: [...testedActions],
+      searchElapsedMs: startedAt === null || observedAt === null ? null : observedAt - startedAt,
+      limits, capReasons: ['fault'], fault: error.message,
+    };
+  }
+
+  try {
+    startedAt = now();
+    observedAt = startedAt;
+  } catch (error) {
+    return faultResult(error);
+  }
 
   function capped() {
     if (nodes >= limits.maxNodes) {
@@ -305,14 +323,14 @@ function searchImmediateWin(state, rngState, options = {}) {
       }
     }
   } catch (error) {
-    return {
-      disposition: 'UNKNOWN', complete: false, witness: null,
-      nodes, actionsTested: testedActions.size, searchElapsedMs: observedAt - startedAt,
-      testedActionIdentities: [...testedActions], limits, capReasons: ['fault'], fault: error.message,
-    };
+    return faultResult(error);
   }
 
-  observedAt = now();
+  try {
+    observedAt = now();
+  } catch (error) {
+    return faultResult(error);
+  }
   if (!witness && observedAt - startedAt >= limits.maxElapsedMs && !capReasons.includes('maxElapsedMs')) {
     capReasons.push('maxElapsedMs');
   }
@@ -331,10 +349,11 @@ function searchImmediateWin(state, rngState, options = {}) {
 
 function classifyAttribution(witness, decision, trace) {
   if (!witness) return null;
+  if (trace.productionImmediateWin) return 'production-choice';
   if (trace.selectedActionIdentity === witness.actionIdentity) return 'production-choice';
+  if (['bomb-priority', 'immediate-target-win'].includes(decision.reason)) return 'unresolved';
   if (trace.offeredActionIdentities.includes(witness.actionIdentity)) return 'ranking';
-  if (decision.reason === 'bomb-priority') return 'control-flow';
-  if (['normal-weighted-ranking', 'immediate-points-ranking', 'no-valid-move', 'immediate-target-win']
+  if (['normal-weighted-ranking', 'immediate-points-ranking', 'no-valid-move']
     .includes(decision.reason)) return 'generation';
   return 'unresolved';
 }
@@ -370,11 +389,18 @@ function auditSessionArtifact(artifactPath, subject, options = {}) {
       now: options.searchNow,
     });
     const selectedActionIdentity = actionIdentity(position.productionChoice);
+    const productionTransition = replayAction(
+      position.state,
+      position.productionChoice,
+      position.liveRng,
+    );
     const offeredActionIdentities = position.decision.candidates
       .map(({ chain }) => actionIdentity(chain));
     const attribution = classifyAttribution(search.witness, position.decision, {
       selectedActionIdentity,
       offeredActionIdentities,
+      productionImmediateWin: productionTransition.outcome
+        && productionTransition.outcome.outcome === 'win',
     });
     return {
       sessionIdentity: verification.session.identity,
@@ -387,6 +413,7 @@ function auditSessionArtifact(artifactPath, subject, options = {}) {
         poolType: position.decision.poolType,
         selectedActionIdentity,
         offeredActionIdentities,
+        transition: productionTransition,
       },
       search,
       attribution,
