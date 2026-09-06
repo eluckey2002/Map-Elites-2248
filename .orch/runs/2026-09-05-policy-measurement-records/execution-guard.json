@@ -1,18 +1,18 @@
 {
   "counters": {
-    "checks": 5,
+    "checks": 9,
     "owner_review_required": 0,
     "progress_required": 0,
     "status_required": 0
   },
   "marks": {
     "progress": {
-      "at": "2026-09-06T02:59:16Z",
-      "evidence": "artifact:4a8e5c23cf1b5f4b4d74ad475576b1ce0c8b97d3"
+      "at": "2026-09-06T03:02:49Z",
+      "evidence": "artifact:.orch/tickets/2026-09-05-policy-measurement-records/EDIT-001.md"
     },
     "status": {
-      "at": "2026-09-06T02:59:16Z",
-      "evidence": "commentary:eleven-document-draft-complete"
+      "at": "2026-09-06T03:02:49Z",
+      "evidence": "commentary:terminal-assembly-no-edit-complete"
     }
   },
   "run": "2026-09-05-policy-measurement-records",
