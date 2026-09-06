@@ -1,13 +1,13 @@
 ---
 id: BL-0011
-title: Shipped levels are saturated and cannot discriminate policy quality
+title: Historical claim — Shipped levels are saturated and cannot discriminate policy quality
 status: proposed
 milestone: measurement-definitions
 depends_on: []
 updated: 2026-09-05
 ---
 
-# BL-0011 — Shipped levels cannot tell a good policy from a great one
+# BL-0011 — Historical claim — Shipped levels cannot tell a good policy from a great one
 
 ## Authority
 

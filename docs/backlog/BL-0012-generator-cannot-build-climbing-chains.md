@@ -1,13 +1,13 @@
 ---
 id: BL-0012
-title: The bot's chain generator cannot build long climbing chains
+title: Historical claim — The bot's chain generator cannot build long climbing chains
 status: proposed
 milestone: policy-strategy
 depends_on: [BL-0011]
 updated: 2026-09-05
 ---
 
-# BL-0012 — The two boards where the human substantially outscores the bot
+# BL-0012 — Historical claim — The two boards where the human substantially outscores the bot
 
 ## Authority
 
