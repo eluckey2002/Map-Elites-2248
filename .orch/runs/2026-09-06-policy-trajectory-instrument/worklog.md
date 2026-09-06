@@ -35,6 +35,12 @@ needs-verify A6; A1-A5 producer checks are reusable at unchanged identities,
 not independent acceptance. Focused42/42 and full388/392 retain four known
 failure identities. One fresh code-lens/gate-check review follows.
 
+GATE-001 at0c6b250 completed with qualification FAIL: valid multi-winner
+position falsely attributed generation, legitimate zero-move artifact admitted,
+and clock fault escaped dispositions. Root accepts these three shared-cause
+groups as the one repair set; unchanged A5 evidence is reusable. REPAIR-001
+owns one8minute correction through08:42:30Z, then one affected verification.
+
 ## Failed approaches
 
 None in this delivery. Source intake already ruled out treating filtered search
@@ -46,4 +52,3 @@ Actual audit protocol/panel/seed/cost declarations and collection follow the
 accepted instrument, not this code delivery. Step4 remains blocked.
 
 ## Terminal
-
