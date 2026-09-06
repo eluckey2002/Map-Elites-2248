@@ -1,0 +1,34 @@
+POLICY-EVAL-0001 descriptive comparison v2
+fixed descriptive panels; not a population estimate or promotion result.
+executable source commit: f407d9c8e85eb407fea3cb2483c1720e7d7daaec
+measurement source identity: 8d41e1b1a766de500d6a31b85b1771398a86b99a2adebd42e749e007dffaad65; tree state: clean
+contract: 3d4cf0f65e88cb597855233738355d49bf7b4176160345a8e2346bb8e3a3935f; inputs: 1030d17804010f218b2776c0e4b3f0eeec7e2fe6d65affd1c60d5c6ad0821fbb
+
+receipt-bound: INELIGIBLE
+12 files, 12 distinct attempts, 9 cases; 0 unresolved, 0 duplicates
+reference win rate 100.0%; human win rate 96.3%
+converted wins 0; mean moves saved unavailable
+regressions 1 attempts in 1 cases
+score: matched-horizon, mixed/unknown-intent diagnostic; target disabled for bot, original B retained; percent coverage 12/12
+  1352aa7a L53 seed 10 T=101000 B=16: human win 110208/13 crossing=13; reference win 109376/12 crossing=12; diagnostic horizon-complete 114496/13 H=13; score delta -4288; percent of bot reference -3.7%
+  1c873567 L51 seed 1 T=124000 B=24: human win 127040/12 crossing=12; reference win 130240/13 crossing=13; diagnostic horizon-complete 120320/12 H=12; score delta +6720; percent of bot reference +5.6%
+  3d3ba1f0 L54 seed 1 T=150000 B=24: human win 152704/16 crossing=16; reference win 162496/16 crossing=16; diagnostic horizon-complete 142016/16 H=16; score delta +10688; percent of bot reference +7.5%
+  44d3802d L52 seed 777 T=69000 B=16: human win 69888/11 crossing=11; reference win 77248/10 crossing=10; diagnostic horizon-complete 82368/11 H=11; score delta -12480; percent of bot reference -15.2%
+  7061bbf0 L53 seed 2 T=101000 B=16: human win 101120/13 crossing=13; reference win 106432/11 crossing=11; diagnostic horizon-complete 110784/13 H=13; score delta -9664; percent of bot reference -8.7%
+  78749fc0 L51 seed 1 T=124000 B=24: human win 130496/14 crossing=14; reference win 130240/13 crossing=13; diagnostic horizon-complete 135360/14 H=14; score delta -4864; percent of bot reference -3.6%
+  7ad0978f L53 seed 10 T=101000 B=16: human win 105216/12 crossing=12; reference win 109376/12 crossing=12; diagnostic horizon-complete 109376/12 H=12; score delta -4160; percent of bot reference -3.8%
+  8ac6c9d4 L51 seed 1 T=124000 B=24: human lose 59584/24 crossing=unavailable; reference win 130240/13 crossing=13; diagnostic horizon-complete 226368/24 H=24; score delta -166784; percent of bot reference -73.7%
+  d36e875d L52 seed 777 T=114000 B=21: human win 114944/16 crossing=16; reference win 121536/19 crossing=19; diagnostic horizon-complete 83776/16 H=16; score delta +31168; percent of bot reference +37.2%
+  f0ae3e75 L52 seed 1 T=102000 B=24: human win 124864/15 crossing=15; reference win 104256/16 crossing=16; diagnostic horizon-complete 91968/15 H=15; score delta +32896; percent of bot reference +35.8%
+  3823dfce L53 seed 424242 T=126000 B=24: human win 164096/19 crossing=19; reference win 129792/15 crossing=15; diagnostic horizon-complete 149312/19 H=19; score delta +14784; percent of bot reference +9.9%
+  c50b34f8 L54 seed 424242 T=126000 B=24: human win 140544/20 crossing=20; reference win 136832/19 crossing=19; diagnostic horizon-complete 142592/20 H=20; score delta -2048; percent of bot reference -1.4%
+
+current-subject: FASTER_ON_THIS_SET
+3 files, 3 distinct attempts, 3 cases; 0 unresolved, 0 duplicates
+reference win rate 100.0%; human win rate 100.0%
+converted wins 0; mean moves saved 1.3333333333333333
+regressions 0 attempts in 0 cases
+score: matched-horizon, mixed/unknown-intent diagnostic; target disabled for bot, original B retained; percent coverage 3/3
+  31a5eae2 L56 seed 3504920448 T=108000 B=18: human win 109120/11 crossing=11; reference win 111680/12 crossing=12; diagnostic horizon-complete 60480/11 H=11; score delta +48640; percent of bot reference +80.4%
+  640f5c64 L58 seed 4255346895 T=162000 B=28: human win 170240/16 crossing=16; reference win 162112/19 crossing=19; diagnostic horizon-complete 139072/16 H=16; score delta +31168; percent of bot reference +22.4%
+  b068afb0 L57 seed 2389915636 T=129000 B=26: human win 133760/15 crossing=15; reference win 134272/15 crossing=15; diagnostic horizon-complete 115392/15 H=15; score delta +18368; percent of bot reference +15.9%

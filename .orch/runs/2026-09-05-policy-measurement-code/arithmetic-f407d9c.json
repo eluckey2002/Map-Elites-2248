@@ -1,0 +1,50 @@
+{
+  "method": "Root recomputation from raw rows without importing benchmark metrics; case means then panel means; exact known regression veto; verifies observed horizons and all winning trace end points.",
+  "source": "baseline-f407d9c.json",
+  "sourceSha256": "d1a217242b0333906af2ed5c10775cd5edcca41d647852894c9f77ef6a042966",
+  "checks": [
+    {
+      "panel": "receipt-bound",
+      "checks": true,
+      "recordings": 12,
+      "cases": 9,
+      "distinctGrids": 8,
+      "humanWinRate": 0.9629629629629629,
+      "lostReferenceWinAttempts": [
+        "recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json"
+      ],
+      "meanMovesSaved": null,
+      "caseWeightedMeanRawDelta": 682.6666666666666,
+      "caseWeightedMeanPercentOfReference": 4.1577153551513515,
+      "firstCrossingMatchesRecordedEnd": true,
+      "repeatedCases": [
+        {
+          "caseKey": "5536cbfee1bd3caaa857af9fba8a9f36d44dbaf7d00a8ed55f796973e045a82f",
+          "level": 53,
+          "seed": 10,
+          "attempts": 2
+        },
+        {
+          "caseKey": "121b79c6f926cb7fbb7a35b411034287fc7582370b1299c4a5f524034ca90a67",
+          "level": 51,
+          "seed": 1,
+          "attempts": 3
+        }
+      ]
+    },
+    {
+      "panel": "current-subject",
+      "checks": true,
+      "recordings": 3,
+      "cases": 3,
+      "distinctGrids": 3,
+      "humanWinRate": 1,
+      "lostReferenceWinAttempts": [],
+      "meanMovesSaved": 1.3333333333333333,
+      "caseWeightedMeanRawDelta": 32725.333333333332,
+      "caseWeightedMeanPercentOfReference": 39.58420260115114,
+      "firstCrossingMatchesRecordedEnd": true,
+      "repeatedCases": []
+    }
+  ]
+}
