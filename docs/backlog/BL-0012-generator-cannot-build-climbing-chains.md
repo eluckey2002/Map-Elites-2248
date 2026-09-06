@@ -14,7 +14,26 @@ updated: 2026-09-05
 This record is intent, not evidence. Proof standing lives in the
 [evidence ledger](../../EVIDENCE_LEDGER.md); nothing here upgrades a claim.
 
-## What was found, including a correction
+## Current disposition — corrected measurement
+
+All 14 fixed-inventory wins stop at first crossing. The historical full-budget
+comparison gave the bot extra moves in 11 of 12 receipt rows. Attempts are now
+weighted within nine cases; ordinary rows are current-subject replays with
+unknown historical runtime identity. See
+[CORRECTION-0005](../../EVIDENCE_LEDGER.md#correction-0005--recorded-stopping-horizons-repeats-and-provenance)
+and the [baseline](../evaluation/POLICY-EVAL-0001/baseline.md).
+
+Before HUMAN-PILOT-0002 move 20, both greedy pools omit an immediate winning
+chain found by the recording and exhaustive search. This is a generation miss
+on a human position, not the final allowed move or the bot's own trajectory.
+The scorer already values future opportunities. See
+[CORRECTION-0006](../../EVIDENCE_LEDGER.md#correction-0006--current-policy-capabilities-and-the-pilot-generation-miss).
+Step 3's bot-trajectory audit remains blocked on Step 2.
+
+## Historical account — what was found, including a correction
+
+The following account is retained history. Its broad stopping, horizon, and
+capability interpretations are superseded above.
 
 An earlier claim in this session — that the human outplays the bot by 33% —
 was **wrong, and wrong for an instructive reason**. It compared one human
@@ -40,7 +59,7 @@ live bot on the same 12 seeds: **the bot outscores the human on 12 of 12
 boards, mean +65.7%**, ranging from +6% to +280%. The bot is not weaker at
 this game. It is playing a different game, and it wins the human's game too.
 
-## What survives, and is worth acting on
+## Historical proposal — what was thought to survive
 
 One finding survives both corrections, because it is about capability rather
 than score: on 3 of the pilot's 20 moves the human's chain out-scored
@@ -66,7 +85,7 @@ idea is not re-attempted on the assumption it was never tried.
 The open question is therefore narrower: is there any position where the
 generator's blind spot costs a *win* rather than points it did not need?
 
-## Acceptance criteria
+## Historical acceptance criteria
 
 - For each of the two boards, the specific moves where the human's chain
   out-scored the bot's entire candidate pool are identified and explained.
@@ -74,7 +93,7 @@ generator's blind spot costs a *win* rather than points it did not need?
   never offered) or ranking (it was offered and scored below something else).
   The HUMAN-PILOT-0002 walk suggests generation, on 3 of 20 moves.
 
-## Current evidence
+## Historical evidence list
 
 - `node solver/human-benchmark.js` — the paired table
 - `pilots/HUMAN-PILOT-0002/` — the recorded session walked move by move
@@ -82,7 +101,7 @@ generator's blind spot costs a *win* rather than points it did not need?
   mechanism that removes off-lattice chains before the lookahead sees them
 - Session measurement: human 41.1% of chains off-lattice vs the bot's 23.9%
 
-## Next action
+## Historical next action — not authorized
 
 None authorized yet. The two boards are named and reproducible; the next step
 is a move-by-move walk of those two specifically, the same way

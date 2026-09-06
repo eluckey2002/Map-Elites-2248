@@ -28,6 +28,14 @@ As of 2026-09-05, `solver/bot.js`'s `rolloutValue` was fixed to use the bot's ow
 
 Also as of 2026-09-05, levels 54-58 ship, and two exploratory measurements bear on policy work without being admitted evidence (neither was pre-registered, so neither can back a generalizing claim). First, comparing owner play to the bot requires matching objectives: the shipped policy is target-aware immediate-finish and stops the move it crosses the target, so its score is not comparable to a human who plays on. With the target removed so both maximise score, the bot outscores the owner on all 12 recorded boards (mean +65.7%); read without that control the same data appears to show the owner ahead. `solver/human-benchmark.js` reports both arms. Second, taking the exhaustive maximum chain every move — ignoring the mergeable-sum trimming entirely — wins 12 of 12 on levels 51, 52, 53, 56 and 58 with zero lockouts, but 1 of 12 on level 54 and 6 of 12 on level 50, against the shipped bot's 108 of 120 overall. Lockouts appear past roughly 19 accumulated off-lattice tiles, which is only reached in games running past 20 moves. This does not overturn `FACT-0006`; it bounds when the lockout it describes has time to occur. `BL-0013` records the policy terms that cannot currently express any of this.
 
+The preceding policy-measurement paragraph is retained as historical context
+and is corrected by `CORRECTION-0005` through `CORRECTION-0007`. In particular,
+the recorded human wins stop at first target crossing; the +65.7% arm uses an
+unequal full-budget horizon; the current scorer already values several future
+opportunities; and RESULT-0017's cited representative is -3.5723% on disjoint
+score holdout, not -0.64%. The [Step 2 baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md)
+is the current descriptive account. RESULT-0017 remains accepted and unchanged.
+
 Two candidate remedies were priced before that retune and neither rescues the late levels on its own. Enriching the spawn pool is the wrong lever — a 76% increase in spawned value buys 13% more score (`RESULT-0006`). Enlarging the move budget works in the mid game and saturates in the late game, where the board reaches a terminal state before extra moves can be spent (`RESULT-0007`). Levels past roughly 31 are short of their targets by two to four times with no parameter fix available, so their targets are the thing that has to move.
 
 Repository baseline for this documentation run is `main` at `10a849d5336bdda89d2d3f5ed1f1ca87e536811d`, with pre-existing dirty work preserved. Recheck with `git status --short --branch` and `git log -1 --format='%H %s'`. (`.orch/runs/game-evidence-ledger-2026-08-11/worklog.md`, **State**)
@@ -831,6 +839,51 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** The correction was driven by a deterministic regression test, not by the first confirmation's outcome. The frozen seed sets were then rerun against the corrected identity; only the corrected run is accepted.
 
+### CORRECTION-0005 — Recorded stopping, horizons, repeats, and provenance
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the 2026-09-05 human/bot benchmark interpretation in the current snapshot, HANDOFF, BL-0011, and BL-0012; no recording, receipt, game result, or policy result changes
+- **statement:** All 14 winning human recordings in the fixed inventory stop on their first target crossing; the remaining receipt-bound attempt loses after its full budget. The full-budget score arm gave the bot extra moves in 11 of 12 receipt-bound comparisons, so its historical +65.7% output is not a shared-opportunity human-strength comparison. The accepted descriptive instrument instead preserves original `B` and `T` for target-game reliability/speed, uses a separately labeled target-disabled matched-human-move horizon for score, and weights attempts within each case before cases. The receipt-bound panel is 12 files, 9 cases, and 8 initialized grids; it is `INELIGIBLE` because one attempt loses a reference win. The three ordinary files are three current-subject replay cases, not historically receipted candidate evidence; their historical runtime identity remains unknown.
+- **evidence:** [`baseline-c61d443.json`](.orch/runs/2026-09-05-policy-measurement-extra-repair/baseline-c61d443.json), SHA-256 `a79fe73494dbff59dc7bc8a822c558caf18f3ce0b194412f4e02cbf38b03889e`, raw fields `dispositions`, `panels`, `rows`, `unresolved`, and `extras`; [`recording-diagnostic.json`](.orch/runs/2026-09-05-policy-grounding/recording-diagnostic.json), SHA-256 `e3a0bf010300123d9f9d77221fb181faa2625e6746f281d68b408e30622edcae`, raw fields `summary.benchmark.humanStopsOnFirstTargetCrossing`, `humanUsesLessThanFullBudget`, and `scoring.fullBudgetPct`; [`contract.md`](docs/evaluation/POLICY-EVAL-0001/contract.md), SHA-256 `3d4cf0f65e88cb597855233738355d49bf7b4176160345a8e2346bb8e3a3935f`, sections 3-6; [`inputs.json`](docs/evaluation/POLICY-EVAL-0001/inputs.json), SHA-256 `1030d17804010f218b2776c0e4b3f0eeec7e2fe6d65affd1c60d5c6ad0821fbb`; behavior source `src/game.js` SHA-256 `22ebc237b6750fff04251c1b123cc6be749b8b75f3146d6e42576c509dc97bf2` at source revision `76d4e82b967ec1370b83bd8195c646ff4c27e9e0`.
+- **proof_class:** `direct_source` for source, inventory, replay, stopping, horizon, and provenance fields; `exact_result` for deterministic descriptive arithmetic on the fixed rows. No population or human-strength inference follows.
+- **as_of:** 2026-09-05
+- **reverify:** Compare the [baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md) to the cited JSON fields and run `node --test solver/tests/humanBenchmark.test.js solver/tests/policyBenchmark.test.js`; expect 38/38 on source `c61d443...`.
+- **updated:** 2026-09-05
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This narrows historical prose; it does not alter the underlying recordings or their receipts.
+
+### CORRECTION-0006 — Current policy capabilities and the pilot generation miss
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the “no concept of building,” “no setting can produce it,” absolute trimming, and final-move explanations retained in HANDOFF, BL-0012, and BL-0013; Step 3 and policy changes excluded
+- **statement:** The current base scorer already combines immediate points, best generated next-chain points, survivor-placement value, scaled turnover, and survivor harvest value. Candidate generation is bounded before ranking, mergeable-sum preference falls back to the full path when no qualifying prefix exists, and the separate target override searches untrimmed paths. On the real HUMAN-PILOT-0002 position before recorded move 20, 23,216 points would win: the human and exhaustive search find 37,760, while the default pool tops out at 6,144 and the untrimmed greedy pool at 21,504. That is an exact generation miss on a human-reached position. It is not the level's final allowed move (`B=24`), a miss on the bot's own trajectory, or evidence that the current terms cannot value future opportunities. The bot wins in 19 moves on its own trajectory. Source review does not establish that BL-0013's proposed terms are needed or sufficient.
+- **evidence:** `solver/bot.js` SHA-256 `3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65`, symbols `DEFAULT_PARAMS`, `harvestValue`, `collectCandidates`, `chooseBaseMove`, and `immediateWinningUntrimmedCandidate`; `solver/engine.js` SHA-256 `0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873`, symbols `scoreGreedyPath`, `buildGreedyPathBeam`, and `findGreedyChains`; [`pilot-position.json`](.orch/runs/2026-09-05-policy-grounding/pilot-position.json), SHA-256 `8b81ffd5e8af13723864a58c09ade8d50af9d6ce296dcfc242a976d2374e85b2`, raw fields `budget`, `movesAlreadyUsed`, `pointsNeeded`, `humanPoints`, `maxImmediateInDefaultPool`, `maxImmediateWithOfferFull`, `exactBestPoints`, and `selected`; [`baseline-c61d443.json`](.orch/runs/2026-09-05-policy-measurement-extra-repair/baseline-c61d443.json), SHA-256 `a79fe73494dbff59dc7bc8a822c558caf18f3ce0b194412f4e02cbf38b03889e`, `rows[]` entry whose `path` has filename prefix `c50b34f8` and whose `reference.firstCrossing` is 19; source revision `76d4e82b967ec1370b83bd8195c646ff4c27e9e0`.
+- **proof_class:** `direct_source` for policy structure and fixed position fields; `exact_result` for the replayed position comparison. No bot-trajectory, whole-game benefit, or proposed-repair claim follows.
+- **as_of:** 2026-09-05
+- **reverify:** Inspect the cited symbols at their hashes and regenerate the grounding position with `.orch/runs/2026-09-05-policy-grounding/pilot-position.cjs`; do not treat that as a Step 3 bot-own-trajectory audit.
+- **updated:** 2026-09-05
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** BL-0013 stays blocked. METHOD-025 remains reserved for Step 3 under DECISION-0006.
+
+### CORRECTION-0007 — RESULT-0017 attribution and objective
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the -0.64% / t=-0.73 attribution and win-rate-saturation explanation in CURRENT, BL-0011, and BL-0013; RESULT-0017 itself remains accepted and unchanged
+- **statement:** RESULT-0017's cited archive defines fitness as paired geometric score lift against the unchanged champion. Its leading screened representative reports +3.30% on screen and -3.5723416962853825% on disjoint holdout; the other stored representatives reproduce -36.5468352175121% and -11.925220113880432%. The historical evaluator at commit `52f500c` played the full move budget. The -0.64% / t=-0.73 figure is absent from the cited archive and representative rows, and its origin remains unresolved. Current shipped-level win-rate saturation therefore does not explain RESULT-0017's score-holdout result. Neither the bounded search nor this correction establishes near-optimal weights or the need for new policy terms.
+- **evidence:** `solver/map-elites-output/archive.json`, SHA-256 `11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c`, fields `evaluation.fitnessDefinition` and `representatives`; [`archive-diagnostic.json`](.orch/runs/2026-09-05-policy-grounding/archive-diagnostic.json), SHA-256 `6bce154de924a3710188293c7f92c9728a88d153f0934b7caa74bf60a5154987`; historical `solver/policy-eval.js` at `52f500c03a11699cb6bd7c3cab7f6a232470e0dd`.
+- **proof_class:** `direct_source` for artifact identity, objective, stored rows, and historical runtime; `exact_result` for deterministic recomputation of the three holdout lifts. The missing -0.64% origin remains `unresolved`.
+- **as_of:** 2026-09-05
+- **reverify:** Recompute the stored representative score lifts with `.orch/runs/2026-09-05-policy-grounding/archive-diagnostic.cjs` and inspect `git show 52f500c:solver/policy-eval.js`.
+- **updated:** 2026-09-05
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Cite RESULT-0017 together with this correction when discussing its objective or representative performance. Do not edit RESULT-0017's accepted record or receipt.
+
 ## Assembly cut log
 
 - Omitted draft labels and repeated draft identities because the root ledger is the assembled authority surface.
@@ -838,7 +891,10 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - Omitted the failed near-target artifact because the certification worklog marks it unaccepted; the accepted lower bound remains 12,336.
 - Kept the full protocol and all 15 seeded records; no acceptance coverage was cut for length.
 
-## Resume boundary
+## Historical resume boundary — not current policy guidance
+
+These retained paragraphs predate the required policy sequence. For policy work,
+the current boundary is [BL-0014](docs/backlog/BL-0014-policy-improvement-sequence.md).
 
 Level tuning is done (`DECISION-0003`, `RESULT-0008`). Active work resumes at authoring new levels, against the design at `docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md` and the measurement harness at `solver/game-tester.js`.
 

@@ -14,7 +14,23 @@ updated: 2026-09-05
 This record is intent, not evidence. Proof standing lives in the
 [evidence ledger](../../EVIDENCE_LEDGER.md); nothing here upgrades a claim.
 
-## What was found
+## Current disposition — corrected measurement
+
+The [baseline](../evaluation/POLICY-EVAL-0001/baseline.md) separates target-game
+reliability/speed from matched-horizon score. Its receipt panel is `INELIGIBLE`
+after one lost reference win; the three ordinary current-subject cases are
+`FASTER_ON_THIS_SET` by 1.3333333333333333 moves. These are selected descriptive
+panels, not population estimates. See
+[CORRECTION-0005](../../EVIDENCE_LEDGER.md#correction-0005--recorded-stopping-horizons-repeats-and-provenance).
+
+RESULT-0017 used full-budget paired geometric score lift, not shipped-level win
+rate. Its record is unchanged; the -0.64% origin is unresolved. See
+[CORRECTION-0007](../../EVIDENCE_LEDGER.md#correction-0007--result-0017-attribution-and-objective).
+
+## Historical account — what was found
+
+The following paragraphs are retained history, not current guidance where they
+conflict with the corrections above.
 
 The bot wins essentially every shipped level. Measured this session: 100% win
 rate on levels 1-53 across a 14-level, 40-seed sample, and 71-88% on the newly
@@ -27,7 +43,7 @@ difference." On a saturated benchmark, "no difference" is also what a genuinely
 better policy would produce. The result is not wrong; its discriminating power
 is simply unknown, and nothing currently records that.
 
-## What was built in response
+## Historical account — what was built in response
 
 `solver/human-benchmark.js` — the bot replayed against all 12 recorded human
 sessions on their exact boards and seeds. This benchmark is not saturated: the
@@ -42,20 +58,20 @@ Any future claim that one policy beats another names the benchmark it was
 measured on and states that benchmark's discriminating power, rather than
 defaulting to shipped-level win rate.
 
-## Acceptance criteria
+## Historical acceptance criteria
 
 - A policy comparison run reports results on a benchmark where the incumbent
   does NOT already sit at ceiling.
 - `RESULT-0017`'s "no difference" finding is either re-run on the paired human
   benchmark or annotated with the saturation caveat.
 
-## Current evidence
+## Historical evidence list
 
 - `solver/human-benchmark.js` (12 paired boards; run it for the current table)
 - `EVIDENCE_LEDGER.md` `RESULT-0008` (every level winnable), `RESULT-0017`
 - Session measurement: levels 1-53 at 100% bot win rate, 40 seeds each
 
-## Next action
+## Historical next action — not authorized
 
 None authorized yet. The benchmark exists and runs; the decision is whether to
 re-measure the MAP-Elites comparison against it.

@@ -13,12 +13,26 @@ The known factual corrections belong to Step 2; recording this sequence does not
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
-- **At Step 2 code `ce21196`, `node --test solver/tests/*.test.js` passes 378 of 382; the same four known failures remain.** The starting `1a01263` baseline was 344/348. [Exact final evidence](.orch/runs/2026-09-05-policy-measurement-code/checks-ce21196.json) names two stale candidate receipts, a generated-view staleness check, and a date-drift check. One carries "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix". Do not clear them by re-authoring, archiving, or exempting. This is not an all-green suite or benchmark acceptance.
-- **The Step 2 benchmark is not yet accepted.** Its [final verification](.orch/runs/2026-09-05-policy-measurement-code/verification-ce21196.md) leaves all-unresolved output reporting incomplete. The benchmark-related premise bullets below are retained pending source-record corrections, not settled current evidence; use the frozen contract and source-pinned grounding report while that work remains open.
+- **The Step 2 code prerequisite is accepted, but Step 2 as a whole is not.**
+  The repaired source `c61d443...` passed independent
+  [VERIFY-002](.orch/tickets/2026-09-05-policy-measurement-extra-repair/VERIFY-002.md)
+  and was admitted at `36b0455...`. Its recorded full suite is 378/382 with
+  the same four known failures: two stale candidate receipts, generated-view
+  staleness, and date drift. Do not clear them by re-authoring, archiving, or
+  exempting. The [baseline](docs/evaluation/POLICY-EVAL-0001/baseline.md) and
+  [acceptance boundary](docs/evaluation/POLICY-EVAL-0001/measurement-acceptance.md)
+  still require final document/whole checks before Step 2 can close.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still reads PASS, 140,544 points in 20 moves — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
-- **Shipped-level win rate cannot rank two policies.** The bot wins 71-100% of every shipped level, so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
-- **The bot and a human are not playing the same game unless you make them.** The shipped policy stops the move it crosses the target; a human plays on for score. Comparing their scores without removing the target measures the objective, not the skill. `human-benchmark.js` prints both arms for this reason.
+- **Historical benchmark premise, corrected:** all 14 winning human recordings
+  stop on first target crossing. The old +65.7% bot-score statement gave the
+  bot extra moves in 11 of 12 receipt-bound comparisons. Use the original
+  target game for reliability/speed and the separately labeled matched-horizon
+  diagnostic for score; see `CORRECTION-0005` and the fixed baseline.
+- **Historical RESULT-0017 attribution, corrected:** the cited representative
+  is +3.30% on screen and -3.5723% on disjoint score holdout. The archive used
+  full-budget geometric score lift. The -0.64% / t=-0.73 origin is unresolved,
+  so win-rate saturation does not explain RESULT-0017; see `CORRECTION-0007`.
 - **Never compare one seed against a median over other seeds.** That measures the seed. Pair on identical seeds instead.
 - **`node solver/board-trace.js`** renders a recorded game as text boards with both players' chains drawn on the same position. Chain-value strings hide where the tiles are, which is the thing this game is about.
 - **`play-sessions/` is not the evidence corpus.** `tools/play-server.js` captures ordinary play there, bound to a level and a seed. `recordings/` holds receipted candidate evidence bound to a candidate identity; mixing them puts unresolvable entries where candidate resolution is expected.
