@@ -61,11 +61,14 @@ seeds, checking whether win rate actually tracks greed ratio out of sample.
   out to be three different boards. Resolving by `LEVELS.find(level)` silently
   reconstructs the wrong board for the ones that aren't the shipped level,
   diverges a few moves in, and (if nothing checks for divergence) can produce a
-  confidently wrong "final board." Resolve by the artifact's own
-  `candidateIdentity` against `solver/candidate-levels*.json`,
-  `solver/candidates-archive/`, and `solver/generated-batch*.json` first; fall
-  back to shipped `LEVELS` only when `candidateIdentity` is null (ordinary play
-  sessions have no candidate).
+  confidently wrong "final board." Resolution needs three tiers, in order: (1)
+  a `pilots/<id>/recordings/` path resolves against that pilot's own
+  `pilots/<id>/candidate.json` — `HUMAN-PILOT-0002`'s candidate identity is not
+  in any `solver/` store, only there; (2) otherwise, a non-null
+  `candidateIdentity` resolves against `solver/candidate-levels*.json`,
+  `solver/candidates-archive/`, and `solver/generated-batch*.json`; (3) a null
+  `candidateIdentity` (ordinary play sessions have no candidate) falls back to
+  shipped `LEVELS`.
 
 ## 2026-09-05: four wrong answers, and the two findings that survived
 
