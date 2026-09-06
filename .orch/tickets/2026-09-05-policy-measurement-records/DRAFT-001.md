@@ -1,7 +1,7 @@
 ---
 id: DRAFT-001
 run: 2026-09-05-policy-measurement-records
-status: ready
+status: claimed
 executor: orch-draft
 pack: orch-content-pack
 independence: gate
@@ -9,8 +9,8 @@ depends_on: []
 write_scope:
   - corrected-measurement outline bundle in the spec's eleven affected document surfaces
 bound: 15 minutes
-claimed_by: null
-claimed_at: null
+claimed_by: /root/records_draft_gpt_5_6_sol_high
+claimed_at: 2026-09-06T02:47:03Z
 ---
 
 ## Objective
@@ -24,7 +24,9 @@ This is the sole unit slot, so there are no sibling slots to duplicate.
 Read the entire .orch/runs/2026-09-05-policy-measurement-records/spec.md.
 Its evidence identities, D1-D5, binding_constraints and eleven affected
 surfaces are frozen inputs. Code predecessor is accepted at 36b0455.
-Workspace identity will be supplied absolutely in the dispatch packet.
+Workspace: /private/tmp/2248-policy-records-20260905.LA1VFm,
+branch work/policy-measurement-records-2026-09-05, base a248deb.
+Starting documents derive byte-for-byte from that commit; status is clean.
 Craft: /Users/eluckey/.orchflows/lib/packs/orch-content-pack/references/craft.md.
 Voice contract: register plain technical; person impersonal except named owner
 decisions; stance evidence-bounded, corrections explicit; cadence short
