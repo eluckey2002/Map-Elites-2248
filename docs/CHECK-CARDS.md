@@ -1038,3 +1038,70 @@ that passed while inspecting nothing.
   covered source change invalidates both commands by identity.
 - **Shipped:** pending RESULT-0026 preregistration and qualification; run
   `2026-09-02-result-0026-confirmation`, ticket `DGS-001`.
+
+### Synthetic descriptor validation artifact · HARD
+
+- **Protects:** RESULT-0029 cannot look complete when its nine-policy
+  factorial, declared level/seed cells, move traces, correctly denominated half-score
+  timing, beam-relative greed arithmetic, source identities, or self-identity
+  are missing or altered.
+- **Where:** `experiments/RESULT-0029/verify.js#validateArtifact`; exercised by
+  `solver/tests/syntheticDescriptorValidation.test.js` and used on every
+  controls or confirmation artifact before interpretation.
+- **Level:** artifact, subject, cell, and serialized move record. A strategic
+  mistake shared by every otherwise-valid record can slip between these
+  levels.
+- **Kind:** shape and value. It verifies completeness, legal field values,
+  source binding, and exact arithmetic from recorded move traces. Predictive
+  meaning and human-strategy interpretation belong to the registered research
+  protocol and its evidence review.
+- **Scope:** JSON schema version 1 for RESULT-0029 `fixture`, `controls`, and
+  `confirmation` artifacts; exactly nine policies formed by crossing three
+  greed centers with three timing slopes (not a MAP-Elites archive grid);
+  declared non-negative integer shipped-level and seed lists; one cell per
+  subject/level/seed; move points, beam maximum,
+  realized ratio, target ratio, terminal outcome/reason, full move budget,
+  half-score timing, current hashes of `run.js`, `verify.js`, `engine.js`,
+  `experiment-guard.js`, and `game.js`. It excludes browser play, human
+  recordings, exhaustive chain enumeration, production policy evaluation,
+  prior result artifacts, and any undeclared level or seed.
+- **Reads own output?:** yes — it reads the result-local runner's serialized
+  artifact. This is bounded by recomputing summaries from the stored move
+  trace, checking current source files independently, and permanently sending
+  a serialized one-field tampered twin through the same CLI verifier.
+- **Sampling memory:** the verifier remembers only the levels and seeds
+  declared inside the one artifact and requires their full Cartesian product.
+  Silence means an undeclared board was never inspected, not that it is clean
+  or represented; repository-wide burned/reserved ranges remain owned by
+  `experiments/SEEDS.md` and the protocol.
+- **Does NOT catch:**
+  1. Whether `findGreedyChains` approximates the exhaustive best legal chain
+     closely enough for the original human greed-ratio definition.
+  2. Whether the two realized descriptors predict win/loss on unseen levels;
+     that is the successor protocol's empirical verdict.
+  3. A bug shared by the engine and the move trace produced from it.
+  4. Whether greed center and timing slope span useful ranges on any population
+     outside the artifact's declared cells.
+  5. Whether either descriptor is fun, interpretable to players, suitable for
+     MAP-Elites, or worthy of production formalization.
+  6. Dishonest protocol authorship before its commit; Git proves ordering, not
+     what an author already knew.
+- **Crafted-bypass test:**
+  `solver/tests/syntheticDescriptorValidation.test.js`, case `the production
+  verifier reads a serialized artifact and rejects its one-field tampered
+  twin`; it first asserts the good artifact exits 0, changes one cell's outcome
+  without updating the artifact identity, then requires the same verifier CLI
+  to exit nonzero with `artifact identity mismatch`.
+- **Retires:** NO — the repository experiment gate checks protocol/report
+  lifecycle, citations, hashes, and commit ancestry, but it does not inspect
+  RESULT-0029's policy factorial, per-cell coverage, or descriptor arithmetic.
+- **Enforcement:** blocking for RESULT-0029 artifact validity only. It does not
+  make an empirical verdict SUPPORTED; the registered research decision rule
+  owns that promotion.
+- **Decay:** run
+  `node --test solver/tests/syntheticDescriptorValidation.test.js`; the test
+  also runs under `node --test solver/tests/*.test.js`, and any covered source
+  change invalidates stored artifacts by hash.
+- **Shipped:** 2026-09-07 · run
+  `2026-09-07T01-48-15Z-synthetic-descriptor-validation-harness`, ticket
+  `SDV-001`.
