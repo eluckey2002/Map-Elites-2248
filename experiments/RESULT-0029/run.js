@@ -7,6 +7,7 @@ const path = require('node:path');
 const { LEVELS } = require('../../src/game');
 const {
   applyGravity,
+  canExtendChain,
   chainMultiplier,
   chainValue,
   checkBombs,
@@ -14,6 +15,7 @@ const {
   executeChain,
   findGreedyChains,
   isValidChain,
+  isBlockedTile,
   makeRng,
   spawnNewTiles,
   tickBlockers,
@@ -34,6 +36,7 @@ const SOURCE_PATHS = Object.freeze([
   'solver/engine.js',
   'solver/experiment-guard.js',
   'src/game.js',
+  'tools/verify-experiments.js',
 ]);
 
 function canonicalJson(value) {
@@ -80,6 +83,40 @@ function scheduledGreedTarget(subject, moveNumber, moveBudget) {
 
 function chainKey(chain) {
   return chain.map(({ x, y }) => `${x},${y}`).join('|');
+}
+
+function canReachMinimum(state, chain) {
+  if (chain.length >= state.minChain) return true;
+  const last = chain.at(-1);
+  for (let dy = -1; dy <= 1; dy++) {
+    for (let dx = -1; dx <= 1; dx++) {
+      if (dx === 0 && dy === 0) continue;
+      const x = last.x + dx;
+      const y = last.y + dy;
+      if (x < 0 || x >= state.gridWidth || y < 0 || y >= state.gridHeight) continue;
+      const neighbor = state.grid[y][x];
+      if (!neighbor || isBlockedTile(neighbor) || chain.includes(neighbor)) continue;
+      if (!canExtendChain(chain, neighbor)) continue;
+      if (canReachMinimum(state, [...chain, neighbor])) return true;
+    }
+  }
+  return false;
+}
+
+function hasAnyValidMove(state) {
+  for (const row of state.grid) {
+    for (const tile of row) {
+      if (tile && !isBlockedTile(tile) && canReachMinimum(state, [tile])) return true;
+    }
+  }
+  return false;
+}
+
+function resolveEmptyCandidatePool(state) {
+  if (hasAnyValidMove(state)) {
+    throw new Error('bounded candidate pool exhausted before an actual game terminal');
+  }
+  return 'no valid moves';
 }
 
 function candidatePool(state) {
@@ -158,7 +195,7 @@ function playSynthetic(levelData, seed, subject) {
   while (state.moves < state.maxMoves) {
     const selection = chooseSyntheticMove(state, subject, state.moves + 1, state.maxMoves);
     if (!selection) {
-      reason = 'no valid moves';
+      reason = resolveEmptyCandidatePool(state);
       break;
     }
     const scoreBefore = state.score;
@@ -296,6 +333,7 @@ module.exports = {
   chooseSyntheticMove,
   objectIdentity,
   playSynthetic,
+  resolveEmptyCandidatePool,
   runCells,
   scheduledGreedTarget,
   sourceHashes,

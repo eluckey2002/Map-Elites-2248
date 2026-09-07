@@ -21,183 +21,6 @@ function sameValue(actual, expected, label) {
   assert(Math.abs(actual - expected) <= 1e-12, `${label} mismatch: ${actual} != ${expected}`);
 }
 
-function mean(values) {
-  return values.reduce((sum, value) => sum + value, 0) / values.length;
-}
-
-function summarizeSubjectDescriptors(cells) {
-  const bySubject = new Map(SUBJECTS.map(({ id }) => [id, []]));
-  for (const cell of cells) {
-    assert(bySubject.has(cell.subjectId), `analysis cell has unknown subject ${cell.subjectId}`);
-    assert(Number.isFinite(cell.halfScoreMove), 'analysis cell has invalid half-score move');
-    assert(Number.isFinite(cell.meanBeamGreedRatio), 'analysis cell has invalid beam greed ratio');
-    bySubject.get(cell.subjectId).push(cell);
-  }
-  return SUBJECTS.map((subject) => {
-    const rows = bySubject.get(subject.id);
-    assert(rows.length > 0, `analysis has no cells for subject ${subject.id}`);
-    return {
-      ...subject,
-      halfScoreMove: mean(rows.map((cell) => cell.halfScoreMove)),
-      meanBeamGreedRatio: mean(rows.map((cell) => cell.meanBeamGreedRatio)),
-    };
-  });
-}
-
-function conditionalSpans(rows, fixedField, fixedValues, orderedField, orderedValues, descriptor) {
-  return fixedValues.map((fixedValue) => {
-    const values = orderedValues.map((orderedValue) => {
-      const row = rows.find((candidate) => (
-        candidate[fixedField] === fixedValue && candidate[orderedField] === orderedValue
-      ));
-      assert(row, `missing factorial policy ${fixedField}=${fixedValue} ${orderedField}=${orderedValue}`);
-      return row[descriptor];
-    });
-    return {
-      fixedValue,
-      values,
-      span: values.at(-1) - values[0],
-      monotonic: values.slice(1).every((value, index) => value > values[index]),
-    };
-  });
-}
-
-function factorDiagnostics(cells) {
-  assert(Array.isArray(cells) && cells.length > 0, 'factor diagnostics require cells');
-  const rows = summarizeSubjectDescriptors(cells);
-  const greedSlices = conditionalSpans(
-    rows,
-    'timingSlope',
-    [...new Set(SUBJECTS.map(({ timingSlope }) => timingSlope))],
-    'greedCenter',
-    [...new Set(SUBJECTS.map(({ greedCenter }) => greedCenter))],
-    'meanBeamGreedRatio',
-  );
-  const timingSlices = conditionalSpans(
-    rows,
-    'greedCenter',
-    [...new Set(SUBJECTS.map(({ greedCenter }) => greedCenter))],
-    'timingSlope',
-    [...new Set(SUBJECTS.map(({ timingSlope }) => timingSlope))],
-    'halfScoreMove',
-  );
-  const outcomes = { win: 0, lose: 0 };
-  for (const cell of cells) {
-    assert(Object.hasOwn(outcomes, cell.outcome), `analysis cell has invalid outcome ${cell.outcome}`);
-    outcomes[cell.outcome] += 1;
-  }
-  const summarizeSlices = (slices) => ({
-    totalSlices: slices.length,
-    monotonicSlices: slices.filter(({ monotonic }) => monotonic).length,
-    minimumSpan: Math.min(...slices.map(({ span }) => span)),
-    slices,
-  });
-  return {
-    policies: SUBJECTS.length,
-    outcomes,
-    greed: summarizeSlices(greedSlices),
-    timing: summarizeSlices(timingSlices),
-    subjectMeans: rows,
-  };
-}
-
-function aggregateSubjectLevels(cells) {
-  assert(Array.isArray(cells) && cells.length > 0, 'prediction analysis requires cells');
-  const subjectOrder = new Map(SUBJECTS.map(({ id }, index) => [id, index]));
-  const groups = new Map();
-  for (const cell of cells) {
-    assert(subjectOrder.has(cell.subjectId), `analysis cell has unknown subject ${cell.subjectId}`);
-    assert(Number.isSafeInteger(cell.level), 'analysis cell has invalid level');
-    assert(Number.isFinite(cell.halfScoreMove), 'analysis cell has invalid half-score move');
-    assert(Number.isFinite(cell.meanBeamGreedRatio), 'analysis cell has invalid beam greed ratio');
-    assert(['win', 'lose'].includes(cell.outcome), `analysis cell has invalid outcome ${cell.outcome}`);
-    const key = `${cell.level}:${cell.subjectId}`;
-    if (!groups.has(key)) groups.set(key, []);
-    groups.get(key).push(cell);
-  }
-  const levels = [...new Set(cells.map(({ level }) => level))].sort((a, b) => a - b);
-  assert(levels.length >= 3, 'leave-one-level-out analysis requires at least three levels');
-  assert(groups.size === levels.length * SUBJECTS.length, 'prediction analysis lacks full level/policy coverage');
-  const rows = [...groups.entries()].map(([key, group]) => ({
-    key,
-    level: group[0].level,
-    subjectId: group[0].subjectId,
-    halfScoreMove: mean(group.map((cell) => cell.halfScoreMove)),
-    meanBeamGreedRatio: mean(group.map((cell) => cell.meanBeamGreedRatio)),
-    winRate: mean(group.map((cell) => (cell.outcome === 'win' ? 1 : 0))),
-  }));
-  rows.sort((a, b) => a.level - b.level || subjectOrder.get(a.subjectId) - subjectOrder.get(b.subjectId));
-  return { levels, rows };
-}
-
-function knnPredictions(train, test, features, k) {
-  const centers = Object.fromEntries(features.map((feature) => [
-    feature,
-    mean(train.map((row) => row[feature])),
-  ]));
-  const scales = Object.fromEntries(features.map((feature) => {
-    const variance = mean(train.map((row) => (row[feature] - centers[feature]) ** 2));
-    return [feature, Math.sqrt(variance) || 1];
-  }));
-  return test.map((row) => {
-    const neighbors = train.map((candidate) => ({
-      key: candidate.key,
-      winRate: candidate.winRate,
-      distance: features.reduce((sum, feature) => (
-        sum + (((row[feature] - candidate[feature]) / scales[feature]) ** 2)
-      ), 0),
-    })).sort((a, b) => a.distance - b.distance || a.key.localeCompare(b.key));
-    return mean(neighbors.slice(0, k).map(({ winRate }) => winRate));
-  });
-}
-
-function brierScore(rows, predictions) {
-  return mean(rows.map((row, index) => (predictions[index] - row.winRate) ** 2));
-}
-
-function leaveOneLevelOutBrier(cells, requestedK = 5) {
-  const { levels, rows } = aggregateSubjectLevels(cells);
-  assert(Number.isSafeInteger(requestedK) && requestedK > 0, 'k must be a positive integer');
-  const scores = {
-    baseRate: [],
-    halfScoreMove: [],
-    meanBeamGreedRatio: [],
-    joint: [],
-  };
-  const perLevel = [];
-  let effectiveK = null;
-  for (const level of levels) {
-    const train = rows.filter((row) => row.level !== level);
-    const test = rows.filter((row) => row.level === level);
-    const k = Math.min(requestedK, train.length);
-    effectiveK = effectiveK === null ? k : Math.min(effectiveK, k);
-    const predictions = {
-      baseRate: test.map(() => mean(train.map(({ winRate }) => winRate))),
-      halfScoreMove: knnPredictions(train, test, ['halfScoreMove'], k),
-      meanBeamGreedRatio: knnPredictions(train, test, ['meanBeamGreedRatio'], k),
-      joint: knnPredictions(train, test, ['halfScoreMove', 'meanBeamGreedRatio'], k),
-    };
-    const levelScores = Object.fromEntries(Object.entries(predictions).map(([name, values]) => [
-      name,
-      brierScore(test, values),
-    ]));
-    for (const name of Object.keys(scores)) scores[name].push(levelScores[name]);
-    perLevel.push({ level, brier: levelScores });
-  }
-  const brier = Object.fromEntries(Object.entries(scores).map(([name, values]) => [name, mean(values)]));
-  return {
-    levels: levels.length,
-    observations: rows.length,
-    k: effectiveK,
-    brier,
-    improvement: {
-      jointVsBaseRate: brier.baseRate - brier.joint,
-      jointVsBestSingle: Math.min(brier.halfScoreMove, brier.meanBeamGreedRatio) - brier.joint,
-    },
-    perLevel,
-  };
-}
-
 function validateRegistration(artifact) {
   if (artifact.kind === 'fixture') {
     assert(artifact.registration?.exploratory === true, 'fixture must be explicitly exploratory');
@@ -247,6 +70,9 @@ function validateArtifact(artifact) {
     assert(Number.isFinite(cell.score) && cell.score >= 0, `${key}: invalid score`);
     assert(Number.isSafeInteger(cell.moves) && cell.moves >= 0, `${key}: invalid moves`);
     assert(Number.isSafeInteger(cell.moveBudget) && cell.moveBudget >= cell.moves && cell.moveBudget > 0, `${key}: invalid move budget`);
+    assert((cell.outcome === 'win') === (cell.reason === 'target reached'), `${key}: outcome/reason mismatch`);
+    assert(cell.reason !== 'out of moves' || cell.moves === cell.moveBudget, `${key}: out-of-moves count mismatch`);
+    assert(cell.reason !== 'no valid moves' || cell.moves < cell.moveBudget, `${key}: no-valid-moves count mismatch`);
     assert(Array.isArray(cell.moveTrace) && cell.moveTrace.length === cell.moves, `${key}: move trace coverage mismatch`);
     for (const move of cell.moveTrace) {
       assert(Number.isFinite(move.points) && move.points >= 0, `${key}: invalid move points`);
@@ -259,7 +85,6 @@ function validateArtifact(artifact) {
     assert(summary.finalScore === cell.score, `${key}: score does not match trace`);
     sameValue(cell.halfScoreMove, summary.halfScoreMove, `${key}: half-score move`);
     sameValue(cell.meanBeamGreedRatio, summary.meanBeamGreedRatio, `${key}: mean beam greed ratio`);
-    assert(cell.outcome !== 'win' || cell.reason === 'target reached', `${key}: win reason mismatch`);
   }
 
   for (const subject of SUBJECTS) {
@@ -282,27 +107,11 @@ function readArtifact(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
 
-function analyzeArtifact(artifact) {
-  const verification = validateArtifact(artifact);
-  return {
-    verification,
-    analysis: {
-      factor: factorDiagnostics(artifact.cells),
-      prediction: leaveOneLevelOutBrier(artifact.cells),
-    },
-  };
-}
-
 function main(argv = process.argv.slice(2)) {
   const index = argv.indexOf('--artifact');
   const file = index === -1 ? null : argv[index + 1];
   if (!file) throw new Error('usage: verify.js --artifact <path>');
-  const artifact = readArtifact(file);
-  if (argv.includes('--analysis')) {
-    console.log(JSON.stringify(analyzeArtifact(artifact), null, 2));
-    return;
-  }
-  const result = validateArtifact(artifact);
+  const result = validateArtifact(readArtifact(file));
   console.log(`PASS ${result.artifactIdentity} ${result.cells} cells`);
 }
 
@@ -316,9 +125,6 @@ if (require.main === module) {
 }
 
 module.exports = {
-  analyzeArtifact,
-  factorDiagnostics,
-  leaveOneLevelOutBrier,
   readArtifact,
   validateArtifact,
 };

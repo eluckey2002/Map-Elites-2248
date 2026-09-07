@@ -55,32 +55,55 @@ a 3x3 MAP-Elites archive.
   uncovered remainder, or decision gap
 - budget spent: one baseline suite and bounded source investigation
 
-### 2 — Red/green tracer and analysis freeze
+### 2 — Red/green tracer
 
-- red: the first focused run failed on the missing RESULT-0029 module; the
-  widening pass then failed specifically on absent `factorDiagnostics`,
-  `leaveOneLevelOutBrier`, and the production `--analysis` path
-- green: the real chooser, serializer, validator, crafted tampered twin,
-  conditional factor diagnostics, seed-aggregated leave-one-level-out Brier
-  analysis, and real verifier CLI now pass 11 focused tests
+- red: the first focused run failed on the missing RESULT-0029 module
+- green: the real chooser, serializer, validator, crafted tampered twin, and
+  real verifier CLI passed the initial focused harness tests
 - terminology clarification: the frozen spec's “3x3 synthetic policy family”
   means a nine-policy factorial manipulation, not a MAP-Elites archive grid;
   mutable run records and user-facing checks now use the unambiguous term
-- no evidence run: all new analysis cases are hand-built fixtures on synthetic
-  level identifiers; no shipped level, control seed, or confirmation seed ran
+- no evidence run: every case is a hand-built fixture on a synthetic level
+  identifier; no shipped level, control seed, or confirmation seed ran
 - gate-card comparison exposed and closed one boundary defect: reportable
   artifacts now reject unknown shipped levels while exploratory fixtures may
   retain synthetic level identifiers
 
+### 3 — Fixed-revision gate and correction
+
+- reviewed revision: `28c34dd92988be83fb43c49eee358a70b7d291a6`
+  through one fresh-context orch-code-pack lens
+- accepted findings: bounded-policy exhaustion was mislabeled as actual move
+  exhaustion; contradictory terminal records passed; predictive analysis had
+  widened beyond the frozen code spec; `tools/verify-experiments.js` was absent
+  from source closure
+- correction: actual move exhaustion now crosses an exact existence check and
+  bounded-policy exhaustion aborts; terminal outcome/reason/count invariants
+  fail closed; the predictive subsystem was removed; source closure includes
+  the hashing helper
+- focused correction evidence: 10/10 tests pass, both Node files parse,
+  `git diff --check` passes, and protected-path diff is empty
+- workflow exception: two required `orch-worker` repair dispatches returned no
+  progress and left HEAD/worktree clean; each was retired after state checks,
+  then the foreground writer applied the single correction pass inline
+
 ## Blame classes
 
-[]
+- child under-delivered: repair dispatch
+  `synthetic_descriptor_repair_gpt_5_6_sol_high` returned no work inside its
+  bound and left the fixed revision clean
+- child under-delivered: replacement repair dispatch
+  `synthetic_descriptor_repair_gpt_5_6_sol_high_1` returned no work inside its
+  bound and left the fixed revision clean
 
 ## Failed approaches
 
 - The handed-off unique-cell premise is not used. Exact denominator
   recomputation in `INV-0001` showed the prior script divided by moves used,
   not move budget, and weakened the joint-cell interpretation.
+- A predictive k-nearest-neighbor/Brier subsystem was added during the code
+  widening pass before the successor research protocol existed. The fixed
+  revision review rejected it as out of scope, and the correction removed it.
 
 ## Queued scope
 

@@ -12,6 +12,7 @@ const {
 const {
   SUBJECTS,
   chooseSyntheticMove,
+  resolveEmptyCandidatePool,
   scheduledGreedTarget,
   sourceHashes,
   summarizeEpisode,
@@ -19,8 +20,6 @@ const {
   writeNew,
 } = require('../../experiments/RESULT-0029/run');
 const {
-  factorDiagnostics,
-  leaveOneLevelOutBrier,
   validateArtifact,
 } = require('../../experiments/RESULT-0029/verify');
 
@@ -67,57 +66,6 @@ test('the exported nine-policy factorial is exactly three greed centers by three
   assert.ok(SUBJECTS.every((subject) => /^[a-f0-9]{12}$/.test(subject.id)));
 });
 
-function analysisCells({ duplicateSeeds = false, collapseGreed = false } = {}) {
-  const levels = [901, 902, 903];
-  const seeds = duplicateSeeds ? [11, 12] : [11];
-  return SUBJECTS.flatMap((subject) => levels.flatMap((level) => seeds.map((seed) => {
-    const meanBeamGreedRatio = collapseGreed ? 0.6 : subject.greedCenter;
-    const halfScoreMove = 0.5 + (0.2 * subject.timingSlope);
-    const wins = subject.greedCenter >= 0.6 && subject.timingSlope >= 0;
-    return {
-      subjectId: subject.id,
-      level,
-      seed,
-      outcome: wins ? 'win' : 'lose',
-      halfScoreMove,
-      meanBeamGreedRatio,
-    };
-  })));
-}
-
-test('factor diagnostics expose realized conditional spans without calling them an archive grid', () => {
-  const diagnostics = factorDiagnostics(analysisCells());
-
-  assert.equal(diagnostics.policies, 9);
-  assert.equal(diagnostics.outcomes.win, 4 * 3);
-  assert.equal(diagnostics.outcomes.lose, 5 * 3);
-  assert.equal(diagnostics.greed.monotonicSlices, 3);
-  assert.equal(diagnostics.greed.totalSlices, 3);
-  assert.equal(diagnostics.greed.minimumSpan, 0.5);
-  assert.equal(diagnostics.timing.monotonicSlices, 3);
-  assert.equal(diagnostics.timing.totalSlices, 3);
-  assert.ok(Math.abs(diagnostics.timing.minimumSpan - 0.1) <= 1e-12);
-
-  const collapsed = factorDiagnostics(analysisCells({ collapseGreed: true }));
-  assert.equal(collapsed.greed.monotonicSlices, 0);
-  assert.equal(collapsed.greed.minimumSpan, 0);
-});
-
-test('leave-one-level-out prediction aggregates repeated seeds before scoring', () => {
-  const single = leaveOneLevelOutBrier(analysisCells());
-  const duplicated = leaveOneLevelOutBrier(analysisCells({ duplicateSeeds: true }));
-
-  assert.deepEqual(single, duplicated);
-  assert.equal(single.levels, 3);
-  assert.equal(single.observations, 27);
-  assert.equal(single.k, 5);
-  for (const name of ['baseRate', 'halfScoreMove', 'meanBeamGreedRatio', 'joint']) {
-    assert.ok(Number.isFinite(single.brier[name]));
-    assert.ok(single.brier[name] >= 0 && single.brier[name] <= 1);
-  }
-  assert.equal(single.perLevel.length, 3);
-});
-
 test('the real bounded candidate seam selects deterministic legal prefixes at different greed centers', () => {
   const level = {
     level: 999,
@@ -143,6 +91,31 @@ test('the real bounded candidate seam selects deterministic legal prefixes at di
   assert.ok(low.beamGreedRatio >= 0 && high.beamGreedRatio <= 1);
 });
 
+test('empty bounded-policy output is distinguished from actual game move exhaustion', () => {
+  const level = {
+    level: 999,
+    target: Infinity,
+    tileScale: 1,
+    moves: 5,
+    minChain: 3,
+    gridW: 2,
+    gridH: 2,
+    blockers: [],
+  };
+  const playable = createLevelState(level, () => 0);
+  assert.throws(() => resolveEmptyCandidatePool(playable), /bounded candidate pool exhausted/);
+
+  const dead = createLevelState(level, () => 0);
+  [2, 4, 8, 16].forEach((value, index) => {
+    dead.grid[Math.floor(index / 2)][index % 2].value = value;
+  });
+  assert.equal(resolveEmptyCandidatePool(dead), 'no valid moves');
+});
+
+test('source closure includes the hashing implementation used to build it', () => {
+  assert.match(sourceHashes()['tools/verify-experiments.js'], /^[a-f0-9]{16}$/);
+});
+
 function fixtureArtifact() {
   const level = 999;
   const seed = 7;
@@ -156,7 +129,7 @@ function fixtureArtifact() {
       level,
       seed,
       outcome: index % 2 ? 'lose' : 'win',
-      reason: index % 2 ? 'out of moves' : 'target reached',
+      reason: index % 2 ? 'no valid moves' : 'target reached',
       score: 30 + index,
       moves: 2,
       moveBudget: 10,
@@ -202,29 +175,6 @@ test('the production verifier reads a serialized artifact and rejects its one-fi
   assert.match(bad.stderr, /artifact identity mismatch/);
 });
 
-test('the production verifier exposes the frozen factor and held-out analysis path', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'synthetic-descriptor-analysis-'));
-  const artifactPath = path.join(dir, 'analysis.json');
-  const base = fixtureArtifact();
-  const levels = [997, 998, 999];
-  const artifact = rehash(base, {
-    levels,
-    cells: base.cells.flatMap((cell) => levels.map((level) => ({ ...cell, level }))),
-  });
-  fs.writeFileSync(artifactPath, `${JSON.stringify(artifact, null, 2)}\n`);
-
-  const result = spawnSync(process.execPath, [VERIFIER, '--artifact', artifactPath, '--analysis'], {
-    encoding: 'utf8',
-  });
-
-  assert.equal(result.status, 0, result.stderr);
-  const output = JSON.parse(result.stdout);
-  assert.equal(output.verification.cells, 27);
-  assert.equal(output.analysis.factor.policies, 9);
-  assert.equal(output.analysis.prediction.observations, 27);
-  assert.equal(output.analysis.prediction.levels, 3);
-});
-
 test('artifact validation fails closed on malformed coverage, values, sources, and identity', () => {
   const valid = fixtureArtifact();
   assert.doesNotThrow(() => validateArtifact(valid));
@@ -235,6 +185,20 @@ test('artifact validation fails closed on malformed coverage, values, sources, a
     { exploratory: false, protocol: 'RESULT-0029', protocolCommit: 'a'.repeat(40) },
   );
   assert.throws(() => validateArtifact(unknownShippedLevel), /unknown shipped level/);
+
+  const loseWithWinReason = rehash(valid, {
+    cells: valid.cells.map((cell, index) => (
+      index === 0 ? { ...cell, outcome: 'lose', reason: 'target reached' } : cell
+    )),
+  });
+  assert.throws(() => validateArtifact(loseWithWinReason), /outcome\/reason mismatch/);
+
+  const earlyOutOfMoves = rehash(valid, {
+    cells: valid.cells.map((cell, index) => (
+      index === 1 ? { ...cell, reason: 'out of moves' } : cell
+    )),
+  });
+  assert.throws(() => validateArtifact(earlyOutOfMoves), /out-of-moves count mismatch/);
 
   const cases = [
     rehash(valid, { cells: valid.cells.slice(1) }),

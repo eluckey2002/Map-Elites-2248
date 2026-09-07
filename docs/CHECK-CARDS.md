@@ -1062,9 +1062,10 @@ that passed while inspecting nothing.
   subject/level/seed; move points, beam maximum,
   realized ratio, target ratio, terminal outcome/reason, full move budget,
   half-score timing, current hashes of `run.js`, `verify.js`, `engine.js`,
-  `experiment-guard.js`, and `game.js`. It excludes browser play, human
-  recordings, exhaustive chain enumeration, production policy evaluation,
-  prior result artifacts, and any undeclared level or seed.
+  `experiment-guard.js`, `game.js`, and `tools/verify-experiments.js`. It
+  excludes browser play, human recordings, exhaustive chain enumeration,
+  production policy evaluation, prior result artifacts, and any undeclared
+  level or seed.
 - **Reads own output?:** yes — it reads the result-local runner's serialized
   artifact. This is bounded by recomputing summaries from the stored move
   trace, checking current source files independently, and permanently sending
