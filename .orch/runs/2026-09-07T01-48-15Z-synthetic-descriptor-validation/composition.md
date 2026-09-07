@@ -19,15 +19,15 @@ entry: named
 2. `validation`
    - unit: `orch-deliver`
    - pack: `orch-research-pack`
-   - spec: deferred; draft and stamp it only after `harness` returns its exact
-     committed result identity.
+   - spec: `.orch/runs/2026-09-07T23-15-28Z-synthetic-descriptor-validation-study/spec.md`
    - binding: Freeze the predecessor revision into a complete RESULT-0029
      protocol, commit it before controls, run each allowed dataset once, and
      synthesize the predeclared verdict without changing executable behavior.
 
 ## Edges
 
-- `seq`: `harness` result identity and verification become
+- `seq`: harness result `7f9caf7bdd5769ce27630b36d4bce3090c45b6a6`
+  and its 371/367/four-known-failure verification become
   `validation.evidence`.
 
 ## Invariants
@@ -51,8 +51,8 @@ entry: named
 ## Done check
 
 PASS only when a fresh invocation at the terminal revision: validates the
-committed RESULT-0029 artifact and registration ancestry; reproduces exact 3x3
-subject and level-by-seed coverage; proves greed-center and timing-slope
+committed RESULT-0029 artifact and registration ancestry; reproduces exact
+nine-policy-factorial and level-by-seed coverage; proves greed-center and timing-slope
 controls did not collapse; reproduces the frozen out-of-sample prediction
 verdict and every guard outcome; rejects a one-field tampered artifact through
 the same verifier; reports the four baseline failures unchanged by identity;
