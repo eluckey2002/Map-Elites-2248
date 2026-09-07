@@ -113,3 +113,13 @@ a 3x3 MAP-Elites archive.
   direct-source reporting task, not synthetic evidence.
 
 ## Terminal
+
+- status: complete
+- code result identity: `7f9caf7bdd5769ce27630b36d4bce3090c45b6a6`
+- focused verification: 10/10 pass
+- full-suite verification: 371 tests / 367 pass / the same four named failures
+- baseline arithmetic correction: the frozen 361/357 total omitted the ten new
+  passing tests; regression standing is unchanged by failure identity
+- gate-check: PROCEED
+- protected surfaces: unchanged
+- evidence standing: harness only; no control or confirmation outcomes exist
