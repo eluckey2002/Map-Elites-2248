@@ -181,26 +181,28 @@ function groupedMeans(rows, field) {
   });
 }
 
-function predictionMetrics(cells, requestedK = 5) {
-  const { levels, rows } = aggregateSubjectLevels(cells);
-  assert(Number.isSafeInteger(requestedK) && requestedK > 0, 'k must be a positive integer');
+function heldOutPrediction(rows, foldField, requestedK) {
   const modelFeatures = {
     halfScoreMove: ['halfScoreMove'],
     meanBeamGreedRatio: ['meanBeamGreedRatio'],
     joint: ['halfScoreMove', 'meanBeamGreedRatio'],
   };
-  const perLevel = [];
+  const foldValues = [...new Set(rows.map((row) => row[foldField]))].sort((a, b) => (
+    typeof a === 'number' ? a - b : a.localeCompare(b)
+  ));
+  assert(foldValues.length >= 3, `leave-one-${foldField}-out analysis requires at least three folds`);
+  const perFold = [];
   const scoreSets = { baseRate: [], halfScoreMove: [], meanBeamGreedRatio: [], joint: [] };
   const invalidFolds = { halfScoreMove: [], meanBeamGreedRatio: [], joint: [] };
   let effectiveK = null;
 
-  for (const level of levels) {
-    const train = rows.filter((row) => row.level !== level);
-    const test = rows.filter((row) => row.level === level);
+  for (const foldValue of foldValues) {
+    const train = rows.filter((row) => row[foldField] !== foldValue);
+    const test = rows.filter((row) => row[foldField] === foldValue);
     const k = Math.min(requestedK, train.length);
     effectiveK = effectiveK === null ? k : Math.min(effectiveK, k);
     const fold = {
-      level,
+      [foldField]: foldValue,
       brier: {
         baseRate: brier(test, test.map(() => mean(train.map(({ winRate }) => winRate)))),
       },
@@ -210,25 +212,42 @@ function predictionMetrics(cells, requestedK = 5) {
       const model = modelPredictions(train, test, features, k);
       if (!model.valid) {
         fold.brier[name] = null;
-        invalidFolds[name].push({ level, zeroVariance: model.zeroVariance });
+        invalidFolds[name].push({ [foldField]: foldValue, zeroVariance: model.zeroVariance });
       } else {
         fold.brier[name] = brier(test, model.predictions);
         scoreSets[name].push(fold.brier[name]);
       }
     }
-    perLevel.push(fold);
+    perFold.push(fold);
   }
 
-  const overall = Object.fromEntries(Object.entries(scoreSets).map(([name, values]) => [
+  const scores = Object.fromEntries(Object.entries(scoreSets).map(([name, values]) => [
     name,
     name !== 'baseRate' && invalidFolds[name].length ? null : mean(values),
   ]));
-  const allPredictorsValid = Object.values(invalidFolds).every((folds) => folds.length === 0);
-  const levelWins = allPredictorsValid
-    ? perLevel.filter(({ brier: scores }) => (
-      scores.joint < Math.min(scores.halfScoreMove, scores.meanBeamGreedRatio)
-    )).length
-    : null;
+  const valid = Object.values(invalidFolds).every((folds) => folds.length === 0);
+  return {
+    folds: foldValues.length,
+    observations: rows.length,
+    k: effectiveK,
+    brier: scores,
+    gains: valid ? {
+      jointVsBaseRate: scores.baseRate - scores.joint,
+      jointVsBestSingle: Math.min(scores.halfScoreMove, scores.meanBeamGreedRatio) - scores.joint,
+    } : null,
+    jointWins: valid ? perFold.filter(({ brier: fold }) => (
+      fold.joint < Math.min(fold.halfScoreMove, fold.meanBeamGreedRatio)
+    )).length : null,
+    invalidFolds,
+    perFold,
+  };
+}
+
+function predictionMetrics(cells, requestedK = 5) {
+  const { levels, rows } = aggregateSubjectLevels(cells);
+  assert(Number.isSafeInteger(requestedK) && requestedK > 0, 'k must be a positive integer');
+  const levelHoldout = heldOutPrediction(rows, 'level', requestedK);
+  const policyHoldout = heldOutPrediction(rows, 'subjectId', requestedK);
   const outcomesByLevel = levels.map((level) => {
     const levelCells = cells.filter((cell) => cell.level === level);
     return {
@@ -243,14 +262,11 @@ function predictionMetrics(cells, requestedK = 5) {
     cells: cells.length,
     levels: levels.length,
     observations: rows.length,
-    k: effectiveK,
-    brier: overall,
-    gains: allPredictorsValid ? {
-      jointVsBaseRate: overall.baseRate - overall.joint,
-      jointVsBestSingle: Math.min(overall.halfScoreMove, overall.meanBeamGreedRatio) - overall.joint,
-    } : null,
-    jointLevelWins: levelWins,
-    invalidFolds,
+    k: levelHoldout.k,
+    brier: levelHoldout.brier,
+    gains: levelHoldout.gains,
+    jointLevelWins: levelHoldout.jointWins,
+    invalidFolds: levelHoldout.invalidFolds,
     outcomeSupport: {
       wins,
       losses: cells.length - wins,
@@ -268,9 +284,19 @@ function predictionMetrics(cells, requestedK = 5) {
         Math.max(...rows.map((row) => row.meanBeamGreedRatio)),
       ],
     },
-    perLevel,
+    perLevel: levelHoldout.perFold,
     perPolicy: groupedMeans(rows, 'subjectId'),
     levelMeans: groupedMeans(rows, 'level'),
+    policyHoldout: {
+      folds: policyHoldout.folds,
+      observations: policyHoldout.observations,
+      k: policyHoldout.k,
+      brier: policyHoldout.brier,
+      gains: policyHoldout.gains,
+      jointPolicyWins: policyHoldout.jointWins,
+      invalidFolds: policyHoldout.invalidFolds,
+      perPolicy: policyHoldout.perFold,
+    },
     terminalReasons: countBy(cells.map(({ reason }) => reason)),
   };
 }

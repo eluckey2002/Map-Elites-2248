@@ -104,7 +104,7 @@ test('registered factor metrics expose all conditional spans and detect collapse
   assert.equal(collapsed.greed.minimumSpan, 0);
 });
 
-test('registered prediction aggregates seeds before deterministic level-held-out scoring', () => {
+test('registered prediction aggregates seeds before level- and policy-held-out scoring', () => {
   const single = predictionMetrics(analysisCells());
   const duplicated = predictionMetrics(analysisCells({ duplicateSeeds: true }));
   assert.deepEqual(single.brier, duplicated.brier);
@@ -118,6 +118,11 @@ test('registered prediction aggregates seeds before deterministic level-held-out
   assert.equal(duplicated.cells, single.cells * 2);
   assert.equal(single.k, 5);
   assert.equal(single.perLevel.length, 3);
+  assert.deepEqual(single.policyHoldout, duplicated.policyHoldout);
+  assert.equal(single.policyHoldout.folds, 9);
+  assert.equal(single.policyHoldout.observations, 27);
+  assert.equal(single.policyHoldout.perPolicy.length, 9);
+  assert.equal(single.policyHoldout.k, 5);
   assert.deepEqual(Object.keys(single.brier), [
     'baseRate',
     'halfScoreMove',
