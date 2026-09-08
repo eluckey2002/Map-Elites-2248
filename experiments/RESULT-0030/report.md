@@ -75,15 +75,14 @@ Available control diagnostics:
   `target reached`
 - policy means and all six manipulation slices:
   `evidence/controls-analysis.json`
-- control command wall time observed by the execution tool: approximately 6.5
-  seconds; this timing is not embedded in the frozen artifact
+- wall-clock runtime: `UNRECORDED`; the frozen artifact carries no timing and
+  the protocol forbids reconstructing a durable value from an uncaptured clock
 
 Unavailable confirmation diagnostics include per-policy and per-level means,
 descriptor ranges, terminal reasons, every primary Brier loss and gain, the
-level-held-out comparisons, and the policy-held-out diagnostic. The failed
-confirmation invocation's tool-observed wall time was approximately 1.2
-seconds, but the artifact-free runner does not preserve a durable timing or
-failing-cell identity.
+level-held-out comparisons, and the policy-held-out diagnostic. The
+artifact-free runner preserves neither durable timing nor the failing cell's
+identity.
 
 ## Attempt register
 
