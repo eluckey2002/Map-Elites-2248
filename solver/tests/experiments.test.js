@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { execFileSync } = require('node:child_process');
+const { execFileSync, spawnSync } = require('node:child_process');
 const path = require('node:path');
 const {
   addedIn, assessExperiments, assessProtocolLifecycle, declaredChecks, isStrictAncestor,
@@ -165,6 +165,7 @@ const fsx = require('node:fs');
 const REPORT_COMMIT = '1fe26ee87a889d13d6c48159eef054f767feaedf';
 const PROTOCOL_COMMIT = 'b09737b58e30e9263bb1ccc82c605a22f5f8b8ab';
 const PRE_PROTOCOL_COMMIT = '52f500c03a11699cb6bd7c3cab7f6a232470e0dd';
+const NEW_EXPERIMENT = path.join(ROOT, 'tools', 'new-experiment.js');
 
 function liveResult(id) {
   const found = readLedgerResults(fsx.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8'))
@@ -293,6 +294,43 @@ test('LIVE: version freeze is enforced while registered, and against what the ar
   // and the positive control: the same clause green when the hash matches
   const honest = { status: 'registered', version_freeze: { 'solver/bot.js': sha16(path.join(ROOT, 'solver/bot.js')) } };
   assert.deepEqual(assessVersionFreeze(result, honest, []), []);
+});
+
+test('the registration command rejects a malformed draft freeze before commit', () => {
+  const root = fsx.mkdtempSync(path.join(os.tmpdir(), 'experiment-draft-'));
+  const frozen = path.join(root, 'solver', 'bot.js');
+  const protocol = path.join(root, 'experiments', 'RESULT-0001', 'protocol.md');
+  fsx.mkdirSync(path.dirname(frozen), { recursive: true });
+  fsx.mkdirSync(path.dirname(protocol), { recursive: true });
+  fsx.writeFileSync(frozen, 'module.exports = 1;\n');
+  const exact = sha16(frozen);
+  const writeProtocol = (hash) => fsx.writeFileSync(protocol, [
+    '---',
+    'result: RESULT-0001',
+    'status: registered',
+    'version_freeze:',
+    `  solver/bot.js: ${hash}`,
+    '---',
+    '',
+    '# complete draft',
+    '',
+  ].join('\n'));
+
+  writeProtocol(exact);
+  const good = spawnSync(process.execPath, [
+    NEW_EXPERIMENT, '--check', 'RESULT-0001', '--root', root,
+  ], { encoding: 'utf8' });
+  assert.equal(good.status, 0, good.stderr);
+  assert.match(good.stdout, /DRAFT OK/);
+
+  const malformed = `${exact}f`;
+  assert.equal(malformed.length, 17, 'the planted RESULT-0029 fault must be one extra hex character');
+  writeProtocol(malformed);
+  const bad = spawnSync(process.execPath, [
+    NEW_EXPERIMENT, '--check', 'RESULT-0001', '--root', root,
+  ], { encoding: 'utf8' });
+  assert.notEqual(bad.status, 0);
+  assert.match(bad.stderr, /must be exactly 16 lowercase hexadecimal characters/);
 });
 
 // ---------------------------------------------------------------------------

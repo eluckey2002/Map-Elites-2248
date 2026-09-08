@@ -820,6 +820,53 @@ that passed while inspecting nothing.
   registration commit apart from `status:`. Mutation check 2026-09-02:
   removing only the rewrite comparison turns exactly that test red.
 
+### pre-registration-draft-freeze-verifies · HARD
+
+- **Protects:** A protocol cannot be committed with the exact RESULT-0029
+  defect: a manually transcribed first-16 source hash containing a seventeenth
+  hexadecimal character, or any other listed hash that already disagrees with
+  the file it claims to freeze.
+- **Where:** `tools/new-experiment.js#checkDraftProtocol`, exposed by
+  `node tools/new-experiment.js --check RESULT-NNNN`.
+- **Level:** protocol file, frontmatter field, and named source file. A missing
+  dependency that was never listed slips between the source files inspected.
+- **Kind:** shape and value. It checks draft identity, registered lifecycle,
+  nonempty freeze, exact 16-character lowercase-hex shape, file existence, and
+  current SHA-256 prefix. Scientific meaning and source-set completeness remain
+  owned by protocol review and the result-local artifact verifier.
+- **Scope:** one uncommitted `experiments/RESULT-NNNN/protocol.md`; every entry
+  in its `version_freeze`; regular files reachable by those repository-relative
+  names; an optional alternate root used by the permanent isolated test. It
+  excludes protocol prose, seeds, thresholds, dependency discovery, Git
+  ordering/history, artifacts, reports, and files absent from the freeze list.
+- **Reads own output?:** the `--check` invocation writes nothing and reads the
+  author's live draft plus current files. The same script's separate creation
+  mode can generate a template and uses the shared `sha16` implementation; the
+  history-aware runtime guard independently rechecks registered files but
+  shares that hash helper.
+- **Sampling memory:** n/a — exhaustive over the draft's declared freeze; silence
+  about an undeclared file means it was never inspected.
+- **Does NOT catch:** an incomplete freeze list; a scientifically weak or
+  already-informed protocol; an honest draft changed after this check but
+  before commit; a shared defect in `sha16`; path aliases or semantic changes
+  that preserve bytes; any post-registration rewrite or history problem.
+- **Crafted-bypass test:** `solver/tests/experiments.test.js`, case `the
+  registration command rejects a malformed draft freeze before commit`; it
+  first sends an exact real-file hash through the public CLI, appends exactly
+  one hexadecimal character, proves the planted value is 17 characters, and
+  requires the same CLI to exit nonzero.
+- **Retires:** manual visual counting and copy-checking of `version_freeze`
+  values before registration; the runtime gate remains because this check does
+  not own Git history or execution-time drift.
+- **Enforcement:** blocking only when explicitly invoked before the registration
+  commit; the successor RESULT-0030 protocol requires it. It is not a second CI
+  gate.
+- **Decay:** the focused experiment test runs under the full Node suite; every
+  future registration can invoke the same public command against its real
+  draft.
+- **Shipped:** pending run `20260908T083200Z-descriptor-smell-recovery`, ticket
+  `DSR-001`.
+
 ### reported-protocol-lifecycle-is-complete · HARD
 
 - **Protects:** a finished, ledger-admitted experiment cannot retain

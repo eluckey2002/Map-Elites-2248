@@ -9,7 +9,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
-const { addedIn, sha16 } = require('./verify-experiments.js');
+const {
+  addedIn, freezeProblem, parseFrontmatter, sha16,
+} = require('./verify-experiments.js');
 
 const ROOT = path.join(__dirname, '..');
 const FROZEN_BY_DEFAULT = ['solver/bot.js', 'solver/engine.js', 'solver/policy-eval.js', 'src/game.js'];
@@ -18,8 +20,52 @@ function git(args) {
   return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();
 }
 
-function main() {
-  const resultId = process.argv[2];
+function flagValue(argv, name) {
+  const index = argv.indexOf(name);
+  return index === -1 ? null : argv[index + 1];
+}
+
+function checkDraftProtocol(resultId, { root = ROOT } = {}) {
+  if (!resultId || !/^RESULT-\d+$/.test(resultId)) {
+    throw new Error(`expected RESULT-NNNN, got ${JSON.stringify(resultId)}`);
+  }
+  const rel = path.join('experiments', resultId, 'protocol.md');
+  const protocol = path.join(root, rel);
+  if (!fs.existsSync(protocol)) throw new Error(`no protocol draft at ${rel}`);
+  const front = parseFrontmatter(fs.readFileSync(protocol, 'utf8'));
+  if (!front) throw new Error(`${rel} has no frontmatter`);
+  if (front.result !== resultId) throw new Error(`${rel} declares ${front.result}, not ${resultId}`);
+  if (front.status !== 'registered') throw new Error(`${rel} status must be registered before registration`);
+  const emptiness = freezeProblem(front.version_freeze);
+  if (emptiness) throw new Error(`${rel} ${emptiness}`);
+
+  for (const [file, expected] of Object.entries(front.version_freeze)) {
+    if (!/^[a-f0-9]{16}$/.test(expected)) {
+      throw new Error(`${file} freeze must be exactly 16 lowercase hexadecimal characters, got ${JSON.stringify(expected)}`);
+    }
+    const target = path.join(root, file);
+    if (!fs.existsSync(target)) throw new Error(`${file} does not exist under the draft root`);
+    const actual = sha16(target);
+    if (actual !== expected) throw new Error(`${file} is ${actual}, draft freezes ${expected}`);
+  }
+  return { files: Object.keys(front.version_freeze).length, protocol: rel, resultId };
+}
+
+function main(argv = process.argv.slice(2)) {
+  if (argv[0] === '--check') {
+    const resultId = argv[1];
+    const root = flagValue(argv, '--root') || ROOT;
+    try {
+      const checked = checkDraftProtocol(resultId, { root });
+      console.log(`DRAFT OK ${checked.resultId} ${checked.files} frozen files`);
+    } catch (error) {
+      console.error(`DRAFT INVALID: ${error.message}`);
+      process.exitCode = 1;
+    }
+    return;
+  }
+
+  const resultId = argv[0];
   if (!resultId || !/^RESULT-\d+$/.test(resultId)) {
     console.error('usage: node tools/new-experiment.js RESULT-NNNN');
     process.exitCode = 1;
@@ -79,4 +125,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { FROZEN_BY_DEFAULT };
+module.exports = { FROZEN_BY_DEFAULT, checkDraftProtocol };
