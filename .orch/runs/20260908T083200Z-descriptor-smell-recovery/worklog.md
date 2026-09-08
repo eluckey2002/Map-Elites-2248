@@ -27,6 +27,12 @@ Acceptance is frozen as `DSR-DRAFT-01`, `DSR-HOLDOUT-02`,
    seam, calculator diagnostics, guidance, negative tests, and check card form
    one fixed-revision behavior and share a write scope. All five acceptance
    criteria are covered; uncovered remainder and decision gap are empty.
+3. `DSR-001` returned at code revision `6c61d96`. Its public draft checker
+   accepts the exact real-file freeze and rejects the planted 17-character
+   hash; its calculator exposes both level- and policy-held-out diagnostics;
+   and protocol authority is singular. Focused tests pass 45/45. The full suite
+   remains 371/375 with exactly the four frozen failures. Protected paths match
+   `9d125e8` and `git diff --check` is clean.
 
 ## Blame classes
 
@@ -34,11 +40,13 @@ Acceptance is frozen as `DSR-DRAFT-01`, `DSR-HOLDOUT-02`,
 
 ## Failed approaches
 
-[]
+- The first nine-level policy-holdout assertion still generated the helper's
+  default three-level fixture. The allowed correction pass made levels an
+  explicit helper input, observed the intended red `3 !== 9`, then restored
+  green at the registered 81-unit denominator.
 
 ## Queued scope
 
 []
 
 ## Terminal
-
