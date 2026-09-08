@@ -1,0 +1,441 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0031",
+  "kind": "confirmation-analysis",
+  "inputArtifactIdentity": "b41eb7cb4f67a54ba24792dcf1d29844a57e0cca2981f7b3503c518dfb145aca",
+  "protocolCommit": "7129f014e8756b9fb8bd116d20c0fbc8a4db2f10",
+  "analyzerIdentity": "680498d5ea5ff4f59fabc40ee2f374cbc3569e5343324d4350c55b4d8b7b9d36",
+  "metrics": {
+    "cells": 972,
+    "levels": 9,
+    "observations": 81,
+    "k": 5,
+    "brier": {
+      "baseRate": 0.1605456247142204,
+      "halfScoreMove": 0.15263031550068593,
+      "meanBeamGreedRatio": 0.1410905349794239,
+      "joint": 0.1372290809327846
+    },
+    "gains": {
+      "jointVsBaseRate": 0.0233165437814358,
+      "jointVsBestSingle": 0.00386145404663929
+    },
+    "jointLevelWins": 5,
+    "invalidFolds": {
+      "halfScoreMove": [],
+      "meanBeamGreedRatio": [],
+      "joint": []
+    },
+    "outcomeSupport": {
+      "wins": 236,
+      "losses": 736,
+      "winFraction": 0.24279835390946503,
+      "mixedLevels": 7,
+      "byLevel": [
+        {
+          "level": 1,
+          "outcomes": {
+            "win": 108
+          },
+          "mixed": false
+        },
+        {
+          "level": 11,
+          "outcomes": {
+            "lose": 60,
+            "win": 48
+          },
+          "mixed": true
+        },
+        {
+          "level": 20,
+          "outcomes": {
+            "lose": 94,
+            "win": 14
+          },
+          "mixed": true
+        },
+        {
+          "level": 26,
+          "outcomes": {
+            "lose": 99,
+            "win": 9
+          },
+          "mixed": true
+        },
+        {
+          "level": 31,
+          "outcomes": {
+            "lose": 90,
+            "win": 18
+          },
+          "mixed": true
+        },
+        {
+          "level": 46,
+          "outcomes": {
+            "lose": 105,
+            "win": 3
+          },
+          "mixed": true
+        },
+        {
+          "level": 51,
+          "outcomes": {
+            "lose": 85,
+            "win": 23
+          },
+          "mixed": true
+        },
+        {
+          "level": 54,
+          "outcomes": {
+            "lose": 108
+          },
+          "mixed": false
+        },
+        {
+          "level": 56,
+          "outcomes": {
+            "lose": 95,
+            "win": 13
+          },
+          "mixed": true
+        }
+      ]
+    },
+    "descriptorRanges": {
+      "halfScoreMove": [
+        0.05666666666666668,
+        0.5267857142857143
+      ],
+      "meanBeamGreedRatio": [
+        0.18266426619483536,
+        1
+      ]
+    },
+    "perLevel": [
+      {
+        "level": 1,
+        "brier": {
+          "baseRate": 0.7256515775034292,
+          "halfScoreMove": 0.6491666666666668,
+          "meanBeamGreedRatio": 0.7407716049382715,
+          "joint": 0.7962345679012345
+        }
+      },
+      {
+        "level": 11,
+        "brier": {
+          "baseRate": 0.24436299725651583,
+          "halfScoreMove": 0.2815740740740741,
+          "meanBeamGreedRatio": 0.15601851851851853,
+          "joint": 0.20203703703703704
+        }
+      },
+      {
+        "level": 20,
+        "brier": {
+          "baseRate": 0.05804719650205761,
+          "halfScoreMove": 0.07209876543209875,
+          "meanBeamGreedRatio": 0.05762345679012347,
+          "joint": 0.020493827160493826
+        }
+      },
+      {
+        "level": 26,
+        "brier": {
+          "baseRate": 0.05224542395404663,
+          "halfScoreMove": 0.0516358024691358,
+          "meanBeamGreedRatio": 0.01895061728395062,
+          "joint": 0.03537037037037036
+        }
+      },
+      {
+        "level": 31,
+        "brier": {
+          "baseRate": 0.07369362997256515,
+          "halfScoreMove": 0.06697530864197532,
+          "meanBeamGreedRatio": 0.02453703703703704,
+          "joint": 0.012530864197530862
+        }
+      },
+      {
+        "level": 46,
+        "brier": {
+          "baseRate": 0.06468755358367624,
+          "halfScoreMove": 0.058518518518518525,
+          "meanBeamGreedRatio": 0.04555555555555556,
+          "joint": 0.040185185185185185
+        }
+      },
+      {
+        "level": 51,
+        "brier": {
+          "baseRate": 0.10006349665637862,
+          "halfScoreMove": 0.11459876543209876,
+          "meanBeamGreedRatio": 0.0862037037037037,
+          "joint": 0.062067901234567895
+        }
+      },
+      {
+        "level": 54,
+        "brier": {
+          "baseRate": 0.0746099108367627,
+          "halfScoreMove": 0.05188271604938273,
+          "meanBeamGreedRatio": 0.09638888888888891,
+          "joint": 0.06194444444444444
+        }
+      },
+      {
+        "level": 56,
+        "brier": {
+          "baseRate": 0.05154883616255144,
+          "halfScoreMove": 0.02722222222222222,
+          "meanBeamGreedRatio": 0.04376543209876544,
+          "joint": 0.00419753086419753
+        }
+      }
+    ],
+    "perPolicy": [
+      {
+        "subjectId": "09d25e7061e3",
+        "observations": 9,
+        "halfScoreMove": 0.24656703164805016,
+        "meanBeamGreedRatio": 0.9058813301231381,
+        "winRate": 0.574074074074074
+      },
+      {
+        "subjectId": "0c5aeb1ce2d4",
+        "observations": 9,
+        "halfScoreMove": 0.24097026259063295,
+        "meanBeamGreedRatio": 0.6655592333613867,
+        "winRate": 0.19444444444444445
+      },
+      {
+        "subjectId": "0e75cff2d5c1",
+        "observations": 9,
+        "halfScoreMove": 0.2806311238487164,
+        "meanBeamGreedRatio": 0.6017056409926981,
+        "winRate": 0.14814814814814814
+      },
+      {
+        "subjectId": "1cbbbe96a5e9",
+        "observations": 9,
+        "halfScoreMove": 0.2911883328434255,
+        "meanBeamGreedRatio": 0.8685294646045203,
+        "winRate": 0.4629629629629629
+      },
+      {
+        "subjectId": "29fb2e15560f",
+        "observations": 9,
+        "halfScoreMove": 0.22821422447579856,
+        "meanBeamGreedRatio": 0.43292567250872394,
+        "winRate": 0.1111111111111111
+      },
+      {
+        "subjectId": "87d50f9ae4aa",
+        "observations": 9,
+        "halfScoreMove": 0.34482449049578684,
+        "meanBeamGreedRatio": 0.5600713792861282,
+        "winRate": 0.1111111111111111
+      },
+      {
+        "subjectId": "c9b9494e9245",
+        "observations": 9,
+        "halfScoreMove": 0.33057208994709,
+        "meanBeamGreedRatio": 0.8003485470052866,
+        "winRate": 0.3611111111111111
+      },
+      {
+        "subjectId": "e8c4b78e80af",
+        "observations": 9,
+        "halfScoreMove": 0.29511690427199677,
+        "meanBeamGreedRatio": 0.36810591350732724,
+        "winRate": 0.1111111111111111
+      },
+      {
+        "subjectId": "f067c9548f9c",
+        "observations": 9,
+        "halfScoreMove": 0.43655472271213014,
+        "meanBeamGreedRatio": 0.31836512127308925,
+        "winRate": 0.1111111111111111
+      }
+    ],
+    "levelMeans": [
+      {
+        "level": 1,
+        "observations": 9,
+        "halfScoreMove": 0.09592592592592593,
+        "meanBeamGreedRatio": 0.6006526857799067,
+        "winRate": 1
+      },
+      {
+        "level": 11,
+        "observations": 9,
+        "halfScoreMove": 0.32275132275132273,
+        "meanBeamGreedRatio": 0.6145393269986337,
+        "winRate": 0.4444444444444444
+      },
+      {
+        "level": 20,
+        "observations": 9,
+        "halfScoreMove": 0.36703703703703705,
+        "meanBeamGreedRatio": 0.6010745462101372,
+        "winRate": 0.12962962962962965
+      },
+      {
+        "level": 26,
+        "observations": 9,
+        "halfScoreMove": 0.3078703703703704,
+        "meanBeamGreedRatio": 0.6177568552046189,
+        "winRate": 0.08333333333333334
+      },
+      {
+        "level": 31,
+        "observations": 9,
+        "halfScoreMove": 0.2861111111111111,
+        "meanBeamGreedRatio": 0.6256446726472439,
+        "winRate": 0.16666666666666666
+      },
+      {
+        "level": 46,
+        "observations": 9,
+        "halfScoreMove": 0.2911522633744856,
+        "meanBeamGreedRatio": 0.6191354990243831,
+        "winRate": 0.027777777777777776
+      },
+      {
+        "level": 51,
+        "observations": 9,
+        "halfScoreMove": 0.345679012345679,
+        "meanBeamGreedRatio": 0.6167894357942297,
+        "winRate": 0.21296296296296297
+      },
+      {
+        "level": 54,
+        "observations": 9,
+        "halfScoreMove": 0.29128086419753085,
+        "meanBeamGreedRatio": 0.6262890112806533,
+        "winRate": 0
+      },
+      {
+        "level": 56,
+        "observations": 9,
+        "halfScoreMove": 0.3868312757201646,
+        "meanBeamGreedRatio": 0.5996102697224921,
+        "winRate": 0.12037037037037036
+      }
+    ],
+    "policyHoldout": {
+      "folds": 9,
+      "observations": 81,
+      "k": 5,
+      "brier": {
+        "baseRate": 0.14501439614769088,
+        "halfScoreMove": 0.10022290809327847,
+        "meanBeamGreedRatio": 0.186920438957476,
+        "joint": 0.05741426611796982
+      },
+      "gains": {
+        "jointVsBaseRate": 0.08760013002972106,
+        "jointVsBestSingle": 0.04280864197530865
+      },
+      "jointPolicyWins": 8,
+      "invalidFolds": {
+        "halfScoreMove": [],
+        "meanBeamGreedRatio": [],
+        "joint": []
+      },
+      "perPolicy": [
+        {
+          "subjectId": "09d25e7061e3",
+          "brier": {
+            "baseRate": 0.23834555041152264,
+            "halfScoreMove": 0.2141666666666667,
+            "meanBeamGreedRatio": 0.28645061728395066,
+            "joint": 0.11916666666666664
+          }
+        },
+        {
+          "subjectId": "0c5aeb1ce2d4",
+          "brier": {
+            "baseRate": 0.13876162765775035,
+            "halfScoreMove": 0.1130864197530864,
+            "meanBeamGreedRatio": 0.08891975308641978,
+            "joint": 0.05435185185185184
+          }
+        },
+        {
+          "subjectId": "0e75cff2d5c1",
+          "brier": {
+            "baseRate": 0.1128472222222222,
+            "halfScoreMove": 0.04435185185185185,
+            "meanBeamGreedRatio": 0.1412345679012346,
+            "joint": 0.019845679012345675
+          }
+        },
+        {
+          "subjectId": "1cbbbe96a5e9",
+          "brier": {
+            "baseRate": 0.1926922582304527,
+            "halfScoreMove": 0.15506172839506172,
+            "meanBeamGreedRatio": 0.12175925925925925,
+            "joint": 0.09617283950617285
+          }
+        },
+        {
+          "subjectId": "29fb2e15560f",
+          "brier": {
+            "baseRate": 0.12071330589849108,
+            "halfScoreMove": 0.10592592592592592,
+            "meanBeamGreedRatio": 0.1466666666666667,
+            "joint": 0
+          }
+        },
+        {
+          "subjectId": "87d50f9ae4aa",
+          "brier": {
+            "baseRate": 0.12071330589849108,
+            "halfScoreMove": 0.03209876543209876,
+            "meanBeamGreedRatio": 0.23604938271604933,
+            "joint": 0.02135802469135803
+          }
+        },
+        {
+          "subjectId": "c9b9494e9245",
+          "brier": {
+            "baseRate": 0.1396296832133059,
+            "halfScoreMove": 0.08228395061728395,
+            "meanBeamGreedRatio": 0.42120370370370375,
+            "joint": 0.07694444444444444
+          }
+        },
+        {
+          "subjectId": "e8c4b78e80af",
+          "brier": {
+            "baseRate": 0.12071330589849108,
+            "halfScoreMove": 0.06262345679012345,
+            "meanBeamGreedRatio": 0.13333333333333336,
+            "joint": 0.01777777777777778
+          }
+        },
+        {
+          "subjectId": "f067c9548f9c",
+          "brier": {
+            "baseRate": 0.12071330589849108,
+            "halfScoreMove": 0.09240740740740741,
+            "meanBeamGreedRatio": 0.10666666666666672,
+            "joint": 0.1111111111111111
+          }
+        }
+      ]
+    },
+    "terminalReasons": {
+      "no valid moves": 378,
+      "out of moves": 358,
+      "target reached": 236
+    }
+  },
+  "analysisIdentity": "3e59e6074bcc316ec338d41f08063f1698ca73bcbde3a4005fe9bdc449765b39"
+}
