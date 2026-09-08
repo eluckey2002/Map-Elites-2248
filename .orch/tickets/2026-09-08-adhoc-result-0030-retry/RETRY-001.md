@@ -1,7 +1,7 @@
 ---
 id: RETRY-001
 run: 2026-09-08-adhoc-result-0030-retry
-status: claimed
+status: complete
 executor: orch-tdd
 pack: orch-code-pack
 independence: gate
@@ -59,8 +59,33 @@ verdict, feedback, risks.
 
 ## Result
 
+**Status:** complete
+
+**Result commit:** `77bb0bb9b791c4cf3d12c99b3c3ee83bc02e1459`
+
+**Changed artifacts:** RESULT-0030 runner/verifier/calculator, focused test
+bindings, live Check Card, and this ticket.
+
 ## Verification
+
+1. `NORMALIZED COPY PASS`: each RESULT-0030 source equals its reviewed
+   RESULT-0029 counterpart after result-id normalization.
+2. Focused tests: 13/13 pass through RESULT-0030 paths.
+3. The production RESULT-0030 CLI without registration exits nonzero before
+   output; no result artifact exists.
+4. The Check Card names RESULT-0030 as live and RESULT-0029 as invalidated
+   before compute; gate-check disposition is PROCEED for the identity-only
+   migration.
+5. Baseline-to-result diff is empty for RESULT-0029, every protected project
+   surface, ledger, and CURRENT; `git diff --check` passes.
 
 ## Feedback
 
+- Duplication is intentional custody: the invalidated RESULT-0029 source and
+  protocol remain reproducible while RESULT-0030 receives a distinct identity.
+
 ## Risks
+
+- Future changes must not update both result directories as if they were one
+  live abstraction. RESULT-0029 is historical; RESULT-0030 is the only live
+  harness.
