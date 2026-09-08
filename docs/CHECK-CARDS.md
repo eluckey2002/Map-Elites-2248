@@ -864,8 +864,8 @@ that passed while inspecting nothing.
 - **Decay:** the focused experiment test runs under the full Node suite; every
   future registration can invoke the same public command against its real
   draft.
-- **Shipped:** pending run `20260908T083200Z-descriptor-smell-recovery`, ticket
-  `DSR-001`.
+- **Shipped:** 2026-09-08 in run
+  `20260908T083200Z-descriptor-smell-recovery`, ticket `DSR-001`.
 
 ### reported-protocol-lifecycle-is-complete · HARD
 

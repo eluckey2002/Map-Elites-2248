@@ -72,8 +72,11 @@ test('the exported nine-policy factorial is exactly three greed centers by three
   assert.ok(SUBJECTS.every((subject) => /^[a-f0-9]{12}$/.test(subject.id)));
 });
 
-function analysisCells({ duplicateSeeds = false, collapseGreed = false } = {}) {
-  const levels = [901, 902, 903];
+function analysisCells({
+  duplicateSeeds = false,
+  collapseGreed = false,
+  levels = [901, 902, 903],
+} = {}) {
   const seeds = duplicateSeeds ? [11, 12] : [11];
   return SUBJECTS.flatMap((subject) => levels.flatMap((level) => seeds.map((seed) => {
     const meanBeamGreedRatio = collapseGreed ? 0.6 : subject.greedCenter;
@@ -105,22 +108,23 @@ test('registered factor metrics expose all conditional spans and detect collapse
 });
 
 test('registered prediction aggregates seeds before level- and policy-held-out scoring', () => {
-  const single = predictionMetrics(analysisCells());
-  const duplicated = predictionMetrics(analysisCells({ duplicateSeeds: true }));
+  const levels = Array.from({ length: 9 }, (_, index) => 901 + index);
+  const single = predictionMetrics(analysisCells({ levels }));
+  const duplicated = predictionMetrics(analysisCells({ duplicateSeeds: true, levels }));
   assert.deepEqual(single.brier, duplicated.brier);
   assert.deepEqual(single.gains, duplicated.gains);
   assert.deepEqual(single.perLevel, duplicated.perLevel);
   assert.deepEqual(single.perPolicy, duplicated.perPolicy);
   assert.deepEqual(single.levelMeans, duplicated.levelMeans);
-  assert.equal(single.levels, 3);
-  assert.equal(single.observations, 27);
-  assert.equal(duplicated.observations, 27);
+  assert.equal(single.levels, 9);
+  assert.equal(single.observations, 81);
+  assert.equal(duplicated.observations, 81);
   assert.equal(duplicated.cells, single.cells * 2);
   assert.equal(single.k, 5);
-  assert.equal(single.perLevel.length, 3);
+  assert.equal(single.perLevel.length, 9);
   assert.deepEqual(single.policyHoldout, duplicated.policyHoldout);
   assert.equal(single.policyHoldout.folds, 9);
-  assert.equal(single.policyHoldout.observations, 27);
+  assert.equal(single.policyHoldout.observations, 81);
   assert.equal(single.policyHoldout.perPolicy.length, 9);
   assert.equal(single.policyHoldout.k, 5);
   assert.deepEqual(Object.keys(single.brier), [
