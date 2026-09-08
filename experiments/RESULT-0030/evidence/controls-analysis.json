@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0030",
+  "kind": "controls-analysis",
+  "inputArtifactIdentity": "5a4cf84e5b321f40fe76799da3f6e6de4c061b62107dbcabdc6ba4c51772f480",
+  "protocolCommit": "fddbf05e8263924bee0dacc33f3d8a1e8f3118d8",
+  "analyzerIdentity": "680498d5ea5ff4f59fabc40ee2f374cbc3569e5343324d4350c55b4d8b7b9d36",
+  "metrics": {
+    "cells": 324,
+    "policies": 9,
+    "outcomes": {
+      "lose": 247,
+      "win": 77
+    },
+    "terminalReasons": {
+      "no valid moves": 125,
+      "out of moves": 122,
+      "target reached": 77
+    },
+    "greed": {
+      "totalSlices": 3,
+      "monotonicSlices": 3,
+      "minimumSpan": 0.46555080994242626,
+      "slices": [
+        {
+          "fixedValue": -0.25,
+          "values": [
+            0.4375126948371344,
+            0.6618198558882056,
+            0.9030635047795607
+          ],
+          "span": 0.46555080994242626,
+          "monotonic": true
+        },
+        {
+          "fixedValue": 0,
+          "values": [
+            0.36950325238813647,
+            0.5958164511091676,
+            0.8695569274717933
+          ],
+          "span": 0.5000536750836568,
+          "monotonic": true
+        },
+        {
+          "fixedValue": 0.25,
+          "values": [
+            0.31884096780656856,
+            0.5578852948396635,
+            0.7983698721758307
+          ],
+          "span": 0.4795289043692621,
+          "monotonic": true
+        }
+      ]
+    },
+    "timing": {
+      "totalSlices": 3,
+      "monotonicSlices": 3,
+      "minimumSpan": 0.05567386831275717,
+      "slices": [
+        {
+          "fixedValue": 0.35,
+          "values": [
+            0.2241530717225162,
+            0.3064322457378013,
+            0.4466335978835978
+          ],
+          "span": 0.2224805261610816,
+          "monotonic": true
+        },
+        {
+          "fixedValue": 0.6,
+          "values": [
+            0.24137951940035274,
+            0.27408858759553206,
+            0.3705230379188712
+          ],
+          "span": 0.12914351851851846,
+          "monotonic": true
+        },
+        {
+          "fixedValue": 0.85,
+          "values": [
+            0.25417989417989423,
+            0.28936324221046444,
+            0.3098537624926514
+          ],
+          "span": 0.05567386831275717,
+          "monotonic": true
+        }
+      ]
+    },
+    "subjectMeans": [
+      {
+        "id": "29fb2e15560f",
+        "greedCenter": 0.35,
+        "timingSlope": -0.25,
+        "halfScoreMove": 0.2241530717225162,
+        "meanBeamGreedRatio": 0.4375126948371344,
+        "winRate": 0.1111111111111111
+      },
+      {
+        "id": "e8c4b78e80af",
+        "greedCenter": 0.35,
+        "timingSlope": 0,
+        "halfScoreMove": 0.3064322457378013,
+        "meanBeamGreedRatio": 0.36950325238813647,
+        "winRate": 0.1111111111111111
+      },
+      {
+        "id": "f067c9548f9c",
+        "greedCenter": 0.35,
+        "timingSlope": 0.25,
+        "halfScoreMove": 0.4466335978835978,
+        "meanBeamGreedRatio": 0.31884096780656856,
+        "winRate": 0.1111111111111111
+      },
+      {
+        "id": "0c5aeb1ce2d4",
+        "greedCenter": 0.6,
+        "timingSlope": -0.25,
+        "halfScoreMove": 0.24137951940035274,
+        "meanBeamGreedRatio": 0.6618198558882056,
+        "winRate": 0.19444444444444445
+      },
+      {
+        "id": "0e75cff2d5c1",
+        "greedCenter": 0.6,
+        "timingSlope": 0,
+        "halfScoreMove": 0.27408858759553206,
+        "meanBeamGreedRatio": 0.5958164511091676,
+        "winRate": 0.2222222222222222
+      },
+      {
+        "id": "87d50f9ae4aa",
+        "greedCenter": 0.6,
+        "timingSlope": 0.25,
+        "halfScoreMove": 0.3705230379188712,
+        "meanBeamGreedRatio": 0.5578852948396635,
+        "winRate": 0.1388888888888889
+      },
+      {
+        "id": "09d25e7061e3",
+        "greedCenter": 0.85,
+        "timingSlope": -0.25,
+        "halfScoreMove": 0.25417989417989423,
+        "meanBeamGreedRatio": 0.9030635047795607,
+        "winRate": 0.5555555555555556
+      },
+      {
+        "id": "1cbbbe96a5e9",
+        "greedCenter": 0.85,
+        "timingSlope": 0,
+        "halfScoreMove": 0.28936324221046444,
+        "meanBeamGreedRatio": 0.8695569274717933,
+        "winRate": 0.4444444444444444
+      },
+      {
+        "id": "c9b9494e9245",
+        "greedCenter": 0.85,
+        "timingSlope": 0.25,
+        "halfScoreMove": 0.3098537624926514,
+        "meanBeamGreedRatio": 0.7983698721758307,
+        "winRate": 0.25
+      }
+    ]
+  },
+  "analysisIdentity": "82256f24cb56ce16f11ef01415df8ec97d8731dd28b218e27428953b8346d9de"
+}
