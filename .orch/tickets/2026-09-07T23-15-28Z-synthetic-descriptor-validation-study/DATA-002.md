@@ -1,7 +1,7 @@
 ---
 id: DATA-002
 run: 2026-09-07T23-15-28Z-synthetic-descriptor-validation-study
-status: claimed
+status: complete
 executor: orch-investigate
 pack: orch-research-pack
 independence: checker
@@ -56,11 +56,29 @@ gaps, risks.
 
 ## Result
 
+**Status:** complete with `BREACH`; no empirical data.
+
+The first control invocation exited 1 inside the production experiment guard
+before compute. The registered guard hash had 17 hex characters rather than
+the first 16. No evidence directory or artifact was created. Controls B and
+confirmation were not invoked.
 
 ## Verification
 
+- Game executions: 0.
+- Output artifact: absent.
+- C1: BREACH; C2: FAIL; C3: FAIL.
+- Fresh retry requirement: new result id and new seed ranges; the 32M/33M
+  registration remains burned.
 
 ## Feedback
 
+- The guard caught the human-copied hash-width error at the correct boundary.
+- The standalone repository experiment command returned PASS before this
+  invocation because unclaimed registered protocols are not its result set;
+  the production guard is the operative pre-run oracle here.
 
 ## Risks
+
+- Any in-place correction would rewrite a registered protocol after its
+  registration commit and destroy the ordering guarantee.

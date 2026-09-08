@@ -69,3 +69,12 @@ at commit `40d5151`, SHA-256
   axes, ledger admission, and policy promotion remain separate owner decisions.
 
 ## Terminal
+
+- status: complete with BREACH
+- result: RESULT-0029 invalid registration; zero game executions
+- registration identity: `b735afe5afd25effa3f12dfc9c948603eeb051ed`
+- failure: one 17-character freeze prefix; production guard exited before
+  compute and no artifact path was created
+- checks: C1 BREACH, C2 FAIL, C3 FAIL, P1/P2 INCONCLUSIVE, P3 PASS
+- successor: requires a new result id and fresh seeds; no in-place protocol
+  correction is permitted
