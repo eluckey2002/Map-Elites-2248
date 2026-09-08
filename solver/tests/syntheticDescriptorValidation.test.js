@@ -11,27 +11,29 @@ const {
 } = require('../engine');
 const {
   SUBJECTS,
+  candidatePool,
   chooseSyntheticMove,
   resolveEmptyCandidatePool,
+  runCells,
   scheduledGreedTarget,
   sourceHashes,
   summarizeEpisode,
   withArtifactIdentity,
   writeNew,
-} = require('../../experiments/RESULT-0030/run');
+} = require('../../experiments/RESULT-0031/run');
 const {
   validateArtifact,
-} = require('../../experiments/RESULT-0030/verify');
+} = require('../../experiments/RESULT-0031/verify');
 const {
   analyzeArtifact,
   factorMetrics,
   predictionMetrics,
-} = require('../../experiments/RESULT-0030/analyze');
+} = require('../../experiments/RESULT-0031/analyze');
 
 const ROOT = path.join(__dirname, '..', '..');
-const RUNNER = path.join(ROOT, 'experiments', 'RESULT-0030', 'run.js');
-const VERIFIER = path.join(ROOT, 'experiments', 'RESULT-0030', 'verify.js');
-const ANALYZER = path.join(ROOT, 'experiments', 'RESULT-0030', 'analyze.js');
+const RUNNER = path.join(ROOT, 'experiments', 'RESULT-0031', 'run.js');
+const VERIFIER = path.join(ROOT, 'experiments', 'RESULT-0031', 'verify.js');
+const ANALYZER = path.join(ROOT, 'experiments', 'RESULT-0031', 'analyze.js');
 
 test('half-score timing divides by the full move budget when an episode ends early', () => {
   const summary = summarizeEpisode([
@@ -160,6 +162,43 @@ test('the real bounded candidate seam selects deterministic legal prefixes at di
   assert.ok(low.beamGreedRatio >= 0 && high.beamGreedRatio <= 1);
 });
 
+test('candidate generation retains a legal doubling path when greedy branches dead-end', () => {
+  const level = {
+    level: 999,
+    target: Infinity,
+    tileScale: 1,
+    moves: 5,
+    minChain: 4,
+    gridW: 4,
+    gridH: 4,
+    blockers: [],
+  };
+  const state = createLevelState(level, () => 0);
+  const values = [
+    2, 24, 16, 16,
+    32, 6, 24, 12,
+    24, 10, 6, 32,
+    24, 32, 6, 32,
+  ];
+  values.forEach((value, index) => {
+    state.grid[Math.floor(index / 4)][index % 4].value = value;
+  });
+
+  const candidates = candidatePool(state);
+  assert.ok(candidates.length > 0);
+  assert.ok(candidates.some(({ chain }) => isValidChain(chain, state.minChain)));
+});
+
+test('cell execution failures name the policy, level, and seed', () => {
+  const subject = SUBJECTS[0];
+  assert.throws(
+    () => runCells([1], [7], [subject], () => {
+      throw new Error('planted cell failure');
+    }),
+    new RegExp(`subject ${subject.id} level 1 seed 7: planted cell failure`),
+  );
+});
+
 test('empty bounded-policy output is distinguished from actual game move exhaustion', () => {
   const level = {
     level: 999,
@@ -209,7 +248,7 @@ function fixtureArtifact() {
   });
   const body = {
     schemaVersion: 1,
-    result: 'RESULT-0030',
+    result: 'RESULT-0031',
     kind: 'fixture',
     sources: sourceHashes(),
     subjects: SUBJECTS,
@@ -252,7 +291,7 @@ function controlArtifact() {
   });
   return withArtifactIdentity({
     schemaVersion: 1,
-    result: 'RESULT-0030',
+    result: 'RESULT-0031',
     kind: 'controls',
     sources: sourceHashes(),
     subjects: SUBJECTS,
@@ -261,7 +300,7 @@ function controlArtifact() {
     cells,
   }, {
     exploratory: false,
-    protocol: 'RESULT-0030',
+    protocol: 'RESULT-0031',
     protocolCommit: 'a'.repeat(40),
   });
 }
@@ -320,7 +359,7 @@ test('artifact validation fails closed on malformed coverage, values, sources, a
   const { artifactIdentity, registration, ...body } = valid;
   const unknownShippedLevel = withArtifactIdentity(
     { ...body, kind: 'controls' },
-    { exploratory: false, protocol: 'RESULT-0030', protocolCommit: 'a'.repeat(40) },
+    { exploratory: false, protocol: 'RESULT-0031', protocolCommit: 'a'.repeat(40) },
   );
   assert.throws(() => validateArtifact(unknownShippedLevel), /unknown shipped level/);
 
