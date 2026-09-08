@@ -50,3 +50,10 @@ Acceptance is frozen as `DSR-DRAFT-01`, `DSR-HOLDOUT-02`,
 []
 
 ## Terminal
+
+- **Disposition:** accepted at the join.
+- **Integrated state:** code result `6c61d96`, ticket return `8ce6b77`.
+- **Invalidated evidence:** none; no covered artifact changed after its oracle
+  ran, and every named changed artifact is inside the ticket write scope.
+- **Next edge:** register the RESULT-0030 protocol against the accepted code
+  result, then create the research delivery record that points to it.
