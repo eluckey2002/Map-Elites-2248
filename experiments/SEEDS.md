@@ -39,6 +39,8 @@ file and the repository before declaring a range fresh.
 | 24,000,000–24,000,024 | RESULT-0026 confirmation | 2026-09-02 | `experiments/RESULT-0026/protocol.md` |
 | 30,000,000–30,000,059 | RESULT-0021 sample A | 2026-09-01 | `experiments/RESULT-0021/protocol.md` |
 | 31,000,000–31,000,059 | RESULT-0021 sample B | 2026-09-01 | `experiments/RESULT-0021/protocol.md` |
+| 32,000,000–32,000,003 | RESULT-0029 repeated controls; registration burns the range even if the study stops before execution | 2026-09-08 | `experiments/RESULT-0029/protocol.md` |
+| 33,000,000–33,000,011 | RESULT-0029 one permitted confirmation; registration burns the range even if controls prevent execution | 2026-09-08 | `experiments/RESULT-0029/protocol.md` |
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
 | 1, 2, 10, 777 | owner play recordings on levels 51–54 (ten recordings in `recordings/`; seed 777 twice on level 52) | 2026-08 | `recordings/*.json` |
 | 9,100,000–9,100,001 and 9,200,004–9,200,005 | seed-variance bounded test, real control through the production `playMeasured` seam | 2026-09-01 | `solver/tests/seedVariance.test.js`, `experiments/RESULT-0021/protocol.md` |

@@ -22,10 +22,16 @@ const {
 const {
   validateArtifact,
 } = require('../../experiments/RESULT-0029/verify');
+const {
+  analyzeArtifact,
+  factorMetrics,
+  predictionMetrics,
+} = require('../../experiments/RESULT-0029/analyze');
 
 const ROOT = path.join(__dirname, '..', '..');
 const RUNNER = path.join(ROOT, 'experiments', 'RESULT-0029', 'run.js');
 const VERIFIER = path.join(ROOT, 'experiments', 'RESULT-0029', 'verify.js');
+const ANALYZER = path.join(ROOT, 'experiments', 'RESULT-0029', 'analyze.js');
 
 test('half-score timing divides by the full move budget when an episode ends early', () => {
   const summary = summarizeEpisode([
@@ -64,6 +70,60 @@ test('the exported nine-policy factorial is exactly three greed centers by three
   assert.deepEqual([...new Set(SUBJECTS.map((subject) => subject.timingSlope))], [-0.25, 0, 0.25]);
   assert.equal(new Set(SUBJECTS.map((subject) => subject.id)).size, 9);
   assert.ok(SUBJECTS.every((subject) => /^[a-f0-9]{12}$/.test(subject.id)));
+});
+
+function analysisCells({ duplicateSeeds = false, collapseGreed = false } = {}) {
+  const levels = [901, 902, 903];
+  const seeds = duplicateSeeds ? [11, 12] : [11];
+  return SUBJECTS.flatMap((subject) => levels.flatMap((level) => seeds.map((seed) => {
+    const meanBeamGreedRatio = collapseGreed ? 0.6 : subject.greedCenter;
+    const halfScoreMove = 0.5 + (0.2 * subject.timingSlope);
+    const wins = subject.greedCenter >= 0.6 && subject.timingSlope >= 0;
+    return {
+      subjectId: subject.id,
+      level,
+      seed,
+      outcome: wins ? 'win' : 'lose',
+      reason: wins ? 'target reached' : 'no valid moves',
+      halfScoreMove,
+      meanBeamGreedRatio,
+    };
+  })));
+}
+
+test('registered factor metrics expose all conditional spans and detect collapse', () => {
+  const metrics = factorMetrics(analysisCells());
+  assert.equal(metrics.policies, 9);
+  assert.equal(metrics.greed.monotonicSlices, 3);
+  assert.equal(metrics.greed.minimumSpan, 0.5);
+  assert.equal(metrics.timing.monotonicSlices, 3);
+  assert.ok(Math.abs(metrics.timing.minimumSpan - 0.1) <= 1e-12);
+
+  const collapsed = factorMetrics(analysisCells({ collapseGreed: true }));
+  assert.equal(collapsed.greed.monotonicSlices, 0);
+  assert.equal(collapsed.greed.minimumSpan, 0);
+});
+
+test('registered prediction aggregates seeds before deterministic level-held-out scoring', () => {
+  const single = predictionMetrics(analysisCells());
+  const duplicated = predictionMetrics(analysisCells({ duplicateSeeds: true }));
+  assert.deepEqual(single.brier, duplicated.brier);
+  assert.deepEqual(single.gains, duplicated.gains);
+  assert.deepEqual(single.perLevel, duplicated.perLevel);
+  assert.deepEqual(single.perPolicy, duplicated.perPolicy);
+  assert.deepEqual(single.levelMeans, duplicated.levelMeans);
+  assert.equal(single.levels, 3);
+  assert.equal(single.observations, 27);
+  assert.equal(duplicated.observations, 27);
+  assert.equal(duplicated.cells, single.cells * 2);
+  assert.equal(single.k, 5);
+  assert.equal(single.perLevel.length, 3);
+  assert.deepEqual(Object.keys(single.brier), [
+    'baseRate',
+    'halfScoreMove',
+    'meanBeamGreedRatio',
+    'joint',
+  ]);
 });
 
 test('the real bounded candidate seam selects deterministic legal prefixes at different greed centers', () => {
@@ -151,6 +211,52 @@ function fixtureArtifact() {
   return withArtifactIdentity(body, { exploratory: true });
 }
 
+function controlArtifact() {
+  const level = 1;
+  const seed = 7;
+  const moveBudget = 25;
+  const patterns = new Map([
+    [-0.25, [120, 100, 90, 90]],
+    [0, [80, 80, 140, 100]],
+    [0.25, [50, 50, 90, 210]],
+  ]);
+  const cells = SUBJECTS.map((subject) => {
+    const points = patterns.get(subject.timingSlope);
+    const moveTrace = points.map((value, index) => ({
+      points: value,
+      beamMaxPoints: value / subject.greedCenter,
+      beamGreedRatio: subject.greedCenter,
+      targetGreed: scheduledGreedTarget(subject, index + 1, moveBudget),
+    }));
+    return {
+      subjectId: subject.id,
+      level,
+      seed,
+      outcome: 'lose',
+      reason: 'no valid moves',
+      score: 400,
+      moves: moveTrace.length,
+      moveBudget,
+      moveTrace,
+      ...summarizeEpisode(moveTrace, moveBudget),
+    };
+  });
+  return withArtifactIdentity({
+    schemaVersion: 1,
+    result: 'RESULT-0029',
+    kind: 'controls',
+    sources: sourceHashes(),
+    subjects: SUBJECTS,
+    levels: [level],
+    seeds: [seed],
+    cells,
+  }, {
+    exploratory: false,
+    protocol: 'RESULT-0029',
+    protocolCommit: 'a'.repeat(40),
+  });
+}
+
 function rehash(artifact, changes) {
   const { artifactIdentity, registration, ...body } = artifact;
   return withArtifactIdentity({ ...body, ...changes }, registration);
@@ -173,6 +279,29 @@ test('the production verifier reads a serialized artifact and rejects its one-fi
   assert.match(good.stdout, /PASS/);
   assert.notEqual(bad.status, 0);
   assert.match(bad.stderr, /artifact identity mismatch/);
+});
+
+test('the registered calculator validates real input and reproduces byte-identical output', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'synthetic-descriptor-analysis-'));
+  const input = path.join(dir, 'controls.json');
+  const firstPath = path.join(dir, 'first.json');
+  const secondPath = path.join(dir, 'second.json');
+  const artifact = controlArtifact();
+  fs.writeFileSync(input, `${JSON.stringify(artifact, null, 2)}\n`);
+
+  const direct = analyzeArtifact(artifact, 'controls');
+  assert.equal(direct.inputArtifactIdentity, artifact.artifactIdentity);
+  assert.equal(direct.metrics.greed.monotonicSlices, 3);
+  assert.equal(direct.metrics.timing.monotonicSlices, 3);
+
+  const first = spawnSync(process.execPath, [ANALYZER, 'controls', '--artifact', input, '--out', firstPath], { encoding: 'utf8' });
+  const second = spawnSync(process.execPath, [ANALYZER, 'controls', '--artifact', input, '--out', secondPath], { encoding: 'utf8' });
+  assert.equal(first.status, 0, first.stderr);
+  assert.equal(second.status, 0, second.stderr);
+  assert.equal(fs.readFileSync(firstPath, 'utf8'), fs.readFileSync(secondPath, 'utf8'));
+
+  const tampered = { ...artifact, cells: artifact.cells.slice(1) };
+  assert.throws(() => analyzeArtifact(tampered, 'controls'), /artifact identity mismatch/);
 });
 
 test('artifact validation fails closed on malformed coverage, values, sources, and identity', () => {
