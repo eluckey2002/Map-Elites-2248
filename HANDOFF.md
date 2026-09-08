@@ -1,6 +1,33 @@
-> **Current authority:** This document is the snapshot stopped on 2026-09-06. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
+> **Current authority:** This document is the snapshot updated on 2026-09-08. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
 
 # 2248 Challenge — Handoff
+
+## 2026-09-08: descriptor validation complete; primary result inconclusive
+
+The prominent one-loss descriptor pattern in the 2026-09-06 section below is
+no longer the next-action headline. It remains exploratory human context, not
+evidence. The registered synthetic study is complete:
+
+- [RESULT-0031](experiments/RESULT-0031/report.md) verified one 324-cell control
+  and one 972-cell confirmation. Its primary leave-one-level-out verdict is
+  **`INCONCLUSIVE`**: the joint model beat base rate by `0.023317`, but beat the
+  better single descriptor by only `0.003861` (required `0.01`) and won 5/9
+  level folds (required 6).
+- The fixed leave-one-policy-out diagnostic was stronger — gains `0.087600`
+  over base and `0.042809` over the better single, with 8/9 policy-fold wins —
+  but it is diagnostic and cannot replace the primary verdict.
+- [RESULT-0030](experiments/RESULT-0030/report.md) is retained as a stopped run:
+  its control passed, then its sole confirmation invocation exposed a legal
+  doubling chain the bounded greedy pool missed. RESULT-0031 regression-guards
+  the concrete `6→6→12→24` case and completed on fresh seeds.
+- Do **not** formalize either proposed axis from this result. The synthetic
+  beam-relative greed measure is not the human exhaustive measure, the level
+  panel is purposive, and the primary support conjunction did not pass.
+
+The formerly orphaned human `strandedCellPressure` observation is now preserved
+at [docs/research/human-play-descriptors](docs/research/human-play-descriptors/README.md).
+It is explicitly exploratory and does not change `SPR-001`'s
+`AMBIGUOUS_ON_EXACT_PROBE` standing.
 
 ## 2026-09-06: PR #18 merged; a human-play descriptor pair that needs more than one loss before it's trusted
 

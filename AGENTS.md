@@ -4,7 +4,7 @@
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
-- **`node --test solver/tests/*.test.js` passes 344 of 348. The four failures are deliberate.** Two stale candidate receipts, a generated-view staleness check, and a date-drift check. One of them carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
+- **`node --test solver/tests/*.test.js` passes 373 of 377. The four failures are deliberate.** Two stale candidate receipts, a generated-view staleness check, and a date-drift check. One of them carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still reads PASS, 140,544 points in 20 moves — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
 - **Shipped-level win rate cannot rank two policies.** The bot wins 71-100% of every shipped level, so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
@@ -30,6 +30,15 @@ Not every remark is a directive. Owner messages mix thinking-out-loud with instr
 Change game rules systematically, never ad hoc. A rule or scoring change is measured with `solver/game-tester.js` against the shipped curve before it lands, and gets a ledger record when it does.
 
 A captured play session is work to do, not a question to ask. When a new file appears in `play-sessions/`, analyse it and report — do not ask whether the owner wants it looked at.
+
+### Tool-managed commands own their process
+
+When a shell tool already manages a background or resumable process, the
+command itself must not contain shell job control: no trailing `&`, `nohup`, or
+`disown`. A double-backgrounded command can detach the real work while the tool
+falsely reports completion. For any command that may outlive a tool yield,
+retain and poll the returned session handle and record the final exit code;
+partial output or a suspiciously fast wrapper exit is not completion evidence.
 
 ## Experiments
 
@@ -63,6 +72,12 @@ it lets a green push through. Two more rules no mechanism enforces:
    resolve the thread, then merge. Do not ask Codex to push fixes into a pull
    request another agent opened: two writers on one branch is the concurrent
    writer problem again.
+
+Opening or merging a pull request is not a request to babysit it. Use a
+long-running PR watcher only when the owner explicitly asks for sustained
+watching; otherwise make one-shot review and check queries at the decision
+points. A small PR does not justify a detached watcher merely because one is
+available.
 
 A red gate is fixed in the ledger or the protocol, never by editing the gate,
 grandfathering the record, or `--no-verify`.
