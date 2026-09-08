@@ -4,6 +4,20 @@ One directory per experiment, named for the result it produces:
 `experiments/RESULT-0019/protocol.md` and `report.md`. Filed under the result,
 which is permanent, not under the run, which is a scheduling artifact.
 
+## One scientific authority
+
+`experiments/<RESULT-ID>/protocol.md` is the sole scientific authority for an
+experiment's question, selection basis, denominator, analysis, thresholds, and
+stopping rules. Planning, orchestration, handoff, and backlog files may point to
+the protocol and record execution state or identities; they must not create a
+second version of its scientific design. If prose elsewhere disagrees with the
+registered protocol, the protocol controls and the disagreement is reported.
+
+Before a protocol exists, code-preparation records may describe the executable
+seam they are building. Once the protocol is registered, successor research
+records cite it rather than restating it. `report.md` owns observed outcomes and
+limitations, but cannot revise the registered design.
+
 ## The rule
 
 **A claim that generalizes beyond what it measured must have said, in advance
@@ -62,6 +76,12 @@ Register the protocol and **commit it before the experiment runs**. A
 protocol committed after its evidence is not a preregistration; it is a
 reconstruction, and the one property that makes preregistration worth
 anything is that it predates the data.
+
+Before committing, run `node tools/new-experiment.js --check RESULT-NNNN`.
+This reads the real draft and every source it declares in `version_freeze`, so
+malformed or stale hashes fail before registration. It cannot tell whether the
+declared source set or scientific design is complete; review still owns those
+questions.
 
 ## Why this exists
 

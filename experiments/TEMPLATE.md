@@ -40,7 +40,11 @@ what it is not.>
 ## Denominator
 
 <Levels x seeds = games per arm, arms, paired or unpaired. Record any conflict
-between two sources of truth rather than settling it for convenience.>
+between two sources of truth rather than settling it for convenience. State
+the level or subject selection basis: probability sample, deterministic rule,
+or purposive panel. Name the true unit of generalization and every identity
+that repeats across train/test folds; a large game count does not turn repeated
+levels or policies into independent evidence.>
 
 ## Seeds
 
@@ -95,6 +99,10 @@ compute-matched control.>
 3. <Confirmation, run once.>
 4. **One confirmation run. No re-runs on different seeds.**
 5. <What breach stops the run and gets reported instead of a result.>
+
+Do not repeat a deterministic control corpus by default. A repeat must test a
+named nondeterminism risk that a smaller fixture or replay check cannot cover;
+otherwise one verified control artifact is enough.
 
 ## Instrument bound
 
