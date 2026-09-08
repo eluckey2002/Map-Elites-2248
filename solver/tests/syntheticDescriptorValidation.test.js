@@ -18,20 +18,20 @@ const {
   summarizeEpisode,
   withArtifactIdentity,
   writeNew,
-} = require('../../experiments/RESULT-0029/run');
+} = require('../../experiments/RESULT-0030/run');
 const {
   validateArtifact,
-} = require('../../experiments/RESULT-0029/verify');
+} = require('../../experiments/RESULT-0030/verify');
 const {
   analyzeArtifact,
   factorMetrics,
   predictionMetrics,
-} = require('../../experiments/RESULT-0029/analyze');
+} = require('../../experiments/RESULT-0030/analyze');
 
 const ROOT = path.join(__dirname, '..', '..');
-const RUNNER = path.join(ROOT, 'experiments', 'RESULT-0029', 'run.js');
-const VERIFIER = path.join(ROOT, 'experiments', 'RESULT-0029', 'verify.js');
-const ANALYZER = path.join(ROOT, 'experiments', 'RESULT-0029', 'analyze.js');
+const RUNNER = path.join(ROOT, 'experiments', 'RESULT-0030', 'run.js');
+const VERIFIER = path.join(ROOT, 'experiments', 'RESULT-0030', 'verify.js');
+const ANALYZER = path.join(ROOT, 'experiments', 'RESULT-0030', 'analyze.js');
 
 test('half-score timing divides by the full move budget when an episode ends early', () => {
   const summary = summarizeEpisode([
@@ -200,7 +200,7 @@ function fixtureArtifact() {
   });
   const body = {
     schemaVersion: 1,
-    result: 'RESULT-0029',
+    result: 'RESULT-0030',
     kind: 'fixture',
     sources: sourceHashes(),
     subjects: SUBJECTS,
@@ -243,7 +243,7 @@ function controlArtifact() {
   });
   return withArtifactIdentity({
     schemaVersion: 1,
-    result: 'RESULT-0029',
+    result: 'RESULT-0030',
     kind: 'controls',
     sources: sourceHashes(),
     subjects: SUBJECTS,
@@ -252,7 +252,7 @@ function controlArtifact() {
     cells,
   }, {
     exploratory: false,
-    protocol: 'RESULT-0029',
+    protocol: 'RESULT-0030',
     protocolCommit: 'a'.repeat(40),
   });
 }
@@ -311,7 +311,7 @@ test('artifact validation fails closed on malformed coverage, values, sources, a
   const { artifactIdentity, registration, ...body } = valid;
   const unknownShippedLevel = withArtifactIdentity(
     { ...body, kind: 'controls' },
-    { exploratory: false, protocol: 'RESULT-0029', protocolCommit: 'a'.repeat(40) },
+    { exploratory: false, protocol: 'RESULT-0030', protocolCommit: 'a'.repeat(40) },
   );
   assert.throws(() => validateArtifact(unknownShippedLevel), /unknown shipped level/);
 

@@ -1041,11 +1041,14 @@ that passed while inspecting nothing.
 
 ### Synthetic descriptor validation artifact · HARD
 
-- **Protects:** RESULT-0029 cannot look complete when its nine-policy
+RESULT-0030 is the live identity. RESULT-0029 was invalidated before compute by
+a malformed registered source prefix and retains its own BREACH report.
+
+- **Protects:** RESULT-0030 cannot look complete when its nine-policy
   factorial, declared level/seed cells, move traces, correctly denominated half-score
   timing, beam-relative greed arithmetic, source identities, or self-identity
   are missing or altered.
-- **Where:** `experiments/RESULT-0029/verify.js#validateArtifact`; exercised by
+- **Where:** `experiments/RESULT-0030/verify.js#validateArtifact`; exercised by
   `solver/tests/syntheticDescriptorValidation.test.js` and used on every
   controls or confirmation artifact before interpretation.
 - **Level:** artifact, subject, cell, and serialized move record. A strategic
@@ -1055,7 +1058,7 @@ that passed while inspecting nothing.
   source binding, and exact arithmetic from recorded move traces. Predictive
   meaning and human-strategy interpretation belong to the registered research
   protocol and its evidence review.
-- **Scope:** JSON schema version 1 for RESULT-0029 `fixture`, `controls`, and
+- **Scope:** JSON schema version 1 for RESULT-0030 `fixture`, `controls`, and
   `confirmation` artifacts; exactly nine policies formed by crossing three
   greed centers with three timing slopes (not a MAP-Elites archive grid);
   declared non-negative integer shipped-level and seed lists; one cell per
@@ -1095,8 +1098,8 @@ that passed while inspecting nothing.
   to exit nonzero with `artifact identity mismatch`.
 - **Retires:** NO — the repository experiment gate checks protocol/report
   lifecycle, citations, hashes, and commit ancestry, but it does not inspect
-  RESULT-0029's policy factorial, per-cell coverage, or descriptor arithmetic.
-- **Enforcement:** blocking for RESULT-0029 artifact validity only. It does not
+  RESULT-0030's policy factorial, per-cell coverage, or descriptor arithmetic.
+- **Enforcement:** blocking for RESULT-0030 artifact validity only. It does not
   make an empirical verdict SUPPORTED; the registered research decision rule
   owns that promotion.
 - **Decay:** run
