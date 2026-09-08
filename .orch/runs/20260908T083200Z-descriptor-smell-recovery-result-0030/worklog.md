@@ -35,7 +35,9 @@ restating or changing its scientific design. Acceptance is frozen in
 
 ## Blame classes
 
-[]
+- `R30-001`: rejected(caller). The fixed code input supplied to the research
+  lane did not guarantee candidate-pool coverage or durable failure context;
+  the lane stayed within authority and the registered no-retry bound.
 
 ## Failed approaches
 
@@ -52,3 +54,14 @@ restating or changing its scientific design. Acceptance is frozen in
   seeds. RESULT-0030 itself is closed and cannot be repaired or rerun.
 
 ## Terminal
+
+- **State:** failed.
+- **Disposition:** `R30-001` rejected(caller) because `R30-CONFIRM-03` and
+  `R30-REPRO-04` could not pass after the frozen runner stopped without an
+  artifact.
+- **Integrated evidence:** RESULT-0030 report `af9d06d`, control artifact
+  `5a4cf84e...f480`, analysis `82256f24...9de`.
+- **Invalidated evidence:** none. The passing control remains valid but is not
+  reportable confirmation evidence.
+- **Next route:** the `fix` composition for the candidate-pool coverage defect;
+  any renewed scientific run must be a new result with fresh seeds.
