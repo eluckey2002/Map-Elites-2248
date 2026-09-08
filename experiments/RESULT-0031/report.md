@@ -25,6 +25,11 @@ The public draft checker returned `DRAFT OK RESULT-0031 8 frozen files` before
 registration commit `7129f014e8756b9fb8bd116d20c0fbc8a4db2f10`. That commit
 strictly predates both artifacts.
 
+The checker line is an operator-recorded execution observation, not a durable
+receipt emitted by the checker. The committed hashes are independently
+reconfirmed by the current experiment gate and both registered artifacts, but
+those later checks cannot reconstruct the pre-commit timing of the command.
+
 The frozen production verifier passed the 324-cell control and the 972-cell
 confirmation. Both bind the exact registration commit, source identities, nine
 policies, nine levels, declared seeds, and complete Cartesian matrices.
