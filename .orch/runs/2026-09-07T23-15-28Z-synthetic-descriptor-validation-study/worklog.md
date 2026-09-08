@@ -42,6 +42,17 @@ at commit `40d5151`, SHA-256
   data, and terminal synthesis cannot see a partial confirmation as a result
 - workspace: isolated branch/worktree only; no canonical-root writes
 
+### 2 — Registration boundary
+
+- red/green: calculator import failed before implementation; the final literal
+  and real-CLI calculator suite passes 13/13
+- registration: `b735afe5afd25effa3f12dfc9c948603eeb051ed`
+- post-commit experiment gate: PASS
+- sources: runner/verifier unchanged; new calculator frozen as
+  `30d15bb86e4c5ba8`; focused test frozen as `16616933bb9b385f`
+- seeds: both 32M control and 33M confirmation ranges burned before use
+- no-data check: no RESULT-0029 outcome artifact existed at close
+
 ## Blame classes
 
 []

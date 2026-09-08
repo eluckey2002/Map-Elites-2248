@@ -1,7 +1,7 @@
 ---
 id: DATA-002
 run: 2026-09-07T23-15-28Z-synthetic-descriptor-validation-study
-status: ready
+status: claimed
 executor: orch-investigate
 pack: orch-research-pack
 independence: checker
@@ -14,6 +14,8 @@ excluded_actions:
   - Rerun confirmation, substitute seeds/levels/policies, change code/protocol/thresholds, or edit reports.
   - Modify any tracked source, merge, rebase, push, or write to the canonical checkout.
 bound: exactly two 324-cell controls and at most one 972-cell confirmation
+claimed_by: /root
+claimed_at: 2026-09-08T06:25:00Z
 ---
 
 # DATA-002 — Execute registered controls and confirmation
@@ -25,7 +27,8 @@ complete verified raw and calculated artifacts result?
 
 ## Fixed evidence and source slice
 
-- METH-001's exact registration commit and passing gates.
+- METH-001 registration commit
+  `b735afe5afd25effa3f12dfc9c948603eeb051ed` and passing gates.
 - Frozen study spec and registered RESULT-0029 protocol.
 - Source policy slice: production runner/verifier, frozen calculator, declared
   control/confirmation seeds, and only this ticket's evidence store.

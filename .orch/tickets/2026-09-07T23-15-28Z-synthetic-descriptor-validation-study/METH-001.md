@@ -1,7 +1,7 @@
 ---
 id: METH-001
 run: 2026-09-07T23-15-28Z-synthetic-descriptor-validation-study
-status: claimed
+status: complete
 executor: orch-investigate
 pack: orch-research-pack
 independence: gate
@@ -61,11 +61,33 @@ outcome, source hashes, seed verdict, no-data verdict, feedback, risks.
 
 ## Result
 
+**Status:** complete
+
+**Registration commit:** `b735afe5afd25effa3f12dfc9c948603eeb051ed`
+
+**Changed artifacts:** protocol, calculator, seed registry, focused test, run
+worklog, and three research tickets.
 
 ## Verification
 
+1. Focused red/green: missing calculator failed; frozen calculations and the
+   real validating CLI now pass 13/13 tests.
+2. `node tools/verify-experiments.js`: `EXPERIMENT GATE PASS` after the
+   registration commit.
+3. Protocol freezes eight exact source identities, all six checks, nine
+   policies, nine levels, both seed ranges, the level-held-out model, thresholds,
+   and stop/adoption boundaries.
+4. `experiments/SEEDS.md` burns 32,000,000-32,000,003 and
+   33,000,000-33,000,011 at registration.
+5. No control, confirmation, or outcome artifact existed at close; protected
+   runner/verifier/product sources were unchanged from the predecessor.
 
 ## Feedback
 
+- The calculator reports metrics only. Verdict assignment remains visibly in
+  the protocol/report rather than hidden in code.
 
 ## Risks
+
+- Factor and outcome support remain unknown until DATA-002; no empirical claim
+  follows from this registration pass.
