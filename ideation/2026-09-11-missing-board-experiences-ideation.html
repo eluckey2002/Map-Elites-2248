@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ideation: Missing Board Experiences</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5efe3;
+      --paper: #fffdf8;
+      --ink: #302e29;
+      --muted: #6c675f;
+      --line: #ded4c3;
+      --gold: #9b6900;
+      --gold-soft: #f8e8b2;
+      --orange: #b54c2d;
+      --orange-soft: #fbe0d5;
+      --green: #256447;
+      --green-soft: #ddefdf;
+      --blue: #315e85;
+      --blue-soft: #dceaf6;
+      --stone: #746f67;
+      --ice: #82b9dc;
+      --bomb: #d96044;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.58 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(940px, calc(100% - 32px)); margin: 32px auto 56px; }
+    header, section, footer {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(20px, 4vw, 36px);
+      margin-bottom: 18px;
+    }
+    h1, h2, h3 { line-height: 1.16; margin: 0 0 14px; }
+    h1 { font-size: clamp(2rem, 5vw, 3.4rem); letter-spacing: -0.04em; max-width: 14ch; }
+    h2 { font-size: 1.55rem; }
+    h3 { font-size: 1.25rem; }
+    p { max-width: 72ch; margin: 0 0 12px; }
+    p:last-child { margin-bottom: 0; }
+    a { color: var(--blue); text-underline-offset: 2px; }
+    code { font: .92em ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .eyebrow { color: var(--gold); font-size: .78rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .lede { color: var(--muted); font-size: 1.08rem; }
+    .meta, .stats, .pill-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #f7f2e9;
+      padding: 6px 10px;
+      font-size: .82rem;
+    }
+    .pill.gold { background: var(--gold-soft); border-color: #e8cc74; color: #6d4800; }
+    .pill.green { background: var(--green-soft); border-color: #b8d7bf; color: #174b33; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .stat { background: #f7f2e9; border-radius: 12px; padding: 15px; }
+    .stat strong { display: block; font-size: 1.75rem; line-height: 1; margin-bottom: 6px; }
+    .stat span { color: var(--muted); font-size: .84rem; }
+    .callout { background: var(--gold-soft); border-radius: 12px; padding: 16px; color: #5f4000; }
+    .axes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .axis { background: #f7f2e9; border-radius: 12px; padding: 14px; }
+    .axis strong { display: block; margin-bottom: 3px; }
+    .axis span { color: var(--muted); font-size: .9rem; }
+    .jump-list { columns: 2; margin: 0; padding-left: 22px; }
+    .jump-list li { margin: 5px 0; break-inside: avoid; }
+    article.idea {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin: 16px 0;
+      background: #fff;
+    }
+    article.idea.top { background: #fffaf0; border-color: #dfbf61; }
+    .idea-head { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
+    .rank {
+      display: inline-grid; place-items: center; min-width: 34px; height: 34px;
+      border-radius: 50%; background: var(--ink); color: white; font-weight: 800;
+    }
+    .idea-title { flex: 1; }
+    .idea-title h3 { margin: 2px 0 4px; }
+    .tag { font-size: .76rem; color: var(--gold); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    dl.fields { display: grid; grid-template-columns: 110px 1fr; gap: 8px 14px; margin: 16px 0 0; }
+    dt { color: var(--muted); font-size: .75rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    dd { margin: 0; }
+    .sketch {
+      margin: 17px 0 4px; display: grid; grid-template-columns: minmax(190px, 270px) 1fr;
+      gap: 18px; align-items: center; background: #f7f2e9; border-radius: 12px; padding: 15px;
+    }
+    pre.board {
+      margin: 0; padding: 12px; overflow: auto; border-radius: 9px;
+      background: #332f2a; color: #fff8e9; font: 700 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .05em;
+    }
+    .legend { color: var(--muted); font-size: .86rem; }
+    table { width: 100%; border-collapse: collapse; font-size: .89rem; }
+    th, td { padding: 10px 9px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; }
+    tbody tr:last-child td { border-bottom: 0; }
+    footer { color: var(--muted); font-size: .82rem; }
+    @media (max-width: 680px) {
+      main { width: min(100% - 18px, 940px); margin-top: 10px; }
+      .stats, .axes { grid-template-columns: 1fr; }
+      .jump-list { columns: 1; }
+      .sketch { grid-template-columns: 1fr; }
+      dl.fields { grid-template-columns: 1fr; gap: 3px; }
+      dt { margin-top: 8px; }
+      .idea-head { flex-wrap: wrap; }
+      table { font-size: .8rem; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Ideation</div>
+    <h1>Missing board experiences</h1>
+    <p class="lede">The current game has plenty of parameter variation. The real opening is to author boards around a recognizable decision: what must the player notice, protect, time, or sacrifice?</p>
+    <div class="meta">
+      <span class="pill">Date <time datetime="2026-09-11">2026-09-11</time></span>
+      <span class="pill">Topic missing-board-experiences</span>
+      <span class="pill">Focus board-type gaps in current data</span>
+      <span class="pill">Mode repo-grounded</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>58</strong><span>shipped levels inspected</span></div>
+      <div class="stat"><strong>504</strong><span>generated shapes inspected</span></div>
+      <div class="stat"><strong>7</strong><span>board directions retained</span></div>
+    </div>
+  </header>
+
+  <section id="grounding-context">
+    <div class="eyebrow">What the data says</div>
+    <h2>Grounding Context</h2>
+    <p>Of the 58 shipped levels, 31 are 5×8 and 24 are 5×7. Only two are 6×5, and one is 4×8. The four stored generator batches range across 25 rectangular sizes and contain 504 screened shapes, but they sample width, height, move budget, demand, and random blocker coordinates independently. That produces many combinations without saying what distinct player experience each combination is meant to create.</p>
+    <p>The project already contains the beginnings of a better vocabulary. <code>profile-shapes.js</code> measures opening-chain share, late-score backload, and single-chain spike. Owner play supplies the strongest qualitative signal: the narrow central choke amplified planning pressure and remained fun, and the latest fixed-seed run repeatedly built 1,024 survivors before a 53,120-point harvest.</p>
+    <div class="callout"><strong>The gap is not “more random boards.”</strong> It is a set of named board families whose topology reliably elicits different decisions. That reading matches procedural-level-design research on expressive range and mechanic-centric generation: diversity should be judged by the experiences produced, and layouts should be shaped around intended player actions.</div>
+  </section>
+
+  <section id="topic-axes">
+    <div class="eyebrow">Coverage map</div>
+    <h2>Topic Axes</h2>
+    <div class="axes">
+      <div class="axis"><strong>Space and topology</strong><span>How cells connect, divide, funnel, or reopen.</span></div>
+      <div class="axis"><strong>Strategic arc</strong><span>Immediate harvest, setup, or a timed payoff.</span></div>
+      <div class="axis"><strong>Threat and tempo</strong><span>Pressure from moves, bombs, thaw timing, or competing clocks.</span></div>
+      <div class="axis"><strong>Value-building affordance</strong><span>Where high-value survivors can be built, protected, and reconnected.</span></div>
+    </div>
+  </section>
+
+  <section id="ranked-ideas">
+    <div class="eyebrow">Seven survivors from 42 candidates</div>
+    <h2>Ranked Ideas</h2>
+    <ol class="jump-list">
+      <li><a href="#idea-1">Bank and Break</a></li>
+      <li><a href="#idea-2">Forked Harvest</a></li>
+      <li><a href="#idea-3">No-Blocker Nemesis</a></li>
+      <li><a href="#idea-4">Funnel Sprint</a></li>
+      <li><a href="#idea-5">Builder Pocket</a></li>
+      <li><a href="#idea-6">Sequential Defusal Relay</a></li>
+      <li><a href="#idea-7">Tiny Marathon</a></li>
+    </ol>
+
+    <article class="idea top" id="idea-1">
+      <div class="idea-head"><span class="rank">1</span><div class="idea-title"><span class="tag">Top pick · strategic arc</span><h3>Bank and Break</h3></div></div>
+      <p>Two stone-shaped basins let the player build one valuable survivor on each side. A central ice gate thaws after several moves, turning two local puzzles into one board and creating the moment to connect the stored value into a decisive chain.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Two basins separated by a stone and ice wall">· · S I S · ·
+· · S I S · ·
+· · S I S · ·
+· · S I S · ·
+· · S · S · ·</pre>
+        <p class="legend">S = stone · I = timed ice · Build locally, then use the opened center as the release point. Directional sketch, not a fixed layout.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Strategic arc</dd>
+        <dt>Basis</dt><dd><strong>direct + external:</strong> Owner play demonstrates build-then-harvest; ice already supports timed topology changes. Gameplay-constraint PCG research supports designing from a desired action sequence.</dd>
+        <dt>Rationale</dt><dd>This is the clearest embodiment of the strategy the user just articulated: smaller construction moves create valuable tiles for a later large chain.</dd>
+        <dt>Downsides</dt><dd>If the gate opens too early, it is decorative. Too late, and the player cannot exploit it. Seed and thaw timing must be qualified together.</dd>
+        <dt>Confidence</dt><dd>91%</dd>
+        <dt>Complexity</dt><dd>Medium</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="idea-2">
+      <div class="idea-head"><span class="rank">2</span><div class="idea-title"><span class="tag">Space and topology</span><h3>Forked Harvest</h3></div></div>
+      <p>Permanent stones divide the lower board into two viable investment zones, but the move budget is tight enough that only one can fully mature. The player chooses a side early, then lives with that commitment.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Board split into two investment zones">L L · S · R R
+L L · S · R R
+L L · S · R R
+L L · S · R R
+L L · · · R R</pre>
+        <p class="legend">L/R are equivalent-looking build zones. The open bottom allows a late connection, but not enough time to perfect both sides.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Space and topology</dd>
+        <dt>Basis</dt><dd><strong>direct:</strong> Level 51 was worth shipping partly because the same seed admitted two distinct winning strategies; DECISION-0005 says blocker value depends on topology.</dd>
+        <dt>Rationale</dt><dd>Most current levels ask “which chain is biggest?” This asks “which engine am I building?” and makes replay meaningful because the other fork remains tempting.</dd>
+        <dt>Downsides</dt><dd>The two forks must be comparably viable. If one is obviously better, the board becomes a disguised single route.</dd>
+        <dt>Confidence</dt><dd>88%</dd>
+        <dt>Complexity</dt><dd>Medium</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="idea-3">
+      <div class="idea-head"><span class="rank">3</span><div class="idea-title"><span class="tag">Strategic arc</span><h3>No-Blocker Nemesis</h3></div></div>
+      <p>An open board whose fixed seed offers no giant opening chain and rewards one or two quiet builder moves. Its identity comes from the exact board sequence, not a new obstacle.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Open board with distributed values and no blockers">· · · · · ·
+· · · · · ·
+· · · · · ·
+· · · · · ·
+· · · · · ·</pre>
+        <p class="legend">No blockers. The authored object is board + seed + intended setup arc. The fixed seed makes that opening repeatable.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Strategic arc</dd>
+        <dt>Basis</dt><dd><strong>direct:</strong> Fixed-seed level challenges now produce an exact shared opening, and <code>profile-shapes.js</code> already treats opening share as meaningful.</dd>
+        <dt>Rationale</dt><dd>It tests whether the game can create deep strategy without visual clutter. It is also the cheapest family to prototype because it needs only seed selection.</dd>
+        <dt>Downsides</dt><dd>A seed selected against the current bot may merely exploit its blind spots. Human play must confirm that the setup is legible and satisfying.</dd>
+        <dt>Confidence</dt><dd>86%</dd>
+        <dt>Complexity</dt><dd>Low</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="idea-4">
+      <div class="idea-head"><span class="rank">4</span><div class="idea-title"><span class="tag">Threat and tempo</span><h3>Funnel Sprint</h3></div></div>
+      <p>Three narrow vertical lanes feed a shared lower payoff zone. The move budget is short, so the player cannot exhaust every lane; they must build just enough in two lanes and time the convergence.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Three lanes converging into a shared lower zone">· S · S ·
+· S · S ·
+· S · S ·
+· · · · ·
+· · · · ·</pre>
+        <p class="legend">Stone separators end before the bottom, creating three inputs and one merge zone. Directional sketch, not a fixed layout.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Threat and tempo</dd>
+        <dt>Basis</dt><dd><strong>direct + reasoned:</strong> Level 53 proves that a short move budget can carry pressure without bombs; gravity makes lane convergence mechanically meaningful.</dd>
+        <dt>Rationale</dt><dd>This adds spatial scheduling to the successful wide-sprint idea instead of producing another open 6×5 variant.</dd>
+        <dt>Downsides</dt><dd>Stones can create accidental refill quirks. The exact divider placement must be checked against the known below-stone behavior.</dd>
+        <dt>Confidence</dt><dd>81%</dd>
+        <dt>Complexity</dt><dd>Medium</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="idea-5">
+      <div class="idea-head"><span class="rank">5</span><div class="idea-title"><span class="tag">Value-building affordance</span><h3>Builder Pocket</h3></div></div>
+      <p>A small stone-bounded side bay gives the player a place to park a 1,024 or 2,048 survivor while continuing to harvest the main field. The pocket reconnects through a narrow mouth, so taking the stored value back out requires planning.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Main field beside a small protected pocket">· · · S P
+· · · S P
+· · · · P
+· · · S S
+· · · · ·</pre>
+        <p class="legend">P = protected pocket. The obstacle is useful: it creates custody for built value rather than simply removing cells.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Value-building affordance</dd>
+        <dt>Basis</dt><dd><strong>direct:</strong> Owner play repeatedly creates power-of-two survivors for later chains; the accepted owner decision says blockers can help or hurt depending on topology.</dd>
+        <dt>Rationale</dt><dd>It makes “save this tile for later” visible in the board itself, encouraging a skill the current random layouts only permit accidentally.</dd>
+        <dt>Downsides</dt><dd>The pocket could become a trap or a free safety zone. Its mouth and refill behavior must preserve choice rather than guarantee value.</dd>
+        <dt>Confidence</dt><dd>79%</dd>
+        <dt>Complexity</dt><dd>Medium</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="idea-6">
+      <div class="idea-head"><span class="rank">6</span><div class="idea-title"><span class="tag">Threat and tempo</span><h3>Sequential Defusal Relay</h3></div></div>
+      <p>One bomb is reachable immediately. A timed ice gate delays the route to a second bomb, creating two distinct urgency phases instead of two simultaneous generic timers.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Two bombs separated by an ice gate">X · · S ·
+· · · S ·
+S S I S S
+· · · · ·
+· · · · X</pre>
+        <p class="legend">X = bomb · I = ice gate. First stabilize the top, then exploit the opened route before the second clock expires.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Threat and tempo</dd>
+        <dt>Basis</dt><dd><strong>reasoned:</strong> The shipped game already supports multiple bombs and timed ice; arranging them as sequential phases is feasible without new rules.</dd>
+        <dt>Rationale</dt><dd>Existing bomb levels mostly add urgency. This would add an order-of-operations puzzle: which threat exists now, and what must be prepared for next?</dd>
+        <dt>Downsides</dt><dd>Confidence is lower because the exact bomb-clear and thaw interaction has not been demonstrated. It may feel scripted if only one sequence works.</dd>
+        <dt>Confidence</dt><dd>68%</dd>
+        <dt>Complexity</dt><dd>Medium</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="idea-7">
+      <div class="idea-head"><span class="rank">7</span><div class="idea-title"><span class="tag">Value-building affordance</span><h3>Tiny Marathon</h3></div></div>
+      <p>A very small board gets a generous move budget. The challenge is not reaching a target quickly; it is maintaining a matchable value ecology without filling the board with permanent off-lattice survivors.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Small open board with a long move budget">· · · ·
+· · · ·
+· · · ·
+· · · ·
+· · · ·</pre>
+        <p class="legend">The geometry is deliberately plain. Scarce cells plus many moves make survivor quality, not obstacle routing, the board's identity.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Value-building affordance</dd>
+        <dt>Basis</dt><dd><strong>direct:</strong> The ledger proves off-lattice survivors never become matchable again and accumulate toward lockout; current shipped levels do not make that long-horizon pressure the central experience.</dd>
+        <dt>Rationale</dt><dd>It turns an otherwise hidden system into the puzzle. Expert play should look visibly different because careless high-scoring chains poison future space.</dd>
+        <dt>Downsides</dt><dd>High frustration risk. A generous target or too many moves could make failure feel inevitable, and the current bot may be a poor authoring proxy for patient cleanup.</dd>
+        <dt>Confidence</dt><dd>64%</dd>
+        <dt>Complexity</dt><dd>Low</dd>
+      </dl>
+    </article>
+  </section>
+
+  <section id="rejection-summary">
+    <div class="eyebrow">What did not survive</div>
+    <h2>Rejection Summary</h2>
+    <table>
+      <thead><tr><th>Raw #</th><th>Idea</th><th>Reason rejected</th></tr></thead>
+      <tbody>
+        <tr><td>3</td><td>Opening Famine</td><td>Folded into the stronger No-Blocker Nemesis and Funnel Sprint directions.</td></tr>
+        <tr><td>4</td><td>Late Bridge</td><td>Folded into Bank and Break, which supplies a clearer purpose for the thaw.</td></tr>
+        <tr><td>5</td><td>Competing Fuseboard</td><td>Weaker than Sequential Defusal Relay because simultaneous timers alone already exist.</td></tr>
+        <tr><td>6</td><td>Dead-Tile Cleanup Lane</td><td>Folded into Tiny Marathon, where value ecology is the whole board rather than a side feature.</td></tr>
+        <tr><td>8</td><td>Blockers as Shelter</td><td>Folded into Builder Pocket with a more concrete board shape.</td></tr>
+        <tr><td>9</td><td>Edge-Open Arena</td><td>Feasible but does not yet imply a distinctive decision beyond “chains collect in the center.”</td></tr>
+        <tr><td>10</td><td>Thawing Relief</td><td>Interesting tension curve, but Bank and Break gives the thaw a more strategic payoff.</td></tr>
+        <tr><td>11</td><td>Sprint/Endurance Twins</td><td>Useful comparison method, not a distinct board type.</td></tr>
+        <tr><td>12</td><td>Threatless Precision</td><td>Too close to No-Blocker Nemesis without a stronger topology.</td></tr>
+        <tr><td>13</td><td>Decision-Pattern Families</td><td>Kept as the organizing principle, not presented as a board.</td></tr>
+        <tr><td>14</td><td>Seed Is Part of the Level</td><td>Kept as a property of No-Blocker Nemesis, not a standalone board.</td></tr>
+        <tr><td>15</td><td>Skill-Differential Boards</td><td>A selection test rather than a player-facing board type.</td></tr>
+        <tr><td>16</td><td>Helpful Obstacle Boards</td><td>Folded into Builder Pocket, which makes “helpful” concrete.</td></tr>
+        <tr><td>17</td><td>Phase-Change Boards</td><td>Broad umbrella covered more specifically by Bank and Break and Sequential Defusal Relay.</td></tr>
+        <tr><td>18</td><td>Near-Miss Boards</td><td>Seed-selection criterion, not enough of a board identity on its own.</td></tr>
+        <tr><td>19</td><td>Topology Recipe Library</td><td>Authoring infrastructure; outside the requested board menu.</td></tr>
+        <tr><td>20</td><td>Experience Descriptor Map</td><td>Evaluation infrastructure; valuable later, but not itself a board.</td></tr>
+        <tr><td>21</td><td>Sibling-Board Experiments</td><td>Research method rather than player-facing content.</td></tr>
+        <tr><td>22</td><td>Nemesis Seed Library</td><td>Challenge packaging, not a board family.</td></tr>
+        <tr><td>23</td><td>Human-Action Fingerprints</td><td>Selection instrument, not a board family.</td></tr>
+        <tr><td>24</td><td>Author From a Desired Arc</td><td>Authoring method retained as guidance, not a player-facing result.</td></tr>
+        <tr><td>25</td><td>Reservoir Board</td><td>Folded into Bank and Break.</td></tr>
+        <tr><td>26</td><td>Hourglass Board</td><td>Clear topology, but Forked Harvest creates a stronger strategic choice.</td></tr>
+        <tr><td>27</td><td>Traffic-Merge Board</td><td>Folded into Funnel Sprint.</td></tr>
+        <tr><td>28</td><td>Crop-Rotation Board</td><td>Weak basis: current gravity and refill may not sustain reliable alternation.</td></tr>
+        <tr><td>29</td><td>Two-Clock Board</td><td>Folded into Sequential Defusal Relay, which creates distinct phases.</td></tr>
+        <tr><td>30</td><td>Airlock Board</td><td>Folded into Bank and Break and Sequential Defusal Relay.</td></tr>
+        <tr><td>31</td><td>One-Room Mansion</td><td>Large-board scarcity is plausible but less distinct than Funnel Sprint's authored flow.</td></tr>
+        <tr><td>33</td><td>Stone Maze</td><td>Likely fragile, visually noisy, and outside the generator's tested blocker-count range.</td></tr>
+        <tr><td>34</td><td>Perfect Symmetry</td><td>Requires tighter control of the initial board than current level authoring exposes.</td></tr>
+        <tr><td>35</td><td>All-Temporary Wall</td><td>Folded into Bank and Break; the extreme version risks a decorative thaw.</td></tr>
+        <tr><td>36</td><td>Zero-Free-Space Start</td><td>Too likely to lock out or feel arbitrary relative to the probable value.</td></tr>
+        <tr><td>38</td><td>Choose Your Engine</td><td>Folded into the simpler, player-facing Forked Harvest name.</td></tr>
+        <tr><td>40</td><td>Controlled Choke Family</td><td>A useful authoring batch, but not one distinct board experience.</td></tr>
+        <tr><td>42</td><td>Nemesis Arc Pack</td><td>Packaging and selection program rather than a board type.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="sources">
+    <div class="eyebrow">Evidence used</div>
+    <h2>Sources</h2>
+    <p>Repository evidence: <code>src/game.js</code>, <code>solver/generated-batch-01.json</code> through <code>generated-batch-04.json</code>, <code>solver/generate-levels.js</code>, <code>solver/profile-shapes.js</code>, <code>CURRENT.md</code>, <code>EVIDENCE_LEDGER.md</code>, <code>docs/backlog/BL-0012-generator-cannot-build-climbing-chains.md</code>, <code>docs/backlog/BL-0013-policy-vocabulary-gaps.md</code>, and the latest fixed-seed Level 54 recording.</p>
+    <p>External grounding: <a href="https://www.pcgworkshop.com/archive/smith2010analyzing.pdf">Smith &amp; Whitehead, <em>Analyzing the Expressive Range of a Level Generator</em></a>; <a href="https://ojs.aaai.org/index.php/AIIDE/article/view/12592">Linden, Lopes &amp; Bidarra, <em>Designing Procedurally Generated Levels</em></a>; <a href="https://arxiv.org/abs/1904.08972">Khalifa et al., <em>Intentional Computational Level Design</em></a>.</p>
+  </section>
+
+  <footer class="composition-signal">Composed 2026-09-11T04:30Z by ce-ideate from the user's board-gap question and repository evidence at branch <code>codex/proposed-beat-the-bot</code>.</footer>
+</main>
+</body>
+</html>
