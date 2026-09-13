@@ -12,14 +12,49 @@ The current board is 5×5 with a four-stone center wall and one ice tile at its
 bottom. Each side is only two columns wide. The ice thaws after four moves and,
 because it begins on the bottom row, cannot fall out of the wall first.
 
-It uses seed 316, a 40,000 target, 16 moves, minimum chain 3, and scale 32.
+The original probe used seed 316. The controlled validation round keeps the
+same 40,000 target, 16 moves, minimum chain 3, scale 32, geometry, and rules,
+and changes only the seed.
 
 ## Run
 
     node prototypes/bank-and-break/serve.js
 
-The command prints one fixed-seed URL and saves completed prototype plays
-under prototypes/bank-and-break/sessions/.
+The command prints three fixed-seed URLs and saves completed prototype plays
+under a role-and-seed directory in
+prototypes/bank-and-break/sessions/bank-break-fixed-bottom-gate/validation-2026-09-12/.
+
+## Controlled validation round
+
+The three playable seeds were selected from the declared finite population
+0–511 by:
+
+    node prototypes/bank-and-break/select-seeds.js --seeds=512
+
+Recheck the frozen selection after any bot, engine, or ranking change with:
+
+    BANK_BREAK_FULL_SCREEN=1 node --test solver/tests/bankAndBreakValidation.test.js
+
+| Role | Seed | Current bot | Bounded largest-chain |
+|---|---:|---:|---:|
+| Setup-favorable | 268 | target in 7, 52,736 | misses target, 33,056 after 16 |
+| Neutral | 511 | target in 10, 41,856 | target in 10, 40,512 |
+| Hypothesis-hostile | 93 | misses target, 35,840 after 16 | target in 15, 40,928 |
+
+“Bounded largest-chain” is the longest chain returned by the frozen width-8
+greedy path generator on each move. It is reproducible, not a mathematical
+maximum.
+
+The roles are selection conditions, not claims about what a player will feel.
+Seed 268 gives the current bot its largest target-race advantage
+over the baseline. Seed 511 gives both policies the same median-adjacent pace.
+Seed 93 is the fastest bounded-largest-chain win in this population among
+seeds where the current bot misses the target.
+
+Play each once. Preserve this family only if banking and later reuse remain
+deliberate and useful outside seed 316. Reject or redesign it if largest-chain
+play feels sufficient, or if the perceived strategy is mostly a favorable
+spawn sequence.
 
 ## Exact fixed-seed bot reference
 
