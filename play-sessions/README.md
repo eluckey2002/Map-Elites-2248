@@ -15,3 +15,12 @@ Captured because human play is the only benchmark in this project the bot has
 not saturated, and until 2026-09-05 the game discarded every session: ordinary
 play drew from `Math.random` with no seed and attached no recorder, so boards
 were not reproducible and moves were lost.
+
+Analyze one ordinary capture against the target-aware and full-budget bot on
+the same shipped level and seed:
+
+    node solver/human-benchmark.js --recording play-sessions/<id>.json
+
+Draw the human and bot chains on each shared starting position:
+
+    node solver/board-trace.js --recording play-sessions/<id>.json

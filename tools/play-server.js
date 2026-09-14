@@ -68,8 +68,34 @@ function json(response, status, body) {
   response.end(payload);
 }
 
-function createPlayServer() {
-  fs.mkdirSync(STORE, { recursive: true });
+function canonicalJson(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
+  if (value && typeof value === 'object') {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(',')}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function sessionIdentity(session) {
+  const { capturedAt: ignoredCapturedAt, source: ignoredSource, ...play } = session;
+  return crypto.createHash('sha256').update(canonicalJson(play)).digest('hex');
+}
+
+function storedSessionId(store, session) {
+  const identity = sessionIdentity(session);
+  for (const name of fs.readdirSync(store).filter((entry) => entry.endsWith('.json'))) {
+    try {
+      const existing = JSON.parse(fs.readFileSync(path.join(store, name), 'utf8'));
+      if (sessionIdentity(existing) === identity) return name.slice(0, -'.json'.length);
+    } catch {
+      // A malformed prior file is not a match and must not block new capture.
+    }
+  }
+  return identity;
+}
+
+function createPlayServer({ store = STORE, now = () => new Date().toISOString() } = {}) {
+  fs.mkdirSync(store, { recursive: true });
   return http.createServer(async (request, response) => {
     const pathname = (request.url || '/').split('?')[0];
 
@@ -78,12 +104,12 @@ function createPlayServer() {
         const session = JSON.parse(await readBody(request));
         const problems = validateSession(session);
         if (problems.length) { json(response, 400, { error: 'invalid session', problems }); return; }
-        const stamped = { ...session, capturedAt: new Date().toISOString(), source: 'play-server' };
+        const id = storedSessionId(store, session);
+        const stamped = { ...session, capturedAt: now(), source: 'play-server' };
         const body = `${JSON.stringify(stamped, null, 2)}\n`;
-        // Content-addressed, so replaying the same game twice cannot create a
-        // second file claiming to be a separate session.
-        const id = crypto.createHash('sha256').update(body).digest('hex');
-        const file = path.join(STORE, `${id}.json`);
+        // The identity excludes server-added capture metadata, so submitting
+        // the same play again remains one benchmark row.
+        const file = path.join(store, `${id}.json`);
         if (!fs.existsSync(file)) fs.writeFileSync(file, body);
         process.stdout.write(
           `captured level ${session.candidateLevel} seed ${session.seed}: `
@@ -119,4 +145,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { createPlayServer, validateSession };
+module.exports = { createPlayServer, sessionIdentity, storedSessionId, validateSession };

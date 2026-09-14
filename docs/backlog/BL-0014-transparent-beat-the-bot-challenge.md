@@ -87,3 +87,9 @@ their pre-game benchmark display without changing level rules or targets.
   the bot's best observed and the owner's worst recorded. Clarified the first
   proposal into a race-to-target Nemesis playlist and corrected "full-budget
   bot" so it does not imply a separately optimised or optimal scoring policy.
+- 2026-09-14 — Two later ordinary plays on Level 54 seed `3310936729` replayed
+  exactly: [126,400 in 18 moves](../../play-sessions/b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28.json)
+  and [129,472 in 16 moves](../../play-sessions/bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json).
+  The target-aware bot remained deterministic at 126,464 in 15 moves on that
+  same seed. These two captures update the owner-observation history; they do
+  not establish an owner minimum or a bot optimum.

@@ -1,0 +1,816 @@
+{
+  "schemaVersion": 1,
+  "standing": "throwaway Forge Contracts playtest; not evidence-ledger evidence",
+  "sessionId": "7bb9256d-4ae3-4ab1-b272-867ff3000029",
+  "candidateIdentity": "2d87e845c719a9d924d94ff65f835454eb93ccd01b40b8d9262b799880be76df",
+  "candidateLevel": 5912,
+  "seed": 5,
+  "contractId": "spread",
+  "contract": {
+    "id": "spread",
+    "name": "Spread Forge",
+    "description": "Hold four 1,024 tiles at once",
+    "bonus": 15000
+  },
+  "startedAt": "2026-09-14T21:11:00.357Z",
+  "updatedAt": "2026-09-14T21:29:15.213Z",
+  "revision": 10,
+  "status": "complete",
+  "outcome": "win",
+  "reason": "target reached",
+  "score": 82520,
+  "movesUsed": 9,
+  "contractAwarded": true,
+  "bonusAwarded": 15000,
+  "progress": {
+    "current": 4,
+    "required": 4,
+    "label": "4/4 tiles worth 1,024",
+    "complete": true
+  },
+  "initialGrid": [
+    [
+      {
+        "x": 0,
+        "y": 0,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 1,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "value": 256,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 2,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 3,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "value": 256,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 4,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ]
+  ],
+  "moves": [
+    {
+      "move": 1,
+      "tiles": [
+        {
+          "x": 1,
+          "y": 0,
+          "value": 128
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "value": 128
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "value": 128
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "value": 128
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "value": 128
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "value": 128
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "value": 128
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "value": 128
+        }
+      ],
+      "chainPoints": 3072,
+      "bonus": 0,
+      "scoreAfter": 3072,
+      "progress": {
+        "current": 1,
+        "required": 4,
+        "label": "1/4 tiles worth 1,024",
+        "complete": false
+      }
+    },
+    {
+      "move": 2,
+      "tiles": [
+        {
+          "x": 3,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 4,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 3,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 0,
+          "y": 3,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 4,
+          "value": 64
+        }
+      ],
+      "chainPoints": 5120,
+      "bonus": 0,
+      "scoreAfter": 8192,
+      "progress": {
+        "current": 2,
+        "required": 4,
+        "label": "2/4 tiles worth 1,024",
+        "complete": false
+      }
+    },
+    {
+      "move": 3,
+      "tiles": [
+        {
+          "x": 4,
+          "y": 4,
+          "value": 128
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "value": 128
+        },
+        {
+          "x": 2,
+          "y": 3,
+          "value": 128
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "value": 128
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "value": 128
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "value": 128
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "value": 128
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "value": 128
+        }
+      ],
+      "chainPoints": 3072,
+      "bonus": 0,
+      "scoreAfter": 11264,
+      "progress": {
+        "current": 3,
+        "required": 4,
+        "label": "3/4 tiles worth 1,024",
+        "complete": false
+      }
+    },
+    {
+      "move": 4,
+      "tiles": [
+        {
+          "x": 4,
+          "y": 4,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 3,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "value": 128
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "value": 256
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "value": 256
+        }
+      ],
+      "chainPoints": 5120,
+      "bonus": 15000,
+      "scoreAfter": 31384,
+      "progress": {
+        "current": 4,
+        "required": 4,
+        "label": "4/4 tiles worth 1,024",
+        "complete": true
+      }
+    },
+    {
+      "move": 5,
+      "tiles": [
+        {
+          "x": 4,
+          "y": 4,
+          "value": 128
+        },
+        {
+          "x": 4,
+          "y": 3,
+          "value": 128
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "value": 256
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "value": 256
+        },
+        {
+          "x": 3,
+          "y": 4,
+          "value": 256
+        }
+      ],
+      "chainPoints": 2048,
+      "bonus": 0,
+      "scoreAfter": 33432,
+      "progress": {
+        "current": 4,
+        "required": 4,
+        "label": "4/4 tiles worth 1,024",
+        "complete": true
+      }
+    },
+    {
+      "move": 6,
+      "tiles": [
+        {
+          "x": 2,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "value": 128
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "value": 128
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "value": 128
+        }
+      ],
+      "chainPoints": 1024,
+      "bonus": 0,
+      "scoreAfter": 34456,
+      "progress": {
+        "current": 4,
+        "required": 4,
+        "label": "4/4 tiles worth 1,024",
+        "complete": true
+      }
+    },
+    {
+      "move": 7,
+      "tiles": [
+        {
+          "x": 0,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "value": 128
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "value": 256
+        }
+      ],
+      "chainPoints": 5120,
+      "bonus": 0,
+      "scoreAfter": 39576,
+      "progress": {
+        "current": 4,
+        "required": 4,
+        "label": "4/4 tiles worth 1,024",
+        "complete": true
+      }
+    },
+    {
+      "move": 8,
+      "tiles": [
+        {
+          "x": 0,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "value": 128
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "value": 128
+        }
+      ],
+      "chainPoints": 1024,
+      "bonus": 0,
+      "scoreAfter": 40600,
+      "progress": {
+        "current": 4,
+        "required": 4,
+        "label": "4/4 tiles worth 1,024",
+        "complete": true
+      }
+    },
+    {
+      "move": 9,
+      "tiles": [
+        {
+          "x": 4,
+          "y": 3,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "value": 64
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "value": 64
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "value": 64
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "value": 128
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "value": 256
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "value": 256
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "value": 512
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "value": 512
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "value": 1024
+        },
+        {
+          "x": 2,
+          "y": 3,
+          "value": 1024
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "value": 1024
+        },
+        {
+          "x": 1,
+          "y": 4,
+          "value": 1024
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "value": 1024
+        },
+        {
+          "x": 3,
+          "y": 4,
+          "value": 1024
+        }
+      ],
+      "chainPoints": 41920,
+      "bonus": 0,
+      "scoreAfter": 82520,
+      "progress": {
+        "current": 4,
+        "required": 4,
+        "label": "4/4 tiles worth 1,024",
+        "complete": true
+      }
+    }
+  ]
+}

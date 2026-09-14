@@ -9,7 +9,7 @@
 //
 //   node solver/board-trace.js                          # the pilot game
 //   node solver/board-trace.js --moves 14,15,20         # only those moves
-//   node solver/board-trace.js --recording <file.json>  # any recording
+//   node solver/board-trace.js --recording <file.json>  # candidate or ordinary play
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -17,7 +17,7 @@ const {
   makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles, tickBlockers,
 } = require('./engine');
 const { chooseMove } = require('./bot');
-const { candidateIndex } = require('./recording-replay');
+const { resolveRecordedBoard } = require('./human-benchmark');
 
 const ROOT = path.join(__dirname, '..');
 const LOOKAHEAD_BASE = 987654321;
@@ -64,8 +64,8 @@ function main() {
   let candidate;
   if (recordingArg) {
     recording = JSON.parse(fs.readFileSync(recordingArg, 'utf8'));
-    const indexed = candidateIndex().get(recording.candidateIdentity);
-    candidate = indexed && indexed.candidate;
+    const resolved = resolveRecordedBoard(recording);
+    candidate = resolved && resolved.candidate;
   } else {
     const dir = path.join(ROOT, 'pilots', 'HUMAN-PILOT-0002');
     candidate = JSON.parse(fs.readFileSync(path.join(dir, 'candidate.json'), 'utf8')).candidates[0];
@@ -88,11 +88,12 @@ function main() {
 
   recording.chains.forEach((chain, i) => {
     const move = i + 1;
+    const shown = !wanted || wanted.has(move);
     const opts = { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + i) };
-    const botChain = chooseMove(state, opts);
+    const botChain = shown ? chooseMove(state, opts) : null;
     const humanLive = chain.tiles.map((t) => state.grid[t.y][t.x]);
 
-    if (!wanted || wanted.has(move)) {
+    if (shown) {
       const humanSum = chain.tiles.reduce((s, t) => s + t.value, 0);
       const botSum = (botChain || []).reduce((s, t) => s + t.value, 0);
       const botPoints = botChain

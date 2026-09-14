@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "standing": "throwaway Forge Contracts playtest; not evidence-ledger evidence",
+  "sessionId": "a101af76-a55b-403f-891c-333150bd7b60",
+  "candidateIdentity": "2d87e845c719a9d924d94ff65f835454eb93ccd01b40b8d9262b799880be76df",
+  "candidateLevel": 5912,
+  "seed": 5,
+  "contractId": "tower",
+  "contract": {
+    "id": "tower",
+    "name": "Tower Forge",
+    "description": "Create one tile worth exactly 4,096",
+    "bonus": 24000
+  },
+  "startedAt": "2026-09-14T21:36:20.599Z",
+  "updatedAt": "2026-09-14T21:36:20.600Z",
+  "revision": 1,
+  "status": "in-progress",
+  "outcome": null,
+  "reason": null,
+  "score": 0,
+  "movesUsed": 0,
+  "contractAwarded": false,
+  "bonusAwarded": 0,
+  "progress": {
+    "current": 256,
+    "required": 4096,
+    "label": "256/4,096 exact tower",
+    "complete": false
+  },
+  "initialGrid": [
+    [
+      {
+        "x": 0,
+        "y": 0,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 1,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "value": 256,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 2,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 3,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "value": 256,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ],
+    [
+      {
+        "x": 0,
+        "y": 4,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "value": 128,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "value": 64,
+        "blocker": null,
+        "blockerDuration": 0,
+        "bombTimer": 0
+      }
+    ]
+  ],
+  "moves": []
+}

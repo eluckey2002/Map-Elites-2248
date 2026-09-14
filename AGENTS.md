@@ -25,11 +25,13 @@ Make every correction append-only. Add a correction or supersession record, upda
 
 Push back before building. If a request looks like the wrong idea, say "wait — is that the best idea?" and make the case, then do it anyway if the answer is yes. Silent compliance on a bad plan costs more than the argument.
 
+Before building a gameplay prototype, read `prototypes/PLAYTEST-DECISION-LEDGER.md`. Name the owner's captured baseline strategy and the exact board state where the proposed design should make that strategy suboptimal. A bot or solver proxy such as bounded-longest play cannot substitute unless a human capture establishes it as the owner's behavior. If the intended move is already the owner's baseline move, stop: control over seeds, spawns, or tile placement is an authoring capability, not by itself a new strategic decision.
+
 Not every remark is a directive. Owner messages mix thinking-out-loud with instructions. When a remark implies a rule change, treat it as a candidate, not an order: capture it as a `proposed` backlog record and confirm before changing rules or scoring.
 
 Change game rules systematically, never ad hoc. A rule or scoring change is measured with `solver/game-tester.js` against the shipped curve before it lands, and gets a ledger record when it does.
 
-A captured play session is work to do, not a question to ask. When a new file appears in `play-sessions/`, analyse it and report — do not ask whether the owner wants it looked at.
+A captured play session is work to do, not a question to ask. When a new file appears in `play-sessions/`, run `node solver/human-benchmark.js --recording <file>` and report the same-seed comparison; use `node solver/board-trace.js --recording <file>` when positions need inspection. Do not ask whether the owner wants it looked at.
 
 ## Experiments
 

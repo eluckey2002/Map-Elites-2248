@@ -106,3 +106,18 @@ only be cleared as the chain endpoint, does the player deliberately reject a
 larger available chain to survive?** Use the same relay board and seed so the
 rule is the only changed variable. Success requires an observed tradeoff and a
 player report that it felt meaningful rather than merely restrictive.
+
+## Correction from Cash or Compound
+
+The Cash or Compound screen found an exact open-board seed where the current
+bot sacrificed immediate points, reused built tiles, and beat two cash-oriented
+baselines. The owner's seven-move replay was even clearer: four 1,024 survivors
+from moves 1–4 plus a 512 from move 5 were all consumed in a 29,440-point move
+6 chain.
+
+That did **not** validate a new design. The owner described this as their normal
+plan. The screen had mistaken evidence that a known strategy occurred for
+evidence that the board introduced a new decision. From now on,
+build-and-harvest is the owner's baseline strategy. A candidate must cause a
+meaningful choice inside that strategy—what to build, where to place it, or
+when to cash it—not merely reward it.
