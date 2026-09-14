@@ -376,6 +376,7 @@ class Game {
         this.random = Math.random;
         this.authoringCapture = null;
         this.customSession = null;
+        this.levelSeedOverride = null;
 
         // History for undo
         this.history = [];
@@ -846,12 +847,19 @@ class Game {
     // and offered to /api/play-sessions. A server that does not accept it
     // (a plain static file server) just fails the POST quietly; play is
     // unaffected.
-    loadLevel(levelNum) {
+    loadLevel(levelNum, { seed: requestedSeed } = {}) {
         this.customSession = null;
         const levelData = LEVELS.find(l => l.level === levelNum) || LEVELS[0];
+        if (requestedSeed !== undefined
+            && (!Number.isInteger(requestedSeed) || requestedSeed < 0 || requestedSeed > 0xffffffff)) {
+            throw new RangeError('seed must be an integer from 0 to 4294967295');
+        }
+        this.levelSeedOverride = Number.isInteger(levelData.seed)
+            ? null
+            : requestedSeed ?? null;
         const seed = Number.isInteger(levelData.seed)
             ? levelData.seed
-            : Math.floor(Math.random() * 0x100000000);
+            : this.levelSeedOverride ?? Math.floor(Math.random() * 0x100000000);
         this.sessionSeed = seed;
         const capture = new AuthoringCapture({
             candidateIdentity: null,
@@ -878,7 +886,12 @@ class Game {
 
     reloadCurrentLevel() {
         if (this.customSession) this.startCustomLevel(this.customSession);
-        else this.loadLevel(this.currentLevel);
+        else {
+            const options = this.levelSeedOverride === null
+                ? {}
+                : { seed: this.levelSeedOverride };
+            this.loadLevel(this.currentLevel, options);
+        }
     }
 
     finishAuthoring(outcome, reason) {
@@ -1324,15 +1337,21 @@ function levelFromQuery(search, levelCount) {
     return n;
 }
 
+function seedFromQuery(search) {
+    const raw = new URLSearchParams(search).get('seed');
+    if (raw === null || raw.trim() === '') return null;
+    const seed = Number(raw);
+    if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) return null;
+    return seed;
+}
+
 function customCandidateFromQuery(search) {
     const query = new URLSearchParams(search);
     const candidateRaw = query.get('candidate');
-    const seedRaw = query.get('seed');
-    if (candidateRaw === null || seedRaw === null || candidateRaw.trim() === '' || seedRaw.trim() === '') return null;
+    const seed = seedFromQuery(search);
+    if (candidateRaw === null || candidateRaw.trim() === '' || seed === null) return null;
     const level = Number(candidateRaw);
-    const seed = Number(seedRaw);
     if (!Number.isInteger(level) || level < 1 || level > 9999) return null;
-    if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) return null;
     return { level, seed };
 }
 
@@ -1367,9 +1386,11 @@ async function startBrowserGame() {
     // `?level=26` opens a level directly, past the unlock gate. Unlocking up
     // to it as well, so the level picker agrees with where you actually are.
     const jump = custom ? null : levelFromQuery(window.location.search, LEVELS.length);
-    if (jump !== null && jump !== game.currentLevel) {
+    const fixedSeed = custom ? null : seedFromQuery(window.location.search);
+    if (jump !== null && (jump !== game.currentLevel || fixedSeed !== null)) {
         game.unlockedLevel = Math.max(game.unlockedLevel, jump);
-        game.loadLevel(jump);
+        const options = fixedSeed === null ? {} : { seed: fixedSeed };
+        game.loadLevel(jump, options);
     }
 }
 
@@ -1392,6 +1413,7 @@ if (typeof module !== 'undefined' && module.exports) {
         levelFromQuery,
         makeSeededRng,
         rngForLevel,
+        seedFromQuery,
         validatePlayableLevel,
     };
 }

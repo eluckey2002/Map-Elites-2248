@@ -1,6 +1,11 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { levelFromQuery, LEVELS } = require('../../src/game.js');
+const {
+  Game,
+  LEVELS,
+  levelFromQuery,
+  seedFromQuery,
+} = require('../../src/game.js');
 
 /**
  * `?level=N` is the developer's way past the unlock gate — the whole point is
@@ -42,4 +47,46 @@ test('a value that is not a whole number is refused, not truncated', () => {
 
 test('the jump survives other query parameters', () => {
   assert.equal(levelFromQuery('?seed=9&level=26&debug=1', 50), 26);
+});
+
+test('a shipped-level seed accepts the full unsigned 32-bit range', () => {
+  assert.equal(seedFromQuery('?level=54&seed=0'), 0);
+  assert.equal(seedFromQuery('?level=54&seed=3310936729'), 3310936729);
+  assert.equal(seedFromQuery('?level=54&seed=4294967295'), 0xffffffff);
+});
+
+test('an absent or malformed shipped-level seed leaves ordinary play random', () => {
+  assert.equal(seedFromQuery('?level=54'), null);
+  assert.equal(seedFromQuery('?level=54&seed='), null);
+  assert.equal(seedFromQuery('?level=54&seed=-1'), null);
+  assert.equal(seedFromQuery('?level=54&seed=1.5'), null);
+  assert.equal(seedFromQuery('?level=54&seed=4294967296'), null);
+  assert.equal(seedFromQuery('?level=54&seed=not-a-seed'), null);
+});
+
+test('loading and retrying a fixed shipped-level seed reproduces the board RNG', () => {
+  const previousDocument = global.document;
+  global.document = { getElementById: () => null };
+
+  try {
+    const rngSamples = [];
+    const game = Object.assign(Object.create(Game.prototype), {
+      currentLevel: 1,
+      initializeLevel(level, rng) {
+        this.currentLevel = level.level;
+        rngSamples.push([rng(), rng(), rng()]);
+      },
+      submitPlaySession() {},
+    });
+
+    game.loadLevel(54, { seed: 3310936729 });
+    assert.equal(game.sessionSeed, 3310936729);
+    assert.equal(game.levelSeedOverride, 3310936729);
+
+    game.reloadCurrentLevel();
+    assert.equal(game.sessionSeed, 3310936729);
+    assert.deepEqual(rngSamples[1], rngSamples[0]);
+  } finally {
+    global.document = previousDocument;
+  }
 });

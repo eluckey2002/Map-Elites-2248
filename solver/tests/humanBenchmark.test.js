@@ -5,7 +5,9 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
+const { spawnSync } = require('node:child_process');
 
 const { collect, playBot } = require('../human-benchmark');
 const { makeRng } = require('../engine');
@@ -18,7 +20,7 @@ const collectOnce = () => { if (!cached) cached = collect(); return cached; };
 
 function recordingCount() {
   let total = 0;
-  const dirs = [path.join(ROOT, 'recordings')];
+  const dirs = [path.join(ROOT, 'recordings'), path.join(ROOT, 'play-sessions')];
   const pilotsDir = path.join(ROOT, 'pilots');
   if (fs.existsSync(pilotsDir)) {
     for (const pilot of fs.readdirSync(pilotsDir)) {
@@ -46,6 +48,62 @@ test('every recorded session resolves to a board and is paired', () => {
   // 12 as of 2026-09-05. A deliberate pin: this number should only ever go up,
   // and it going up should be a decision someone made, not a surprise.
   assert.ok(rows.length >= 12, `expected at least 12 paired boards, got ${rows.length}`);
+});
+
+test('an ordinary play capture resolves to the shipped board and pairs on its seed', () => {
+  const file = path.join(
+    ROOT,
+    'play-sessions',
+    'bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json',
+  );
+  const { rows, unresolved } = collect({ recordingPath: file });
+
+  assert.deepEqual(unresolved, []);
+  assert.equal(rows.length, 1);
+  assert.deepEqual(rows[0].human, { score: 129472, moves: 16, outcome: 'win' });
+  assert.equal(rows[0].source, 'shipped-level');
+  assert.equal(rows[0].seed, 3310936729);
+  assert.deepEqual(rows[0].bot, { score: 126464, moves: 15, outcome: 'win' });
+});
+
+test('an invalid ordinary capture is reported without crashing on its null identity', (t) => {
+  const source = path.join(
+    ROOT,
+    'play-sessions',
+    'bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json',
+  );
+  const recording = JSON.parse(fs.readFileSync(source, 'utf8'));
+  recording.score += 1;
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'human-benchmark-'));
+  const file = path.join(directory, 'broken.json');
+  fs.writeFileSync(file, `${JSON.stringify(recording)}\n`);
+  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+
+  const result = spawnSync(process.execPath, [path.join(ROOT, 'solver', 'human-benchmark.js'), '--recording', file], {
+    encoding: 'utf8',
+  });
+  assert.equal(result.status, 1);
+  assert.match(result.stdout, /identity shipped-level/);
+  assert.match(result.stdout, /final score/);
+  assert.equal(result.stderr, '');
+});
+
+test('board trace renders an ordinary play capture through the documented CLI', () => {
+  const file = path.join(
+    ROOT,
+    'play-sessions',
+    'bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json',
+  );
+  const result = spawnSync(
+    process.execPath,
+    [path.join(ROOT, 'solver', 'board-trace.js'), '--recording', file, '--moves', '1'],
+    { encoding: 'utf8' },
+  );
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /level 54, seed 3310936729/);
+  assert.match(result.stdout, /move 1/);
+  assert.match(result.stdout, /HUMAN/);
+  assert.match(result.stdout, /BOT/);
 });
 
 test('each pair compares the same board and the same seed for both players', () => {

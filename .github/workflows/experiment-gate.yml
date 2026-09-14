@@ -5,8 +5,8 @@
 #
 # Job 1 is the gate and is meant to be a required status check on main.
 # Job 2 is the full test suite, reported but not blocking, because main
-# carries five known failures (three deliberately visible receipt mismatches,
-# one linked-worktree check, one generated-view staleness check) that are
+# carries four known failures (two deliberately visible receipt mismatches,
+# one generated-view staleness check, and one date-drift check) that are
 # tracked elsewhere and must not mask a red gate.
 name: experiment-gate
 
@@ -30,7 +30,7 @@ jobs:
         run: node tools/verify-experiments.js
 
   test-suite:
-    name: full test suite (informational until the five known failures are retired)
+    name: full test suite (informational until the four known failures are retired)
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:

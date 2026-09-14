@@ -4,7 +4,7 @@
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
-- **`node --test solver/tests/*.test.js` passes 344 of 348. The four failures are deliberate.** Two stale candidate receipts, a generated-view staleness check, and a date-drift check. One of them carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
+- **`node --test solver/tests/*.test.js` reports 381 tests: 376 pass, four fail deliberately, and one is skipped.** The four failures are two stale candidate receipts, a generated-view staleness check, and a date-drift check. One of them carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still reads PASS, 140,544 points in 20 moves — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
 - **Shipped-level win rate cannot rank two policies.** The bot wins 71-100% of every shipped level, so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
@@ -25,11 +25,13 @@ Make every correction append-only. Add a correction or supersession record, upda
 
 Push back before building. If a request looks like the wrong idea, say "wait — is that the best idea?" and make the case, then do it anyway if the answer is yes. Silent compliance on a bad plan costs more than the argument.
 
+Before building a gameplay prototype, read `prototypes/PLAYTEST-DECISION-LEDGER.md`. Name the owner's captured baseline strategy and the exact board state where the proposed design should make that strategy suboptimal. A bot or solver proxy such as bounded-longest play cannot substitute unless a human capture establishes it as the owner's behavior. If the intended move is already the owner's baseline move, stop: control over seeds, spawns, or tile placement is an authoring capability, not by itself a new strategic decision.
+
 Not every remark is a directive. Owner messages mix thinking-out-loud with instructions. When a remark implies a rule change, treat it as a candidate, not an order: capture it as a `proposed` backlog record and confirm before changing rules or scoring.
 
 Change game rules systematically, never ad hoc. A rule or scoring change is measured with `solver/game-tester.js` against the shipped curve before it lands, and gets a ledger record when it does.
 
-A captured play session is work to do, not a question to ask. When a new file appears in `play-sessions/`, analyse it and report — do not ask whether the owner wants it looked at.
+A captured play session is work to do, not a question to ask. When a new file appears in `play-sessions/`, run `node solver/human-benchmark.js --recording <file>` and report the same-seed comparison; use `node solver/board-trace.js --recording <file>` when positions need inspection. Do not ask whether the owner wants it looked at.
 
 ## Experiments
 

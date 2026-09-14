@@ -2,6 +2,7 @@
 .orch/friction/
 .recovery/
 .codex/
+.context/compound-engineering/
 
 # Live git worktrees checked out inside the repo; they carry their own history
 .claude/worktrees/
