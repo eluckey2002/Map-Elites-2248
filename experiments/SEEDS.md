@@ -44,6 +44,8 @@ file and the repository before declaring a range fresh.
 | 32,200,000–32,200,001 | RESULT-0031 corrected-cap paired representative-board confirmation across Levels 10, 31, 53, and 54 | 2026-09-16 | `experiments/RESULT-0031/protocol.md` |
 | 32,300,000 | choice-density × recovery runtime and positive-control calibration; excluded from confirmation | 2026-09-16 | `solver/choice-recovery-descriptors.js` development calibration |
 | 32,400,000–32,400,007 | RESULT-0032 choice-density × recovery confirmation across four static/no-blocker board profiles | 2026-09-16 | `experiments/RESULT-0032/protocol.md` |
+| 32,500,000 | merge-depth × spatial-spread runtime and range calibration; excluded from confirmation | 2026-09-16 | `solver/merge-spread-descriptors.js` development calibration |
+| 32,600,000–32,600,007 | RESULT-0033 merge-depth × spatial-spread confirmation across four static/no-blocker board profiles | 2026-09-16 | `experiments/RESULT-0033/protocol.md` |
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
 | 1, 2, 10, 777 | owner play recordings on levels 51–54 (ten recordings in `recordings/`; seed 777 twice on level 52) | 2026-08 | `recordings/*.json` |
 | 9,100,000–9,100,001 and 9,200,004–9,200,005 | seed-variance bounded test, real control through the production `playMeasured` seam | 2026-09-01 | `solver/tests/seedVariance.test.js`, `experiments/RESULT-0021/protocol.md` |
