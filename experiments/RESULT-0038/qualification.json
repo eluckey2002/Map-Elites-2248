@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "result": "RESULT-0038",
+  "qualification": "PASS",
+  "oracle": {
+    "path": "protocol.md",
+    "commit": "6cecb3efbcf471fbd639b3a3e92aa90ff6e76cd5",
+    "immutable_protocol_sha256": "734d3347520c440922bff0c07cd860ebfbe6407b608705baa1fe0c063e285270"
+  },
+  "harness_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+  "trusted_input_identity_source": "version_freeze in protocol.md at the preregistration commit",
+  "controls": [
+    {
+      "id": "C1-C5-shared-harness",
+      "status": "PASS",
+      "command": "node --test experiments/RESULT-0037/*.test.js solver/tests/behaviorDescriptors.test.js solver/tests/exact-score.test.js solver/tests/exactGreedDenominator.test.js solver/tests/greedDescriptorScreen.test.js",
+      "exit_code": 0,
+      "observed": "25 tests passed; 0 failed"
+    },
+    {
+      "id": "C5-result-wrapper",
+      "status": "PASS",
+      "command": "RESULT-0038 production source closure, row verification, and stdout recomputation controls",
+      "exit_code": 0,
+      "observed": "clean frozen sources and row accepted; coherent source substitution rejected; corrected command emitted bytes identical to the retained independent reduction"
+    },
+    {
+      "id": "C6-suite-baseline",
+      "status": "PASS",
+      "command": "node --test solver/tests/*.test.js",
+      "exit_code": 1,
+      "observed": "420 tests; 415 passed; the same 4 documented deliberate failures; 1 skipped; no new failure"
+    },
+    {
+      "id": "experiment-gate",
+      "status": "PASS",
+      "command": "node tools/verify-experiments.js",
+      "exit_code": 0,
+      "observed": "EXPERIMENT GATE PASS"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "ABORTED",
+      "scope": "RESULT-0038 wrapper source-closure control only",
+      "observed": "controller supplied a non-existent expanded commit hash; no evidence retained"
+    },
+    {
+      "attempt": 2,
+      "status": "PASS",
+      "scope": "complete frozen qualification",
+      "observed": "shared harness and successor wrapper controls passed under the exact preregistration identity"
+    }
+  ],
+  "coherent_substitution": {
+    "status": "PASS",
+    "observed": "a changed exact-denominator source hash was rejected against the externally committed protocol freeze"
+  },
+  "uncertainties": [
+    "The 30-second watchdog invalidates confirmation if it fires; it is not a descriptor outcome.",
+    "Qualification establishes the harness and corrected closure path, not the descriptor's domain outcome."
+  ]
+}
