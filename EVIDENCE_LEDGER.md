@@ -817,6 +817,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** [CORRECTION-0007]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
+### RESULT-0041 — Hardened greed harness qualifies; confirmation watchdog invalidates the run
+
+- **type:** result
+- **status:** accepted
+- **scope:** mutation-qualified exact-denominator greed-ratio validation for percentile policies 0.25, 0.50, 0.75, and 1.00 on shipped Levels 10, 31, 53, and 54; confirmation seeds 33,800,000–33,800,007; deterministic 500,000-path-state cap and 30,000 ms emergency watchdog; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
+- **statement:** RESULT-0041's frozen harness qualified: the production verifier killed stale body identity, coherent seed-panel substitution, incorrect work-limit counts, and coherent source substitution for their intended reasons; its exact-modal stability statistic reported 0.50 on a planted unstable middle-bin policy; independent analysis matched work-limited, zero-exact-policy, null-cell, and non-default-policy fixtures; and source restoration passed. The single allowed confirmation attempt then hit the registered emergency watchdog at percentile 1.00, Level 10, seed 33,800,004 after reporting 96/128 completed games. The protocol declares any watchdog timeout invalid and forbids retry. Closure is therefore **`INVALID`**, recomputation is `NOT_RUN`, and P1–P6 are `UNVERIFIED`; no greed-ratio domain outcome or adoption evidence follows.
+- **evidence:** immutable protocol `experiments/RESULT-0041/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0041/protocol.md`, registration commit `4c6943b`; mutation [qualification receipt](experiments/RESULT-0041/qualification.json); retained [baseline output](experiments/RESULT-0041/baseline-output.txt); explicit invalid-run [corpus placeholder](experiments/RESULT-0041/corpus.json) with no outcome rows; complete [report](experiments/RESULT-0041/report.md); executable contract and [closure receipt](experiments/RESULT-0041/closure.json).
+- **proof_class:** `direct_source` for qualification controls, identities, the terminal watchdog condition, closure status, and absence of retained outcome rows; `UNKNOWN` for every descriptor prediction and domain conclusion.
+- **as_of:** 2026-09-16
+- **reverify:** From `experiments/RESULT-0041`, run `python3 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py closeout-contract.json closure.json --run-recomputation`; expect verifier `PASS`, `closure_status: INVALID`, and recomputation `NOT_RUN`. Run `node tools/verify-experiments.js` from the repository root; expect `EXPERIMENT GATE PASS`. Do not run the confirmation again or interpret its progress counts as outcomes.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0038]
+- **superseded_by:** []
+- **notes:** RESULT-0039 and RESULT-0040 stopped during pre-outcome qualification and retain their failed attempt receipts. RESULT-0041 repaired those exact gaps and qualified; its separate terminal failure shows that the 30-second watchdog is not guaranteed to outlast the deterministic path-state cap on every registered board. Any future confirmation is a new subject and requires an owner-selected compute/denominator change, not a retry of this run.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
