@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "registered-protocol.md",
+    "sha256": "68af107fe586cf35f4c43d45713a5fd82f9bcc89809138ec50a90c93d77fa11e"
+  },
+  "final_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+  "required_claims": ["C1", "C2", "C3", "C4", "P1", "P2", "P3"],
+  "required_artifacts": [
+    "human-board-1",
+    "human-board-2",
+    "oracle-challenge-report",
+    "primary-recomputation",
+    "report"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": ["node", "recompute.js"],
+    "cwd": ".",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}
