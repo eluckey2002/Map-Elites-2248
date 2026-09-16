@@ -776,6 +776,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** A successor must use a new result identity and fresh seeds, and its independent recomputation must reduce the immutable corpus rather than replay timeout-sensitive work. Greed ratio remains the stronger candidate; half-score move needs a stronger timing manipulation or replacement. Build potential remains a policy term, not an axis.
 
+### RESULT-0037 — Deterministic greed corpus is preserved but its frozen closeout command is unusable
+
+- **type:** result
+- **status:** provisional
+- **scope:** four fixed-percentile scripted policies on shipped Levels 10, 31, 53, and 54; seeds 33,400,000–33,400,007; exact legal-chain greed denominators capped at 500,000 deterministic path states per move; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, rule, or timing-axis validation claim
+- **statement:** RESULT-0037 closed **`UNVERIFIED`** and has no entitled primary domain outcome. The registered 128-game run completed without an emergency-watchdog timeout, passed its production artifact verifier, and retained 68/128 exact-complete games. A manual independent reduction byte-matched the retained decision and produced promising partial diagnostics: exact mean greed rose **0.366, 0.522, 0.728, 0.955**; policy win/greed correlation was **0.955**; per-game score/greed correlation was **0.611**; and greed-bin stability was **100%**. Half-score move again occupied only two timing bins and remains diagnostic. Executable closure nevertheless cannot pass because the frozen recomputation command writes its result to a file while the required closeout verifier compares command stdout to that file. The immutable contract cannot be repaired after outcomes were visible, so every prediction remains `UNVERIFIED` despite the preserved corpus.
+- **evidence:** immutable protocol `experiments/RESULT-0037/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0037/protocol.md`, registration commit `d8814f7`; qualified harness [qualification receipt](experiments/RESULT-0037/qualification.json); retained corpus `experiments/RESULT-0037/corpus.json`, artifact identity `f57690b58297feec62e4ef863a59931f7f48910c00fef873d61b29f6b0592083`; evidence boundary `experiments/RESULT-0037/report.md`; honest `UNVERIFIED` [closure receipt](experiments/RESULT-0037/closure.json); [manually reduced decision](experiments/RESULT-0037/primary-recomputation.json).
+- **proof_class:** `direct_source` for identities, deterministic work-limit counts, artifact verification, manual reduction agreement, and the closeout-contract defect; `UNKNOWN` for the intended domain conclusion. The correlations and stability are non-entitled `heuristic_observation` diagnostics and must not be promoted.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0037/verify.js experiments/RESULT-0037/corpus.json`; expect artifact verification PASS and 68/128 exact-complete games. Run the close-experiment verifier with `--run-recomputation` but without `--require-closed`; expect structural PASS, `closure_status: UNVERIFIED`, and recomputation `NOT_RUN`. Do not claim a closed domain outcome.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** A successor requires fresh seeds and the same corpus-reducing analysis, but its frozen recomputation argv must emit the reduction on stdout. Do not rerun RESULT-0037 or promote its partial diagnostics. Greed ratio remains the active candidate; a second timing axis still needs its own independent manipulation.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
