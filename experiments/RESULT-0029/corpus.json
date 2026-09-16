@@ -1,0 +1,4182 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0029",
+  "reportable": true,
+  "proofStanding": "exact_result within corpus; owner decision for scoped descriptor promotion",
+  "generator": {
+    "baseLevel": {
+      "level": 9029,
+      "name": "exact-descriptor-micro-puzzle",
+      "gridW": 3,
+      "gridH": 3,
+      "moves": 2,
+      "minChain": 3,
+      "tileScale": 1,
+      "blockers": [],
+      "target": 1
+    },
+    "regions": [
+      {
+        "id": "relaxed-short",
+        "seedStart": 29000000,
+        "seedCount": 48
+      },
+      {
+        "id": "relaxed-long",
+        "seedStart": 29000100,
+        "seedCount": 48
+      },
+      {
+        "id": "tight-short",
+        "seedStart": 29000200,
+        "seedCount": 48
+      },
+      {
+        "id": "tight-long",
+        "seedStart": 29000300,
+        "seedCount": 48
+      }
+    ],
+    "requiredPerRegion": 4,
+    "maxNodes": 250000,
+    "selection": "first exact qualifying seeds in each frozen disjoint range"
+  },
+  "sources": {
+    "experiments/RESULT-0029/subject.js": "7eabf8f181c9bacfcc50fe58740c9d4f9ebf2dc20d0b4b2a1aabe2e91f5be6f0",
+    "experiments/RESULT-0029/run.js": "dff770e8829ad588afd30c078a07b9178c0afd2f22a68be30e91d0096958ddaa",
+    "experiments/RESULT-0029/verify.js": "d519f03620301740a6e0c97cc1481f9ffef5f527406f997f8954521e5fe7d6ed",
+    "solver/puzzle-descriptors.js": "21751834257eaf73181fb2fb2c79d448361806e007048f0fdf0bfc04e906cd43",
+    "solver/exact-score.js": "edf48486735048e85ff8a72e9142e631643b20fbadb8c82c29b9bc94fbf886f3",
+    "solver/engine.js": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "solver/experiment-guard.js": "200ad71fad9492a3f397492880ffec4313e22039dc0ea18a8633822ba358443a",
+    "tools/verify-experiments.js": "17d658d9f13a40b050ee1f3ba9f0a227b80fc0d79d5a40aa2dc742e5b17369b3"
+  },
+  "regions": [
+    {
+      "region": "relaxed-short",
+      "screened": [
+        {
+          "seed": 29000000,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 36,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 36,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 104
+          },
+          "search": {
+            "expandedNodes": 22,
+            "generatedActions": 279,
+            "deduplicatedStates": 64
+          }
+        },
+        {
+          "seed": 29000001,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 9,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 9,
+            "oneMoveCap4": 12,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 21,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 202
+          },
+          "search": {
+            "expandedNodes": 99,
+            "generatedActions": 6922,
+            "deduplicatedStates": 4633
+          }
+        },
+        {
+          "seed": 29000002,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 36,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 36,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 210,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 318
+          },
+          "search": {
+            "expandedNodes": 128,
+            "generatedActions": 9671,
+            "deduplicatedStates": 4689
+          }
+        },
+        {
+          "seed": 29000003,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 48,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 60,
+            "oneMoveAll": 270,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 96,
+            "fullBudgetAll": 318
+          },
+          "search": {
+            "expandedNodes": 81,
+            "generatedActions": 2444,
+            "deduplicatedStates": 720
+          }
+        }
+      ],
+      "instances": [
+        {
+          "region": "relaxed-short",
+          "puzzleIdentity": "a76568cfbbcd9b26bd941431c67f3a6e0725a815c43bb02a3d1e8013eb30267d",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-relaxed-short",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 36
+          },
+          "seed": 29000000,
+          "initialBoard": [
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 16,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 16,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "6306a418c4f8f54bc2b91086a4217bd9f90461f6be1218db71f6e718acee7568",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 36,
+            "allowedMoves": 2,
+            "minimumMoves": 1,
+            "budgetTightness": 0.5,
+            "chainLengthDependence": 3,
+            "minimumMovesWitness": [
+              [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  2
+                ]
+              ],
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 0,
+              "bestScoreBelowRequiredCap": 0
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 22,
+            "generatedActions": 279,
+            "deduplicatedStates": 64
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 72,
+              "cursor": 5,
+              "moves": 1,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 72,
+              "cursor": 4,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        },
+        {
+          "region": "relaxed-short",
+          "puzzleIdentity": "0a653e1a2d1f7fe07290b75b616eec804fc0d91a7a6b35651a724fca58580084",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-relaxed-short",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 9
+          },
+          "seed": 29000001,
+          "initialBoard": [
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "04287b9fbe9199640d73e9438c7e9e901b9b836b18909d773a28d78e161d7ece",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 9,
+            "allowedMoves": 2,
+            "minimumMoves": 1,
+            "budgetTightness": 0.5,
+            "chainLengthDependence": 3,
+            "minimumMovesWitness": [
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ]
+              ],
+              [
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 0,
+              "bestScoreBelowRequiredCap": 0
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 99,
+            "generatedActions": 6922,
+            "deduplicatedStates": 4633
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 48,
+              "cursor": 7,
+              "moves": 1,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 21,
+              "cursor": 4,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        },
+        {
+          "region": "relaxed-short",
+          "puzzleIdentity": "3231300b3cd9c087da0770d242980dea9168327e60a443ff57606054f187c87c",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-relaxed-short",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 36
+          },
+          "seed": 29000002,
+          "initialBoard": [
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "f48acbcf88ee45128c8bbcfa6b9bea3f1dba0959e3fdb7c0347e9bb63f9c20d4",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 36,
+            "allowedMoves": 2,
+            "minimumMoves": 1,
+            "budgetTightness": 0.5,
+            "chainLengthDependence": 3,
+            "minimumMovesWitness": [
+              [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  1
+                ]
+              ],
+              [
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  1
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 0,
+              "bestScoreBelowRequiredCap": 0
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 128,
+            "generatedActions": 9671,
+            "deduplicatedStates": 4689
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 210,
+              "cursor": 8,
+              "moves": 1,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 72,
+              "cursor": 4,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        },
+        {
+          "region": "relaxed-short",
+          "puzzleIdentity": "91db8ea73c25af585ac1ee39ec731396f3c940644d81597f6ec35138a37678c0",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-relaxed-short",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 48
+          },
+          "seed": 29000003,
+          "initialBoard": [
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 16,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "a5ddd3b0a34b9ad10694df26121b6f2a97febf53bcd7cfc59cbafdec1b41fdae",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 48,
+            "allowedMoves": 2,
+            "minimumMoves": 1,
+            "budgetTightness": 0.5,
+            "chainLengthDependence": 3,
+            "minimumMovesWitness": [
+              [
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  0
+                ]
+              ],
+              [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 0,
+              "bestScoreBelowRequiredCap": 0
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 81,
+            "generatedActions": 2444,
+            "deduplicatedStates": 720
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 270,
+              "cursor": 8,
+              "moves": 1,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 72,
+              "cursor": 4,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "region": "relaxed-long",
+      "screened": [
+        {
+          "seed": 29000100,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 260,
+            "fullBudgetCap3": 66,
+            "fullBudgetCap4": 78,
+            "fullBudgetAll": 324
+          },
+          "search": {
+            "expandedNodes": 74,
+            "generatedActions": 5992,
+            "deduplicatedStates": 3009
+          }
+        },
+        {
+          "seed": 29000101,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 31,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 180,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 254
+          },
+          "search": {
+            "expandedNodes": 133,
+            "generatedActions": 11768,
+            "deduplicatedStates": 7432
+          }
+        },
+        {
+          "seed": 29000102,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 60,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 138
+          },
+          "search": {
+            "expandedNodes": 128,
+            "generatedActions": 7319,
+            "deduplicatedStates": 3661
+          }
+        },
+        {
+          "seed": 29000103,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 60,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 84,
+            "fullBudgetAll": 382
+          },
+          "search": {
+            "expandedNodes": 56,
+            "generatedActions": 1080,
+            "deduplicatedStates": 374
+          }
+        },
+        {
+          "seed": 29000104,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 200,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 278
+          },
+          "search": {
+            "expandedNodes": 84,
+            "generatedActions": 7084,
+            "deduplicatedStates": 4504
+          }
+        },
+        {
+          "seed": 29000105,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 32,
+            "fullBudgetCap3": 66,
+            "fullBudgetCap4": 90,
+            "fullBudgetAll": 248
+          },
+          "search": {
+            "expandedNodes": 10,
+            "generatedActions": 414,
+            "deduplicatedStates": 57
+          }
+        },
+        {
+          "seed": 29000106,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 66,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 144
+          },
+          "search": {
+            "expandedNodes": 20,
+            "generatedActions": 964,
+            "deduplicatedStates": 679
+          }
+        },
+        {
+          "seed": 29000107,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 78,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 292
+          },
+          "search": {
+            "expandedNodes": 175,
+            "generatedActions": 7748,
+            "deduplicatedStates": 3171
+          }
+        },
+        {
+          "seed": 29000108,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 130,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 42,
+            "fullBudgetAll": 184
+          },
+          "search": {
+            "expandedNodes": 140,
+            "generatedActions": 18135,
+            "deduplicatedStates": 11753
+          }
+        },
+        {
+          "seed": 29000109,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 68,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 118
+          },
+          "search": {
+            "expandedNodes": 21,
+            "generatedActions": 570,
+            "deduplicatedStates": 234
+          }
+        },
+        {
+          "seed": 29000110,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 220,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 63,
+            "fullBudgetAll": 302
+          },
+          "search": {
+            "expandedNodes": 71,
+            "generatedActions": 12266,
+            "deduplicatedStates": 10562
+          }
+        },
+        {
+          "seed": 29000111,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 132,
+            "fullBudgetCap3": 66,
+            "fullBudgetCap4": 96,
+            "fullBudgetAll": 216
+          },
+          "search": {
+            "expandedNodes": 47,
+            "generatedActions": 1246,
+            "deduplicatedStates": 283
+          }
+        },
+        {
+          "seed": 29000112,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 37,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 180,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 54,
+            "fullBudgetAll": 272
+          },
+          "search": {
+            "expandedNodes": 74,
+            "generatedActions": 7052,
+            "deduplicatedStates": 4618
+          }
+        },
+        {
+          "seed": 29000113,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 16,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 192
+          },
+          "search": {
+            "expandedNodes": 78,
+            "generatedActions": 6762,
+            "deduplicatedStates": 3696
+          }
+        },
+        {
+          "seed": 29000114,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 120,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 42,
+            "fullBudgetAll": 242
+          },
+          "search": {
+            "expandedNodes": 130,
+            "generatedActions": 22959,
+            "deduplicatedStates": 15241
+          }
+        },
+        {
+          "seed": 29000115,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 40,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 144
+          },
+          "search": {
+            "expandedNodes": 52,
+            "generatedActions": 1614,
+            "deduplicatedStates": 551
+          }
+        },
+        {
+          "seed": 29000116,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 60,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 144
+          },
+          "search": {
+            "expandedNodes": 63,
+            "generatedActions": 2117,
+            "deduplicatedStates": 713
+          }
+        },
+        {
+          "seed": 29000117,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 156,
+            "fullBudgetCap3": 66,
+            "fullBudgetCap4": 96,
+            "fullBudgetAll": 204
+          },
+          "search": {
+            "expandedNodes": 65,
+            "generatedActions": 5807,
+            "deduplicatedStates": 4035
+          }
+        },
+        {
+          "seed": 29000118,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 49,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 36,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 220,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 84,
+            "fullBudgetAll": 256
+          },
+          "search": {
+            "expandedNodes": 79,
+            "generatedActions": 1941,
+            "deduplicatedStates": 611
+          }
+        },
+        {
+          "seed": 29000119,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 54,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 42,
+            "fullBudgetAll": 172
+          },
+          "search": {
+            "expandedNodes": 92,
+            "generatedActions": 13735,
+            "deduplicatedStates": 10003
+          }
+        },
+        {
+          "seed": 29000120,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 37,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 36,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 102,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 254
+          },
+          "search": {
+            "expandedNodes": 37,
+            "generatedActions": 5217,
+            "deduplicatedStates": 3528
+          }
+        },
+        {
+          "seed": 29000121,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": null,
+          "reason": "predeclared target contrast is absent",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 15,
+            "fullBudgetCap3": 24,
+            "fullBudgetCap4": 39,
+            "fullBudgetAll": 168
+          },
+          "search": {
+            "expandedNodes": 6,
+            "generatedActions": 141,
+            "deduplicatedStates": 45
+          }
+        },
+        {
+          "seed": 29000122,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 114,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 63,
+            "fullBudgetAll": 168
+          },
+          "search": {
+            "expandedNodes": 61,
+            "generatedActions": 2948,
+            "deduplicatedStates": 1321
+          }
+        },
+        {
+          "seed": 29000123,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 16,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 100,
+            "fullBudgetCap3": 24,
+            "fullBudgetCap4": 36,
+            "fullBudgetAll": 148
+          },
+          "search": {
+            "expandedNodes": 75,
+            "generatedActions": 11785,
+            "deduplicatedStates": 8800
+          }
+        },
+        {
+          "seed": 29000124,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 140,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 266
+          },
+          "search": {
+            "expandedNodes": 225,
+            "generatedActions": 11576,
+            "deduplicatedStates": 4257
+          }
+        },
+        {
+          "seed": 29000125,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 16,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 242
+          },
+          "search": {
+            "expandedNodes": 28,
+            "generatedActions": 1813,
+            "deduplicatedStates": 1066
+          }
+        },
+        {
+          "seed": 29000126,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 37,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 108,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 244
+          },
+          "search": {
+            "expandedNodes": 72,
+            "generatedActions": 10407,
+            "deduplicatedStates": 6909
+          }
+        },
+        {
+          "seed": 29000127,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 202
+          },
+          "search": {
+            "expandedNodes": 101,
+            "generatedActions": 7474,
+            "deduplicatedStates": 3476
+          }
+        },
+        {
+          "seed": 29000128,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 61,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 60,
+            "oneMoveAll": 260,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 96,
+            "fullBudgetAll": 364
+          },
+          "search": {
+            "expandedNodes": 52,
+            "generatedActions": 3533,
+            "deduplicatedStates": 1299
+          }
+        },
+        {
+          "seed": 29000129,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 242
+          },
+          "search": {
+            "expandedNodes": 75,
+            "generatedActions": 3055,
+            "deduplicatedStates": 1336
+          }
+        },
+        {
+          "seed": 29000130,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 31,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 160,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 262
+          },
+          "search": {
+            "expandedNodes": 127,
+            "generatedActions": 14345,
+            "deduplicatedStates": 8750
+          }
+        },
+        {
+          "seed": 29000131,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 31,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 78,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 124
+          },
+          "search": {
+            "expandedNodes": 23,
+            "generatedActions": 754,
+            "deduplicatedStates": 295
+          }
+        },
+        {
+          "seed": 29000132,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 42,
+            "fullBudgetAll": 192
+          },
+          "search": {
+            "expandedNodes": 89,
+            "generatedActions": 12009,
+            "deduplicatedStates": 7270
+          }
+        },
+        {
+          "seed": 29000133,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 224
+          },
+          "search": {
+            "expandedNodes": 118,
+            "generatedActions": 7914,
+            "deduplicatedStates": 2469
+          }
+        },
+        {
+          "seed": 29000134,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 61,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 60,
+            "oneMoveAll": 168,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 96,
+            "fullBudgetAll": 334
+          },
+          "search": {
+            "expandedNodes": 80,
+            "generatedActions": 1444,
+            "deduplicatedStates": 288
+          }
+        },
+        {
+          "seed": 29000135,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 16,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 54,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 192
+          },
+          "search": {
+            "expandedNodes": 119,
+            "generatedActions": 11788,
+            "deduplicatedStates": 7958
+          }
+        },
+        {
+          "seed": 29000136,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 114,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 272
+          },
+          "search": {
+            "expandedNodes": 76,
+            "generatedActions": 3797,
+            "deduplicatedStates": 1731
+          }
+        },
+        {
+          "seed": 29000137,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 44,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 51,
+            "fullBudgetAll": 126
+          },
+          "search": {
+            "expandedNodes": 24,
+            "generatedActions": 714,
+            "deduplicatedStates": 202
+          }
+        },
+        {
+          "seed": 29000138,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 66,
+            "fullBudgetAll": 272
+          },
+          "search": {
+            "expandedNodes": 58,
+            "generatedActions": 2393,
+            "deduplicatedStates": 988
+          }
+        },
+        {
+          "seed": 29000139,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 192
+          },
+          "search": {
+            "expandedNodes": 101,
+            "generatedActions": 8726,
+            "deduplicatedStates": 4572
+          }
+        },
+        {
+          "seed": 29000140,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 96,
+            "fullBudgetCap3": 96,
+            "fullBudgetCap4": 96,
+            "fullBudgetAll": 152
+          },
+          "search": {
+            "expandedNodes": 5,
+            "generatedActions": 28,
+            "deduplicatedStates": 2
+          }
+        },
+        {
+          "seed": 29000141,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 31,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 90,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 252
+          },
+          "search": {
+            "expandedNodes": 85,
+            "generatedActions": 6695,
+            "deduplicatedStates": 2426
+          }
+        },
+        {
+          "seed": 29000142,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 328
+          },
+          "search": {
+            "expandedNodes": 85,
+            "generatedActions": 6820,
+            "deduplicatedStates": 2888
+          }
+        },
+        {
+          "seed": 29000143,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 230,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 66,
+            "fullBudgetAll": 302
+          },
+          "search": {
+            "expandedNodes": 64,
+            "generatedActions": 2968,
+            "deduplicatedStates": 1302
+          }
+        },
+        {
+          "seed": 29000144,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 31,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 56,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 186
+          },
+          "search": {
+            "expandedNodes": 34,
+            "generatedActions": 1206,
+            "deduplicatedStates": 340
+          }
+        },
+        {
+          "seed": 29000145,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 31,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 84,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 272
+          },
+          "search": {
+            "expandedNodes": 125,
+            "generatedActions": 11331,
+            "deduplicatedStates": 5665
+          }
+        },
+        {
+          "seed": 29000146,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 9,
+            "oneMoveCap4": 12,
+            "oneMoveAll": 42,
+            "fullBudgetCap3": 21,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 242
+          },
+          "search": {
+            "expandedNodes": 74,
+            "generatedActions": 3633,
+            "deduplicatedStates": 2118
+          }
+        },
+        {
+          "seed": 29000147,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 138,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 210
+          },
+          "search": {
+            "expandedNodes": 78,
+            "generatedActions": 4408,
+            "deduplicatedStates": 2014
+          }
+        }
+      ],
+      "instances": [
+        {
+          "region": "relaxed-long",
+          "puzzleIdentity": "5dba1ee02bbbc8147fe8075a8b799031c0ab6f843007d8ff6386e3d64e70e904",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-relaxed-long",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 49
+          },
+          "seed": 29000118,
+          "initialBoard": [
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "2d31689d65dec56f40bb23b7a50967c7ce1a19342ce054b9f98de10739f9667a",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 49,
+            "allowedMoves": 2,
+            "minimumMoves": 1,
+            "budgetTightness": 0.5,
+            "chainLengthDependence": 4,
+            "minimumMovesWitness": [
+              [
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 0,
+              "bestScoreBelowRequiredCap": 48
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 79,
+            "generatedActions": 1941,
+            "deduplicatedStates": 611
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 220,
+              "cursor": 8,
+              "moves": 1,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 84,
+              "cursor": 6,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "region": "tight-short",
+      "screened": [
+        {
+          "seed": 29000200,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 84,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 170
+          },
+          "search": {
+            "expandedNodes": 43,
+            "generatedActions": 1435,
+            "deduplicatedStates": 526
+          }
+        },
+        {
+          "seed": 29000201,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 24,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 192
+          },
+          "search": {
+            "expandedNodes": 66,
+            "generatedActions": 6365,
+            "deduplicatedStates": 4058
+          }
+        },
+        {
+          "seed": 29000202,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 37,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 36,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 200,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 302
+          },
+          "search": {
+            "expandedNodes": 121,
+            "generatedActions": 9987,
+            "deduplicatedStates": 3640
+          }
+        },
+        {
+          "seed": 29000203,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 21,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 278
+          },
+          "search": {
+            "expandedNodes": 63,
+            "generatedActions": 4361,
+            "deduplicatedStates": 2746
+          }
+        },
+        {
+          "seed": 29000204,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 54,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 162
+          },
+          "search": {
+            "expandedNodes": 87,
+            "generatedActions": 5227,
+            "deduplicatedStates": 2251
+          }
+        },
+        {
+          "seed": 29000205,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 140,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 234
+          },
+          "search": {
+            "expandedNodes": 138,
+            "generatedActions": 9807,
+            "deduplicatedStates": 5098
+          }
+        },
+        {
+          "seed": 29000206,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 170,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 236
+          },
+          "search": {
+            "expandedNodes": 145,
+            "generatedActions": 9637,
+            "deduplicatedStates": 4365
+          }
+        },
+        {
+          "seed": 29000207,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 96,
+            "fullBudgetCap3": 96,
+            "fullBudgetCap4": 144,
+            "fullBudgetAll": 144
+          },
+          "search": {
+            "expandedNodes": 7,
+            "generatedActions": 417,
+            "deduplicatedStates": 234
+          }
+        },
+        {
+          "seed": 29000208,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 60,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 228
+          },
+          "search": {
+            "expandedNodes": 91,
+            "generatedActions": 4177,
+            "deduplicatedStates": 1519
+          }
+        },
+        {
+          "seed": 29000209,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 252
+          },
+          "search": {
+            "expandedNodes": 96,
+            "generatedActions": 9511,
+            "deduplicatedStates": 5479
+          }
+        },
+        {
+          "seed": 29000210,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 32,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 236
+          },
+          "search": {
+            "expandedNodes": 31,
+            "generatedActions": 749,
+            "deduplicatedStates": 326
+          }
+        },
+        {
+          "seed": 29000211,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 242
+          },
+          "search": {
+            "expandedNodes": 39,
+            "generatedActions": 3030,
+            "deduplicatedStates": 2122
+          }
+        },
+        {
+          "seed": 29000212,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 102,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 180
+          },
+          "search": {
+            "expandedNodes": 112,
+            "generatedActions": 5776,
+            "deduplicatedStates": 2058
+          }
+        },
+        {
+          "seed": 29000213,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 108,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 180
+          },
+          "search": {
+            "expandedNodes": 38,
+            "generatedActions": 1543,
+            "deduplicatedStates": 749
+          }
+        },
+        {
+          "seed": 29000214,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 10,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 9,
+            "oneMoveCap4": 12,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 21,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 338
+          },
+          "search": {
+            "expandedNodes": 114,
+            "generatedActions": 6295,
+            "deduplicatedStates": 3678
+          }
+        },
+        {
+          "seed": 29000215,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 114,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 272
+          },
+          "search": {
+            "expandedNodes": 62,
+            "generatedActions": 1464,
+            "deduplicatedStates": 320
+          }
+        },
+        {
+          "seed": 29000216,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 84,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 168
+          },
+          "search": {
+            "expandedNodes": 34,
+            "generatedActions": 1019,
+            "deduplicatedStates": 128
+          }
+        },
+        {
+          "seed": 29000217,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 114,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 192
+          },
+          "search": {
+            "expandedNodes": 44,
+            "generatedActions": 713,
+            "deduplicatedStates": 126
+          }
+        },
+        {
+          "seed": 29000218,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 186
+          },
+          "search": {
+            "expandedNodes": 96,
+            "generatedActions": 4309,
+            "deduplicatedStates": 1909
+          }
+        },
+        {
+          "seed": 29000219,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 66,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 63,
+            "fullBudgetAll": 262
+          },
+          "search": {
+            "expandedNodes": 56,
+            "generatedActions": 3085,
+            "deduplicatedStates": 1311
+          }
+        },
+        {
+          "seed": 29000220,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 44,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 63,
+            "fullBudgetAll": 150
+          },
+          "search": {
+            "expandedNodes": 48,
+            "generatedActions": 2173,
+            "deduplicatedStates": 966
+          }
+        },
+        {
+          "seed": 29000221,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 84,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 194
+          },
+          "search": {
+            "expandedNodes": 80,
+            "generatedActions": 2273,
+            "deduplicatedStates": 628
+          }
+        },
+        {
+          "seed": 29000222,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 80,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 96,
+            "fullBudgetAll": 354
+          },
+          "search": {
+            "expandedNodes": 27,
+            "generatedActions": 1195,
+            "deduplicatedStates": 482
+          }
+        },
+        {
+          "seed": 29000223,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 54,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 42,
+            "fullBudgetAll": 162
+          },
+          "search": {
+            "expandedNodes": 114,
+            "generatedActions": 14819,
+            "deduplicatedStates": 9664
+          }
+        },
+        {
+          "seed": 29000224,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 66,
+            "fullBudgetCap3": 33,
+            "fullBudgetCap4": 75,
+            "fullBudgetAll": 180
+          },
+          "search": {
+            "expandedNodes": 41,
+            "generatedActions": 1310,
+            "deduplicatedStates": 434
+          }
+        },
+        {
+          "seed": 29000225,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 96,
+            "fullBudgetAll": 294
+          },
+          "search": {
+            "expandedNodes": 10,
+            "generatedActions": 139,
+            "deduplicatedStates": 18
+          }
+        },
+        {
+          "seed": 29000226,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 140,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 272
+          },
+          "search": {
+            "expandedNodes": 174,
+            "generatedActions": 13571,
+            "deduplicatedStates": 5815
+          }
+        },
+        {
+          "seed": 29000227,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 63,
+            "fullBudgetAll": 206
+          },
+          "search": {
+            "expandedNodes": 41,
+            "generatedActions": 1269,
+            "deduplicatedStates": 379
+          }
+        },
+        {
+          "seed": 29000228,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 170,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 312
+          },
+          "search": {
+            "expandedNodes": 137,
+            "generatedActions": 6233,
+            "deduplicatedStates": 2355
+          }
+        },
+        {
+          "seed": 29000229,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 108,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 84,
+            "fullBudgetAll": 312
+          },
+          "search": {
+            "expandedNodes": 56,
+            "generatedActions": 3981,
+            "deduplicatedStates": 1281
+          }
+        },
+        {
+          "seed": 29000230,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 64,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 192
+          },
+          "search": {
+            "expandedNodes": 12,
+            "generatedActions": 315,
+            "deduplicatedStates": 124
+          }
+        },
+        {
+          "seed": 29000231,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 144
+          },
+          "search": {
+            "expandedNodes": 28,
+            "generatedActions": 1839,
+            "deduplicatedStates": 838
+          }
+        },
+        {
+          "seed": 29000232,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 60,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 48,
+            "fullBudgetAll": 192
+          },
+          "search": {
+            "expandedNodes": 142,
+            "generatedActions": 11872,
+            "deduplicatedStates": 5986
+          }
+        },
+        {
+          "seed": 29000233,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 66,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 42,
+            "fullBudgetAll": 182
+          },
+          "search": {
+            "expandedNodes": 124,
+            "generatedActions": 13986,
+            "deduplicatedStates": 7217
+          }
+        },
+        {
+          "seed": 29000234,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 210,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 294
+          },
+          "search": {
+            "expandedNodes": 112,
+            "generatedActions": 4115,
+            "deduplicatedStates": 1381
+          }
+        },
+        {
+          "seed": 29000235,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 60,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 252
+          },
+          "search": {
+            "expandedNodes": 115,
+            "generatedActions": 6131,
+            "deduplicatedStates": 2698
+          }
+        },
+        {
+          "seed": 29000236,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 78,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 138
+          },
+          "search": {
+            "expandedNodes": 61,
+            "generatedActions": 2521,
+            "deduplicatedStates": 1364
+          }
+        },
+        {
+          "seed": 29000237,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 84,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 188
+          },
+          "search": {
+            "expandedNodes": 43,
+            "generatedActions": 1836,
+            "deduplicatedStates": 534
+          }
+        },
+        {
+          "seed": 29000238,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 19,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 72,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 242
+          },
+          "search": {
+            "expandedNodes": 95,
+            "generatedActions": 6456,
+            "deduplicatedStates": 3958
+          }
+        },
+        {
+          "seed": 29000239,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 24,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 242
+          },
+          "search": {
+            "expandedNodes": 71,
+            "generatedActions": 3510,
+            "deduplicatedStates": 1726
+          }
+        },
+        {
+          "seed": 29000240,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 15,
+            "oneMoveAll": 28,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 144
+          },
+          "search": {
+            "expandedNodes": 57,
+            "generatedActions": 2230,
+            "deduplicatedStates": 739
+          }
+        },
+        {
+          "seed": 29000241,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 49,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 180
+          },
+          "search": {
+            "expandedNodes": 16,
+            "generatedActions": 290,
+            "deduplicatedStates": 77
+          }
+        },
+        {
+          "seed": 29000242,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 37,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 36,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 90,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 242
+          },
+          "search": {
+            "expandedNodes": 71,
+            "generatedActions": 5033,
+            "deduplicatedStates": 2776
+          }
+        },
+        {
+          "seed": 29000243,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 90,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 54,
+            "fullBudgetAll": 186
+          },
+          "search": {
+            "expandedNodes": 85,
+            "generatedActions": 4069,
+            "deduplicatedStates": 1196
+          }
+        },
+        {
+          "seed": 29000244,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 210,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 66,
+            "fullBudgetAll": 254
+          },
+          "search": {
+            "expandedNodes": 99,
+            "generatedActions": 4357,
+            "deduplicatedStates": 1257
+          }
+        },
+        {
+          "seed": 29000245,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 49,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 48,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 132,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 294
+          },
+          "search": {
+            "expandedNodes": 67,
+            "generatedActions": 6482,
+            "deduplicatedStates": 3949
+          }
+        },
+        {
+          "seed": 29000246,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 13,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 66,
+            "fullBudgetCap3": 60,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 180
+          },
+          "search": {
+            "expandedNodes": 40,
+            "generatedActions": 1954,
+            "deduplicatedStates": 1311
+          }
+        },
+        {
+          "seed": 29000247,
+          "standing": "exact_result",
+          "eligible": false,
+          "target": 25,
+          "reason": "observed relaxed-short",
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 30,
+            "oneMoveAll": 48,
+            "fullBudgetCap3": 48,
+            "fullBudgetCap4": 72,
+            "fullBudgetAll": 176
+          },
+          "search": {
+            "expandedNodes": 27,
+            "generatedActions": 1358,
+            "deduplicatedStates": 642
+          }
+        }
+      ],
+      "instances": [
+        {
+          "region": "tight-short",
+          "puzzleIdentity": "77afdc629ef388491b7ce29f1e7e7eeb60314f3f5d35efc0a7e5f6de4fc44671",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-tight-short",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 49
+          },
+          "seed": 29000241,
+          "initialBoard": [
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 16,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "2852b29283b84199de93ec231a9d0f3e63c24dda711ff0beb737644d40c15c77",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 49,
+            "allowedMoves": 2,
+            "minimumMoves": 2,
+            "budgetTightness": 1,
+            "chainLengthDependence": 3,
+            "minimumMovesWitness": [
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  2
+                ]
+              ],
+              [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  0
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 48,
+              "bestScoreBelowRequiredCap": 0
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 16,
+            "generatedActions": 290,
+            "deduplicatedStates": 77
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 180,
+              "cursor": 10,
+              "moves": 2,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 60,
+              "cursor": 4,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "region": "tight-long",
+      "screened": [
+        {
+          "seed": 29000300,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 131,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 12,
+            "oneMoveCap4": 24,
+            "oneMoveAll": 130,
+            "fullBudgetCap3": 21,
+            "fullBudgetCap4": 36,
+            "fullBudgetAll": 196
+          },
+          "search": {
+            "expandedNodes": 92,
+            "generatedActions": 13410,
+            "deduplicatedStates": 9538
+          }
+        },
+        {
+          "seed": 29000301,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 67,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 18,
+            "oneMoveCap4": 18,
+            "oneMoveAll": 66,
+            "fullBudgetCap3": 36,
+            "fullBudgetCap4": 60,
+            "fullBudgetAll": 144
+          },
+          "search": {
+            "expandedNodes": 126,
+            "generatedActions": 9676,
+            "deduplicatedStates": 6077
+          }
+        },
+        {
+          "seed": 29000302,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 127,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 24,
+            "oneMoveCap4": 48,
+            "oneMoveAll": 126,
+            "fullBudgetCap3": 42,
+            "fullBudgetCap4": 66,
+            "fullBudgetAll": 188
+          },
+          "search": {
+            "expandedNodes": 24,
+            "generatedActions": 743,
+            "deduplicatedStates": 294
+          }
+        },
+        {
+          "seed": 29000303,
+          "standing": "exact_result",
+          "eligible": true,
+          "target": 221,
+          "reason": null,
+          "maxima": {
+            "oneMoveCap3": 36,
+            "oneMoveCap4": 36,
+            "oneMoveAll": 220,
+            "fullBudgetCap3": 72,
+            "fullBudgetCap4": 84,
+            "fullBudgetAll": 294
+          },
+          "search": {
+            "expandedNodes": 101,
+            "generatedActions": 5967,
+            "deduplicatedStates": 1589
+          }
+        }
+      ],
+      "instances": [
+        {
+          "region": "tight-long",
+          "puzzleIdentity": "188762499e53900d2a16b0c57378ed44ad3dc2120346d40ba0e20a4fc85e40d6",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-tight-long",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 131
+          },
+          "seed": 29000300,
+          "initialBoard": [
+            [
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "c4d7798268cb19ebaf55bac193913ee8f9e9363e8936b74016426dae43e5c102",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 131,
+            "allowedMoves": 2,
+            "minimumMoves": 2,
+            "budgetTightness": 1,
+            "chainLengthDependence": 7,
+            "minimumMovesWitness": [
+              [
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  2
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  2
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  0,
+                  1
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 130,
+              "bestScoreBelowRequiredCap": 72
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 92,
+            "generatedActions": 13410,
+            "deduplicatedStates": 9538
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 196,
+              "cursor": 15,
+              "moves": 2,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 156,
+              "cursor": 12,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        },
+        {
+          "region": "tight-long",
+          "puzzleIdentity": "356bb0afe63b998946f139fa17e19fe7fc775ceb27150e115b1ee7538c0b42b4",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-tight-long",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 67
+          },
+          "seed": 29000301,
+          "initialBoard": [
+            [
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 16,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "c6bee0f1e53544575c1e5dc775e6ed0b65d0951b0afe064cbbc8c83a8c3cefd5",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 67,
+            "allowedMoves": 2,
+            "minimumMoves": 2,
+            "budgetTightness": 1,
+            "chainLengthDependence": 5,
+            "minimumMovesWitness": [
+              [
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  0,
+                  1
+                ]
+              ],
+              [
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ]
+              ],
+              [
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 66,
+              "bestScoreBelowRequiredCap": 60
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 126,
+            "generatedActions": 9676,
+            "deduplicatedStates": 6077
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 144,
+              "cursor": 10,
+              "moves": 2,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 84,
+              "cursor": 6,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        },
+        {
+          "region": "tight-long",
+          "puzzleIdentity": "053ff8e8f4190e156e568109dc1c0cf8c687553bf992fdbb5475c0b87a523851",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-tight-long",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 127
+          },
+          "seed": 29000302,
+          "initialBoard": [
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 16,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "6240ee90b1f7650874e47b630f131ac7d886a0f033c023026b7353f70be1db6d",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 127,
+            "allowedMoves": 2,
+            "minimumMoves": 2,
+            "budgetTightness": 1,
+            "chainLengthDependence": 5,
+            "minimumMovesWitness": [
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  0
+                ]
+              ],
+              [
+                [
+                  2,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  2,
+                  0
+                ]
+              ],
+              [
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 126,
+              "bestScoreBelowRequiredCap": 66
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 24,
+            "generatedActions": 743,
+            "deduplicatedStates": 294
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 188,
+              "cursor": 10,
+              "moves": 2,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 128,
+              "cursor": 8,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        },
+        {
+          "region": "tight-long",
+          "puzzleIdentity": "98ff15c9e004e596a0e28fbafa1f4f903404dd332f14fc5e430433801e0c9b58",
+          "level": {
+            "level": 9029,
+            "name": "exact-descriptor-micro-puzzle-tight-long",
+            "gridW": 3,
+            "gridH": 3,
+            "moves": 2,
+            "minChain": 3,
+            "tileScale": 1,
+            "blockers": [],
+            "target": 221
+          },
+          "seed": 29000303,
+          "initialBoard": [
+            [
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 2,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 8,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ],
+            [
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              },
+              {
+                "value": 4,
+                "blocker": null,
+                "blockerDuration": 0,
+                "bombTimer": 0
+              }
+            ]
+          ],
+          "spawnStreamIdentity": "2c37a87d8f789f806233ea9accb7b60fb6cd834943226830c714502620dda35a",
+          "descriptor": {
+            "standing": "exact_result",
+            "reachable": true,
+            "target": 221,
+            "allowedMoves": 2,
+            "minimumMoves": 2,
+            "budgetTightness": 1,
+            "chainLengthDependence": 9,
+            "minimumMovesWitness": [
+              [
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  2
+                ]
+              ],
+              [
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  2
+                ]
+              ]
+            ],
+            "minimumCapWitness": [
+              [
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  2
+                ]
+              ],
+              [
+                [
+                  0,
+                  1
+                ],
+                [
+                  0,
+                  2
+                ],
+                [
+                  1,
+                  1
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  1,
+                  0
+                ],
+                [
+                  2,
+                  0
+                ],
+                [
+                  2,
+                  1
+                ],
+                [
+                  1,
+                  2
+                ],
+                [
+                  2,
+                  2
+                ]
+              ]
+            ],
+            "counterfactuals": {
+              "bestScoreWithFewerMoves": 220,
+              "bestScoreBelowRequiredCap": 204
+            }
+          },
+          "search": {
+            "complete": true,
+            "expandedNodes": 101,
+            "generatedActions": 5967,
+            "deduplicatedStates": 1589
+          },
+          "replays": {
+            "minimumMovesReplay": {
+              "score": 294,
+              "cursor": 11,
+              "moves": 2,
+              "reachesTarget": true
+            },
+            "minimumCapReplay": {
+              "score": 294,
+              "cursor": 11,
+              "moves": 2,
+              "reachesTarget": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "representatives": {
+    "relaxed-short": "a76568cfbbcd9b26bd941431c67f3a6e0725a815c43bb02a3d1e8013eb30267d",
+    "relaxed-long": "5dba1ee02bbbc8147fe8075a8b799031c0ab6f843007d8ff6386e3d64e70e904",
+    "tight-short": "77afdc629ef388491b7ce29f1e7e7eeb60314f3f5d35efc0a7e5f6de4fc44671",
+    "tight-long": "188762499e53900d2a16b0c57378ed44ad3dc2120346d40ba0e20a4fc85e40d6"
+  },
+  "decision": {
+    "verdict": "INCONCLUSIVE",
+    "occupied": {
+      "relaxed-short": 4,
+      "relaxed-long": 1,
+      "tight-short": 1,
+      "tight-long": 4
+    },
+    "distinctStartingBoards": 10,
+    "strictCounterfactuals": true,
+    "descriptorDecision": {
+      "budgetTightness": "REJECT_FOR_EXACT_MICRO_PUZZLE_INSTANCE_MAPS",
+      "chainLengthDependence": "REJECT_FOR_EXACT_MICRO_PUZZLE_INSTANCE_MAPS"
+    },
+    "scope": "blocker-free 3x3, minChain 3, tileScale 1, two-move exact generated puzzles only"
+  },
+  "registration": {
+    "exploratory": false,
+    "protocol": "RESULT-0029",
+    "protocolCommit": "b85486ea44636aac14d314004d9ae9546f7239be"
+  },
+  "artifactIdentity": "7a908767a40d4cb1acc28b417430e7ec4fbf44b8319127e2c221c80ef245d7af"
+}

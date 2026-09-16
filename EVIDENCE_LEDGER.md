@@ -8,6 +8,25 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
+As of 2026-09-16, the first exact puzzle-instance descriptor validation is
+accepted at its bounded scope as corrected by `CORRECTION-0005`. It recorded
+104 seed observations covering 103 distinct generated 3x3, two-move boards
+and retained 10 exact puzzles across the four intended
+`budget tightness × chain-length dependence` regions, with occupancy
+**4 / 1 / 1 / 4** rather than the preregistered **4 / 4 / 4 / 4** and only 10
+distinct selected starting boards rather than 12. The empirical verdict is
+`INCONCLUSIVE`; `DECISION-0006` rejects promotion of both descriptors for this
+scoped exact micro-puzzle map. This does not claim either quantity is invalid,
+nor does it measure difficulty, fun, policy quality, fitness, or larger-board
+behavior.
+
+Also as of 2026-09-16, `RESULT-0031` replaces invalidated `RESULT-0030` for
+representative 5x8, 5x7, 6x5, and 4x8 boards. The corrected search enforced one
+combined 16-candidate cap on every expanded state and found replayable target
+witnesses on all 8/8 fresh puzzles. Only 4/8 retained the same coarse proxy
+cell when beam width rose from 12 to 48, below the registered 75% stability
+bar. The disposition remains `REVISE_BEFORE_MAP_CORPUS`.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -605,6 +624,52 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The recording was recovered on 2026-09-02 from an untracked worktree (`.orch/tickets/2026-09-02-adhoc-remote-branch-triage`) and committed byte-for-byte before qualification. Unlike `RESULT-0025`, this pilot has no runtime-bundle manifest from before the session; the receipt binds the runtime files as they were at qualification, which is a weaker provenance claim and is why the scope is replay exactness only.
+
+### RESULT-0029 — Exact micro-puzzle descriptors do not clear the frozen four-region promotion bar
+
+- **type:** result
+- **status:** superseded
+- **scope:** blocker-free generated 3x3 puzzles with `minChain: 3`, `tileScale: 1`, two allowed moves, four disjoint registered seed blocks, at most 48 screened seeds per intended region, exact position-aware enumeration capped at 250,000 expanded nodes per starting board; no shipped level, policy, human outcome, or larger-board claim
+- **statement:** The registered run screened 104 distinct starting boards, selected 10 exact reachable puzzles, and returned **`INCONCLUSIVE`** under its frozen rule. Occupancy was `relaxed-short: 4`, `relaxed-long: 1`, `tight-short: 1`, and `tight-long: 4`, below the required four per region; the 10 selected starting boards were also below the required 12 distinct identities. All selected puzzles had strict exact counterfactuals for fewer moves and the next-shorter chain cap, both witnesses replayed, and no screen hit the node cap. The sole relaxed-long puzzle landed at required cap 4: its construction excluded cap-4 success in one move, but cap-4 success remained possible across the full two-move budget. The result therefore does not validate the intended four-region map and must not be read as a cap-5-or-more relaxed example.
+- **evidence:** registered protocol `experiments/RESULT-0029/protocol.md`, registration commit `b85486ea44636aac14d314004d9ae9546f7239be`; canonical corpus `experiments/RESULT-0029/corpus.json`, artifact identity `7a908767a40d4cb1acc28b417430e7ec4fbf44b8319127e2c221c80ef245d7af`; complete outcomes and representative boards in `experiments/RESULT-0029/report.md`; exact envelope instrument `solver/puzzle-descriptors.js`; verifier `experiments/RESULT-0029/verify.js`.
+- **proof_class:** `exact_result` for every recorded board, target, reachability envelope, descriptor coordinate, counterfactual maximum, replay, screen count, and occupancy within the stated corpus. The frozen promotion disposition is recorded separately as `DECISION-0006`; no general claim about natural puzzle frequency or player experience follows.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0029/verify.js experiments/RESULT-0029/corpus.json`; expect `PASS`, artifact identity `7a908767…`, 10 instances, exact occupancy `4/1/1/4`, and empirical verdict `INCONCLUSIVE`. Run `node --test solver/tests/puzzleDescriptors.test.js experiments/RESULT-0029/run.test.js experiments/RESULT-0029/verify.test.js` and `node tools/verify-experiments.js`; expect 10/10 focused tests and the experiment gate to pass, including changed-descriptor and missing-witness twins failing the real verifier predicate.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** [CORRECTION-0005]
+- **notes:** Budget tightness is exact minimum moves divided by allowed moves. Chain-length dependence is the smallest maximum-chain-length cap under which the target remains reachable within budget; it is not a statistic from one policy trace. `UNKNOWN` remains distinct from unreachable, although this run happened to record zero node-cap cases. Recovery and wasted-move tolerance remain one untested candidate concept.
+
+### RESULT-0030 — Representative-board descriptor proxies reach every target but miss the stability bar
+
+- **type:** result
+- **status:** superseded
+- **scope:** shipped configurations for Levels 10 (5x8), 31 (5x7), 53 (6x5), and 54 (4x8 with two stones); confirmation seeds 32,100,000–32,100,001; paired deterministic bounded searches at widths 12 and 48; caps 2, 3, 4, 6, 8, 12, and full cell count; no exact-search, human, gameplay-rule, level-change, or MAP-Elites claim
+- **statement:** The registered confirmation found replayable target witnesses on all 8/8 puzzle identities and all four representative board profiles, so coverage was **`SUPPORTED`**. Paired stability was **`INCONCLUSIVE`**: all eight pairs produced witnesses and the deeper arm worsened neither upper bound, but only 5/8 retained the same coarse relaxed/tight and short/long proxy bin, 62.5% against the frozen 75% bar. The deeper arm expanded 43,445 states versus 11,424 for the shallow arm (3.803x, diagnostic only). The frozen disposition is `REVISE_BEFORE_MAP_CORPUS`: successful measurements remain replayed upper bounds on moves and chain cap, not exact descriptor values, and bounded misses would remain `UNKNOWN`.
+- **evidence:** registered protocol `experiments/RESULT-0030/protocol.md`, registration commit `14a601e`; canonical corpus `experiments/RESULT-0030/corpus.json`, artifact identity `4f961ed015a191f0d98ce37377cccbdca48881f0bb3ff1b1dd2283b89767bbf8`; complete outcomes in `experiments/RESULT-0030/report.md`; bounded instrument `solver/puzzle-descriptor-witness.js`; verifier `experiments/RESULT-0030/verify.js`.
+- **proof_class:** `replayed_upper_bound` for each successful witness's moves and tested cap; `direct_source` for identities, deterministic counts, and verifier outcomes; `heuristic_observation` for coverage and search-width stability across the registered eight-puzzle panel. No failed search is evidence of unreachability, and no exact or player-facing interpretation follows.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node tools/verify-frozen-experiment.js RESULT-0030`; it checks out the first commit carrying the corpus and runs the frozen verifier against the frozen implementation, expecting `PASS`, artifact identity `4f961ed0…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node tools/verify-experiments.js`; expect the experiment gate to pass. The current-tree RESULT-0030 verifier is intentionally not the reverify path after `CORRECTION-0006` changed its shared instrument.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** [CORRECTION-0006]
+- **notes:** The three cell changes were threshold crossings: Level 10 seed 32,100,001 improved from 12 to 11 moves across the 0.5 tightness boundary; Level 53 and Level 54 seed 32,100,000 improved from full-board cap witnesses to cap 12. The next candidate should represent uncertainty or search qualification explicitly instead of treating a raw bounded upper bound as a settled archive coordinate.
+
+### RESULT-0031 — Corrected-cap descriptor proxies cover all puzzles but remain search-sensitive
+
+- **type:** result
+- **status:** accepted
+- **scope:** shipped configurations for Levels 10 (5x8), 31 (5x7), 53 (6x5), and 54 (4x8 with two stones); confirmation seeds 32,200,000–32,200,001; paired bounded searches at widths 12 and 48; one combined 16-candidate cap per expanded state; no exact-search, player, level-change, rule-change, or MAP-Elites claim
+- **statement:** The corrected registered confirmation enforced its combined candidate limit on all 96 cap/search runs and found replayable target witnesses on all 8/8 puzzle identities across all four profiles, so coverage was **`SUPPORTED`**. Search-width stability was **`INCONCLUSIVE`**: all eight pairs produced witnesses and the deeper arm worsened neither upper bound, but only 4/8 retained the same coarse proxy bin, 50% against the frozen 75% bar. The deeper arm expanded 43,275 states versus 11,594 for the shallow arm (3.733x, diagnostic only). The disposition is `REVISE_BEFORE_MAP_CORPUS`.
+- **evidence:** registered protocol `experiments/RESULT-0031/protocol.md`, registration commit `3a6c38c`; canonical corpus `experiments/RESULT-0031/corpus.json`, artifact identity `d68b5492dd55464f9a957e0b72cb3ee5cb82022b9eef71b77eac7de474bb6048`; complete outcomes in `experiments/RESULT-0031/report.md`; corrected bounded instrument `solver/puzzle-descriptor-witness.js`; verifier `experiments/RESULT-0031/verify.js`.
+- **proof_class:** `replayed_upper_bound` for every successful witness's moves and tested cap; `direct_source` for cap conformance, identities, deterministic counts, and verification; `heuristic_observation` for coverage and search-width stability across the registered eight-puzzle panel. No failed search is evidence of unreachability, and no exact or player-facing interpretation follows.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0031/verify.js experiments/RESULT-0031/corpus.json`; expect `PASS`, artifact identity `d68b5492…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/puzzleDescriptorWitness.test.js` and `node tools/verify-experiments.js`; expect 6/6 focused tests and the experiment gate to pass.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0030]
+- **superseded_by:** []
+- **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
@@ -680,6 +745,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The disposition chooses a direction for another bounded iteration. It does not select a particular repair, change blocker mechanics, or admit the candidate.
+
+### DECISION-0006 — Do not promote the two puzzle-instance descriptors from RESULT-0029
+
+- **type:** decision
+- **status:** accepted
+- **scope:** use of `budget tightness × chain-length dependence` as an accepted map for exact blocker-free 3x3, scale-1, two-move generated puzzle instances; existing policy-behavior MAP-Elites axes and all larger or heuristic puzzle scopes excluded
+- **statement:** Reject promotion of both `budget tightness` and `chain-length dependence` for the scoped exact micro-puzzle map because `RESULT-0029` did not clear its frozen four-region occupancy and starting-board-diversity requirements. Keep both definitions as candidate measurements: the decision rejects adoption on this evidence, not the mathematical quantities themselves. Any repair must be a new registered result; in particular, a relaxed-long construction must constrain the chain cap over the same full move budget used by the descriptor rather than only over its opening move.
+- **evidence:** exact result lineage `RESULT-0029` as corrected by `CORRECTION-0005`; frozen disposition rule in `experiments/RESULT-0029/protocol.md`, **P4**; canonical artifact decision in `experiments/RESULT-0029/corpus.json`; failure analysis and representatives in `experiments/RESULT-0029/report.md`.
+- **proof_class:** `owner_decision`, authorized by the accepted persistent goal's predeclared promote/revise/reject outcome and the committed RESULT-0029 disposition rule; underlying measurements retain `RESULT-0029`'s `exact_result` standing.
+- **as_of:** 2026-09-16
+- **reverify:** Confirm `CORRECTION-0005` is accepted, preserves the selected-puzzle evidence and disposition from `RESULT-0029`, and that the canonical artifact's `descriptorDecision` rejects both descriptors at the exact scoped use. No new gameplay run is required to re-establish this decision.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This decision makes no claim about human difficulty, fun, preference, solver fitness, policy quality, natural region frequency, shipped levels, or larger boards. It does not replace `RESULT-0017`'s policy-behavior axes. Recovery and wasted-move tolerance remain one candidate concept and were not evaluated.
 
 ## Hypothesis registry
 
@@ -815,6 +895,36 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0015]
 - **superseded_by:** []
 - **notes:** The correction was driven by a deterministic regression test, not by the first confirmation's outcome. The frozen seed sets were then rerun against the corrected identity; only the corrected run is accepted.
+
+### CORRECTION-0005 — RESULT-0029 screened 103 distinct starting boards
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the screened-board count in `RESULT-0029`; selected instances, exact descriptors, occupancy, witnesses, and disposition unchanged
+- **statement:** Supersedes only `RESULT-0029`'s claim that its 104 screened seed observations were 104 distinct starting boards. Seeds 29,000,132 and 29,000,209 both deal the initial board `4,4,2,4,2,2,4,2,4`, so the run screened 104 seed observations covering 103 distinct starting boards. The 10 selected puzzles still have 10 distinct starting-board identities, and the frozen `INCONCLUSIVE` verdict is unchanged.
+- **evidence:** canonical screens in `experiments/RESULT-0029/corpus.json`; `experiments/RESULT-0029/subject.js`, `BASE_LEVEL`; seeded construction in `solver/engine.js`, `makeRng` and `createLevelState`; independent enumeration of every recorded screen seed produced 104 observations, 103 board-value keys, and the sole duplicate pair 29,000,132 / 29,000,209.
+- **proof_class:** `exact_result`
+- **as_of:** 2026-09-16
+- **reverify:** Enumerate every `regions[].screened[].seed` in `experiments/RESULT-0029/corpus.json`, construct `BASE_LEVEL` with `createLevelState(BASE_LEVEL, makeRng(seed))`, and key each initial grid by its nine values; expect 104 observations, 103 unique keys, and only seeds 29,000,132 and 29,000,209 sharing `4,4,2,4,2,2,4,2,4`.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0029]
+- **superseded_by:** []
+- **notes:** The correction changes no selected-puzzle identity, exact reachability result, region occupancy, threshold comparison, or descriptor decision.
+
+### CORRECTION-0006 — RESULT-0030 exceeded its registered candidate cap
+
+- **type:** correction
+- **status:** accepted
+- **scope:** `RESULT-0030`'s coverage, search-width stability, compute accounting, and descriptor disposition; individual replayed witnesses remain legal upper-bound observations on their identified puzzles
+- **statement:** Supersedes `RESULT-0030` as a protocol-conforming confirmation. Its candidate generator applied `actionsPerState: 16` separately to mergeable-preferred and unrestricted candidate families, then combined them without a final cap. A state could therefore retain up to 32 candidates, while the protocol froze a hard limit of 16. The artifact averages roughly 31 generated actions per expanded state, confirming that the registered limit was exceeded materially. The 8/8 coverage, 62.5% stability, 3.803x compute ratio, and `REVISE_BEFORE_MAP_CORPUS` disposition cannot stand as RESULT-0030 outcomes. Each recorded witness still replays as a legal upper bound for its exact puzzle identity, but no panel-level generalization follows. A corrected search and fresh seeds require a new registered result.
+- **evidence:** `solver/puzzle-descriptor-witness.js` at registration commit `14a601e`, `candidateChains`; registered hard limit in `experiments/RESULT-0030/protocol.md`, **Budget and stopping rules**; per-run `generatedActions` and `expandedStates` in `experiments/RESULT-0030/corpus.json`; review finding `https://github.com/eluckey2002/Map-Elites-2248/pull/21#discussion_r4023819293`.
+- **proof_class:** `direct_source` for the implementation/protocol mismatch and recorded counts; `replayed_upper_bound` remains only for the individual legal witnesses.
+- **as_of:** 2026-09-16
+- **reverify:** At commit `14a601e`, inspect `candidateChains` and confirm two `findGreedyChains(... limit: actionsPerState)` results are unioned without a final slice. Divide each RESULT-0030 run's `diagnostics.generatedActions` by `diagnostics.expandedStates`; expect values that can exceed 16 and approach 32.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0030]
+- **superseded_by:** []
+- **notes:** This is an invalidation of the panel-level experiment, not evidence against the descriptor idea. The replacement must be preregistered under a new result ID and use fresh seeds.
 
 ## Assembly cut log
 
