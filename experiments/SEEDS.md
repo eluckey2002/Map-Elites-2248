@@ -48,6 +48,7 @@ file and the repository before declaring a range fresh.
 | 32,600,000–32,600,007 | RESULT-0033 merge-depth × spatial-spread confirmation across four static/no-blocker board profiles | 2026-09-16 | `experiments/RESULT-0033/protocol.md` |
 | 32,700,000 | forced-prefix × bounded-diversity runtime and range calibration; excluded from confirmation | 2026-09-16 | `solver/forced-diversity-descriptors.js` development calibration |
 | 32,800,000–32,800,007 | RESULT-0034 forced-prefix × bounded-diversity confirmation across four static/no-blocker board profiles | 2026-09-16 | `experiments/RESULT-0034/protocol.md` |
+| 33,000,000–33,000,031 | RESULT-0035 merge-depth × spatial-spread MAP-corpus confirmation across four representative board profiles | 2026-09-16 | `experiments/RESULT-0035/protocol.md` |
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
 | 1, 2, 10, 777 | owner play recordings on levels 51–54 (ten recordings in `recordings/`; seed 777 twice on level 52) | 2026-08 | `recordings/*.json` |
 | 9,100,000–9,100,001 and 9,200,004–9,200,005 | seed-variance bounded test, real control through the production `playMeasured` seam | 2026-09-01 | `solver/tests/seedVariance.test.js`, `experiments/RESULT-0021/protocol.md` |
