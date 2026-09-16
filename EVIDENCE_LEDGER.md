@@ -65,9 +65,14 @@ fresh games, 75 exact-complete games, the stated policy means and correlations,
 and primary `INCONCLUSIVE`. Its 100% same-or-adjacent-bin statistic cannot
 support seed stability because the rule is vacuous for a middle modal bin; its
 frozen verifier also fails to bind the registered seed panel and exact
-work-limit count, and its source closure omits executed dependencies. Greed
-ratio is not an adopted axis. `BL-0015` owns a fresh registered successor;
-half-score timing remains a separate later experiment.
+work-limit count, and its source closure omits executed dependencies.
+`RESULT-0043` now supplies the hardened fresh-seed successor: 128/128 games
+completed, executable closeout passed, greed means rose 0.385→0.946, and
+win/greed correlation was 0.956. Its primary outcome remains `INCONCLUSIVE`
+because exact coverage missed every Level 10 cell, score/greed correlation was
+0.730, and minimum exact-modal stability was 66.7%. Greed ratio is responsive
+but not an adopted axis. `BL-0015` is complete; half-score timing remains a
+separate later experiment.
 
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
@@ -831,6 +836,36 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0038]
 - **superseded_by:** []
 - **notes:** RESULT-0039 and RESULT-0040 stopped during pre-outcome qualification and retain their failed attempt receipts. RESULT-0041 repaired those exact gaps and qualified; its separate terminal failure shows that the 30-second watchdog is not guaranteed to outlast the deterministic path-state cap on every registered board. Any future confirmation is a new subject and requires an owner-selected compute/denominator change, not a retry of this run.
+
+### RESULT-0042 — Calibrated watchdog completes the matrix; frozen closeout path remains unverified
+
+- **type:** result
+- **status:** superseded
+- **scope:** four fixed-percentile policies on shipped Levels 10, 31, 53, and 54; seeds 33,900,000–33,900,007; deterministic 500,000-path-state cap and calibrated 120,000 ms emergency watchdog; hardened seed, work-count, source-closure, reducer, and exact-modal stability receipts; half-score move diagnostic only
+- **statement:** RESULT-0042 demonstrated that the relaxed watchdog lets the full registered workload finish: all 128 games completed with zero timeout observations, 68 were exact-complete, and 198 move denominators stopped honestly at the deterministic work cap. Its retained reducer output records exact policy means **0.372, 0.529, 0.725, 0.946**, policy win/greed correlation **0.940**, per-game score/greed correlation **0.660**, and minimum exact-modal stability **75%**. However, the preregistered closeout argv was repository-root-relative while its `cwd: "."` resolved from the experiment directory, so executable closeout exited 1. Closure is **`UNVERIFIED`**, P1–P6 have no entitled outcomes, and the descriptive values cannot support adoption.
+- **evidence:** immutable protocol `experiments/RESULT-0042/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0042/protocol.md`, registration commit `24dbb96`; [qualification receipt](experiments/RESULT-0042/qualification.json); retained [corpus](experiments/RESULT-0042/corpus.json), artifact identity `6d642e89e6307c6e2731257a2e7eb88fe6af1cfea2f1c31d904fcdef1a93f67a`; [report](experiments/RESULT-0042/report.md); honest `UNVERIFIED` [closure receipt](experiments/RESULT-0042/closure.json); retained manual [recomputation](experiments/RESULT-0042/primary-recomputation.json).
+- **proof_class:** `direct_source` for the complete row matrix, exact/work-limit standings, zero timeouts, artifact verification, and closeout-path defect; `UNKNOWN` for the primary domain conclusion. The means and correlations are non-entitled `heuristic_observation` diagnostics.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0042/verify.js experiments/RESULT-0042/corpus.json`; expect PASS and 128 rows. Run the close-experiment verifier without `--require-closed`; expect structural PASS, `closure_status: UNVERIFIED`, and recomputation `NOT_RUN`. Do not rerun its seeds or claim a domain outcome.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0041]
+- **superseded_by:** [RESULT-0043]
+- **notes:** The watchdog change worked. The failure was only the frozen closeout working directory. RESULT-0043 preregistered the corrected cwd, qualified that exact path, and used fresh seeds.
+
+### RESULT-0043 — Greed responds and tracks wins, but coverage, redundancy, and stability remain inconclusive
+
+- **type:** result
+- **status:** accepted
+- **scope:** four fixed-percentile policies on shipped Levels 10, 31, 53, and 54; seeds 34,000,000–34,000,007; deterministic 500,000-path-state cap and 120,000 ms emergency watchdog; hardened verifier and executable-closeout qualification; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
+- **statement:** RESULT-0043 closed validly with primary outcome **`INCONCLUSIVE`**. All 128 games completed with zero watchdog timeouts; 61 were exact-complete and 201 move denominators stopped at the registered work cap. Greed responded strongly to the policy manipulation: exact means rose **0.385, 0.531, 0.741, 0.946** (range **0.561**), and policy win/greed correlation was **0.956**, so P2 and P3 are `SUPPORTED`. P1 is `INCONCLUSIVE` because every policy × Level 10 cell had zero exact games. P4 is `INCONCLUSIVE` because score/greed correlation **0.730** lies between the 0.70 support and 0.85 falsification thresholds. P5 is `INCONCLUSIVE` because minimum exact-modal stability **66.7%** lies between its 80% and 60% thresholds. Nothing was falsified, but the full promotion bar was not cleared. Greed ratio remains an unadopted candidate; half-score move occupied only the early bin and remains diagnostic.
+- **evidence:** immutable protocol `experiments/RESULT-0043/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0043/protocol.md`, registration commit `acfe8c6`; mutation and exact-command [qualification receipt](experiments/RESULT-0043/qualification.json); retained [corpus](experiments/RESULT-0043/corpus.json), artifact identity `560f436388daeebcd19a198918791f0d9d014aa47512b0520e500b4a20ca199e`; exact [report](experiments/RESULT-0043/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0043/closure.json), and [independent corpus reduction](experiments/RESULT-0043/primary-recomputation.json).
+- **proof_class:** `direct_source` for frozen identities, row counts, exact/work-limit standings, artifact verification, qualified closeout path, and executable closure; `heuristic_observation` for controlled response, correlations, and stability over the registered panel. Work-limited games remain `UNKNOWN` and contribute no partial greed ratio.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0043/verify.js experiments/RESULT-0043/corpus.json`; expect PASS, artifact `560f4363…`, 128 rows, P2/P3 `SUPPORTED`, P1/P4/P5 `INCONCLUSIVE`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 66c18f65643d528aa58b292116b005a4a96a4ef1cb1a2d5576394b19c6779f8f`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0042]
+- **superseded_by:** []
+- **notes:** Do not add seeds or raise this run's cap after observing the result. The evidence supports greed as a responsive behavioral measure but does not yet support promotion as a MAP-Elites axis. A future change must address the exact-coverage strategy and score overlap as a genuinely new subject; repeated copies of this same panel are not the next step.
 
 ## Decision registry
 
