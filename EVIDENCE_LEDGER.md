@@ -20,6 +20,13 @@ scoped exact micro-puzzle map. This does not claim either quantity is invalid,
 nor does it measure difficulty, fun, policy quality, fitness, or larger-board
 behavior.
 
+Also as of 2026-09-16, `RESULT-0031` replaces invalidated `RESULT-0030` for
+representative 5x8, 5x7, 6x5, and 4x8 boards. The corrected search enforced one
+combined 16-candidate cap on every expanded state and found replayable target
+witnesses on all 8/8 fresh puzzles. Only 4/8 retained the same coarse proxy
+cell when beam width rose from 12 to 48, below the registered 75% stability
+bar. The disposition remains `REVISE_BEFORE_MAP_CORPUS`.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -647,6 +654,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0006]
 - **notes:** The three cell changes were threshold crossings: Level 10 seed 32,100,001 improved from 12 to 11 moves across the 0.5 tightness boundary; Level 53 and Level 54 seed 32,100,000 improved from full-board cap witnesses to cap 12. The next candidate should represent uncertainty or search qualification explicitly instead of treating a raw bounded upper bound as a settled archive coordinate.
+
+### RESULT-0031 — Corrected-cap descriptor proxies cover all puzzles but remain search-sensitive
+
+- **type:** result
+- **status:** accepted
+- **scope:** shipped configurations for Levels 10 (5x8), 31 (5x7), 53 (6x5), and 54 (4x8 with two stones); confirmation seeds 32,200,000–32,200,001; paired bounded searches at widths 12 and 48; one combined 16-candidate cap per expanded state; no exact-search, player, level-change, rule-change, or MAP-Elites claim
+- **statement:** The corrected registered confirmation enforced its combined candidate limit on all 96 cap/search runs and found replayable target witnesses on all 8/8 puzzle identities across all four profiles, so coverage was **`SUPPORTED`**. Search-width stability was **`INCONCLUSIVE`**: all eight pairs produced witnesses and the deeper arm worsened neither upper bound, but only 4/8 retained the same coarse proxy bin, 50% against the frozen 75% bar. The deeper arm expanded 43,275 states versus 11,594 for the shallow arm (3.733x, diagnostic only). The disposition is `REVISE_BEFORE_MAP_CORPUS`.
+- **evidence:** registered protocol `experiments/RESULT-0031/protocol.md`, registration commit `3a6c38c`; canonical corpus `experiments/RESULT-0031/corpus.json`, artifact identity `d68b5492dd55464f9a957e0b72cb3ee5cb82022b9eef71b77eac7de474bb6048`; complete outcomes in `experiments/RESULT-0031/report.md`; corrected bounded instrument `solver/puzzle-descriptor-witness.js`; verifier `experiments/RESULT-0031/verify.js`.
+- **proof_class:** `replayed_upper_bound` for every successful witness's moves and tested cap; `direct_source` for cap conformance, identities, deterministic counts, and verification; `heuristic_observation` for coverage and search-width stability across the registered eight-puzzle panel. No failed search is evidence of unreachability, and no exact or player-facing interpretation follows.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0031/verify.js experiments/RESULT-0031/corpus.json`; expect `PASS`, artifact identity `d68b5492…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/puzzleDescriptorWitness.test.js` and `node tools/verify-experiments.js`; expect 6/6 focused tests and the experiment gate to pass.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0030]
+- **superseded_by:** []
+- **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate.
 
 ## Decision registry
 
