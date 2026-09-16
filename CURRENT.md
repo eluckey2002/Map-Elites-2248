@@ -4,9 +4,11 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
-## Current decision frontier — 2026-09-05
+## Current decision frontier — 2026-09-16
 
 The latest trustworthy sequence is now visible in the ledger:
+
+- [RESULT-0029](EVIDENCE_LEDGER.md#result-0029--exact-micro-puzzle-descriptors-do-not-clear-the-frozen-four-region-promotion-bar) is the first exact puzzle-instance descriptor validation, kept separate from policy behavior. It screened 104 generated micro-puzzles and retained 10, but occupied the intended relaxed-short / relaxed-long / tight-short / tight-long regions **4 / 1 / 1 / 4**, below its frozen **4 / 4 / 4 / 4** bar. [DECISION-0006](EVIDENCE_LEDGER.md#decision-0006--do-not-promote-the-two-puzzle-instance-descriptors-from-result-0029) therefore rejects promotion of both axes for that exact scoped map. A repair is a new registered result; do not extend the opened seed blocks or rewrite the relaxed-long construction after seeing its cap-4 collapse.
 
 - [RESULT-0021](EVIDENCE_LEDGER.md#result-0021--structural-level-ranking-is-stable-across-disjoint-seed-samples) found that repeated human plays are not supported as necessary merely to average seed noise when differentiating candidates. It does not remove qualitative human review.
 - [RESULT-0025](EVIDENCE_LEDGER.md#result-0025--one-owner-pilot-session-replays-exactly-on-its-identified-subject) qualifies one exact owner-play session. [DECISION-0005](EVIDENCE_LEDGER.md#decision-0005--route-the-qualified-owner-pilot-to-variantrepair) disposes that candidate as `variant/repair`: preserve the narrow-board direction, treat blocker benefit as topology-dependent, and resolve or explicitly accept the stone/refill behavior before relying on it.

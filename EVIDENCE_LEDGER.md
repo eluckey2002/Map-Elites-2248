@@ -8,6 +8,17 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
+As of 2026-09-16, the first exact puzzle-instance descriptor validation is
+accepted at its bounded scope (`RESULT-0029`). It screened 104 generated 3x3,
+two-move boards and retained 10 exact puzzles across the four intended
+`budget tightness × chain-length dependence` regions, with occupancy
+**4 / 1 / 1 / 4** rather than the preregistered **4 / 4 / 4 / 4** and only 10
+distinct selected starting boards rather than 12. The empirical verdict is
+`INCONCLUSIVE`; `DECISION-0006` rejects promotion of both descriptors for this
+scoped exact micro-puzzle map. This does not claim either quantity is invalid,
+nor does it measure difficulty, fun, policy quality, fitness, or larger-board
+behavior.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -605,6 +616,22 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The recording was recovered on 2026-09-02 from an untracked worktree (`.orch/tickets/2026-09-02-adhoc-remote-branch-triage`) and committed byte-for-byte before qualification. Unlike `RESULT-0025`, this pilot has no runtime-bundle manifest from before the session; the receipt binds the runtime files as they were at qualification, which is a weaker provenance claim and is why the scope is replay exactness only.
+
+### RESULT-0029 — Exact micro-puzzle descriptors do not clear the frozen four-region promotion bar
+
+- **type:** result
+- **status:** accepted
+- **scope:** blocker-free generated 3x3 puzzles with `minChain: 3`, `tileScale: 1`, two allowed moves, four disjoint registered seed blocks, at most 48 screened seeds per intended region, exact position-aware enumeration capped at 250,000 expanded nodes per starting board; no shipped level, policy, human outcome, or larger-board claim
+- **statement:** The registered run screened 104 distinct starting boards, selected 10 exact reachable puzzles, and returned **`INCONCLUSIVE`** under its frozen rule. Occupancy was `relaxed-short: 4`, `relaxed-long: 1`, `tight-short: 1`, and `tight-long: 4`, below the required four per region; the 10 selected starting boards were also below the required 12 distinct identities. All selected puzzles had strict exact counterfactuals for fewer moves and the next-shorter chain cap, both witnesses replayed, and no screen hit the node cap. The sole relaxed-long puzzle landed at required cap 4: its construction excluded cap-4 success in one move, but cap-4 success remained possible across the full two-move budget. The result therefore does not validate the intended four-region map and must not be read as a cap-5-or-more relaxed example.
+- **evidence:** registered protocol `experiments/RESULT-0029/protocol.md`, registration commit `b85486ea44636aac14d314004d9ae9546f7239be`; canonical corpus `experiments/RESULT-0029/corpus.json`, artifact identity `7a908767a40d4cb1acc28b417430e7ec4fbf44b8319127e2c221c80ef245d7af`; complete outcomes and representative boards in `experiments/RESULT-0029/report.md`; exact envelope instrument `solver/puzzle-descriptors.js`; verifier `experiments/RESULT-0029/verify.js`.
+- **proof_class:** `exact_result` for every recorded board, target, reachability envelope, descriptor coordinate, counterfactual maximum, replay, screen count, and occupancy within the stated corpus. The frozen promotion disposition is recorded separately as `DECISION-0006`; no general claim about natural puzzle frequency or player experience follows.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0029/verify.js experiments/RESULT-0029/corpus.json`; expect `PASS`, artifact identity `7a908767…`, 10 instances, exact occupancy `4/1/1/4`, and empirical verdict `INCONCLUSIVE`. Run `node --test solver/tests/puzzleDescriptors.test.js experiments/RESULT-0029/run.test.js experiments/RESULT-0029/verify.test.js` and `node tools/verify-experiments.js`; expect 10/10 focused tests and the experiment gate to pass, including changed-descriptor and missing-witness twins failing the real verifier predicate.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Budget tightness is exact minimum moves divided by allowed moves. Chain-length dependence is the smallest maximum-chain-length cap under which the target remains reachable within budget; it is not a statistic from one policy trace. `UNKNOWN` remains distinct from unreachable, although this run happened to record zero node-cap cases. Recovery and wasted-move tolerance remain one untested candidate concept.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
@@ -680,6 +707,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The disposition chooses a direction for another bounded iteration. It does not select a particular repair, change blocker mechanics, or admit the candidate.
+
+### DECISION-0006 — Do not promote the two puzzle-instance descriptors from RESULT-0029
+
+- **type:** decision
+- **status:** accepted
+- **scope:** use of `budget tightness × chain-length dependence` as an accepted map for exact blocker-free 3x3, scale-1, two-move generated puzzle instances; existing policy-behavior MAP-Elites axes and all larger or heuristic puzzle scopes excluded
+- **statement:** Reject promotion of both `budget tightness` and `chain-length dependence` for the scoped exact micro-puzzle map because `RESULT-0029` did not clear its frozen four-region occupancy and starting-board-diversity requirements. Keep both definitions as candidate measurements: the decision rejects adoption on this evidence, not the mathematical quantities themselves. Any repair must be a new registered result; in particular, a relaxed-long construction must constrain the chain cap over the same full move budget used by the descriptor rather than only over its opening move.
+- **evidence:** accepted exact result `RESULT-0029`; frozen disposition rule in `experiments/RESULT-0029/protocol.md`, **P4**; canonical artifact decision in `experiments/RESULT-0029/corpus.json`; failure analysis and representatives in `experiments/RESULT-0029/report.md`.
+- **proof_class:** `owner_decision`, authorized by the accepted persistent goal's predeclared promote/revise/reject outcome and the committed RESULT-0029 disposition rule; underlying measurements retain `RESULT-0029`'s `exact_result` standing.
+- **as_of:** 2026-09-16
+- **reverify:** Confirm `RESULT-0029` remains accepted and that the canonical artifact's `descriptorDecision` rejects both descriptors at the exact scoped use. No new gameplay run is required to re-establish this decision.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This decision makes no claim about human difficulty, fun, preference, solver fitness, policy quality, natural region frequency, shipped levels, or larger boards. It does not replace `RESULT-0017`'s policy-behavior axes. Recovery and wasted-move tolerance remain one candidate concept and were not evaluated.
 
 ## Hypothesis registry
 
