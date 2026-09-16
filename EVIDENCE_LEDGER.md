@@ -8,6 +8,15 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
+As of 2026-09-16, `RESULT-0039` records verified oracle witnesses for all 20
+exact puzzles grouped from the 25 captured sessions. On the 19 puzzles with a
+human win, these witnesses use fewer moves on 17 and equal moves on 2; the
+remaining loss-only puzzle also has an oracle win. The saved run stays within
+30 seconds of search per puzzle, including its current-bot baseline. These
+are best-known solutions on the identified development corpus, not optimality,
+future-board superiority, or a human-difficulty measurement. Shipped play and
+the `calib-1` authoring evaluator remain unchanged.
+
 As of 2026-09-16, the first exact puzzle-instance descriptor validation is
 accepted at its bounded scope as corrected by `CORRECTION-0005`. It recorded
 104 seed observations covering 103 distinct generated 3x3, two-move boards
@@ -830,6 +839,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0007]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
+
+### RESULT-0039 — Oracle witnesses meet every frozen captured-puzzle move comparator
+
+- **type:** result
+- **status:** accepted
+- **scope:** the 20 exact puzzles in `docs/oracle/corpus.json`, grouped from 25 captured sessions; saved run `attempt-05-full-corpus`, Node v26.0.0 on darwin/arm64
+- **statement:** The report contains 20 legal target-reaching oracle witnesses. Against each puzzle's best verified human win, 17 are shorter and 2 tie; the loss-only puzzle also has a win. Every witness preserves or improves the current-bot winning move count. Search plus baseline generation is at most 29.855 seconds per puzzle in this saved run; maximum parent-controller elapsed time is 29.950 seconds. These are exact witness/comparator facts about this artifact, not minimum-move claims or predictions.
+- **evidence:** `docs/oracle/runs/attempt-05-full-corpus.json`, report identity `397ca4631966e659bbedbd8f5e1e7c41fa39fd04ad973d9fb6443ec6b80dee05`; corpus identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`; implementation closure identity `7b9b7592bf2ed880af95041ca4e2dc87138308bb9f212125682a4138bd5ded1c`; `solver/oracle/verify.js:verifyWitness` and `assessPuzzle`; `solver/oracle/cli.js:verifyReport`; `solver/tests/oracle.test.js` (14 passing controls, including real CLI-file forgery rejection)
+- **proof_class:** `direct_source`
+- **as_of:** 2026-09-16
+- **reverify:** `node solver/oracle/cli.js --verify docs/oracle/runs/attempt-05-full-corpus.json` from the producing source version; expect exit 0 and `valid:true, pass:true, puzzles:20, wins:20`. New search runs use a new output path and may differ under wall-clock load.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The search worker receives rules, seed and budget, not human chains or performance labels. Historical boards were inspected during development; this is not a blind evaluation. Timing and work counts are run observations, not replay-proven wall time. Failed and partial attempts remain in `docs/oracle/runs/`. The goal, qualification and readable comparison are in `docs/oracle/CONTRACT.md`, `QUALIFICATION.md`, and `RESULT.md`. No gameplay, target, live-policy or frozen-calibration promotion follows.
 
 ## Decision registry
 

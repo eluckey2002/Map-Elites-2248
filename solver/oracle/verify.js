@@ -1,10 +1,11 @@
 const assert = require('node:assert/strict');
 const { makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles, tickBlockers } = require('../engine');
 const { replayRecording, classifyTerminal } = require('../benchmark-replay');
+const { chooseMove } = require('../bot');
 
 // This verifier does not import the oracle transition or candidate generator.
 // Recompute the complete trace directly through the existing game engine.
-function verifyWitness(input, result) {
+function verifyWitness(input, result, { baselinePolicy = false } = {}) {
   assert.ok(result && Array.isArray(result.chains), 'missing witness');
   const recording = {
     ...result, seed: input.seed, candidateIdentity: null,
@@ -20,6 +21,10 @@ function verifyWitness(input, result) {
   const initialDraws = draws;
   for (let i = 0; i < result.chains.length; i++) {
     const chain = result.chains[i].tiles.map(({ x, y }) => state.grid[y][x]);
+    if (baselinePolicy) {
+      const expected = chooseMove(state, { lookaheadRngFactory: () => makeRng(987654321 + i) });
+      assert.deepEqual(chain.map(({ x, y }) => [x, y]), expected?.map(({ x, y }) => [x, y]), 'baseline differs from current bot');
+    }
     executeChain(state, chain);
     applyGravity(state);
     spawnNewTiles(state, rng);
@@ -32,8 +37,9 @@ function verifyWitness(input, result) {
 }
 
 function assessPuzzle(puzzle, result) {
-  if (result.baseline) verifyWitness(puzzle.input, result.baseline);
+  if (result.baseline) verifyWitness(puzzle.input, result.baseline, { baselinePolicy: true });
   if (result.best) {
+    assert.ok(result.baseline, 'winning search result must retain its completed baseline');
     const replay = verifyWitness(puzzle.input, result.best);
     assert.equal(replay.outcome, 'win', 'best must be a win');
   }

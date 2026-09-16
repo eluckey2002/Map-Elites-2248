@@ -3,12 +3,15 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const { spawnSync } = require('node:child_process');
 const { valueIdentity } = require('../benchmark-inputs');
+const { chooseMove } = require('../bot');
+const { makeRng } = require('../engine');
 const { loadCorpus, collectCorpus, ROOT } = require('../oracle/corpus');
 const { createPuzzle, transition, witness } = require('../oracle/simulation');
 const { candidates, search } = require('../oracle/search');
 const { verifyWitness, assessPuzzle } = require('../oracle/verify');
-const { verifyReport, sourceIdentities } = require('../oracle/cli');
+const { verifyReport, sourceIdentities, runPuzzle, showWitness } = require('../oracle/cli');
 
 const manifest = loadCorpus();
 
@@ -25,13 +28,27 @@ function knownWitness(puzzle, recordingEntry = puzzle.recordings.find(r => r.out
 
 function seal(body) { return { ...body, reportIdentity: valueIdentity(body) }; }
 function reseal(report) { const { reportIdentity, ...body } = report; return seal(body); }
+let qualificationCache;
 function qualificationReport() {
+  if (qualificationCache) return structuredClone(qualificationCache);
   const rows = manifest.puzzles.map(puzzle => {
     const known = puzzle.recordings.find(r => r.outcome === 'win' && r.moves === puzzle.humanBestMoves);
-    const result = { best: known ? knownWitness(puzzle, known) : null, baseline: null, searchMs: 1 };
+    let node = createPuzzle(puzzle.input.level, puzzle.input.seed);
+    const draws = node.draws;
+    while (!node.terminal) {
+      const index = node.state.moves;
+      const chain = chooseMove(node.state, { lookaheadRngFactory: () => makeRng(987654321 + index) });
+      if (!chain) break;
+      node = transition(node, chain, draws);
+    }
+    const baseline = { ...witness(node), outcome: node.terminal };
+    const human = known ? knownWitness(puzzle, known) : null;
+    const best = human && human.movesUsed < baseline.movesUsed ? human : baseline;
+    const result = { best, baseline, searchMs: 1 };
     return { puzzleIdentity: puzzle.puzzleIdentity, result, assessment: assessPuzzle(puzzle, result), verificationMs: 0 };
   });
-  return seal({ manifestIdentity: manifest.manifestIdentity, sources: sourceIdentities(), budgetMs: 30000, rows, pass: false });
+  qualificationCache = seal({ manifestIdentity: manifest.manifestIdentity, sources: sourceIdentities(), budgetMs: 30000, rows, pass: true, completeCorpus: true });
+  return structuredClone(qualificationCache);
 }
 
 test('oracle corpus reads and replays all real recordings, groups exact repeats, retains best wins', () => {
@@ -77,9 +94,9 @@ test('verifier rejects continuation after the actual target crossing', () => {
   assert.throws(() => verifyWitness(puzzle.input, broken), /continuation after terminal/);
 });
 
-test('real report verifier accepts a valid report without laundering its domain failure', () => {
+test('real report verifier accepts the known legal calibration witnesses', () => {
   const result = verifyReport(qualificationReport());
-  assert.deepEqual(result, { valid: true, pass: false, puzzles: 20, wins: 19 });
+  assert.deepEqual(result, { valid: true, pass: true, puzzles: 20, wins: 20 });
 });
 
 test('report verifier rejects missing rows, duplicate rows and invented comparison results', () => {
@@ -87,7 +104,7 @@ test('report verifier rejects missing rows, duplicate rows and invented comparis
     report => report.rows.pop(),
     report => { report.rows[1] = report.rows[0]; },
     report => { report.rows[0].assessment.movesSaved = 999; },
-    report => { report.pass = true; },
+    report => { report.pass = false; },
     report => { report.rows[0].result.searchMs = 30001; },
   ]) {
     const report = qualificationReport();
@@ -131,4 +148,49 @@ test('candidate generation preserves legal setup prefixes and off-lattice choice
   assert.ok(choices.some(c => c.chain.length === 2));
   assert.ok(choices.some(c => c.sum === 6));
   assert.ok(choices.some(c => c.chain.length === 4));
+});
+
+test('CLI reads real report files: positive passes and resigned false comparison fails', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), '2248-oracle-report-'));
+  const file = path.join(dir, 'report.json');
+  try {
+    const report = qualificationReport();
+    fs.writeFileSync(file, JSON.stringify(report));
+    const good = spawnSync(process.execPath, ['solver/oracle/cli.js', '--verify', file], { cwd: ROOT, encoding: 'utf8' });
+    assert.equal(good.status, 0, good.stderr);
+    assert.equal(JSON.parse(good.stdout).pass, true);
+    report.rows[0].assessment.oracleMoves = 999;
+    fs.writeFileSync(file, JSON.stringify(reseal(report)));
+    assert.equal(JSON.parse(fs.readFileSync(file)).rows[0].assessment.oracleMoves, 999);
+    const bad = spawnSync(process.execPath, ['solver/oracle/cli.js', '--verify', file], { cwd: ROOT, encoding: 'utf8' });
+    assert.equal(bad.status, 2);
+    assert.match(bad.stderr, /forged comparison/);
+  } finally { fs.rmSync(file); fs.rmdirSync(dir); }
+});
+
+test('actual process deadline retains UNKNOWN without inventing impossibility', async () => {
+  const result = await runPuzzle(manifest.puzzles[0].input, 1);
+  assert.equal(result.terminationReason, 'process-deadline');
+  assert.equal(result.standing, 'UNKNOWN');
+  assert.equal(result.best, null);
+  assert.equal(result.searchMs, 1);
+});
+
+test('a real slower bot witness remains a valid domain failure', () => {
+  const report = qualificationReport();
+  const puzzle = manifest.puzzles.find(p => p.puzzleIdentity.startsWith('8de7adce'));
+  const row = report.rows.find(r => r.puzzleIdentity === puzzle.puzzleIdentity);
+  row.result.best = row.result.baseline;
+  row.assessment = assessPuzzle(puzzle, row.result);
+  assert.equal(row.assessment.pass, false);
+  report.pass = false;
+  assert.equal(verifyReport(reseal(report)).pass, false);
+});
+
+test('replay display renders every verified move as a spatial board', () => {
+  const report = qualificationReport();
+  const row = report.rows[0];
+  const text = showWitness(manifest.puzzles[0], row.result);
+  assert.equal((text.match(/Move \d+:/g) || []).length, row.result.best.movesUsed);
+  assert.match(text, /\[ 1\]/);
 });

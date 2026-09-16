@@ -1,6 +1,6 @@
 const { performance } = require('node:perf_hooks');
 const { chooseMove } = require('../bot');
-const { makeRng, buildGreedyChain, chainMultiplier, isMergeableSum, isBlockedTile } = require('../engine');
+const { makeRng, buildGreedyChain, findGreedyChains, chainMultiplier, isMergeableSum, isBlockedTile } = require('../engine');
 const { createPuzzle, transition, stateKey, witness } = require('./simulation');
 
 const LOOKAHEAD_BASE = 987654321;
@@ -9,10 +9,11 @@ const LOOKAHEAD_BASE = 987654321;
 // off-lattice sums. Equal immediate scores are not equivalent board actions.
 function candidates(state, limit = 48, variant = 0) {
   const actions = new Map();
-  for (const row of state.grid) for (const tile of row) {
-    if (!tile || isBlockedTile(tile)) continue;
-    const found = buildGreedyChain(state, tile, { tieBreak: variant % 2 ? 'none' : 'degree' });
-    if (!found) continue;
+  const paths = variant >= 2
+    ? findGreedyChains(state, { pathWidth: 8, tieBreak: 'degree', preferMergeableSum: false })
+    : state.grid.flat().filter(tile => tile && !isBlockedTile(tile))
+      .map(tile => buildGreedyChain(state, tile, { tieBreak: variant % 2 ? 'none' : 'degree' })).filter(Boolean);
+  for (const found of paths) {
     let sum = 0;
     const selected = [];
     for (const next of found.chain) {
@@ -102,7 +103,7 @@ function search({ level, seed, budgetMs = 30000 }, onProgress = () => {}) {
   // Progressive widths reuse the same seeded game. Each pass remains bounded;
   // no result of these passes establishes absence of a better solution.
   for (const width of [16, 48, 128, 256]) {
-    for (const variant of [0, 1]) {
+    for (const variant of [0, 1, 2]) {
       if (performance.now() >= deadline) break;
       let frontier = [root];
       for (let depth = 0; depth < (best ? best.movesUsed - 1 : level.moves); depth++) {

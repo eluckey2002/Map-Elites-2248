@@ -7,12 +7,14 @@ const { performance } = require('node:perf_hooks');
 const { valueIdentity } = require('../benchmark-inputs');
 const { ROOT, FROZEN_MANIFEST_ID, loadCorpus, fileHash } = require('./corpus');
 const { assessPuzzle } = require('./verify');
+const { renderBoard } = require('../board-trace');
 
 const SOURCE_FILES = [
   'solver/oracle/cli.js', 'solver/oracle/corpus.js', 'solver/oracle/worker.js',
   'solver/oracle/search.js', 'solver/oracle/simulation.js', 'solver/oracle/verify.js',
   'solver/engine.js', 'solver/bot.js', 'solver/benchmark-inputs.js',
-  'solver/benchmark-replay.js', 'solver/human-benchmark.js', 'solver/recording-replay.js', 'src/game.js',
+  'solver/benchmark-replay.js', 'solver/human-benchmark.js', 'solver/recording-replay.js',
+  'solver/board-trace.js', 'solver/tests/oracle.test.js', 'src/game.js',
 ];
 const sourceIdentities = () => Object.fromEntries(SOURCE_FILES.map(file => [file, fileHash(path.join(ROOT, file))]));
 
@@ -67,7 +69,23 @@ function verifyReport(report, manifest = loadCorpus()) {
   });
   const pass = checked.every(row => row.pass);
   assert.equal(report.pass, pass, 'forged overall result');
+  assert.equal(report.completeCorpus, true, 'complete corpus must be declared');
   return { valid: true, pass, puzzles: checked.length, wins: checked.filter(row => row.oracleMoves !== null).length };
+}
+
+function showWitness(puzzle, result) {
+  if (!result.best) return 'No verified winning witness.';
+  const lines = [`Puzzle ${puzzle.puzzleIdentity}; seed ${puzzle.input.seed}; tile values × ${puzzle.input.level.tileScale}. [n] marks chain order.`];
+  let board = puzzle.input.initialBoard;
+  result.best.chains.forEach((chain, i) => {
+    const grid = board.map((row, y) => row.map((tile, x) => tile ? {
+      x, y, value: tile[0], blocker: tile[1], blockerDuration: tile[2], bombTimer: tile[3],
+    } : null));
+    lines.push(`\nMove ${i + 1}: +${chain.points}; score ${result.best.trace[i].score}`);
+    lines.push(...renderBoard({ grid, gridWidth: puzzle.input.level.gridW, gridHeight: puzzle.input.level.gridH }, chain.tiles, puzzle.input.level.tileScale));
+    board = result.best.trace[i].board;
+  });
+  return lines.join('\n');
 }
 
 async function main(argv = process.argv.slice(2)) {
@@ -82,6 +100,17 @@ async function main(argv = process.argv.slice(2)) {
     const checked = verifyReport(JSON.parse(fs.readFileSync(option('--verify'), 'utf8')));
     console.log(JSON.stringify(checked));
     return checked.pass ? 0 : 1;
+  }
+  if (option('--show')) {
+    const report = JSON.parse(fs.readFileSync(option('--show'), 'utf8'));
+    verifyReport(report);
+    const manifest = loadCorpus();
+    const prefix = option('--puzzle');
+    if (!prefix) throw new Error('--show requires --puzzle <id-prefix>');
+    const found = report.rows.filter(row => row.puzzleIdentity.startsWith(prefix));
+    if (found.length !== 1) throw new Error('--puzzle must identify exactly one report row');
+    console.log(showWitness(manifest.puzzles.find(p => p.puzzleIdentity === found[0].puzzleIdentity), found[0].result));
+    return 0;
   }
   const out = option('--out');
   if (!out) throw new Error('usage: node solver/oracle/cli.js --out <new-report.json> [--budget-ms 30000] [--puzzle <id-prefix>] | --verify <report.json>');
@@ -107,13 +136,14 @@ async function main(argv = process.argv.slice(2)) {
   }
   const body = {
     schemaVersion: 1, manifestIdentity: manifest.manifestIdentity, sources,
+    runtime: { node: process.version, platform: process.platform, arch: process.arch },
     claim: 'best-known replayed solutions on the identified development corpus; no optimality or generalization',
     budgetMs, loadingMs, completeCorpus: rows.length === manifest.puzzles.length,
     pass: rows.length === manifest.puzzles.length && rows.every(row => row.assessment.pass), rows,
   };
   const report = { ...body, reportIdentity: valueIdentity(body) };
   fs.mkdirSync(path.dirname(path.resolve(out)), { recursive: true });
-  fs.writeFileSync(out, `${JSON.stringify(report, null, 2)}\n`);
+  fs.writeFileSync(out, `${JSON.stringify(report)}\n`);
   if (body.completeCorpus) console.log(JSON.stringify(verifyReport(report, manifest)));
   else console.log('Partial diagnostic only; this cannot satisfy the corpus goal.');
   return report.pass ? 0 : 1;
@@ -122,4 +152,4 @@ async function main(argv = process.argv.slice(2)) {
 if (require.main === module) main().then(code => { process.exitCode = code; }).catch(error => {
   console.error(error.stack); process.exitCode = 2;
 });
-module.exports = { runPuzzle, sourceIdentities, verifyReport, main };
+module.exports = { runPuzzle, sourceIdentities, verifyReport, showWitness, main };
