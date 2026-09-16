@@ -44,6 +44,12 @@ chain span ranged by 0.2396. Across 28 paired witnesses, depth agreed on 25
 disposition is `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS`, with both coordinates
 still explicitly qualified as properties of successful bounded witnesses.
 
+Also as of 2026-09-16, `RESULT-0034` tested forced-prefix ratio × bounded
+opening diversity on 32 fresh boards. Coverage and width stability passed, and
+forced-prefix ratio spanned 0.1974. Opening diversity collapsed to one on
+30/32 boards and two on only 2/32, missing the frozen range bar. The pair is
+`REVISE_BEFORE_MAP_CORPUS`; a repair needs a different success-set sampler.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -716,6 +722,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** Initial and spawned tiles have depth zero; each merged tile has one plus the maximum input depth. Spatial spread is mean per-move Chebyshev chain span divided by board diameter. Four Level 54 shallow misses remain `UNKNOWN`; deep witnesses make panel coverage complete. Eligibility permits a new preregistered corpus only and is not adoption by itself.
+
+### RESULT-0034 — Bounded opening diversity collapses on representative boards
+
+- **type:** result
+- **status:** accepted
+- **scope:** shipped Levels 10, 31, 53, and 54; seeds 32,800,000–32,800,007; 32 fresh puzzles; paired bounded successful-witness searches at widths 12 and 48, 16 candidates per state, path width 2, 64-success cap, and eight successes per opening; no exhaustive, player, difficulty, content, rule, or MAP-Elites claim
+- **statement:** The frozen disposition is **`INCONCLUSIVE`**. Deep search covered 32/32 puzzles and all profiles. Forced-prefix ratio spanned **0.1974**, clearing 0.15. Opening diversity failed range: 30 boards reported one represented opening and two boards reported two, so only one value met the four-row population floor. Width stability passed on 28 paired puzzles: 26/28 (**92.9%**) stayed within 0.15 for forced-prefix ratio and 26/28 retained exact opening diversity. The pair is `REVISE_BEFORE_MAP_CORPUS` because the bounded diversity coordinate collapsed.
+- **evidence:** protocol `experiments/RESULT-0034/protocol.md`, registration commit `a0608db`; corpus `experiments/RESULT-0034/corpus.json`, artifact identity `48876a4151535ec0b72b55059dabc91e962c2df424385e9686ac27a0a486999b`; report `experiments/RESULT-0034/report.md`; instrument `solver/forced-diversity-descriptors.js`; verifier `experiments/RESULT-0034/verify.js`.
+- **proof_class:** `direct_source` for deterministic identities, counts, and verification; `heuristic_observation` for coverage, range, and stability across the registered panel. The success set is bounded and no exhaustive solution-count or true-forcedness claim follows; misses remain `UNKNOWN`.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0034/verify.js experiments/RESULT-0034/corpus.json`; expect `PASS`, artifact `48876a41…`, 32 rows, P1/P3 `SUPPORTED`, P2 `INCONCLUSIVE`, and `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/forcedDiversityDescriptors.test.js experiments/RESULT-0034/run.test.js` and `node tools/verify-experiments.js`; expect 3/3 and gate PASS.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The repair target is the success-set sampler, not the seed count. Ordered opening chains preserve survivor placement, so reversed chains remain distinct moves.
 
 ## Decision registry
 

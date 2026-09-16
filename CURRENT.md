@@ -8,6 +8,8 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 The latest trustworthy sequence is now visible in the ledger:
 
+- [RESULT-0034](EVIDENCE_LEDGER.md#result-0034--bounded-opening-diversity-collapses-on-representative-boards) completed the third recommended pair. Forced-prefix ratio showed range and both proxies were width-stable, but bounded opening diversity was 1 on 30/32 boards and 2 on only 2/32. Revise the success-set sampler before MAP use; do not add seeds to this panel.
+
 - [RESULT-0033](EVIDENCE_LEDGER.md#result-0033--merge-depth-and-spatial-spread-clear-the-candidate-measure-bars) validated merge depth × spatial spread on 32 fresh boards. Deep witnesses covered 32/32; both coordinates showed registered range; paired width stability was 89.3% for exact peak depth and 96.4% for spatial spread. This is the first recommended pair to become eligible for a separate registered MAP corpus, with both names kept witness-qualified.
 
 - [RESULT-0032](EVIDENCE_LEDGER.md#result-0032--choice-density-clears-its-bars-recovery-lacks-enough-non-ceiling-pairs) tested choice density × recovery on 32 fresh representative boards. The exact opening choice proxy cleared its range and invariance bars. Recovery moved in the intended direction on 7/8 eligible pairs and passed the registered width-stability bar, but only eight pairs were below ceiling against the required twelve. Keep choice density as a candidate; revise recovery before a MAP corpus.
