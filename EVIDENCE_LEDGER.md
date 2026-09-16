@@ -9,8 +9,9 @@ The ledger is the authority for a record's current standing. It is not the autho
 ## Current snapshot
 
 As of 2026-09-16, the first exact puzzle-instance descriptor validation is
-accepted at its bounded scope (`RESULT-0029`). It screened 104 generated 3x3,
-two-move boards and retained 10 exact puzzles across the four intended
+accepted at its bounded scope as corrected by `CORRECTION-0005`. It recorded
+104 seed observations covering 103 distinct generated 3x3, two-move boards
+and retained 10 exact puzzles across the four intended
 `budget tightness × chain-length dependence` regions, with occupancy
 **4 / 1 / 1 / 4** rather than the preregistered **4 / 4 / 4 / 4** and only 10
 distinct selected starting boards rather than 12. The empirical verdict is
@@ -620,7 +621,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0029 — Exact micro-puzzle descriptors do not clear the frozen four-region promotion bar
 
 - **type:** result
-- **status:** accepted
+- **status:** superseded
 - **scope:** blocker-free generated 3x3 puzzles with `minChain: 3`, `tileScale: 1`, two allowed moves, four disjoint registered seed blocks, at most 48 screened seeds per intended region, exact position-aware enumeration capped at 250,000 expanded nodes per starting board; no shipped level, policy, human outcome, or larger-board claim
 - **statement:** The registered run screened 104 distinct starting boards, selected 10 exact reachable puzzles, and returned **`INCONCLUSIVE`** under its frozen rule. Occupancy was `relaxed-short: 4`, `relaxed-long: 1`, `tight-short: 1`, and `tight-long: 4`, below the required four per region; the 10 selected starting boards were also below the required 12 distinct identities. All selected puzzles had strict exact counterfactuals for fewer moves and the next-shorter chain cap, both witnesses replayed, and no screen hit the node cap. The sole relaxed-long puzzle landed at required cap 4: its construction excluded cap-4 success in one move, but cap-4 success remained possible across the full two-move budget. The result therefore does not validate the intended four-region map and must not be read as a cap-5-or-more relaxed example.
 - **evidence:** registered protocol `experiments/RESULT-0029/protocol.md`, registration commit `b85486ea44636aac14d314004d9ae9546f7239be`; canonical corpus `experiments/RESULT-0029/corpus.json`, artifact identity `7a908767a40d4cb1acc28b417430e7ec4fbf44b8319127e2c221c80ef245d7af`; complete outcomes and representative boards in `experiments/RESULT-0029/report.md`; exact envelope instrument `solver/puzzle-descriptors.js`; verifier `experiments/RESULT-0029/verify.js`.
@@ -629,7 +630,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0029/verify.js experiments/RESULT-0029/corpus.json`; expect `PASS`, artifact identity `7a908767…`, 10 instances, exact occupancy `4/1/1/4`, and empirical verdict `INCONCLUSIVE`. Run `node --test solver/tests/puzzleDescriptors.test.js experiments/RESULT-0029/run.test.js experiments/RESULT-0029/verify.test.js` and `node tools/verify-experiments.js`; expect 10/10 focused tests and the experiment gate to pass, including changed-descriptor and missing-witness twins failing the real verifier predicate.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0005]
 - **notes:** Budget tightness is exact minimum moves divided by allowed moves. Chain-length dependence is the smallest maximum-chain-length cap under which the target remains reachable within budget; it is not a statistic from one policy trace. `UNKNOWN` remains distinct from unreachable, although this run happened to record zero node-cap cases. Recovery and wasted-move tolerance remain one untested candidate concept.
 
 ### RESULT-0030 — Representative-board descriptor proxies reach every target but miss the stability bar
@@ -729,10 +730,10 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **status:** accepted
 - **scope:** use of `budget tightness × chain-length dependence` as an accepted map for exact blocker-free 3x3, scale-1, two-move generated puzzle instances; existing policy-behavior MAP-Elites axes and all larger or heuristic puzzle scopes excluded
 - **statement:** Reject promotion of both `budget tightness` and `chain-length dependence` for the scoped exact micro-puzzle map because `RESULT-0029` did not clear its frozen four-region occupancy and starting-board-diversity requirements. Keep both definitions as candidate measurements: the decision rejects adoption on this evidence, not the mathematical quantities themselves. Any repair must be a new registered result; in particular, a relaxed-long construction must constrain the chain cap over the same full move budget used by the descriptor rather than only over its opening move.
-- **evidence:** accepted exact result `RESULT-0029`; frozen disposition rule in `experiments/RESULT-0029/protocol.md`, **P4**; canonical artifact decision in `experiments/RESULT-0029/corpus.json`; failure analysis and representatives in `experiments/RESULT-0029/report.md`.
+- **evidence:** exact result lineage `RESULT-0029` as corrected by `CORRECTION-0005`; frozen disposition rule in `experiments/RESULT-0029/protocol.md`, **P4**; canonical artifact decision in `experiments/RESULT-0029/corpus.json`; failure analysis and representatives in `experiments/RESULT-0029/report.md`.
 - **proof_class:** `owner_decision`, authorized by the accepted persistent goal's predeclared promote/revise/reject outcome and the committed RESULT-0029 disposition rule; underlying measurements retain `RESULT-0029`'s `exact_result` standing.
 - **as_of:** 2026-09-16
-- **reverify:** Confirm `RESULT-0029` remains accepted and that the canonical artifact's `descriptorDecision` rejects both descriptors at the exact scoped use. No new gameplay run is required to re-establish this decision.
+- **reverify:** Confirm `CORRECTION-0005` is accepted, preserves the selected-puzzle evidence and disposition from `RESULT-0029`, and that the canonical artifact's `descriptorDecision` rejects both descriptors at the exact scoped use. No new gameplay run is required to re-establish this decision.
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** []
@@ -872,6 +873,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0015]
 - **superseded_by:** []
 - **notes:** The correction was driven by a deterministic regression test, not by the first confirmation's outcome. The frozen seed sets were then rerun against the corrected identity; only the corrected run is accepted.
+
+### CORRECTION-0005 — RESULT-0029 screened 103 distinct starting boards
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the screened-board count in `RESULT-0029`; selected instances, exact descriptors, occupancy, witnesses, and disposition unchanged
+- **statement:** Supersedes only `RESULT-0029`'s claim that its 104 screened seed observations were 104 distinct starting boards. Seeds 29,000,132 and 29,000,209 both deal the initial board `4,4,2,4,2,2,4,2,4`, so the run screened 104 seed observations covering 103 distinct starting boards. The 10 selected puzzles still have 10 distinct starting-board identities, and the frozen `INCONCLUSIVE` verdict is unchanged.
+- **evidence:** canonical screens in `experiments/RESULT-0029/corpus.json`; `experiments/RESULT-0029/subject.js`, `BASE_LEVEL`; seeded construction in `solver/engine.js`, `makeRng` and `createLevelState`; independent enumeration of every recorded screen seed produced 104 observations, 103 board-value keys, and the sole duplicate pair 29,000,132 / 29,000,209.
+- **proof_class:** `exact_result`
+- **as_of:** 2026-09-16
+- **reverify:** Enumerate every `regions[].screened[].seed` in `experiments/RESULT-0029/corpus.json`, construct `BASE_LEVEL` with `createLevelState(BASE_LEVEL, makeRng(seed))`, and key each initial grid by its nine values; expect 104 observations, 103 unique keys, and only seeds 29,000,132 and 29,000,209 sharing `4,4,2,4,2,2,4,2,4`.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0029]
+- **superseded_by:** []
+- **notes:** The correction changes no selected-puzzle identity, exact reachability result, region occupancy, threshold comparison, or descriptor decision.
 
 ## Assembly cut log
 

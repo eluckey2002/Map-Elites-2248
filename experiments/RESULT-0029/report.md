@@ -13,6 +13,14 @@ before any reportable seed was opened. The one reportable run produced
 `experiments/RESULT-0029/corpus.json`, artifact identity
 `7a908767a40d4cb1acc28b417430e7ec4fbf44b8319127e2c221c80ef245d7af`.
 
+## Correction — screened-board count
+
+The report originally called all 104 screened seed observations distinct.
+Seeds 29,000,132 and 29,000,209 deal the same initial board, so the run covers
+103 distinct starting boards. `CORRECTION-0005` records the exact duplicate.
+The 10 selected puzzles remain distinct, and the occupancy and disposition do
+not change.
+
 ## Outcome
 
 | Region | Seeds screened | Exact selected | Coordinate pattern |
