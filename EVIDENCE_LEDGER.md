@@ -36,6 +36,14 @@ only eight pairs were eligible against the required twelve. The disposition is
 `REVISE_BEFORE_MAP_CORPUS`: retain choice density as a candidate, repair the
 ceiling-prone recovery proxy before promotion.
 
+Also as of 2026-09-16, `RESULT-0033` tested merge depth × spatial spread on 32
+fresh representative boards. Deep search produced witnesses on all 32, with
+peak witness merge depth 1 on 20 and depth 2 on 12; mean normalized witness
+chain span ranged by 0.2396. Across 28 paired witnesses, depth agreed on 25
+(89.3%) and spatial spread stayed within 0.10 on 27 (96.4%). The registered
+disposition is `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS`, with both coordinates
+still explicitly qualified as properties of successful bounded witnesses.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -693,6 +701,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** `initialViableStartFraction` counts viable starting tiles, not distinct paths or perceived decisions. `oneDetourRecoveryWitnessRate` samples up to eight lowest-scoring non-reference candidates from a deterministic 64-candidate pool and counts only replayed bounded-search successes. A repair needs a new protocol and fresh seeds; do not extend this opened range or lower its frozen eligibility denominator.
+
+### RESULT-0033 — Merge depth and spatial spread clear the candidate-measure bars
+
+- **type:** result
+- **status:** accepted
+- **scope:** shipped Levels 10, 31, 53, and 54; seeds 32,600,000–32,600,007; 32 fresh puzzle identities; paired deterministic bounded searches at widths 12 and 48 with 16 combined candidates per state and path width 2; static/no-blocker profiles only; no exact-search, player, difficulty, level-change, rule-change, or MAP-Elites claim
+- **statement:** The registered confirmation returned **`SUPPORTED`** under its frozen disposition. Deep search found replayable target witnesses on all 32/32 puzzles and all four profiles. Peak witness merge depth was 1 on 20 boards and 2 on 12; mean normalized witness-chain span ranged from 0.7143 to 0.9538, a **0.2396** range against the 0.15 bar. Twenty-eight puzzles had witnesses at both widths; 25/28 retained exact peak depth (**89.3%**) and 27/28 retained spatial spread within 0.10 (**96.4%**), both above 75%. The pair is `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS` with its witness-qualified names and proof standing.
+- **evidence:** registered protocol `experiments/RESULT-0033/protocol.md`, registration commit `dae2ef1`; canonical corpus `experiments/RESULT-0033/corpus.json`, artifact identity `48c31d54296c5ddf6f833717992e2039a32e504ce4d1debb6770e71626325e45`; complete outcomes in `experiments/RESULT-0033/report.md`; recursive-lineage and geometry instrument `solver/merge-spread-descriptors.js`; verifier `experiments/RESULT-0033/verify.js`.
+- **proof_class:** `replayed_lower_bound` for every successful witness and its constructed lineage; `direct_source` for puzzle identities, trace arithmetic, deterministic counts, and verification; `heuristic_observation` for coverage, range, and width stability across the registered panel. Neither coordinate is a necessary or exact property across all solutions, and every bounded miss remains `UNKNOWN`.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0033/verify.js experiments/RESULT-0033/corpus.json`; expect `PASS`, artifact identity `48c31d54…`, 32 rows, P1–P3 `SUPPORTED`, and disposition `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS`. Run `node --test solver/tests/mergeSpreadDescriptors.test.js experiments/RESULT-0033/*.test.js` and `node tools/verify-experiments.js`; expect 8/8 focused tests and the experiment gate to pass.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Initial and spawned tiles have depth zero; each merged tile has one plus the maximum input depth. Spatial spread is mean per-move Chebyshev chain span divided by board diameter. Four Level 54 shallow misses remain `UNKNOWN`; deep witnesses make panel coverage complete. Eligibility permits a new preregistered corpus only and is not adoption by itself.
 
 ## Decision registry
 
