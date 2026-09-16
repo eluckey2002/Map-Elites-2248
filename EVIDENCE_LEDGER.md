@@ -58,6 +58,17 @@ coverage and occupancy were supported. Cross-width cell stability was only
 `MAP_CORPUS_INCONCLUSIVE`: the 16 retained representatives remain diagnostic,
 not a canonical adopted corpus.
 
+Also as of 2026-09-16, `CORRECTION-0007` supersedes `RESULT-0037` and
+`RESULT-0038` at their evidence standing while preserving their retained rows.
+The deterministic path-state cap worked, and RESULT-0038 still records 128
+fresh games, 75 exact-complete games, the stated policy means and correlations,
+and primary `INCONCLUSIVE`. Its 100% same-or-adjacent-bin statistic cannot
+support seed stability because the rule is vacuous for a middle modal bin; its
+frozen verifier also fails to bind the registered seed panel and exact
+work-limit count, and its source closure omits executed dependencies. Greed
+ratio is not an adopted axis. `BL-0015` owns a fresh registered successor;
+half-score timing remains a separate later experiment.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -779,7 +790,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0037 — Deterministic greed corpus is preserved but its frozen closeout command is unusable
 
 - **type:** result
-- **status:** provisional
+- **status:** superseded
 - **scope:** four fixed-percentile scripted policies on shipped Levels 10, 31, 53, and 54; seeds 33,400,000–33,400,007; exact legal-chain greed denominators capped at 500,000 deterministic path states per move; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, rule, or timing-axis validation claim
 - **statement:** RESULT-0037 closed **`UNVERIFIED`** and has no entitled primary domain outcome. The registered 128-game run completed without an emergency-watchdog timeout, passed its production artifact verifier, and retained 68/128 exact-complete games. A manual independent reduction byte-matched the retained decision and produced promising partial diagnostics: exact mean greed rose **0.366, 0.522, 0.728, 0.955**; policy win/greed correlation was **0.955**; per-game score/greed correlation was **0.611**; and greed-bin stability was **100%**. Half-score move again occupied only two timing bins and remains diagnostic. Executable closure nevertheless cannot pass because the frozen recomputation command writes its result to a file while the required closeout verifier compares command stdout to that file. The immutable contract cannot be repaired after outcomes were visible, so every prediction remains `UNVERIFIED` despite the preserved corpus.
 - **evidence:** immutable protocol `experiments/RESULT-0037/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0037/protocol.md`, registration commit `d8814f7`; qualified harness [qualification receipt](experiments/RESULT-0037/qualification.json); retained corpus `experiments/RESULT-0037/corpus.json`, artifact identity `f57690b58297feec62e4ef863a59931f7f48910c00fef873d61b29f6b0592083`; evidence boundary `experiments/RESULT-0037/report.md`; honest `UNVERIFIED` [closure receipt](experiments/RESULT-0037/closure.json); [manually reduced decision](experiments/RESULT-0037/primary-recomputation.json).
@@ -788,13 +799,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0037/verify.js experiments/RESULT-0037/corpus.json`; expect artifact verification PASS and 68/128 exact-complete games. Run the close-experiment verifier with `--run-recomputation` but without `--require-closed`; expect structural PASS, `closure_status: UNVERIFIED`, and recomputation `NOT_RUN`. Do not claim a closed domain outcome.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0007]
 - **notes:** A successor requires fresh seeds and the same corpus-reducing analysis, but its frozen recomputation argv must emit the reduction on stdout. Do not rerun RESULT-0037 or promote its partial diagnostics. Greed ratio remains the active candidate; a second timing axis still needs its own independent manipulation.
 
 ### RESULT-0038 — Greed behavior clears four checks but exact coverage misses one hard cell
 
 - **type:** result
-- **status:** accepted
+- **status:** superseded
 - **scope:** four fixed-percentile scripted policies on shipped Levels 10, 31, 53, and 54; seeds 33,500,000–33,500,007; exact legal-chain greed denominators capped at 500,000 deterministic path states per move; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, rule, timing-axis, or outside-panel claim
 - **statement:** The registered confirmation closed validly with primary outcome **`INCONCLUSIVE`**. Greed ratio cleared every behavior test: exact policy means rose **0.386, 0.516, 0.725, 0.950** across percentiles 0.25–1.00 (range **0.564**); policy win/greed Pearson correlation was **0.953**; per-game score/greed correlation was **0.617**, below the 0.70 redundancy boundary; and every policy had **100%** modal-or-adjacent greed-bin stability. Exact coverage was 75/128 (**58.59%**) with at least 50% in every policy, but percentile 0.75 × Level 10 had zero exact-complete games, so the registered every-cell support rule left P1 `INCONCLUSIVE`. P2–P5 were `SUPPORTED`; none were falsified. Half-score move again occupied only early and steady and remains unvalidated. Greed ratio is a strong candidate, not an adopted MAP-Elites axis.
 - **evidence:** immutable protocol `experiments/RESULT-0038/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0038/protocol.md`, registration commit `6cecb3e`; qualified harness [qualification receipt](experiments/RESULT-0038/qualification.json); retained corpus `experiments/RESULT-0038/corpus.json`, artifact identity `07531402dbed5802056692b587a121884ae2c23c1caa93b18ea0a17f9f51732f`; exact outcomes `experiments/RESULT-0038/report.md`; executable contract, `CLOSED` [closure receipt](experiments/RESULT-0038/closure.json), and [independent corpus reduction](experiments/RESULT-0038/primary-recomputation.json).
@@ -803,7 +814,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0038/verify.js experiments/RESULT-0038/corpus.json`; expect PASS, artifact `07531402…`, 128 rows, P1 `INCONCLUSIVE`, P2–P5 `SUPPORTED`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 f778503c60c6681e490df205735309e908fd83c56fee1b4407ccd9c5fa250b97`; expect `CLOSED`, recomputation PASS, and verifier PASS.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0007]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
 ## Decision registry
@@ -1061,6 +1072,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0030]
 - **superseded_by:** []
 - **notes:** This is an invalidation of the panel-level experiment, not evidence against the descriptor idea. The replacement must be preregistered under a new result ID and use fresh seeds.
+
+### CORRECTION-0007 — RESULT-0037 and RESULT-0038 overstate stability and receipt closure
+
+- **type:** correction
+- **status:** accepted
+- **scope:** `RESULT-0037` and `RESULT-0038` stability evidence, verifier guarantees, and source-closure claims; retained rows, artifact hashes, exact/work-limit standings, policy means, correlations, and the primary `INCONCLUSIVE` disposition remain recorded observations
+- **statement:** Supersedes the evidence standing of `RESULT-0037` and `RESULT-0038`. Their frozen analyses report `sameOrAdjacentGreedRate = 1` for every policy, but on the three-bin greed axis that statistic is identically 1 whenever the modal bin is the middle bin; this occurs for the 0.50 and 0.75 policies, so the 100% minimum cannot support a general seed-stability claim. Both frozen verifiers also derive the expected seed matrix from artifact-controlled `panel.seeds`, allowing a coherently substituted seed panel to pass after the artifact self-hash is refreshed, and accept `UNKNOWN/work-limit` observations without checking the registered requirement that `visitedPathStates` equal 500,000. Finally, `RESULT-0038`'s source closure omits `solver/tests/exact-score.test.js`, although qualification executes it, and omits `experiments/RESULT-0037/subject.js`, although its closeout reducer imports it. The retained corpus still directly shows 128 rows on the stated seeds, 75 exact-complete games, the recorded policy means and correlations, and the empty 0.75 × Level 10 exact cell; the primary outcome therefore remains `INCONCLUSIVE`. What no longer stands is P5 `SUPPORTED`, the claim that the frozen verifier binds the registered seed panel and complete work-limit receipt, or the claim that the closeout identity covers every executed dependency. Greed ratio remains an unadopted candidate whose registered validation must be repeated under a successor protocol before it can be promoted.
+- **evidence:** frozen bin rule `experiments/RESULT-0037/result.js`, `greedBinStability`; three-bin definition `solver/greed-descriptor-screen.js`, `descriptorCell`; retained middle-bin policies `experiments/RESULT-0038/primary-recomputation.json`; artifact-controlled matrix check and incomplete work-limit check `experiments/RESULT-0037/verify.js` and `experiments/RESULT-0038/verify.js`, `verifyMatrix`, `verifyRow`, and `verifyArtifact`; registered seed and work-limit requirements `experiments/RESULT-0037/registered-protocol.md` and `experiments/RESULT-0038/registered-protocol.md`; incomplete source lists `experiments/RESULT-0038/subject.js`, `SOURCE_PATHS`, qualification command `experiments/RESULT-0038/qualification.json`, and transitive import `experiments/RESULT-0037/recompute.js`.
+- **proof_class:** `direct_source` for the vacuous middle-bin calculation, verifier acceptance surface, omitted dependencies, retained rows, and unchanged primary disposition; `heuristic_observation` for the fixed-panel means and correlations; `unresolved` for seed stability and for any promotion of greed ratio to a MAP-Elites axis. Individual capped denominator misses retain their recorded `UNKNOWN` standing.
+- **as_of:** 2026-09-16
+- **reverify:** Inspect `descriptorCell` and `greedBinStability`; with possible bins `{0,1,2}`, confirm every bin satisfies distance at most 1 from modal bin 1, then inspect `primary-recomputation.json` and confirm policies 0.50 and 0.75 have modal bin 1. Inspect both `verifyArtifact` implementations and confirm `verifyMatrix` receives `artifact.panel.seeds`, while `verifyRow` checks the work-limit reason but not `visitedPathStates`. Compare `RESULT-0038/qualification.json` and `RESULT-0037/recompute.js` imports against `RESULT-0038/subject.js` `SOURCE_PATHS`; confirm the executed exact-score test and imported RESULT-0037 subject are absent. Run the ordinary artifact verifier only as a reproduction of the frozen verifier's behavior, not as proof that these omitted bindings are present.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0037, RESULT-0038]
+- **superseded_by:** []
+- **notes:** Frozen experiment files remain untouched. [BL-0015](docs/backlog/BL-0015-harden-greed-validation-receipts.md) defines the successor work: fresh seeds, a seed-bound and work-count-bound verifier, complete executable source closure, reducer equivalence over `UNKNOWN` cases, and a non-vacuous stability statistic. The separate timing-axis manipulation remains later work and must not be folded into this repair.
 
 ## Assembly cut log
 
