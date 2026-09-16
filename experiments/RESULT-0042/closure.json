@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "6bed5404140e6d55cb7a9cfdd44b5e652ce3e26b4c70ddfd81570111cf3f8a91"
+  },
+  "run_id": "RESULT-0042-confirmation-33900000-33900007",
+  "final_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+  "closure_status": "UNVERIFIED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "Production descriptor arithmetic and unknown propagation passed the frozen controls."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "Deterministic exact/reference and objective-equivalence controls passed; the former failure game completed 22 moves with zero watchdog timeouts."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "Positive percentile and uniformly scaled negative manipulations passed."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "All four production-verifier mutants were killed for their intended reasons; the unstable middle-bin share was 0.50."
+    },
+    {
+      "id": "C5",
+      "status": "PASS",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "Independent reduction matched all registered edge fixtures and the retained corpus."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "Timing-only manipulation left greed predictions and summaries unchanged."
+    },
+    {
+      "id": "C7",
+      "status": "PASS",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "Baseline retained 420 tests, 415 passes, four documented failures, and one skip; focused qualification passed 27/27."
+    },
+    {
+      "id": "P1",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "The complete corpus was retained, but the frozen executable closeout contract cannot run its recomputation command from the declared working directory."
+    },
+    {
+      "id": "P2",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "The retained calculation shows strictly rising exact means spanning 0.574, but the failed frozen closeout prevents an entitled prediction outcome."
+    },
+    {
+      "id": "P3",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "The retained calculation shows policy win/greed Pearson correlation 0.940, but the failed frozen closeout prevents an entitled prediction outcome."
+    },
+    {
+      "id": "P4",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "The retained calculation shows per-game score/greed correlation 0.660, but the failed frozen closeout prevents an entitled prediction outcome."
+    },
+    {
+      "id": "P5",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "The retained calculation shows minimum exact modal-bin stability 0.75, but the failed frozen closeout prevents an entitled prediction outcome."
+    },
+    {
+      "id": "P6",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "95f2a943e5edd534560399ffeae8d4b67363a5f40cea137654448a358e62d3e8",
+      "reason": "UNVERIFIED closure is not entitled to a primary domain outcome."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "qualification",
+      "path": "qualification.json",
+      "sha256": "7db0d884b830bc2a721a2eaa4b89ea4d789ca2f6b721e40def8f8d32cb3ec629"
+    },
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "b8964fece57908a0e43b8aad7476d07761e4f0cdc1f5411cb542e59c4dfcd69d"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "b6bb91af5a7716a38e30f530ac18ccce93c860a64ad12cb60228af6a72a5e260"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "ce809a03c5fe090ed1fff2bb2609d7fa5cf15caedfa42f29f9ce644fb0ee7994"
+    }
+  ],
+  "primary_outcome": null,
+  "deviations": [
+    "The frozen recomputation argv is repository-root-relative, but the contract cwd resolves to the experiment directory; executable closeout exited 1."
+  ],
+  "attempts": [
+    {
+      "id": "qualification-attempt-1",
+      "exit_code": 0,
+      "artifact_ids": ["qualification"]
+    },
+    {
+      "id": "confirmation-attempt-1",
+      "exit_code": 0,
+      "artifact_ids": ["corpus"]
+    },
+    {
+      "id": "deterministic-recomputation",
+      "exit_code": 0,
+      "artifact_ids": ["primary-recomputation", "report"]
+    },
+    {
+      "id": "closeout-verifier-attempt-1",
+      "exit_code": 1,
+      "artifact_ids": ["qualification", "corpus", "report", "primary-recomputation"]
+    }
+  ]
+}
