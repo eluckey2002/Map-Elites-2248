@@ -1,6 +1,6 @@
 ---
 result: RESULT-0036
-status: registered
+status: complete
 registered: 2026-09-16T13:00:00Z
 supersedes: null
 reportable: confirmation

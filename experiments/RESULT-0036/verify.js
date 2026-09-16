@@ -6,17 +6,17 @@ const { execFileSync } = require('node:child_process');
 
 const { descriptorCell } = require('../../solver/greed-descriptor-screen');
 const { summarizeRegistered } = require('../../solver/greed-descriptor-result');
-const { addedIn } = require('../../tools/verify-experiments');
+const { addedIn, parseFrontmatter, showAtCommit } = require('../../tools/verify-experiments');
 const {
   EXPECTED_GAMES,
   PERCENTILES,
   PROFILE_LEVELS,
   RESULT,
   ROOT,
+  SOURCE_PATHS,
   canonicalJson,
   identity,
-  sourceHashes,
-  subjectIdentity,
+  subjectIdentityFromSources,
 } = require('./subject');
 
 function verifyRegistration(artifact) {
@@ -34,6 +34,24 @@ function verifyRegistration(artifact) {
     execFileSync('git', ['merge-base', '--is-ancestor', registeredCommit, 'HEAD'], { cwd: ROOT, stdio: 'ignore' });
   } catch {
     throw new Error('registered protocol is not reachable from HEAD');
+  }
+  return registeredCommit;
+}
+
+function verifySourceClosure(artifact, registeredCommit) {
+  const protocolPath = `experiments/${RESULT}/protocol.md`;
+  const registeredProtocol = showAtCommit(registeredCommit, protocolPath, ROOT);
+  const frozen = parseFrontmatter(registeredProtocol)?.version_freeze;
+  if (!frozen) throw new Error('registered protocol has no version freeze');
+  if (canonicalJson(Object.keys(artifact.sources).sort()) !== canonicalJson([...SOURCE_PATHS].sort())) {
+    throw new Error('source identity closure mismatch');
+  }
+  for (const relative of SOURCE_PATHS) {
+    if (typeof frozen[relative] !== 'string'
+        || typeof artifact.sources[relative] !== 'string'
+        || !artifact.sources[relative].startsWith(frozen[relative])) {
+      throw new Error('source identity closure mismatch');
+    }
   }
 }
 
@@ -66,10 +84,10 @@ function verifyMatrix(rows, seeds) {
 
 function verifyArtifact(artifact) {
   verifyIdentity(artifact);
-  verifyRegistration(artifact);
-  if (artifact.finalSubjectIdentity !== subjectIdentity()) throw new Error('final subject identity mismatch');
-  if (canonicalJson(artifact.sources) !== canonicalJson(sourceHashes())) {
-    throw new Error('source identity closure mismatch');
+  const registeredCommit = verifyRegistration(artifact);
+  verifySourceClosure(artifact, registeredCommit);
+  if (artifact.finalSubjectIdentity !== subjectIdentityFromSources(artifact.sources)) {
+    throw new Error('final subject identity mismatch');
   }
   if (artifact.rows.length !== EXPECTED_GAMES) throw new Error('wrong game count');
   verifyMatrix(artifact.rows, artifact.panel.seeds);
@@ -96,4 +114,11 @@ if (require.main === module) {
   try { main(); } catch (error) { console.error(`FAIL: ${error.message}`); process.exitCode = 1; }
 }
 
-module.exports = { verifyArtifact, verifyIdentity, verifyMatrix, verifyRow };
+module.exports = {
+  verifyArtifact,
+  verifyIdentity,
+  verifyMatrix,
+  verifyRegistration,
+  verifyRow,
+  verifySourceClosure,
+};

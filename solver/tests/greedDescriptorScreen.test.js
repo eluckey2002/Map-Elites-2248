@@ -51,3 +51,32 @@ test('screen stops when a descriptor merely tracks score and occupies one row', 
   assert.equal(result.screenChecks.expressiveRange, false);
   assert.equal(result.nextStep, 'STOP_AFTER_SCREEN');
 });
+
+test('screen fails closed when score correlation is undefined', () => {
+  const timingByPercentile = new Map([
+    [0.25, 0.3],
+    [0.5, 0.5],
+    [0.75, 0.8],
+    [1, 0.8],
+  ]);
+  const rows = [];
+  for (const percentile of [0.25, 0.5, 0.75, 1]) {
+    for (let seed = 0; seed < 20; seed += 1) {
+      const descriptors = {
+        halfScoreMove: timingByPercentile.get(percentile),
+        greedRatio: percentile,
+      };
+      rows.push({
+        percentile,
+        score: 1000,
+        win: percentile >= 0.75,
+        descriptors,
+        cell: descriptorCell(descriptors),
+      });
+    }
+  }
+  const result = summarize(rows);
+  assert.equal(result.diagnostics.scoreGreedCorrelation, null);
+  assert.equal(result.screenChecks.lowFitnessCorrelation, false);
+  assert.equal(result.nextStep, 'STOP_AFTER_SCREEN');
+});

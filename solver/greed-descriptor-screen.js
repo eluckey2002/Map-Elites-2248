@@ -209,7 +209,8 @@ function summarize(rows, percentiles = DEFAULT_PERCENTILES) {
   const screenChecks = {
     controlledGreedRange: orderedGreed && greedMeanRange >= 0.30,
     expressiveRange: timingBins.size === 3 && greedBins.size === 3 && occupiedCells.size >= 5,
-    lowFitnessCorrelation: Math.abs(scoreGreedCorrelation) < 0.70,
+    lowFitnessCorrelation: scoreGreedCorrelation !== null
+      && Math.abs(scoreGreedCorrelation) < 0.70,
     seedStability: minimumStability !== null && minimumStability >= 0.80,
     outcomeTracksGreed: policyWinGreedCorrelation !== null && Math.abs(policyWinGreedCorrelation) >= 0.50,
   };

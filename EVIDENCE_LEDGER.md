@@ -761,6 +761,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** RESULT-0033 validated separate depth and spread stability bars on 32 puzzles; RESULT-0035's stricter joint cell assignment exposed boundary sensitivity at corpus scale. Do not move the 0.82 cut or extend this seed range after seeing the outcome. A repair is a new registered uncertainty-aware subject and fresh panel.
 
+### RESULT-0036 — Exact greed confirmation is not entitled because timeout-sensitive closure did not reproduce
+
+- **type:** result
+- **status:** provisional
+- **scope:** four fixed-percentile scripted policies on shipped Levels 10, 31, 53, and 54; seeds 33,200,000–33,200,007; exact legal-chain greed denominators with a 2,000 ms child-process timeout; fixed early/steady/late and low/mid/high bins; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, or rule claim
+- **statement:** RESULT-0036 closed **`UNVERIFIED`** and has no entitled primary domain outcome. The registered 128-game run verified internally and its partial diagnostics were promising for greed ratio: exact mean greed rose 0.376, 0.519, 0.722, 0.958 across the four policies; policy win/greed correlation was 0.912; per-game score/greed correlation was 0.638; and same-or-edge-adjacent cell stability was 100% among exact-complete games. Half-score move occupied only early and steady, never late, so the proposed 3×3 pair was not established. More importantly, the registered closure command reran wall-clock-limited enumeration: timeout jitter changed exact-complete games from 70/128 to 68/128 and changed the required decision bytes. Those quantities remain partial diagnostics, not accepted descriptor validation or an adoption basis.
+- **evidence:** immutable protocol `experiments/RESULT-0036/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0036/protocol.md`, registration commit `654226f`; retained registered corpus `experiments/RESULT-0036/corpus.json`, artifact identity `b97b1b8ad87c3b844684a1c8edc22ac77d98f5b4941f37641e9f4bb80c29f397`; exact outcomes and evidence boundary `experiments/RESULT-0036/report.md`; executable closeout contract, honest `UNVERIFIED` [closure receipt](experiments/RESULT-0036/closure.json), and [repeated decision projection](experiments/RESULT-0036/primary-recomputation.json), with their identities pinned by the receipt and rechecked by the closeout verifier.
+- **proof_class:** `direct_source` for the two retained timeout/completeness counts, identity checks, closure mismatch, and honest receipt; `UNKNOWN` for the intended domain conclusion. The reported correlations and occupancy are non-entitled `heuristic_observation` diagnostics over the fixed panel and must not be promoted.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0036/verify.js experiments/RESULT-0036/corpus.json`; expect artifact verification PASS and the retained partial decision. Run the close-experiment verifier without `--require-closed`; expect structural PASS with `closure_status: UNVERIFIED` and recomputation `NOT_RUN`. Do not expect or claim a closed domain outcome.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** A successor must use a new result identity and fresh seeds, and its independent recomputation must reduce the immutable corpus rather than replay timeout-sensitive work. Greed ratio remains the stronger candidate; half-score move needs a stronger timing manipulation or replacement. Build potential remains a policy term, not an axis.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

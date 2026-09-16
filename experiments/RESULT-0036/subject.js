@@ -68,8 +68,12 @@ function profiles() {
 }
 
 function subjectIdentity() {
+  return subjectIdentityFromSources(sourceHashes());
+}
+
+function subjectIdentityFromSources(sources) {
   return identity({
-    sources: Object.fromEntries(SUBJECT_SOURCE_PATHS.map((relative) => [relative, fileHash(relative)])),
+    sources: Object.fromEntries(SUBJECT_SOURCE_PATHS.map((relative) => [relative, sources[relative]])),
     panel: {
       levels: PROFILE_LEVELS,
       percentiles: PERCENTILES,
@@ -98,4 +102,5 @@ module.exports = {
   profiles,
   sourceHashes,
   subjectIdentity,
+  subjectIdentityFromSources,
 };
