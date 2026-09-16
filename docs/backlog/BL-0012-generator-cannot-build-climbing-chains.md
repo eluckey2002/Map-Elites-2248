@@ -4,10 +4,10 @@ title: The bot's chain generator cannot build long climbing chains
 status: proposed
 milestone: policy-strategy
 depends_on: [BL-0011]
-updated: 2026-09-05
+updated: 2026-09-16
 ---
 
-# BL-0012 — The two boards where the human substantially outscores the bot
+# BL-0012 — The bot generator misses long climbing chains
 
 ## Authority
 
@@ -24,21 +24,21 @@ session (140,544 on the HUMAN-PILOT-0002 board) against the bot's *median over
 over other seeds measures the seed, not the player. That caution now lives in
 `solver/human-benchmark.js`'s header so the next person does not repeat it.
 
-The paired benchmark across all 12 recorded sessions shows the bot is broadly
-competitive: bot ahead on score on 7 of 12 boards, mean difference +9.3% in the
-bot's favour, and the bot won 12 of 12 where the human won 11 of 12.
+The first 12-session paired benchmark showed the bot ahead on crossing score on
+7 of 12 boards, with a mean difference of +9.3%, and 12 bot wins against 11
+human wins. Crossing score is final-move overshoot, not a speed measure.
 
-Two boards appeared to run the other way (`3823dfce` level 53 seed 424242,
-human +20.9%; `f0ae3e75` level 52 seed 1, human +16.5%) — and that appearance
-was **also an artifact**, of a second and more basic kind. The shipped policy
-is target-aware immediate-finish: it stops the move it crosses the target. The
-human kept playing for score. Comparing the two measures the objective, not
-the skill.
+The later claim that the human kept playing after reaching the target was also
+wrong. Every accepted human win records `reason: target reached`, just like the
+shipped bot. Removing the target gave only the bot extra moves. Its uncapped
+score therefore has no recorded human comparator and cannot establish that the
+bot is stronger.
 
-Removing the target so the bot spends its full move budget, measured with the
-live bot on the same 12 seeds: **the bot outscores the human on 12 of 12
-boards, mean +65.7%**, ranging from +6% to +280%. The bot is not weaker at
-this game. It is playing a different game, and it wins the human's game too.
+The corrected 25-session benchmark has 23 mutual wins: the human is faster on
+9, the bot on 9, and 5 are ties. In the 12 mutual wins from ordinary shipped-
+level captures, the human is faster on 6, the bot on 3, and 3 are ties. Every
+bot-faster ordinary capture is on Level 54. `CORRECTION-0009` records the exact
+scope and retained results.
 
 ## What survives, and is worth acting on
 

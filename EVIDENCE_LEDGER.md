@@ -77,6 +77,12 @@ occupied cells into one reusable survivor. That survivor remains off-lattice.
 Off-lattice occupancy is therefore a neutral board-state observation; its
 recovery cost and strategic pressure remain unresolved.
 
+Also as of 2026-09-16, `CORRECTION-0009` supersedes the objective interpretation
+in the 2026-09-05 human-benchmark snapshot below. Recorded human wins and the
+shipped bot both stop on the target-crossing move. Across the current 25-session
+mixed corpus, each wins the speed comparison on 9 of 23 mutual wins, with 5
+ties. The uncapped bot arm continues alone and cannot support a human comparison.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -1110,6 +1116,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [FACT-0006]
 - **superseded_by:** []
 - **notes:** The source comment above `isMergeableSum` still carries the older permanent-dead interpretation. `solver/engine.js` is identity-bound into candidate receipts, so this documentation correction records the rule without changing that hashed source. Any future source edit must follow the receipt re-derivation rules. The possible use of starting off-lattice values as soft blockers and landmark-route multiplicity as a level-design measure are proposals in `docs/MEASUREMENT-AND-ANALYSIS-STANDARDS.md`, not shipped rules or accepted empirical results.
+
+### CORRECTION-0009 — Recorded human games stop at the target
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the 2026-09-05 current-snapshot claim that recorded human play continued after reaching the target; the matching comments and labels in `solver/human-benchmark.js`; the uncapped bot's reported 12/12 and later 25/25 score advantage when presented as a human comparison
+- **statement:** Supersedes the objective interpretation, not the recorded scores. Every recorded human win ends with `reason: target reached`, on the move that crosses the same target used by the shipped target-aware bot. The target-stopping arms therefore share the race-to-target objective. Across the current mixed corpus of 25 paired sessions, the human wins 23 and the bot wins 25. Among the 23 mutual wins, the human reaches the target in fewer moves on 9, the bot on 9, and 5 are ties. The bot has the higher crossing score on 13/23 mutual wins, with a mean paired difference of `-0.4%`; crossing score records final-chain overshoot and is not a substitute for speed. The 13 ordinary shipped-level captures contain 12 mutual wins: the human is faster on 6, the bot on 3, and 3 are ties. Every bot-faster ordinary capture is on Level 54. The remaining ordinary capture is the human loss on shipped Level 54 seed `1044860360`. The uncapped arm removes the target only for the bot and lets it continue to the move budget; it has no recorded human comparator and establishes no bot-over-human score advantage.
+- **evidence:** Every replay-accepted winning JSON under `recordings/`, `play-sessions/`, and `pilots/*/recordings/` records `reason: target reached`; `solver/recording-replay.js` verifies the terminal outcome and score; `node solver/human-benchmark.js` replays the shipped bot on each identical board and seed and reports the paired outcome and move counts; `solver/tests/humanBenchmark.test.js` guards complete corpus collection, pairing, and the summary classification.
+- **proof_class:** `exact_result` for the 25 recorded sessions under their bound boards, seeds, recordings, and current bot; `direct_source` for capture termination semantics; no general claim about human or bot skill outside this corpus
+- **as_of:** 2026-09-16
+- **reverify:** Run `node solver/human-benchmark.js`; expect 25 paired sessions, outcome 23 human wins and 25 bot wins, and speed among 23 mutual wins of human faster 9, bot faster 9, tied 5. Inspect the two human losses: archived Level 51 `split-channel`, seed 1, and shipped Level 54, seed `1044860360`.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The earlier 2026-09-05 snapshot is retained above as historical lineage. Its same-seed correction remains valid; only its human-continues premise and resulting uncapped comparison are superseded. The mixed 25-session corpus includes historical candidate boards and pilot boards, so current shipped-level claims must use the ordinary `play-sessions/` subset.
 
 ## Assembly cut log
 

@@ -137,12 +137,13 @@ unconditional, so it pays insurance on boards where the game ends first.
    bot by 33% on the pilot board, from one human session (140,544) against the
    bot's median over 150 unrelated seeds (105,664). On the same seed the bot
    scores 136,832. That is a 2.6% gap, in the bot's favour on move count.
-2. **Two different objectives.** Corrected to a paired same-seed benchmark, got
-   "bot ahead on 7 of 12, +9.3%", and reported it. Still wrong: the shipped
-   policy is target-aware immediate-finish and stops the move it crosses the
-   target, while the human plays on for score. With the target removed so both
-   maximise score, **the bot outscores the human on 12 of 12 boards, mean
-   +65.7%.** The apparent human advantage was the bot stopping early.
+2. **A human objective mismatch that did not exist.** The paired same-seed
+   benchmark produced "bot ahead on 7 of 12, +9.3%." The analysis then wrongly
+   claimed the human played on after reaching the target and gave the bot a
+   full-budget arm to compensate. The recordings say `reason: target reached`:
+   human and shipped-bot games both stop on the crossing move. The uncapped
+   bot's 12-of-12 score result gave only the bot extra moves and cannot compare
+   player skill.
 3. **Two different bots.** The first attempt to fix (2) used `playMeasured`,
    which runs the frozen `calib-1` evaluator, not the live bot — so it mixed an
    objective change with a policy change.

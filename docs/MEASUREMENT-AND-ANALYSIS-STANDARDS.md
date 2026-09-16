@@ -192,18 +192,29 @@ Never compare one seed with a median over other seeds.
 
 1. **Reliability:** Which player reaches the target or avoids lockout?
 2. **Speed:** When both reach the target, which uses fewer moves?
-3. **Score strength:** When both play the full budget, which earns more score?
+3. **Crossing score:** When both stop at the target, which final chain overshoots
+   farther? This is secondary and is not a speed measure.
 
-These claims are not interchangeable. The shipped bot stops as soon as it
-crosses the target, while a human normally continues for score. Comparing
-their raw scores in that configuration measures different objectives.
+These claims are not interchangeable. Recorded human games and the shipped bot
+both stop on the move that crosses the target. The benchmark's uncapped bot
+continues alone to the move budget; because no recorded human receives those
+extra moves, that arm is a bot-only diagnostic rather than a comparison.
 
 The current 25-session benchmark demonstrates the distinction:
 
 - human wins: 23/25;
 - target-stopping bot wins: 25/25;
-- full-budget bot score is higher on 25/25 paired sessions, mean `+53.9%`;
-- target-stopping bot score is higher on 15/25, mean `+5.0%`.
+- among the 23 mutual wins, the human is faster on 9, the bot is faster on 9,
+  and 5 are ties;
+- among those mutual wins, the bot's crossing score is higher on 13/23, but
+  the mean paired difference is `-0.4%`; this records final-chain overshoot,
+  not a decisive skill advantage;
+- the corpus mixes historical candidate boards, pilot boards, and 13 ordinary
+  shipped-level captures;
+- in the 12 mutual wins from ordinary shipped-level captures, the human is
+  faster on 6, the bot on 3, and 3 are ties; every bot-faster ordinary capture
+  is on Level 54, and the one ordinary human loss is shipped Level 54 seed
+  `1044860360`.
 
 Reproduce with:
 
@@ -211,12 +222,16 @@ Reproduce with:
 node solver/human-benchmark.js
 ```
 
-The project goal is a bot that does not lose to the recorded human under the
-same objective. Evaluate that goal with explicit guards:
+The project goal is a bot that does not lose to the recorded human in the
+target race. Evaluate that goal with explicit guards:
 
 - no human win becomes a bot loss on the same board and seed;
-- compare moves only when both players reach the target;
-- compare score only when both players receive the full move budget;
+- among mutual wins, the bot reaches the target in no more moves than the
+  human;
+- treat crossing score as final-move overshoot, not a substitute for speed;
+- do not compare uncapped bot score with target-stopping human score;
+- a fixed-budget score claim requires a new human capture mode in which both
+  sides actually receive the full move budget;
 - report every paired regression, not only the mean;
 - weight summaries by unique board as well as by session, so repeated attempts
   on one seed do not silently dominate the result;

@@ -6,7 +6,7 @@
 // human sessions are the one benchmark in this repo that is not saturated:
 // each one pins a real board, a real seed, and a score a person actually
 // achieved on it. Replaying the bot against those exact seeds gives a paired
-// comparison per board.
+// comparison per recorded session.
 //
 // This exists because of a measurement mistake worth not repeating. A single
 // human session (140,544 on the HUMAN-PILOT-0002 board) was compared against
@@ -93,12 +93,10 @@ function resolveRecordedBoard(recording, index = candidateIndex(), pilots = pilo
   return null;
 }
 
-// The two players do not share an objective, and comparing their scores
-// without saying so measures the objective, not the skill. The shipped policy
-// is target-aware immediate-finish: it stops the move it crosses the target.
-// A human playing on past the target is not beating it, just answering a
-// different question. `uncapped` removes the target so the bot spends its full
-// move budget on score, which is the arm that compares like with like.
+// Recorded human play and the shipped bot share the target-stop objective:
+// both games end on the move that crosses the target. The `uncapped` arm is a
+// bot-only diagnostic that removes the target and lets the same policy spend
+// its full move budget. It has no recorded human comparator.
 function playBot(candidate, seed, { uncapped = false } = {}) {
   const level = uncapped ? { ...candidate, target: Infinity } : candidate;
   const rng = makeRng(seed);
@@ -131,29 +129,58 @@ function collect({ recordingPath = null } = {}) {
       continue;
     }
     const { candidate, source } = resolved;
+    const relativeDir = path.relative(ROOT, dir);
+    const corpus = relativeDir === 'play-sessions'
+      ? 'ordinary'
+      : (relativeDir.startsWith(`pilots${path.sep}`) ? 'pilot' : 'candidate');
     const replayResult = replay(candidate, recording);
     if (replayResult.problems.length) {
       unresolved.push({ file: name, level: recording.candidateLevel, identity: recording.candidateIdentity, problems: replayResult.problems });
       continue;
     }
     const bot = playBot(candidate, recording.seed);
-    const scoring = playBot(candidate, recording.seed, { uncapped: true });
+    const uncappedBot = playBot(candidate, recording.seed, { uncapped: true });
     rows.push({
       file: name.slice(0, 8),
       level: recording.candidateLevel,
       seed: recording.seed,
       source,
+      corpus,
       target: candidate.target,
-      human: { score: recording.score, moves: recording.movesUsed, outcome: recording.outcome },
+      human: {
+        score: recording.score,
+        moves: recording.movesUsed,
+        outcome: recording.outcome,
+        reason: recording.reason,
+      },
       bot,
-      scoring,
+      uncappedBot,
       scoreDelta: bot.score - recording.score,
       scorePct: ((bot.score - recording.score) / recording.score) * 100,
-      scoringDelta: scoring.score - recording.score,
-      scoringPct: ((scoring.score - recording.score) / recording.score) * 100,
     });
   }
   return { rows, unresolved };
+}
+
+function summarizeRows(rows) {
+  const mutualWins = rows.filter((r) => r.human.outcome === 'win' && r.bot.outcome === 'win');
+  const humanFaster = mutualWins.filter((r) => r.human.moves < r.bot.moves).length;
+  const botFaster = mutualWins.filter((r) => r.bot.moves < r.human.moves).length;
+  const tiedMoves = mutualWins.length - humanFaster - botFaster;
+  const botHigherCrossingScore = mutualWins.filter((r) => r.scoreDelta > 0).length;
+  const meanCrossingScorePct = mutualWins.reduce((sum, r) => sum + r.scorePct, 0)
+    / (mutualWins.length || 1);
+
+  return {
+    humanWins: rows.filter((r) => r.human.outcome === 'win').length,
+    botWins: rows.filter((r) => r.bot.outcome === 'win').length,
+    mutualWins: mutualWins.length,
+    humanFaster,
+    botFaster,
+    tiedMoves,
+    botHigherCrossingScore,
+    meanCrossingScorePct,
+  };
 }
 
 function main() {
@@ -166,28 +193,30 @@ function main() {
     return unresolved.length ? 1 : 0;
   }
 
-  console.log('board     lvl     seed      human            bot (stops at target)      bot (plays for score)');
+  console.log('board     lvl     seed      human            bot (stops at target)      bot (continues alone)');
   for (const r of rows) {
     const h = `${r.human.score} / ${r.human.moves}mv ${r.human.outcome === 'win' ? 'W' : 'L'}`;
     const b = `${r.bot.score} / ${r.bot.moves}mv ${r.bot.outcome === 'win' ? 'W' : 'L'}`;
-    const s = `${r.scoring.score} (${(r.scoringPct >= 0 ? '+' : '') + r.scoringPct.toFixed(0)}%)`;
+    const s = `${r.uncappedBot.score} / ${r.uncappedBot.moves}mv`;
     console.log(
       `${r.file}  ${String(r.level).padStart(3)}  ${String(r.seed).padStart(7)}  `
       + `${h.padStart(18)}  ${b.padStart(18)} ${((r.scoreDelta >= 0 ? '+' : '') + r.scoreDelta).padStart(8)}  ${s.padStart(18)}`,
     );
   }
 
-  const botWins = rows.filter((r) => r.bot.outcome === 'win').length;
-  const humanWins = rows.filter((r) => r.human.outcome === 'win').length;
-  const botAhead = rows.filter((r) => r.scoreDelta > 0).length;
-  const meanPct = rows.reduce((s, r) => s + r.scorePct, 0) / (rows.length || 1);
-  console.log(`\n${rows.length} paired boards`);
-  console.log(`  outcome:  human won ${humanWins}, bot won ${botWins}`);
-  console.log(`  score, same objective as the human (bot plays its full budget): bot ahead on `
-    + `${rows.filter((r) => r.scoringDelta > 0).length}/${rows.length} boards, `
-    + `mean ${(rows.reduce((s2, r) => s2 + r.scoringPct, 0) / (rows.length || 1)).toFixed(1)}%`);
-  console.log(`  score, as shipped (bot stops at the target): bot ahead on ${botAhead}/${rows.length}, `
-    + `mean ${meanPct.toFixed(1)}% -- this arm compares different objectives and is kept only to show that`);
+  const summary = summarizeRows(rows);
+  console.log(`\n${rows.length} paired sessions`);
+  console.log(`  outcome: human won ${summary.humanWins}, bot won ${summary.botWins}`);
+  console.log(`  speed, ${summary.mutualWins} mutual wins: human faster ${summary.humanFaster}, `
+    + `bot faster ${summary.botFaster}, tied ${summary.tiedMoves}`);
+  console.log(`  crossing score, mutual wins: bot higher on ${summary.botHigherCrossingScore}/`
+    + `${summary.mutualWins}, mean ${summary.meanCrossingScorePct.toFixed(1)}% -- final-move overshoot, not speed`);
+  const ordinaryRows = rows.filter((r) => r.corpus === 'ordinary');
+  const ordinary = summarizeRows(ordinaryRows);
+  console.log(`  ordinary shipped-level captures: ${ordinary.humanWins}/${ordinaryRows.length} human wins; `
+    + `among ${ordinary.mutualWins} mutual wins, human faster ${ordinary.humanFaster}, `
+    + `bot faster ${ordinary.botFaster}, tied ${ordinary.tiedMoves}`);
+  console.log('  uncapped bot: continues alone to the move budget; no recorded human comparison');
   if (unresolved.length) {
     console.log(`\n${unresolved.length} recording(s) could not be resolved to a board:`);
     for (const u of unresolved) {
@@ -201,4 +230,4 @@ function main() {
 
 if (require.main === module) process.exit(main());
 
-module.exports = { collect, playBot, resolveRecordedBoard };
+module.exports = { collect, playBot, resolveRecordedBoard, summarizeRows };
