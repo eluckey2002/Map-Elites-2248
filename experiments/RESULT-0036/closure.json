@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "9d2dd1c68aa1db9e7494e80705f836058be7089042fb92d42b3f8688023a553e"
+  },
+  "run_id": "RESULT-0036-confirmation-33200000-33200007",
+  "final_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+  "closure_status": "UNVERIFIED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "Per-game timing, greed arithmetic, unknown propagation, and the real trace seam passed their frozen controls."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "The exact child returned the hand-enumerated maximum and failed closed to UNKNOWN on timeout."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "The percentile selector and frozen semantic-bin boundaries passed their fixtures."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "Proxy and exact measurement modes preserved score, win, move count, and terminal reason on the exposed control game."
+    },
+    {
+      "id": "C5",
+      "status": "FAIL",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "The registered recomputation reran wall-clock-limited enumeration; timeout jitter changed exact completeness from 70 to 68 games, so its decision bytes did not match the retained corpus."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "The 417-test solver suite retained only the same four documented deliberate failures and one skip."
+    },
+    {
+      "id": "P1",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "The retained corpus assigned INCONCLUSIVE completeness, but executable closure did not reproduce its exact decision."
+    },
+    {
+      "id": "P2",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "Both executions showed a monotonic greed response over a range above 0.30, but the run is not entitled to a domain inference."
+    },
+    {
+      "id": "P3",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "Both executions showed strong policy-level win/greed correlation, but the run is not entitled to a domain inference."
+    },
+    {
+      "id": "P4",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "Score/greed correlation stayed below the support boundary in both executions, but changed with the timeout set and is not closed evidence."
+    },
+    {
+      "id": "P5",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "Both executions reported 100% same-or-edge-adjacent stability on exact-complete games, but the run is not entitled to a domain inference."
+    },
+    {
+      "id": "P6",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "Both executions occupied all greed bins but only early and steady timing bins; closure failure leaves this partial diagnostic unverified."
+    },
+    {
+      "id": "P7",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "7f24cd320b5aaeb679d57136ff101efdd4144ed0859c5fead0fa213993365e1b",
+      "reason": "No primary domain outcome is entitled because the executable closure did not reproduce the retained decision bytes."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "bcdff13d315307d03fdf123fedf2272764229d4f70de4c5535646ced5982bf7e"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "0b8fdbb0f85ea6ac5fdd1974a2e73404816a9b0881deb5efd9f7740622eabd82"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "13bf5f79dcf632eaba6617ad6dc58abdb82e5637c92d5143c894ed5f7f99f9f0"
+    }
+  ],
+  "primary_outcome": null,
+  "deviations": [
+    "The registered recomputation command repeated the timeout-sensitive matrix instead of reducing the retained corpus. Its 68 exact-complete games did not byte-match the confirmation artifact's 70."
+  ],
+  "attempts": [
+    {
+      "id": "confirmation",
+      "exit_code": 0,
+      "artifact_ids": [
+        "corpus"
+      ]
+    },
+    {
+      "id": "deterministic-recomputation",
+      "exit_code": 0,
+      "artifact_ids": [
+        "primary-recomputation",
+        "report"
+      ]
+    }
+  ]
+}

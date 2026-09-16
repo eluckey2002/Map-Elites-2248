@@ -49,6 +49,8 @@ file and the repository before declaring a range fresh.
 | 32,700,000 | forced-prefix × bounded-diversity runtime and range calibration; excluded from confirmation | 2026-09-16 | `solver/forced-diversity-descriptors.js` development calibration |
 | 32,800,000–32,800,007 | RESULT-0034 forced-prefix × bounded-diversity confirmation across four static/no-blocker board profiles | 2026-09-16 | `experiments/RESULT-0034/protocol.md` |
 | 33,000,000–33,000,031 | RESULT-0035 merge-depth × spatial-spread MAP-corpus confirmation across four representative board profiles | 2026-09-16 | `experiments/RESULT-0035/protocol.md` |
+| 33,100,000–33,100,063 | exploratory half-score-move × greed-ratio scripted-percentile screen across Levels 10, 31, 53, and 54; not confirmation evidence | 2026-09-16 | `solver/greed-descriptor-screen.js` |
+| 33,200,000–33,200,007 | RESULT-0036 exact-denominator half-score-move × greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0036/protocol.md` |
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
 | 1, 2, 10, 777 | owner play recordings on levels 51–54 (ten recordings in `recordings/`; seed 777 twice on level 52) | 2026-08 | `recordings/*.json` |
 | 9,100,000–9,100,001 and 9,200,004–9,200,005 | seed-variance bounded test, real control through the production `playMeasured` seam | 2026-09-01 | `solver/tests/seedVariance.test.js`, `experiments/RESULT-0021/protocol.md` |

@@ -36,6 +36,75 @@ function strandedCellPressure(state) {
   return strandedCells / playableCells;
 }
 
+function halfScoreMove(trace) {
+  if (!trace.length) return null;
+  const finalScore = trace.reduce((sum, move) => sum + move.scoreGain, 0);
+  if (finalScore <= 0) return null;
+  const threshold = finalScore / 2;
+  let cumulative = 0;
+  for (const move of trace) {
+    cumulative += move.scoreGain;
+    if (cumulative >= threshold) return move.moveNumber / trace.length;
+  }
+  throw new Error('half-score threshold was not reached by the final move');
+}
+
+function greedRatio(trace) {
+  if (trace.some(({ greedDenominatorPoints }) => greedDenominatorPoints === null)) return null;
+  const measured = trace.filter(({ greedDenominatorPoints }) => greedDenominatorPoints > 0);
+  if (!measured.length) return null;
+  return measured.reduce((sum, move) => (
+    sum + move.scoreGain / move.greedDenominatorPoints
+  ), 0) / measured.length;
+}
+
+const PER_GAME_DESCRIPTORS = Object.freeze({ halfScoreMove, greedRatio });
+
+function captureGameMove({ moveNumber, scoreGain, strongestGreedyPoints }) {
+  if (!Number.isInteger(moveNumber) || moveNumber < 1) throw new Error('moveNumber must be positive');
+  if (!Number.isFinite(scoreGain) || scoreGain < 0) throw new Error('scoreGain must be non-negative');
+  if (strongestGreedyPoints !== null
+      && (!Number.isFinite(strongestGreedyPoints) || strongestGreedyPoints < 0)) {
+    throw new Error('strongestGreedyPoints must be non-negative');
+  }
+  return {
+    moveNumber,
+    scoreGain,
+    greedDenominatorPoints: strongestGreedyPoints === null
+      ? null
+      : Math.max(scoreGain, strongestGreedyPoints),
+  };
+}
+
+function summarizeGameTrace(trace, descriptors = PER_GAME_DESCRIPTORS) {
+  return Object.fromEntries(Object.entries(descriptors).map(([name, measure]) => [
+    name,
+    measure(trace),
+  ]));
+}
+
+function createPerGameTotals(descriptors = PER_GAME_DESCRIPTORS) {
+  return Object.fromEntries(Object.keys(descriptors).map((name) => [name, { count: 0, sum: 0 }]));
+}
+
+function addPerGameDescriptors(totals, values) {
+  for (const [name, value] of Object.entries(values)) {
+    if (value === null) continue;
+    if (!Number.isFinite(value)) throw new Error(`${name} must be finite or null`);
+    if (!totals[name]) totals[name] = { count: 0, sum: 0 };
+    totals[name].count += 1;
+    totals[name].sum += value;
+  }
+  return totals;
+}
+
+function summarizePerGameTotals(totals) {
+  return Object.fromEntries(Object.entries(totals).map(([name, value]) => [
+    name,
+    value.count ? value.sum / value.count : null,
+  ]));
+}
+
 const POST_MOVE_DESCRIPTORS = Object.freeze({ strandedCellPressure });
 
 function capturePostMove(state, descriptors = POST_MOVE_DESCRIPTORS) {
@@ -78,12 +147,20 @@ function summarizePostMoveTrace(trace) {
 }
 
 module.exports = {
+  PER_GAME_DESCRIPTORS,
   POST_MOVE_DESCRIPTORS,
+  addPerGameDescriptors,
   addPostMoveTrace,
   boardFootprint,
+  captureGameMove,
   capturePostMove,
+  createPerGameTotals,
   createPostMoveTotals,
+  greedRatio,
+  halfScoreMove,
   strandedCellPressure,
+  summarizeGameTrace,
+  summarizePerGameTotals,
   summarizePostMoveTotals,
   summarizePostMoveTrace,
 };
