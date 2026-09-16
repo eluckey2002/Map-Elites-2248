@@ -69,6 +69,14 @@ work-limit count, and its source closure omits executed dependencies. Greed
 ratio is not an adopted axis. `BL-0015` owns a fresh registered successor;
 half-score timing remains a separate later experiment.
 
+Also as of 2026-09-16, `CORRECTION-0008` narrows `FACT-0006`. A survivor
+outside the ordinary `tileScale × 2^n` spawn lattice has no naturally spawned
+partner, but it is not permanently unmatchable: deliberately constructed
+equal and double off-lattice values can form a legal chain and collapse several
+occupied cells into one reusable survivor. That survivor remains off-lattice.
+Off-lattice occupancy is therefore a neutral board-state observation; its
+recovery cost and strategic pressure remain unresolved.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -264,7 +272,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### FACT-0006 — The mergeable-sum lattice and what a lockout is
 
 - **type:** fact
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped game rules, all levels
 - **statement:** A merge leaves exactly one tile behind, valued at the chain's sum. Spawns are the level's tile scale times 2, 4, or 8, and every chain extension is equal-or-double, so a sum lands back in the matchable lattice only when it equals the tile scale times a power of two. Any other sum is a tile nothing can ever match again. One such tile can accrue per move and they never leave, so they accumulate until no legal chain remains. That accumulation *is* the "no valid moves" lockout; it is a property of the scoring rule, not a coding defect.
 - **evidence:** `solver/engine.js`, `isMergeableSum` and its use in `buildGreedyChain`; the level-26 instrumentation recorded at that symbol (5x8 grid, 32 moves, 31 of 40 cells holding unmatchable sums such as 78, 46, 34 at termination); lockout rates per level reported by `node solver/verify-loop.js`.
@@ -273,7 +281,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Inspect `isMergeableSum` and `buildGreedyChain` in `solver/engine.js`; run `node solver/verify-loop.js` and expect the lockout-rate check to report a nonzero but bounded rate on the late levels.
 - **updated:** 2026-08-12
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0008]
 - **notes:** This is the mechanism behind the original Level 26 failure and behind the whole score-pace ceiling. It also bounds any future change to the spawn pool: more distinct spawn values means more sums fall off the lattice, so widening the pool trades matchability for value. See `BL-0003` and `RESULT-0006`.
 
 ### FACT-0007 — Uniform integer tile scaling is an exact isomorphism
@@ -1087,6 +1095,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0037, RESULT-0038]
 - **superseded_by:** []
 - **notes:** Frozen experiment files remain untouched. [BL-0015](docs/backlog/BL-0015-harden-greed-validation-receipts.md) defines the successor work: fresh seeds, a seed-bound and work-count-bound verifier, complete executable source closure, reducer equivalence over `UNKNOWN` cases, and a non-vacuous stability statistic. The separate timing-axis manipulation remains later work and must not be folded into this repair.
+
+### CORRECTION-0008 — Off-lattice tiles are recoverable, not permanently dead
+
+- **type:** correction
+- **status:** accepted
+- **scope:** `FACT-0006`'s claim that a survivor outside `tileScale × 2^n` can never be matched again, and the derived reading of `strandedCellPressure` as irreversible board damage; the spawn lattice, chain-sum rule, and observed historical Level 26 terminal board remain unchanged
+- **statement:** Narrows `FACT-0006`. A merge survivor outside the ordinary `tileScale × 2^n` lattice has no matching partner in the normal spawn family, but it is not permanently unmatchable. Chain legality depends on equality and doubling, not membership in the spawn lattice. A player can deliberately construct compatible off-lattice values: at scale 1, adjacent values `6 → 6 → 12` form a legal three-tile chain whose sum is `24`, collapsing three occupied cells into one reusable survivor. The survivor remains off-lattice because the merge preserves the value family's odd factor. Off-lattice values can therefore be recombined to reclaim cells, exploited for immediate score, or left as costly occupants depending on geometry, remaining moves, and the availability of a constructible partner. Their accumulation can contribute to a no-legal-chain lockout, but it is not itself the definition or sufficient cause of lockout. The current `strandedCellPressure` function exactly measures off-lattice occupancy; permanent damage, recovery cost, and strategic pressure do not follow from that count alone.
+- **evidence:** `solver/engine.js`, `canExtendChain`, `isValidChain`, and `executeChain`, which accept the constructed `6, 6, 12` chain and leave survivor value `24`; durable characterization test `solver/tests/engine.test.js`, `off-lattice tiles can be deliberately recombined to reclaim occupied cells`; `solver/behavior-descriptors.js`, `strandedCellPressure`, which counts every non-stone off-lattice value without testing whether a compatible partner can be constructed; the original Level 26 terminal-board observation retained in `FACT-0006`.
+- **proof_class:** `direct_source` for chain legality, the constructed recovery example, and what the occupancy function counts; `unresolved` for population frequency, recovery cost, player pressure, level-design value, and any general causal relationship between off-lattice occupancy and lockout
+- **as_of:** 2026-09-16
+- **reverify:** Run `node --test solver/tests/engine.test.js`; expect the named off-lattice recombination test to pass with a 24-valued survivor. Inspect `strandedCellPressure` and confirm it classifies by `isMergeableSum` only, without a recoverability search.
+- **updated:** 2026-09-16
+- **supersedes:** [FACT-0006]
+- **superseded_by:** []
+- **notes:** The source comment above `isMergeableSum` still carries the older permanent-dead interpretation. `solver/engine.js` is identity-bound into candidate receipts, so this documentation correction records the rule without changing that hashed source. Any future source edit must follow the receipt re-derivation rules. The possible use of starting off-lattice values as soft blockers and landmark-route multiplicity as a level-design measure are proposals in `docs/MEASUREMENT-AND-ANALYSIS-STANDARDS.md`, not shipped rules or accepted empirical results.
 
 ## Assembly cut log
 
