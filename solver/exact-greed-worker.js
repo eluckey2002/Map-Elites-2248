@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
 const { chainMultiplier, chainValue } = require('./engine');
-const { enumerateLegalChains } = require('./exact-score');
+const {
+  ExactChainEnumerationLimitError,
+  enumerateLegalChainsWithStats,
+} = require('./exact-score');
 
 function readStdin() {
   return new Promise((resolve, reject) => {
@@ -13,18 +16,34 @@ function readStdin() {
   });
 }
 
-function exactGreedyPoints(state) {
-  const actions = enumerateLegalChains(state);
+function exactGreedyPoints(state, { maxPathStates = Infinity } = {}) {
+  let enumeration;
+  try {
+    enumeration = enumerateLegalChainsWithStats(state, { maxPathStates });
+  } catch (error) {
+    if (error instanceof ExactChainEnumerationLimitError) {
+      return {
+        complete: false,
+        reason: 'work-limit',
+        visitedPathStates: error.visitedPathStates,
+      };
+    }
+    throw error;
+  }
+  const { actions, visitedPathStates } = enumeration;
   let points = 0;
   for (const chain of actions) {
     points = Math.max(points, Math.floor(chainValue(chain) * chainMultiplier(chain.length)));
   }
-  return { points, legalChains: actions.length };
+  return { complete: true, points, legalChains: actions.length, visitedPathStates };
 }
 
 async function main() {
-  const state = JSON.parse(await readStdin());
-  process.stdout.write(`${JSON.stringify(exactGreedyPoints(state))}\n`);
+  const input = JSON.parse(await readStdin());
+  const state = input.state || input;
+  process.stdout.write(`${JSON.stringify(exactGreedyPoints(state, {
+    maxPathStates: input.maxPathStates,
+  }))}\n`);
 }
 
 if (require.main === module) {

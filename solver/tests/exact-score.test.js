@@ -67,6 +67,20 @@ test('position-aware enumerator keeps visited cells distinct above the 32-bit bo
   assert.deepEqual(actions[0].map((entry) => [entry.x, entry.y]), [[0, 7], [1, 7], [2, 7], [3, 7]]);
 });
 
+test('position-aware enumerator stops at a deterministic path-state cap', () => {
+  const state = stateFromRows([[2, 2, 2, 2]]);
+
+  assert.throws(
+    () => enumerateLegalChains(state, { maxPathStates: 1 }),
+    (error) => {
+      assert.equal(error.code, 'EXACT_CHAIN_ENUMERATION_LIMIT');
+      assert.equal(error.maxPathStates, 1);
+      assert.equal(error.visitedPathStates, 1);
+      return true;
+    },
+  );
+});
+
 test('value-relaxed action enumerator includes the hand-enumerated maximum', () => {
   const actions = enumerateRelaxedActions(new Map([[2, 2], [4, 2]]), 4);
   const best = Math.max(...actions.map((action) => action.points));
