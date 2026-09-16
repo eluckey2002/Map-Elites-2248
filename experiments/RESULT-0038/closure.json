@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "f778503c60c6681e490df205735309e908fd83c56fee1b4407ccd9c5fa250b97"
+  },
+  "run_id": "RESULT-0038-confirmation-33500000-33500007",
+  "final_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "Descriptor arithmetic and unknown propagation passed the frozen production-seam controls."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The exact fixture returned 24; repeated work-limit observations were byte-identical; restoration passed."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The fixed-percentile selector passed every planted manipulation control."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "Proxy and deterministic measurement modes preserved score, win, moves, and terminal reason."
+    },
+    {
+      "id": "C5",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "Known-kill mutations, externally anchored source closure, production artifact verification, independent reduction, and executable closeout all passed."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The solver suite retained exactly the same four documented deliberate failures and one skip."
+    },
+    {
+      "id": "P1",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The registered rule assigned INCONCLUSIVE: 75/128 games were exact, but percentile 0.75 on Level 10 had zero exact-complete games."
+    },
+    {
+      "id": "P2",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The registered rule assigned SUPPORTED from strictly rising exact greed means spanning 0.564."
+    },
+    {
+      "id": "P3",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The registered rule assigned SUPPORTED from policy win/greed Pearson correlation 0.953."
+    },
+    {
+      "id": "P4",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The registered rule assigned SUPPORTED from per-game score/greed correlation 0.617."
+    },
+    {
+      "id": "P5",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The registered rule assigned SUPPORTED from minimum modal-or-adjacent greed-bin stability 1.00."
+    },
+    {
+      "id": "P6",
+      "status": "PASS",
+      "evidence_subject_identity": "2f17ec3c4db62546a7d1f0d328e3b69d30b411186eadba1ec4bb742fe3ba34b2",
+      "reason": "The primary domain outcome was assigned INCONCLUSIVE exactly as preregistered because P1 was inconclusive and no prediction was falsified."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "b4f3024f4b1cc3939d4db48e48cbc8e843b50a7bab2795ee5d2781facd0a2b1b"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "8f77eb9895cd72a14cbab92d716a02f09a73df6ec0c2e85d632a0077f0a245a4"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "9e056220aa523b4da08a3a4a7e12425448fcbe311c70089ece4dae788aaa643b"
+    },
+    {
+      "id": "qualification",
+      "path": "qualification.json",
+      "sha256": "c184cebabe06aa2120a6a4bfc33a19127cf924193a64c23b81feceb94ab4defc"
+    }
+  ],
+  "primary_outcome": "INCONCLUSIVE",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "qualification-attempt-1",
+      "exit_code": 1,
+      "artifact_ids": [
+        "qualification"
+      ]
+    },
+    {
+      "id": "qualification-attempt-2",
+      "exit_code": 0,
+      "artifact_ids": [
+        "qualification"
+      ]
+    },
+    {
+      "id": "confirmation",
+      "exit_code": 0,
+      "artifact_ids": [
+        "corpus"
+      ]
+    },
+    {
+      "id": "deterministic-recomputation",
+      "exit_code": 0,
+      "artifact_ids": [
+        "primary-recomputation",
+        "report"
+      ]
+    }
+  ]
+}

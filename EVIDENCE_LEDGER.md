@@ -791,6 +791,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** A successor requires fresh seeds and the same corpus-reducing analysis, but its frozen recomputation argv must emit the reduction on stdout. Do not rerun RESULT-0037 or promote its partial diagnostics. Greed ratio remains the active candidate; a second timing axis still needs its own independent manipulation.
 
+### RESULT-0038 — Greed behavior clears four checks but exact coverage misses one hard cell
+
+- **type:** result
+- **status:** accepted
+- **scope:** four fixed-percentile scripted policies on shipped Levels 10, 31, 53, and 54; seeds 33,500,000–33,500,007; exact legal-chain greed denominators capped at 500,000 deterministic path states per move; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, rule, timing-axis, or outside-panel claim
+- **statement:** The registered confirmation closed validly with primary outcome **`INCONCLUSIVE`**. Greed ratio cleared every behavior test: exact policy means rose **0.386, 0.516, 0.725, 0.950** across percentiles 0.25–1.00 (range **0.564**); policy win/greed Pearson correlation was **0.953**; per-game score/greed correlation was **0.617**, below the 0.70 redundancy boundary; and every policy had **100%** modal-or-adjacent greed-bin stability. Exact coverage was 75/128 (**58.59%**) with at least 50% in every policy, but percentile 0.75 × Level 10 had zero exact-complete games, so the registered every-cell support rule left P1 `INCONCLUSIVE`. P2–P5 were `SUPPORTED`; none were falsified. Half-score move again occupied only early and steady and remains unvalidated. Greed ratio is a strong candidate, not an adopted MAP-Elites axis.
+- **evidence:** immutable protocol `experiments/RESULT-0038/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0038/protocol.md`, registration commit `6cecb3e`; qualified harness [qualification receipt](experiments/RESULT-0038/qualification.json); retained corpus `experiments/RESULT-0038/corpus.json`, artifact identity `07531402dbed5802056692b587a121884ae2c23c1caa93b18ea0a17f9f51732f`; exact outcomes `experiments/RESULT-0038/report.md`; executable contract, `CLOSED` [closure receipt](experiments/RESULT-0038/closure.json), and [independent corpus reduction](experiments/RESULT-0038/primary-recomputation.json).
+- **proof_class:** `direct_source` for frozen identities, exact/work-limit standings, counts, artifact verification, and executable closure; `heuristic_observation` for controlled response, correlations, and stability over the registered panel. Work-limited games remain `UNKNOWN`; the run makes no exact claim for their greed values.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0038/verify.js experiments/RESULT-0038/corpus.json`; expect PASS, artifact `07531402…`, 128 rows, P1 `INCONCLUSIVE`, P2–P5 `SUPPORTED`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 f778503c60c6681e490df205735309e908fd83c56fee1b4407ccd9c5fa250b97`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
