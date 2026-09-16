@@ -8,7 +8,7 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 The latest trustworthy sequence is now visible in the ledger:
 
-- [RESULT-0036](EVIDENCE_LEDGER.md#result-0036--exact-greed-confirmation-is-not-entitled-because-timeout-sensitive-closure-did-not-reproduce) implemented per-game half-score move and greed ratio, screened four fixed-percentile players, and ran the registered exact-denominator confirmation. The retained run showed a monotonic 0.582 greed range, 0.912 policy win/greed correlation, 0.638 per-game score/greed correlation, and 100% same/adjacent stability among exact-complete games; timing occupied only early and steady. The result is nevertheless `UNVERIFIED`: the registered closure reran wall-clock-limited enumeration, and timeout jitter changed exact completeness from 70/128 to 68/128. Do not adopt the pair or quote a primary outcome. A successor needs fresh seeds, a corpus-reducing recomputation, and a stronger timing manipulation or replacement.
+- [CORRECTION-0007](EVIDENCE_LEDGER.md#correction-0007--result-0037-and-result-0038-overstate-stability-and-receipt-closure) supersedes the evidence standing of RESULT-0037 and RESULT-0038 without changing their retained rows. The deterministic 500,000-path-state cap worked, and RESULT-0038 still records 128 fresh games, 75 exact-complete games, policy means rising 0.386→0.950, win/greed correlation 0.953, score/greed correlation 0.617, and an empty percentile 0.75 × Level 10 exact cell. Its primary result remains `INCONCLUSIVE`. However, “same or adjacent” is automatically 100% for a middle modal bin, the frozen verifier does not bind the registered seed panel or exact work-limit count, and the claimed source closure omits executed dependencies. Do not cite P5 as stability evidence or treat the closed receipt as complete. Greed ratio remains an unadopted candidate pending [BL-0015](docs/backlog/BL-0015-harden-greed-validation-receipts.md), a fresh registered successor with a non-vacuous stability measure and hardened receipts. Half-score move remains diagnostic and still needs a separate independent timing manipulation.
 
 - [RESULT-0035](EVIDENCE_LEDGER.md#result-0035--four-cell-occupancy-succeeds-but-witness-dependent-cell-stability-does-not) built the preregistered merge-depth × spatial-spread corpus on 128 fresh puzzles. Deep witnesses covered 128/128 and all four cells retained four representatives, but only 63/115 paired puzzles (54.8%) kept the same cell within the registered spread tolerance. The disposition is `MAP_CORPUS_INCONCLUSIVE`; keep the 16 representatives diagnostic and repair witness uncertainty under a new protocol rather than moving the 0.82 boundary or adding seeds here.
 
@@ -128,4 +128,4 @@ node solver/human-replay.js --from .orch/runs/2026-08-29-human-replay-explorator
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
-Last reviewed: 2026-09-02
+Last reviewed: 2026-09-16

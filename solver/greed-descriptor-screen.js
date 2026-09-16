@@ -67,6 +67,7 @@ function descriptorCell({ halfScoreMove, greedRatio }) {
 
 function playPercentile(levelData, seed, percentile, {
   denominator = 'strong-greedy',
+  exactMaxPathStates = 100000,
   exactTimeoutMs = 2000,
 } = {}) {
   const rng = makeRng(seed);
@@ -84,7 +85,10 @@ function playPercentile(levelData, seed, percentile, {
     }
     const scoreBefore = state.score;
     const denominatorObservation = denominator === 'exact'
-      ? exactGreedDenominator(state, { timeoutMs: exactTimeoutMs })
+      ? exactGreedDenominator(state, {
+        maxPathStates: exactMaxPathStates,
+        timeoutMs: exactTimeoutMs,
+      })
       : {
         standing: 'bounded_strong_greedy_proxy',
         points: candidates[0].points,

@@ -5,8 +5,10 @@ const {
   adjacentRate,
   choosePercentileCandidate,
   descriptorCell,
+  playPercentile,
   summarize,
 } = require('../greed-descriptor-screen');
+const { LEVELS } = require('../../src/game');
 
 test('percentile player chooses the chain nearest its fixed share of the best points', () => {
   const candidates = [{ points: 100 }, { points: 76 }, { points: 52 }, { points: 24 }];
@@ -79,4 +81,22 @@ test('screen fails closed when score correlation is undefined', () => {
   assert.equal(result.diagnostics.scoreGreedCorrelation, null);
   assert.equal(result.screenChecks.lowFitnessCorrelation, false);
   assert.equal(result.nextStep, 'STOP_AFTER_SCREEN');
+});
+
+test('exact play propagates the deterministic path-state cap to every denominator observation', () => {
+  const level = LEVELS.find(({ level }) => level === 54);
+  const game = playPercentile(level, 33300000, 0.75, {
+    denominator: 'exact',
+    exactMaxPathStates: 1,
+    exactTimeoutMs: 1000,
+  });
+
+  assert.ok(game.denominatorObservations.length > 0);
+  assert.ok(game.denominatorObservations.every((observation) => (
+    observation.standing === 'UNKNOWN'
+      && observation.reason === 'work-limit'
+      && observation.maxPathStates === 1
+  )));
+  assert.equal(game.exactComplete, false);
+  assert.equal(game.descriptors.greedRatio, null);
 });

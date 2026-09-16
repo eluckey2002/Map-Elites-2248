@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "b8c6adcb8d9e3f823a6a2bc72b85c9613a556e24b4f4fdc5d73b68a2bc2ae65f"
+  },
+  "run_id": "RESULT-0037-confirmation-33400000-33400007",
+  "final_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+  "closure_status": "UNVERIFIED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "Per-game descriptor arithmetic and unknown propagation passed the frozen production-seam controls."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The exact fixture returned 24, repeated work-limit observations were byte-identical, and the clean fixture passed after the mutation control."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The fixed-percentile selector passed all planted candidate controls."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "Proxy and deterministic exact measurement preserved score, win, moves, and terminal reason on the qualification game."
+    },
+    {
+      "id": "C5",
+      "status": "FAIL",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The independent manual reduction matched, but the frozen recomputation argv writes to a file while the required verifier compares stdout, so executable closure cannot pass."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The solver suite retained exactly the same four documented deliberate failures and one skip."
+    },
+    {
+      "id": "P1",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The retained corpus met the registered coverage threshold, but failed executable closure prevents a domain inference."
+    },
+    {
+      "id": "P2",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The retained corpus showed ordered greed means spanning 0.589, but failed executable closure prevents a domain inference."
+    },
+    {
+      "id": "P3",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The retained policy win/greed correlation was 0.955, but failed executable closure prevents a domain inference."
+    },
+    {
+      "id": "P4",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The retained per-game score/greed correlation was 0.611, but failed executable closure prevents a domain inference."
+    },
+    {
+      "id": "P5",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "The retained minimum adjacent greed-bin stability was 1.00, but failed executable closure prevents a domain inference."
+    },
+    {
+      "id": "P6",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "8fdee091fd35beb0d4b5cfdc868c909c062f8aa73715e428de69d490b5b7a37d",
+      "reason": "No primary domain outcome is entitled because C5 failed executable closure."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "8c637780b79edbe7f4fe108893f9067fc056dfc5713c534575dd89aec8019e86"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "d1a6498970b2978fc66dfb4bd412d2f8dfb1534d225c2d9287b0359f22461686"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "41e4fbda2c376548c6a068dd8796883604ec181d649efef71c96815d64939685"
+    },
+    {
+      "id": "qualification",
+      "path": "qualification.json",
+      "sha256": "a581e9307edd1845cd2383d94f00f822d8098d3330fc25b61ee947859856c78b"
+    }
+  ],
+  "primary_outcome": null,
+  "deviations": [
+    "The frozen recomputation command writes the reduction to primary-recomputation.json and emits no stdout, while the required closure verifier byte-compares stdout with that artifact. The immutable contract therefore cannot execute its own closure proof."
+  ],
+  "attempts": [
+    {
+      "id": "qualification-attempt-1",
+      "exit_code": 1,
+      "artifact_ids": [
+        "qualification"
+      ]
+    },
+    {
+      "id": "qualification-attempt-2",
+      "exit_code": 0,
+      "artifact_ids": [
+        "qualification"
+      ]
+    },
+    {
+      "id": "confirmation",
+      "exit_code": 0,
+      "artifact_ids": [
+        "corpus"
+      ]
+    },
+    {
+      "id": "manual-independent-reduction",
+      "exit_code": 0,
+      "artifact_ids": [
+        "primary-recomputation",
+        "report"
+      ]
+    }
+  ]
+}

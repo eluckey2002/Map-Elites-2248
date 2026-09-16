@@ -22,10 +22,23 @@ function canExtend(chain, tile) {
   return tile.value === previous.value || tile.value === previous.value * 2;
 }
 
+class ExactChainEnumerationLimitError extends Error {
+  constructor(maxPathStates, visitedPathStates) {
+    super(`Exact chain enumeration exceeded path-state cap ${maxPathStates}`);
+    this.name = 'ExactChainEnumerationLimitError';
+    this.code = 'EXACT_CHAIN_ENUMERATION_LIMIT';
+    this.maxPathStates = maxPathStates;
+    this.visitedPathStates = visitedPathStates;
+  }
+}
+
 // Returns every distinct board action, not just every score. Two paths that
 // leave different tiles behind must stay separate even if their immediate
 // score matches, because their future boards can differ.
-function enumerateLegalChains(state) {
+function enumerateLegalChainsWithStats(state, { maxPathStates = Infinity } = {}) {
+  if (maxPathStates !== Infinity && (!Number.isInteger(maxPathStates) || maxPathStates < 1)) {
+    throw new Error('maxPathStates must be a positive integer or Infinity');
+  }
   const actions = new Map();
   const pathStates = new Set();
 
@@ -50,6 +63,15 @@ function enumerateLegalChains(state) {
     if (!actions.has(key)) actions.set(key, chain.slice());
   }
 
+  function visitPathState(stateKey) {
+    if (pathStates.has(stateKey)) return false;
+    if (pathStates.size >= maxPathStates) {
+      throw new ExactChainEnumerationLimitError(maxPathStates, pathStates.size);
+    }
+    pathStates.add(stateKey);
+    return true;
+  }
+
   function walk(chain, visitedMask, sum) {
     record(chain);
     const previous = chain[chain.length - 1];
@@ -70,8 +92,7 @@ function enumerateLegalChains(state) {
         // Once the final tile and visited set match, the remaining legal
         // extensions and every later board transition match as well. Keeping
         // only the first legal ordering avoids re-walking path permutations.
-        if (!pathStates.has(stateKey)) {
-          pathStates.add(stateKey);
+        if (visitPathState(stateKey)) {
           walk(chain, nextMask, sum + next.value);
         }
         chain.pop();
@@ -95,14 +116,20 @@ function enumerateLegalChains(state) {
           const nextIndex = indexOf(next);
           const mask = maskBit(startIndex) | maskBit(nextIndex);
           const stateKey = `${nextIndex}:${mask}`;
-          if (pathStates.has(stateKey)) continue;
-          pathStates.add(stateKey);
+          if (!visitPathState(stateKey)) continue;
           walk([tile, next], mask, tile.value + next.value);
         }
       }
     }
   }
-  return [...actions.values()];
+  return {
+    actions: [...actions.values()],
+    visitedPathStates: pathStates.size,
+  };
+}
+
+function enumerateLegalChains(state, options) {
+  return enumerateLegalChainsWithStats(state, options).actions;
 }
 
 function spawnFrozenValues(state, values, cursor) {
@@ -426,7 +453,9 @@ function replayFrozenWitness({ level, seed, witness }) {
 }
 
 module.exports = {
+  ExactChainEnumerationLimitError,
   enumerateLegalChains,
+  enumerateLegalChainsWithStats,
   applyFrozenChain,
   solveExactPosition,
   enumerateRelaxedActions,
