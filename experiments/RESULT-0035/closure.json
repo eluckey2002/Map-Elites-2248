@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "b3e0389b74d48ab99be5770e7850f500e60e78e7019a55324d2e5dbb22c5c423"
+  },
+  "run_id": "RESULT-0035-confirmation-33000000-33000031",
+  "final_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "All four frozen axis-boundary fixtures reached their intended cells."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "Balanced and collapsed archive controls separated ready from falsified outcomes, and unstable candidates were refused."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "Inherited lineage, geometry, scale, bounded-miss, and illegal-witness controls passed."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "Registration, replay, artifact identity, source closure, decision recomputation, and executable closure verified."
+    },
+    {
+      "id": "C5",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "The 406-test solver suite retained only the same four deliberate failures and one skip."
+    },
+    {
+      "id": "P1",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "The registered rule assigned SUPPORTED from 128/128 deep witnesses across all profiles."
+    },
+    {
+      "id": "P2",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "The registered rule assigned SUPPORTED because every cell retained four stable representatives."
+    },
+    {
+      "id": "P3",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "The registered rule assigned INCONCLUSIVE from 63/115 stable paired rows, between its support and falsification bounds."
+    },
+    {
+      "id": "P4",
+      "status": "PASS",
+      "evidence_subject_identity": "db17076e31a5b54de3483c461986e6da4d15dc93aa9a091a6abb067c9fb1e5d6",
+      "reason": "The scoped disposition was assigned MAP_CORPUS_INCONCLUSIVE exactly as preregistered."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "84c1eb01d668c3104d6780eaaea58d3986296165a1f8c9bc968b2da0b597e2b1"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "e5147609cb7345579292db85c5c6c426efd45c224ae65c43c60458e4ee3b2642"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "8ec936000375e72dbe272b409d2db300c4b2f0ead291a990073ecdd0be21a716"
+    }
+  ],
+  "primary_outcome": "MAP_CORPUS_INCONCLUSIVE",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "confirmation",
+      "exit_code": 0,
+      "artifact_ids": [
+        "corpus"
+      ]
+    },
+    {
+      "id": "deterministic-recomputation",
+      "exit_code": 0,
+      "artifact_ids": [
+        "primary-recomputation",
+        "report"
+      ]
+    }
+  ]
+}

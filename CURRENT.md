@@ -8,6 +8,8 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 The latest trustworthy sequence is now visible in the ledger:
 
+- [RESULT-0035](EVIDENCE_LEDGER.md#result-0035--four-cell-occupancy-succeeds-but-witness-dependent-cell-stability-does-not) built the preregistered merge-depth × spatial-spread corpus on 128 fresh puzzles. Deep witnesses covered 128/128 and all four cells retained four representatives, but only 63/115 paired puzzles (54.8%) kept the same cell within the registered spread tolerance. The disposition is `MAP_CORPUS_INCONCLUSIVE`; keep the 16 representatives diagnostic and repair witness uncertainty under a new protocol rather than moving the 0.82 boundary or adding seeds here.
+
 - [RESULT-0034](EVIDENCE_LEDGER.md#result-0034--bounded-opening-diversity-collapses-on-representative-boards) completed the third recommended pair. Forced-prefix ratio showed range and both proxies were width-stable, but bounded opening diversity was 1 on 30/32 boards and 2 on only 2/32. Revise the success-set sampler before MAP use; do not add seeds to this panel.
 
 - [RESULT-0033](EVIDENCE_LEDGER.md#result-0033--merge-depth-and-spatial-spread-clear-the-candidate-measure-bars) validated merge depth × spatial spread on 32 fresh boards. Deep witnesses covered 32/32; both coordinates showed registered range; paired width stability was 89.3% for exact peak depth and 96.4% for spatial spread. This is the first recommended pair to become eligible for a separate registered MAP corpus, with both names kept witness-qualified.

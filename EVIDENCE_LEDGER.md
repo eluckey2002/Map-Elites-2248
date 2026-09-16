@@ -50,6 +50,14 @@ forced-prefix ratio spanned 0.1974. Opening diversity collapsed to one on
 30/32 boards and two on only 2/32, missing the frozen range bar. The pair is
 `REVISE_BEFORE_MAP_CORPUS`; a repair needs a different success-set sampler.
 
+Also as of 2026-09-16, `RESULT-0035` constructed the registered merge-depth ×
+spatial-spread archive on 128 fresh puzzle identities. Deep search covered all
+128, and all four fixed cells had at least ten stable eligible candidates, so
+coverage and occupancy were supported. Cross-width cell stability was only
+63/115 (54.8%), below the frozen 75% bar. The valid disposition is
+`MAP_CORPUS_INCONCLUSIVE`: the 16 retained representatives remain diagnostic,
+not a canonical adopted corpus.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -737,6 +745,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The repair target is the success-set sampler, not the seed count. Ordered opening chains preserve survivor placement, so reversed chains remain distinct moves.
+
+### RESULT-0035 — Four-cell occupancy succeeds but witness-dependent cell stability does not
+
+- **type:** result
+- **status:** accepted
+- **scope:** shipped Levels 10, 31, 53, and 54; seeds 33,000,000–33,000,031; 128 fresh puzzle identities; paired bounded searches at widths 12 and 48 with 16 combined candidates per state and path width 2; fixed depth-1/depth-2-plus and compact/broad-at-0.82 cells; four retained representatives per cell; no evolutionary MAP-Elites, player, difficulty, fun, content, or rule claim
+- **statement:** The registered archive confirmation closed validly as **`MAP_CORPUS_INCONCLUSIVE`**. Deep search produced replayable target witnesses on 128/128 puzzles across all four profiles. Stable eligible counts were 12, 30, 10, and 11 across depth-1/compact, depth-1/broad, depth-2-plus/compact, and depth-2-plus/broad, so all four cells retained four representatives. But only 63/115 paired puzzles (**54.8%**) kept the same cell with spread difference at most 0.10, below the frozen 75% support bar and above the 50% falsification bar. The retained 16 are diagnostic and are not admitted as a canonical corpus.
+- **evidence:** immutable protocol `experiments/RESULT-0035/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0035/protocol.md`, registration commit `f68edd2`; canonical run artifact `experiments/RESULT-0035/corpus.json`, identity `52bf543e937358e4ba4f2f2fe2812df05bfae74b1b08b81ce226f3f452f4fef2`; complete outcomes `experiments/RESULT-0035/report.md`; executable closeout contract and receipt under `experiments/RESULT-0035/`; archive logic `solver/merge-spread-map.js`; verifier `experiments/RESULT-0035/verify.js`.
+- **proof_class:** `replayed_lower_bound` for each successful witness and its tracked lineage; `direct_source` for puzzle identities, deterministic cell assignments, retained identities, counts, and closure; `heuristic_observation` for panel coverage, occupancy, and cross-width stability. The cells describe registered bounded-search witnesses, not necessary puzzle properties; misses remain `UNKNOWN`.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0035/verify.js experiments/RESULT-0035/corpus.json`; expect `PASS`, artifact `52bf543e…`, 128 rows, P1/P2 `SUPPORTED`, P3 `INCONCLUSIVE`, and `MAP_CORPUS_INCONCLUSIVE`. Run `node --test solver/tests/mergeSpreadMap.test.js solver/tests/mergeSpreadDescriptors.test.js experiments/RESULT-0035/*.test.js` and `node tools/verify-experiments.js`; expect 12/12 focused tests and gate PASS. Run the close-experiment verifier against the RESULT-0035 closeout pair with expected contract SHA-256 `b3e0389b74d48ab99be5770e7850f500e60e78e7019a55324d2e5dbb22c5c423`; expect a closed receipt and recomputation PASS.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** RESULT-0033 validated separate depth and spread stability bars on 32 puzzles; RESULT-0035's stricter joint cell assignment exposed boundary sensitivity at corpus scale. Do not move the 0.82 cut or extend this seed range after seeing the outcome. A repair is a new registered uncertainty-aware subject and fresh panel.
 
 ## Decision registry
 
