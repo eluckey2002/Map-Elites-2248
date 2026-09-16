@@ -12,13 +12,18 @@ const path = require('node:path');
 const ROOT = path.join(__dirname, '..');
 const {
   makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles,
-  tickBlockers, checkBombs,
+  tickBlockers, checkBombs, findGreedyChains,
 } = require(`${ROOT}/solver/engine`);
-const { chooseMove } = require(`${ROOT}/solver/bot`);
+const { chooseMove, DEFAULT_PARAMS } = require(`${ROOT}/solver/bot`);
 const {
+  addPerGameDescriptors,
   addPostMoveTrace,
+  captureGameMove,
   capturePostMove,
+  createPerGameTotals,
   createPostMoveTotals,
+  summarizeGameTrace,
+  summarizePerGameTotals,
   summarizePostMoveTotals,
   summarizePostMoveTrace,
 } = require(`${ROOT}/solver/behavior-descriptors`);
@@ -46,13 +51,25 @@ function recordBehaviorMove(totals, {
 // does NOT stop at targetScore: the win condition censors score from above, so
 // a policy strong enough to clear the target early would be indistinguishable
 // from one that barely scrapes it. Strength needs an uncensored measure.
-function playToBudget(levelData, rng, params) {
+function strongestGreedyPoints(state) {
+  const best = findGreedyChains(state, {
+    limit: 1,
+    preferMergeableSum: false,
+    tieBreak: DEFAULT_PARAMS.tieBreak,
+    pathWidth: DEFAULT_PARAMS.pathWidth,
+  })[0];
+  return best ? best.points : 0;
+}
+
+function playToBudget(levelData, rng, params, { measureGameDescriptors = false } = {}) {
   const state = createLevelState(levelData, rng);
   let moveIndex = 0;
   let reachedTarget = null;
   const behaviorTotals = { chainCount: 0, chainTiles: 0, totalScore: 0, lateScore: 0 };
   const postMoveTrace = [];
+  const gameDescriptorTrace = [];
   for (let i = 0; i < levelData.moves + 5; i++) {
+    const greedyPoints = measureGameDescriptors ? strongestGreedyPoints(state) : 0;
     const chain = chooseMove(state, {
       params,
       lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + moveIndex),
@@ -67,6 +84,13 @@ function playToBudget(levelData, rng, params) {
       moveNumber: state.moves,
       moveBudget: state.maxMoves,
     });
+    if (measureGameDescriptors) {
+      gameDescriptorTrace.push(captureGameMove({
+        moveNumber: state.moves,
+        scoreGain: state.score - scoreBefore,
+        strongestGreedyPoints: greedyPoints,
+      }));
+    }
     applyGravity(state);
     spawnNewTiles(state, rng);
     tickBlockers(state);
@@ -83,24 +107,28 @@ function playToBudget(levelData, rng, params) {
     behavior: summarizeBehavior(behaviorTotals),
     postMoveTrace,
     postMoveDescriptors: summarizePostMoveTrace(postMoveTrace),
+    gameDescriptorTrace,
+    gameDescriptors: summarizeGameTrace(gameDescriptorTrace),
   };
 }
 
 // One policy against a fixed (level, seed) grid, flattened in a stable order so
 // cell i of one run is the same game as cell i of any other run.
-function evaluatePolicy(params, levels, seeds) {
+function evaluatePolicy(params, levels, seeds, options = {}) {
   const scores = [];
   let wins = 0;
   let movesToTargetSum = 0;
   const behaviorTotals = { chainCount: 0, chainTiles: 0, totalScore: 0, lateScore: 0 };
   const postMoveTotals = createPostMoveTotals();
+  const perGameTotals = createPerGameTotals();
   for (const levelData of levels) {
     for (const seed of seeds) {
-      const r = playToBudget(levelData, makeRng(seed), params);
+      const r = playToBudget(levelData, makeRng(seed), params, options);
       scores.push(r.score);
       if (r.movesToTarget !== null) { wins += 1; movesToTargetSum += r.movesToTarget; }
       for (const key of Object.keys(behaviorTotals)) behaviorTotals[key] += r.behaviorTotals[key];
       addPostMoveTrace(postMoveTotals, r.postMoveTrace);
+      addPerGameDescriptors(perGameTotals, r.gameDescriptors);
     }
   }
   return {
@@ -111,6 +139,8 @@ function evaluatePolicy(params, levels, seeds) {
     behavior: summarizeBehavior(behaviorTotals),
     postMoveTotals,
     postMoveDescriptors: summarizePostMoveTotals(postMoveTotals),
+    perGameTotals,
+    perGameDescriptors: summarizePerGameTotals(perGameTotals),
   };
 }
 

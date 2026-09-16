@@ -2,7 +2,13 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 
 const { DEFAULT_PARAMS } = require('../bot');
-const { strandedCellPressure } = require('../behavior-descriptors');
+const {
+  captureGameMove,
+  greedRatio,
+  halfScoreMove,
+  strandedCellPressure,
+  summarizeGameTrace,
+} = require('../behavior-descriptors');
 const { playToBudget } = require('../policy-eval');
 
 const OPEN_LEVEL = {
@@ -65,4 +71,45 @@ test('stranded-cell pressure uses the tile-scale lattice, not raw powers of two'
   };
 
   assert.equal(strandedCellPressure(state), 1 / 2);
+});
+
+test('half-score move distinguishes early, steady, and late cash-in games', () => {
+  assert.equal(halfScoreMove([
+    { moveNumber: 1, scoreGain: 60 },
+    { moveNumber: 2, scoreGain: 20 },
+    { moveNumber: 3, scoreGain: 20 },
+    { moveNumber: 4, scoreGain: 0 },
+  ]), 1 / 4);
+  assert.equal(halfScoreMove([
+    { moveNumber: 1, scoreGain: 10 },
+    { moveNumber: 2, scoreGain: 20 },
+    { moveNumber: 3, scoreGain: 70 },
+    { moveNumber: 4, scoreGain: 0 },
+  ]), 3 / 4);
+  assert.equal(halfScoreMove([]), null);
+});
+
+test('greed ratio averages per-move opportunity capture and bounds a denominator miss', () => {
+  const trace = [
+    captureGameMove({ moveNumber: 1, scoreGain: 20, strongestGreedyPoints: 100 }),
+    captureGameMove({ moveNumber: 2, scoreGain: 80, strongestGreedyPoints: 40 }),
+  ];
+  assert.deepEqual(trace, [
+    { moveNumber: 1, scoreGain: 20, greedDenominatorPoints: 100 },
+    { moveNumber: 2, scoreGain: 80, greedDenominatorPoints: 80 },
+  ]);
+  assert.equal(greedRatio(trace), 0.6);
+  assert.deepEqual(summarizeGameTrace(trace), { halfScoreMove: 1, greedRatio: 0.6 });
+  assert.equal(greedRatio([
+    ...trace,
+    captureGameMove({ moveNumber: 3, scoreGain: 10, strongestGreedyPoints: null }),
+  ]), null);
+});
+
+test('policy evaluation can collect the registered per-game measures through real play', () => {
+  const result = playToBudget(OPEN_LEVEL, alwaysTwoRng, DEFAULT_PARAMS, {
+    measureGameDescriptors: true,
+  });
+  assert.deepEqual(result.gameDescriptors, { halfScoreMove: 1, greedRatio: 1 });
+  assert.equal(result.gameDescriptorTrace.length, 1);
 });
