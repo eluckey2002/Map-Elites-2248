@@ -68,10 +68,13 @@ function candidateChains(state, { actionsPerState, maxChainLength, pathWidth }) 
     });
     for (const result of results) {
       const key = chainKey(result.chain);
-      if (!candidates.has(key)) candidates.set(key, result.chain);
+      if (!candidates.has(key)) candidates.set(key, result);
     }
   }
-  return [...candidates.values()];
+  return [...candidates.entries()]
+    .sort(([keyA, a], [keyB, b]) => b.points - a.points || keyA.localeCompare(keyB))
+    .slice(0, actionsPerState)
+    .map(([, result]) => result.chain);
 }
 
 // Finds one legal witness under a bounded, deterministic search. Success is a

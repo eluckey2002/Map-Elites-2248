@@ -79,6 +79,25 @@ test('a bounded miss remains UNKNOWN rather than becoming unreachable', () => {
   assert.equal(result.complete, false);
 });
 
+test('actionsPerState caps the combined candidate families', () => {
+  const level = {
+    level: 'candidate-cap-fixture', target: Number.MAX_SAFE_INTEGER, moves: 2, minChain: 2,
+    tileScale: 1, gridW: 5, gridH: 8, blockers: [],
+  };
+  const result = findBoundedWitness({
+    level,
+    seed: 17,
+    width: 4,
+    actionsPerState: 3,
+    pathWidth: 2,
+  });
+  assert.ok(result.diagnostics.expandedStates > 0);
+  assert.ok(
+    result.diagnostics.generatedActions <= result.diagnostics.expandedStates * 3,
+    `${result.diagnostics.generatedActions} actions exceeded three per ${result.diagnostics.expandedStates} states`,
+  );
+});
+
 test('the representative panel uses real 5x8, 5x7, 6x5, and 4x8 configurations', () => {
   const expected = new Map([[10, '5x8'], [31, '5x7'], [53, '6x5'], [54, '4x8']]);
   for (const [levelNumber, dimensions] of expected) {

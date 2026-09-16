@@ -1,5 +1,15 @@
 # RESULT-0030 — Representative-board witness-bounded descriptors
 
+## Correction — registered candidate cap was exceeded
+
+`CORRECTION-0006` supersedes this report's panel-level outcome. The runner
+applied the 16-candidate limit once to each of two candidate families and then
+combined them without a final cap, allowing up to 32 actions per state. That
+does not match the registered hard limit of 16. The individual witnesses still
+replay as legal upper bounds, but the coverage, stability, compute ratio, and
+disposition below are not protocol-conforming evidence. A replacement requires
+a new protocol, corrected search, and fresh seeds.
+
 **Outcome:** `INCONCLUSIVE` for promotion to a MAP corpus.
 
 The bounded proxy reached every target on the confirmation panel, but only

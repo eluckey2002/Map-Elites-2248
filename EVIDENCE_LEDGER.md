@@ -636,7 +636,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0030 — Representative-board descriptor proxies reach every target but miss the stability bar
 
 - **type:** result
-- **status:** accepted
+- **status:** superseded
 - **scope:** shipped configurations for Levels 10 (5x8), 31 (5x7), 53 (6x5), and 54 (4x8 with two stones); confirmation seeds 32,100,000–32,100,001; paired deterministic bounded searches at widths 12 and 48; caps 2, 3, 4, 6, 8, 12, and full cell count; no exact-search, human, gameplay-rule, level-change, or MAP-Elites claim
 - **statement:** The registered confirmation found replayable target witnesses on all 8/8 puzzle identities and all four representative board profiles, so coverage was **`SUPPORTED`**. Paired stability was **`INCONCLUSIVE`**: all eight pairs produced witnesses and the deeper arm worsened neither upper bound, but only 5/8 retained the same coarse relaxed/tight and short/long proxy bin, 62.5% against the frozen 75% bar. The deeper arm expanded 43,445 states versus 11,424 for the shallow arm (3.803x, diagnostic only). The frozen disposition is `REVISE_BEFORE_MAP_CORPUS`: successful measurements remain replayed upper bounds on moves and chain cap, not exact descriptor values, and bounded misses would remain `UNKNOWN`.
 - **evidence:** registered protocol `experiments/RESULT-0030/protocol.md`, registration commit `14a601e`; canonical corpus `experiments/RESULT-0030/corpus.json`, artifact identity `4f961ed015a191f0d98ce37377cccbdca48881f0bb3ff1b1dd2283b89767bbf8`; complete outcomes in `experiments/RESULT-0030/report.md`; bounded instrument `solver/puzzle-descriptor-witness.js`; verifier `experiments/RESULT-0030/verify.js`.
@@ -645,7 +645,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0030/verify.js experiments/RESULT-0030/corpus.json`; expect `PASS`, artifact identity `4f961ed0…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/puzzleDescriptorWitness.test.js experiments/RESULT-0030/*.test.js` and `node tools/verify-experiments.js`; expect 9/9 focused tests and the experiment gate to pass.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0006]
 - **notes:** The three cell changes were threshold crossings: Level 10 seed 32,100,001 improved from 12 to 11 moves across the 0.5 tightness boundary; Level 53 and Level 54 seed 32,100,000 improved from full-board cap witnesses to cap 12. The next candidate should represent uncertainty or search qualification explicitly instead of treating a raw bounded upper bound as a settled archive coordinate.
 
 ## Decision registry
@@ -888,6 +888,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0029]
 - **superseded_by:** []
 - **notes:** The correction changes no selected-puzzle identity, exact reachability result, region occupancy, threshold comparison, or descriptor decision.
+
+### CORRECTION-0006 — RESULT-0030 exceeded its registered candidate cap
+
+- **type:** correction
+- **status:** accepted
+- **scope:** `RESULT-0030`'s coverage, search-width stability, compute accounting, and descriptor disposition; individual replayed witnesses remain legal upper-bound observations on their identified puzzles
+- **statement:** Supersedes `RESULT-0030` as a protocol-conforming confirmation. Its candidate generator applied `actionsPerState: 16` separately to mergeable-preferred and unrestricted candidate families, then combined them without a final cap. A state could therefore retain up to 32 candidates, while the protocol froze a hard limit of 16. The artifact averages roughly 31 generated actions per expanded state, confirming that the registered limit was exceeded materially. The 8/8 coverage, 62.5% stability, 3.803x compute ratio, and `REVISE_BEFORE_MAP_CORPUS` disposition cannot stand as RESULT-0030 outcomes. Each recorded witness still replays as a legal upper bound for its exact puzzle identity, but no panel-level generalization follows. A corrected search and fresh seeds require a new registered result.
+- **evidence:** `solver/puzzle-descriptor-witness.js` at registration commit `14a601e`, `candidateChains`; registered hard limit in `experiments/RESULT-0030/protocol.md`, **Budget and stopping rules**; per-run `generatedActions` and `expandedStates` in `experiments/RESULT-0030/corpus.json`; review finding `https://github.com/eluckey2002/Map-Elites-2248/pull/21#discussion_r4023819293`.
+- **proof_class:** `direct_source` for the implementation/protocol mismatch and recorded counts; `replayed_upper_bound` remains only for the individual legal witnesses.
+- **as_of:** 2026-09-16
+- **reverify:** At commit `14a601e`, inspect `candidateChains` and confirm two `findGreedyChains(... limit: actionsPerState)` results are unioned without a final slice. Divide each RESULT-0030 run's `diagnostics.generatedActions` by `diagnostics.expandedStates`; expect values that can exceed 16 and approach 32.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0030]
+- **superseded_by:** []
+- **notes:** This is an invalidation of the panel-level experiment, not evidence against the descriptor idea. The replacement must be preregistered under a new result ID and use fresh seeds.
 
 ## Assembly cut log
 
