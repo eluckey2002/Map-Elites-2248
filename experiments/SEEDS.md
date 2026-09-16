@@ -37,6 +37,7 @@ file and the repository before declaring a range fresh.
 | 22,000,000–22,000,011 | RESULT-0024 topology controls, executed twice | 2026-09-02 | `experiments/RESULT-0024/protocol.md` |
 | 23,000,000–23,000,199 | RESULT-0024 confirmation, executed and reported | 2026-09-02 | `experiments/RESULT-0024/protocol.md`, `report.md` |
 | 24,000,000–24,000,024 | RESULT-0026 confirmation | 2026-09-02 | `experiments/RESULT-0026/protocol.md` |
+| 29,000,000–29,000,047; 29,000,100–29,000,147; 29,000,200–29,000,247; 29,000,300–29,000,347 | RESULT-0029 exact puzzle-descriptor corpus; each disjoint block searches one predeclared structural region and stops after four qualifying boards | 2026-09-16 | `experiments/RESULT-0029/protocol.md` |
 | 30,000,000–30,000,059 | RESULT-0021 sample A | 2026-09-01 | `experiments/RESULT-0021/protocol.md` |
 | 31,000,000–31,000,059 | RESULT-0021 sample B | 2026-09-01 | `experiments/RESULT-0021/protocol.md` |
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
