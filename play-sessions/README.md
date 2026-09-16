@@ -16,6 +16,10 @@ not saturated, and until 2026-09-05 the game discarded every session: ordinary
 play drew from `Math.random` with no seed and attached no recorder, so boards
 were not reproducible and moves were lost.
 
+All captures in this directory are part of the normal paired human benchmark:
+
+    node solver/human-benchmark.js
+
 Analyze one ordinary capture against the target-aware and full-budget bot on
 the same shipped level and seed:
 

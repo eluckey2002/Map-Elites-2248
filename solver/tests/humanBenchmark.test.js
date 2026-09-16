@@ -45,9 +45,9 @@ test('every recorded session resolves to a board and is paired', () => {
     rows.length, recordingCount(),
     'the benchmark must pair every recording on disk, not a subset',
   );
-  // 12 as of 2026-09-05. A deliberate pin: this number should only ever go up,
+  // 25 as of 2026-09-16. A deliberate pin: this number should only ever go up,
   // and it going up should be a decision someone made, not a surprise.
-  assert.ok(rows.length >= 12, `expected at least 12 paired boards, got ${rows.length}`);
+  assert.ok(rows.length >= 25, `expected at least 25 paired boards, got ${rows.length}`);
 });
 
 test('an ordinary play capture resolves to the shipped board and pairs on its seed', () => {
