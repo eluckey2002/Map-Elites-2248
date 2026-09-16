@@ -632,6 +632,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** Budget tightness is exact minimum moves divided by allowed moves. Chain-length dependence is the smallest maximum-chain-length cap under which the target remains reachable within budget; it is not a statistic from one policy trace. `UNKNOWN` remains distinct from unreachable, although this run happened to record zero node-cap cases. Recovery and wasted-move tolerance remain one untested candidate concept.
 
+### RESULT-0030 — Representative-board descriptor proxies reach every target but miss the stability bar
+
+- **type:** result
+- **status:** accepted
+- **scope:** shipped configurations for Levels 10 (5x8), 31 (5x7), 53 (6x5), and 54 (4x8 with two stones); confirmation seeds 32,100,000–32,100,001; paired deterministic bounded searches at widths 12 and 48; caps 2, 3, 4, 6, 8, 12, and full cell count; no exact-search, human, gameplay-rule, level-change, or MAP-Elites claim
+- **statement:** The registered confirmation found replayable target witnesses on all 8/8 puzzle identities and all four representative board profiles, so coverage was **`SUPPORTED`**. Paired stability was **`INCONCLUSIVE`**: all eight pairs produced witnesses and the deeper arm worsened neither upper bound, but only 5/8 retained the same coarse relaxed/tight and short/long proxy bin, 62.5% against the frozen 75% bar. The deeper arm expanded 43,445 states versus 11,424 for the shallow arm (3.803x, diagnostic only). The frozen disposition is `REVISE_BEFORE_MAP_CORPUS`: successful measurements remain replayed upper bounds on moves and chain cap, not exact descriptor values, and bounded misses would remain `UNKNOWN`.
+- **evidence:** registered protocol `experiments/RESULT-0030/protocol.md`, registration commit `14a601e`; canonical corpus `experiments/RESULT-0030/corpus.json`, artifact identity `4f961ed015a191f0d98ce37377cccbdca48881f0bb3ff1b1dd2283b89767bbf8`; complete outcomes in `experiments/RESULT-0030/report.md`; bounded instrument `solver/puzzle-descriptor-witness.js`; verifier `experiments/RESULT-0030/verify.js`.
+- **proof_class:** `replayed_upper_bound` for each successful witness's moves and tested cap; `direct_source` for identities, deterministic counts, and verifier outcomes; `heuristic_observation` for coverage and search-width stability across the registered eight-puzzle panel. No failed search is evidence of unreachability, and no exact or player-facing interpretation follows.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0030/verify.js experiments/RESULT-0030/corpus.json`; expect `PASS`, artifact identity `4f961ed0…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/puzzleDescriptorWitness.test.js experiments/RESULT-0030/*.test.js` and `node tools/verify-experiments.js`; expect 9/9 focused tests and the experiment gate to pass.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The three cell changes were threshold crossings: Level 10 seed 32,100,001 improved from 12 to 11 moves across the 0.5 tightness boundary; Level 53 and Level 54 seed 32,100,000 improved from full-board cap witnesses to cap 12. The next candidate should represent uncertainty or search qualification explicitly instead of treating a raw bounded upper bound as a settled archive coordinate.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
