@@ -8,6 +8,8 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 The latest trustworthy sequence is now visible in the ledger:
 
+- [RESULT-0032](EVIDENCE_LEDGER.md#result-0032--choice-density-clears-its-bars-recovery-lacks-enough-non-ceiling-pairs) tested choice density × recovery on 32 fresh representative boards. The exact opening choice proxy cleared its range and invariance bars. Recovery moved in the intended direction on 7/8 eligible pairs and passed the registered width-stability bar, but only eight pairs were below ceiling against the required twelve. Keep choice density as a candidate; revise recovery before a MAP corpus.
+
 - [RESULT-0029](EVIDENCE_LEDGER.md#result-0029--exact-micro-puzzle-descriptors-do-not-clear-the-frozen-four-region-promotion-bar) is the first exact puzzle-instance descriptor validation, kept separate from policy behavior. It screened 104 generated micro-puzzles and retained 10, but occupied the intended relaxed-short / relaxed-long / tight-short / tight-long regions **4 / 1 / 1 / 4**, below its frozen **4 / 4 / 4 / 4** bar. [DECISION-0006](EVIDENCE_LEDGER.md#decision-0006--do-not-promote-the-two-puzzle-instance-descriptors-from-result-0029) therefore rejects promotion of both axes for that exact scoped map. A repair is a new registered result; do not extend the opened seed blocks or rewrite the relaxed-long construction after seeing its cap-4 collapse.
 
 - [RESULT-0021](EVIDENCE_LEDGER.md#result-0021--structural-level-ranking-is-stable-across-disjoint-seed-samples) found that repeated human plays are not supported as necessary merely to average seed noise when differentiating candidates. It does not remove qualitative human review.

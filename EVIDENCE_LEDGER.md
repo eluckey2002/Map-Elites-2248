@@ -27,6 +27,15 @@ witnesses on all 8/8 fresh puzzles. Only 4/8 retained the same coarse proxy
 cell when beam width rose from 12 to 48, below the registered 75% stability
 bar. The disposition remains `REVISE_BEFORE_MAP_CORPUS`.
 
+Also as of 2026-09-16, `RESULT-0032` tested the first remaining descriptor
+pair, choice density × recovery, on 32 fresh representative opening boards.
+The exact initial viable-start fraction spanned 0.3833 and was invariant in
+all 32 rows. The bounded recovery-witness proxy was search-stable at its frozen
+bar and moved in the intended direction on 7/8 eligible non-ceiling pairs, but
+only eight pairs were eligible against the required twelve. The disposition is
+`REVISE_BEFORE_MAP_CORPUS`: retain choice density as a candidate, repair the
+ceiling-prone recovery proxy before promotion.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -669,6 +678,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0030]
 - **superseded_by:** []
 - **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate.
+
+### RESULT-0032 — Choice density clears its bars; recovery lacks enough non-ceiling pairs
+
+- **type:** result
+- **status:** accepted
+- **scope:** 32 fresh starting boards across static/no-blocker profiles derived from shipped Levels 10, 31, 53, and 54; seeds 32,400,000–32,400,007; calibration-selected tight move budgets 13, 15, 14, and 27 paired with `+4` moves; bounded searches at widths 12 and 48; no player, difficulty, level-change, gameplay-rule, or MAP-Elites claim
+- **statement:** The registered confirmation returned **`INCONCLUSIVE`** under its frozen joint disposition. The exact opening choice proxy was `SUPPORTED`: viable-start fractions spanned **0.3833** (0.5667–0.95) and remained identical across move-budget and search-width arms in all 32 rows. Search-width stability was `SUPPORTED`: 47/58 comparable recovery arms were within 0.25, or **81.0%** against the 75% bar. Held-out recovery sensitivity was `INCONCLUSIVE`: 7/8 eligible non-ceiling pairs improved by at least 0.125 with four extra moves and none decreased, but only eight pairs were eligible against the required twelve. The recovery-witness proxy is too ceiling-prone on this panel for promotion; the disposition is `REVISE_BEFORE_MAP_CORPUS`.
+- **evidence:** registered protocol `experiments/RESULT-0032/protocol.md`, registration commit `2c1f0f5`; canonical corpus `experiments/RESULT-0032/corpus.json`, artifact identity `2f2f31bbc6b772b0a1710cfac4d69f821ac6d06d8f869ec32117fbf45a5a61dc`; complete outcomes in `experiments/RESULT-0032/report.md`; instrument `solver/choice-recovery-descriptors.js`; verifier `experiments/RESULT-0032/verify.js`.
+- **proof_class:** `exact_result` for each identified opening board's viable-start fraction; `replayed_lower_bound` for every found reference and recovery continuation; `direct_source` for identities, deterministic counts, and verification; `heuristic_observation` for range, controlled response, and stability across the registered panel. Every bounded miss remains `UNKNOWN`, so the recovery-witness fraction is not an exact recoverability rate.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0032/verify.js experiments/RESULT-0032/corpus.json`; expect `PASS`, artifact identity `2f2f31bb…`, 32 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, P3 `SUPPORTED`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/choiceRecoveryDescriptors.test.js experiments/RESULT-0032/*.test.js` and `node tools/verify-experiments.js`; expect 8/8 focused tests and the experiment gate to pass.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** `initialViableStartFraction` counts viable starting tiles, not distinct paths or perceived decisions. `oneDetourRecoveryWitnessRate` samples up to eight lowest-scoring non-reference candidates from a deterministic 64-candidate pool and counts only replayed bounded-search successes. A repair needs a new protocol and fresh seeds; do not extend this opened range or lower its frozen eligibility denominator.
 
 ## Decision registry
 
