@@ -10,6 +10,11 @@ replay as legal upper bounds, but the coverage, stability, compute ratio, and
 disposition below are not protocol-conforming evidence. A replacement requires
 a new protocol, corrected search, and fresh seeds.
 
+The retained historical artifact remains reproducible with
+`node tools/verify-frozen-experiment.js RESULT-0030`. That command runs the
+original verifier from the first commit carrying the corpus, against the exact
+source identities frozen for that result.
+
 **Outcome:** `INCONCLUSIVE` for promotion to a MAP corpus.
 
 The bounded proxy reached every target on the confirmation panel, but only
