@@ -43,6 +43,36 @@ test('a forged artifact or board identity is rejected', () => {
   assert.throws(() => verifyEvaluation(forgedBoard, artifact.config), /board identity mismatch/);
 });
 
+test('the provenance stamp rides outside artifact identity', () => {
+  const restamped = structuredClone(artifact);
+  restamped.registration = {
+    exploratory: false,
+    protocol: 'RESULT-9999',
+    protocolCommit: 'f'.repeat(40),
+  };
+  assert.doesNotThrow(() => verifyArtifactIdentity(restamped));
+});
+
+test('the verifier accepts an exhausted empty breadth row as exact zero', () => {
+  const evaluation = structuredClone(artifact.evaluations.find(({ eligible }) => eligible));
+  evaluation.descriptors.breadth = {
+    standing: 'exact_result',
+    value: 0,
+    aggregation: 'median distinct verified outcome lower bound across the fixed seed panel',
+    bin: artifact.config.axes.breadth[0],
+    landmark: artifact.config.landmark,
+    rows: [{
+      seed: artifact.config.descriptorSeeds[0],
+      standing: 'exact_result',
+      complete: true,
+      distinctOutcomeCountLowerBound: 0,
+      routes: [],
+      diagnostics: {},
+    }],
+  };
+  assert.doesNotThrow(() => verifyBreadth(evaluation, artifact.config));
+});
+
 test('an illegal landmark route is rejected by replay', () => {
   const evaluation = structuredClone(artifact.evaluations.find(({ descriptors }) => (
     descriptors?.breadth?.rows.some(({ routes }) => routes.length > 0)
@@ -80,4 +110,3 @@ test('a changed source identity is rejected against current bytes and the frozen
   const frozen = Object.fromEntries(Object.entries(artifact.sources).map(([file, hash]) => [file, hash.slice(0, 16)]));
   assert.throws(() => verifySourceClosure(changed, frozen), /source changed/);
 });
-

@@ -231,7 +231,8 @@ function buildRun(config, registration, onProgress = () => {}) {
         ? 'SUPPORTED_AT_BOUNDED_SCOPE' : 'DISCONFIRMED_AT_BOUNDED_SCOPE',
     },
   };
-  return { ...body, artifactIdentity: identity(body) };
+  const { registration: _registration, ...identifiedBody } = body;
+  return { ...body, artifactIdentity: identity(identifiedBody) };
 }
 
 function integerFlag(argv, name, fallback) {

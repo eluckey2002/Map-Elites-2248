@@ -38,7 +38,7 @@ function fileHash(relative) {
 }
 
 function verifyArtifactIdentity(artifact) {
-  const { artifactIdentity, ...body } = artifact;
+  const { artifactIdentity, registration, ...body } = artifact;
   assert.equal(identity(body), artifactIdentity, 'artifact identity mismatch');
 }
 
@@ -104,7 +104,9 @@ function verifyBreadth(evaluation, config) {
     assert.equal(row.routes.length, row.distinctOutcomeCountLowerBound, 'breadth route count mismatch');
     assert.equal(new Set(row.routes.map(({ outcomeIdentity }) => outcomeIdentity)).size, row.routes.length, 'duplicate breadth outcome');
     for (const route of row.routes) replayLandmarkRoute({ ...puzzle, landmark: config.landmark }, route);
-    assert.equal(row.standing, row.routes.length ? 'replayed_lower_bound' : 'UNKNOWN');
+    const expectedStanding = row.routes.length ? 'replayed_lower_bound'
+      : row.complete ? 'exact_result' : 'UNKNOWN';
+    assert.equal(row.standing, expectedStanding);
   }
   const recomputed = summarizeBreadth(breadth.rows);
   assert.equal(canonicalJson({ standing: breadth.standing, value: breadth.value, bin: breadth.bin }),
