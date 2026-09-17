@@ -2,6 +2,7 @@ const { performance } = require('node:perf_hooks');
 const { chooseMove } = require('../bot');
 const { makeRng, buildGreedyChain, findGreedyChains, chainMultiplier, isMergeableSum, isBlockedTile } = require('../engine');
 const { createPuzzle, transition, stateKey, witness } = require('./simulation');
+const { rankState } = require('./harvest-policy');
 
 const LOOKAHEAD_BASE = 987654321;
 
@@ -48,25 +49,12 @@ function candidates(state, limit = 48, variant = 0) {
   return [...kept.values()];
 }
 
-function potential(state) {
-  const counts = new Map();
-  for (const tile of state.grid.flat()) {
-    if (tile && !isBlockedTile(tile)) counts.set(tile.value, (counts.get(tile.value) || 0) + 1);
-  }
-  let result = 0;
-  for (const [value, count] of counts) {
-    // An estimate used only to order a bounded beam, never a proof bound.
-    if (count > 1 || counts.has(value / 2) || counts.has(value * 2)) result += value * count;
-  }
-  return result;
-}
-
 function retainBeam(nodes, width, weight) {
   const all = [...nodes.values()];
   const scoreOrder = (a, b) => b.state.score - a.state.score;
   const result = all.slice().sort(scoreOrder).slice(0, Math.ceil(width / 3));
   const kept = new Set(result);
-  for (const node of all) node.rank = node.state.score + weight * potential(node.state);
+  for (const node of all) node.rank = rankState(node.state, { potentialWeight: weight });
   all.sort((a, b) => b.rank - a.rank || scoreOrder(a, b));
   for (const node of all) {
     if (result.length >= width) break;
@@ -75,8 +63,11 @@ function retainBeam(nodes, width, weight) {
   return result;
 }
 
-function search({ level, seed, budgetMs = 30000 }, onProgress = () => {}) {
+function search({ level, seed, budgetMs = 30000, maxExpandedStates = Infinity, includeBaseline = true }, onProgress = () => {}) {
   if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 30000) throw new Error('budgetMs must be in (0, 30000]');
+  if (maxExpandedStates !== Infinity && (!Number.isInteger(maxExpandedStates) || maxExpandedStates < 1)) {
+    throw new Error('maxExpandedStates must be a positive integer or Infinity');
+  }
   const started = performance.now();
   // Reserve time to serialize the final result. The CLI also enforces a process deadline.
   const deadline = started + Math.max(0, budgetMs - 50);
@@ -88,16 +79,18 @@ function search({ level, seed, budgetMs = 30000 }, onProgress = () => {}) {
   function publish(reason) {
     onProgress({ baseline, best, searchMs: elapsed(), terminationReason: reason, stats: { ...stats } });
   }
-  let node = root;
-  while (!node.terminal && performance.now() < deadline) {
-    const chain = chooseMove(node.state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + node.state.moves) });
-    if (!chain || performance.now() >= deadline) break;
-    node = transition(node, chain, root.draws);
-  }
-  if (node.terminal) {
-    baseline = { ...witness(node), outcome: node.terminal };
-    if (node.terminal === 'win') best = baseline;
-    publish('baseline');
+  if (includeBaseline) {
+    let node = root;
+    while (!node.terminal && performance.now() < deadline) {
+      const chain = chooseMove(node.state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + node.state.moves) });
+      if (!chain || performance.now() >= deadline) break;
+      node = transition(node, chain, root.draws);
+    }
+    if (node.terminal) {
+      baseline = { ...witness(node), outcome: node.terminal };
+      if (node.terminal === 'win') best = baseline;
+      publish('baseline');
+    }
   }
 
   // Progressive widths reuse the same seeded game. Each pass remains bounded;
@@ -110,6 +103,7 @@ function search({ level, seed, budgetMs = 30000 }, onProgress = () => {}) {
         const next = new Map();
         for (const current of frontier) {
           if (performance.now() >= deadline) break;
+          if (stats.expandedStates >= maxExpandedStates) break;
           stats.expandedStates++;
           for (const action of candidates(current.state, 48, variant)) {
             if (performance.now() >= deadline) break;
@@ -128,7 +122,7 @@ function search({ level, seed, budgetMs = 30000 }, onProgress = () => {}) {
             if (!previous || previous.state.score < successor.state.score) next.set(key, successor);
           }
         }
-        if (performance.now() >= deadline || next.size === 0) break;
+        if (performance.now() >= deadline || stats.expandedStates >= maxExpandedStates || next.size === 0) break;
         frontier = retainBeam(next, width, variant ? 4 : 1);
       }
       if (performance.now() < deadline) stats.completedPasses++;
@@ -136,7 +130,8 @@ function search({ level, seed, budgetMs = 30000 }, onProgress = () => {}) {
   }
   const result = {
     baseline, best, searchMs: elapsed(), stats,
-    terminationReason: performance.now() >= deadline ? 'time-budget' : 'portfolio-complete',
+    terminationReason: performance.now() >= deadline ? 'time-budget'
+      : stats.expandedStates >= maxExpandedStates ? 'work-budget' : 'portfolio-complete',
     standing: best ? 'best-known' : 'UNKNOWN',
   };
   onProgress(result);
