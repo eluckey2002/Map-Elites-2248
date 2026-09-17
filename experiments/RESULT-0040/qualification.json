@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0040",
+  "verdict": "PASS",
+  "attempt": 1,
+  "challengeIdentity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+  "captureManifestIdentity": "02f5e4d195d73f924defd3062c71e3289e7276177b8a006134166d3d2759e4eb",
+  "sources": {
+    "experiments/RESULT-0040/challenge.json": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+    "experiments/RESULT-0040/captures.json": "02f5e4d195d73f924defd3062c71e3289e7276177b8a006134166d3d2759e4eb",
+    "experiments/RESULT-0040/registered-protocol.md": "68af107fe586cf35f4c43d45713a5fd82f9bcc89809138ec50a90c93d77fa11e",
+    "experiments/RESULT-0040/closeout-contract.json": "d0a460ea53845a10c9379f8f39878ef61cd04c55dcc86e455e1f2e13d806cd40",
+    "experiments/RESULT-0040/subject.js": "2138f1fcc93d9764c7a8b49385215adc7d91ec3e4ddc63ecf75d0643c86125a2",
+    "experiments/RESULT-0040/run.js": "6619f374fbf93d2b627c6e1cbe8e65eb1776587745b85e31f0ee29d9457cb6f9",
+    "experiments/RESULT-0040/verify.js": "332e066a87ea88d42c667260a3b29035cc8641aa72ebaeaf3cc649903a9f1c62",
+    "experiments/RESULT-0040/qualify.js": "84c12376d83ea0e3a74310431ff2e31b457c209c01c9ad2816f09f56581116e7",
+    "experiments/RESULT-0040/run.test.js": "c756f1b3eba66aec2f2c8cd3f22d9c9f2abb3fcc2b7a56ee0db1396fc1db357e",
+    "solver/oracle/cli.js": "83dc49aa494b335261bfaaa66f159354f89f38d0d5ea927b15aa9d23b4e25700",
+    "solver/oracle/worker.js": "67ecaa23466d1c6af9b760b9c66aa90003d60a6b8bdae0be4f5e31a619444701",
+    "solver/oracle/search.js": "6c362d2d309edb4922fd118bb4a62fbb9edad009e017bad3066c517f8f4a0085",
+    "solver/oracle/simulation.js": "9cafa661bfb9bed197387eb4704d1ebc2e92f56b2b40dc697a1f5c19d68b8c8b",
+    "solver/oracle/verify.js": "6eeba60f146e164187f005d05a2b9b47e62902cadf2326ce63902a06b8925069",
+    "solver/engine.js": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "solver/bot.js": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "solver/benchmark-inputs.js": "655ce8a84ffa03ccd149435bf2a4a648374e9acceb474160040a22949e73d127",
+    "solver/benchmark-replay.js": "a714232d4e4bf308c7c6231d792ee90259f5bc9b4f33d9d1a2c21f0157e15167",
+    "src/game.js": "3d405595707621ce28ab2ff4a8f509b8e3099462d42e8e0b304d3459907936c1",
+    "tools/verify-experiments.js": "17d658d9f13a40b050ee1f3ba9f0a227b80fc0d79d5a40aa2dc742e5b17369b3",
+    "play-sessions/ddc4bce3d15be5501bd22856c23ede5ab4393bd7bde3b8029cb1aad021a54d4b.json": "96513c33d20d205e52c6d78503523310fbdbdde12011667cd777d8e8bcc3e9a7",
+    "play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json": "7402e552115be6bafe31706161943956d5bf211b5df5f1f55511a1b7733dd712"
+  },
+  "calibration": {
+    "command": "node --test experiments/RESULT-0040/run.test.js",
+    "exitCode": 0,
+    "knownGood": "PASS through public report-file CLI",
+    "plantedDefect": "confirmed on disk; FAIL comparison mismatch through the same CLI",
+    "coherentSubstitution": "FAIL against externally supplied registered challenge identity",
+    "boundedMiss": "inherited process-deadline UNKNOWN control in solver/tests/oracle.test.js"
+  },
+  "qualificationIdentity": "676bc91e007f838edab4eeed70326ec0ddeede3ee97a142c9308585621d40eba"
+}
