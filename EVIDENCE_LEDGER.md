@@ -8,6 +8,17 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
+As of 2026-09-17, `RESULT-0041` preserves a complete deterministic paired
+comparison of the evolved harvesting ranker against its pre-evolution baseline
+on the captured corpus, but closed `UNVERIFIED` because the preregistered
+recomputation command resolves from the wrong working directory and one source
+freeze was recorded with 17 characters instead of 16. On the 18
+non-tuning puzzles, the evolved arm won 18/18 versus 15/18, reduced
+loss-adjusted moves from 338 to 253, and reduced human misses from 7 to 3; it
+was nevertheless slower on two baseline-winning puzzles. Those rows and replay
+checks are retained direct observations. The registered primary outcome is
+`UNKNOWN`, and the broken frozen command cannot be repaired after outcomes.
+
 As of 2026-09-16, `RESULT-0040` preserves two fresh-board observations but
 closed `UNVERIFIED` with no entitled primary outcome. On shipped Level 56 /
 seed 41,000,000, the owner won in 10 moves and the retained oracle witness in
@@ -878,6 +889,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The oracle search interface received rules, seed, and budget only; the two human paths and outcomes were withheld until both captures existed and never crossed into search. The Level 56 miss is not repaired or retried. A successor harvesting-policy search requires a new frozen adapter, new subject identity, and fresh evaluation boards.
+
+### RESULT-0041 — Evolved harvesting policy transfers broadly but strict corpus conclusion is unverified
+
+- **type:** result
+- **status:** provisional
+- **scope:** deterministic paired comparison of the frozen pre-evolution and evolved harvest rankers on the 20 exact puzzles in `docs/oracle/corpus.json`, with exactly 600 expanded states per arm and puzzle; primary panel excludes the two captured Level 56 puzzles used by the four-board optimization panel
+- **statement:** The experiment closed **`UNVERIFIED`** and has no entitled primary domain outcome because its frozen recomputation command is repository-relative while the closure verifier resolves it from the experiment directory, and the registered `solver/benchmark-inputs.js` hash contains 17 characters rather than the required 16. The retained 40 cells are complete and replay-valid. On the 18 non-tuning primary puzzles, evolved won 18/18 versus baseline's 15/18, reduced loss-adjusted moves from 338 to 253, and reduced human misses from 7 to 3. It was one move slower on puzzle `2bb321b4…` and five moves slower on `3808ee88…`. A deterministic manual reduction applies the registered rule as `FALSIFIED` because the no-regression guard fails, but that reduction is partial evidence rather than an entitled experiment conclusion. Across all 20 puzzles, evolved won 20/20 versus 17/20 and reduced loss-adjusted moves from 360 to 272.
+- **evidence:** immutable protocol `experiments/RESULT-0041/registered-protocol.md`, registration commit `6730a0a`; subject identity `cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295`; qualified harness `experiments/RESULT-0041/qualification.json`; raw paired artifact identity `f4fed3e47edeb8a2cf046c8a230271436fd35ebb5703167550837cbc8c1d5acf`, preserved but not closure-entitled; manual reduction `experiments/RESULT-0041/primary-recomputation.json`; report `experiments/RESULT-0041/report.md`; honest `UNVERIFIED` closure `experiments/RESULT-0041/closure.json`
+- **proof_class:** `direct_source` for frozen identities, matrix completeness, replay-valid witnesses, exact per-cell move counts, and deterministic manual aggregate arithmetic; `UNKNOWN` for the registered primary conclusion and any future-board, unseen-level, universal-superiority, or optimality claim
+- **as_of:** 2026-09-17
+- **reverify:** Run `node experiments/RESULT-0041/verify.js experiments/RESULT-0041/corpus.json` to reproduce the retained rows and manual dispositions. Run the close-experiment verifier with `--run-recomputation` but without `--require-closed`; expect verifier `PASS`, closure `UNVERIFIED`, and recomputation `NOT_RUN`. Do not promote the manual `FALSIFIED` reduction into an entitled primary outcome.
+- **updated:** 2026-09-17
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The evolved policy is generic code rather than board lookup, and this panel shows broad fixed-corpus transfer, but the two regressions disprove strict dominance on the measured rows. A reportable successor requires a new result identity, a contract-relative recomputation command, and correctly sized freeze hashes recorded before any new outcomes; do not rerun this matrix under RESULT-0041.
 
 ## Decision registry
 

@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0041",
+  "subjectIdentity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+  "corpusIdentity": "59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308",
+  "primaryPuzzleCount": 18,
+  "optimizationOverlapPuzzleCount": 2,
+  "primarySummary": {
+    "baseline": {
+      "wins": 15,
+      "lossAdjustedMoves": 338,
+      "humanMisses": 7
+    },
+    "evolved": {
+      "wins": 18,
+      "lossAdjustedMoves": 253,
+      "humanMisses": 3
+    }
+  },
+  "allCorpusSummary": {
+    "baseline": {
+      "wins": 17,
+      "lossAdjustedMoves": 360,
+      "humanMisses": 8
+    },
+    "evolved": {
+      "wins": 20,
+      "lossAdjustedMoves": 272,
+      "humanMisses": 3
+    }
+  },
+  "pairedRegressions": 2,
+  "pairs": [
+    {
+      "puzzleIdentity": "1726f3e5190fa65fa5e337639c1e142589ecb86abf728b764ebccafc26ea7a92",
+      "humanBestMoves": 19,
+      "baselineMoves": null,
+      "evolvedMoves": 17,
+      "moveDelta": null,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "24a49a4c8fa2c0cb71131d61d8419c81a301b6d2eff5e4224e73e3dcfc2ad5ed",
+      "humanBestMoves": 15,
+      "baselineMoves": 17,
+      "evolvedMoves": 12,
+      "moveDelta": 5,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "2bb321b435751a652f9a76dfba255b720fd810fd2470842389d5cab73ca03823",
+      "humanBestMoves": 13,
+      "baselineMoves": 9,
+      "evolvedMoves": 10,
+      "moveDelta": -1,
+      "regression": true
+    },
+    {
+      "puzzleIdentity": "3214dbd437170b396b9f1b6c4d63cbe11bebe4d93ae8e3e1476b3e7f64300537",
+      "humanBestMoves": 16,
+      "baselineMoves": 15,
+      "evolvedMoves": 14,
+      "moveDelta": 1,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "342fa0366822801eef10348ce98b188e39f4d9072eac4601331b874b382488f1",
+      "humanBestMoves": 11,
+      "baselineMoves": 10,
+      "evolvedMoves": 9,
+      "moveDelta": 1,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "3808ee8892e6eb828388ecd37095633d9fe3c89950e2337a4d2bcf1ba18fa386",
+      "humanBestMoves": 16,
+      "baselineMoves": 17,
+      "evolvedMoves": 22,
+      "moveDelta": -5,
+      "regression": true
+    },
+    {
+      "puzzleIdentity": "3e0d1c86d58ceee50a3a22c45e446d0e2f7afec77232dc0c41638c7e7031c058",
+      "humanBestMoves": 20,
+      "baselineMoves": 19,
+      "evolvedMoves": 18,
+      "moveDelta": 1,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "6b0d3ffdb44b7ef9a67a479d2214a82b1ed5d9abb6bb16e1d20a2bde26090e24",
+      "humanBestMoves": 15,
+      "baselineMoves": 16,
+      "evolvedMoves": 15,
+      "moveDelta": 1,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "742e23f0305a8fc7cf4fcf4ba244d22d0d12dbe299e4793a0aab5c4736e5399e",
+      "humanBestMoves": 11,
+      "baselineMoves": 8,
+      "evolvedMoves": 8,
+      "moveDelta": 0,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "783ac318ddeea191cc2d62bfa78318d023e5e3c64dd9fc9fb877f672d4d8343e",
+      "humanBestMoves": null,
+      "baselineMoves": 19,
+      "evolvedMoves": 19,
+      "moveDelta": 0,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "7ab85e63f0b2ce34d3c0bde2971b2a3560da11d053461d60f027079c422181e8",
+      "humanBestMoves": 16,
+      "baselineMoves": null,
+      "evolvedMoves": 19,
+      "moveDelta": null,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "81d2beb28b6cf96cbfb9ffb4a89fb3cd612b95f8724563284820f387c89c5c08",
+      "humanBestMoves": 12,
+      "baselineMoves": 11,
+      "evolvedMoves": 10,
+      "moveDelta": 1,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "8fe7db24e4ac6b36a0999ecd8d61b2594637b1a17ec02978e0f3b5aede38e104",
+      "humanBestMoves": 16,
+      "baselineMoves": 19,
+      "evolvedMoves": 15,
+      "moveDelta": 4,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "a2577c1f104d3391578caf4039b2b4fec4d83290d76c70abe8a952ab8e2be8ea",
+      "humanBestMoves": 12,
+      "baselineMoves": 12,
+      "evolvedMoves": 12,
+      "moveDelta": 0,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "abcba5172111e30b205ead70b9f01d6648aee32434126f847fdd01174c7b3a2c",
+      "humanBestMoves": 14,
+      "baselineMoves": 13,
+      "evolvedMoves": 12,
+      "moveDelta": 1,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "bd5bda0e646de4636021ba5498f0aea723a235072dd2b391910409ff547e16a5",
+      "humanBestMoves": 15,
+      "baselineMoves": 10,
+      "evolvedMoves": 8,
+      "moveDelta": 2,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "c1bd39cbead6dd2fe0da32839269b37b04e78b45eee61beaeb205a3957dc8406",
+      "humanBestMoves": 15,
+      "baselineMoves": null,
+      "evolvedMoves": 23,
+      "moveDelta": null,
+      "regression": false
+    },
+    {
+      "puzzleIdentity": "ebe52ad45659503a3523cfba7f96a6a3d6d49f2d2bcfff67a6bdf80d20e8c373",
+      "humanBestMoves": 16,
+      "baselineMoves": 11,
+      "evolvedMoves": 10,
+      "moveDelta": 1,
+      "regression": false
+    }
+  ],
+  "checks": {
+    "P1": "SUPPORTED",
+    "P2": "SUPPORTED",
+    "P3": "FALSIFIED"
+  },
+  "primaryOutcome": "FALSIFIED"
+}
