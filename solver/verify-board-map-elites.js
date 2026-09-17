@@ -29,6 +29,10 @@ const {
 
 const ROOT = path.resolve(__dirname, '..');
 
+function subjectIdentityForArtifact(artifact) {
+  return identity({ sources: artifact.sources, config: artifact.config });
+}
+
 function fileHash(relative) {
   return crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT, relative))).digest('hex');
 }
@@ -176,6 +180,7 @@ function verifyArtifact(artifact, { verifyRegistrationFn = verifyRegistration, v
   assert.equal(artifact.schemaVersion, 1);
   assert.equal(artifact.kind, 'board-map-elites');
   verifyConfig(artifact.config);
+  assert.equal(artifact.finalSubjectIdentity, subjectIdentityForArtifact(artifact), 'final subject identity mismatch');
   verifyScreenPanel(artifact);
   artifact.evaluations.forEach((evaluation) => verifyEvaluation(evaluation, artifact.config));
   verifyArchive(artifact);
@@ -209,4 +214,5 @@ module.exports = {
   verifyScreenPanel,
   verifySourceClosure,
   verifySummary,
+  subjectIdentityForArtifact,
 };

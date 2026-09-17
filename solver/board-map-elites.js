@@ -30,7 +30,7 @@ const {
 const ROOT = path.resolve(__dirname, '..');
 const LANDMARK = 2048;
 const DEFAULT_DESCRIPTOR_SEEDS = Object.freeze([42000000, 42000001, 42000002]);
-const DEFAULT_SAMPLER_SEED = 20260917;
+const DEFAULT_SAMPLER_SEED = 20260918;
 const DEFAULT_COUNT = 36;
 const DEFAULT_FULL = 16;
 const LANDMARK_OPTIONS = Object.freeze({
@@ -46,6 +46,27 @@ function fileHash(relative) {
 
 function sourceHashes() {
   return Object.fromEntries(SOURCE_PATHS.map((relative) => [relative, fileHash(relative)]));
+}
+
+function subjectIdentityFor(config, sources = sourceHashes()) {
+  return identity({
+    sources,
+    config: {
+      gridSize: GRID_SIZE,
+      cellCapacity: CELL_CAPACITY,
+      axes: { breadth: BREADTH_BINS, harvest: HARVEST_BINS },
+      samplerSeed: config.samplerSeed,
+      sampledShapes: config.count,
+      fullyEvaluatedLimit: config.full,
+      level: config.level,
+      descriptorSeeds: config.descriptorSeeds,
+      landmark: LANDMARK,
+      landmarkOptions: LANDMARK_OPTIONS,
+      oracleMaxExpandedStates: ORACLE_MAX_EXPANDED_STATES,
+      oracleBudgetMs: ORACLE_BUDGET_MS,
+      objective: 'first target crossing for both paired policies',
+    },
+  });
 }
 
 function immediateRankState(state) {
@@ -173,10 +194,12 @@ function buildRun(config, registration, onProgress = () => {}) {
   const archive = buildArchive(evaluations);
   const occupiedBreadthBins = new Set(archive.map(({ cell }) => cell.split(',')[0])).size;
   const occupiedHarvestBins = new Set(archive.map(({ cell }) => cell.split(',')[1])).size;
+  const sources = sourceHashes();
   const body = {
     schemaVersion: 1,
     kind: 'board-map-elites',
     registration: registrationStamp(registration),
+    finalSubjectIdentity: subjectIdentityFor(config, sources),
     config: {
       gridSize: GRID_SIZE,
       cellCapacity: CELL_CAPACITY,
@@ -192,7 +215,7 @@ function buildRun(config, registration, onProgress = () => {}) {
       oracleBudgetMs: ORACLE_BUDGET_MS,
       objective: 'first target crossing for both paired policies',
     },
-    sources: sourceHashes(),
+    sources,
     screened: generated.screened,
     evaluations,
     archive,
@@ -287,5 +310,6 @@ module.exports = {
   measureHarvest,
   parseArgs,
   sourceHashes,
+  subjectIdentityFor,
   writeRun,
 };
