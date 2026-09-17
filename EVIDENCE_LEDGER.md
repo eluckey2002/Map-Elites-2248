@@ -8,6 +8,35 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
+As of 2026-09-17, `RESULT-0041` preserves a complete deterministic paired
+comparison of the evolved harvesting ranker against its pre-evolution baseline
+on the captured corpus, but closed `UNVERIFIED` because the preregistered
+recomputation command resolves from the wrong working directory and one source
+freeze was recorded with 17 characters instead of 16. On the 18
+non-tuning puzzles, the evolved arm won 18/18 versus 15/18, reduced
+loss-adjusted moves from 338 to 253, and reduced human misses from 7 to 3; it
+was nevertheless slower on two baseline-winning puzzles. Those rows and replay
+checks are retained direct observations. The registered primary outcome is
+`UNKNOWN`, and the broken frozen command cannot be repaired after outcomes.
+
+As of 2026-09-16, `RESULT-0040` preserves two fresh-board observations but
+closed `UNVERIFIED` with no entitled primary outcome. On shipped Level 56 /
+seed 41,000,000, the owner won in 10 moves and the retained oracle witness in
+11; on shipped Level 58 / seed 41,000,001, both won in 14. Every witness
+replays. The run report nevertheless fails the repository's source-closure and
+self-identity gate, so its row reduction to `FALSIFIED` is partial evidence,
+not an admitted fresh-panel conclusion. A successor needs a fully frozen
+adapter and fresh cases.
+
+As of 2026-09-16, `RESULT-0039` records verified oracle witnesses for all 20
+exact puzzles grouped from the 25 captured sessions. On the 19 puzzles with a
+human win, these witnesses use fewer moves on 17 and equal moves on 2; the
+remaining loss-only puzzle also has an oracle win. The saved run stays within
+30 seconds of search per puzzle, including its current-bot baseline. These
+are best-known solutions on the identified development corpus, not optimality,
+future-board superiority, or a human-difficulty measurement. Shipped play and
+the `calib-1` authoring evaluator remain unchanged.
+
 As of 2026-09-16, the first exact puzzle-instance descriptor validation is
 accepted at its bounded scope as corrected by `CORRECTION-0005`. It recorded
 104 seed observations covering 103 distinct generated 3x3, two-move boards
@@ -831,7 +860,52 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** [CORRECTION-0007]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
-### RESULT-0039 — Bounded 2048 opportunity counts distinguish four captured board starts
+### RESULT-0039 — Oracle witnesses meet every frozen captured-puzzle move comparator
+
+- **type:** result
+- **status:** accepted
+- **scope:** the 20 exact puzzles in `docs/oracle/corpus.json`, grouped from 25 captured sessions; saved run `attempt-05-full-corpus`, Node v26.0.0 on darwin/arm64
+- **statement:** The report contains 20 legal target-reaching oracle witnesses. Against each puzzle's best verified human win, 17 are shorter and 2 tie; the loss-only puzzle also has a win. Every witness preserves or improves the current-bot winning move count. Search plus baseline generation is at most 29.855 seconds per puzzle in this saved run; maximum parent-controller elapsed time is 29.950 seconds. These are exact witness/comparator facts about this artifact, not minimum-move claims or predictions.
+- **evidence:** `docs/oracle/runs/attempt-05-full-corpus.json`, report identity `397ca4631966e659bbedbd8f5e1e7c41fa39fd04ad973d9fb6443ec6b80dee05`; corpus identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`; implementation closure identity `7b9b7592bf2ed880af95041ca4e2dc87138308bb9f212125682a4138bd5ded1c`; `solver/oracle/verify.js:verifyWitness` and `assessPuzzle`; `solver/oracle/cli.js:verifyReport`; `solver/tests/oracle.test.js` (14 passing controls, including real CLI-file forgery rejection)
+- **proof_class:** `direct_source`
+- **as_of:** 2026-09-16
+- **reverify:** `node solver/oracle/cli.js --verify docs/oracle/runs/attempt-05-full-corpus.json` from the producing source version; expect exit 0 and `valid:true, pass:true, puzzles:20, wins:20`. New search runs use a new output path and may differ under wall-clock load.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The search worker receives rules, seed and budget, not human chains or performance labels. Historical boards were inspected during development; this is not a blind evaluation. Timing and work counts are run observations, not replay-proven wall time. Failed and partial attempts remain in `docs/oracle/runs/`. The goal, qualification and readable comparison are in `docs/oracle/CONTRACT.md`, `QUALIFICATION.md`, and `RESULT.md`. No gameplay, target, live-policy or frozen-calibration promotion follows.
+
+### RESULT-0040 — Fresh-board rows are preserved but closure is unverified
+
+- **type:** result
+- **status:** provisional
+- **scope:** two preregistered exact shipped puzzles: Level 56 / seed 41,000,000 and Level 58 / seed 41,000,001; one owner attempt followed by one 30-second oracle attempt per board; fixed-case evidence only
+- **statement:** The experiment closed **`UNVERIFIED`** and has no entitled primary domain outcome. The retained rows are exact replayable observations: on Board 1 the owner reached the target in 10 moves and the oracle witness in 11; on Board 2 both reached it in 14 moves. The current bot took 11 and 17 moves respectively. A deterministic manual reduction applies the registered rule as `FALSIFIED`, but the run report used a self-identity convention rejected by the repository gate and listed post-registration adapter/capture source hashes absent from the original `version_freeze`. Those receipt defects cannot be repaired after seeing outcomes. The two rows remain partial evidence only.
+- **evidence:** immutable protocol `experiments/RESULT-0040/registered-protocol.md`; challenge identity `2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1`; qualified adapter identity `676bc91e007f838edab4eeed70326ec0ddeede3ee97a142c9308585621d40eba`; manual row reduction `experiments/RESULT-0040/primary-recomputation.json`; evidence boundary `experiments/RESULT-0040/report.md`; honest `UNVERIFIED` closure `experiments/RESULT-0040/closure.json`
+- **proof_class:** `direct_source` for the retained row values, replay checks, and receipt defects; `UNKNOWN` for the registered panel conclusion; no general claim about future boards, optimality, or move minima
+- **as_of:** 2026-09-16
+- **reverify:** Run the close-experiment verifier without `--require-closed` and with `--run-recomputation`; expect verifier `PASS`, closure `UNVERIFIED`, and recomputation `NOT_RUN`. Inspect `primary-recomputation.json` only as partial row evidence, not an entitled domain outcome.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The oracle search interface received rules, seed, and budget only; the two human paths and outcomes were withheld until both captures existed and never crossed into search. The Level 56 miss is not repaired or retried. A successor harvesting-policy search requires a new frozen adapter, new subject identity, and fresh evaluation boards.
+
+### RESULT-0041 — Evolved harvesting policy transfers broadly but strict corpus conclusion is unverified
+
+- **type:** result
+- **status:** provisional
+- **scope:** deterministic paired comparison of the frozen pre-evolution and evolved harvest rankers on the 20 exact puzzles in `docs/oracle/corpus.json`, with exactly 600 expanded states per arm and puzzle; primary panel excludes the two captured Level 56 puzzles used by the four-board optimization panel
+- **statement:** The experiment closed **`UNVERIFIED`** and has no entitled primary domain outcome because its frozen recomputation command is repository-relative while the closure verifier resolves it from the experiment directory, and the registered `solver/benchmark-inputs.js` hash contains 17 characters rather than the required 16. The retained 40 cells are complete and replay-valid. On the 18 non-tuning primary puzzles, evolved won 18/18 versus baseline's 15/18, reduced loss-adjusted moves from 338 to 253, and reduced human misses from 7 to 3. It was one move slower on puzzle `2bb321b4…` and five moves slower on `3808ee88…`. A deterministic manual reduction applies the registered rule as `FALSIFIED` because the no-regression guard fails, but that reduction is partial evidence rather than an entitled experiment conclusion. Across all 20 puzzles, evolved won 20/20 versus 17/20 and reduced loss-adjusted moves from 360 to 272.
+- **evidence:** immutable protocol `experiments/RESULT-0041/registered-protocol.md`, registration commit `6730a0a`; subject identity `cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295`; qualified harness `experiments/RESULT-0041/qualification.json`; raw paired artifact identity `f4fed3e47edeb8a2cf046c8a230271436fd35ebb5703167550837cbc8c1d5acf`, preserved but not closure-entitled; manual reduction `experiments/RESULT-0041/primary-recomputation.json`; report `experiments/RESULT-0041/report.md`; honest `UNVERIFIED` closure `experiments/RESULT-0041/closure.json`
+- **proof_class:** `direct_source` for frozen identities, matrix completeness, replay-valid witnesses, exact per-cell move counts, and deterministic manual aggregate arithmetic; `UNKNOWN` for the registered primary conclusion and any future-board, unseen-level, universal-superiority, or optimality claim
+- **as_of:** 2026-09-17
+- **reverify:** Run `node experiments/RESULT-0041/verify.js experiments/RESULT-0041/corpus.json` to reproduce the retained rows and manual dispositions. Run the close-experiment verifier with `--run-recomputation` but without `--require-closed`; expect verifier `PASS`, closure `UNVERIFIED`, and recomputation `NOT_RUN`. Do not promote the manual `FALSIFIED` reduction into an entitled primary outcome.
+- **updated:** 2026-09-17
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The evolved policy is generic code rather than board lookup, and this panel shows broad fixed-corpus transfer, but the two regressions disprove strict dominance on the measured rows. A reportable successor requires a new result identity, a contract-relative recomputation command, and correctly sized freeze hashes recorded before any new outcomes; do not rerun this matrix under RESULT-0041.
+
+### RESULT-0044 — Bounded 2048 opportunity counts distinguish four captured board starts
 
 - **type:** result
 - **status:** accepted
@@ -844,7 +918,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-09-17
 - **supersedes:** []
 - **superseded_by:** []
-- **notes:** This is an exploratory fixed-panel observation, not a preregistered generalization. It makes landmark opportunity measurable without adopting it as a descriptor or beginning MAP-Elites integration.
+- **notes:** This record was renumbered from the unmerged landmark-probe branch's colliding `RESULT-0039` during integration with the oracle branch. It is an exploratory fixed-panel observation, not a preregistered generalization. It makes landmark opportunity measurable without adopting it as a descriptor or beginning MAP-Elites integration.
 
 ## Decision registry
 

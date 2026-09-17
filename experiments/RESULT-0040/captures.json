@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0040",
+  "challengeIdentity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+  "entries": [
+    {
+      "boardId": "board-1",
+      "file": "play-sessions/ddc4bce3d15be5501bd22856c23ede5ab4393bd7bde3b8029cb1aad021a54d4b.json",
+      "fileIdentity": "96513c33d20d205e52c6d78503523310fbdbdde12011667cd777d8e8bcc3e9a7"
+    },
+    {
+      "boardId": "board-2",
+      "file": "play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json",
+      "fileIdentity": "7402e552115be6bafe31706161943956d5bf211b5df5f1f55511a1b7733dd712"
+    }
+  ]
+}

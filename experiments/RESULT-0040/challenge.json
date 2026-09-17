@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0040",
+  "title": "Fresh-board owner versus oracle challenge",
+  "boards": [
+    { "id": "board-1", "level": 56, "seed": 41000000 },
+    { "id": "board-2", "level": 58, "seed": 41000001 }
+  ],
+  "humanArm": {
+    "attemptsPerBoard": 1,
+    "selection": "first terminal capture received for the exact level and seed",
+    "oracleWithheldUntil": "both human terminal captures exist"
+  },
+  "oracleArm": {
+    "implementationCommit": "5205535",
+    "budgetMsPerBoard": 30000,
+    "attemptsPerBoard": 1,
+    "inputs": ["shipped level rules", "seed", "budget"],
+    "forbiddenInputs": ["human chains", "human intermediate boards", "human outcome", "human move count"]
+  },
+  "objective": "stop at the first target-crossing move",
+  "comparison": "win beats loss; among mutual wins fewer moves wins; equal moves tie"
+}

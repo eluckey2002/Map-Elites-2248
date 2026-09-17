@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "c017becc63f714dd1601020abf38855da568f0046b235f1cc2e98693752ac415"
+  },
+  "run_id": "f4fed3e47edeb8a2cf046c8a230271436fd35ebb5703167550837cbc8c1d5acf",
+  "final_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+  "closure_status": "UNVERIFIED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+      "reason": "All 40 unique policy/puzzle cells were present; the primary panel contained exactly 18 non-tuning puzzles and the diagnostic overlap contained two."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+      "reason": "Every winning witness replayed to first target crossing; both arms shared the frozen rules, seeds, objective, and 600-state bound."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+      "reason": "Seven focused qualification controls passed, including public known-good, planted replay defect, coherent substitution, matrix integrity, source integrity, injected production seam, and bounded UNKNOWN behavior."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+      "reason": "The solver suite retained 432 passes, the same four deliberate failures, and one skip across 437 tests."
+    },
+    {
+      "id": "P1",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+      "reason": "The manual reduction assigns SUPPORTED from 18 versus 15 wins and loss-adjusted moves 338 to 253, but the frozen executable recomputation command is unusable."
+    },
+    {
+      "id": "P2",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+      "reason": "The manual reduction assigns SUPPORTED from human misses 7 to 3, but the frozen executable recomputation command is unusable."
+    },
+    {
+      "id": "P3",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+      "reason": "The manual reduction assigns FALSIFIED because two baseline-winning primary puzzles became slower, but the frozen executable recomputation command is unusable."
+    },
+    {
+      "id": "P4",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "cd6491312ef5d34eb941a1fb7abdcbc47a37ce49a94f41199d49fccef1c95295",
+      "reason": "The manual intersection would be FALSIFIED, but executable closure cannot entitle a primary domain outcome."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "0c134b45f8fc272143d3372d958d7dbf2d8d471343fe55cc77724af6cf5dae2a"
+    },
+    {
+      "id": "qualification",
+      "path": "qualification.json",
+      "sha256": "3e50509469aaf3a3d62d4e9dc30ebacd644ecd921f8d4069e1f2aba91e98e99c"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "c16a02dd15fdeb9956d6b09c4ee544660c6a951ecae51d21a547d40f7e8bd8a6"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "35db352bdd9b9b8c8a37550b5c9b5453a8e896da902f933745841228fb4ae9a0"
+    }
+  ],
+  "primary_outcome": null,
+  "deviations": [
+    "The frozen recomputation argv names experiments/RESULT-0041/recompute.js while cwd resolves to experiments/RESULT-0041, producing a nonexistent doubled path. The defect was discovered after outcomes and was not repaired.",
+    "The registered solver/benchmark-inputs.js freeze value is 17 characters rather than the required 16, so the run artifact's correct full source hash is not covered. The defect was discovered after outcomes and was not repaired."
+  ],
+  "attempts": [
+    {
+      "id": "qualification-attempt-1",
+      "exit_code": 0,
+      "artifact_ids": ["qualification"]
+    },
+    {
+      "id": "reportable-matrix",
+      "exit_code": 0,
+      "artifact_ids": ["corpus"]
+    },
+    {
+      "id": "deterministic-recomputation",
+      "exit_code": 0,
+      "artifact_ids": ["primary-recomputation", "report"]
+    }
+  ]
+}

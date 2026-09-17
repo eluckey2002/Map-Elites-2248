@@ -1038,3 +1038,61 @@ that passed while inspecting nothing.
   covered source change invalidates both commands by identity.
 - **Shipped:** pending RESULT-0026 preregistration and qualification; run
   `2026-09-02-result-0026-confirmation`, ticket `DGS-001`.
+
+---
+
+### captured-oracle-report-verifies · report
+
+- **Protects:** a corpus speed comparison cannot pass by dropping a hard puzzle,
+  changing its rules or human comparator, inventing a solution, or continuing
+  play after the target. Current-bot wins must be retained or improved.
+- **Where:** `solver/oracle/cli.js:verifyReport`, `solver/oracle/verify.js`, and
+  `node solver/oracle/cli.js --verify <report.json>`.
+- **Level:** report, puzzle, move, and post-move cell. Run provenance and
+  performance beyond these puzzle identities do not follow from a legal move.
+- **Kind:** shape, value, and replay meaning. Checks legal moves, terminal
+  precedence, baseline policy choices, full traces, exact comparators and claimed
+  pass. Human difficulty and global optimality have no owner in this check.
+- **Scope:** frozen `docs/oracle/corpus.json`; 25 JSON captures in `recordings/`,
+  `play-sessions/`, and `pilots/*/recordings/`, resolved via current levels and
+  candidate archives, grouped into 20 puzzles. Exact rules, candidate metadata,
+  raw file hashes, board, seed, future stream and 15 implementation/test files
+  are bound. Partial reports cannot satisfy the corpus goal. Newly added captures
+  trigger drift rather than automatically enlarging or shrinking the benchmark.
+- **Reads own output?:** yes, submitted search reports. Recomputes comparisons
+  against an independently pinned corpus and replays with the existing engine;
+  the verifier imports neither oracle transition nor candidate generation. Does
+  not treat the submitted hash or `pass` as evidence by itself.
+- **Sampling memory:** no sampling; every frozen puzzle is required exactly once.
+  Silence about another board means it was not evaluated.
+- **Does NOT catch:**
+  1. A bug shared by the game and engine; existing parity tests are separate.
+  2. Optimality, future boards, human difficulty, or overfitting during development.
+  3. Dishonest run authorship: legal human-derived witnesses can calibrate this
+     checker too. Search independence rests on the inspected worker interface and
+     source-bound execution, not on a witness revealing who discovered it.
+  4. Forged plausible timing or work counts. The runner enforces a process budget;
+     a saved report verifier can check ranges but cannot reconstruct wall time.
+  5. Unlisted environment changes. Node/platform/architecture are recorded, not
+     a complete machine image. Wall-clock search results can vary with load.
+  6. Editing the verifier and its expected corpus identity together. Hashes make
+     that change visible; they are not an authorization boundary.
+- **Crafted-bypass test:** `solver/tests/oracle.test.js`: actual CLI file mutation
+  with a re-signed false comparison exits 2 for `forged comparison`; illegal
+  coordinates, wrong spawn/timer, post-terminal moves, missing/duplicate rows,
+  exceeded time and coherent manifest substitution fail. Positive calibration
+  and a legal slower domain failure exercise the same verifier. All 14 passed
+  in 91.95 seconds at the attempt-2 identity in `docs/oracle/QUALIFICATION.md`.
+- **Retires:** NO — composes the existing `benchmark-replay.js:replayRecording`
+  rather than replacing it. That checker owns one game's legality, not frozen
+  multi-puzzle coverage, source binding, preserved incumbents or paired speed.
+- **Enforcement:** report-only for authoring and gameplay; no CI adoption or
+  retargeting. The explicit verification command fails closed on integrity and
+  returns a separate domain failure for slower/missing wins. Promotion to an
+  authoring gate requires an owner-approved future scope and acceptance rule.
+- **Decay:** rerun oracle tests and source-matched report verification after
+  mechanism changes; preserve prior identities and failed reports in `docs/oracle/`.
+  The full repository baseline has four owner-decided failures; keep them visible,
+  never exempt them to manufacture green.
+- **Shipped:** 2026-09-16, isolated `feat/bounded-authoring-oracle` branch; qualification
+  attempt 2. Verdict: **PROCEED** at report-only rung.
