@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "result_id": "RESULT-0045",
+  "status": "PASS",
+  "qualified_at": "2026-09-17",
+  "registration": {
+    "commit": "b0eaf9c6905cee6f666a052dfbacbd340db23bff",
+    "protocol_sha256": "4129ef633d05d421dfd11fb0aafc17dd4611958e86d6d4aaaf723056b024abb4",
+    "closeout_contract_sha256": "0e55b063ec896ceda319b260908e07d1241ebe0a4cdca9c55c99ba066b854f78",
+    "freeze_entries_checked": 31,
+    "freeze_mismatches": 0,
+    "experiment_gate_discovered_protocol": true
+  },
+  "final_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+  "profiles": [
+    {
+      "name": "candidate-measure",
+      "sha256": "5b1edc87a2e4c7bdcea493c7ba6b03c017fae6a13d05044b8df99586e5d167e4"
+    },
+    {
+      "name": "simulation-policy",
+      "sha256": "63dbce14106578b3973cf6308f1820de8395099558c9b4ae91438aa3b0461f8a"
+    },
+    {
+      "name": "mutation-qualification",
+      "sha256": "dc67e21d0c4938b85e853e4e9c4868408f53a9a85e88006e029a500d8f08632f"
+    }
+  ],
+  "checks": {
+    "focused_map_suite": {
+      "command": "node --test solver/tests/boardMapElitesCore.test.js solver/tests/boardMapElitesMeasure.test.js solver/tests/boardMapElitesVerifier.test.js solver/tests/landmarkFrontier.test.js",
+      "tests": 24,
+      "passed": 24,
+      "failed": 0
+    },
+    "repository_baseline": {
+      "command": "node --test solver/tests/*.test.js",
+      "tests": 461,
+      "passed": 456,
+      "failed": 4,
+      "skipped": 1,
+      "matches_documented_expected_failures": true,
+      "expected_failures": [
+        "candidate-levels-52.json stale receipt",
+        "candidate-levels-54.json stale receipt",
+        "Universe Map generated-view staleness",
+        "Universe Map date drift"
+      ]
+    },
+    "production_controls": {
+      "harvest_positive_advantage": 0.173913,
+      "immediate_positive_advantage": -0.074074,
+      "assignment_null_advantage": 0,
+      "paired_inputs_equal": true
+    },
+    "mutation_kills": {
+      "attempted": 7,
+      "killed": 7,
+      "exclusions": [],
+      "mutations": [
+        "forged artifact or board identity",
+        "illegal landmark route",
+        "wrong archive cell",
+        "fourth elite in a cell",
+        "duplicate elite identity",
+        "unpaired harvesting row",
+        "changed source identity"
+      ],
+      "restoration": "clean",
+      "frozen_source_hash_restored": true
+    },
+    "closeout_rehearsal": {
+      "verdict": "PASS",
+      "checked_claims": 11,
+      "checked_artifacts": 4,
+      "recomputation": "PASS",
+      "disposable_output_removed": true
+    }
+  },
+  "attempts": [
+    {
+      "id": "qualification-01",
+      "verdict": "PASS",
+      "confirmation_outcome_observed": false
+    }
+  ]
+}
