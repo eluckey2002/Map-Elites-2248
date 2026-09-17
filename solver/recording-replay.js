@@ -14,6 +14,7 @@ const {
 
 const SOLVER_DIR = __dirname;
 const ARCHIVE_DIR = path.join(SOLVER_DIR, 'candidates-archive');
+const EXPERIMENTS_DIR = path.join(SOLVER_DIR, '..', 'experiments');
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -44,11 +45,36 @@ function indexBatches(index, dir) {
   }
 }
 
-function candidateIndex(dirs = [SOLVER_DIR, ARCHIVE_DIR]) {
+function indexClosedExperimentArchives(index, experimentsDir) {
+  if (!fs.existsSync(experimentsDir)) return;
+  for (const resultId of fs.readdirSync(experimentsDir).sort()) {
+    const resultDir = path.join(experimentsDir, resultId);
+    const closurePath = path.join(resultDir, 'closure.json');
+    const archivePath = path.join(resultDir, 'output', 'archive.json');
+    if (!fs.existsSync(closurePath) || !fs.existsSync(archivePath)) continue;
+    if (readJson(closurePath).closure_status !== 'CLOSED') continue;
+
+    const evaluations = readJson(archivePath).evaluations;
+    if (!Array.isArray(evaluations)) continue;
+    for (const entry of evaluations) {
+      const candidateIdentity = entry && entry.receipt && entry.receipt.candidateIdentity;
+      if (typeof candidateIdentity !== 'string' || !entry.candidate || index.has(candidateIdentity)) continue;
+      index.set(candidateIdentity, {
+        candidate: entry.candidate,
+        source: `experiments/${resultId}/output/archive.json (${entry.candidate.name})`,
+      });
+    }
+  }
+}
+
+function candidateIndex(dirs) {
+  const includeClosedExperiments = dirs === undefined;
+  dirs = dirs || [SOLVER_DIR, ARCHIVE_DIR];
   const index = new Map();
   const present = dirs.filter((dir) => fs.existsSync(dir));
   for (const dir of present) indexStores(index, dir);
   for (const dir of present) indexBatches(index, dir);
+  if (includeClosedExperiments) indexClosedExperimentArchives(index, EXPERIMENTS_DIR);
   return index;
 }
 

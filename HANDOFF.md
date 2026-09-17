@@ -1,6 +1,123 @@
-> **Current authority:** This document is the snapshot stopped on 2026-09-06. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
+> **Current authority:** This document is the snapshot stopped on 2026-09-17. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-09-17 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
 
 # 2248 Challenge — Handoff
+
+## 2026-09-17: a stronger player, a verified board map, and five owner playtests
+
+### The two breakthroughs
+
+The owner identified two productive directions in one session:
+
+1. **OpenEvolve / AlphaEvolve-style policy evolution for an authoring oracle.**
+   Keep three results separate. `RESULT-0039` is accepted: its bounded oracle
+   produced replayable wins on all 20 captured puzzles, beating the best human
+   win on 17 and tying 2. `RESULT-0041` is provisional and closed `UNVERIFIED`:
+   its retained rows show the evolved generic harvesting ranker winning 18/18
+   non-tuning puzzles versus 15/18 for baseline, but it regressed on two
+   baseline-winning puzzles and its frozen recomputation receipt is defective.
+   `RESULT-0040` preserved two fresh-board rows only: the owner beat the oracle
+   10-to-11 on one and tied 14-to-14 on the other. Do not claim evolved-policy
+   dominance or fresh-board human superiority.
+2. **A board MAP-Elites map on successful plan breadth × harvesting advantage.**
+   `RESULT-0046` is accepted and closed: 12 distinct elites across 6/49 cells,
+   3 breadth bins, 4 harvest bins, and at most 3 elites per cell. Open
+   `experiments/RESULT-0046/output/map.html`. Empty cells are bounded-search
+   absences, not impossibility claims.
+
+Together these are the beginnings of an authoring loop: search discovers how
+to play, MAP-Elites discovers what to play, and human review decides which
+expressions deserve to ship.
+
+### Five retained elites were played and preserved
+
+`RESULT-0047` records the post-close owner playtest without changing
+RESULT-0046's registered conclusion. Run:
+
+```sh
+node experiments/RESULT-0046/replay-playtests.js
+```
+
+| Board | Cell | Owner / reference bot | Owner judgment |
+| --- | --- | ---: | --- |
+| `gen-0006` | 6,2 | 15 / 21 moves | 143,360-point finishing chain; no explicit quality label |
+| `gen-0003` | 6,1 | 19 / 20 moves | too long, repetitive, no meaningful pressure |
+| `gen-0002` | 0,5 | 11 / 13 moves | immediate containment; good level |
+| `gen-0010` | 0,5 | 10 / 11 moves | quick and easy |
+| `gen-0004` | 0,5 | 8 / 12 moves | quick and balanced |
+
+The owner said most boards created a sense of gameplay and that their
+differences were notable. The three boards in cell 0,5 alone produced three
+different descriptions, which is why the owner-confirmed archive contract
+retains up to three elites per cell. Do not turn these five fixed judgments
+into a general fun or difficulty model.
+
+After incorporating these five captures, `node solver/human-benchmark.js`
+reports 32 paired sessions: human 30 wins, reference bot 32 wins; among the 30
+mutual wins, human faster 16, bot faster 9, tied 5. This is the current fixed
+corpus, not proof about unseen boards.
+
+The exact recordings are in `recordings/`; their readable synthesis is
+`experiments/RESULT-0046/playtest-report.md`. The normal replay index now reads
+candidates from experiment archives only when the experiment is `CLOSED`, so
+both `solver/human-benchmark.js --recording` and the dedicated report command
+resolve these candidate identities without admitting invalid RESULT-0045 data.
+Because `solver/recording-replay.js` is part of HUMAN-PILOT-0002's runtime
+identity, that pilot's challenge and execution receipts were requalified after
+the lookup repair; the replay remains PASS at 140,544 points in 20 moves.
+
+### What the playtests changed about interpretation
+
+- Read successful plan breadth as **route freedom / openness**, not as a claim
+  that more routes mean richer or better planning. High breadth can support a
+  spectacular sandbox or a low-pressure grind.
+- Positive harvesting advantage identified a promising concise-play region in
+  this sample. All three played cell-0,5 boards were short and distinct.
+- Blocker presence is not blocker pressure. The lone timer-10 bomb on
+  `gen-0003` was effectively decorative; its RESULT-0046 holdout explosion rate
+  was 1/300. A single timed bomb should not be treated as pressure unless it
+  starts one move from exploding.
+- Containment is a useful authoring concept but not yet a validated descriptor.
+  It comes from effective width, topology, and genuinely binding mechanics,
+  not blocker count alone.
+- Repetition becomes objectionable in combination with duration and lack of
+  pressure. Exact repeated payout counts by themselves did not separate the
+  accepted quick boards from the grind.
+
+### Portfolio artifact
+
+`docs/two-breakthroughs.html` is a self-contained one-page HTML/CSS case study,
+responsive at desktop and mobile sizes and styled for a one-sheet poster PDF.
+It states the proof boundaries explicitly. It was concepted with built-in Image
+Gen and verified against desktop and mobile Chromium screenshots. No external
+assets or runtime dependencies are required.
+
+### Recommended next move
+
+Do not replace the two axes yet. Use the current map as an authoring surface:
+
+1. Preserve the three cell-0,5 elites as reference archetypes: tactical
+   containment, easy harvest sprint, and balanced harvest sprint.
+2. Add targeted generator mutations for effective containment, genuine urgency
+   (including bombs that start one move from explosion), multiple 2,048 routes,
+   starting high-value anchors, and mergeable off-lattice space pressure.
+3. Select parents near empty cells, mutate one authoring lever at a time, and
+   measure where offspring actually land. Continue keeping up to three distinct
+   elites per cell.
+4. Before adopting any new annotation as a metric, validate it separately.
+   Candidate annotations are expected crossing time, effective containment,
+   effective mechanic pressure, repetition moderated by duration, and
+   human-to-oracle move gap.
+5. Any claim that generalizes playtest preference beyond these five sessions
+   needs a preregistered successor. Exact new recordings and owner decisions do
+   not need to be mislabeled as experiments.
+
+### Branch and landing state
+
+Work is in `/private/tmp/2248-board-map-elites-20260917` on branch
+`feat/board-map-elites-20260917`. The root checkout was deliberately not used
+because of the repository's one-writer rule. `main` is protected: land through
+a pull request with a green experiment gate, wait for the Codex review, and let
+the PR opener own every review thread through merge.
 
 ## 2026-09-06: PR #18 merged; a human-play descriptor pair that needs more than one loss before it's trusted
 

@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How an evolved game-playing policy and a MAP-Elites behavior map opened a new path for automated level authoring in 2248 Challenge.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23071329'/%3E%3Crect x='8' y='8' width='22' height='22' fill='%23073fd2'/%3E%3Crect x='34' y='34' width='22' height='22' fill='%23ee351f'/%3E%3C/svg%3E">
+  <title>Two Breakthroughs in One Session</title>
+  <style>
+    :root {
+      --paper: #faf9f4;
+      --ink: #071329;
+      --muted: #646b7a;
+      --rule: #aeb2b9;
+      --blue: #073fd2;
+      --red: #ee351f;
+      --blue-soft: #dfe7ff;
+      --red-soft: #ffe1db;
+      --page: 1120px;
+      --gutter: clamp(22px, 5vw, 64px);
+      --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: #e9e8e3;
+      color: var(--ink);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    main {
+      width: min(100%, var(--page));
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: clamp(32px, 5vw, 68px) var(--gutter) clamp(30px, 4vw, 52px);
+      background: var(--paper);
+      box-shadow: 0 20px 70px rgb(7 19 41 / 10%);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    .hero {
+      padding-bottom: clamp(30px, 4vw, 50px);
+    }
+
+    h1 {
+      max-width: 980px;
+      margin-bottom: 12px;
+      font-size: clamp(3.6rem, 9.25vw, 7.7rem);
+      font-weight: 850;
+      letter-spacing: -0.075em;
+      line-height: 0.84;
+    }
+
+    .dek {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(1.35rem, 3vw, 2.45rem);
+      font-weight: 560;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+    }
+
+    .breakthroughs {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .breakthrough {
+      min-width: 0;
+      padding: clamp(30px, 4vw, 52px) 0 clamp(34px, 4vw, 54px);
+    }
+
+    .breakthrough + .breakthrough {
+      margin-left: clamp(28px, 4vw, 56px);
+      padding-left: clamp(28px, 4vw, 56px);
+      border-left: 1px solid var(--rule);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-number {
+      flex: none;
+      color: var(--blue);
+      font-size: clamp(3.7rem, 7vw, 6rem);
+      font-weight: 850;
+      letter-spacing: -0.075em;
+      line-height: 0.8;
+    }
+
+    .map .section-number { color: var(--red); }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(1.65rem, 3vw, 2.55rem);
+      font-weight: 780;
+      letter-spacing: -0.045em;
+      line-height: 0.96;
+    }
+
+    .section-copy {
+      max-width: 42ch;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.45vw, 1.2rem);
+      line-height: 1.38;
+    }
+
+    .stat-primary {
+      margin: 0 0 28px;
+    }
+
+    .stat-value {
+      display: block;
+      color: var(--blue);
+      font-size: clamp(4.35rem, 8vw, 6.8rem);
+      font-weight: 850;
+      letter-spacing: -0.075em;
+      line-height: 0.8;
+    }
+
+    .stat-label,
+    .map-label,
+    .legend,
+    .play-kicker,
+    .evidence-label {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 9px;
+    }
+
+    .stat-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-bottom: 30px;
+    }
+
+    .stat-pair > div + div {
+      padding-left: 24px;
+      border-left: 1px solid var(--rule);
+    }
+
+    .stat-pair strong {
+      display: block;
+      color: var(--blue);
+      font-size: clamp(3rem, 5vw, 4.7rem);
+      font-weight: 850;
+      letter-spacing: -0.065em;
+      line-height: 0.84;
+    }
+
+    .stat-pair span {
+      display: block;
+      margin-top: 8px;
+      font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+      font-weight: 720;
+      letter-spacing: -0.025em;
+    }
+
+    .policy-result {
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .policy-result strong {
+      display: block;
+      color: var(--blue);
+      font-size: clamp(3.35rem, 5.7vw, 5.25rem);
+      font-weight: 850;
+      letter-spacing: -0.065em;
+      line-height: 0.84;
+    }
+
+    .policy-result p,
+    .caveat p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .caveat { padding-top: 18px; }
+    .caveat strong { font-size: 1rem; }
+
+    .map-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin: 0 0 34px;
+    }
+
+    .map-stat {
+      min-height: 84px;
+      padding: 0 22px 18px 0;
+    }
+
+    .map-stat:nth-child(even) {
+      padding-left: 22px;
+      border-left: 1px solid var(--rule);
+    }
+
+    .map-stat:nth-child(n + 3) {
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .map-stat strong {
+      display: block;
+      color: var(--red);
+      font-size: clamp(2.5rem, 4.4vw, 4rem);
+      font-weight: 850;
+      letter-spacing: -0.06em;
+      line-height: 0.85;
+    }
+
+    .map-label { display: block; margin-top: 9px; }
+
+    .map-figure {
+      margin: 0;
+      padding: 20px 0 0;
+    }
+
+    .axis-top {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      margin: 0 0 11px 56px;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .axis-arrow {
+      color: var(--red);
+      font-size: 1.25rem;
+      line-height: 0;
+    }
+
+    .map-layout {
+      display: grid;
+      grid-template-columns: 38px minmax(220px, 1fr);
+      gap: 14px;
+      align-items: center;
+    }
+
+    .axis-side {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    .axis-side::after {
+      content: "  ↑";
+      color: var(--red);
+      font-family: var(--sans);
+      font-size: 1.15rem;
+    }
+
+    .elite-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      aspect-ratio: 1;
+      border-top: 1px solid var(--rule);
+      border-left: 1px solid var(--rule);
+      background: #fffefa;
+    }
+
+    .elite-grid span {
+      position: relative;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .elite-grid .occupied { background: var(--red); }
+    .elite-grid .occupied.three { background: var(--ink); }
+
+    .elite-grid .occupied::after {
+      content: attr(data-count);
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-family: var(--mono);
+      font-size: clamp(0.55rem, 1.2vw, 0.78rem);
+      font-weight: 800;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 20px;
+      margin: 16px 0 0 52px;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .legend i { width: 12px; height: 12px; background: var(--red); }
+    .legend span:last-child i { background: var(--ink); }
+
+    .playstyles {
+      padding: clamp(28px, 4vw, 48px) 0 clamp(26px, 4vw, 44px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .play-kicker { margin-bottom: 24px; }
+
+    .play-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .playstyle {
+      min-width: 0;
+      padding: 0 clamp(12px, 1.7vw, 20px);
+    }
+
+    .playstyle:first-child { padding-left: 0; }
+    .playstyle:last-child { padding-right: 0; }
+    .playstyle + .playstyle { border-left: 1px solid var(--rule); }
+
+    .playstyle .index {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--red);
+      font-size: clamp(2rem, 3.5vw, 3.1rem);
+      font-weight: 850;
+      letter-spacing: -0.055em;
+      line-height: 0.9;
+    }
+
+    .playstyle h3 {
+      min-height: 2.25em;
+      margin-bottom: 8px;
+      font-size: clamp(0.95rem, 1.45vw, 1.18rem);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+
+    .playstyle p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(0.82rem, 1.2vw, 0.98rem);
+      line-height: 1.32;
+    }
+
+    .synthesis {
+      padding: clamp(28px, 4vw, 48px) 0 clamp(24px, 3vw, 36px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .synthesis p {
+      margin: 0;
+      font-size: clamp(2.3rem, 5.35vw, 5.1rem);
+      font-weight: 850;
+      letter-spacing: -0.06em;
+      line-height: 0.94;
+    }
+
+    .synthesis .blue { color: var(--blue); }
+    .synthesis .red { color: var(--red); }
+
+    .evidence {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      padding-top: 24px;
+      color: var(--muted);
+    }
+
+    .evidence p {
+      margin: 6px 0 0;
+      font-size: 0.82rem;
+      line-height: 1.42;
+    }
+
+    .next-step {
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(0.95rem, 1.4vw, 1.12rem);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 760px) {
+      html { background: var(--paper); }
+      main { box-shadow: none; }
+      h1 { font-size: clamp(3.25rem, 15vw, 5.5rem); }
+
+      .breakthroughs { display: block; }
+
+      .breakthrough + .breakthrough {
+        margin-left: 0;
+        padding-left: 0;
+        border-top: 1px solid var(--rule);
+        border-left: 0;
+      }
+
+      .play-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+
+      .playstyle {
+        min-height: 150px;
+        padding: 18px;
+        border-top: 1px solid var(--rule);
+      }
+
+      .playstyle:first-child { padding-left: 18px; }
+      .playstyle:last-child { padding-right: 18px; }
+      .playstyle:nth-child(odd) { border-left: 0; }
+      .playstyle:nth-child(-n + 2) { border-top: 0; }
+      .playstyle h3 { min-height: auto; }
+      .evidence { grid-template-columns: 1fr; gap: 18px; }
+    }
+
+    @media (max-width: 430px) {
+      .section-title { align-items: flex-end; gap: 12px; }
+      .stat-pair { grid-template-columns: 1fr; gap: 18px; }
+      .stat-pair > div + div { padding: 18px 0 0; border-top: 1px solid var(--rule); border-left: 0; }
+      .play-grid { grid-template-columns: 1fr; }
+      .playstyle, .playstyle:first-child, .playstyle:last-child { min-height: 0; padding: 18px 0; border-top: 1px solid var(--rule); border-left: 0; }
+      .playstyle + .playstyle { border-left: 0; }
+      .playstyle:first-child { border-top: 0; }
+      .legend { margin-left: 0; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .occupied { animation: settle 560ms both; }
+      .occupied:nth-child(7n) { animation-delay: 70ms; }
+      @keyframes settle {
+        from { transform: scale(0.82); }
+        to { transform: scale(1); }
+      }
+    }
+
+    @media print {
+      @page { size: 1120px 2100px; margin: 0; }
+      html, body, main { background: white; }
+      body { width: 1120px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      main { width: 1120px; min-height: 2100px; padding: 58px 56px 42px; box-shadow: none; }
+      .breakthroughs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+      .breakthrough + .breakthrough { margin-left: 56px; padding-left: 56px; border-top: 0; border-left: 1px solid var(--rule); }
+      .play-grid { grid-template-columns: repeat(5, 1fr); }
+      .playstyle, .playstyle:first-child, .playstyle:last-child { min-height: 0; padding: 0 16px; border-top: 0; }
+      .playstyle:first-child { padding-left: 0; }
+      .playstyle:last-child { padding-right: 0; }
+      .playstyle + .playstyle { border-left: 1px solid var(--rule); }
+      .evidence { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <h1>Two Breakthroughs<br>in One Session</h1>
+      <p class="dek">A stronger way to play. A new way to author.</p>
+    </header>
+
+    <section class="breakthroughs" aria-label="The two breakthroughs">
+      <article class="breakthrough policy">
+        <div class="section-title">
+          <span class="section-number">01</span>
+          <h2>Evolve the player</h2>
+        </div>
+        <p class="section-copy">An OpenEvolve / AlphaEvolve-style search produced a generic harvesting ranker and an oracle that found stronger lines across the captured human-board corpus.</p>
+
+        <div class="stat-primary">
+          <strong class="stat-value">20 / 20</strong>
+          <span class="stat-label">oracle wins</span>
+        </div>
+
+        <div class="stat-pair" aria-label="Oracle comparison with recorded human wins">
+          <div><strong>17</strong><span>faster</span></div>
+          <div><strong>2</strong><span>tied</span></div>
+        </div>
+
+        <div class="policy-result">
+          <strong>18 / 18</strong>
+          <span class="stat-label">evolved-policy wins</span>
+          <p>On the non-tuning captured panel, versus 15 / 18 for the pre-evolution baseline.</p>
+        </div>
+
+        <div class="caveat">
+          <strong>Captured-corpus success.</strong>
+          <p>Fresh-board superiority remains open.</p>
+        </div>
+      </article>
+
+      <article class="breakthrough map">
+        <div class="section-title">
+          <span class="section-number">02</span>
+          <h2>Map the game</h2>
+        </div>
+        <p class="section-copy">A verified MAP-Elites run turned successful plan breadth × harvesting advantage into a searchable space of genuinely different levels.</p>
+
+        <div class="map-stats" aria-label="MAP-Elites archive statistics">
+          <div class="map-stat"><strong>7 × 7</strong><span class="map-label">behavior map</span></div>
+          <div class="map-stat"><strong>12</strong><span class="map-label">elite boards</span></div>
+          <div class="map-stat"><strong>6</strong><span class="map-label">occupied cells</span></div>
+          <div class="map-stat"><strong>3 × 4</strong><span class="map-label">breadth × harvest bins</span></div>
+        </div>
+
+        <figure class="map-figure">
+          <div class="axis-top">successful plan breadth <span class="axis-arrow">→</span></div>
+          <div class="map-layout">
+            <div class="axis-side">harvesting advantage</div>
+            <div class="elite-grid" role="img" aria-label="Seven by seven MAP-Elites archive with six occupied cells. Three cells contain three elite boards and three contain one.">
+              <!-- y=6 -->
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              <!-- y=5: cells 0,5 · 4,5 · 6,5 -->
+              <span class="occupied three" data-count="3"></span><span></span><span></span><span></span><span class="occupied" data-count="1"></span><span></span><span class="occupied" data-count="1"></span>
+              <!-- y=4: cell 6,4 -->
+              <span></span><span></span><span></span><span></span><span></span><span></span><span class="occupied three" data-count="3"></span>
+              <!-- y=3 -->
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              <!-- y=2: cell 6,2 -->
+              <span></span><span></span><span></span><span></span><span></span><span></span><span class="occupied three" data-count="3"></span>
+              <!-- y=1: cell 6,1 -->
+              <span></span><span></span><span></span><span></span><span></span><span></span><span class="occupied" data-count="1"></span>
+              <!-- y=0 -->
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <figcaption class="legend"><span><i></i> one elite</span><span><i></i> three elites</span></figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section class="playstyles" aria-labelledby="playstyles-title">
+      <h2 class="play-kicker" id="playstyles-title">Five forms of gameplay surfaced in playtest</h2>
+      <div class="play-grid">
+        <article class="playstyle"><span class="index">01</span><h3>Mega-harvest</h3><p>Open, exploitable play ending in a spectacular payout.</p></article>
+        <article class="playstyle"><span class="index">02</span><h3>Low-pressure grind</h3><p>Real buildup, but repetition continued too long without pressure.</p></article>
+        <article class="playstyle"><span class="index">03</span><h3>Tactical containment</h3><p>Tight space made position matter from the opening move.</p></article>
+        <article class="playstyle"><span class="index">04</span><h3>Quick &amp; easy</h3><p>A short, approachable harvest with immediate momentum.</p></article>
+        <article class="playstyle"><span class="index">05</span><h3>Quick &amp; balanced</h3><p>Concise without feeling automatic or punishing.</p></article>
+      </div>
+    </section>
+
+    <section class="synthesis" aria-label="Synthesis">
+      <p class="blue">Search discovers how to play.</p>
+      <p class="red">MAP-Elites discovers what to play.</p>
+    </section>
+
+    <footer>
+      <div class="evidence">
+        <div>
+          <span class="evidence-label">What the evidence supports</span>
+          <p>Legal, replayable oracle witnesses on the captured corpus; broad fixed-corpus improvement by the evolved ranker; a verified bounded board archive spanning both chosen axes.</p>
+        </div>
+        <div>
+          <span class="evidence-label">What remains open</span>
+          <p>Optimality, universal policy dominance, superiority on unseen boards, and whether every occupied cell contains a level worth shipping.</p>
+        </div>
+      </div>
+      <p class="next-step">The next step is deliberate cell-filling: introduce mechanics, preserve diversity, and let human play identify what deserves to ship.</p>
+    </footer>
+  </main>
+</body>
+</html>

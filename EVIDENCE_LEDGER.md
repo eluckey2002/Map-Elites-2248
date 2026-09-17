@@ -8,6 +8,16 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
+As of 2026-09-17, `RESULT-0047` preserves five exact owner playtests of
+retained RESULT-0046 elites. All five candidate-bound recordings replay, and
+the owner reached the target faster than the current reference bot on every
+identified board. The three played cell-0,5 elites finished in 11, 10, and 8
+moves and received distinct owner descriptions: good tactical containment,
+quick and easy, and quick and balanced. The high-breadth cell-6,1 board was
+judged a repetitive low-pressure grind despite its record 153,600-point final
+chain. These are fixed-session results and owner judgments, not a general
+preference, difficulty, fun, or future-board claim.
+
 As of 2026-09-17, `RESULT-0041` preserves a complete deterministic paired
 comparison of the evolved harvesting ranker against its pre-evolution baseline
 on the captured corpus, but closed `UNVERIFIED` because the preregistered
@@ -949,6 +959,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0045]
 - **superseded_by:** []
 - **notes:** RESULT-0045 remains preserved as invalid. Its two harness defects are regression-guarded here: exhausted empty breadth rows verify as exact zero while capped empties stay `UNKNOWN`, and registration provenance is excluded from artifact identity consistently with the repository experiment gate. This validates a bounded authoring map, not the desirability of every retained board; human playtesting and deliberate cell-filling are separate next steps.
+
+### RESULT-0047 — Five retained board elites replay and receive distinct owner judgments
+
+- **type:** result
+- **status:** accepted
+- **scope:** one owner session on each of five RESULT-0046 elites — `gen-0006` seed `43,000,002`, `gen-0003` seed `43,000,002`, `gen-0002` seed `43,000,001`, `gen-0010` seed `43,000,000`, and `gen-0004` seed `43,000,001`; exact candidate identities, seeds, recordings, and current reference bot only
+- **statement:** All five candidate-bound owner recordings replay without divergence and reach their bound target. Owner/reference-bot move counts are `15/21`, `19/20`, `11/13`, `10/11`, and `8/12`; the owner is faster on all five fixed sessions. With these sessions included, the live all-corpus benchmark reports 32 paired sessions: human 30 wins, reference bot 32 wins; among 30 mutual wins, human faster 16, bot faster 9, tied 5. The three played cell-0,5 boards received distinct judgments: `gen-0002` immediately conveyed containment and was judged a good level, `gen-0010` was quick and easy, and `gen-0004` was quick and balanced. `gen-0003` was judged too long and repetitive without meaningful pressure; its lone timer-10 bomb exploded in only 1/300 RESULT-0046 holdout games, and its owner session ended with a 153,600-point chain after an unexpected 4,096-producing penultimate chain. Across the five boards, the owner said most brought out a sense of gameplay and that their differences were notable. These are exact fixed-session results and owner judgments, not estimates of fun, difficulty, preference frequency, policy superiority, optimality, or unplayed boards.
+- **evidence:** candidate recordings `recordings/efc156d36033580dacfc95e003b038f3285121c497f875d4e3a88ee85ff05a6f.json`, `recordings/e3f484119b650659e2a1a546a26a94af3f3e75a375cf61e645b23a444867c703.json`, `recordings/86e778a28499b151f237fd25eb4924a018f94065410f4437028d3619b09acb93.json`, `recordings/ef9f371939c637162d49b2e551ffa18a5e783934fb78e6034b925c69465ae497.json`, and `recordings/0e612993635c924ec12aaa6b331b0419c850e08495a8eecdcc49a0054405c56c.json`; canonical candidate and mapped-policy rows in `experiments/RESULT-0046/output/archive.json`; replay and same-seed reduction `experiments/RESULT-0046/replay-playtests.js`; readable synthesis `experiments/RESULT-0046/playtest-report.md`
+- **proof_class:** `exact_result` for the five replayed owner outcomes, scores, move counts, chains, and same-seed reference-bot comparisons; `direct_source` for the bound candidate/archive rows and the owner's captured descriptions; no generalized human-quality or policy claim
+- **as_of:** 2026-09-17
+- **reverify:** Run `node experiments/RESULT-0046/replay-playtests.js`; expect five rows with owner/reference-bot moves `15/21`, `19/20`, `11/13`, `10/11`, and `8/12`, and no replay error. Run `node solver/human-benchmark.js`; expect 32 paired sessions, human/reference-bot wins `30/32`, and mutual-win speed `16/9/5` for human faster / bot faster / tied.
+- **updated:** 2026-09-17
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This post-close follow-up does not alter RESULT-0046's registered conclusion. The normal replay index now admits candidates only from experiment archives whose closure status is `CLOSED`, so these sessions resolve through `solver/human-benchmark.js --recording` without treating invalid RESULT-0045 output as evidence or falling back to a shipped level with the same number. Retaining three elites per cell is now supported as an owner decision by the distinct fixed-session descriptions, not as a population-level quality claim.
 
 ## Decision registry
 

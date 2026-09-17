@@ -72,6 +72,26 @@ test('an ordinary play capture resolves to the shipped board and pairs on its se
   assert.deepEqual(rows[0].bot, { score: 126464, moves: 15, outcome: 'win' });
 });
 
+test('a MAP-Elites playtest resolves through its CLOSED experiment archive', () => {
+  const file = path.join(
+    ROOT,
+    'recordings',
+    '0e612993635c924ec12aaa6b331b0419c850e08495a8eecdcc49a0054405c56c.json',
+  );
+  const { rows, unresolved } = collect({ recordingPath: file });
+
+  assert.deepEqual(unresolved, []);
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].source, 'experiments/RESULT-0046/output/archive.json (gen-0004)');
+  assert.deepEqual(rows[0].human, {
+    score: 78656,
+    moves: 8,
+    outcome: 'win',
+    reason: 'target reached',
+  });
+  assert.deepEqual(rows[0].bot, { score: 83072, moves: 12, outcome: 'win' });
+});
+
 test('an invalid ordinary capture is reported without crashing on its null identity', (t) => {
   const source = path.join(
     ROOT,
