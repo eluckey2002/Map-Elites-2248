@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "result_id": "RESULT-0046",
+  "status": "PASS",
+  "qualified_at": "2026-09-17",
+  "registration": {
+    "commit": "4091e60f5a9a26cf23f2ede40cbf7b37713925d2",
+    "protocol_sha256": "3e1a3819387d4f3e0a93b542f8567f1ddb64b72504b0d2266157eb081651a90a",
+    "closeout_contract_sha256": "2be1659b53060de81188ca6317169373518e64dbaec5268a06df55734c6d5ac5",
+    "freeze_entries_checked": 31,
+    "freeze_mismatches": 0,
+    "experiment_gate_discovered_protocol": true
+  },
+  "final_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+  "profiles": [
+    {
+      "name": "candidate-measure",
+      "sha256": "5b1edc87a2e4c7bdcea493c7ba6b03c017fae6a13d05044b8df99586e5d167e4"
+    },
+    {
+      "name": "simulation-policy",
+      "sha256": "63dbce14106578b3973cf6308f1820de8395099558c9b4ae91438aa3b0461f8a"
+    },
+    {
+      "name": "mutation-qualification",
+      "sha256": "dc67e21d0c4938b85e853e4e9c4868408f53a9a85e88006e029a500d8f08632f"
+    }
+  ],
+  "checks": {
+    "focused_map_suite": {
+      "command": "node --test solver/tests/boardMapElitesCore.test.js solver/tests/boardMapElitesMeasure.test.js solver/tests/boardMapElitesVerifier.test.js solver/tests/landmarkFrontier.test.js",
+      "tests": 26,
+      "passed": 26,
+      "failed": 0
+    },
+    "repository_baseline": {
+      "command": "node --test solver/tests/*.test.js",
+      "tests": 463,
+      "passed": 458,
+      "failed": 4,
+      "skipped": 1,
+      "matches_documented_expected_failures": true,
+      "expected_failures": [
+        "candidate-levels-52.json stale receipt",
+        "candidate-levels-54.json stale receipt",
+        "Universe Map generated-view staleness",
+        "Universe Map date drift"
+      ]
+    },
+    "production_controls": {
+      "harvest_positive_advantage": 0.173913,
+      "immediate_positive_advantage": -0.074074,
+      "assignment_null_advantage": 0,
+      "paired_inputs_equal": true,
+      "exhausted_empty_breadth": "exact_result",
+      "capped_empty_breadth": "UNKNOWN"
+    },
+    "verifier_assurance": {
+      "rejection_mutations_attempted": 7,
+      "rejection_mutations_killed": 7,
+      "exclusions": [],
+      "positive_seams": [
+        "provenance restamping preserves artifact identity",
+        "exhausted empty breadth row verifies as exact zero"
+      ],
+      "repository_identity_convention": "registration excluded",
+      "restoration": "clean",
+      "frozen_source_hash_restored": true
+    },
+    "closeout_rehearsal": {
+      "verdict": "PASS",
+      "checked_claims": 11,
+      "checked_artifacts": 4,
+      "recomputation": "PASS",
+      "disposable_output_removed": true
+    },
+    "unregistered_execution": {
+      "refused_before_compute": true,
+      "output_path_absent": true
+    }
+  },
+  "attempts": [
+    {
+      "id": "qualification-01",
+      "verdict": "PASS",
+      "confirmation_outcome_observed": false
+    }
+  ]
+}
