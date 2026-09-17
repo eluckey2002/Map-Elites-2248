@@ -79,6 +79,21 @@ test('a capped miss stays UNKNOWN', () => {
   assert.ok(result.diagnostics.capReasons.includes('nodes'));
 });
 
+test('an exhausted one-move targeted search reports an exact zero', () => {
+  const result = analyzeLandmarkFrontier({
+    state: fixture([[2], [2]]),
+    spawnValues: Array(10).fill(2),
+    landmark: 8,
+    options: {
+      mode: 'bounded', maxNodes: 1, beamWidth: 1, actionsPerState: 8,
+      pathWidth: 1, maxPathStates: 100, maxResults: 8, maxMoves: 1,
+    },
+  });
+  assert.equal(result.standing, 'exact_result');
+  assert.equal(result.complete, true);
+  assert.equal(result.distinctOutcomeCountLowerBound, 0);
+});
+
 test('replay rejects a planted bad chain', () => {
   const state = fixture([[2], [2]]);
   const result = exact(state, 4);

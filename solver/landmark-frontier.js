@@ -156,6 +156,8 @@ function directLandmarkChains(state, landmark, maxPathStates) {
 function candidateChains(state, landmark, options, diagnostics) {
   if (options.mode === 'bounded') {
     const direct = directLandmarkChains(state, landmark, options.maxPathStates);
+    diagnostics.directLandmarkCalls += 1;
+    if (!direct.capped) diagnostics.completeDirectLandmarkCalls += 1;
     diagnostics.visitedPathStates += direct.visitedPathStates;
     if (direct.capped) diagnostics.capReasons.add('landmark-path-states');
     const combined = new Map(direct.actions.map((chain) => [actionIdentity(chain), chain]));
@@ -273,6 +275,8 @@ function analyzeLandmarkFrontier({ state, spawnValues, spawnCursor = 0, landmark
     generatedActions: 0,
     landmarkActions: 0,
     visitedPathStates: 0,
+    directLandmarkCalls: 0,
+    completeDirectLandmarkCalls: 0,
     capReasons: new Set(),
   };
   const outcomes = new Map();
@@ -339,10 +343,17 @@ function analyzeLandmarkFrontier({ state, spawnValues, spawnCursor = 0, landmark
   const routes = [...outcomes.values()]
     .sort((a, b) => a.moves - b.moves || b.score - a.score
       || a.outcomeIdentity.localeCompare(b.outcomeIdentity));
-  const bounded = limits.mode === 'bounded' || diagnostics.capReasons.size > 0;
+  const targetedOneMoveComplete = limits.mode === 'bounded'
+    && moveLimit === 1
+    && diagnostics.expandedNodes === 1
+    && diagnostics.directLandmarkCalls === 1
+    && diagnostics.completeDirectLandmarkCalls === 1
+    && !diagnostics.capReasons.has('results');
+  const bounded = (limits.mode === 'bounded' && !targetedOneMoveComplete)
+    || diagnostics.capReasons.size > 0;
   return {
     landmark,
-    standing: routes.length ? 'replayed_lower_bound' : 'UNKNOWN',
+    standing: routes.length ? 'replayed_lower_bound' : bounded ? 'UNKNOWN' : 'exact_result',
     complete: !bounded,
     distinctOutcomeCountLowerBound: routes.length,
     routes,
