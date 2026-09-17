@@ -831,6 +831,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** [CORRECTION-0007]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
+### RESULT-0039 — Bounded 2048 opportunity counts distinguish four captured board starts
+
+- **type:** result
+- **status:** accepted
+- **scope:** the initial positions of shipped Levels 55–58 on captured seeds `2600645753`, `3504920448`, `2389915636`, and `4255346895`; exact tile value 2048; one move; at most 100,000 landmark path states and 512 returned outcomes per board; no total-route, future-board, human-difficulty, enjoyment, fitness, MAP-Elites-axis, or outside-panel claim
+- **statement:** The landmark-frontier probe found and replayed **11**, **370**, **at least 512**, and **4** distinct post-move board outcomes containing a 2048 tile on the four fixed board starts, respectively. Different legal actions that converged on the same post-move board were collapsed: the corresponding generated-action counts were 17, 973, 734, and 7, with 6, 603, 222, and 3 duplicate outcomes removed. Level 56 and Level 58 reached the 100,000 path-state bound; Level 57 reached the 512-result bound. Every count is therefore retained only as a replayed lower bound, and a bounded miss would remain `UNKNOWN`. The observed spread establishes that this probe distinguishes these four identified positions; it does not establish that more 2048 routes improve a level.
+- **evidence:** executable fixed comparison `solver/landmark-frontier-sample.js`; search, board-outcome deduplication, and route replay `solver/landmark-frontier.js`; controlled one-route, multiple-route, duplicate-outcome, capped-miss, planted-bad-route, serialized-position CLI, and owner-opening tests in `solver/tests/landmarkFrontier.test.js`; captured-board identities named by the sample are ordinary sessions under `play-sessions/` and are not promoted to candidate evidence
+- **proof_class:** `replayed_lower_bound` for the four found outcome counts; `direct_source` for the fixed inputs, bounds, deduplication rule, replay checks, and observed differentiation; `unresolved` for total route multiplicity and for any gameplay-quality or authoring-value relationship
+- **as_of:** 2026-09-17
+- **reverify:** Run `node --test solver/tests/landmarkFrontier.test.js`; expect 7/7 passing. Run `node solver/landmark-frontier-sample.js`; expect outcomes found `11`, `370`, `512`, and `4`, action counts `17`, `973`, `734`, and `7`, and bounds `none`, `landmark-path-states`, `results`, and `landmark-path-states`. The command replays every route before printing the comparison.
+- **updated:** 2026-09-17
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This is an exploratory fixed-panel observation, not a preregistered generalization. It makes landmark opportunity measurable without adopting it as a descriptor or beginning MAP-Elites integration.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
