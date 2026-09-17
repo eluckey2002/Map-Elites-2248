@@ -15,7 +15,7 @@ function harvestableMass(state) {
       const valueWeight = Math.max(1, Math.log2(value) / 5);
 
       // Exact pairs unlock merges immediately (worth more)
-      let pairBonus = count > 1 ? 1.8 : 1.0;
+      let pairBonus = count > 1 ? 1.5 : 1.0;
 
       // Bonus for ladder chains: tiles part of sequences like 2→4→8→16
       let ladderBonus = 1.0;
@@ -23,7 +23,7 @@ function harvestableMass(state) {
         let chainDepth = 0;
         let v = value;
         while (counts.has(v)) { chainDepth++; v *= 2; }
-        ladderBonus = 1.0 + chainDepth * 0.25;
+        ladderBonus = chainDepth > 1 ? 1.0 + (chainDepth - 1) * 0.18 : 1.0;
       }
 
       result += value * count * valueWeight * pairBonus * ladderBonus;
@@ -32,9 +32,9 @@ function harvestableMass(state) {
   return result;
 }
 
-function rankState(state, { potentialWeight = 2 } = {}) {
-  // Emphasize setup for large chains over immediate score
-  return state.score * 0.6 + potentialWeight * harvestableMass(state);
+function rankState(state, { potentialWeight = 1.3 } = {}) {
+  // Balance immediate progress against chain setup
+  return state.score * 0.75 + potentialWeight * harvestableMass(state);
 }
 
 module.exports = { harvestableMass, rankState };
