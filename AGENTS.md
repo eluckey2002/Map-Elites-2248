@@ -17,6 +17,10 @@ Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) before substantive reasoning about
 
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
 
+`docs/solutions/` contains documented solutions to past problems and tooling decisions, organized by category with searchable YAML frontmatter (`module`, `tags`, `problem_type`). It is relevant when implementing, debugging, or making decisions in a documented area.
+
+`CONCEPTS.md` contains the project's shared domain vocabulary and is relevant when orienting to the codebase or discussing project-specific concepts.
+
 Append source-pinned updates using the ledger's record schema. Preserve each proof class exactly: a replayed lower bound, exact result, proven upper bound, heuristic observation, `UNKNOWN`, or unresolved question must not be promoted into another class.
 
 Make every correction append-only. Add a correction or supersession record, update the affected record's status, and retain the prior claim and receipt.
