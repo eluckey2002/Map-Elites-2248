@@ -10,13 +10,31 @@ function harvestableMass(state) {
   }
   let result = 0;
   for (const [value, count] of counts) {
-    if (count > 1 || counts.has(value / 2) || counts.has(value * 2)) result += value * count;
+    if (count > 1 || counts.has(value / 2) || counts.has(value * 2)) {
+      // Weight by value magnitude (large tiles matter more than small)
+      const valueWeight = Math.max(1, Math.log2(value) / 5);
+
+      // Exact pairs unlock merges immediately (worth more)
+      let pairBonus = count > 1 ? 1.8 : 1.0;
+
+      // Bonus for ladder chains: tiles part of sequences like 2→4→8→16
+      let ladderBonus = 1.0;
+      if (counts.has(value / 2)) {
+        let chainDepth = 0;
+        let v = value;
+        while (counts.has(v)) { chainDepth++; v *= 2; }
+        ladderBonus = 1.0 + chainDepth * 0.25;
+      }
+
+      result += value * count * valueWeight * pairBonus * ladderBonus;
+    }
   }
   return result;
 }
 
-function rankState(state, { potentialWeight = 1 } = {}) {
-  return state.score + potentialWeight * harvestableMass(state);
+function rankState(state, { potentialWeight = 2 } = {}) {
+  // Emphasize setup for large chains over immediate score
+  return state.score * 0.6 + potentialWeight * harvestableMass(state);
 }
 
 module.exports = { harvestableMass, rankState };
