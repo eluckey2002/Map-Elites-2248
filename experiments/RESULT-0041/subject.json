@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0041",
+  "claimScope": "exact paired transfer comparison on the 18 captured-corpus puzzles not used by the four-board optimization panel",
+  "corpusIdentity": "59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308",
+  "budgetMs": 30000,
+  "maxExpandedStates": 600,
+  "includeBaseline": false,
+  "lossPenaltyMoves": 20,
+  "arms": {
+    "baseline": {
+      "name": "pre-evolution harvest ranking",
+      "sourceCommit": "84c7a433e368e6eaf572b9d753288246b478fdce",
+      "description": "score plus compatible equal-or-double tile mass"
+    },
+    "evolved": {
+      "name": "evolved harvest ranking",
+      "sourceCommit": "abf3f3149051a47af616b50194009a71fda78a1d",
+      "file": "solver/oracle/harvest-policy.js",
+      "sha256": "2b6c6ff96a6d10f6c093d5084abeefb79ac3a635cd0ca2969b3f1cbbb7c89b0b"
+    }
+  },
+  "optimizationPanelCorpusPuzzles": [
+    "8de7adce947dfcaa3d14aa051176c7051ac034c1b6737a0532f467cce3e27911",
+    "aa9efa2f04ce7c87b0352f9478222a0bf723b16eeb6c558fa87ce32067328ec9"
+  ]
+}

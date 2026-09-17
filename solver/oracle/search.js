@@ -49,12 +49,12 @@ function candidates(state, limit = 48, variant = 0) {
   return [...kept.values()];
 }
 
-function retainBeam(nodes, width, weight) {
+function retainBeam(nodes, width, weight, rankStateFn = rankState) {
   const all = [...nodes.values()];
   const scoreOrder = (a, b) => b.state.score - a.state.score;
   const result = all.slice().sort(scoreOrder).slice(0, Math.ceil(width / 3));
   const kept = new Set(result);
-  for (const node of all) node.rank = rankState(node.state, { potentialWeight: weight });
+  for (const node of all) node.rank = rankStateFn(node.state, { potentialWeight: weight });
   all.sort((a, b) => b.rank - a.rank || scoreOrder(a, b));
   for (const node of all) {
     if (result.length >= width) break;
@@ -63,7 +63,10 @@ function retainBeam(nodes, width, weight) {
   return result;
 }
 
-function search({ level, seed, budgetMs = 30000, maxExpandedStates = Infinity, includeBaseline = true }, onProgress = () => {}) {
+function search({
+  level, seed, budgetMs = 30000, maxExpandedStates = Infinity,
+  includeBaseline = true, rankStateFn = rankState,
+}, onProgress = () => {}) {
   if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 30000) throw new Error('budgetMs must be in (0, 30000]');
   if (maxExpandedStates !== Infinity && (!Number.isInteger(maxExpandedStates) || maxExpandedStates < 1)) {
     throw new Error('maxExpandedStates must be a positive integer or Infinity');
@@ -123,7 +126,7 @@ function search({ level, seed, budgetMs = 30000, maxExpandedStates = Infinity, i
           }
         }
         if (performance.now() >= deadline || stats.expandedStates >= maxExpandedStates || next.size === 0) break;
-        frontier = retainBeam(next, width, variant ? 4 : 1);
+        frontier = retainBeam(next, width, variant ? 4 : 1, rankStateFn);
       }
       if (performance.now() < deadline) stats.completedPasses++;
     }
