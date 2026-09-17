@@ -29,8 +29,8 @@ const {
 
 const ROOT = path.resolve(__dirname, '..');
 const LANDMARK = 2048;
-const DEFAULT_DESCRIPTOR_SEEDS = Object.freeze([42000000, 42000001, 42000002]);
-const DEFAULT_SAMPLER_SEED = 20260918;
+const DEFAULT_DESCRIPTOR_SEEDS = Object.freeze([43000000, 43000001, 43000002]);
+const DEFAULT_SAMPLER_SEED = 20260919;
 const DEFAULT_COUNT = 36;
 const DEFAULT_FULL = 16;
 const LANDMARK_OPTIONS = Object.freeze({

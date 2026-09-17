@@ -67,6 +67,6 @@ test('CLI defaults freeze the 7x7 confirmation configuration', () => {
   assert.equal(parsed.count, 36);
   assert.equal(parsed.full, 16);
   assert.equal(parsed.level, 56);
-  assert.equal(parsed.samplerSeed, 20260918);
-  assert.deepEqual(parsed.descriptorSeeds, [42000000, 42000001, 42000002]);
+  assert.equal(parsed.samplerSeed, 20260919);
+  assert.deepEqual(parsed.descriptorSeeds, [43000000, 43000001, 43000002]);
 });
