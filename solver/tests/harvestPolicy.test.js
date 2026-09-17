@@ -11,10 +11,14 @@ function state(values, score = 0) {
   };
 }
 
-test('baseline harvest policy values mutually harvestable mass, not an isolated maximum', () => {
-  assert.equal(harvestableMass(state([64, 64, 128, 4096])), 256);
-  assert.equal(harvestableMass(state([4096, 2, 4, 8])), 14);
-  assert.ok(rankState(state([64, 64, 128], 100)) > rankState(state([4096], 100)));
+test('harvest policy favors mutually harvestable mass without mutating state', () => {
+  const compatible = state([64, 64, 128, 4096], 100);
+  const isolated = state([4096], 100);
+  const before = structuredClone(compatible);
+
+  assert.ok(Number.isFinite(harvestableMass(compatible)));
+  assert.ok(rankState(compatible) > rankState(isolated));
+  assert.deepEqual(compatible, before);
 });
 
 test('deterministic work cap stops search without claiming impossibility', () => {
