@@ -1,0 +1,6 @@
+{
+  "status": "NOT_ENTITLED",
+  "closureStatus": "INVALID",
+  "primaryOutcome": null,
+  "reason": "The frozen independent verifier rejected the confirmation artifact before a domain outcome was entitled."
+}

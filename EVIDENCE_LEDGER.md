@@ -920,6 +920,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** This record was renumbered from the unmerged landmark-probe branch's colliding `RESULT-0039` during integration with the oracle branch. It is an exploratory fixed-panel observation, not a preregistered generalization. It makes landmark opportunity measurable without adopting it as a descriptor or beginning MAP-Elites integration.
 
+### RESULT-0045 — First board MAP-Elites confirmation is invalid because its verifier contradicts the producer
+
+- **type:** result
+- **status:** invalid
+- **scope:** one preregistered 36-shape Level-56 generator panel at seed `20260918`; the first 16 screen survivors evaluated on gameplay seeds `42,000,000–42,000,002`; successful-plan-breadth × harvesting-advantage 7×7 archive with up to three boards per cell; no domain inference, adoption, human-quality, fun, difficulty, exhaustive-route, or outside-panel claim
+- **statement:** The sole confirmation attempt produced a complete raw archive but closed **`INVALID`** with no primary domain outcome. The frozen producer correctly classified an exhausted one-move search with zero 2048 outcomes as `exact_result`; the frozen independent verifier still asserted that every zero-route row must be `UNKNOWN`, so it rejected the clean artifact before archive integrity could be established. The raw artifact is preserved with identity `aa7d441e…` and reports 36 screened shapes, 16 evaluated boards, 15 eligible boards, seven occupied cells, five occupied successful-plan-breadth bins, and three occupied harvesting-advantage bins. Those counts are partial direct observations only and do not establish the preregistered map premise. A successor requires a regression-guarded verifier repair, a new subject and protocol identity, and fresh generator and gameplay seeds.
+- **evidence:** immutable registered protocol `experiments/RESULT-0045/registered-protocol.md`; registration commit `b0eaf9c`; qualified harness `experiments/RESULT-0045/qualification.json`; preserved raw artifact identity `aa7d441e7e6aab6c87e8db1d96ee5b48b3d7cde61150b9b4c36fd860a944e2f8` and rendered-map hash bound through the closure; failure analysis `experiments/RESULT-0045/report.md`; verified honest invalid closure `experiments/RESULT-0045/closure.json`
+- **proof_class:** `direct_source` for the identities, complete raw rows, raw counts, verifier contradiction, failed exit, and invalid closure; `UNKNOWN` for all preregistered prediction claims and the primary board-map conclusion. Individual replayed nonzero routes retain lower-bound status inside the preserved artifact; exact-zero rows are not promoted through this invalid experiment.
+- **as_of:** 2026-09-17
+- **reverify:** Run the close-experiment verifier with `--run-recomputation --expected-contract-sha256 0e55b063ec896ceda319b260908e07d1241ebe0a4cdca9c55c99ba066b854f78` but without `--require-closed`; expect verifier `PASS`, closure `INVALID`, and recomputation `NOT_RUN`. Running the frozen experiment verifier on the raw artifact reproduces the `exact_result` versus `UNKNOWN` assertion failure. Do not rerun RESULT-0045 or promote its raw occupancy counts into a domain outcome.
+- **updated:** 2026-09-17
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Qualification killed its seven planned mutations but lacked a clean fixture containing a complete empty breadth row, so it did not expose this producer/verifier semantic disagreement. The successor regression must plant that exact case before any fresh confirmation run.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

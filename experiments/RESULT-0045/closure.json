@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "0e55b063ec896ceda319b260908e07d1241ebe0a4cdca9c55c99ba066b854f78"
+  },
+  "run_id": "RESULT-0045-confirmation-01",
+  "final_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+  "closure_status": "INVALID",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "Frozen breadth controls passed through the public production and replay seams."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "Harvest-positive, immediate-positive, and assignment-null production controls passed."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "The complete raw artifact retains the frozen paired arm matrix under common inputs and caps."
+    },
+    {
+      "id": "C4",
+      "status": "FAIL",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "The clean confirmation artifact was unexpectedly rejected by the frozen verifier's stale zero-route standing assertion."
+    },
+    {
+      "id": "C5",
+      "status": "PASS",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "Repository baseline matched 461 tests: 456 pass, four documented failures, one skip."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "All 31 frozen inputs, protocol discovery, and disposable closeout admission checks passed before confirmation."
+    },
+    {
+      "id": "P1",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "The raw count is five breadth bins, but an invalid run is not entitled to the domain claim."
+    },
+    {
+      "id": "P2",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "The raw count is three harvest bins, but an invalid run is not entitled to the domain claim."
+    },
+    {
+      "id": "P3",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "The raw count is seven cells, but an invalid run is not entitled to the domain claim."
+    },
+    {
+      "id": "P4",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "The independent production verifier did not run to completion."
+    },
+    {
+      "id": "P5",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "5fa64f1c1334bd82dd51f682960f535e968f258d1c6d8fa1d6055915b5c7a12f",
+      "reason": "No primary domain inference is permitted for an invalid run."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "output/archive.json",
+      "sha256": "546b320cc8f3b50e25b66299f2cce20e31b9ee369eb8fdbf4a15b48a77476a25"
+    },
+    {
+      "id": "map",
+      "path": "output/map.html",
+      "sha256": "a049b273b07b2d7a80444e4b924b8aaf82d7fe7e67ee0819a25aef269ffea3c0"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "4245ef6b868d4fb10d5364ac4e3de1c70efb55090bce8dc6facc02c9755f1812"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "a4d4e727775725904bd871d7893c6df2b7e29d447e354ba296f1a0d5e5d69a3f"
+    }
+  ],
+  "primary_outcome": null,
+  "deviations": [
+    "The frozen independent verifier required every empty breadth row to be UNKNOWN, contradicting the frozen producer's exact_result standing for an exhausted one-move zero-route search.",
+    "The producer and experiment verifier included registration in artifactIdentity, while the repository experiment gate excludes registration before recomputing that identity."
+  ],
+  "attempts": [
+    {
+      "id": "RESULT-0045-confirmation-01",
+      "exit_code": 1,
+      "artifact_ids": [
+        "corpus",
+        "map",
+        "report",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}
