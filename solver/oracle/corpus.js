@@ -27,10 +27,10 @@ function ruleLevel(candidate) {
     .map(key => [key, key === 'tileScale' ? candidate[key] || 1 : candidate[key]]));
 }
 
-function collectCorpus() {
+function collectCorpus(files = recordingFiles()) {
   const engineIdentity = fileHash(path.join(ROOT, 'solver/engine.js'));
   const puzzles = new Map();
-  for (const file of recordingFiles()) {
+  for (const file of files) {
     const recording = JSON.parse(fs.readFileSync(path.join(ROOT, file), 'utf8'));
     const resolved = resolveRecordedBoard(recording);
     if (!resolved) throw new Error(`unresolved recording: ${file}`);
@@ -59,7 +59,7 @@ function collectCorpus() {
   const body = {
     schemaVersion: 1, scope: 'exact captured corpus; development cases, not a holdout',
     engineIdentity, gameIdentity: fileHash(path.join(ROOT, 'src/game.js')),
-    recordingCount: recordingFiles().length,
+    recordingCount: files.length,
     puzzles: [...puzzles.values()].sort((a, b) => a.puzzleIdentity.localeCompare(b.puzzleIdentity)),
   };
   return { ...body, manifestIdentity: valueIdentity(body) };
@@ -71,7 +71,8 @@ function loadCorpus(file = DEFAULT_MANIFEST, expectedIdentity = FROZEN_MANIFEST_
   if (manifestIdentity !== expectedIdentity || valueIdentity(body) !== expectedIdentity) {
     throw new Error('frozen corpus identity mismatch');
   }
-  const actual = collectCorpus();
+  const frozenFiles = manifest.puzzles.flatMap(puzzle => puzzle.recordings.map(recording => recording.file));
+  const actual = collectCorpus(frozenFiles);
   if (actual.manifestIdentity !== expectedIdentity) throw new Error('live corpus or rules differ from the frozen manifest');
   return manifest;
 }

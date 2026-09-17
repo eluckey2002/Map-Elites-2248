@@ -55,7 +55,8 @@ test('oracle corpus reads and replays all real recordings, groups exact repeats,
   assert.equal(manifest.recordingCount, 25);
   assert.equal(manifest.puzzles.length, 20);
   assert.equal(manifest.puzzles.filter(p => p.humanBestMoves === null).length, 1);
-  assert.equal(collectCorpus().manifestIdentity, manifest.manifestIdentity);
+  const frozenFiles = manifest.puzzles.flatMap(puzzle => puzzle.recordings.map(recording => recording.file));
+  assert.equal(collectCorpus(frozenFiles).manifestIdentity, manifest.manifestIdentity);
   const split = manifest.puzzles.find(p => p.recordings.some(r => r.levelNumber === 51));
   assert.equal(split.recordings.length, 3);
   assert.equal(split.humanBestMoves, 12);

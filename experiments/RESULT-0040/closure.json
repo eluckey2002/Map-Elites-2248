@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "d0a460ea53845a10c9379f8f39878ef61cd04c55dcc86e455e1f2e13d806cd40"
+  },
+  "run_id": "RESULT-0040-challenge-41000000-41000001",
+  "final_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+  "closure_status": "UNVERIFIED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+      "reason": "Exactly one identified human capture and one oracle result are retained for each registered level/seed pair."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+      "reason": "Every human, current-bot, and oracle move replays, and all arms stop at first target crossing."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+      "reason": "The oracle preserved the current bot's 11-move Board 1 win and improved its 17-move Board 2 win to 14."
+    },
+    {
+      "id": "C4",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+      "reason": "The adapter controls passed before search, but the final report's post-registration source map is not covered by the protocol version freeze, so end-to-end provenance is unverified."
+    },
+    {
+      "id": "P1",
+      "status": "PASS",
+      "evidence_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+      "reason": "Board 1 was measured completely and assigned FALSIFIED: the owner won in 10 moves and the oracle in 11."
+    },
+    {
+      "id": "P2",
+      "status": "PASS",
+      "evidence_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+      "reason": "Board 2 was measured completely and assigned SUPPORTED: both owner and oracle won in 14 moves."
+    },
+    {
+      "id": "P3",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1",
+      "reason": "The retained rows manually reduce to FALSIFIED, but the malformed report receipt is not entitled to a registered panel outcome."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "human-board-1",
+      "path": "../../play-sessions/ddc4bce3d15be5501bd22856c23ede5ab4393bd7bde3b8029cb1aad021a54d4b.json",
+      "sha256": "96513c33d20d205e52c6d78503523310fbdbdde12011667cd777d8e8bcc3e9a7"
+    },
+    {
+      "id": "human-board-2",
+      "path": "../../play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json",
+      "sha256": "7402e552115be6bafe31706161943956d5bf211b5df5f1f55511a1b7733dd712"
+    },
+    {
+      "id": "oracle-challenge-report",
+      "path": "oracle-challenge-report.json",
+      "sha256": "f123726df5fa7fe63cf545f112daa987d19e3b83bfa02a1f8a599c81438b0cd0"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "982fba4a84390b808c00d76b307a09bed831ed0ee46cd1531cea2006567c081c"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "5d246f3bb7d4af8d86ad9a8bf793862698d0267c1032df11eeeb3e68e1fc3f15"
+    }
+  ],
+  "primary_outcome": null,
+  "deviations": [
+    "The oracle challenge report computes artifactIdentity over its registration stamp, while the repository evidence gate excludes registration before recomputing the identity.",
+    "The report sources include qualified adapter and capture files created after registration; their hashes are not covered by the original protocol version_freeze, so the repository gate refuses source closure."
+  ],
+  "attempts": [
+    {
+      "id": "human-board-1-first-terminal-capture",
+      "exit_code": 0,
+      "artifact_ids": ["human-board-1"]
+    },
+    {
+      "id": "human-board-2-first-terminal-capture",
+      "exit_code": 0,
+      "artifact_ids": ["human-board-2"]
+    },
+    {
+      "id": "oracle-challenge-single-attempt",
+      "exit_code": 0,
+      "artifact_ids": ["oracle-challenge-report"]
+    },
+    {
+      "id": "deterministic-primary-recomputation",
+      "exit_code": 0,
+      "artifact_ids": ["primary-recomputation", "report"]
+    }
+  ]
+}

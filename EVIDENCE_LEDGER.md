@@ -8,6 +8,15 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
+As of 2026-09-16, `RESULT-0040` preserves two fresh-board observations but
+closed `UNVERIFIED` with no entitled primary outcome. On shipped Level 56 /
+seed 41,000,000, the owner won in 10 moves and the retained oracle witness in
+11; on shipped Level 58 / seed 41,000,001, both won in 14. Every witness
+replays. The run report nevertheless fails the repository's source-closure and
+self-identity gate, so its row reduction to `FALSIFIED` is partial evidence,
+not an admitted fresh-panel conclusion. A successor needs a fully frozen
+adapter and fresh cases.
+
 As of 2026-09-16, `RESULT-0039` records verified oracle witnesses for all 20
 exact puzzles grouped from the 25 captured sessions. On the 19 puzzles with a
 human win, these witnesses use fewer moves on 17 and equal moves on 2; the
@@ -854,6 +863,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The search worker receives rules, seed and budget, not human chains or performance labels. Historical boards were inspected during development; this is not a blind evaluation. Timing and work counts are run observations, not replay-proven wall time. Failed and partial attempts remain in `docs/oracle/runs/`. The goal, qualification and readable comparison are in `docs/oracle/CONTRACT.md`, `QUALIFICATION.md`, and `RESULT.md`. No gameplay, target, live-policy or frozen-calibration promotion follows.
+
+### RESULT-0040 — Fresh-board rows are preserved but closure is unverified
+
+- **type:** result
+- **status:** provisional
+- **scope:** two preregistered exact shipped puzzles: Level 56 / seed 41,000,000 and Level 58 / seed 41,000,001; one owner attempt followed by one 30-second oracle attempt per board; fixed-case evidence only
+- **statement:** The experiment closed **`UNVERIFIED`** and has no entitled primary domain outcome. The retained rows are exact replayable observations: on Board 1 the owner reached the target in 10 moves and the oracle witness in 11; on Board 2 both reached it in 14 moves. The current bot took 11 and 17 moves respectively. A deterministic manual reduction applies the registered rule as `FALSIFIED`, but the run report used a self-identity convention rejected by the repository gate and listed post-registration adapter/capture source hashes absent from the original `version_freeze`. Those receipt defects cannot be repaired after seeing outcomes. The two rows remain partial evidence only.
+- **evidence:** immutable protocol `experiments/RESULT-0040/registered-protocol.md`; challenge identity `2be50b1fac3dbce4787401b3189783478e78e72fc457c6078f9c21c20f50e7c1`; qualified adapter identity `676bc91e007f838edab4eeed70326ec0ddeede3ee97a142c9308585621d40eba`; manual row reduction `experiments/RESULT-0040/primary-recomputation.json`; evidence boundary `experiments/RESULT-0040/report.md`; honest `UNVERIFIED` closure `experiments/RESULT-0040/closure.json`
+- **proof_class:** `direct_source` for the retained row values, replay checks, and receipt defects; `UNKNOWN` for the registered panel conclusion; no general claim about future boards, optimality, or move minima
+- **as_of:** 2026-09-16
+- **reverify:** Run the close-experiment verifier without `--require-closed` and with `--run-recomputation`; expect verifier `PASS`, closure `UNVERIFIED`, and recomputation `NOT_RUN`. Inspect `primary-recomputation.json` only as partial row evidence, not an entitled domain outcome.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The oracle search interface received rules, seed, and budget only; the two human paths and outcomes were withheld until both captures existed and never crossed into search. The Level 56 miss is not repaired or retried. A successor harvesting-policy search requires a new frozen adapter, new subject identity, and fresh evaluation boards.
 
 ## Decision registry
 
