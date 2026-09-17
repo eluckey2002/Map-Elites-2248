@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "2be1659b53060de81188ca6317169373518e64dbaec5268a06df55734c6d5ac5"
+  },
+  "run_id": "RESULT-0046-confirmation-01",
+  "final_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "Breadth controls and producer/verifier exact-zero agreement passed."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "Harvest-positive, immediate-positive, and assignment-null controls passed."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "The paired matrix, common objective, and replay checks passed."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "All mutations were killed and both repaired positive verification seams passed."
+    },
+    {
+      "id": "C5",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "Repository baseline matched 463 tests: 458 pass, four documented failures, one skip."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "All 31 frozen inputs and exact-path preregistration and closeout checks passed."
+    },
+    {
+      "id": "P1",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "SUPPORTED: three successful-plan-breadth bins were occupied; threshold was two."
+    },
+    {
+      "id": "P2",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "SUPPORTED: four harvesting-advantage bins were occupied; threshold was two."
+    },
+    {
+      "id": "P3",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "SUPPORTED: six joint cells were occupied; threshold was four."
+    },
+    {
+      "id": "P4",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "SUPPORTED: independent verification accepted the exact corpus, archive, and map twice."
+    },
+    {
+      "id": "P5",
+      "status": "PASS",
+      "evidence_subject_identity": "f385028282b7747ba2e034f0d6828577e2a44ab1a1580b50b3afbe62ab80abb3",
+      "reason": "SUPPORTED: P1 through P4 are all supported."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "output/archive.json",
+      "sha256": "9547ae69b3e513c80e6adac53b274c08f7b7f0666087759de5dda8dfff8d1027"
+    },
+    {
+      "id": "map",
+      "path": "output/map.html",
+      "sha256": "a50ad44a4b7d8dbbb4652c47d1e7025b31aa1b3d5e65bdd694a98b24fd0ea1f4"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "cbfb86d321df1dcc9be1eabb4e7f829448b3ed9c7e5630efe904773e7af70d23"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "57e75990be86b4bb5e5b10e0b1908422b28c73b59983a6ddd6c046b6c33abadf"
+    }
+  ],
+  "primary_outcome": "SUPPORTED",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "RESULT-0046-confirmation-01",
+      "exit_code": 0,
+      "artifact_ids": [
+        "corpus",
+        "map",
+        "report",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}

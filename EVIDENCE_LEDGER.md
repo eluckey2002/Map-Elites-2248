@@ -932,8 +932,23 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run the close-experiment verifier with `--run-recomputation --expected-contract-sha256 0e55b063ec896ceda319b260908e07d1241ebe0a4cdca9c55c99ba066b854f78` but without `--require-closed`; expect verifier `PASS`, closure `INVALID`, and recomputation `NOT_RUN`. Running the frozen experiment verifier on the raw artifact reproduces the `exact_result` versus `UNKNOWN` assertion failure. Do not rerun RESULT-0045 or promote its raw occupancy counts into a domain outcome.
 - **updated:** 2026-09-17
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [RESULT-0046]
 - **notes:** Qualification killed its seven planned mutations but lacked a clean fixture containing a complete empty breadth row, so it did not expose this producer/verifier semantic disagreement. The successor regression must plant that exact case before any fresh confirmation run.
+
+### RESULT-0046 — Verified board MAP-Elites archive spans both agreed axes
+
+- **type:** result
+- **status:** accepted
+- **scope:** one preregistered 36-shape Level-56 generator panel at seed `20260919`; the first 16 screen survivors evaluated on gameplay seeds `43,000,000–43,000,002`; successful-plan-breadth × harvesting-advantage 7×7 archive with up to three distinct boards per cell; no fun, human-difficulty, exhaustive-route, full-map, future-board, policy-optimality, or shipping claim
+- **statement:** The repaired successor closed **`CLOSED`** with primary outcome **`SUPPORTED`**. The one reproducible command generated and independently verified a 49-cell MAP-Elites archive: 36 shapes screened, 16 boards fully evaluated, 15 authoring-eligible, and 12 distinct elites retained across **6 occupied cells**, **3 successful-plan-breadth bins**, and **4 harvesting-advantage bins**. The registered minima were 4 cells and 2 bins on each axis. Three cells hold the full capacity of three elites; no cell exceeds it and no board identity appears twice. The public verifier passed both during production and from the saved artifact, replaying retained landmark routes and oracle witnesses, rebuilding selection and placement, checking frozen sources and configuration, and byte-checking the rendered map. The repository experiment gate's independent identity convention reproduced artifact identity `a3a8cd7b…` exactly. Empty cells remain honest bounded-search absences, not impossibility claims.
+- **evidence:** immutable protocol `experiments/RESULT-0046/registered-protocol.md`, registration commit `4091e60`; [qualified repaired harness](experiments/RESULT-0046/qualification.json); canonical archive `experiments/RESULT-0046/output/archive.json`, identity `a3a8cd7b217232d6151cafa4b2643f3e908c8742d3a42b081ea478b36a738ba6`; readable 49-cell map `experiments/RESULT-0046/output/map.html`; [independent reduction](experiments/RESULT-0046/primary-recomputation.json); report `experiments/RESULT-0046/report.md`; executable `CLOSED` [closure receipt](experiments/RESULT-0046/closure.json)
+- **proof_class:** `direct_source` for frozen identities, archive contents, replay checks, capacity/uniqueness, artifact verification, exact-zero semantics, deterministic reduction, and executable closure; `heuristic_observation` for the registered fixed-panel axis spread and joint occupancy. Each nonzero breadth row retains `replayed_lower_bound` standing unless its bounded search completed; the single capped zero remains `UNKNOWN`.
+- **as_of:** 2026-09-17
+- **reverify:** Run `node experiments/RESULT-0046/verify.js experiments/RESULT-0046/output/archive.json`; expect PASS, artifact `a3a8cd7b…`, 36 screened, 16 evaluated, 15 eligible, 6 cells, 3 breadth bins, and 4 harvest bins. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 2be1659b53060de81188ca6317169373518e64dbaec5268a06df55734c6d5ac5`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-17
+- **supersedes:** [RESULT-0045]
+- **superseded_by:** []
+- **notes:** RESULT-0045 remains preserved as invalid. Its two harness defects are regression-guarded here: exhausted empty breadth rows verify as exact zero while capped empties stay `UNKNOWN`, and registration provenance is excluded from artifact identity consistently with the repository experiment gate. This validates a bounded authoring map, not the desirability of every retained board; human playtesting and deliberate cell-filling are separate next steps.
 
 ## Decision registry
 
