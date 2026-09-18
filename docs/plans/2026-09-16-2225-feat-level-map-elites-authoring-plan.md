@@ -182,7 +182,7 @@ The exact split may contract during implementation, but descriptor computation, 
 - **Existing evidence:** Candidate receipt behavior stays unchanged because the plan imports from, but does not edit, `solver/engine.js` or `solver/level-author.js`. Historical oracle experiment artifacts remain immutable; the new owner decision authorizes prospective authoring use.
 - **Compute:** Independent first-action continuation search multiplies oracle work by the number of deduplicated opening outcomes. U2 must measure this cost before U3 freezes panel sizes or U6 commits to an archive budget.
 - **Generated artifacts:** Development analytics, qualification evidence, archive checkpoints, and final reports require distinct identities and directories so exploratory output cannot be consumed as admitted evidence.
-- **Human workflow:** The output is a shortlist for ordinary captured play, not a new gameplay surface. Captures continue through `play-sessions/` and same-seed analysis; candidate receipts remain in their existing evidence path.
+- **Human workflow:** The output is a shortlist of unshipped candidates for human evaluation, not a new gameplay surface. Because U7's shortlist candidates are not yet shipped in `src/game.js`, their captures must go through the identity-bound `solver/authoring-server.js` / `recordings/` workflow, not `play-sessions/` — `tools/play-server.js` only resolves against shipped `LEVELS` and cannot bind a session to a candidate identity, which would make U7's exact-candidate replay impossible or ambiguous if a level number is later reused. Candidate receipts remain in their existing evidence path.
 - **Failure propagation:** A descriptor qualification failure stops archive work. An archive saturation failure preserves the map as diagnostic and prevents it from becoming the authoring acceptance bar.
 
 ### Alternatives Considered
@@ -283,7 +283,7 @@ The exact split may contract during implementation, but descriptor computation, 
   - An orthogonal scale transformation leaves both normalized descriptors unchanged.
   - Shallow-versus-deep and panel-versus-panel cell comparisons reproduce the frozen stability calculations exactly.
   - A missing, duplicated, substituted, or forged row fails the public verifier.
-- **Verification:** The registered result returns `SUPPORTED`, `FALSIFIED`, `INCONCLUSIVE`, or `UNVERIFIED` under frozen rules. Only `SUPPORTED` unlocks U4-U7.
+- **Verification:** The registered result returns `SUPPORTED`, `FALSIFIED`, `INCONCLUSIVE`, or `UNVERIFIED` under frozen rules. Only `SUPPORTED` unlocks U5-U7 — U4 is a dependency of U2 (see U2's Dependencies) and so is already built earlier, not gated by U3.
 
 ### U5. Implement the multi-candidate level archive
 
