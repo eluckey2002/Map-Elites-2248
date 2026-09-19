@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "result": "RESULT-0048",
+  "qualification": "PASS",
+  "oracle": {
+    "path": "registered-protocol.md",
+    "commit": "b3fd0fb",
+    "immutable_protocol_sha256": "a5738aed3bf7dd1e5e604e3274200aca397b4b4d73828e23beb59c0c7c1765c7"
+  },
+  "closeout_contract_sha256": "2e5a52bd651bf7d0b2b9a6b0a34f46bb9960ff4d44caada48f92418e364002f4",
+  "harness_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+  "trusted_input_identity_source": "version_freeze in protocol.md at preregistration commit b3fd0fb",
+  "controls": [
+    {
+      "id": "C1-C5-focused",
+      "status": "PASS",
+      "command": "node --test experiments/RESULT-0048/*.test.js",
+      "exit_code": 0,
+      "observed": "6 tests passed; 0 failed. Exact family classification, all five island templates, paired refill manipulation, deterministic simulation, paired-arm integrity, artifact mutation rejection, and frozen closeout routing passed."
+    },
+    {
+      "id": "C3-known-kill",
+      "status": "PASS",
+      "command": "node --test subject.test.js in a disposable copy after mutating 54 to family 3 and 60 to family 5",
+      "exit_code": 1,
+      "observed": "The planted mutant failed at the public classifier control (3 !== 27); the registered subject source was not modified and retained its frozen hash."
+    },
+    {
+      "id": "closeout-route-attempt-1",
+      "status": "FAIL_EXPECTED_AND_CORRECTED",
+      "command": "synthetic corpus through the exact verifier and recomputation route",
+      "exit_code": 1,
+      "observed": "The synthetic fixture omitted summary.P3; the verifier rejected it. No reportable seed was opened and no outcome was retained."
+    },
+    {
+      "id": "closeout-route-attempt-2",
+      "status": "PASS",
+      "command": "corrected synthetic corpus through the exact verifier and recomputation route",
+      "exit_code": 0,
+      "observed": "The verifier enforced the committed contract identity and the independent recomputation reproduced the synthetic primary result."
+    },
+    {
+      "id": "C6-source-restoration",
+      "status": "PASS",
+      "command": "validate every version_freeze entry and the complete harness subject identity",
+      "exit_code": 0,
+      "observed": "All 12 frozen source hashes matched; the harness identity was 33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24; reportable corpus.json was absent."
+    },
+    {
+      "id": "C6-suite-baseline",
+      "status": "PASS_WITH_PREEXISTING_WORKTREE_FAILURE",
+      "command": "node --test solver/tests/*.test.js",
+      "exit_code": 1,
+      "observed": "420 tests; 414 passed; 5 failed; 1 skipped. Four failures are the documented two stale receipts, generated-view staleness, and date drift. The fifth is the pre-existing design-worktree title mismatch in authoringServer.test.js (the page title changed from 2248 Challenge to Keeper before this experiment). The experiment diff adds only experiments/RESULT-0048 and experiments/SEEDS.md and caused no solver-suite failure. A clean git-backed checkout of parent fe9ed6f also reported 420/414/5/1 on this machine; its fifth failure was the unrelated resource-sensitive exact-play cap test, while its authoring-server test passed."
+    },
+    {
+      "id": "experiment-gate",
+      "status": "PASS",
+      "command": "node tools/verify-experiments.js",
+      "exit_code": 0,
+      "observed": "EXPERIMENT GATE PASS; all frozen identities and the registration order were accepted."
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "ABORTED",
+      "scope": "synthetic closeout-route fixture only",
+      "observed": "Missing synthetic summary.P3 was rejected before confirmation; no reportable evidence was produced."
+    },
+    {
+      "attempt": 2,
+      "status": "PASS",
+      "scope": "complete frozen qualification",
+      "observed": "All declared controls passed under the preregistration identity, including a real known-kill mutation and exact synthetic closeout route."
+    }
+  ],
+  "reportable_seed_state": {
+    "range": "44000000-44004095",
+    "opened_before_qualification": false,
+    "corpus_present_before_qualification": false
+  },
+  "uncertainties": [
+    "The screening policy is a deterministic candidate generator, not a human proxy.",
+    "The full-suite fifth failure differs between the clean parent and active design worktree, but neither failure is in the experiment diff or its production seam.",
+    "Qualification establishes harness behavior only; it contains no domain outcome."
+  ]
+}
