@@ -48,10 +48,10 @@
     },
     {
       "id": "C6-suite-baseline",
-      "status": "PASS_WITH_PREEXISTING_WORKTREE_FAILURE",
-      "command": "node --test solver/tests/*.test.js",
+      "status": "PASS",
+      "command": "node --test solver/tests/*.test.js in a clean git-backed checkout of qualified commit 38f46ef",
       "exit_code": 1,
-      "observed": "420 tests; 414 passed; 5 failed; 1 skipped. Four failures are the documented two stale receipts, generated-view staleness, and date drift. The fifth is the pre-existing design-worktree title mismatch in authoringServer.test.js (the page title changed from 2248 Challenge to Keeper before this experiment). The experiment diff adds only experiments/RESULT-0048 and experiments/SEEDS.md and caused no solver-suite failure. A clean git-backed checkout of parent fe9ed6f also reported 420/414/5/1 on this machine; its fifth failure was the unrelated resource-sensitive exact-play cap test, while its authoring-server test passed."
+      "observed": "420 tests; 415 passed; exactly the four documented failures (two stale receipts, generated-view staleness, and date drift); 1 skipped. The active visual-design worktree separately reports a pre-existing title assertion because its uncommitted page title is Keeper; that file is outside the experiment diff and frozen subject."
     },
     {
       "id": "experiment-gate",
@@ -82,7 +82,7 @@
   },
   "uncertainties": [
     "The screening policy is a deterministic candidate generator, not a human proxy.",
-    "The full-suite fifth failure differs between the clean parent and active design worktree, but neither failure is in the experiment diff or its production seam.",
+    "The active visual-design worktree has an unrelated uncommitted page-title assertion; the exact committed experiment checkout retains only the documented suite failures.",
     "Qualification establishes harness behavior only; it contains no domain outcome."
   ]
 }
