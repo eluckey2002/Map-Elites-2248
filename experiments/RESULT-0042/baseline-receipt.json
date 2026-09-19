@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-16T19:25:33Z",
+  "command": "node --test solver/tests/*.test.js",
+  "exitCode": 1,
+  "tests": 420,
+  "pass": 415,
+  "fail": 4,
+  "skipped": 1,
+  "failures": [
+    "candidate-levels-52.json has a receipt that verifies against the current bot",
+    "candidate-levels-54.json has a receipt that verifies against the current bot",
+    "the builder is byte-stable and the committed generated views are current",
+    "verification observations derive from rebound evidence instead of copied metrics in code"
+  ],
+  "classification": "expected documented baseline"
+}

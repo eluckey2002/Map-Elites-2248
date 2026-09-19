@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0039",
+  "attempt": "qualification-1",
+  "harnessCommit": "ef8be18",
+  "protocolSha256": "9d1e70d195ca728cf48f653ac355cc76ad6e8e0387d2146084199696b506edfe",
+  "harnessIdentity": "2ff1df15db38dd571e61dc66ec9bff5d45b2f11b54cf26a1636d6bd4a350f681",
+  "command": [
+    "node",
+    "experiments/RESULT-0039/qualify.js",
+    "write"
+  ],
+  "exitCode": 1,
+  "qualification": "FAIL",
+  "stage": "clean production-verifier control",
+  "observed": "CONFIRMATION_SEEDS is not defined",
+  "freshConfirmationOutcomesAccessed": false,
+  "disposition": "frozen harness superseded; do not repair or run RESULT-0039"
+}
