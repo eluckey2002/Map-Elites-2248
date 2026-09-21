@@ -54,6 +54,9 @@ file and the repository before declaring a range fresh.
 | 33,300,000 | RESULT-0037 deterministic work-limit qualification control on Level 54; excluded from confirmation | 2026-09-16 | `experiments/RESULT-0037/run.test.js` |
 | 33,400,000–33,400,007 | RESULT-0037 deterministic exact greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0037/protocol.md` |
 | 33,500,000–33,500,007 | RESULT-0038 deterministic exact greed-ratio closure replication across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0038/protocol.md` |
+| 33,800,000–33,800,007 | RESULT-0041 bound-receipt exact greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0041/protocol.md` |
+| 33,900,000–33,900,007 | RESULT-0042 calibrated-watchdog exact greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0042/protocol.md` |
+| 34,000,000–34,000,007 | RESULT-0043 executable-closeout exact greed-ratio replication across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0043/protocol.md` |
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
 | 1, 2, 10, 777 | owner play recordings on levels 51–54 (ten recordings in `recordings/`; seed 777 twice on level 52) | 2026-08 | `recordings/*.json` |
 | 9,100,000–9,100,001 and 9,200,004–9,200,005 | seed-variance bounded test, real control through the production `playMeasured` seam | 2026-09-01 | `solver/tests/seedVariance.test.js`, `experiments/RESULT-0021/protocol.md` |
