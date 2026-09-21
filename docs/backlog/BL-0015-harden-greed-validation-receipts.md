@@ -1,7 +1,7 @@
 ---
 id: BL-0015
 title: Repeat greed validation with receipts that bind the registered run
-status: proposed
+status: complete
 milestone: descriptor-discovery
 depends_on: [CORRECTION-0007]
 updated: 2026-09-16
@@ -78,12 +78,19 @@ fresh seeds run.
 - `experiments/RESULT-0038/registered-protocol.md` preserves the prior frozen
   requirements and the boundary the successor must not edit after outcomes.
 
-## Next action
+## Outcome
 
-Preregister the successor harness and its fresh seed range, qualify the planted
-failure controls, commit that registration, and only then run the panel.
+Completed by `RESULT-0043`. The successor bound the registered seeds and work
+counts, derived source closure and qualification from one manifest, killed all
+four planted verifier mutations, demonstrated a failing middle-bin stability
+fixture, qualified the exact closeout cwd/argv path, completed all 128 fresh
+games without a timeout, and closed through independent recomputation. Its
+domain outcome is `INCONCLUSIVE`; greed ratio remains unadopted.
 
 ## History
 
 - 2026-09-16 — created from the full review of `RESULT-0037`/`RESULT-0038` and
   `CORRECTION-0007`; frozen experiment sources were deliberately left intact.
+- 2026-09-16 — completed by `RESULT-0043`; `RESULT-0042` retained the complete
+  watchdog-calibration corpus but exposed a closeout cwd defect, and the fresh
+  successor qualified that exact path before confirmation.
