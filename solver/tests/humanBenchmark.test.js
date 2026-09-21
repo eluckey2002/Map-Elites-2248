@@ -9,7 +9,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 
-const { collect, playBot } = require('../human-benchmark');
+const { collect, playBot, summarizeRows } = require('../human-benchmark');
 const { makeRng } = require('../engine');
 
 const ROOT = path.join(__dirname, '..', '..');
@@ -60,8 +60,14 @@ test('an ordinary play capture resolves to the shipped board and pairs on its se
 
   assert.deepEqual(unresolved, []);
   assert.equal(rows.length, 1);
-  assert.deepEqual(rows[0].human, { score: 129472, moves: 16, outcome: 'win' });
+  assert.deepEqual(rows[0].human, {
+    score: 129472,
+    moves: 16,
+    outcome: 'win',
+    reason: 'target reached',
+  });
   assert.equal(rows[0].source, 'shipped-level');
+  assert.equal(rows[0].corpus, 'ordinary');
   assert.equal(rows[0].seed, 3310936729);
   assert.deepEqual(rows[0].bot, { score: 126464, moves: 15, outcome: 'win' });
 });
@@ -120,7 +126,30 @@ test('each pair compares the same board and the same seed for both players', () 
       ['win', 'lose'].includes(row.human.outcome) && ['win', 'lose'].includes(row.bot.outcome),
       `${row.file}: both outcomes must be decided`,
     );
+    if (row.human.outcome === 'win') {
+      assert.equal(
+        row.human.reason, 'target reached',
+        `${row.file}: a winning human recording must stop when it reaches the target`,
+      );
+    }
   }
+
+  const summary = summarizeRows([
+    { human: { outcome: 'win', moves: 10 }, bot: { outcome: 'win', moves: 11 }, scoreDelta: -5, scorePct: -5 },
+    { human: { outcome: 'win', moves: 12 }, bot: { outcome: 'win', moves: 9 }, scoreDelta: 10, scorePct: 10 },
+    { human: { outcome: 'win', moves: 8 }, bot: { outcome: 'win', moves: 8 }, scoreDelta: 2, scorePct: 2 },
+    { human: { outcome: 'lose', moves: 20 }, bot: { outcome: 'win', moves: 15 }, scoreDelta: 50, scorePct: 50 },
+  ]);
+  assert.deepEqual(summary, {
+    humanWins: 3,
+    botWins: 4,
+    mutualWins: 3,
+    humanFaster: 1,
+    botFaster: 1,
+    tiedMoves: 1,
+    botHigherCrossingScore: 2,
+    meanCrossingScorePct: 7 / 3,
+  });
 });
 
 test('the bot arm is deterministic for a given board and seed', () => {
