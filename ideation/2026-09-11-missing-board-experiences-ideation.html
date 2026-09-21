@@ -124,15 +124,15 @@
     <h1>Missing board experiences</h1>
     <p class="lede">The current game has plenty of parameter variation. The real opening is to author boards around a recognizable decision: what must the player notice, protect, time, or sacrifice?</p>
     <div class="meta">
-      <span class="pill">Date <time datetime="2026-09-11">2026-09-11</time></span>
+      <span class="pill">Date <time datetime="2026-09-16">2026-09-16</time></span>
       <span class="pill">Topic missing-board-experiences</span>
-      <span class="pill">Focus board-type gaps in current data</span>
+      <span class="pill">Focus board-type gaps and richer landmark harvesting decisions</span>
       <span class="pill">Mode repo-grounded</span>
     </div>
     <div class="stats">
       <div class="stat"><strong>58</strong><span>shipped levels inspected</span></div>
       <div class="stat"><strong>504</strong><span>generated shapes inspected</span></div>
-      <div class="stat"><strong>7</strong><span>board directions retained</span></div>
+      <div class="stat"><strong>7 + 7</strong><span>original directions + grounded extension</span></div>
     </div>
   </header>
 
@@ -155,9 +155,178 @@
     </div>
   </section>
 
+  <section id="evidence-update">
+    <div class="eyebrow">What later playtests changed</div>
+    <h2>Evidence update</h2>
+    <p>The original seven directions remain below as the historical first pass, but later prototype play changed their standing. Bank and Break is the one retained distinct-play family. Funnel Sprint remains a routing hypothesis. Builder Pocket, No-Blocker Nemesis, Sequential Defusal Relay, and Tiny Marathon in its original form were retired because they either lost their identity after refill, made space feel wasted, let ordinary maximum-chain play solve the visible objective, or failed to name a choice beyond the owner’s normal build-and-harvest strategy.</p>
+    <p>The owner’s current observation supplies a sharper frontier: the board is often one compatible tile short of 2048, so the best available 1024 harvest may clear roughly ten fewer tiles and collapse planning into a single inferior line. The relevant question is not simply whether a level contains more large values. It is whether a named 2048 or 4096 frontier offers multiple materially different, replayable plans with distinct inventory costs and survivor locations.</p>
+    <div class="callout"><strong>Wait — adding all starting-tile ideas to the MAP-Elites genome now is not the best first move.</strong> It would mix three hypotheses, enlarge the search space, and require a receipt-sensitive schema extension before the current seed-and-geometry system has failed its control. First measure landmark frontiers and mine fixed seeds; promote authored starts only when that control cannot reach the desired behavior space.</div>
+  </section>
+
+  <section id="authoring-axes">
+    <div class="eyebrow">2026-09-16 extension</div>
+    <h2>Authoring-lever axes</h2>
+    <div class="axes">
+      <div class="axis"><strong>Landmark access</strong><span>How many non-equivalent plans can still create a named 2048 or 4096 within the horizon?</span></div>
+      <div class="axis"><strong>High-value anchor custody</strong><span>Which bank funds an authored large tile, and where does the resulting survivor live?</span></div>
+      <div class="axis"><strong>Timed-threat conflict</strong><span>Does a bomb alter preparation and harvest timing, or disappear inside ordinary play?</span></div>
+      <div class="axis"><strong>Off-lattice recovery</strong><span>Which recoverable value family deserves space and construction effort?</span></div>
+      <div class="axis"><strong>Persistence under refill</strong><span>What commitment remains legible after the opening deal has vanished?</span></div>
+    </div>
+  </section>
+
+  <section id="authoring-ranked-ideas">
+    <div class="eyebrow">Seven survivors from 26 grounded candidates</div>
+    <h2>Ranked authoring extensions</h2>
+    <ol class="jump-list">
+      <li><a href="#authoring-idea-1">Landmark Frontier Audit</a></li>
+      <li><a href="#authoring-idea-2">Three-Landing 2048</a></li>
+      <li><a href="#authoring-idea-3">Seed-Mined Authored Starts</a></li>
+      <li><a href="#authoring-idea-4">4096 Clearinghouse</a></li>
+      <li><a href="#authoring-idea-5">4096 Bomb With Two Exit Plans</a></li>
+      <li><a href="#authoring-idea-6">Odd-Factor Escrow</a></li>
+      <li><a href="#authoring-idea-7">Three-Room Escrow Market</a></li>
+    </ol>
+
+    <article class="idea top" id="authoring-idea-1">
+      <div class="idea-head"><span class="rank">1</span><div class="idea-title"><span class="tag">Top pick · landmark access</span><h3>Landmark Frontier Audit</h3></div></div>
+      <p>At every named 2048 or 4096 frontier, count the materially different first decisions that retain a replayable route to the landmark within a fixed horizon. For each route, record cells cleared, score, deliberately built inventory consumed, survivor location, and the best fallback harvest. This makes “one tile short of 2048” an authoring diagnosis rather than a vague feeling.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Landmark frontier comparison">route A → 2048 @ bank
+route B → 2048 @ bridge
+fallback → 1024 + space
+
+compare:
+inventory · cells · location</pre>
+        <p class="legend">The routes count only when their first commitments and downstream consequences differ. Reversals and spatially identical outcomes collapse together.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Landmark access</dd>
+        <dt>Basis</dt><dd><strong>direct:</strong> Measurement &amp; Analysis Standards already defines landmark-route multiplicity and rejects legal-move count as a substitute for meaningful plans. Build potential is the named missing measure needed to price what each route consumes.</dd>
+        <dt>Rationale</dt><dd>This is the smallest reliable step. It can test the owner’s exact observation on current boards and tell us whether authored starts are necessary before the genome expands.</dd>
+        <dt>Downsides</dt><dd>A bounded search can miss routes and must report <code>UNKNOWN</code>. The measure describes structure; human play still decides whether the alternatives feel meaningful.</dd>
+        <dt>Confidence</dt><dd>88%</dd>
+        <dt>Complexity</dt><dd>Medium</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="authoring-idea-2">
+      <div class="idea-head"><span class="rank">2</span><div class="idea-title"><span class="tag">Landmark access</span><h3>Three-Landing 2048</h3></div></div>
+      <p>Offer several routes to the same 2048, but make each route spend a different bank and leave the survivor in a different berth: an open scoring lane, a protected reserve, or a bridge between rooms. The choice is not merely whether 2048 is available; it is which inventory should fund it and where the resulting asset should live.</p>
+      <div class="sketch">
+        <pre class="board" aria-label="Three distinct 2048 landing zones">BANK ← 2048
+  ↑      ↑
+reserve  bridge → OPEN LANE</pre>
+        <p class="legend">Same landmark, different consumed inventory and survivor custody. That difference is what prevents three arithmetic recipes from being cosmetic variants.</p>
+      </div>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Landmark access</dd>
+        <dt>Basis</dt><dd><strong>direct + external:</strong> Landmark-route multiplicity requires non-equivalent plans; merge survival makes endpoint placement consequential. Triple Town supplies relevant prior art for completion location changing later play.</dd>
+        <dt>Rationale</dt><dd>This answers the 2048 scarcity observation without making the landmark free. More access creates more planning only when each access route carries a different future cost.</dd>
+        <dt>Downsides</dt><dd>The current schema cannot place exact route ingredients. Start with seed-mined versions; an explicit starting-layout capability remains a gated follow-up.</dd>
+        <dt>Confidence</dt><dd>82%</dd>
+        <dt>Complexity</dt><dd>High</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="authoring-idea-3">
+      <div class="idea-head"><span class="rank">3</span><div class="idea-title"><span class="tag">Persistence under refill</span><h3>Seed-Mined Authored Starts</h3></div></div>
+      <p>Before adding explicit starting tiles, mine fixed seeds for boards that already contain multiple landmark routes, then pair those seeds with stone or ice geometry that preserves the consequences of the first commitment. Compare the same seed on an open board to prove that the geometry—not merely a lucky deal—keeps the decision alive.</p>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Persistence under refill</dd>
+        <dt>Basis</dt><dd><strong>direct:</strong> Fixed seeds and blockers exist today; No-Blocker Nemesis showed that an authored opening disappears after one or two refills unless a persistent mechanism carries it forward.</dd>
+        <dt>Rationale</dt><dd>This is the proper control for the proposed schema extension. If the current system can create the desired frontier, we avoid widening the genome; if it cannot, the failure justifies new capability.</dd>
+        <dt>Downsides</dt><dd>Seed mining may find brittle or rare openings, and success on one seed does not establish a reusable family.</dd>
+        <dt>Confidence</dt><dd>86%</dd>
+        <dt>Complexity</dt><dd>Medium</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="authoring-idea-4">
+      <div class="idea-head"><span class="rank">4</span><div class="idea-title"><span class="tag">High-value anchor custody</span><h3>4096 Clearinghouse</h3></div></div>
+      <p>Place a 4096 at a stone-supported junction between two banks. Either bank can feed the anchor, but doing so consumes that bank’s accumulated work and fixes the enlarged survivor at a strategically consequential location. Leaving the anchor dormant while the banks mature independently must remain a viable third posture.</p>
+      <dl class="fields">
+        <dt>Axis</dt><dd>High-value anchor custody</dd>
+        <dt>Basis</dt><dd><strong>direct:</strong> Bank and Break showed that separated retained values can create a legible build-and-release arc. The engine’s endpoint rule makes the final survivor’s location matter.</dd>
+        <dt>Rationale</dt><dd>A starting 4096 becomes banked work plus positional debt—not free score. It asks which room should surrender value, where the next asset should live, and when the transaction is worth making.</dd>
+        <dt>Downsides</dt><dd>Requires an authored-start extension, and one bank may dominate in practice. The anchor must pay rent for the premium cell it occupies.</dd>
+        <dt>Confidence</dt><dd>68%</dd>
+        <dt>Complexity</dt><dd>High</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="authoring-idea-5">
+      <div class="idea-head"><span class="rank">5</span><div class="idea-title"><span class="tag">Timed-threat conflict</span><h3>4096 Bomb With Two Exit Plans</h3></div></div>
+      <p>Put a 4096 bomb where two separate banks can rescue it before expiry. The fast route sacrifices mature inventory but preserves maneuvering room; the slower route spends moves and preserves the stronger bank for a later harvest. Both routes must leave a reusable survivor and remain target-viable.</p>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Timed-threat conflict</dd>
+        <dt>Basis</dt><dd><strong>direct + external:</strong> Sequential Defusal Relay proved that bombs swept by ordinary maximum chains are strategically empty. Double Vault Rescue and Bejeweled-style positional bombs show the stronger pattern: preparation and survivor value must compete with the deadline.</dd>
+        <dt>Rationale</dt><dd>The timer now prices investment rather than issuing a chore. The interesting decision is which bank to spend and what asset the rescue should create.</dd>
+        <dt>Downsides</dt><dd>Non-dominance is unproven. A short fuse forces one route; a long fuse makes the bomb decorative. This should remain behind the authored-anchor capability gate.</dd>
+        <dt>Confidence</dt><dd>62%</dd>
+        <dt>Complexity</dt><dd>High</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="authoring-idea-6">
+      <div class="idea-head"><span class="rank">6</span><div class="idea-title"><span class="tag">Off-lattice recovery</span><h3>Odd-Factor Escrow</h3></div></div>
+      <p>Seed two recoverable off-lattice families in separate bays. The player can reclaim one immediately for space, mature one into a later asset, or bypass both through a normal-lattice route; developing every family should be unattractive. The unusual values act as recoverable obligations, not permanent blockers.</p>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Off-lattice recovery</dd>
+        <dt>Basis</dt><dd><strong>direct + external:</strong> The engine accepts equal-and-double off-lattice chains such as <code>6 → 6 → 12</code>, reclaiming cells while preserving the odd factor. Triple Town’s obstacle-to-resource chain is a structurally relevant precedent.</dd>
+        <dt>Rationale</dt><dd>This could make space pressure into a portfolio decision: which arithmetic ecology deserves construction capacity, and which debt is rational to carry?</dd>
+        <dt>Downsides</dt><dd>Lowest-confidence survivor. Readability, partner-construction cost, bot competence, and whether the choice feels strategic are all unresolved. It should not enter the main genome before a controlled prototype.</dd>
+        <dt>Confidence</dt><dd>58%</dd>
+        <dt>Complexity</dt><dd>High</dd>
+      </dl>
+    </article>
+
+    <article class="idea" id="authoring-idea-7">
+      <div class="idea-head"><span class="rank">7</span><div class="idea-title"><span class="tag">Persistence under refill</span><h3>Three-Room Escrow Market</h3></div></div>
+      <p>Extend Bank and Break to three separated rooms containing different partial assets. Move budget and staggered connections make fully developing all three unattractive, so the player selects a two-room portfolio and later decides which inventory crosses the shared corridor.</p>
+      <dl class="fields">
+        <dt>Axis</dt><dd>Persistence under refill</dd>
+        <dt>Basis</dt><dd><strong>direct:</strong> Bank and Break is the one retained distinct-play family; its captured run reused seven built tiles and made the later connection legible. This extension preserves that verified mechanism while adding a non-binary allocation choice.</dd>
+        <dt>Rationale</dt><dd>It is the strongest near-term board hypothesis because current geometry can express it without authored tile values. It also tests whether “more than two plans” can remain legible under refill.</dd>
+        <dt>Downsides</dt><dd>Three rooms may become visually or cognitively noisy, and favorable refills could still dominate the intended portfolio choice.</dd>
+        <dt>Confidence</dt><dd>78%</dd>
+        <dt>Complexity</dt><dd>Medium</dd>
+      </dl>
+    </article>
+  </section>
+
+  <section id="authoring-rejection-summary">
+    <div class="eyebrow">What the extension cut</div>
+    <h2>Authoring-extension rejection summary</h2>
+    <table>
+      <thead><tr><th>Raw #</th><th>Idea</th><th>Reason rejected or folded</th></tr></thead>
+      <tbody>
+        <tr><td>2</td><td>Shared Rung / 2048 Overdraft</td><td>Strong variant folded into Three-Landing 2048 until authored starts exist.</td></tr>
+        <tr><td>3</td><td>Valuable 1024 Fallback</td><td>States a desired outcome without a concrete persistent mechanism.</td></tr>
+        <tr><td>4</td><td>Three Exact Ways to Make 2048</td><td>Arithmetic diversity alone does not establish different plans.</td></tr>
+        <tr><td>5</td><td>2048 Route Compiler</td><td>Folded into the broader Landmark Frontier Audit.</td></tr>
+        <tr><td>7</td><td>Anchor Elevator / Gravity Escrow</td><td>Vertical gravity does not reliably choose among later rooms.</td></tr>
+        <tr><td>8</td><td>Crown as Collateral</td><td>Compatible partners and non-dominated payoffs remain underspecified.</td></tr>
+        <tr><td>9</td><td>Twin-Crown Compass</td><td>Risks collapsing to a cosmetic endpoint reversal.</td></tr>
+        <tr><td>10</td><td>Poisoned Treasury</td><td>Retained as the acceptance rule that every constrained anchor must pay rent.</td></tr>
+        <tr><td>11</td><td>Bomb Escrow</td><td>Dead-end retention and pass-through choice require contradictory geometry.</td></tr>
+        <tr><td>13</td><td>Cross-Collateral Vaults</td><td>Either-order viability and downstream collateral value are assumed.</td></tr>
+        <tr><td>14</td><td>One Deadline, Three Exits</td><td>Three credible routes are asserted rather than grounded.</td></tr>
+        <tr><td>15</td><td>Odd-Factor Tollgates</td><td>Narrower duplicate of Odd-Factor Escrow.</td></tr>
+        <tr><td>17</td><td>Convertible Congestion</td><td>The delayed exit and its payoff are not yet evidenced.</td></tr>
+        <tr><td>18</td><td>Gravity Appointments</td><td>Post-gravity adjacency is brittle and the exact starts are unsupported.</td></tr>
+        <tr><td>20</td><td>Opening Writes the Constitution</td><td>Useful persistence principle; Three-Room Escrow Market is the clearer board family.</td></tr>
+        <tr><td>21</td><td>Clockwork Banks</td><td>Too broad and overlaps the retained three-room design.</td></tr>
+        <tr><td>24</td><td>Paired One-Tile Counterfactuals</td><td>Excellent future control, but it needs legitimate state injection or authored starts first.</td></tr>
+        <tr><td>25</td><td>Capability Escalation Ladder</td><td>Retained as gating guidance rather than a player-facing direction.</td></tr>
+        <tr><td>26</td><td>Obstacle-to-Resource Portfolio</td><td>Combines several unvalidated mechanisms before any component passes independently.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
   <section id="ranked-ideas">
-    <div class="eyebrow">Seven survivors from 42 candidates</div>
-    <h2>Ranked Ideas</h2>
+    <div class="eyebrow">Historical first pass · retained for context</div>
+    <h2>Original ranked ideas</h2>
     <ol class="jump-list">
       <li><a href="#idea-1">Bank and Break</a></li>
       <li><a href="#idea-2">Forked Harvest</a></li>
@@ -296,7 +465,7 @@ S S I S S
 
     <article class="idea" id="idea-7">
       <div class="idea-head"><span class="rank">7</span><div class="idea-title"><span class="tag">Value-building affordance</span><h3>Tiny Marathon</h3></div></div>
-      <p>A very small board gets a generous move budget. The challenge is not reaching a target quickly; it is maintaining a matchable value ecology without filling the board with permanent off-lattice survivors.</p>
+      <p>A very small board gets a generous move budget. The original hypothesis was that scarce cells plus a long horizon would make off-lattice recovery central; later evidence established that off-lattice survivors are recoverable rather than permanently dead.</p>
       <div class="sketch">
         <pre class="board" aria-label="Small open board with a long move budget">· · · ·
 · · · ·
@@ -307,8 +476,8 @@ S S I S S
       </div>
       <dl class="fields">
         <dt>Axis</dt><dd>Value-building affordance</dd>
-        <dt>Basis</dt><dd><strong>direct:</strong> The ledger proves off-lattice survivors never become matchable again and accumulate toward lockout; current shipped levels do not make that long-horizon pressure the central experience.</dd>
-        <dt>Rationale</dt><dd>It turns an otherwise hidden system into the puzzle. Expert play should look visibly different because careless high-scoring chains poison future space.</dd>
+        <dt>Basis</dt><dd><strong>direct, corrected:</strong> Off-lattice values have no partners in the ordinary spawn family, but compatible off-lattice values can be deliberately constructed and merged to reclaim cells. Their recovery cost and strategic pressure remain unresolved.</dd>
+        <dt>Rationale</dt><dd>The durable design question is whether recovery timing and construction cost create meaningful pressure—not whether unusual values are permanently dead.</dd>
         <dt>Downsides</dt><dd>High frustration risk. A generous target or too many moves could make failure feel inevitable, and the current bot may be a poor authoring proxy for patient cleanup.</dd>
         <dt>Confidence</dt><dd>64%</dd>
         <dt>Complexity</dt><dd>Low</dd>
@@ -364,11 +533,11 @@ S S I S S
   <section id="sources">
     <div class="eyebrow">Evidence used</div>
     <h2>Sources</h2>
-    <p>Repository evidence: <code>src/game.js</code>, <code>solver/generated-batch-01.json</code> through <code>generated-batch-04.json</code>, <code>solver/generate-levels.js</code>, <code>solver/profile-shapes.js</code>, <code>CURRENT.md</code>, <code>EVIDENCE_LEDGER.md</code>, <code>docs/backlog/BL-0012-generator-cannot-build-climbing-chains.md</code>, <code>docs/backlog/BL-0013-policy-vocabulary-gaps.md</code>, and the latest fixed-seed Level 54 recording.</p>
-    <p>External grounding: <a href="https://www.pcgworkshop.com/archive/smith2010analyzing.pdf">Smith &amp; Whitehead, <em>Analyzing the Expressive Range of a Level Generator</em></a>; <a href="https://ojs.aaai.org/index.php/AIIDE/article/view/12592">Linden, Lopes &amp; Bidarra, <em>Designing Procedurally Generated Levels</em></a>; <a href="https://arxiv.org/abs/1904.08972">Khalifa et al., <em>Intentional Computational Level Design</em></a>.</p>
+    <p>Repository evidence: <code>src/game.js</code>, <code>solver/engine.js</code>, <code>solver/level-author.js</code>, <code>solver/generate-levels.js</code>, <code>CURRENT.md</code>, <code>EVIDENCE_LEDGER.md</code>, <code>docs/MEASUREMENT-AND-ANALYSIS-STANDARDS.md</code>, <code>prototypes/DESIGN-LEARNINGS.md</code>, <code>prototypes/PLAYTEST-DECISION-LEDGER.md</code>, the existing candidate batches, and the current MAP-Elites authoring plan.</p>
+    <p>External grounding: <a href="https://www.pcgworkshop.com/archive/smith2010analyzing.pdf">Smith &amp; Whitehead, <em>Analyzing the Expressive Range of a Level Generator</em></a>; <a href="https://ojs.aaai.org/index.php/AIIDE/article/view/12592">Linden, Lopes &amp; Bidarra, <em>Designing Procedurally Generated Levels</em></a>; <a href="https://arxiv.org/abs/1904.08972">Khalifa et al., <em>Intentional Computational Level Design</em></a>; <a href="https://support.spryfox.com/hc/en-us/articles/219104828-How-to-play-Triple-Town">Triple Town rules</a>; <a href="https://images.popcap.com/www/images/product/extras/strategyguides/bejeweled3/1033/bejeweled3strategyguide.pdf">Bejeweled 3 strategy guide</a>; <a href="https://drop7.dev/learn/rules">Drop7 rules</a>; and <a href="https://arxiv.org/abs/1804.07396">Eppstein, <em>Making Change in 2048</em></a>.</p>
   </section>
 
-  <footer class="composition-signal">Composed 2026-09-11T04:30Z by ce-ideate from the user's board-gap question and repository evidence at branch <code>codex/proposed-beat-the-bot</code>.</footer>
+  <footer class="composition-signal">Composed 2026-09-11T04:30Z and extended 2026-09-16 by ce-ideate from the user's level-authoring observations, project design corpus, and repository evidence.</footer>
 </main>
 </body>
 </html>
