@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-09-22",
+  "asOf": "2026-08-28",
   "authority": {
     "standing": "EVIDENCE_LEDGER.md",
     "artifactContents": "named primary receipts",
     "generatedViews": "projections only"
   },
   "sourceIdentities": {
-    "contractSha256": "aa5fed13b46a9c0962d091783d45c562daf815559dd59c9c12e6bb2be8c82004",
-    "ledgerSha256": "6e995f3455a3e98d68a83346ee9e0185244f477002d5630062b654f8b4c7ed14",
-    "currentNavigationSha256": "841bab39208b2d2cb9908b585d50e24a704c86da07380d6118b99eaa149bdfad",
-    "shippedGameSha256": "3d405595707621ce28ab2ff4a8f509b8e3099462d42e8e0b304d3459907936c1",
+    "contractSha256": "372ac90f35f69d38c96ee37be4fddf6f19e322bd5ecaf732df2e142fe5828ac1",
+    "ledgerSha256": "298ff7d535809ae26cceaaa6d72cd1e572901d7567b03578c827afed89b3b447",
+    "currentNavigationSha256": "4ee7fde389950e391d14b8904d8700967c53324907ea7c8ef76f37cd5a6ba4a0",
+    "shippedGameSha256": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
     "latestArtifactSha256": "ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22",
     "latestArtifactVerificationSha256": "701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790",
     "artifactVerifierCommit": "8508c3b4aa2bac9eceaac0bcaf91e3838e303a53"
@@ -54,7 +54,7 @@
     }
   },
   "evaluationUniverse": {
-    "shippedLevelCount": 58,
+    "shippedLevelCount": 53,
     "selection": {
       "levels": [
         1,
@@ -67,7 +67,7 @@
       "levelCount": 6,
       "seedCount": 12,
       "gameCount": 72,
-      "shippedLevelCoverage": 0.10344827586206896
+      "shippedLevelCoverage": 0.11320754716981132
     },
     "holdout": {
       "levels": [
@@ -131,7 +131,7 @@
     "acceptedRecord": "RESULT-0017",
     "latestArtifact": "not-admitted",
     "currentNavigation": "current",
-    "currentNavigationLastReviewed": "2026-09-16"
+    "currentNavigationLastReviewed": "2026-09-02"
   },
   "currentFrontier": [
     {
