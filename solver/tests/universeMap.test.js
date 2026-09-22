@@ -261,7 +261,23 @@ test('verification observations derive from rebound evidence instead of copied m
   writeUniverse(fixture);
 
   assert.equal(resolveUniverse(fixture).observedPerformance.latest.occupiedCells, 24);
-  assert.deepEqual(verifyUniverse(fixture), []);
+  assert.deepEqual(verifyUniverse(fixture, { today: contract.asOf }), []);
+});
+
+test('verification reports the map stale exactly one day past its maximum age', (t) => {
+  const fixture = makeFixture(t);
+  const contract = JSON.parse(fs.readFileSync(path.join(fixture, 'universe/contract.json'), 'utf8'));
+  const dayAfter = (days) => {
+    const at = new Date(`${contract.asOf}T00:00:00Z`);
+    at.setUTCDate(at.getUTCDate() + days);
+    return at.toISOString().slice(0, 10);
+  };
+  const limit = contract.freshness.maximumMapAgeDays;
+
+  assert.deepEqual(verifyUniverse(fixture, { today: dayAfter(limit) }), []);
+  assert.deepEqual(verifyUniverse(fixture, { today: dayAfter(limit + 1) }), [
+    `Universe Map stale: contract asOf ${contract.asOf}, today ${dayAfter(limit + 1)}`,
+  ]);
 });
 
 test('verification fails closed for protected champion identity mismatch even with a rebound hash', (t) => {

@@ -1,6 +1,6 @@
 # Universe Map
 
-> Generated control panel as of 2026-08-28. Do not edit by hand. Evidence standing comes only from [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md); this page is a projection.
+> Generated control panel as of 2026-09-22. Do not edit by hand. Evidence standing comes only from [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md); this page is a projection.
 
 ## Warnings
 
@@ -15,7 +15,7 @@
 
 ## Evaluation universe
 
-- **Selection universe:** 6 levels × 12 seeds = 72 games (11.3% of 53 shipped levels).
+- **Selection universe:** 6 levels × 12 seeds = 72 games (10.3% of 58 shipped levels).
 - Levels: 1, 10, 20, 30, 40, 52.
 - **Representative holdout:** 12 levels × 24 seeds = 288 games.
 - Levels: 1, 5, 10, 15, 20, 26, 30, 35, 40, 45, 50, 52.
@@ -33,7 +33,7 @@
 
 - Accepted standing: RESULT-0017 in EVIDENCE_LEDGER.md.
 - Latest artifact: not-admitted.
-- CURRENT.md navigation: current; last reviewed 2026-09-02.
+- CURRENT.md navigation: current; last reviewed 2026-09-16.
 
 ## Current frontier
 
