@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "registered-protocol.md",
+    "sha256": "1b41234cae7319bd95b1c867322ca0f178382963b538c971469561b48200ca9b"
+  },
+  "final_subject_identity": "2ff1df15db38dd571e61dc66ec9bff5d45b2f11b54cf26a1636d6bd4a350f681",
+  "required_claims": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6"
+  ],
+  "required_artifacts": [
+    "qualification",
+    "corpus",
+    "report",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "experiments/RESULT-0039/recompute.js",
+      "--corpus",
+      "experiments/RESULT-0039/corpus.json"
+    ],
+    "cwd": ".",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}

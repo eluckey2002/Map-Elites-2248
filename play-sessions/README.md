@@ -20,8 +20,9 @@ All captures in this directory are part of the normal paired human benchmark:
 
     node solver/human-benchmark.js
 
-Analyze one ordinary capture against the target-aware and full-budget bot on
-the same shipped level and seed:
+Analyze one ordinary capture against the target-stopping bot on the same
+shipped level and seed. The command also prints an uncapped bot-only diagnostic;
+it is not a human comparison because the recorded game stopped at the target:
 
     node solver/human-benchmark.js --recording play-sessions/<id>.json
 

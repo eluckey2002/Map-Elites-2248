@@ -131,6 +131,25 @@ test('executeChain: applies the length multiplier (>=3 tiles = 1.5x)', () => {
   assert.equal(points, 12);
 });
 
+test('off-lattice tiles can be deliberately recombined to reclaim occupied cells', () => {
+  const sixA = makeTile(0, 0, 6);
+  const sixB = makeTile(1, 0, 6);
+  const twelve = makeTile(2, 0, 12);
+  const chain = [sixA, sixB, twelve];
+  const state = makeState([[sixA, sixB, twelve]], { minChain: 3 });
+
+  assert.equal(canExtendChain([sixA], sixB), true);
+  assert.equal(canExtendChain([sixA, sixB], twelve), true);
+  assert.equal(isValidChain(chain, state.minChain), true);
+
+  executeChain(state, chain);
+
+  assert.equal(state.grid[0][0], null);
+  assert.equal(state.grid[0][1], null);
+  assert.equal(twelve.value, 24);
+  assert.equal(state.grid[0][2], twelve);
+});
+
 test('applyGravity: a tile falls through holes to the bottom of its column', () => {
   const a = makeTile(0, 1, 2);
   const grid = [[null], [a], [null]]; // 3 rows, 1 col; hole above and below

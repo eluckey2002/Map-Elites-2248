@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0043",
+  "qualification": "PASS",
+  "finalSubjectIdentity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8",
+  "oracle": {
+    "path": "experiments/RESULT-0043/registered-protocol.md",
+    "sha256": "8a161f6ac3686a6e8c36672e933531882639fa10ee0797e12f658ddabdef356e"
+  },
+  "productionSeam": "experiments/RESULT-0043/verify.js#verifyArtifact",
+  "manifest": {
+    "paths": [
+      "experiments/RESULT-0043/closeout-contract.json",
+      "experiments/RESULT-0043/manifest.js",
+      "experiments/RESULT-0043/qualify.js",
+      "experiments/RESULT-0043/recompute.js",
+      "experiments/RESULT-0043/registered-protocol.md",
+      "experiments/RESULT-0043/result.js",
+      "experiments/RESULT-0043/result.test.js",
+      "experiments/RESULT-0043/run.js",
+      "experiments/RESULT-0043/run.test.js",
+      "experiments/RESULT-0043/subject.js",
+      "experiments/RESULT-0043/verify.js",
+      "experiments/RESULT-0043/verify.test.js",
+      "solver/behavior-descriptors.js",
+      "solver/bot.js",
+      "solver/engine.js",
+      "solver/exact-greed-denominator.js",
+      "solver/exact-greed-worker.js",
+      "solver/exact-score.js",
+      "solver/experiment-guard.js",
+      "solver/greed-descriptor-screen.js",
+      "solver/policy-eval.js",
+      "solver/tests/behaviorDescriptors.test.js",
+      "solver/tests/exact-score.test.js",
+      "solver/tests/exactGreedDenominator.test.js",
+      "solver/tests/greedDescriptorScreen.test.js",
+      "src/game.js",
+      "tools/verify-experiments.js"
+    ],
+    "identity": "e2ce29f514af1285fa23b07e1965652524c46e49c5791b825174a83ed2c406c2"
+  },
+  "controls": {
+    "cleanBaseline": "PASS",
+    "watchdogCalibration": {
+      "seed": 33800004,
+      "level": 10,
+      "percentile": 1,
+      "moves": 22,
+      "workLimitedMoves": 5,
+      "timeoutMoves": 0
+    },
+    "positiveAndScaleInvariantSelection": "PASS",
+    "unstableMiddleBin": {
+      "modalGreedBin": 1,
+      "exactModalGreedRate": 0.5
+    },
+    "reducerEdgeFixtures": [
+      "work-limited",
+      "zero-exact-policy",
+      "null-cell",
+      "non-default-policy-panel"
+    ],
+    "contractRecomputationPath": "PASS",
+    "timingOrthogonality": "PASS",
+    "restoration": "PASS"
+  },
+  "mutations": [
+    {
+      "id": "M1-stale-body-hash",
+      "classification": "KILL",
+      "expectedReason": "artifact identity mismatch",
+      "observed": "artifact identity mismatch"
+    },
+    {
+      "id": "M2-coherent-seed-substitution",
+      "classification": "KILL",
+      "expectedReason": "registered seed panel mismatch",
+      "observed": "registered seed panel mismatch"
+    },
+    {
+      "id": "M3-work-limit-count",
+      "classification": "KILL",
+      "expectedReason": "work-limit state count mismatch",
+      "observed": "work-limit state count mismatch"
+    },
+    {
+      "id": "M4-coherent-source-substitution",
+      "classification": "KILL",
+      "expectedReason": "source identity closure mismatch",
+      "observed": "source identity closure mismatch"
+    }
+  ],
+  "testCommand": [
+    "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+    "--test",
+    "experiments/RESULT-0043/result.test.js",
+    "experiments/RESULT-0043/run.test.js",
+    "experiments/RESULT-0043/verify.test.js",
+    "solver/tests/behaviorDescriptors.test.js",
+    "solver/tests/exact-score.test.js",
+    "solver/tests/exactGreedDenominator.test.js",
+    "solver/tests/greedDescriptorScreen.test.js"
+  ],
+  "testExitCode": 0,
+  "testOutputSha256": "563982bc9b225cf86886d359e45dbcf59513051a106cb61f7535b16b09b6b5bd"
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0041",
+  "reportable": false,
+  "runStatus": "INVALID",
+  "finalSubjectIdentity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c",
+  "registrationCommit": "4c6943b",
+  "completedGamesBeforeFailure": 96,
+  "rows": [],
+  "failure": {
+    "type": "emergency-watchdog",
+    "percentile": 1,
+    "level": 10,
+    "seed": 33800004,
+    "message": "emergency watchdog fired at percentile 1, level 10, seed 33800004"
+  },
+  "standing": "No game rows were retained because the registered runner writes atomically only after all 128 games. This closeout record preserves the terminal failure and must not be analyzed as a corpus."
+}

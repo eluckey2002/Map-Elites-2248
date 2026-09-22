@@ -65,9 +65,28 @@ fresh games, 75 exact-complete games, the stated policy means and correlations,
 and primary `INCONCLUSIVE`. Its 100% same-or-adjacent-bin statistic cannot
 support seed stability because the rule is vacuous for a middle modal bin; its
 frozen verifier also fails to bind the registered seed panel and exact
-work-limit count, and its source closure omits executed dependencies. Greed
-ratio is not an adopted axis. `BL-0015` owns a fresh registered successor;
-half-score timing remains a separate later experiment.
+work-limit count, and its source closure omits executed dependencies.
+`RESULT-0043` now supplies the hardened fresh-seed successor: 128/128 games
+completed, executable closeout passed, greed means rose 0.385→0.946, and
+win/greed correlation was 0.956. Its primary outcome remains `INCONCLUSIVE`
+because exact coverage missed every Level 10 cell, score/greed correlation was
+0.730, and minimum exact-modal stability was 66.7%. Greed ratio is responsive
+but not an adopted axis. `BL-0015` is complete; half-score timing remains a
+separate later experiment.
+
+Also as of 2026-09-16, `CORRECTION-0008` narrows `FACT-0006`. A survivor
+outside the ordinary `tileScale × 2^n` spawn lattice has no naturally spawned
+partner, but it is not permanently unmatchable: deliberately constructed
+equal and double off-lattice values can form a legal chain and collapse several
+occupied cells into one reusable survivor. That survivor remains off-lattice.
+Off-lattice occupancy is therefore a neutral board-state observation; its
+recovery cost and strategic pressure remain unresolved.
+
+Also as of 2026-09-16, `CORRECTION-0009` supersedes the objective interpretation
+in the 2026-09-05 human-benchmark snapshot below. Recorded human wins and the
+shipped bot both stop on the target-crossing move. Across the current 25-session
+mixed corpus, each wins the speed comparison on 9 of 23 mutual wins, with 5
+ties. The uncapped bot arm continues alone and cannot support a human comparison.
 
 As of 2026-09-19, `RESULT-0048` closed the bounded family-island candidate
 search with `ISLANDS_SUFFICIENT`. Under blue-only refills, 1,305/4,096 boards
@@ -274,7 +293,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### FACT-0006 — The mergeable-sum lattice and what a lockout is
 
 - **type:** fact
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped game rules, all levels
 - **statement:** A merge leaves exactly one tile behind, valued at the chain's sum. Spawns are the level's tile scale times 2, 4, or 8, and every chain extension is equal-or-double, so a sum lands back in the matchable lattice only when it equals the tile scale times a power of two. Any other sum is a tile nothing can ever match again. One such tile can accrue per move and they never leave, so they accumulate until no legal chain remains. That accumulation *is* the "no valid moves" lockout; it is a property of the scoring rule, not a coding defect.
 - **evidence:** `solver/engine.js`, `isMergeableSum` and its use in `buildGreedyChain`; the level-26 instrumentation recorded at that symbol (5x8 grid, 32 moves, 31 of 40 cells holding unmatchable sums such as 78, 46, 34 at termination); lockout rates per level reported by `node solver/verify-loop.js`.
@@ -283,7 +302,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Inspect `isMergeableSum` and `buildGreedyChain` in `solver/engine.js`; run `node solver/verify-loop.js` and expect the lockout-rate check to report a nonzero but bounded rate on the late levels.
 - **updated:** 2026-08-12
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0008]
 - **notes:** This is the mechanism behind the original Level 26 failure and behind the whole score-pace ceiling. It also bounds any future change to the spawn pool: more distinct spawn values means more sums fall off the lattice, so widening the pool trades matchability for value. See `BL-0003` and `RESULT-0006`.
 
 ### FACT-0007 — Uniform integer tile scaling is an exact isomorphism
@@ -827,6 +846,51 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** [CORRECTION-0007]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
+### RESULT-0041 — Hardened greed harness qualifies; confirmation watchdog invalidates the run
+
+- **type:** result
+- **status:** accepted
+- **scope:** mutation-qualified exact-denominator greed-ratio validation for percentile policies 0.25, 0.50, 0.75, and 1.00 on shipped Levels 10, 31, 53, and 54; confirmation seeds 33,800,000–33,800,007; deterministic 500,000-path-state cap and 30,000 ms emergency watchdog; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
+- **statement:** RESULT-0041's frozen harness qualified: the production verifier killed stale body identity, coherent seed-panel substitution, incorrect work-limit counts, and coherent source substitution for their intended reasons; its exact-modal stability statistic reported 0.50 on a planted unstable middle-bin policy; independent analysis matched work-limited, zero-exact-policy, null-cell, and non-default-policy fixtures; and source restoration passed. The single allowed confirmation attempt then hit the registered emergency watchdog at percentile 1.00, Level 10, seed 33,800,004 after reporting 96/128 completed games. The protocol declares any watchdog timeout invalid and forbids retry. Closure is therefore **`INVALID`**, recomputation is `NOT_RUN`, and P1–P6 are `UNVERIFIED`; no greed-ratio domain outcome or adoption evidence follows.
+- **evidence:** immutable protocol `experiments/RESULT-0041/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0041/protocol.md`, registration commit `4c6943b`; mutation [qualification receipt](experiments/RESULT-0041/qualification.json); retained [baseline output](experiments/RESULT-0041/baseline-output.txt); explicit invalid-run [corpus placeholder](experiments/RESULT-0041/corpus.json) with no outcome rows; complete [report](experiments/RESULT-0041/report.md); executable contract and [closure receipt](experiments/RESULT-0041/closure.json).
+- **proof_class:** `direct_source` for qualification controls, identities, the terminal watchdog condition, closure status, and absence of retained outcome rows; `UNKNOWN` for every descriptor prediction and domain conclusion.
+- **as_of:** 2026-09-16
+- **reverify:** From `experiments/RESULT-0041`, run `python3 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py closeout-contract.json closure.json --run-recomputation`; expect verifier `PASS`, `closure_status: INVALID`, and recomputation `NOT_RUN`. Run `node tools/verify-experiments.js` from the repository root; expect `EXPERIMENT GATE PASS`. Do not run the confirmation again or interpret its progress counts as outcomes.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0038]
+- **superseded_by:** []
+- **notes:** RESULT-0039 and RESULT-0040 stopped during pre-outcome qualification and retain their failed attempt receipts. RESULT-0041 repaired those exact gaps and qualified; its separate terminal failure shows that the 30-second watchdog is not guaranteed to outlast the deterministic path-state cap on every registered board. Any future confirmation is a new subject and requires an owner-selected compute/denominator change, not a retry of this run.
+
+### RESULT-0042 — Calibrated watchdog completes the matrix; frozen closeout path remains unverified
+
+- **type:** result
+- **status:** superseded
+- **scope:** four fixed-percentile policies on shipped Levels 10, 31, 53, and 54; seeds 33,900,000–33,900,007; deterministic 500,000-path-state cap and calibrated 120,000 ms emergency watchdog; hardened seed, work-count, source-closure, reducer, and exact-modal stability receipts; half-score move diagnostic only
+- **statement:** RESULT-0042 demonstrated that the relaxed watchdog lets the full registered workload finish: all 128 games completed with zero timeout observations, 68 were exact-complete, and 198 move denominators stopped honestly at the deterministic work cap. Its retained reducer output records exact policy means **0.372, 0.529, 0.725, 0.946**, policy win/greed correlation **0.940**, per-game score/greed correlation **0.660**, and minimum exact-modal stability **75%**. However, the preregistered closeout argv was repository-root-relative while its `cwd: "."` resolved from the experiment directory, so executable closeout exited 1. Closure is **`UNVERIFIED`**, P1–P6 have no entitled outcomes, and the descriptive values cannot support adoption.
+- **evidence:** immutable protocol `experiments/RESULT-0042/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0042/protocol.md`, registration commit `24dbb96`; [qualification receipt](experiments/RESULT-0042/qualification.json); retained [corpus](experiments/RESULT-0042/corpus.json), artifact identity `6d642e89e6307c6e2731257a2e7eb88fe6af1cfea2f1c31d904fcdef1a93f67a`; [report](experiments/RESULT-0042/report.md); honest `UNVERIFIED` [closure receipt](experiments/RESULT-0042/closure.json); retained manual [recomputation](experiments/RESULT-0042/primary-recomputation.json).
+- **proof_class:** `direct_source` for the complete row matrix, exact/work-limit standings, zero timeouts, artifact verification, and closeout-path defect; `UNKNOWN` for the primary domain conclusion. The means and correlations are non-entitled `heuristic_observation` diagnostics.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0042/verify.js experiments/RESULT-0042/corpus.json`; expect PASS and 128 rows. Run the close-experiment verifier without `--require-closed`; expect structural PASS, `closure_status: UNVERIFIED`, and recomputation `NOT_RUN`. Do not rerun its seeds or claim a domain outcome.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0041]
+- **superseded_by:** [RESULT-0043]
+- **notes:** The watchdog change worked. The failure was only the frozen closeout working directory. RESULT-0043 preregistered the corrected cwd, qualified that exact path, and used fresh seeds.
+
+### RESULT-0043 — Greed responds and tracks wins, but coverage, redundancy, and stability remain inconclusive
+
+- **type:** result
+- **status:** accepted
+- **scope:** four fixed-percentile policies on shipped Levels 10, 31, 53, and 54; seeds 34,000,000–34,000,007; deterministic 500,000-path-state cap and 120,000 ms emergency watchdog; hardened verifier and executable-closeout qualification; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
+- **statement:** RESULT-0043 closed validly with primary outcome **`INCONCLUSIVE`**. All 128 games completed with zero watchdog timeouts; 61 were exact-complete and 201 move denominators stopped at the registered work cap. Greed responded strongly to the policy manipulation: exact means rose **0.385, 0.531, 0.741, 0.946** (range **0.561**), and policy win/greed correlation was **0.956**, so P2 and P3 are `SUPPORTED`. P1 is `INCONCLUSIVE` because every policy × Level 10 cell had zero exact games. P4 is `INCONCLUSIVE` because score/greed correlation **0.730** lies between the 0.70 support and 0.85 falsification thresholds. P5 is `INCONCLUSIVE` because minimum exact-modal stability **66.7%** lies between its 80% and 60% thresholds. Nothing was falsified, but the full promotion bar was not cleared. Greed ratio remains an unadopted candidate; half-score move occupied only the early bin and remains diagnostic.
+- **evidence:** immutable protocol `experiments/RESULT-0043/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0043/protocol.md`, registration commit `acfe8c6`; mutation and exact-command [qualification receipt](experiments/RESULT-0043/qualification.json); retained [corpus](experiments/RESULT-0043/corpus.json), artifact identity `560f436388daeebcd19a198918791f0d9d014aa47512b0520e500b4a20ca199e`; exact [report](experiments/RESULT-0043/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0043/closure.json), and [independent corpus reduction](experiments/RESULT-0043/primary-recomputation.json).
+- **proof_class:** `direct_source` for frozen identities, row counts, exact/work-limit standings, artifact verification, qualified closeout path, and executable closure; `heuristic_observation` for controlled response, correlations, and stability over the registered panel. Work-limited games remain `UNKNOWN` and contribute no partial greed ratio.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0043/verify.js experiments/RESULT-0043/corpus.json`; expect PASS, artifact `560f4363…`, 128 rows, P2/P3 `SUPPORTED`, P1/P4/P5 `INCONCLUSIVE`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 66c18f65643d528aa58b292116b005a4a96a4ef1cb1a2d5576394b19c6779f8f`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0042]
+- **superseded_by:** []
+- **notes:** Do not add seeds or raise this run's cap after observing the result. The evidence supports greed as a responsive behavioral measure but does not yet support promotion as a MAP-Elites axis. A future change must address the exact-coverage strategy and score overlap as a genuinely new subject; repeated copies of this same panel are not the next step.
+
 ### RESULT-0048 — Blue-only refills yield family-island playtest candidates
 
 - **type:** result
@@ -1112,6 +1176,36 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0037, RESULT-0038]
 - **superseded_by:** []
 - **notes:** Frozen experiment files remain untouched. [BL-0015](docs/backlog/BL-0015-harden-greed-validation-receipts.md) defines the successor work: fresh seeds, a seed-bound and work-count-bound verifier, complete executable source closure, reducer equivalence over `UNKNOWN` cases, and a non-vacuous stability statistic. The separate timing-axis manipulation remains later work and must not be folded into this repair.
+
+### CORRECTION-0008 — Off-lattice tiles are recoverable, not permanently dead
+
+- **type:** correction
+- **status:** accepted
+- **scope:** `FACT-0006`'s claim that a survivor outside `tileScale × 2^n` can never be matched again, and the derived reading of `strandedCellPressure` as irreversible board damage; the spawn lattice, chain-sum rule, and observed historical Level 26 terminal board remain unchanged
+- **statement:** Narrows `FACT-0006`. A merge survivor outside the ordinary `tileScale × 2^n` lattice has no matching partner in the normal spawn family, but it is not permanently unmatchable. Chain legality depends on equality and doubling, not membership in the spawn lattice. A player can deliberately construct compatible off-lattice values: at scale 1, adjacent values `6 → 6 → 12` form a legal three-tile chain whose sum is `24`, collapsing three occupied cells into one reusable survivor. The survivor remains off-lattice because the merge preserves the value family's odd factor. Off-lattice values can therefore be recombined to reclaim cells, exploited for immediate score, or left as costly occupants depending on geometry, remaining moves, and the availability of a constructible partner. Their accumulation can contribute to a no-legal-chain lockout, but it is not itself the definition or sufficient cause of lockout. The current `strandedCellPressure` function exactly measures off-lattice occupancy; permanent damage, recovery cost, and strategic pressure do not follow from that count alone.
+- **evidence:** `solver/engine.js`, `canExtendChain`, `isValidChain`, and `executeChain`, which accept the constructed `6, 6, 12` chain and leave survivor value `24`; durable characterization test `solver/tests/engine.test.js`, `off-lattice tiles can be deliberately recombined to reclaim occupied cells`; `solver/behavior-descriptors.js`, `strandedCellPressure`, which counts every non-stone off-lattice value without testing whether a compatible partner can be constructed; the original Level 26 terminal-board observation retained in `FACT-0006`.
+- **proof_class:** `direct_source` for chain legality, the constructed recovery example, and what the occupancy function counts; `unresolved` for population frequency, recovery cost, player pressure, level-design value, and any general causal relationship between off-lattice occupancy and lockout
+- **as_of:** 2026-09-16
+- **reverify:** Run `node --test solver/tests/engine.test.js`; expect the named off-lattice recombination test to pass with a 24-valued survivor. Inspect `strandedCellPressure` and confirm it classifies by `isMergeableSum` only, without a recoverability search.
+- **updated:** 2026-09-16
+- **supersedes:** [FACT-0006]
+- **superseded_by:** []
+- **notes:** The source comment above `isMergeableSum` still carries the older permanent-dead interpretation. `solver/engine.js` is identity-bound into candidate receipts, so this documentation correction records the rule without changing that hashed source. Any future source edit must follow the receipt re-derivation rules. The possible use of starting off-lattice values as soft blockers and landmark-route multiplicity as a level-design measure are proposals in `docs/MEASUREMENT-AND-ANALYSIS-STANDARDS.md`, not shipped rules or accepted empirical results.
+
+### CORRECTION-0009 — Recorded human games stop at the target
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the 2026-09-05 current-snapshot claim that recorded human play continued after reaching the target; the matching comments and labels in `solver/human-benchmark.js`; the uncapped bot's reported 12/12 and later 25/25 score advantage when presented as a human comparison
+- **statement:** Supersedes the objective interpretation, not the recorded scores. Every recorded human win ends with `reason: target reached`, on the move that crosses the same target used by the shipped target-aware bot. The target-stopping arms therefore share the race-to-target objective. Across the current mixed corpus of 25 paired sessions, the human wins 23 and the bot wins 25. Among the 23 mutual wins, the human reaches the target in fewer moves on 9, the bot on 9, and 5 are ties. The bot has the higher crossing score on 13/23 mutual wins, with a mean paired difference of `-0.4%`; crossing score records final-chain overshoot and is not a substitute for speed. The 13 ordinary shipped-level captures contain 12 mutual wins: the human is faster on 6, the bot on 3, and 3 are ties. Every bot-faster ordinary capture is on Level 54. The remaining ordinary capture is the human loss on shipped Level 54 seed `1044860360`. The uncapped arm removes the target only for the bot and lets it continue to the move budget; it has no recorded human comparator and establishes no bot-over-human score advantage.
+- **evidence:** Every replay-accepted winning JSON under `recordings/`, `play-sessions/`, and `pilots/*/recordings/` records `reason: target reached`; `solver/recording-replay.js` verifies the terminal outcome and score; `node solver/human-benchmark.js` replays the shipped bot on each identical board and seed and reports the paired outcome and move counts; `solver/tests/humanBenchmark.test.js` guards complete corpus collection, pairing, and the summary classification.
+- **proof_class:** `exact_result` for the 25 recorded sessions under their bound boards, seeds, recordings, and current bot; `direct_source` for capture termination semantics; no general claim about human or bot skill outside this corpus
+- **as_of:** 2026-09-16
+- **reverify:** Run `node solver/human-benchmark.js`; expect 25 paired sessions, outcome 23 human wins and 25 bot wins, and speed among 23 mutual wins of human faster 9, bot faster 9, tied 5. Inspect the two human losses: archived Level 51 `split-channel`, seed 1, and shipped Level 54, seed `1044860360`.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The earlier 2026-09-05 snapshot is retained above as historical lineage. Its same-seed correction remains valid; only its human-continues premise and resulting uncapped comparison are superseded. The mixed 25-session corpus includes historical candidate boards and pilot boards, so current shipped-level claims must use the ordinary `play-sessions/` subset.
 
 ## Assembly cut log
 
