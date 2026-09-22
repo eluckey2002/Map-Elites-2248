@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0040",
+  "attempt": "qualification-1",
+  "harnessCommit": "b4f8d92",
+  "protocolSha256": "131ff523403b11e82e4bf56e3f670cb80d18a55d0f2ad35a4a2f29f25101daf1",
+  "harnessIdentity": "1f071c0b82487651d8a6340e84e10df38ed79f5de697a7d76425c0e8b1b3685b",
+  "command": [
+    "node",
+    "experiments/RESULT-0040/qualify.js",
+    "write"
+  ],
+  "exitCode": 1,
+  "qualification": "FAIL",
+  "stage": "independent reducer edge fixtures",
+  "observed": "zero-exact-policy correlation mismatch: independent reducer included null as numeric zero while registered analysis excluded it",
+  "freshConfirmationOutcomesAccessed": false,
+  "disposition": "frozen harness superseded; do not repair or run RESULT-0040"
+}

@@ -77,7 +77,7 @@ history, not the complete goal result.
   candidate receipts, generated Universe Map staleness, and Universe Map date
   drift. None was changed, exempted or cleared. All 14 added oracle tests pass.
 - `node tools/verify-experiments.js` returned `EXPERIMENT GATE PASS` after the
-  source-pinned `RESULT-0039` ledger record was added.
+  source-pinned `RESULT-0045` ledger record was added.
 - `git diff --check` passed. A diff against `e1d1f60` confirms no changes to
   `src/game.js`, `solver/engine.js`, `solver/bot.js`, `solver/level-author.js`,
   `solver/calibrations/calib-1.js`, captures, pilots, or archived candidates.

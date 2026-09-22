@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "66c18f65643d528aa58b292116b005a4a96a4ef1cb1a2d5576394b19c6779f8f"
+  },
+  "run_id": "RESULT-0043-confirmation-34000000-34000007",
+  "final_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8",
+  "closure_status": "CLOSED",
+  "claims": [
+    {"id": "C1", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "Production descriptor arithmetic and unknown propagation passed."},
+    {"id": "C2", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "Deterministic exact/reference and objective-equivalence controls passed; the former failure game completed 22 moves with zero timeouts."},
+    {"id": "C3", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "Positive percentile and uniformly scaled negative manipulations passed."},
+    {"id": "C4", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "All four verifier mutants were killed for their intended reasons; unstable middle-bin share was 0.50."},
+    {"id": "C5", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "Independent reduction matched all edge fixtures and the retained corpus; the frozen closeout cwd/argv path passed qualification."},
+    {"id": "C6", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "Timing-only manipulation left greed predictions unchanged."},
+    {"id": "C7", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "Baseline retained 420 tests, 415 passes, four documented failures, and one skip; focused qualification passed 27/27."},
+    {"id": "P1", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "The registered rule assigned INCONCLUSIVE: 61/128 games were exact, but every Level 10 policy cell had zero exact games."},
+    {"id": "P2", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "The registered rule assigned SUPPORTED from strictly rising exact means spanning 0.561."},
+    {"id": "P3", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "The registered rule assigned SUPPORTED from policy win/greed Pearson correlation 0.956."},
+    {"id": "P4", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "The registered rule assigned INCONCLUSIVE from per-game score/greed correlation 0.730."},
+    {"id": "P5", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "The registered rule assigned INCONCLUSIVE from minimum exact modal-bin stability 0.667."},
+    {"id": "P6", "status": "PASS", "evidence_subject_identity": "ca788bc698a5f9f61877d1d0a1d682bb15974cf321d681e38eaf2f6ac08ba5c8", "reason": "The primary domain outcome was assigned INCONCLUSIVE exactly as preregistered because P1, P4, and P5 were inconclusive and none was falsified."}
+  ],
+  "artifacts": [
+    {"id": "qualification", "path": "qualification.json", "sha256": "9feecfc521840daef03c60894debc4992b3ab698eb987f947281aa8d46ad2ecf"},
+    {"id": "corpus", "path": "corpus.json", "sha256": "255f7c30e98363b1afd5029cc251387cf708e4fc7f2eeaf5c05e334ef30c9439"},
+    {"id": "report", "path": "report.md", "sha256": "6b9c9dd8dd2efede08323d0dbd803f30348f8a6f64446bb2288f1fad727a433f"},
+    {"id": "primary-recomputation", "path": "primary-recomputation.json", "sha256": "41e618e1a7a2aaf67c5085fc03daa0fc5a7a2b734604ad13ecd6edb0d7c97506"}
+  ],
+  "primary_outcome": "INCONCLUSIVE",
+  "deviations": [],
+  "attempts": [
+    {"id": "qualification-attempt-1", "exit_code": 0, "artifact_ids": ["qualification"]},
+    {"id": "confirmation-attempt-1", "exit_code": 0, "artifact_ids": ["corpus"]},
+    {"id": "deterministic-recomputation", "exit_code": 0, "artifact_ids": ["primary-recomputation", "report"]}
+  ]
+}

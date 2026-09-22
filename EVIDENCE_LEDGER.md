@@ -28,7 +28,7 @@ self-identity gate, so its row reduction to `FALSIFIED` is partial evidence,
 not an admitted fresh-panel conclusion. A successor needs a fully frozen
 adapter and fresh cases.
 
-As of 2026-09-16, `RESULT-0039` records verified oracle witnesses for all 20
+As of 2026-09-16, `RESULT-0045` records verified oracle witnesses for all 20
 exact puzzles grouped from the 25 captured sessions. On the 19 puzzles with a
 human win, these witnesses use fewer moves on 17 and equal moves on 2; the
 remaining loss-only puzzle also has an oracle win. The saved run stays within
@@ -94,9 +94,14 @@ fresh games, 75 exact-complete games, the stated policy means and correlations,
 and primary `INCONCLUSIVE`. Its 100% same-or-adjacent-bin statistic cannot
 support seed stability because the rule is vacuous for a middle modal bin; its
 frozen verifier also fails to bind the registered seed panel and exact
-work-limit count, and its source closure omits executed dependencies. Greed
-ratio is not an adopted axis. `BL-0015` owns a fresh registered successor;
-half-score timing remains a separate later experiment.
+work-limit count, and its source closure omits executed dependencies.
+`RESULT-0043` now supplies the hardened fresh-seed successor: 128/128 games
+completed, executable closeout passed, greed means rose 0.385→0.946, and
+win/greed correlation was 0.956. Its primary outcome remains `INCONCLUSIVE`
+because exact coverage missed every Level 10 cell, score/greed correlation was
+0.730, and minimum exact-modal stability was 66.7%. Greed ratio is responsive
+but not an adopted axis. `BL-0015` is complete; half-score timing remains a
+separate later experiment.
 
 Also as of 2026-09-16, `CORRECTION-0008` narrows `FACT-0006`. A survivor
 outside the ordinary `tileScale × 2^n` spawn lattice has no naturally spawned
@@ -111,6 +116,16 @@ in the 2026-09-05 human-benchmark snapshot below. Recorded human wins and the
 shipped bot both stop on the target-crossing move. Across the current 25-session
 mixed corpus, each wins the speed comparison on 9 of 23 mutual wins, with 5
 ties. The uncapped bot arm continues alone and cannot support a human comparison.
+
+As of 2026-09-19, `RESULT-0048` closed the bounded family-island candidate
+search with `ISLANDS_SUFFICIENT`. Under blue-only refills, 1,305/4,096 boards
+remained sustained through move six and 656 contained a later rejoin of a tile
+created by blue-family conversion; every target family 3/5/7/9 cleared the
+registered candidate threshold. Mixed-family refills increased move-six
+persistence to 55.5–61.3%, but were not required to source the first human
+playtest candidates. This is a deterministic screening-policy observation,
+not evidence about human strategy, fun, difficulty, or a production spawn
+rule.
 
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
@@ -860,20 +875,50 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** [CORRECTION-0007]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
-### RESULT-0039 — Oracle witnesses meet every frozen captured-puzzle move comparator
+### RESULT-0041 — Hardened greed harness qualifies; confirmation watchdog invalidates the run
 
 - **type:** result
 - **status:** accepted
-- **scope:** the 20 exact puzzles in `docs/oracle/corpus.json`, grouped from 25 captured sessions; saved run `attempt-05-full-corpus`, Node v26.0.0 on darwin/arm64
-- **statement:** The report contains 20 legal target-reaching oracle witnesses. Against each puzzle's best verified human win, 17 are shorter and 2 tie; the loss-only puzzle also has a win. Every witness preserves or improves the current-bot winning move count. Search plus baseline generation is at most 29.855 seconds per puzzle in this saved run; maximum parent-controller elapsed time is 29.950 seconds. These are exact witness/comparator facts about this artifact, not minimum-move claims or predictions.
-- **evidence:** `docs/oracle/runs/attempt-05-full-corpus.json`, report identity `397ca4631966e659bbedbd8f5e1e7c41fa39fd04ad973d9fb6443ec6b80dee05`; corpus identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`; implementation closure identity `7b9b7592bf2ed880af95041ca4e2dc87138308bb9f212125682a4138bd5ded1c`; `solver/oracle/verify.js:verifyWitness` and `assessPuzzle`; `solver/oracle/cli.js:verifyReport`; `solver/tests/oracle.test.js` (14 passing controls, including real CLI-file forgery rejection)
-- **proof_class:** `direct_source`
+- **scope:** mutation-qualified exact-denominator greed-ratio validation for percentile policies 0.25, 0.50, 0.75, and 1.00 on shipped Levels 10, 31, 53, and 54; confirmation seeds 33,800,000–33,800,007; deterministic 500,000-path-state cap and 30,000 ms emergency watchdog; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
+- **statement:** RESULT-0041's frozen harness qualified: the production verifier killed stale body identity, coherent seed-panel substitution, incorrect work-limit counts, and coherent source substitution for their intended reasons; its exact-modal stability statistic reported 0.50 on a planted unstable middle-bin policy; independent analysis matched work-limited, zero-exact-policy, null-cell, and non-default-policy fixtures; and source restoration passed. The single allowed confirmation attempt then hit the registered emergency watchdog at percentile 1.00, Level 10, seed 33,800,004 after reporting 96/128 completed games. The protocol declares any watchdog timeout invalid and forbids retry. Closure is therefore **`INVALID`**, recomputation is `NOT_RUN`, and P1–P6 are `UNVERIFIED`; no greed-ratio domain outcome or adoption evidence follows.
+- **evidence:** immutable protocol `experiments/RESULT-0041/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0041/protocol.md`, registration commit `4c6943b`; mutation [qualification receipt](experiments/RESULT-0041/qualification.json); retained [baseline output](experiments/RESULT-0041/baseline-output.txt); explicit invalid-run [corpus placeholder](experiments/RESULT-0041/corpus.json) with no outcome rows; complete [report](experiments/RESULT-0041/report.md); executable contract and [closure receipt](experiments/RESULT-0041/closure.json).
+- **proof_class:** `direct_source` for qualification controls, identities, the terminal watchdog condition, closure status, and absence of retained outcome rows; `UNKNOWN` for every descriptor prediction and domain conclusion.
 - **as_of:** 2026-09-16
-- **reverify:** `node solver/oracle/cli.js --verify docs/oracle/runs/attempt-05-full-corpus.json` from the producing source version; expect exit 0 and `valid:true, pass:true, puzzles:20, wins:20`. New search runs use a new output path and may differ under wall-clock load.
+- **reverify:** From `experiments/RESULT-0041`, run `python3 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py closeout-contract.json closure.json --run-recomputation`; expect verifier `PASS`, `closure_status: INVALID`, and recomputation `NOT_RUN`. Run `node tools/verify-experiments.js` from the repository root; expect `EXPERIMENT GATE PASS`. Do not run the confirmation again or interpret its progress counts as outcomes.
 - **updated:** 2026-09-16
-- **supersedes:** []
+- **supersedes:** [RESULT-0038]
 - **superseded_by:** []
-- **notes:** The search worker receives rules, seed and budget, not human chains or performance labels. Historical boards were inspected during development; this is not a blind evaluation. Timing and work counts are run observations, not replay-proven wall time. Failed and partial attempts remain in `docs/oracle/runs/`. The goal, qualification and readable comparison are in `docs/oracle/CONTRACT.md`, `QUALIFICATION.md`, and `RESULT.md`. No gameplay, target, live-policy or frozen-calibration promotion follows.
+- **notes:** RESULT-0039 and RESULT-0040 stopped during pre-outcome qualification and retain their failed attempt receipts. RESULT-0041 repaired those exact gaps and qualified; its separate terminal failure shows that the 30-second watchdog is not guaranteed to outlast the deterministic path-state cap on every registered board. Any future confirmation is a new subject and requires an owner-selected compute/denominator change, not a retry of this run.
+
+### RESULT-0042 — Calibrated watchdog completes the matrix; frozen closeout path remains unverified
+
+- **type:** result
+- **status:** superseded
+- **scope:** four fixed-percentile policies on shipped Levels 10, 31, 53, and 54; seeds 33,900,000–33,900,007; deterministic 500,000-path-state cap and calibrated 120,000 ms emergency watchdog; hardened seed, work-count, source-closure, reducer, and exact-modal stability receipts; half-score move diagnostic only
+- **statement:** RESULT-0042 demonstrated that the relaxed watchdog lets the full registered workload finish: all 128 games completed with zero timeout observations, 68 were exact-complete, and 198 move denominators stopped honestly at the deterministic work cap. Its retained reducer output records exact policy means **0.372, 0.529, 0.725, 0.946**, policy win/greed correlation **0.940**, per-game score/greed correlation **0.660**, and minimum exact-modal stability **75%**. However, the preregistered closeout argv was repository-root-relative while its `cwd: "."` resolved from the experiment directory, so executable closeout exited 1. Closure is **`UNVERIFIED`**, P1–P6 have no entitled outcomes, and the descriptive values cannot support adoption.
+- **evidence:** immutable protocol `experiments/RESULT-0042/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0042/protocol.md`, registration commit `24dbb96`; [qualification receipt](experiments/RESULT-0042/qualification.json); retained [corpus](experiments/RESULT-0042/corpus.json), artifact identity `6d642e89e6307c6e2731257a2e7eb88fe6af1cfea2f1c31d904fcdef1a93f67a`; [report](experiments/RESULT-0042/report.md); honest `UNVERIFIED` [closure receipt](experiments/RESULT-0042/closure.json); retained manual [recomputation](experiments/RESULT-0042/primary-recomputation.json).
+- **proof_class:** `direct_source` for the complete row matrix, exact/work-limit standings, zero timeouts, artifact verification, and closeout-path defect; `UNKNOWN` for the primary domain conclusion. The means and correlations are non-entitled `heuristic_observation` diagnostics.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0042/verify.js experiments/RESULT-0042/corpus.json`; expect PASS and 128 rows. Run the close-experiment verifier without `--require-closed`; expect structural PASS, `closure_status: UNVERIFIED`, and recomputation `NOT_RUN`. Do not rerun its seeds or claim a domain outcome.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0041]
+- **superseded_by:** [RESULT-0043]
+- **notes:** The watchdog change worked. The failure was only the frozen closeout working directory. RESULT-0043 preregistered the corrected cwd, qualified that exact path, and used fresh seeds.
+
+### RESULT-0043 — Greed responds and tracks wins, but coverage, redundancy, and stability remain inconclusive
+
+- **type:** result
+- **status:** accepted
+- **scope:** four fixed-percentile policies on shipped Levels 10, 31, 53, and 54; seeds 34,000,000–34,000,007; deterministic 500,000-path-state cap and 120,000 ms emergency watchdog; hardened verifier and executable-closeout qualification; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
+- **statement:** RESULT-0043 closed validly with primary outcome **`INCONCLUSIVE`**. All 128 games completed with zero watchdog timeouts; 61 were exact-complete and 201 move denominators stopped at the registered work cap. Greed responded strongly to the policy manipulation: exact means rose **0.385, 0.531, 0.741, 0.946** (range **0.561**), and policy win/greed correlation was **0.956**, so P2 and P3 are `SUPPORTED`. P1 is `INCONCLUSIVE` because every policy × Level 10 cell had zero exact games. P4 is `INCONCLUSIVE` because score/greed correlation **0.730** lies between the 0.70 support and 0.85 falsification thresholds. P5 is `INCONCLUSIVE` because minimum exact-modal stability **66.7%** lies between its 80% and 60% thresholds. Nothing was falsified, but the full promotion bar was not cleared. Greed ratio remains an unadopted candidate; half-score move occupied only the early bin and remains diagnostic.
+- **evidence:** immutable protocol `experiments/RESULT-0043/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0043/protocol.md`, registration commit `acfe8c6`; mutation and exact-command [qualification receipt](experiments/RESULT-0043/qualification.json); retained [corpus](experiments/RESULT-0043/corpus.json), artifact identity `560f436388daeebcd19a198918791f0d9d014aa47512b0520e500b4a20ca199e`; exact [report](experiments/RESULT-0043/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0043/closure.json), and [independent corpus reduction](experiments/RESULT-0043/primary-recomputation.json).
+- **proof_class:** `direct_source` for frozen identities, row counts, exact/work-limit standings, artifact verification, qualified closeout path, and executable closure; `heuristic_observation` for controlled response, correlations, and stability over the registered panel. Work-limited games remain `UNKNOWN` and contribute no partial greed ratio.
+- **as_of:** 2026-09-16
+- **reverify:** Run `node experiments/RESULT-0043/verify.js experiments/RESULT-0043/corpus.json`; expect PASS, artifact `560f4363…`, 128 rows, P2/P3 `SUPPORTED`, P1/P4/P5 `INCONCLUSIVE`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 66c18f65643d528aa58b292116b005a4a96a4ef1cb1a2d5576394b19c6779f8f`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-16
+- **supersedes:** [RESULT-0042]
+- **superseded_by:** []
+- **notes:** Do not add seeds or raise this run's cap after observing the result. The evidence supports greed as a responsive behavioral measure but does not yet support promotion as a MAP-Elites axis. A future change must address the exact-coverage strategy and score overlap as a genuinely new subject; repeated copies of this same panel are not the next step.
 
 ### RESULT-0044 — Fresh-board owner-vs-oracle comparison (corrected identity, blocked pending owner play)
 
@@ -890,6 +935,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** Do not attempt to complete this record by fabricating owner play. The two-board design and its real historical outcome are preserved in the protocol for whichever closure path the owner chooses.
 
+### RESULT-0045 — Oracle witnesses meet every frozen captured-puzzle move comparator
+
+- **type:** result
+- **status:** accepted
+- **scope:** the 20 exact puzzles in `docs/oracle/corpus.json`, grouped from 25 captured sessions; saved run `attempt-05-full-corpus`, Node v26.0.0 on darwin/arm64
+- **statement:** The report contains 20 legal target-reaching oracle witnesses. Against each puzzle's best verified human win, 17 are shorter and 2 tie; the loss-only puzzle also has a win. Every witness preserves or improves the current-bot winning move count. Search plus baseline generation is at most 29.855 seconds per puzzle in this saved run; maximum parent-controller elapsed time is 29.950 seconds. These are exact witness/comparator facts about this artifact, not minimum-move claims or predictions.
+- **evidence:** `docs/oracle/runs/attempt-05-full-corpus.json`, report identity `397ca4631966e659bbedbd8f5e1e7c41fa39fd04ad973d9fb6443ec6b80dee05`; corpus identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`; implementation closure identity `7b9b7592bf2ed880af95041ca4e2dc87138308bb9f212125682a4138bd5ded1c`; `solver/oracle/verify.js:verifyWitness` and `assessPuzzle`; `solver/oracle/cli.js:verifyReport`; `solver/tests/oracle.test.js` (14 passing controls, including real CLI-file forgery rejection)
+- **proof_class:** `direct_source`
+- **as_of:** 2026-09-16
+- **reverify:** `node solver/oracle/cli.js --verify docs/oracle/runs/attempt-05-full-corpus.json` from the producing source version; expect exit 0 and `valid:true, pass:true, puzzles:20, wins:20`. New search runs use a new output path and may differ under wall-clock load.
+- **updated:** 2026-09-16
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The search worker receives rules, seed and budget, not human chains or performance labels. Historical boards were inspected during development; this is not a blind evaluation. Timing and work counts are run observations, not replay-proven wall time. Failed and partial attempts remain in `docs/oracle/runs/`. The goal, qualification and readable comparison are in `docs/oracle/CONTRACT.md`, `QUALIFICATION.md`, and `RESULT.md`. No gameplay, target, live-policy or frozen-calibration promotion follows. This record was originally registered 2026-09-16 as `RESULT-0039` on `experiment/harvest-policy-corpus`. That number collided with an unrelated, independently-registered `RESULT-0039` on `main` — a greed-ratio qualification attempt that stopped before producing an outcome and retains its own frozen experiment directory. This record carries no frozen experiment directory and no hash pinned to its identifier, so it is the side renumbered; `RESULT-0045` was unused on both branches. No scope, statement, evidence or proof_class changed.
+
 ### RESULT-0047 — Evolved harvesting policy transfers broadly but two regressions falsify strict dominance (corrected identity, closed)
 
 - **type:** result
@@ -904,6 +964,22 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The evolved policy is generic code rather than board lookup, and this panel shows broad fixed-corpus transfer, but the two regressions disprove strict dominance on the measured rows. This is directly relevant to `BL-0013` (missing fitness-function term for policy search): the evolved ranker is a candidate carrying a "hold value for a bigger chain" term, but does not yet clear a strict-dominance bar on held-out puzzles. A reportable successor requires a new result identity and fresh evaluation boards; do not rerun this matrix under RESULT-0047.
+
+### RESULT-0048 — Blue-only refills yield family-island playtest candidates
+
+- **type:** result
+- **status:** accepted
+- **scope:** 4,096 generated 5×8 openings across target families 3/5/7/9 and five registered island templates; four paired refill arms; deterministic highest-scoring degree-tiebreak greedy screening policy; 16-move bound; candidate discovery only
+- **statement:** The registered run closed with primary outcome **`ISLANDS_SUFFICIENT`**. The blue-only arm retained at least eight target-family tiles and two viable target-family components through move six on **1,305/4,096 (31.9%)** boards and recorded a later rejoin of a blue-conversion tile on **656** boards. Every family cleared the frozen existence threshold: move-six sustained / conversion-rejoin counts were **396/136** for family 3, **350/164** for family 5, **288/175** for family 7, and **271/181** for family 9. Mixed-family refills were not required for candidate discovery, although their move-six persistence was materially higher at **55.5%, 58.8%, and 61.3%** for 25%, 50%, and 75% target-family refills. The result routes island-only openings to human playtesting; it does not adopt a spawn rule or establish human behavior, fun, or difficulty.
+- **evidence:** immutable protocol `experiments/RESULT-0048/registered-protocol.md`, registration commit `b3fd0fb`; qualification commit `38f46ef` and [qualification receipt](experiments/RESULT-0048/qualification.json); retained [corpus](experiments/RESULT-0048/corpus.json), internal artifact identity `133e044ed418aa6a08befacbab3d0ad888bfe41e363dfdee5ac18489ee38166b`; exact outcomes and boundary in [report](experiments/RESULT-0048/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0048/closure.json), and [independent corpus reduction](experiments/RESULT-0048/primary-recomputation.json).
+- **proof_class:** `direct_source` for frozen identities, counts, pairing, artifact verification, and executable closure; `heuristic_observation` for persistence and conversion behavior under the registered deterministic screening policy.
+- **as_of:** 2026-09-19
+- **reverify:** Run `node experiments/RESULT-0048/verify.js experiments/RESULT-0048/corpus.json`; expect PASS, 4,096 paired openings, and artifact identity `133e044e…`. From `experiments/RESULT-0048`, run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 2e5a52bd651bf7d0b2b9a6b0a34f46bb9960ff4d44caada48f92418e364002f4`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-19
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The three-vertical-island template supplied 594 of the 1,305 blue-only sustained candidates and is the strongest first source for manual play. Candidate trace goals remain unadopted until human play validates them.
+
 
 ## Decision registry
 

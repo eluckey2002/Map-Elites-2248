@@ -1,0 +1,4 @@
+{
+  "status": "NOT_RUN",
+  "reason": "The single confirmation attempt was invalidated by the registered emergency watchdog before a reportable corpus existed."
+}

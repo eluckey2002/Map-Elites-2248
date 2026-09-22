@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "2e5a52bd651bf7d0b2b9a6b0a34f46bb9960ff4d44caada48f92418e364002f4"
+  },
+  "run_id": "RESULT-0048-confirmation-44000000-44004095",
+  "final_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "Focused controls passed deterministic replay and every template's declared target count and disconnected component count; confirmation completed 4096 unique openings."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "The production refill seam generated only blue tiles at rate zero and only target-family tiles at rate one on the frozen five-hole fixture."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "A disposable planted classifier that assigned 54 to family 3 and 60 to family 5 failed the public exact-root control; the registered source hash was restored."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "Focused verifier controls rejected both a missing paired arm and a post-identity outcome mutation; the retained corpus passed pairing and artifact-identity verification."
+    },
+    {
+      "id": "C5",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "Every retained opening has all four unique arms under one dimensions, move-limit, scoring, chain, policy, opening, seed, and family-target identity; only refill family rate differs before path divergence."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "All frozen source hashes matched, focused tests passed 6/6, the experiment gate passed, and a clean checkout of qualified commit 38f46ef retained exactly 420 solver tests, 415 passes, four documented failures, and one skip."
+    },
+    {
+      "id": "P1",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "SUPPORTED: every family exceeded 10 blue-only move-six-sustained boards and five conversion-rejoin boards; family sustained counts were 396, 350, 288, and 271."
+    },
+    {
+      "id": "P2",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "FALSIFIED by the frozen conditional rule because P1 was supported; mixed spawning was not required for candidate discovery, though its descriptive persistence rates were higher."
+    },
+    {
+      "id": "P3",
+      "status": "PASS",
+      "evidence_subject_identity": "33453c6b5024f0488d9d837b3e87d731140b5a9717fddd2fcfada2dfc98c7a24",
+      "reason": "The frozen P1/P2 routing rule returns ISLANDS_SUFFICIENT."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "6f8ea919485c2c6f8e17543c506d649270d3b1212404a5a3fb9cf9c3016ddcb9"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "d9f4b8d27ed253875b76188f6fa269c3b0cb9c0a428ff30e3b2f551aa6819049"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "423d647fa072d59db337c2eedd70062d491d17a26024bceb45b8b67feaf369f5"
+    },
+    {
+      "id": "qualification",
+      "path": "qualification.json",
+      "sha256": "fc33972d598d713df6477828a7c6ac869771e0e0c7c4c7fb9186dca24f5e2c5c"
+    }
+  ],
+  "primary_outcome": "ISLANDS_SUFFICIENT",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "qualification-synthetic-attempt-1",
+      "exit_code": 1,
+      "artifact_ids": ["qualification"]
+    },
+    {
+      "id": "qualification-synthetic-attempt-2",
+      "exit_code": 0,
+      "artifact_ids": ["qualification"]
+    },
+    {
+      "id": "confirmation",
+      "exit_code": 0,
+      "artifact_ids": ["corpus"]
+    },
+    {
+      "id": "independent-recomputation-and-report",
+      "exit_code": 0,
+      "artifact_ids": ["primary-recomputation", "report"]
+    }
+  ]
+}

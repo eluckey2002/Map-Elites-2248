@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>2248 Challenge</title>
+    <title>Keeper — The Apothecary Bench</title>
     <style>
         * {
             margin: 0;
@@ -314,8 +314,13 @@
             color: #f67c5f;
         }
     </style>
+    <link rel="stylesheet" href="keeper-motion-prototype.css?v=alchemy-26">
 </head>
 <body>
+    <header class="keeper-brand" aria-label="Keeper">
+        <div class="keeper-wordmark">Keeper</div>
+        <div class="keeper-subtitle">The Apothecary Bench</div>
+    </header>
     <div class="game-header">
         <div class="header-top">
             <div class="level-info">Level <span id="levelNum">1</span></div>
@@ -329,19 +334,15 @@
         </div>
         <div class="stats-row">
             <div class="stat">
-                <span class="stat-icon">⬡</span>
-                <span>Moves: <span class="stat-value" id="movesLeft">25</span>/<span id="movesTotal">25</span></span>
+                <span>Turns: <span class="stat-value" id="movesLeft">25</span>/<span id="movesTotal">25</span></span>
             </div>
             <div class="stat">
-                <span class="stat-icon">🎲</span>
                 <span>Seed: <span class="stat-value" id="seedValue">—</span></span>
             </div>
             <div class="stat">
-                <span class="stat-icon">🎯</span>
                 <span>Target: <span class="stat-value" id="targetScore">1000</span></span>
             </div>
             <div class="stat" id="minChainDisplay">
-                <span class="stat-icon">🔗</span>
                 <span>Min: <span class="stat-value" id="minChain">2</span></span>
             </div>
         </div>
@@ -356,15 +357,10 @@
     </div>
 
     <div class="controls">
-        <button class="btn btn-secondary" id="undoBtn" disabled>↩ Undo</button>
-        <button class="btn btn-secondary" id="restartBtn">↻ Restart</button>
-        <button class="btn btn-secondary" id="menuBtn">☰ Levels</button>
-    </div>
-    <div class="controls">
-        <button class="btn btn-primary" id="submitBtn" style="flex: 2;">✓ Submit Chain (Enter)</button>
-    </div>
-    <div class="controls">
-        <button class="btn btn-primary" id="submitBtn" style="flex: 2;">✓ Submit Chain (Enter)</button>
+        <button class="btn btn-secondary" id="undoBtn" disabled>Undo</button>
+        <button class="btn btn-secondary" id="restartBtn">Restart</button>
+        <button class="btn btn-secondary" id="menuBtn">Levels</button>
+        <button class="btn btn-primary" id="submitBtn">Ignite</button>
     </div>
 
     <!-- Level Complete Modal -->
@@ -424,5 +420,6 @@
     </div>
 
     <script src="game.js"></script>
+    <script src="keeper-motion-prototype.js?v=alchemy-26"></script>
 </body>
 </html>

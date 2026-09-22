@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "280fe43bc1091b5377a4c1b11b3b46afbec126bbc87aa6048c9587c05621b4b4"
+  },
+  "run_id": "RESULT-0041-confirmation-attempt-1",
+  "final_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c",
+  "closure_status": "INVALID",
+  "claims": [
+    {"id": "C1", "status": "PASS", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "Production descriptor arithmetic fixtures passed qualification."},
+    {"id": "C2", "status": "PASS", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "Deterministic exact/reference and objective-equivalence controls passed."},
+    {"id": "C3", "status": "PASS", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "Positive percentile and uniformly scaled negative manipulations passed."},
+    {"id": "C4", "status": "PASS", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "All four production-verifier mutants were killed for their intended reason; unstable middle-bin share was 0.50."},
+    {"id": "C5", "status": "PASS", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "Independent reducer matched all registered edge fixtures."},
+    {"id": "C6", "status": "PASS", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "Timing-only manipulation left greed predictions unchanged."},
+    {"id": "C7", "status": "PASS", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "Baseline retained 420 tests, 415 passes, four documented failures, and one skip; focused qualification was 27/27."},
+    {"id": "P1", "status": "UNVERIFIED", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "Watchdog invalidated the run before a complete retained matrix existed."},
+    {"id": "P2", "status": "UNVERIFIED", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "No complete immutable corpus exists for controlled-response analysis."},
+    {"id": "P3", "status": "UNVERIFIED", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "No complete immutable corpus exists for win-tracking analysis."},
+    {"id": "P4", "status": "UNVERIFIED", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "No complete immutable corpus exists for score-redundancy analysis."},
+    {"id": "P5", "status": "UNVERIFIED", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "The non-vacuous statistic qualified, but confirmation stability has no complete retained corpus."},
+    {"id": "P6", "status": "UNVERIFIED", "evidence_subject_identity": "4afc2ef4e5ea125d066dfcc494fc9c56c63df0faede3562e3a23593b8f4c984c", "reason": "An invalid run is not entitled to a primary descriptor outcome."}
+  ],
+  "artifacts": [
+    {"id": "qualification", "path": "qualification.json", "sha256": "87e2ea4f129892292d4aba9efb1af28df0620a653d283da0890b2190f0454871"},
+    {"id": "corpus", "path": "corpus.json", "sha256": "7d6e67502c32bf5b766e0e6c16c3929ad0b4db9385b758624fd07c032b1fab4c"},
+    {"id": "report", "path": "report.md", "sha256": "d683d5701a029e14c4716764b2ec1af565367ed77e163ba30aa50c432be17afd"},
+    {"id": "primary-recomputation", "path": "primary-recomputation.json", "sha256": "97653da2e98760fa237009f584953ce8f1208f2f60838dc0f8698bed82d5908c"}
+  ],
+  "primary_outcome": null,
+  "deviations": [
+    "The registered emergency watchdog fired at percentile 1.00, Level 10, seed 33,800,004. The protocol declares any watchdog timeout invalid and forbids retry."
+  ],
+  "attempts": [
+    {"id": "qualification-1", "exit_code": 0, "artifact_ids": ["qualification"]},
+    {"id": "confirmation-1", "exit_code": 1, "artifact_ids": ["corpus"]},
+    {"id": "closeout-1", "exit_code": 0, "artifact_ids": ["report", "primary-recomputation"]}
+  ]
+}
