@@ -78,11 +78,28 @@ test('serves only the game assets and exposes the bound candidate', async () => 
   const page = await fetch(`${base}/index.html`);
   assert.equal(page.status, 200);
   assert.match(page.headers.get('content-type'), /^text\/html/);
-  assert.match(await page.text(), /2248 Challenge/);
+  assert.match(await page.text(), /Keeper — The Apothecary Bench/);
 
-  const game = await fetch(`${base}/game.js`);
-  assert.equal(game.status, 200);
-  assert.match(game.headers.get('content-type'), /^text\/javascript/);
+  const gameAssets = [
+    ['/game.js', /^text\/javascript/],
+    ['/keeper-motion-prototype.css', /^text\/css/],
+    ['/keeper-motion-prototype.js', /^text\/javascript/],
+    ['/assets/keeper-alchemy-lab.png', /^image\/png/],
+    ['/assets/keeper-material-elements-v5.png', /^image\/png/],
+    ['/assets/keeper-material-compound-v4.png', /^image\/png/],
+    ['/assets/keeper-material-crystal-v6.png', /^image\/png/],
+    ['/assets/keeper-material-essence-v5.png', /^image\/png/],
+    ['/assets/keeper-material-4096-v3.png', /^image\/png/],
+    ['/assets/keeper-material-8192-v3.png', /^image\/png/],
+  ];
+  for (const [assetPath, contentType] of gameAssets) {
+    const asset = await fetch(`${base}${assetPath}`);
+    assert.equal(asset.status, 200, assetPath);
+    assert.match(asset.headers.get('content-type'), contentType, assetPath);
+  }
+
+  const unusedAsset = await fetch(`${base}/assets/keeper-material-elements-v4.png`);
+  assert.equal(unusedAsset.status, 404);
 
   const candidate = await fetch(`${base}/api/candidates/${boundLevel}`);
   assert.equal(candidate.status, 200);
