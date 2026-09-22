@@ -88,6 +88,16 @@ shipped bot both stop on the target-crossing move. Across the current 25-session
 mixed corpus, each wins the speed comparison on 9 of 23 mutual wins, with 5
 ties. The uncapped bot arm continues alone and cannot support a human comparison.
 
+As of 2026-09-19, `RESULT-0048` closed the bounded family-island candidate
+search with `ISLANDS_SUFFICIENT`. Under blue-only refills, 1,305/4,096 boards
+remained sustained through move six and 656 contained a later rejoin of a tile
+created by blue-family conversion; every target family 3/5/7/9 cleared the
+registered candidate threshold. Mixed-family refills increased move-six
+persistence to 55.5–61.3%, but were not required to source the first human
+playtest candidates. This is a deterministic screening-policy observation,
+not evidence about human strategy, fun, difficulty, or a production spawn
+rule.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -880,6 +890,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0042]
 - **superseded_by:** []
 - **notes:** Do not add seeds or raise this run's cap after observing the result. The evidence supports greed as a responsive behavioral measure but does not yet support promotion as a MAP-Elites axis. A future change must address the exact-coverage strategy and score overlap as a genuinely new subject; repeated copies of this same panel are not the next step.
+
+### RESULT-0048 — Blue-only refills yield family-island playtest candidates
+
+- **type:** result
+- **status:** accepted
+- **scope:** 4,096 generated 5×8 openings across target families 3/5/7/9 and five registered island templates; four paired refill arms; deterministic highest-scoring degree-tiebreak greedy screening policy; 16-move bound; candidate discovery only
+- **statement:** The registered run closed with primary outcome **`ISLANDS_SUFFICIENT`**. The blue-only arm retained at least eight target-family tiles and two viable target-family components through move six on **1,305/4,096 (31.9%)** boards and recorded a later rejoin of a blue-conversion tile on **656** boards. Every family cleared the frozen existence threshold: move-six sustained / conversion-rejoin counts were **396/136** for family 3, **350/164** for family 5, **288/175** for family 7, and **271/181** for family 9. Mixed-family refills were not required for candidate discovery, although their move-six persistence was materially higher at **55.5%, 58.8%, and 61.3%** for 25%, 50%, and 75% target-family refills. The result routes island-only openings to human playtesting; it does not adopt a spawn rule or establish human behavior, fun, or difficulty.
+- **evidence:** immutable protocol `experiments/RESULT-0048/registered-protocol.md`, registration commit `b3fd0fb`; qualification commit `38f46ef` and [qualification receipt](experiments/RESULT-0048/qualification.json); retained [corpus](experiments/RESULT-0048/corpus.json), internal artifact identity `133e044ed418aa6a08befacbab3d0ad888bfe41e363dfdee5ac18489ee38166b`; exact outcomes and boundary in [report](experiments/RESULT-0048/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0048/closure.json), and [independent corpus reduction](experiments/RESULT-0048/primary-recomputation.json).
+- **proof_class:** `direct_source` for frozen identities, counts, pairing, artifact verification, and executable closure; `heuristic_observation` for persistence and conversion behavior under the registered deterministic screening policy.
+- **as_of:** 2026-09-19
+- **reverify:** Run `node experiments/RESULT-0048/verify.js experiments/RESULT-0048/corpus.json`; expect PASS, 4,096 paired openings, and artifact identity `133e044e…`. From `experiments/RESULT-0048`, run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 2e5a52bd651bf7d0b2b9a6b0a34f46bb9960ff4d44caada48f92418e364002f4`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-19
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** The three-vertical-island template supplied 594 of the 1,305 blue-only sustained candidates and is the strongest first source for manual play. Candidate trace goals remain unadopted until human play validates them.
 
 ## Decision registry
 
