@@ -997,6 +997,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **superseded_by:** []
 - **notes:** This decision makes no claim about human difficulty, fun, preference, solver fitness, policy quality, natural region frequency, shipped levels, or larger boards. It does not replace `RESULT-0017`'s policy-behavior axes. Recovery and wasted-move tolerance remain one candidate concept and were not evaluated.
 
+### DECISION-0007 — Adopt the evolved harvesting ranker as an authoring-only portfolio arm
+
+- **type:** decision
+- **status:** accepted
+- **scope:** authoring-only bounded witness search through the oracle portfolio adopted at `a98d7f42c10d4b832c98f0f81fbf31bc14421277`; the shipped bot, `solver/calibrations/calib-1.js`, gameplay rules, level targets, experiment identities, and future-board claims are excluded
+- **statement:** Adopt the evolved harvesting ranker from source commit `c88668d1499a449b2638153231a435649594bca4` as one named arm beside the immediate-score arm for authoring witness search. Both arms receive the same legal-action generator, seeded draw stream, target objective, and deterministic state cap. The authoring portfolio may retain only the shortest independently replay-valid winning witness; a bounded miss remains `UNKNOWN` and cannot erase another arm's valid witness. This is an owner decision to use the capability for authoring, not a claim that harvesting is generally or strictly superior.
+- **evidence:** commit-qualified source record `c88668d1499a449b2638153231a435649594bca4:EVIDENCE_LEDGER.md`, `RESULT-0041`, whose closure is `UNVERIFIED` and whose retained primary rows include a one-move regression on puzzle `2bb321b4…` and a five-move regression on `3808ee88…`; frozen adoption requirements at `a98d7f42c10d4b832c98f0f81fbf31bc14421277:docs/plans/2026-09-16-2225-feat-level-map-elites-authoring-plan.md`, **U1**. Canonical `RESULT-0041` in this ledger remains the distinct greed-harness run with `INVALID` closure and is not superseded or rewritten.
+- **proof_class:** `owner_decision`; the imported source result retains `direct_source` standing for its fixed rows and `UNKNOWN` for its registered conclusion, future-board performance, universal superiority, and optimality
+- **as_of:** 2026-09-23
+- **reverify:** Resolve the full source commit and inspect its `RESULT-0041` record; require `UNVERIFIED` closure and both named regressions. Run `node --test solver/tests/oracle.test.js solver/tests/harvestPolicy.test.js`; require named equal-bound arms, independent replay before selection, shortest-witness retention, and bounded-miss preservation. Confirm `solver/bot.js`, `solver/calibrations/calib-1.js`, and the canonical `RESULT-0041` block are unchanged from `a98d7f42c10d4b832c98f0f81fbf31bc14421277`.
+- **updated:** 2026-09-23
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** This record creates no `RESULT`, reserves no experiment identity, and changes no evidence standing. The full commit qualification is required because bare `RESULT-0041` names different experiments in the canonical and source histories.
+
 ## Hypothesis registry
 
 ### HYPOTHESIS-0001 — Compact state may guide an approximate search

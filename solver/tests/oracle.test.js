@@ -100,6 +100,15 @@ test('real report verifier accepts the known legal calibration witnesses', () =>
   assert.deepEqual(result, { valid: true, pass: true, puzzles: 20, wins: 20 });
 });
 
+test('the saved final report remains replayable only at its exact immutable identity', () => {
+  const report = JSON.parse(fs.readFileSync(path.join(ROOT, 'docs/oracle/runs/attempt-05-full-corpus.json'), 'utf8'));
+  assert.deepEqual(verifyReport(report), { valid: true, pass: true, puzzles: 20, wins: 20 });
+
+  const changed = structuredClone(report);
+  changed.rows[0].assessment.oracleMoves++;
+  assert.throws(() => verifyReport(reseal(changed)), /report source identities differ|forged comparison/);
+});
+
 test('report verifier rejects missing rows, duplicate rows and invented comparison results', () => {
   for (const mutate of [
     report => report.rows.pop(),
