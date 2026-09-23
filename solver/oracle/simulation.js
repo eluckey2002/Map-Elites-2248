@@ -2,6 +2,7 @@ const {
   makeRng, createLevelState, cloneState, executeChain, applyGravity,
   spawnNewTiles, tickBlockers, checkBombs,
 } = require('../engine');
+const { valueIdentity } = require('../benchmark-inputs');
 
 function boardSnapshot(state) {
   return state.grid.map(row => row.map(tile => tile ? [
@@ -14,6 +15,16 @@ function createPuzzle(level, seed) {
   const state = createLevelState(level, rng);
   const draws = Array.from({ length: level.moves * (level.gridW * level.gridH - 1) }, rng);
   return { state, draws, cursor: 0, parent: null, action: null };
+}
+
+function sourcePuzzleIdentity(level, seed) {
+  const root = createPuzzle(level, seed);
+  return valueIdentity({
+    level,
+    seed,
+    initialBoard: boardSnapshot(root.state),
+    spawnIdentity: valueIdentity(root.draws),
+  });
 }
 
 function transition(node, chain, draws) {
@@ -48,4 +59,4 @@ function witness(node) {
   return { score: node.state.score, movesUsed: node.state.moves, chains: chains.reverse(), trace: trace.reverse() };
 }
 
-module.exports = { boardSnapshot, createPuzzle, transition, stateKey, witness };
+module.exports = { boardSnapshot, createPuzzle, sourcePuzzleIdentity, transition, stateKey, witness };

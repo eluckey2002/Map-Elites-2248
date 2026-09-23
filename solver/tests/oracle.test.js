@@ -9,8 +9,8 @@ const { chooseMove } = require('../bot');
 const { makeRng } = require('../engine');
 const { loadCorpus, collectCorpus, ROOT } = require('../oracle/corpus');
 const { createPuzzle, transition, witness } = require('../oracle/simulation');
-const { candidates, search } = require('../oracle/search');
-const { verifyWitness, assessPuzzle } = require('../oracle/verify');
+const { candidates, search, searchFromVerifiedRoot } = require('../oracle/search');
+const { verifyWitness, assessPuzzle, verifiedContinuationRoot } = require('../oracle/verify');
 const { verifyReport, sourceIdentities, runPuzzle, showWitness } = require('../oracle/cli');
 
 const manifest = loadCorpus();
@@ -139,6 +139,64 @@ test('bounded search supplies a independently replayable solution and does not m
   assert.equal(verifyWitness(input, result.best).outcome, 'win');
   assert.ok(result.best.movesUsed <= result.baseline.movesUsed);
   assert.deepEqual(input, before);
+});
+
+test('verified initial-root continuation is equivalent to the level-and-seed wrapper', () => {
+  const input = {
+    level: { gridW: 2, gridH: 2, moves: 3, minChain: 2, target: 1000, tileScale: 1, blockers: [] },
+    seed: 7,
+    budgetMs: 30000,
+    maxExpandedStates: 17,
+    includeBaseline: false,
+  };
+  const verifiedRoot = verifiedContinuationRoot(input);
+  const before = structuredClone(verifiedRoot);
+  const direct = search(input);
+  const continued = searchFromVerifiedRoot({ ...input, verifiedRoot });
+  const stable = ({ baseline, best, stats, terminationReason, standing }) => (
+    { baseline, best, stats, terminationReason, standing }
+  );
+  assert.deepEqual(stable(continued), stable(direct));
+  assert.deepEqual(verifiedRoot, before);
+});
+
+test('continuation rejects board, draw cursor, score, and source-puzzle identity mismatches', () => {
+  const puzzle = manifest.puzzles[0];
+  const root = verifiedContinuationRoot(puzzle.input, knownWitness(puzzle), { afterMoves: 1 });
+  const cases = [
+    {
+      expected: /board mismatch/,
+      mutate(copy) { copy.successor.state.grid.flat().find(Boolean).value++; },
+    },
+    {
+      expected: /draw cursor mismatch/,
+      mutate(copy) { copy.successor.cursor++; },
+    },
+    {
+      expected: /score mismatch/,
+      mutate(copy) { copy.successor.state.score++; },
+    },
+    {
+      expected: /source-puzzle identity mismatch/,
+      mutate(copy) {
+        const { recordIdentity, ...body } = copy.record;
+        body.sourcePuzzleIdentity = 'wrong-source-puzzle';
+        copy.record = { ...body, recordIdentity: valueIdentity(body) };
+      },
+    },
+  ];
+  for (const { expected, mutate } of cases) {
+    const changed = structuredClone(root);
+    mutate(changed);
+    assert.throws(() => searchFromVerifiedRoot({
+      level: puzzle.input.level,
+      seed: puzzle.input.seed,
+      verifiedRoot: changed,
+      budgetMs: 30000,
+      maxExpandedStates: 1,
+      includeBaseline: false,
+    }), expected);
+  }
 });
 
 test('candidate generation preserves legal setup prefixes and off-lattice choices', () => {

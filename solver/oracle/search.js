@@ -1,7 +1,9 @@
 const { performance } = require('node:perf_hooks');
+const assert = require('node:assert/strict');
 const { chooseMove } = require('../bot');
-const { makeRng, buildGreedyChain, findGreedyChains, chainMultiplier, isMergeableSum, isBlockedTile } = require('../engine');
-const { createPuzzle, transition, stateKey, witness } = require('./simulation');
+const { valueIdentity } = require('../benchmark-inputs');
+const { makeRng, cloneState, buildGreedyChain, findGreedyChains, chainMultiplier, isMergeableSum, isBlockedTile } = require('../engine');
+const { boardSnapshot, createPuzzle, sourcePuzzleIdentity, transition, stateKey, witness } = require('./simulation');
 const { RANKERS } = require('./rankers');
 
 const LOOKAHEAD_BASE = 987654321;
@@ -63,8 +65,8 @@ function retainBeam(nodes, width, weight, rankStateFn = RANKERS.harvesting) {
   return result;
 }
 
-function search({
-  level, seed, budgetMs = 30000, maxExpandedStates = Infinity,
+function searchFromRoot({
+  level, root, draws, budgetMs = 30000, maxExpandedStates = Infinity,
   includeBaseline = true, rankStateFn = RANKERS.harvesting,
 }, onProgress = () => {}) {
   if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 30000) throw new Error('budgetMs must be in (0, 30000]');
@@ -74,7 +76,6 @@ function search({
   const started = performance.now();
   // Reserve time to serialize the final result. The CLI also enforces a process deadline.
   const deadline = started + Math.max(0, budgetMs - 50);
-  const root = createPuzzle(level, seed);
   const stats = { expandedStates: 0, generatedActions: 0, completedPasses: 0 };
   let baseline = null;
   let best = null;
@@ -87,7 +88,7 @@ function search({
     while (!node.terminal && performance.now() < deadline) {
       const chain = chooseMove(node.state, { lookaheadRngFactory: () => makeRng(LOOKAHEAD_BASE + node.state.moves) });
       if (!chain || performance.now() >= deadline) break;
-      node = transition(node, chain, root.draws);
+      node = transition(node, chain, draws);
     }
     if (node.terminal) {
       baseline = { ...witness(node), outcome: node.terminal };
@@ -111,7 +112,7 @@ function search({
           for (const action of candidates(current.state, 48, variant)) {
             if (performance.now() >= deadline) break;
             stats.generatedActions++;
-            const successor = transition(current, action.chain, root.draws);
+            const successor = transition(current, action.chain, draws);
             if (successor.terminal === 'win') {
               if (!best || successor.state.moves < best.movesUsed) {
                 best = { ...witness(successor), outcome: 'win' };
@@ -139,6 +140,47 @@ function search({
   };
   onProgress(result);
   return result;
+}
+
+function search({ level, seed, ...options }, onProgress = () => {}) {
+  const root = createPuzzle(level, seed);
+  return searchFromRoot({ level, root, draws: root.draws, ...options }, onProgress);
+}
+
+function searchFromVerifiedRoot({ level, seed, verifiedRoot, ...options }, onProgress = () => {}) {
+  assert.ok(verifiedRoot && verifiedRoot.successor && verifiedRoot.record, 'verified root is required');
+  const { recordIdentity, ...recordBody } = verifiedRoot.record;
+  assert.equal(valueIdentity(recordBody), recordIdentity, 'verified root record identity mismatch');
+  assert.equal(
+    verifiedRoot.record.sourcePuzzleIdentity,
+    sourcePuzzleIdentity(level, seed),
+    'source-puzzle identity mismatch',
+  );
+  assert.deepEqual(
+    boardSnapshot(verifiedRoot.successor.state),
+    verifiedRoot.record.board,
+    'board mismatch',
+  );
+  assert.equal(verifiedRoot.successor.cursor, verifiedRoot.record.drawCursor, 'draw cursor mismatch');
+  assert.equal(verifiedRoot.successor.state.score, verifiedRoot.record.score, 'score mismatch');
+  assert.equal(verifiedRoot.successor.state.moves, verifiedRoot.record.moves, 'move count mismatch');
+
+  const initial = createPuzzle(level, seed);
+  let canonical = initial;
+  for (const action of verifiedRoot.record.prefixChains) {
+    const chain = action.tiles.map(({ x, y }) => canonical.state.grid[y][x]);
+    canonical = transition(canonical, chain, initial.draws);
+  }
+  assert.deepEqual(boardSnapshot(canonical.state), verifiedRoot.record.board, 'verified root record board mismatch');
+  assert.equal(canonical.cursor, verifiedRoot.record.drawCursor, 'verified root record draw cursor mismatch');
+  assert.equal(canonical.state.score, verifiedRoot.record.score, 'verified root record score mismatch');
+
+  const root = {
+    ...canonical,
+    state: cloneState(verifiedRoot.successor.state),
+    cursor: verifiedRoot.successor.cursor,
+  };
+  return searchFromRoot({ level, root, draws: initial.draws, ...options }, onProgress);
 }
 
 function searchPortfolio(options, onProgress = () => {}, {
@@ -182,4 +224,4 @@ function searchPortfolio(options, onProgress = () => {}, {
   };
 }
 
-module.exports = { candidates, search, searchPortfolio };
+module.exports = { candidates, search, searchFromVerifiedRoot, searchPortfolio };
