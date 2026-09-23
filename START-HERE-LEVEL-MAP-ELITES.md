@@ -1,6 +1,6 @@
 # Start Here: Level MAP-Elites Authoring
 
-**Resume snapshot:** 2026-09-22  
+**Resume snapshot:** 2026-09-22
 **Current main baseline:** `2475ec5747e58d314ba942bceb0fde15ddb17fd4`
 
 This is the operational entry point for the [Level MAP-Elites authoring plan](docs/plans/2026-09-16-2225-feat-level-map-elites-authoring-plan.md). It does not replace the plan or change evidence standing. Use [CURRENT.md](CURRENT.md) for navigation and [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for proof standing.
