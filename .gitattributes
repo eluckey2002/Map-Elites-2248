@@ -2,3 +2,11 @@
 # (tools/verify-experiments.js protocolDrift), so git must never rewrite their
 # line endings on checkout, whatever core.autocrlf says.
 experiments/** text eol=lf
+
+# Raw-byte identities are part of receipts and verification contracts. Keep
+# repository text materialized exactly like its LF Git blobs on every host.
+.gitattributes text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.html text eol=lf
