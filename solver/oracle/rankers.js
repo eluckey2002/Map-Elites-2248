@@ -4,8 +4,8 @@ function immediateScore(state) {
   return state.score;
 }
 
-function harvesting(state) {
-  return rankState(state);
+function harvesting(state, options) {
+  return rankState(state, options);
 }
 
 const RANKERS = Object.freeze({

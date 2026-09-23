@@ -27,6 +27,10 @@ test('the public ranker registry exposes stable immediate-score and harvesting a
   assert.deepEqual(Object.keys(RANKERS), ['immediate-score', 'harvesting']);
   assert.equal(RANKERS['immediate-score'](compatible), 100);
   assert.equal(RANKERS.harvesting(compatible), rankState(compatible));
+  assert.equal(
+    RANKERS.harvesting(compatible, { potentialWeight: 4 }),
+    rankState(compatible, { potentialWeight: 4 }),
+  );
 });
 
 test('portfolio keeps the shortest independently verified witness across identical arm bounds', () => {
