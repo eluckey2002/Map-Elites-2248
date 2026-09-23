@@ -174,11 +174,12 @@ function searchFromVerifiedRoot({ level, seed, verifiedRoot, ...options }, onPro
   assert.deepEqual(boardSnapshot(canonical.state), verifiedRoot.record.board, 'verified root record board mismatch');
   assert.equal(canonical.cursor, verifiedRoot.record.drawCursor, 'verified root record draw cursor mismatch');
   assert.equal(canonical.state.score, verifiedRoot.record.score, 'verified root record score mismatch');
+  assert.deepEqual(verifiedRoot.successor.state, canonical.state, 'successor state mismatch');
 
   const root = {
     ...canonical,
-    state: cloneState(verifiedRoot.successor.state),
-    cursor: verifiedRoot.successor.cursor,
+    state: cloneState(canonical.state),
+    cursor: canonical.cursor,
   };
   return searchFromRoot({ level, root, draws: initial.draws, ...options }, onProgress);
 }

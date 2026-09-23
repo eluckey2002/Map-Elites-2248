@@ -7,7 +7,7 @@ const { spawnSync } = require('node:child_process');
 const { valueIdentity } = require('../benchmark-inputs');
 const { chooseMove } = require('../bot');
 const { makeRng } = require('../engine');
-const { loadCorpus, collectCorpus, ROOT } = require('../oracle/corpus');
+const { loadCorpus, collectCorpus, fileHash, ROOT } = require('../oracle/corpus');
 const { createPuzzle, transition, witness } = require('../oracle/simulation');
 const { candidates, search, searchFromVerifiedRoot } = require('../oracle/search');
 const { verifyWitness, assessPuzzle, verifiedContinuationRoot } = require('../oracle/verify');
@@ -98,6 +98,13 @@ test('verifier rejects continuation after the actual target crossing', () => {
 test('real report verifier accepts the known legal calibration witnesses', () => {
   const result = verifyReport(qualificationReport());
   assert.deepEqual(result, { valid: true, pass: true, puzzles: 20, wins: 20 });
+});
+
+test('report source identities bind both authoring ranker implementations', () => {
+  const sources = sourceIdentities();
+  for (const file of ['solver/oracle/rankers.js', 'solver/oracle/harvest-policy.js']) {
+    assert.equal(sources[file], fileHash(path.join(ROOT, file)));
+  }
 });
 
 test('the saved final report remains replayable only at its exact immutable identity', () => {
@@ -192,6 +199,10 @@ test('continuation rejects board, draw cursor, score, and source-puzzle identity
         body.sourcePuzzleIdentity = 'wrong-source-puzzle';
         copy.record = { ...body, recordIdentity: valueIdentity(body) };
       },
+    },
+    {
+      expected: /successor state mismatch/,
+      mutate(copy) { copy.successor.state.targetScore++; },
     },
   ];
   for (const { expected, mutate } of cases) {
