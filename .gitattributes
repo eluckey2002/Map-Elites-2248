@@ -10,3 +10,8 @@ experiments/** text eol=lf
 *.json text eol=lf
 *.md text eol=lf
 *.html text eol=lf
+
+# These two legacy artifacts are committed with CRLF. Preserve their bytes;
+# they are parsed as JSON and are not inputs to the raw-byte identity checks.
+solver/candidate-levels.json -text -eol
+solver/candidate-levels.receipt.json -text -eol
