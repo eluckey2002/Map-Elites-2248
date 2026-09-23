@@ -866,6 +866,61 @@ that passed while inspecting nothing.
 - **Shipped:** 2026-09-02 · fix run
   `2026-09-02-experiment-lifecycle-completion-fix`.
 
+### failed-run-ledger-coverage · HARD
+
+- **Protects:** a retained experiment cannot close `INVALID` or `UNVERIFIED`
+  and then disappear into prose without a pinpointed cause and a concrete
+  prevention mechanism. The durable index is `FAILED-RUN-LEDGER.CSV`; the
+  source facts remain the experiment's `closure.json` and cited evidence.
+- **Granularity:** one retained run (`closure.json#run_id`) per ledger row.
+  Individual failed attempts inside an otherwise `CLOSED` run are deliberately
+  below this check's granularity because qualification mutants and planted
+  negative controls are expected to exit nonzero.
+- **Shape, value, or meaning:** shape and value. It checks the exact CSV schema,
+  enums, unique identities, repository-relative paths, existence of evidence,
+  and one-to-one coverage of real non-closed closures. Human review owns whether
+  the written root-cause explanation is true and whether the chosen prevention
+  is sufficient.
+- **Garbage test:** `solver/tests/failedRunLedger.test.js` copies a real
+  `UNVERIFIED` closure into a temporary repository, omits its CSV row, and
+  requires the check to fail with that exact run id. Separate cases plant a
+  missing prevention artifact and prove that a `CLOSED` run with an intentional
+  nonzero qualification attempt is not misclassified.
+- **Scope inventory:** `experiments/RESULT-*/closure.json` files with exact
+  `closure_status` values `INVALID` or `UNVERIFIED`, plus discoverable legacy
+  incident files at `docs/failed-runs/FR-*.md` whose rows are marked
+  `source_kind=legacy`. CSV is RFC-4180-style
+  UTF-8 with one header and one physical row per failure; quoted commas and
+  doubled quotes are supported, embedded newlines are refused.
+- **Supply chain:** the experiment workflow writes closure receipts; this gate
+  reads those receipts independently and cross-checks a separately maintained
+  CSV. The ledger does not generate, edit, or rewrite closure receipts.
+- **Sampling memory:** exhaustive over committed closure receipts. Silence about
+  an arbitrary shell failure or an abandoned run with no closure receipt means
+  "not visible to this check," never "no failure occurred."
+- **Enforcement rung:** HARD inside the existing experiment gate. This widens
+  the current required status check; it does not add another CI job.
+- **Decay:** the live test asserts the exact set of repository failures found by
+  scanning real closure receipts, and the temporary-repository negative tests
+  run with every experiment-gate test pass.
+- **Retires:** NO. The experiment gate already owns retained experiment
+  lifecycle integrity, but none of its existing clauses inspect non-`CLOSED`
+  closure receipts or require failure learning. Widening that gate is the
+  smallest placement that fires at the existing admission boundary.
+- **Does NOT catch:**
+  1. A process crash, discarded branch, or uncommitted run that never leaves a
+     closure receipt or manually retained legacy row.
+  2. A plausible but false root-cause narrative; the gate validates presence
+     and references, not semantic truth.
+  3. A prevention artifact that exists and has a test but is never invoked by a
+     different future workflow.
+  4. A valid falsified hypothesis or inconclusive domain result whose run still
+     closed correctly; those are scientific outcomes, not failed runs.
+- **Paths:** implementation `tools/failed-run-ledger.js`; live integration
+  `tools/verify-experiments.js`; negative test
+  `solver/tests/failedRunLedger.test.js`.
+- **Shipped:** 2026-09-22 on the isolated failed-run-ledger branch.
+
 ---
 
 ### stranded-cell-pressure-real-state-seam · HARD
