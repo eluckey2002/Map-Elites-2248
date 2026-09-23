@@ -14,6 +14,7 @@ const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const { listChallenges, oneChallenge } = require('./nemesis');
 
 const ROOT = path.join(__dirname, '..');
 const SRC = path.join(ROOT, 'src');
@@ -94,10 +95,23 @@ function storedSessionId(store, session) {
   return identity;
 }
 
-function createPlayServer({ store = STORE, now = () => new Date().toISOString() } = {}) {
+function createPlayServer({ store = STORE, now = () => new Date().toISOString(), challengeSources = null } = {}) {
   fs.mkdirSync(store, { recursive: true });
+  const botCache = new Map();
+  const nemesisOptions = () => ({ cache: botCache, ...(challengeSources ? { sources: challengeSources } : {}) });
   return http.createServer(async (request, response) => {
-    const pathname = (request.url || '/').split('?')[0];
+    const url = new URL(request.url || '/', 'http://localhost');
+    const { pathname } = url;
+
+    if (request.method === 'GET' && pathname === '/api/nemesis') {
+      const level = url.searchParams.get('level');
+      const seed = url.searchParams.get('seed');
+      if (level === null && seed === null) { json(response, 200, { challenges: listChallenges(nemesisOptions()) }); return; }
+      const challenge = oneChallenge(Number(level), Number(seed), nemesisOptions());
+      if (!challenge) { json(response, 400, { error: 'unknown level or seed' }); return; }
+      json(response, 200, { challenge });
+      return;
+    }
 
     if (request.method === 'POST' && pathname === '/api/play-sessions') {
       try {
@@ -141,7 +155,7 @@ function createPlayServer({ store = STORE, now = () => new Date().toISOString() 
 
 if (require.main === module) {
   createPlayServer().listen(PORT, '127.0.0.1', () => {
-    process.stdout.write(`Play server: http://127.0.0.1:${PORT}/index.html\nCapturing to ${STORE}\n`);
+    process.stdout.write(`Play server: http://127.0.0.1:${PORT}/index.html\nNemesis:     http://127.0.0.1:${PORT}/nemesis.html\nCapturing to ${STORE}\n`);
   });
 }
 
