@@ -2,7 +2,7 @@ const { performance } = require('node:perf_hooks');
 const { chooseMove } = require('../bot');
 const { makeRng, buildGreedyChain, findGreedyChains, chainMultiplier, isMergeableSum, isBlockedTile } = require('../engine');
 const { createPuzzle, transition, stateKey, witness } = require('./simulation');
-const { rankState } = require('./harvest-policy');
+const { RANKERS } = require('./rankers');
 
 const LOOKAHEAD_BASE = 987654321;
 
@@ -49,7 +49,7 @@ function candidates(state, limit = 48, variant = 0) {
   return [...kept.values()];
 }
 
-function retainBeam(nodes, width, weight, rankStateFn = rankState) {
+function retainBeam(nodes, width, weight, rankStateFn = RANKERS.harvesting) {
   const all = [...nodes.values()];
   const scoreOrder = (a, b) => b.state.score - a.state.score;
   const result = all.slice().sort(scoreOrder).slice(0, Math.ceil(width / 3));
@@ -65,7 +65,7 @@ function retainBeam(nodes, width, weight, rankStateFn = rankState) {
 
 function search({
   level, seed, budgetMs = 30000, maxExpandedStates = Infinity,
-  includeBaseline = true, rankStateFn = rankState,
+  includeBaseline = true, rankStateFn = RANKERS.harvesting,
 }, onProgress = () => {}) {
   if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 30000) throw new Error('budgetMs must be in (0, 30000]');
   if (maxExpandedStates !== Infinity && (!Number.isInteger(maxExpandedStates) || maxExpandedStates < 1)) {
@@ -141,4 +141,45 @@ function search({
   return result;
 }
 
-module.exports = { candidates, search };
+function searchPortfolio(options, onProgress = () => {}, {
+  searchFn = search,
+  verifyWitnessFn = require('./verify').verifyWitness,
+} = {}) {
+  const arms = {};
+  let selectedArm = null;
+  let best = null;
+  for (const [name, rankStateFn] of Object.entries(RANKERS)) {
+    const result = searchFn(
+      { ...options, rankStateFn },
+      progress => onProgress({ arm: name, progress }),
+    );
+    if (!result.best) {
+      arms[name] = result;
+      continue;
+    }
+    try {
+      const replay = verifyWitnessFn({ level: options.level, seed: options.seed }, result.best);
+      if (replay.outcome !== 'win') throw new Error('portfolio witness must replay to a win');
+      arms[name] = { ...result, verification: 'valid' };
+      if (!best || result.best.movesUsed < best.movesUsed) {
+        best = result.best;
+        selectedArm = name;
+      }
+    } catch (error) {
+      arms[name] = {
+        ...result,
+        best: null,
+        standing: 'INVALID',
+        verificationError: error.message,
+      };
+    }
+  }
+  return {
+    arms,
+    best,
+    selectedArm,
+    standing: best ? 'best-known' : 'UNKNOWN',
+  };
+}
+
+module.exports = { candidates, search, searchPortfolio };
