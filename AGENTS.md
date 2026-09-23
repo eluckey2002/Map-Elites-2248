@@ -46,6 +46,14 @@ copy `experiments/TEMPLATE.md` to start one. The gate is
 Commit the protocol before the experiment runs. A protocol committed after its
 evidence is a reconstruction, not a preregistration.
 
+Every retained experiment closure marked `INVALID` or `UNVERIFIED` is a failed
+run and must have one row in `FAILED-RUN-LEDGER.CSV`. Pinpoint the stage,
+location, observed failure, and root cause; link the closure receipt; and land
+an implemented prevention artifact with a negative test. A `CLOSED`
+`FALSIFIED` or `INCONCLUSIVE` result is not a failed run. For one-shot paired
+comparisons, use `tools/persist-before-verdict.js` so the complete raw pairs are
+written before any fail-fast verdict.
+
 ## Landing changes on `main`
 
 `main` is protected. Every change reaches it through a pull request whose

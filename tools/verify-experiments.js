@@ -20,6 +20,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
+const { assessFailedRunLedger } = require('./failed-run-ledger');
 
 const ROOT = path.join(__dirname, '..');
 const LEDGER = path.join(ROOT, 'EVIDENCE_LEDGER.md');
@@ -483,6 +484,7 @@ function assessReportAnswers(result, protocol, report) {
 function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
+  problems.push(...assessFailedRunLedger(ROOT));
   const results = readLedgerResults(fs.readFileSync(LEDGER, 'utf8'));
   const exempt = grandfathered();
 
