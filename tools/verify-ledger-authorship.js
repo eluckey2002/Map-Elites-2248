@@ -22,9 +22,12 @@ const LEDGER = path.join(__dirname, '..', 'EVIDENCE_LEDGER.md');
 const EXEMPT_THROUGH = {
   FACT: 7, RESULT: 43, DECISION: 6, HYPOTHESIS: 2, QUESTION: 3, CORRECTION: 9,
 };
-// Exempt records that were provisional or open when the gate landed.
+// Exempt records whose status was anything other than accepted or narrowed
+// when the gate landed (superseded, provisional, or open).
 const UNACCEPTED_AT_LANDING = [
-  'RESULT-0036', 'HYPOTHESIS-0001', 'HYPOTHESIS-0002', 'QUESTION-0001', 'QUESTION-0002', 'QUESTION-0003',
+  'FACT-0003', 'FACT-0004', 'RESULT-0015', 'RESULT-0029', 'RESULT-0030', 'RESULT-0036', 'RESULT-0037',
+  'RESULT-0038', 'RESULT-0042', 'DECISION-0001', 'HYPOTHESIS-0001', 'HYPOTHESIS-0002', 'QUESTION-0001',
+  'QUESTION-0002', 'QUESTION-0003',
 ];
 const NEEDS_CHECKER = ['accepted', 'narrowed'];
 

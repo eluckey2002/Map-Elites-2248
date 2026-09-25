@@ -87,6 +87,11 @@ test('an old provisional record promoted to accepted needs a writer and checker'
   assert.match(problems.join('\n'), /no checked_by/);
 });
 
+test('an old superseded record flipped to accepted needs a checker', () => {
+  const problems = assessAuthorship(parseLedgerRecords(record('DECISION-0001', { status: 'accepted' })));
+  assert.match(problems.join('\n'), /no checked_by/);
+});
+
 test('an old provisional record left provisional stays exempt', () => {
   assert.deepEqual(assessAuthorship(parseLedgerRecords(record('RESULT-0036', { status: 'provisional' }))), []);
 });
