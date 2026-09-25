@@ -7,6 +7,9 @@ experiments/** text eol=lf
 # and Universe Map verification. Materialize every text artifact with LF on
 # every host so those identities bind Git content rather than checkout policy.
 * text=auto eol=lf
+#
+# An existing Windows clone keeps its old CRLF checkouts after pulling this
+# rule. Run `sh tools/refresh-line-endings.sh` once, from a clean tree.
 
 # These legacy live-store blobs were committed with CRLF. They are parsed as
 # JSON rather than hashed as raw input bytes, so retain their historical bytes
