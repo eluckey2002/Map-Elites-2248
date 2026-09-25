@@ -81,6 +81,16 @@ test('a backticked status still requires a checker', () => {
   assert.match(problems.join('\n'), /no checked_by/);
 });
 
+test('an old provisional record promoted to accepted needs a writer and checker', () => {
+  const problems = assessAuthorship(parseLedgerRecords(record('HYPOTHESIS-0001', { status: 'accepted' })));
+  assert.match(problems.join('\n'), /no written_by/);
+  assert.match(problems.join('\n'), /no checked_by/);
+});
+
+test('an old provisional record left provisional stays exempt', () => {
+  assert.deepEqual(assessAuthorship(parseLedgerRecords(record('RESULT-0036', { status: 'provisional' }))), []);
+});
+
 test('the live ledger passes the authorship gate', () => {
   const out = execFileSync('node', ['tools/verify-ledger-authorship.js'], { cwd: ROOT, encoding: 'utf8' });
   assert.match(out, /LEDGER AUTHORSHIP GATE PASS/);
