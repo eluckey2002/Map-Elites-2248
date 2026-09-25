@@ -9,8 +9,8 @@
 // Records that existed when the gate landed are exempt by ID: their authorship
 // was never recorded and cannot be reconstructed honestly. The exemption is by
 // ID number, not by date, so it cannot be claimed by backdating `updated`.
-// Known gap: an exempt record later moved from `provisional` to `accepted` is
-// not caught here.
+// An exempt record that was not yet accepted when the gate landed loses its
+// exemption once it is promoted: the promotion is new work and needs a checker.
 
 const fs = require('node:fs');
 const path = require('node:path');
@@ -22,10 +22,15 @@ const LEDGER = path.join(__dirname, '..', 'EVIDENCE_LEDGER.md');
 const EXEMPT_THROUGH = {
   FACT: 7, RESULT: 43, DECISION: 6, HYPOTHESIS: 2, QUESTION: 3, CORRECTION: 9,
 };
+// Exempt records that were provisional or open when the gate landed.
+const UNACCEPTED_AT_LANDING = [
+  'RESULT-0036', 'HYPOTHESIS-0001', 'HYPOTHESIS-0002', 'QUESTION-0001', 'QUESTION-0002', 'QUESTION-0003',
+];
 const NEEDS_CHECKER = ['accepted', 'narrowed'];
 
 function isExempt(record) {
-  return record.number <= (EXEMPT_THROUGH[record.prefix] ?? 0);
+  if (record.number > (EXEMPT_THROUGH[record.prefix] ?? 0)) return false;
+  return !(UNACCEPTED_AT_LANDING.includes(record.id) && NEEDS_CHECKER.includes(record.fields.status));
 }
 
 function normalized(name) {
@@ -64,4 +69,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { EXEMPT_THROUGH, assessAuthorship, isExempt };
+module.exports = { EXEMPT_THROUGH, UNACCEPTED_AT_LANDING, assessAuthorship, isExempt };
