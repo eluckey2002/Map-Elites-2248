@@ -326,6 +326,16 @@ function registrationRepo({ freezeLine } = {}) {
   return { root, git, bot, hash, protocolPath, protocol, argv, registration: git('rev-parse', 'HEAD') };
 }
 
+test('Git object paths use repository separators when callers supply Windows separators', () => {
+  const repo = registrationRepo();
+  const registered = showAtCommit(
+    repo.registration,
+    'experiments\\RESULT-0001\\protocol.md',
+    repo.root,
+  );
+  assert.equal(registered, repo.protocol(`  solver/bot.js: ${repo.hash}`));
+});
+
 test('an honest registration passes and stamps its own commit', () => {
   const repo = registrationRepo();
   const reg = requireProtocol(repo.argv, { root: repo.root });
