@@ -6,9 +6,11 @@
 // checker must not be the writer. A checker is an independent agent, a named
 // script run, or the owner; it is never the session that wrote the record.
 //
-// Records that existed when the gate landed are exempt by ID: their authorship
-// was never recorded and cannot be reconstructed honestly. The exemption is by
-// ID number, not by date, so it cannot be claimed by backdating `updated`.
+// Records that existed when the gate landed are exempt by exact ID: their
+// authorship was never recorded and cannot be reconstructed honestly. The list
+// is exact, not a numeric range, so an unused old number (RESULT-0019) or a
+// date backdated in `updated` cannot claim the exemption, and a duplicate ID is
+// rejected so a new record cannot borrow an old record's exemption.
 // An exempt record that was not yet accepted when the gate landed loses its
 // exemption once it is promoted: the promotion is new work and needs a checker.
 
@@ -18,22 +20,30 @@ const { parseLedgerRecords } = require('./ledger-index.js');
 
 const LEDGER = path.join(__dirname, '..', 'EVIDENCE_LEDGER.md');
 
-// Highest ID per type in EVIDENCE_LEDGER.md when this gate landed (2026-09-25).
-const EXEMPT_THROUGH = {
-  FACT: 7, RESULT: 48, DECISION: 6, HYPOTHESIS: 2, QUESTION: 3, CORRECTION: 9,
-};
-// Exempt records whose status was anything other than accepted or narrowed
-// when the gate landed (superseded, provisional, or open).
-const UNACCEPTED_AT_LANDING = [
-  'FACT-0003', 'FACT-0004', 'RESULT-0015', 'RESULT-0029', 'RESULT-0030', 'RESULT-0036', 'RESULT-0037',
-  'RESULT-0038', 'RESULT-0042', 'DECISION-0001', 'HYPOTHESIS-0001', 'HYPOTHESIS-0002', 'QUESTION-0001',
-  'QUESTION-0002', 'QUESTION-0003',
-];
+// Every record on origin/main when the gate landed (2026-09-25, 66 records).
+// Accepted or narrowed then: exempt whatever their status now.
+const ACCEPTED_AT_LANDING = new Set([
+  'FACT-0001', 'FACT-0002', 'FACT-0005', 'FACT-0006', 'FACT-0007', 'RESULT-0001', 'RESULT-0002',
+  'RESULT-0003', 'RESULT-0004', 'RESULT-0005', 'RESULT-0006', 'RESULT-0007', 'RESULT-0008',
+  'RESULT-0009', 'RESULT-0010', 'RESULT-0011', 'RESULT-0012', 'RESULT-0013', 'RESULT-0014',
+  'RESULT-0016', 'RESULT-0017', 'RESULT-0018', 'RESULT-0020', 'RESULT-0021', 'RESULT-0024',
+  'RESULT-0025', 'RESULT-0026', 'RESULT-0027', 'RESULT-0028', 'RESULT-0031', 'RESULT-0032',
+  'RESULT-0033', 'RESULT-0034', 'RESULT-0035', 'RESULT-0041', 'RESULT-0043', 'RESULT-0048',
+  'DECISION-0002', 'DECISION-0003', 'DECISION-0004', 'DECISION-0005', 'DECISION-0006',
+  'CORRECTION-0001', 'CORRECTION-0002', 'CORRECTION-0003', 'CORRECTION-0004', 'CORRECTION-0005',
+  'CORRECTION-0006', 'CORRECTION-0007', 'CORRECTION-0008', 'CORRECTION-0009',
+]);
+// Superseded, provisional, or open then: exempt until promoted.
+const UNACCEPTED_AT_LANDING = new Set([
+  'FACT-0003', 'FACT-0004', 'RESULT-0015', 'RESULT-0029', 'RESULT-0030', 'RESULT-0036',
+  'RESULT-0037', 'RESULT-0038', 'RESULT-0042', 'DECISION-0001', 'HYPOTHESIS-0001',
+  'HYPOTHESIS-0002', 'QUESTION-0001', 'QUESTION-0002', 'QUESTION-0003',
+]);
 const NEEDS_CHECKER = ['accepted', 'narrowed'];
 
 function isExempt(record) {
-  if (record.number > (EXEMPT_THROUGH[record.prefix] ?? 0)) return false;
-  return !(UNACCEPTED_AT_LANDING.includes(record.id) && NEEDS_CHECKER.includes(record.fields.status));
+  if (ACCEPTED_AT_LANDING.has(record.id)) return true;
+  return UNACCEPTED_AT_LANDING.has(record.id) && !NEEDS_CHECKER.includes(record.fields.status);
 }
 
 function normalized(name) {
@@ -42,8 +52,15 @@ function normalized(name) {
 
 function assessAuthorship(records) {
   const problems = [];
+  const seen = new Set();
   for (const r of records) {
-    if (isExempt(r)) continue;
+    if (seen.has(r.id)) {
+      problems.push(`${r.id}: appears more than once. IDs are never reused; give the new record the next free ID.`);
+    }
+    seen.add(r.id);
+  }
+  for (const r of records) {
+    if (isExempt(r) && records.filter((x) => x.id === r.id).length === 1) continue;
     const writer = normalized(r.fields.written_by);
     const checker = normalized(r.fields.checked_by);
     if (!writer) {
@@ -72,4 +89,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { EXEMPT_THROUGH, UNACCEPTED_AT_LANDING, assessAuthorship, isExempt };
+module.exports = { ACCEPTED_AT_LANDING, UNACCEPTED_AT_LANDING, assessAuthorship, isExempt };

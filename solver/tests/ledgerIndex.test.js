@@ -96,6 +96,20 @@ test('an old provisional record left provisional stays exempt', () => {
   assert.deepEqual(assessAuthorship(parseLedgerRecords(record('RESULT-0036', { status: 'provisional' }))), []);
 });
 
+test('an unused old ID number gets no exemption', () => {
+  const problems = assessAuthorship(parseLedgerRecords(record('RESULT-0019', { status: 'accepted' })));
+  assert.match(problems.join('\n'), /no written_by/);
+});
+
+test('reusing an existing ID is rejected and removes the exemption', () => {
+  const problems = assessAuthorship(parseLedgerRecords([
+    record('RESULT-0001', { status: 'accepted' }),
+    record('RESULT-0001', { status: 'accepted' }),
+  ].join('\n')));
+  assert.match(problems.join('\n'), /appears more than once/);
+  assert.match(problems.join('\n'), /no checked_by/);
+});
+
 test('the live ledger passes the authorship gate', () => {
   const out = execFileSync('node', ['tools/verify-ledger-authorship.js'], { cwd: ROOT, encoding: 'utf8' });
   assert.match(out, /LEDGER AUTHORSHIP GATE PASS/);
