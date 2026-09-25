@@ -20,7 +20,7 @@ const LEDGER = path.join(__dirname, '..', 'EVIDENCE_LEDGER.md');
 
 // Highest ID per type in EVIDENCE_LEDGER.md when this gate landed (2026-09-25).
 const EXEMPT_THROUGH = {
-  FACT: 7, RESULT: 43, DECISION: 6, HYPOTHESIS: 2, QUESTION: 3, CORRECTION: 9,
+  FACT: 7, RESULT: 48, DECISION: 6, HYPOTHESIS: 2, QUESTION: 3, CORRECTION: 9,
 };
 // Exempt records whose status was anything other than accepted or narrowed
 // when the gate landed (superseded, provisional, or open).

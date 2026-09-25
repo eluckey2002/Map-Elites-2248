@@ -39,18 +39,18 @@ test('superseded records leave the current table', () => {
 });
 
 test('an exempt record needs no authorship', () => {
-  assert.deepEqual(assessAuthorship(parseLedgerRecords(record('RESULT-0043', { status: 'accepted' }))), []);
+  assert.deepEqual(assessAuthorship(parseLedgerRecords(record('RESULT-0048', { status: 'accepted' }))), []);
 });
 
 test('a new record without written_by fails', () => {
-  const problems = assessAuthorship(parseLedgerRecords(record('RESULT-0044', { status: 'provisional' })));
+  const problems = assessAuthorship(parseLedgerRecords(record('RESULT-0049', { status: 'provisional' })));
   assert.equal(problems.length, 1);
   assert.match(problems[0], /no written_by/);
 });
 
 test('a new provisional record with a writer and no checker passes', () => {
   assert.deepEqual(assessAuthorship(parseLedgerRecords(
-    record('RESULT-0044', { status: 'provisional', written_by: 'agent-a' }))), []);
+    record('RESULT-0049', { status: 'provisional', written_by: 'agent-a' }))), []);
 });
 
 test('a new accepted record without a checker fails', () => {
@@ -71,13 +71,13 @@ test('a record accepted by a different checker passes', () => {
 });
 
 test('a heading with a plain hyphen is still a record the gate sees', () => {
-  const text = record('RESULT-0044', { status: 'accepted' }).replace(' — ', ' - ');
+  const text = record('RESULT-0049', { status: 'accepted' }).replace(' — ', ' - ');
   assert.match(assessAuthorship(parseLedgerRecords(text)).join('\n'), /no written_by/);
 });
 
 test('a backticked status still requires a checker', () => {
   const problems = assessAuthorship(parseLedgerRecords(
-    record('RESULT-0044', { status: '`Accepted`', written_by: 'agent-a' })));
+    record('RESULT-0049', { status: '`Accepted`', written_by: 'agent-a' })));
   assert.match(problems.join('\n'), /no checked_by/);
 });
 
