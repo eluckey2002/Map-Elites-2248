@@ -1,121 +1,97 @@
 #!/usr/bin/env node
-// Gate: an agent may propose a ledger record but may not accept its own.
+// Gate: an agent may propose a ledger record but may not accept its own, and
+// the ledger is append-only.
 //
-// Every record created after this gate landed must name `written_by`. A record
-// whose status is `accepted` or `narrowed` must also name `checked_by`, and the
-// checker must not be the writer. A checker is an independent agent, a named
-// script run, or the owner; it is never the session that wrote the record.
+// The gate compares EVIDENCE_LEDGER.md with the same file on the base branch
+// (main). Only what the change touches needs anything:
+//   - a record on the base that is missing now fails: retire it with a
+//     correction instead of deleting it;
+//   - an ID that appears more than once fails;
+//   - a record that is new, or whose text differs from the base in any way,
+//     must name `written_by`;
+//   - such a record must also name a `checked_by` who is not the writer when it
+//     is `accepted` or `narrowed` now, or was `accepted` or `narrowed` on the
+//     base. So accepting a claim and retiring accepted evidence both need an
+//     independent check.
+// Records the change does not touch need nothing, so records written before
+// this gate existed stay valid without authorship fields.
 //
-// Records that existed when the gate landed (2026-09-25) are exempt, because
-// their authorship was never recorded and cannot be reconstructed honestly.
-// The exemption is pinned to each record exactly as it stood then: a hash of
-// every line of the record except `status`, `superseded_by`, and `updated`,
-// plus those three values themselves. A legacy record stays exempt only if
-//   - it is byte-for-byte unchanged, or
-//   - its content is unchanged and it moved to a retired status (superseded,
-//     stale, rejected), which is what the append-only correction process does.
-// Any other edit, including a restamped date, a status newly reaching
-// `accepted` or `narrowed`, or a changed claim or evidence line, is new work
-// and must carry `written_by` and `checked_by` like any new record. Duplicate
-// IDs are rejected so a new record cannot borrow an old record's exemption.
+// The base is `git merge-base HEAD origin/main`; when HEAD is itself on main
+// (a push to main), it is HEAD's first parent. Set LEDGER_BASE to override.
 
-const crypto = require('node:crypto');
+const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 const { parseLedgerRecords } = require('./ledger-index.js');
 
-const LEDGER = path.join(__dirname, '..', 'EVIDENCE_LEDGER.md');
-const { records: LANDING } = require('./ledger-legacy-pins.json');
-
+const ROOT = path.join(__dirname, '..');
+const LEDGER = 'EVIDENCE_LEDGER.md';
 const NEEDS_CHECKER = ['accepted', 'narrowed'];
-const RETIRED = ['superseded', 'stale', 'rejected'];
-const MOVABLE = /^- \*\*(status|superseded_by|updated):\*\*/;
 
-// Hash of the whole record except the three fields a correction may move.
-function contentPin(record) {
-  const body = record.lines.filter((l) => !MOVABLE.test(l)).map((l) => l.trimEnd());
-  while (body.length && body[body.length - 1] === '') body.pop();
-  return crypto.createHash('sha256').update(JSON.stringify([record.title, body])).digest('hex').slice(0, 16);
+function git(args) {
+  return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
 }
 
-function landingEntry(record) {
-  return {
-    pin: contentPin(record),
-    status: record.fields.status || '',
-    superseded_by: record.fields.superseded_by || '',
-    updated: record.fields.updated || '',
-  };
+function baseCommit() {
+  if (process.env.LEDGER_BASE) return git(['rev-parse', process.env.LEDGER_BASE]);
+  const head = git(['rev-parse', 'HEAD']);
+  const base = git(['merge-base', 'HEAD', 'origin/main']);
+  return base === head ? git(['rev-parse', 'HEAD^1']) : base;
 }
 
-function ids(list) {
-  return [...String(list || '').matchAll(/[A-Z]+-\d{4}/g)].map((m) => m[0]);
-}
-
-// A retirement counts only when a record it names in superseded_by exists and
-// names it back in supersedes, i.e. a real append-only correction.
-function retiredByRealCorrection(record, byId) {
-  return ids(record.fields.superseded_by).some((id) => ids(byId.get(id)?.fields.supersedes).includes(record.id));
-}
-
-function isExempt(record, byId = new Map()) {
-  const then = LANDING[record.id];
-  if (!then) return false;
-  const now = landingEntry(record);
-  if (now.pin !== then.pin) return false;
-  if (now.status === then.status) {
-    return now.superseded_by === then.superseded_by && now.updated === then.updated;
-  }
-  return RETIRED.includes(now.status) && retiredByRealCorrection(record, byId);
+function text(record) {
+  return [record.title, ...record.lines.map((l) => l.trimEnd())].join('\n').trimEnd();
 }
 
 function normalized(name) {
   return String(name || '').replace(/`/g, '').trim().toLowerCase();
 }
 
-function assessAuthorship(records) {
+function assessChanges(baseRecords, records) {
   const problems = [];
   const counts = new Map();
   for (const r of records) counts.set(r.id, (counts.get(r.id) || 0) + 1);
   for (const [id, n] of counts) {
     if (n > 1) problems.push(`${id}: appears more than once. IDs are never reused; give the new record the next free ID.`);
   }
-  const byId = new Map(records.map((r) => [r.id, r]));
+  const base = new Map(baseRecords.map((r) => [r.id, r]));
+  for (const id of base.keys()) {
+    if (!counts.has(id)) problems.push(`${id}: was removed. The ledger is append-only; retire a record with a correction instead.`);
+  }
   for (const r of records) {
-    if (counts.get(r.id) === 1 && isExempt(r, byId)) continue;
+    const before = base.get(r.id);
+    if (before && counts.get(r.id) === 1 && text(before) === text(r)) continue;
     const writer = normalized(r.fields.written_by);
     const checker = normalized(r.fields.checked_by);
-    if (!writer) {
-      problems.push(`${r.id}: no written_by. Name the agent or person who wrote this record.`);
-    }
-    if (!NEEDS_CHECKER.includes(r.fields.status)) continue;
+    const what = before ? 'changed' : 'new';
+    if (!writer) problems.push(`${r.id}: ${what} record with no written_by. Name the agent or person who wrote it.`);
+    const accepting = NEEDS_CHECKER.includes(r.fields.status);
+    const touchesAccepted = NEEDS_CHECKER.includes(before?.fields.status);
+    if (!accepting && !touchesAccepted) continue;
+    const why = accepting ? `status ${r.fields.status}` : `it was ${before.fields.status} on the base`;
     if (!checker) {
-      problems.push(`${r.id}: status ${r.fields.status} but no checked_by. Leave it provisional until an independent check is recorded.`);
+      problems.push(`${r.id}: ${what} record, ${why}, but no checked_by. An independent check must be recorded first.`);
     } else if (writer && checker === writer) {
-      problems.push(`${r.id}: checked_by is the same as written_by (${writer}). A record may not be accepted by its own writer.`);
+      problems.push(`${r.id}: checked_by is the same as written_by (${writer}). A record may not be checked by its own writer.`);
     }
   }
   return problems;
 }
 
-// Run on the whole ledger: every record present at landing must still exist.
-function assessRemovals(records) {
-  const present = new Set(records.map((r) => r.id));
-  return Object.keys(LANDING).filter((id) => !present.has(id))
-    .map((id) => `${id}: was removed. The ledger is append-only; retire a record with a correction instead.`);
-}
-
 function main() {
-  const records = parseLedgerRecords(fs.readFileSync(LEDGER, 'utf8'));
-  const problems = [...assessRemovals(records), ...assessAuthorship(records)];
+  const commit = baseCommit();
+  const baseText = git(['show', `${commit}:${LEDGER}`]);
+  const records = parseLedgerRecords(fs.readFileSync(path.join(ROOT, LEDGER), 'utf8'));
+  const problems = assessChanges(parseLedgerRecords(baseText), records);
   if (problems.length) {
-    console.error('LEDGER AUTHORSHIP GATE FAILED');
+    console.error(`LEDGER AUTHORSHIP GATE FAILED (base ${commit.slice(0, 8)})`);
     for (const p of problems) console.error(`- ${p}`);
     process.exitCode = 1;
     return;
   }
-  console.log('LEDGER AUTHORSHIP GATE PASS');
+  console.log(`LEDGER AUTHORSHIP GATE PASS (base ${commit.slice(0, 8)})`);
 }
 
 if (require.main === module) main();
 
-module.exports = { assessAuthorship, assessRemovals, contentPin, isExempt, landingEntry };
+module.exports = { assessChanges };
