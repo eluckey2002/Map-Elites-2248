@@ -171,5 +171,23 @@ test('retiring a legacy record through a correction keeps its exemption', () => 
     .replace(/^- \*\*status:\*\*.*$/m, '- **status:** superseded')
     .replace(/^- \*\*superseded_by:\*\*.*$/m, '- **superseded_by:** [CORRECTION-0010]')
     .replace(/^- \*\*updated:\*\*.*$/m, '- **updated:** 2026-09-26');
-  assert.deepEqual(assessAuthorship(parseLedgerRecords(block)), []);
+  const correction = record('CORRECTION-0010', {
+    status: 'accepted', written_by: 'agent-a', checked_by: 'agent-b', supersedes: '[RESULT-0001]',
+  });
+  const noBacklink = record('CORRECTION-0010', {
+    status: 'accepted', written_by: 'agent-a', checked_by: 'agent-b', supersedes: '[]',
+  });
+  // Real correction that names RESULT-0001 back: the retirement stays exempt.
+  assert.deepEqual(assessAuthorship(parseLedgerRecords(`${block}\n${correction}`)), []);
+  // Correction missing, or not naming it back: the status edit is new work.
+  assert.match(assessAuthorship(parseLedgerRecords(block)).join('\n'), /RESULT-0001: no written_by/);
+  assert.match(assessAuthorship(parseLedgerRecords(`${block}\n${noBacklink}`)).join('\n'), /RESULT-0001: no written_by/);
+});
+
+test('removing a legacy record fails the gate', () => {
+  const { assessRemovals } = require('../../tools/verify-ledger-authorship.js');
+  const text = require('node:fs').readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
+  const all = parseLedgerRecords(text);
+  assert.deepEqual(assessRemovals(all), []);
+  assert.match(assessRemovals(all.filter((r) => r.id !== 'RESULT-0001')).join('\n'), /RESULT-0001: was removed/);
 });

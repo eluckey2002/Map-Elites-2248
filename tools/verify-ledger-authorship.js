@@ -47,7 +47,17 @@ function landingEntry(record) {
   };
 }
 
-function isExempt(record) {
+function ids(list) {
+  return [...String(list || '').matchAll(/[A-Z]+-\d{4}/g)].map((m) => m[0]);
+}
+
+// A retirement counts only when a record it names in superseded_by exists and
+// names it back in supersedes, i.e. a real append-only correction.
+function retiredByRealCorrection(record, byId) {
+  return ids(record.fields.superseded_by).some((id) => ids(byId.get(id)?.fields.supersedes).includes(record.id));
+}
+
+function isExempt(record, byId = new Map()) {
   const then = LANDING[record.id];
   if (!then) return false;
   const now = landingEntry(record);
@@ -55,7 +65,7 @@ function isExempt(record) {
   if (now.status === then.status) {
     return now.superseded_by === then.superseded_by && now.updated === then.updated;
   }
-  return RETIRED.includes(now.status);
+  return RETIRED.includes(now.status) && retiredByRealCorrection(record, byId);
 }
 
 function normalized(name) {
@@ -69,8 +79,9 @@ function assessAuthorship(records) {
   for (const [id, n] of counts) {
     if (n > 1) problems.push(`${id}: appears more than once. IDs are never reused; give the new record the next free ID.`);
   }
+  const byId = new Map(records.map((r) => [r.id, r]));
   for (const r of records) {
-    if (counts.get(r.id) === 1 && isExempt(r)) continue;
+    if (counts.get(r.id) === 1 && isExempt(r, byId)) continue;
     const writer = normalized(r.fields.written_by);
     const checker = normalized(r.fields.checked_by);
     if (!writer) {
@@ -86,8 +97,16 @@ function assessAuthorship(records) {
   return problems;
 }
 
+// Run on the whole ledger: every record present at landing must still exist.
+function assessRemovals(records) {
+  const present = new Set(records.map((r) => r.id));
+  return Object.keys(LANDING).filter((id) => !present.has(id))
+    .map((id) => `${id}: was removed. The ledger is append-only; retire a record with a correction instead.`);
+}
+
 function main() {
-  const problems = assessAuthorship(parseLedgerRecords(fs.readFileSync(LEDGER, 'utf8')));
+  const records = parseLedgerRecords(fs.readFileSync(LEDGER, 'utf8'));
+  const problems = [...assessRemovals(records), ...assessAuthorship(records)];
   if (problems.length) {
     console.error('LEDGER AUTHORSHIP GATE FAILED');
     for (const p of problems) console.error(`- ${p}`);
@@ -99,4 +118,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { assessAuthorship, contentPin, isExempt, landingEntry };
+module.exports = { assessAuthorship, assessRemovals, contentPin, isExempt, landingEntry };
