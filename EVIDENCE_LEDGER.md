@@ -199,6 +199,12 @@ Preserve the history of what the project believed and why. To correct an entry:
 
 Never delete a receipt, erase a challenged claim, or edit an old statement so that the history appears to have always been correct. If the replacement lacks support, record the gap as an open question and leave the earlier entry's standing unchanged.
 
+## Authorship and the index
+
+Every record created after 2026-09-25 names `written_by`. A record reaches `accepted` or `narrowed` only when `checked_by` names someone other than the writer: an independent agent, a script run, or the owner. Records that existed on 2026-09-25 are exempt by ID because their authorship was never recorded. `tools/verify-ledger-authorship.js` enforces this.
+
+`LEDGER-INDEX.md` lists every record in one line and is generated from this file by `node tools/ledger-index.js`. Regenerate and commit it with every ledger change; `node tools/ledger-index.js --check` fails when it is stale.
+
 ## Entry template
 
 ```yaml
@@ -213,6 +219,8 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
   as_of: YYYY-MM-DD | not_time_sensitive
   reverify: <command and expected observation, or not_applicable>
   updated: YYYY-MM-DD
+  written_by: <agent, session, or person who wrote this record>
+  checked_by: <a different agent, script run, or the owner; required for accepted or narrowed>
   supersedes: []
   superseded_by: []
   notes: <optional implication, rationale, or explicit evidence gap>

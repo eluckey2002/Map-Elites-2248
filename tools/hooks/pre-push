@@ -17,5 +17,9 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     echo "pre-push: REFUSED — EXPERIMENT GATE FAILED. Fix the ledger before pushing to main." >&2
     exit 1
   fi
+  if ! node tools/verify-ledger-authorship.js >&2 || ! node tools/ledger-index.js --check >&2; then
+    echo "pre-push: REFUSED — LEDGER AUTHORSHIP OR INDEX CHECK FAILED." >&2
+    exit 1
+  fi
 done
 exit 0
