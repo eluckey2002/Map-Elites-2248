@@ -14,6 +14,7 @@
 // An exempt record that was not yet accepted when the gate landed loses its
 // exemption once it is promoted: the promotion is new work and needs a checker.
 
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 const { parseLedgerRecords } = require('./ledger-index.js');
@@ -40,8 +41,20 @@ const UNACCEPTED_AT_LANDING = new Set([
   'HYPOTHESIS-0002', 'QUESTION-0001', 'QUESTION-0002', 'QUESTION-0003',
 ]);
 const NEEDS_CHECKER = ['accepted', 'narrowed'];
+// A legacy record keeps its exemption only while its claim is unchanged: the
+// title, statement or question, scope, and proof_class as they stood at landing.
+// Status and link fields may still move, as the correction process requires.
+const { pins: LEGACY_PINS } = require('./ledger-legacy-pins.json');
+
+function contentPin(record) {
+  const f = record.fields;
+  return crypto.createHash('sha256')
+    .update(JSON.stringify([record.title, f.statement || f.question || '', f.scope || '', f.proof_class || '']))
+    .digest('hex').slice(0, 16);
+}
 
 function isExempt(record) {
+  if (LEGACY_PINS[record.id] !== contentPin(record)) return false;
   if (ACCEPTED_AT_LANDING.has(record.id)) return true;
   return UNACCEPTED_AT_LANDING.has(record.id) && !NEEDS_CHECKER.includes(record.fields.status);
 }
@@ -89,4 +102,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { ACCEPTED_AT_LANDING, UNACCEPTED_AT_LANDING, assessAuthorship, isExempt };
+module.exports = { contentPin, ACCEPTED_AT_LANDING, UNACCEPTED_AT_LANDING, assessAuthorship, isExempt };

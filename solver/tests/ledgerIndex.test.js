@@ -7,6 +7,12 @@ const { assessAuthorship } = require('../../tools/verify-ledger-authorship.js');
 
 const ROOT = path.join(__dirname, '..', '..');
 
+// Legacy exemptions are pinned to real content, so exemption tests use the live ledger.
+function liveRecord(id) {
+  const text = require('node:fs').readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
+  return parseLedgerRecords(text).find((r) => r.id === id);
+}
+
 function record(id, fields) {
   return [`### ${id} — a title`, '', ...Object.entries(fields).map(([k, v]) => `- **${k}:** ${v}`), ''].join('\n');
 }
@@ -39,7 +45,7 @@ test('superseded records leave the current table', () => {
 });
 
 test('an exempt record needs no authorship', () => {
-  assert.deepEqual(assessAuthorship(parseLedgerRecords(record('RESULT-0048', { status: 'accepted' }))), []);
+  assert.deepEqual(assessAuthorship([liveRecord('RESULT-0048')]), []);
 });
 
 test('a new record without written_by fails', () => {
@@ -93,7 +99,7 @@ test('an old superseded record flipped to accepted needs a checker', () => {
 });
 
 test('an old provisional record left provisional stays exempt', () => {
-  assert.deepEqual(assessAuthorship(parseLedgerRecords(record('RESULT-0036', { status: 'provisional' }))), []);
+  assert.deepEqual(assessAuthorship([liveRecord('RESULT-0036')]), []);
 });
 
 test('an unused old ID number gets no exemption', () => {
@@ -118,4 +124,15 @@ test('the live ledger passes the authorship gate', () => {
 test('the committed index matches the live ledger', () => {
   const out = execFileSync('node', ['tools/ledger-index.js', '--check'], { cwd: ROOT, encoding: 'utf8' });
   assert.match(out, /LEDGER INDEX CURRENT/);
+});
+
+test('a legacy record whose claim was rewritten loses its exemption', () => {
+  const fs = require('node:fs');
+  const live = parseLedgerRecords(fs.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8'));
+  const original = live.find((r) => r.id === 'RESULT-0001');
+  assert.deepEqual(assessAuthorship([original]), []);
+  const rewritten = { ...original, fields: { ...original.fields, statement: 'A different claim.' } };
+  assert.match(assessAuthorship([rewritten]).join('\n'), /no written_by/);
+  const restatused = { ...original, fields: { ...original.fields, status: 'superseded', superseded_by: '[CORRECTION-0010]' } };
+  assert.deepEqual(assessAuthorship([restatused]), []);
 });
