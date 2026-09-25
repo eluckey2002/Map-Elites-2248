@@ -54,7 +54,8 @@ evidence is a reconstruction, not a preregistration.
 `main` is protected. Every change reaches it through a pull request whose
 `experiment gate` check is green; a direct push to `main` is refused by GitHub.
 `tools/hooks/pre-push` is a second, narrower safeguard, not a substitute: where
-it has been installed (`node tools/hooks/install.js`, once per clone) it
+it has been installed (`node tools/hooks/install.js`, once per clone; clones
+installed before 2026-09-25 hold a stale copy and must run it once more) it
 refuses to push a red gate to `main` before the push leaves the machine, and
 it lets a green push through. Two more rules no mechanism enforces:
 

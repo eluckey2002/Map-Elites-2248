@@ -41,15 +41,17 @@ const UNACCEPTED_AT_LANDING = new Set([
   'HYPOTHESIS-0002', 'QUESTION-0001', 'QUESTION-0002', 'QUESTION-0003',
 ]);
 const NEEDS_CHECKER = ['accepted', 'narrowed'];
-// A legacy record keeps its exemption only while its claim is unchanged: the
-// title, statement or question, scope, and proof_class as they stood at landing.
+// A legacy record keeps its exemption only while its claim and evidence are
+// unchanged: title, statement or question, scope, proof_class, evidence, and
+// reverify as they stood at landing.
 // Status and link fields may still move, as the correction process requires.
 const { pins: LEGACY_PINS } = require('./ledger-legacy-pins.json');
 
 function contentPin(record) {
   const f = record.fields;
   return crypto.createHash('sha256')
-    .update(JSON.stringify([record.title, f.statement || f.question || '', f.scope || '', f.proof_class || '']))
+    .update(JSON.stringify([record.title, f.statement || f.question || '', f.scope || '', f.proof_class || '',
+      f.evidence || '', f.reverify || '']))
     .digest('hex').slice(0, 16);
 }
 

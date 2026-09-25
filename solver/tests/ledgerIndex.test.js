@@ -133,6 +133,8 @@ test('a legacy record whose claim was rewritten loses its exemption', () => {
   assert.deepEqual(assessAuthorship([original]), []);
   const rewritten = { ...original, fields: { ...original.fields, statement: 'A different claim.' } };
   assert.match(assessAuthorship([rewritten]).join('\n'), /no written_by/);
+  const reevidenced = { ...original, fields: { ...original.fields, evidence: 'a different receipt' } };
+  assert.match(assessAuthorship([reevidenced]).join('\n'), /no written_by/);
   const restatused = { ...original, fields: { ...original.fields, status: 'superseded', superseded_by: '[CORRECTION-0010]' } };
   assert.deepEqual(assessAuthorship([restatused]), []);
 });
