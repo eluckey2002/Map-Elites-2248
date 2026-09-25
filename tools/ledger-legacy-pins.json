@@ -1,71 +1,401 @@
 {
-  "note": "Fingerprint of title, statement or question, scope, proof_class, evidence and reverify for each ledger record on origin/main when the authorship gate landed (2026-09-25). Generated once; never regenerate to make the gate pass.",
-  "pins": {
-    "FACT-0001": "fe725990cf63f575",
-    "FACT-0002": "0a207b31eaaf8754",
-    "FACT-0003": "e6ac50c4c40e655c",
-    "FACT-0004": "968022a70b131214",
-    "FACT-0005": "ea1d2e1f0c01513d",
-    "FACT-0006": "a6271eed5098c8ea",
-    "FACT-0007": "3f168b95545a37e5",
-    "RESULT-0001": "f770067aae037b96",
-    "RESULT-0002": "09ce391cc8f4e399",
-    "RESULT-0003": "cf88a8fc92d299ed",
-    "RESULT-0004": "f2b5cd126a6f9ba7",
-    "RESULT-0005": "08693c44048fe575",
-    "RESULT-0006": "2ddc11acb14c592b",
-    "RESULT-0007": "3a2550c4da47e68e",
-    "RESULT-0008": "dc83498f8c4b35df",
-    "RESULT-0009": "bd60d29f5ad1ebfe",
-    "RESULT-0010": "c1b13da21992764c",
-    "RESULT-0011": "671323d2d3bcdd09",
-    "RESULT-0012": "c5ae22a782189997",
-    "RESULT-0013": "ac436124ab228bc8",
-    "RESULT-0014": "7c81221eb68a9a03",
-    "RESULT-0015": "853f43103ae38efa",
-    "RESULT-0016": "75a41da9c6c53b69",
-    "RESULT-0017": "a6555b88525e1b0d",
-    "RESULT-0018": "7954c40cadd39caa",
-    "RESULT-0020": "77e682d33fc0e0ff",
-    "RESULT-0021": "2c8998d88efc92ba",
-    "RESULT-0024": "e551483d743d55ff",
-    "RESULT-0025": "61eca6d1da46ce1c",
-    "RESULT-0026": "0439a663af5307ab",
-    "RESULT-0027": "7530d10a2dfd1d33",
-    "RESULT-0028": "08c006638ac9c02b",
-    "RESULT-0029": "f8781e7311e86b10",
-    "RESULT-0030": "e7b343f3215dcc87",
-    "RESULT-0031": "19e3428d34820dc6",
-    "RESULT-0032": "e218ebe48ee04771",
-    "RESULT-0033": "9607cdf1585e7e7c",
-    "RESULT-0034": "9f9c8afd6cf04bc0",
-    "RESULT-0035": "1bc978bfdcd71cc8",
-    "RESULT-0036": "be179b70ff7d7fdd",
-    "RESULT-0037": "7ab846824095c360",
-    "RESULT-0038": "b85920eb8a6722d2",
-    "RESULT-0041": "b893454c9938823e",
-    "RESULT-0042": "ccf2008c34ed9e3c",
-    "RESULT-0043": "59d635fad79d1336",
-    "RESULT-0048": "e638e8d36d46a2c5",
-    "DECISION-0001": "ce093ab5e807f99d",
-    "DECISION-0002": "335418429df3926f",
-    "DECISION-0003": "349512d944cce377",
-    "DECISION-0004": "f97aa367378962d9",
-    "DECISION-0005": "40cba55956479cd8",
-    "DECISION-0006": "a4b6b8630edba4a6",
-    "HYPOTHESIS-0001": "c7987d20d144f837",
-    "HYPOTHESIS-0002": "825b5930fecfed07",
-    "QUESTION-0001": "ff4cc0faf3fa1aba",
-    "QUESTION-0002": "7f88e1897447dfbc",
-    "QUESTION-0003": "5b01c00d9924c242",
-    "CORRECTION-0001": "87fb8ef51c9ad285",
-    "CORRECTION-0002": "01df8fecec85f617",
-    "CORRECTION-0003": "cb6a58b3f12c1df2",
-    "CORRECTION-0004": "324d3630702f9b93",
-    "CORRECTION-0005": "bb7775dc850f6b19",
-    "CORRECTION-0006": "c22877d367d10862",
-    "CORRECTION-0007": "50ca6a8a195af18e",
-    "CORRECTION-0008": "9ba874d331322912",
-    "CORRECTION-0009": "4384ea18aca2d521"
+  "note": "Each ledger record on origin/main when the authorship gate landed (2026-09-25): a hash of every line except status, superseded_by and updated, plus those three values. Generated once from that ledger; never regenerate to make the gate pass.",
+  "records": {
+    "FACT-0001": {
+      "pin": "df8269fbe4bce5bb",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "FACT-0002": {
+      "pin": "e56b90d5d9550fc4",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "FACT-0003": {
+      "pin": "b038182943bad913",
+      "status": "superseded",
+      "superseded_by": "[CORRECTION-0001]",
+      "updated": "2026-08-12"
+    },
+    "FACT-0004": {
+      "pin": "8df92abc43ac5461",
+      "status": "superseded",
+      "superseded_by": "[CORRECTION-0002]",
+      "updated": "2026-08-12"
+    },
+    "FACT-0005": {
+      "pin": "961784e39eb45f49",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "FACT-0006": {
+      "pin": "2751ed714059a96c",
+      "status": "narrowed",
+      "superseded_by": "[CORRECTION-0008]",
+      "updated": "2026-08-12"
+    },
+    "FACT-0007": {
+      "pin": "aa41523d727ed13e",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-12"
+    },
+    "RESULT-0001": {
+      "pin": "b7b812b05f9ec90a",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "RESULT-0002": {
+      "pin": "9e8cd985ba9d4612",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "RESULT-0003": {
+      "pin": "a9762f2cef19586b",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "RESULT-0004": {
+      "pin": "7761a527441d5fe0",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "RESULT-0005": {
+      "pin": "2f07fe77195887d3",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "RESULT-0006": {
+      "pin": "77811791ac0f2bd8",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "RESULT-0007": {
+      "pin": "8095e4d609d0cf43",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "RESULT-0008": {
+      "pin": "c4befe2bd9350804",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-12"
+    },
+    "RESULT-0009": {
+      "pin": "9915371f917afb8d",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-17"
+    },
+    "RESULT-0010": {
+      "pin": "8597c941e45e1f33",
+      "status": "narrowed",
+      "superseded_by": "[]",
+      "updated": "2026-08-19"
+    },
+    "RESULT-0011": {
+      "pin": "afc745b186dd3cfd",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-20"
+    },
+    "RESULT-0012": {
+      "pin": "ec13e58ed3c47914",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-20"
+    },
+    "RESULT-0013": {
+      "pin": "fb5973cbc50d6807",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-20"
+    },
+    "RESULT-0014": {
+      "pin": "4f7fb20cd486b7be",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-21"
+    },
+    "RESULT-0015": {
+      "pin": "4f73c6d4bbaf0b81",
+      "status": "superseded",
+      "superseded_by": "[CORRECTION-0004]",
+      "updated": "2026-08-21"
+    },
+    "RESULT-0016": {
+      "pin": "f9bca3c0b8a9a2e7",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-21"
+    },
+    "RESULT-0017": {
+      "pin": "f8044df0970ecf78",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-22"
+    },
+    "RESULT-0018": {
+      "pin": "49f10eaad494cb63",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-30"
+    },
+    "RESULT-0020": {
+      "pin": "4eefd4fe0bfb4e47",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-01"
+    },
+    "RESULT-0021": {
+      "pin": "7585e230961f55fb",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-01"
+    },
+    "RESULT-0024": {
+      "pin": "f84c0a089953813c",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-02"
+    },
+    "RESULT-0025": {
+      "pin": "47fb070bbc517b5d",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-02"
+    },
+    "RESULT-0026": {
+      "pin": "3c4585ac5f78886c",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-02"
+    },
+    "RESULT-0027": {
+      "pin": "02da9908ab9655bc",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-03"
+    },
+    "RESULT-0028": {
+      "pin": "09d217d26273dd43",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-03"
+    },
+    "RESULT-0029": {
+      "pin": "b8bbcb5bb31816aa",
+      "status": "superseded",
+      "superseded_by": "[CORRECTION-0005]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0030": {
+      "pin": "a477c0d8084e9f42",
+      "status": "superseded",
+      "superseded_by": "[CORRECTION-0006]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0031": {
+      "pin": "2bde90df1495a7af",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0032": {
+      "pin": "01219fe427ecb9d9",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0033": {
+      "pin": "a95e21aac8fd577d",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0034": {
+      "pin": "c65f3bbb2e0b8fd4",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0035": {
+      "pin": "249809d315bd1468",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0036": {
+      "pin": "57c75b767c56d7f8",
+      "status": "provisional",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0037": {
+      "pin": "ba982f75bd9dc836",
+      "status": "superseded",
+      "superseded_by": "[CORRECTION-0007]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0038": {
+      "pin": "4444077cac2e58f5",
+      "status": "superseded",
+      "superseded_by": "[CORRECTION-0007]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0041": {
+      "pin": "f3370137043313b0",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0042": {
+      "pin": "9649ca1a3a962504",
+      "status": "superseded",
+      "superseded_by": "[RESULT-0043]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0043": {
+      "pin": "fd0f3a1be4b5ceff",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "RESULT-0048": {
+      "pin": "152383fc342499bb",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-19"
+    },
+    "DECISION-0001": {
+      "pin": "a5a3e6a03b0b5b9d",
+      "status": "superseded",
+      "superseded_by": "[DECISION-0002]",
+      "updated": "2026-08-11"
+    },
+    "DECISION-0002": {
+      "pin": "f0ecd4627780baf0",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "DECISION-0003": {
+      "pin": "2a7f0730e7b38707",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-12"
+    },
+    "DECISION-0004": {
+      "pin": "46ec1cdaf0a793fb",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-30"
+    },
+    "DECISION-0005": {
+      "pin": "d032eaec811e27b4",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-02"
+    },
+    "DECISION-0006": {
+      "pin": "41c8d41f4ef75ca1",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "HYPOTHESIS-0001": {
+      "pin": "85d7a8a914cd9f96",
+      "status": "provisional",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "HYPOTHESIS-0002": {
+      "pin": "8ff751193cf2c8ec",
+      "status": "provisional",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "QUESTION-0001": {
+      "pin": "d7ea52dbfd870e09",
+      "status": "open",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "QUESTION-0002": {
+      "pin": "955daa2bacc93b37",
+      "status": "open",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "QUESTION-0003": {
+      "pin": "3fe1fffd3c193210",
+      "status": "open",
+      "superseded_by": "[]",
+      "updated": "2026-08-11"
+    },
+    "CORRECTION-0001": {
+      "pin": "55f56f46b2c1b8c2",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-12"
+    },
+    "CORRECTION-0002": {
+      "pin": "f45c67ac7457485c",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-12"
+    },
+    "CORRECTION-0003": {
+      "pin": "96d6fd9bcf9c65aa",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-20"
+    },
+    "CORRECTION-0004": {
+      "pin": "e2a5052296b5a766",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-08-21"
+    },
+    "CORRECTION-0005": {
+      "pin": "ec5955f796b76048",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "CORRECTION-0006": {
+      "pin": "69e080d433694d37",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "CORRECTION-0007": {
+      "pin": "2d2bca2bc2165525",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "CORRECTION-0008": {
+      "pin": "2f4d8e771f1449d3",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    },
+    "CORRECTION-0009": {
+      "pin": "28388551feb64fb4",
+      "status": "accepted",
+      "superseded_by": "[]",
+      "updated": "2026-09-16"
+    }
   }
 }

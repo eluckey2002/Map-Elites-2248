@@ -6,13 +6,18 @@
 // checker must not be the writer. A checker is an independent agent, a named
 // script run, or the owner; it is never the session that wrote the record.
 //
-// Records that existed when the gate landed are exempt by exact ID: their
-// authorship was never recorded and cannot be reconstructed honestly. The list
-// is exact, not a numeric range, so an unused old number (RESULT-0019) or a
-// date backdated in `updated` cannot claim the exemption, and a duplicate ID is
-// rejected so a new record cannot borrow an old record's exemption.
-// An exempt record that was not yet accepted when the gate landed loses its
-// exemption once it is promoted: the promotion is new work and needs a checker.
+// Records that existed when the gate landed (2026-09-25) are exempt, because
+// their authorship was never recorded and cannot be reconstructed honestly.
+// The exemption is pinned to each record exactly as it stood then: a hash of
+// every line of the record except `status`, `superseded_by`, and `updated`,
+// plus those three values themselves. A legacy record stays exempt only if
+//   - it is byte-for-byte unchanged, or
+//   - its content is unchanged and it moved to a retired status (superseded,
+//     stale, rejected), which is what the append-only correction process does.
+// Any other edit, including a restamped date, a status newly reaching
+// `accepted` or `narrowed`, or a changed claim or evidence line, is new work
+// and must carry `written_by` and `checked_by` like any new record. Duplicate
+// IDs are rejected so a new record cannot borrow an old record's exemption.
 
 const crypto = require('node:crypto');
 const fs = require('node:fs');
@@ -20,45 +25,37 @@ const path = require('node:path');
 const { parseLedgerRecords } = require('./ledger-index.js');
 
 const LEDGER = path.join(__dirname, '..', 'EVIDENCE_LEDGER.md');
+const { records: LANDING } = require('./ledger-legacy-pins.json');
 
-// Every record on origin/main when the gate landed (2026-09-25, 66 records).
-// Accepted or narrowed then: exempt whatever their status now.
-const ACCEPTED_AT_LANDING = new Set([
-  'FACT-0001', 'FACT-0002', 'FACT-0005', 'FACT-0006', 'FACT-0007', 'RESULT-0001', 'RESULT-0002',
-  'RESULT-0003', 'RESULT-0004', 'RESULT-0005', 'RESULT-0006', 'RESULT-0007', 'RESULT-0008',
-  'RESULT-0009', 'RESULT-0010', 'RESULT-0011', 'RESULT-0012', 'RESULT-0013', 'RESULT-0014',
-  'RESULT-0016', 'RESULT-0017', 'RESULT-0018', 'RESULT-0020', 'RESULT-0021', 'RESULT-0024',
-  'RESULT-0025', 'RESULT-0026', 'RESULT-0027', 'RESULT-0028', 'RESULT-0031', 'RESULT-0032',
-  'RESULT-0033', 'RESULT-0034', 'RESULT-0035', 'RESULT-0041', 'RESULT-0043', 'RESULT-0048',
-  'DECISION-0002', 'DECISION-0003', 'DECISION-0004', 'DECISION-0005', 'DECISION-0006',
-  'CORRECTION-0001', 'CORRECTION-0002', 'CORRECTION-0003', 'CORRECTION-0004', 'CORRECTION-0005',
-  'CORRECTION-0006', 'CORRECTION-0007', 'CORRECTION-0008', 'CORRECTION-0009',
-]);
-// Superseded, provisional, or open then: exempt until promoted.
-const UNACCEPTED_AT_LANDING = new Set([
-  'FACT-0003', 'FACT-0004', 'RESULT-0015', 'RESULT-0029', 'RESULT-0030', 'RESULT-0036',
-  'RESULT-0037', 'RESULT-0038', 'RESULT-0042', 'DECISION-0001', 'HYPOTHESIS-0001',
-  'HYPOTHESIS-0002', 'QUESTION-0001', 'QUESTION-0002', 'QUESTION-0003',
-]);
 const NEEDS_CHECKER = ['accepted', 'narrowed'];
-// A legacy record keeps its exemption only while its claim and evidence are
-// unchanged: title, statement or question, scope, proof_class, evidence, and
-// reverify as they stood at landing.
-// Status and link fields may still move, as the correction process requires.
-const { pins: LEGACY_PINS } = require('./ledger-legacy-pins.json');
+const RETIRED = ['superseded', 'stale', 'rejected'];
+const MOVABLE = /^- \*\*(status|superseded_by|updated):\*\*/;
 
+// Hash of the whole record except the three fields a correction may move.
 function contentPin(record) {
-  const f = record.fields;
-  return crypto.createHash('sha256')
-    .update(JSON.stringify([record.title, f.statement || f.question || '', f.scope || '', f.proof_class || '',
-      f.evidence || '', f.reverify || '']))
-    .digest('hex').slice(0, 16);
+  const body = record.lines.filter((l) => !MOVABLE.test(l)).map((l) => l.trimEnd());
+  while (body.length && body[body.length - 1] === '') body.pop();
+  return crypto.createHash('sha256').update(JSON.stringify([record.title, body])).digest('hex').slice(0, 16);
+}
+
+function landingEntry(record) {
+  return {
+    pin: contentPin(record),
+    status: record.fields.status || '',
+    superseded_by: record.fields.superseded_by || '',
+    updated: record.fields.updated || '',
+  };
 }
 
 function isExempt(record) {
-  if (LEGACY_PINS[record.id] !== contentPin(record)) return false;
-  if (ACCEPTED_AT_LANDING.has(record.id)) return true;
-  return UNACCEPTED_AT_LANDING.has(record.id) && !NEEDS_CHECKER.includes(record.fields.status);
+  const then = LANDING[record.id];
+  if (!then) return false;
+  const now = landingEntry(record);
+  if (now.pin !== then.pin) return false;
+  if (now.status === then.status) {
+    return now.superseded_by === then.superseded_by && now.updated === then.updated;
+  }
+  return RETIRED.includes(now.status);
 }
 
 function normalized(name) {
@@ -67,15 +64,13 @@ function normalized(name) {
 
 function assessAuthorship(records) {
   const problems = [];
-  const seen = new Set();
-  for (const r of records) {
-    if (seen.has(r.id)) {
-      problems.push(`${r.id}: appears more than once. IDs are never reused; give the new record the next free ID.`);
-    }
-    seen.add(r.id);
+  const counts = new Map();
+  for (const r of records) counts.set(r.id, (counts.get(r.id) || 0) + 1);
+  for (const [id, n] of counts) {
+    if (n > 1) problems.push(`${id}: appears more than once. IDs are never reused; give the new record the next free ID.`);
   }
   for (const r of records) {
-    if (isExempt(r) && records.filter((x) => x.id === r.id).length === 1) continue;
+    if (counts.get(r.id) === 1 && isExempt(r)) continue;
     const writer = normalized(r.fields.written_by);
     const checker = normalized(r.fields.checked_by);
     if (!writer) {
@@ -104,4 +99,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { contentPin, ACCEPTED_AT_LANDING, UNACCEPTED_AT_LANDING, assessAuthorship, isExempt };
+module.exports = { assessAuthorship, contentPin, isExempt, landingEntry };

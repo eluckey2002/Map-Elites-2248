@@ -27,12 +27,13 @@ function parseLedgerRecords(text) {
     const heading = /^### ([A-Z]+)-(\d{4})\s*[—–-]\s*(.*)$/.exec(line);
     if (heading) {
       current = { id: `${heading[1]}-${heading[2]}`, prefix: heading[1], number: Number(heading[2]),
-        title: heading[3].trim(), line: i + 1, fields: {} };
+        title: heading[3].trim(), line: i + 1, fields: {}, lines: [] };
       records.push(current);
       return;
     }
     if (/^#{2,3} /.test(line)) { current = null; return; }
     if (!current) return;
+    current.lines.push(line);
     const field = /^- \*\*([a-z_]+):\*\*\s*(.*)$/.exec(line);
     if (field) current.fields[field[1]] = field[1] === 'status' ? field[2].replace(/`/g, '').trim().toLowerCase() : field[2].trim();
   });

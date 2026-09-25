@@ -126,15 +126,50 @@ test('the committed index matches the live ledger', () => {
   assert.match(out, /LEDGER INDEX CURRENT/);
 });
 
-test('a legacy record whose claim was rewritten loses its exemption', () => {
-  const fs = require('node:fs');
-  const live = parseLedgerRecords(fs.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8'));
-  const original = live.find((r) => r.id === 'RESULT-0001');
-  assert.deepEqual(assessAuthorship([original]), []);
-  const rewritten = { ...original, fields: { ...original.fields, statement: 'A different claim.' } };
-  assert.match(assessAuthorship([rewritten]).join('\n'), /no written_by/);
-  const reevidenced = { ...original, fields: { ...original.fields, evidence: 'a different receipt' } };
-  assert.match(assessAuthorship([reevidenced]).join('\n'), /no written_by/);
-  const restatused = { ...original, fields: { ...original.fields, status: 'superseded', superseded_by: '[CORRECTION-0010]' } };
-  assert.deepEqual(assessAuthorship([restatused]), []);
+// Edit one `- **field:** value` line of a live legacy record, as a real ledger edit would.
+function edited(id, field, value) {
+  const text = require('node:fs').readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
+  const start = text.indexOf(`### ${id} — `);
+  const end = text.indexOf('\n### ', start + 1);
+  const block = text.slice(start, end).replace(new RegExp(`^- \\*\\*${field}:\\*\\*.*$`, 'm'), `- **${field}:** ${value}`);
+  return parseLedgerRecords(block)[0];
+}
+
+test('an unchanged legacy record stays exempt', () => {
+  assert.deepEqual(assessAuthorship([liveRecord('RESULT-0001')]), []);
+});
+
+for (const [field, value] of [
+  ['statement', 'A different claim.'],
+  ['evidence', 'a different receipt'],
+  ['as_of', '2026-09-25'],
+  ['reverify', 'Run `node other.js`.'],
+]) {
+  test(`a legacy record whose ${field} changed loses its exemption`, () => {
+    assert.match(assessAuthorship([edited('RESULT-0001', field, value)]).join('\n'), /no written_by/);
+  });
+}
+
+test('a line added to a legacy record removes its exemption', () => {
+  const record = liveRecord('RESULT-0001');
+  const added = parseLedgerRecords([`### RESULT-0001 — ${record.title}`, ...record.lines, '- **notes:** an added note'].join('\n'))[0];
+  assert.match(assessAuthorship([added]).join('\n'), /no written_by/);
+});
+
+test('a legacy record restamped with a new updated date loses its exemption', () => {
+  assert.match(assessAuthorship([edited('RESULT-0001', 'updated', '2026-09-25')]).join('\n'), /no written_by/);
+});
+
+test('an accepted legacy record newly narrowed needs a checker', () => {
+  assert.match(assessAuthorship([edited('RESULT-0001', 'status', 'narrowed')]).join('\n'), /no checked_by/);
+});
+
+test('retiring a legacy record through a correction keeps its exemption', () => {
+  const text = require('node:fs').readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
+  const start = text.indexOf('### RESULT-0001 — ');
+  const block = text.slice(start, text.indexOf('\n### ', start + 1))
+    .replace(/^- \*\*status:\*\*.*$/m, '- **status:** superseded')
+    .replace(/^- \*\*superseded_by:\*\*.*$/m, '- **superseded_by:** [CORRECTION-0010]')
+    .replace(/^- \*\*updated:\*\*.*$/m, '- **updated:** 2026-09-26');
+  assert.deepEqual(assessAuthorship(parseLedgerRecords(block)), []);
 });
