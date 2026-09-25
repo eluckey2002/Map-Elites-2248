@@ -13,7 +13,9 @@ Each line here is a fact you can check in a minute. Check it rather than trust i
 - **`node solver/board-trace.js`** renders a recorded game as text boards with both players' chains drawn on the same position. Chain-value strings hide where the tiles are, which is the thing this game is about.
 - **`play-sessions/` is not the evidence corpus.** `tools/play-server.js` captures ordinary play there, bound to a level and a seed. `recordings/` holds receipted candidate evidence bound to a candidate identity; mixing them puts unresolvable entries where candidate resolution is expected.
 
-Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) before substantive reasoning about game rules, solver results, score feasibility, or experiment status. Use the ledger for current project status and follow its citations to primary repository evidence for factual support.
+Read [LEDGER-INDEX.md](LEDGER-INDEX.md) before substantive reasoning about game rules, solver results, score feasibility, or experiment status. It lists every ledger record's standing in one line. Then open the relevant records in [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at their listed lines; the ledger, not the index, is the authority for current status, and its citations lead to the primary repository evidence. The index is generated: after changing the ledger, run `node tools/ledger-index.js` and commit both files.
+
+You may write a ledger record; you may not accept your own. Every new record names `written_by` (your agent or session). A record reaches `accepted` or `narrowed` only when `checked_by` names a different agent, a script run, or the owner who actually checked it. Until then it stays `provisional`. The gate is `tools/verify-ledger-authorship.js`.
 
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
 
