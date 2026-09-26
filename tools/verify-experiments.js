@@ -498,7 +498,11 @@ function assessLedgerStructure(text) {
   const records = [];
   let current = null;
   for (const line of text.split('\n')) {
-    const heading = /^### ([A-Z]+)-(\d+)\b/.exec(line);
+    // A near-miss heading would silently drop the whole record from checking.
+    if (/^#{1,6}\s*[A-Za-z]+-\d+/i.test(line) && !/^### [A-Z]+-\d{4}\b/.test(line)) {
+      problems.push(`malformed record heading: ${line.trim()}`);
+    }
+    const heading = /^### ([A-Z]+)-(\d{4})\b/.exec(line);
     if (heading) {
       current = { id: `${heading[1]}-${heading[2]}`, prefix: heading[1], body: [] };
       records.push(current);
@@ -515,8 +519,10 @@ function assessLedgerStructure(text) {
     seen.add(id);
     const text = body.join('\n');
     const field = (name) => {
-      const m = new RegExp(`^- \\*\\*${name}:\\*\\*\\s*(.*)$`, 'm').exec(text);
-      return m ? m[1].trim() : null;
+      const all = [...text.matchAll(new RegExp(`^- \\*\\*${name}:\\*\\*[ \\t]*(.*)$`, 'gm'))];
+      if (all.length > 1) problems.push(`${id}: field ${name} appears ${all.length} times`);
+      const value = all.length ? all[0][1].trim() : '';
+      return value === '' ? null : value;
     };
     const expectedType = TYPE_OF_PREFIX[prefix];
     if (!expectedType) { problems.push(`${id}: unknown record type prefix ${prefix}`); continue; }
@@ -528,6 +534,12 @@ function assessLedgerStructure(text) {
     if (type !== null && type !== expectedType) problems.push(`${id}: type ${type} does not match its ID prefix (${expectedType})`);
     const status = field('status');
     if (status !== null && !STATUSES.has(status)) problems.push(`${id}: status ${status} is not in the status vocabulary`);
+    const asOf = field('as_of');
+    if (asOf !== null && !/^`?(\d{4}-\d{2}-\d{2}|not_time_sensitive)\b/.test(asOf)) problems.push(`${id}: as_of ${asOf} is not a date or not_time_sensitive`);
+    const supersededBy = field('superseded_by');
+    if (status === 'superseded' && (supersededBy === null || /^`?\[\s*\]`?$/.test(supersededBy))) {
+      problems.push(`${id}: status superseded but superseded_by is empty`);
+    }
     const proofClass = field('proof_class');
     if (proofClass !== null) {
       const tokens = [...proofClass.matchAll(/`([^`]+)`/g)].map((m) => m[1])

@@ -71,3 +71,4 @@ closes the most gaps).
   mechanizability pending).
 - 2026-09-26: Mechanizability audit added F9–F12; F10 spot-checked.
 - 2026-09-26: Owner decided F10: add `replayed_upper_bound` to the allowed proof classes (done in the ledger's class table and entry template).
+- 2026-09-26: F9 built (`11bd925`) and hardened after an independent mutation audit: kill rate 16/27 -> 26/27, no false positives on the real ledger or 4 legitimate variants. Known survivor: a bad class written in prose without backticks beside a good backticked one (scanning bare snake_case risks false positives).

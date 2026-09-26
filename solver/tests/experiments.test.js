@@ -566,6 +566,15 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     ['missing evidence', good('RESULT-9001', { evidence: null })],
     ['type not matching prefix', good('FACT-9001', { type: 'result' })],
     ['unknown prefix', good('CLAIM-9001')],
+    ['h2 heading', good('RESULT-9001').replace('### ', '## ')],
+    ['h4 heading', good('RESULT-9001').replace('### ', '#### ')],
+    ['lowercase heading', good('RESULT-9001').replace('RESULT', 'result')],
+    ['heading without space', good('RESULT-9001').replace('### ', '###')],
+    ['short ID', good('RESULT-91')],
+    ['empty evidence', good('RESULT-9001', { evidence: '' })],
+    ['status written twice', `${good()}\n- **status:** confirmed`],
+    ['superseded without link', good('RESULT-9001', { status: 'superseded' })],
+    ['free-text as_of', good('RESULT-9001', { as_of: 'yesterday' })],
   ]) {
     test(`structure check rejects: ${name}`, () => {
       assert.notDeepEqual(assessLedgerStructure(`${real}\n${rec}\n`), []);
