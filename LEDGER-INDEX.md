@@ -335,21 +335,21 @@ The registered run closed with primary outcome **`ISLANDS_SUFFICIENT`**. The blu
 
 *Proof class:* `direct_source` for frozen identities, counts, pairing, artifact verification, and executable closure; `heuristic_observation` for persistence and conversion behavior under the registered deterministic screening policy.
 
-### RESULT-0049 — A 120-mutation MAP-Elites archive on re-calibrated axes occupies 24 of 25 cells without changing the champion
+### RESULT-0049 — A 120-mutation MAP-Elites archive on re-calibrated axes occupies 24 of 25 cells without replacing the `52f500c` champion
 
 **accepted**
 
-The archive file contains **24 occupied cells** of 25, 60 archive replacements over 120 evaluated mutants, and three representatives whose recorded holdout lifts are all negative: `896748efe7b5` at cell `4,2` (screen lift +2.18%, holdout lift **-2.22%** over 288 holdout games), `7e8b57682e93` (-31.61%), and `0873a5b8c4e2` (-31.11%). No representative has positive holdout lift, so none meets the stronger-policy rule and the champion is unchanged. Because the axes differ from `RESULT-0017`'s, the 24 cells are **not** comparable cell-for-cell with that record's 20.
+The archive file contains **24 occupied cells** of 25, 60 archive replacements over 120 evaluated mutants, and three representatives whose recorded holdout lifts are all negative: `896748efe7b5` at cell `4,2` (screen lift +2.18%, holdout lift **-2.22%** over 288 holdout games), `7e8b57682e93` (-31.61%), and `0873a5b8c4e2` (-31.11%). No representative has positive holdout lift against the then-champion `52f500c` (since superseded by `DECISION-0004`), so none meets the stronger-policy rule (positive holdout lift and t > 3, stated in `.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md`) and that champion was not replaced. Because the axes differ from `RESULT-0017`'s, the 24 cells are **not** comparable cell-for-cell with that record's 20.
 
-*Proof class:* `direct_source` — the counts, identities, and recorded lifts are what the archive file literally contains. No generalizing claim is made; there was no preregistered protocol.
+*Proof class:* `direct_source` — the counts, identities, and recorded lifts are what the archive file literally contains; the promotion rule is quoted from the run's measurement file cited in the statement. No generalizing claim is made; there was no preregistered protocol.
 
-### RESULT-0050 — On `RESULT-0017`'s exact axes with fresh seeds, a 120-mutation MAP-Elites archive occupies 23 of 25 cells without changing the champion
+### RESULT-0050 — On `RESULT-0017`'s exact axes with fresh seeds, a 120-mutation MAP-Elites archive occupies 23 of 25 cells without replacing the `52f500c` champion
 
 **accepted**
 
-The archive's chain-style and patience axis objects are identical to those of the `RESULT-0017` archive, and its screen and holdout seeds are disjoint from each other and from both earlier archives. On those shared coordinates it occupies **23 of 25 cells** versus the original's 20: 19 cells shared, four newly occupied (`1,1`, `1,3`, `2,0`, `3,1`), one no longer occupied (`2,4`). It records 52 replacements over 120 evaluated mutants. The top screened elite `e7349b8a477a` at cell `4,1` has screen lift **+0.73%** and holdout lift **-1.47%** over 288 holdout games; the other two representatives record -28.26% (`d4dee742cedd`) and -27.92% (`0b207fb85a0f`). No representative has positive holdout lift; the champion is unchanged.
+The archive's chain-style and patience axis objects are identical to those of the `RESULT-0017` archive, and its screen and holdout seeds are disjoint from each other and from both earlier archives. On those shared coordinates it occupies **23 of 25 cells** versus the original's 20: 19 cells shared, four newly occupied (`1,1`, `1,3`, `2,0`, `3,1`), one no longer occupied (`2,4`). It records 52 replacements over 120 evaluated mutants. The top screened elite `e7349b8a477a` at cell `4,1` has screen lift **+0.73%** and holdout lift **-1.47%** over 288 holdout games; the other two representatives record -28.26% (`d4dee742cedd`) and -27.92% (`0b207fb85a0f`). No representative has positive holdout lift against the then-champion `52f500c` (since superseded by `DECISION-0004`), so under the same stronger-policy rule that champion was not replaced.
 
-*Proof class:* `direct_source` — axes equality, seed disjointness, cell counts, and recorded lifts are read directly from the two archive files. No generalizing claim is made; there was no preregistered protocol.
+*Proof class:* `direct_source` — axes equality, seed disjointness, cell counts, and recorded lifts are read directly from the two archive files; the promotion rule is quoted from the run's measurement file cited in the statement. No generalizing claim is made; there was no preregistered protocol.
 
 ### DECISION-0002 — Park the exact-proof track; tune levels from measured calibration
 
