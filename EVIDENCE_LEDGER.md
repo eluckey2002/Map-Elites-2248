@@ -564,7 +564,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0017 — A bounded MAP-Elites run finds 20 distinct behavior cells without changing the champion
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** isolated `map-elites-learning` experiment at champion commit `52f500c`; 11-policy descriptor pilot, 48 archive iterations, six fixed screen cases with six seeds each, and twelve disjoint holdout cases with twelve seeds each for three representative elites; no level, target, receipt, authoring path, or champion file changed
 - **statement:** The two proposed behavior descriptors are usable for this bounded learning experiment rather than collapsing to one value. The pilot's mean-chain-length range is **2.4327 tiles** (9.7917 to 12.2244), above the preregistered 0.15 minimum, and its late-score-share range is **0.1089** (0.2758 to 0.3847), above the preregistered 0.02 minimum. The deterministic 5x5 MAP-Elites archive occupies **20 of 25 cells**, spanning all five bins on both axes, and retains the best screened policy independently inside each occupied cell. Three replayable representatives expose distinct styles: `a61e8b8e23b7` at cell `4,2` (12.61 mean-chain length, 32.9% late-score share, +3.30% screen lift, **-3.57% disjoint holdout lift**); `4cbec6509c34` at `0,0` (10.13, 27.9%, -35.07%, -36.55%); and `ebeb9e326a01` at `2,4` (11.24, 37.6%, -14.91%, -11.93%). The first representative is also a concrete winner's-curse lesson: it looked 3.30% better on the cases that selected it but 3.57% worse on unseen holdout cases. This is evidence of behavior diversity and honest selection/holdout separation, **not** evidence that any discovered policy is a stronger replacement champion.
 - **evidence:** `solver/map-elites-output/archive.json` SHA-256 `11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c`; `solver/map-elites-output/map.html` SHA-256 `c1e27d78431f64e4378c286bc6a3cb1882db131573f1aa0cbba357174a692b1a`; producer `solver/map-elites.js`; independent checker `solver/verify-map-elites.js`; public-seam tests `solver/tests/mapElites.test.js` and `solver/tests/policy-eval.test.js`; rendered browser inspection of the generated 25-cell grid; durable execution record `.orch/tickets/2026-08-22-map-elites-learning/T-001.md`.
@@ -573,7 +573,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run the documented fixed command in `solver/README.md`, then `node solver/verify-map-elites.js solver/map-elites-output`; expect 20 occupied cells across five chain bins and five patience bins, three exact representative replays, and unchanged champion/authoring hashes. Run the focused 83-test command recorded in ticket T-001.
 - **updated:** 2026-08-22
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** The archive axes are calibrated from the bounded pilot and may clip policies outside that pilot's observed range. The experiment explores the existing parameter seam only; it does not learn a value function, add search depth, or discover new policy structure. The full solver suite remains 193/196 because of the same three pre-existing receipt-identity failures named in `RESULT-0016`; no receipt was refreshed or weakened.
 
 ### RESULT-0018 — A target-aware finish rule extracted from human Level 51 play generalizes across all shipped levels
@@ -609,7 +609,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0021 — Structural level ranking is stable across disjoint seed samples
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** all 53 shipped levels under the current reference policy and evaluator; disjoint seed ranges 30,000,000–30,000,059 and 31,000,000–31,000,059; 60 games per level per range, 6,360 games total; terminal achievable score before target stopping; registered protocol and frozen source identities
 - **statement:** Across the two predeclared 60-game samples, the 53 per-level mean scores correlate at **r = 0.99942855**. The one-way random-effects between-candidate variance component is **2,481,397,518.78**, pooled within-level seed variance is **84,459,875.41**, and between/within is **29.3796x**, yielding estimated single-seed reliability **0.967083**. Both predeclared support thresholds cleared. The same production check passed the real subject, failed a controlled twin whose sample-B candidate assignments were reversed, drove the exact production batch to selection only under the valid verdict, and invalidated on a covered evaluator identity change. Repeated human plays are therefore **not supported as necessary for seed-noise control** in candidate differentiation. This does not decide whether human qualitative play is needed. The older `r = 0.98` sentence remains provenance-inconclusive: its introducing commit changed only `HANDOFF.md`, and no original measurement artifact or seed ranges were found.
 - **evidence:** protocol `experiments/RESULT-0021/protocol.md` registered at commit `e63f83c70ad1cf0725237e37f82d41491676d778`, a strict ancestor of measurement commit `0acfb6b191a3c8f3633533fa3f36893a694d4516`; report `experiments/RESULT-0021/report.md`; canonical admission receipt `experiments/RESULT-0021/admission.json`, identity `aae5beca8a054b5d495e62f3da6c9d689a41ec2c2496200ff6382f4b61518549`, binding measurement artifact identity `73dfd91b04229cfcd2c60b4482f443ea73b9fa5a865cac9d170980b724f6710e`, challenge bundle identity `c099d3a38caa989253bda46f67b6d634ec491255e54292d25b9c38000158af3d`, and challenge receipt identity `95d4552269c15c8ff8f61631c3c5c03b930071a93da59673fe77e03490d2ce86`.
@@ -618,13 +618,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0021/verify.js`, `node tools/verify-experiments.js`, and `node --test solver/tests/generateLevels.test.js solver/tests/levelAuthor.test.js solver/tests/seedVariance.test.js solver/tests/experiments.test.js`. Expect challenge receipt `95d45522…`, experiment gate PASS, and 43/43 focused tests. The full suite remains 280/284 with the same three stale-receipt failures and one unrelated root-worktree state failure.
 - **updated:** 2026-09-01
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** The current `r = 0.99943` is a new registered result, not evidence for the exact historical `r = 0.98`. Human repetition may still be appropriate for learning, fun, frustration, strategy discovery, or reliability of subjective judgments; this result removes only seed averaging as an independently supported requirement.
 
 ### RESULT-0024 — The repaired topology-response study is entitled but inconclusive
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** four fixed policy identities on open, one-center-stone, and two-adjacent-center-stone 4x8 layouts; 48 control seeds and 200 fresh confirmation seeds `23000000..23000199`; exactly 2,400 reportable cells under one evaluator and 24-move budget; protocol, source identities, outcome-only control receipt, and downstream consumption frozen before confirmation
 - **statement:** The valid real control passed with gameplay outcomes differing in all 48 one-stone/two-stone pairs; an outcome-identical twin had zero changed outcomes and failed the same check before confirmation. The confirmation runner consumed that exact qualified receipt. On fresh confirmation seeds, two-stone versus one-stone score responses ranged from **-18.338%** to **-22.071%**, an interaction spread of **0.0373308141** or **3.733 percentage points**. The policies remained behaviorally distinct on the open layout, clearing both style guards, but the most- and least-affected policies changed between fixed seed halves. The predeclared empirical verdict is therefore **`INCONCLUSIVE`**: this exact contrast neither supports nor falsifies a stable five-point policy-by-topology interaction. Aggregate evidence entitlement is **PASS**, but it does not authorize treating this topology response as a MAP-Elites axis or scaling it into OpenEvolve or co-evolution.
 - **evidence:** protocol `experiments/RESULT-0024/protocol.md` registered at commit `e6da102cfbbfb6605bfb1c21c3c7e46a72565002`; report `experiments/RESULT-0024/report.md`; controls identity `aa69b1233176124efc086300c11584eae0820971d1d4c1f0a5d84ca1acbf7bf5`; control-entitlement identity `dabcb1b3e8313b7b1f3fff0c920ca4370623ec92798a1a51217be486f22b40d5`; confirmation identity `77a8d7d623d23d123cf383bd8b080db458574a7ef0a11a148f8291cb04ff84be`; primary verification identity `6634724c54ee448a57c5233d7b758e6fc89cf2eaba3549fc0a8dba75283e9ff6`; independent recomputation identity `049534b508eeedd748cdc57b7e8d40072dfadc1b558bfce91f050dc67d0e6d2c`; challenge receipt identity `e04ae952677fd59c851327329afe92455a8eecd9c2d9b30f7aa5208c362d560a`.
@@ -633,13 +633,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Call `verifyAll` from `experiments/RESULT-0024/verify.js` on the committed controls, control-entitlement, and confirmation artifacts; expect PASS, confirmation `77a8d7d6...`, empirical verdict `INCONCLUSIVE`, interaction spread `0.03733081406203867`, style guard true, and stable ordering false. Run `node --test experiments/RESULT-0024/control-gate.test.js` and `node tools/verify-experiments.js`; expect 4/4 and `EXPERIMENT GATE PASS`.
 - **updated:** 2026-09-02
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** `verification.json` says `ENTITLED` before reading the independent recomputation or final challenge receipt. The report narrows that component field to primary artifact-chain PASS; final entitlement is the report-level join over all six identified artifacts. The frozen component receipt is retained unchanged. The rejected `RESULT-0023` report preserves the predecessor's false-PASS finding and diagnostic arithmetic but is not admitted as its own ledger result; `RESULT-0022` contains only an unused incomplete protocol template and produced no measurement.
 
 ### RESULT-0025 — One owner pilot session replays exactly on its identified subject
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** `HUMAN-PILOT-0001`; one owner, candidate `gen-0008` identity `4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d`, fixed seed `424242`, subject identity `55b57be2805413f2e0466fad8b7272d9ee6caa89ae6e1da674ff0c158a7ff257`, one terminal browser recording; not the shipped Level 53 identity and not a population sample
 - **statement:** The browser-produced recording replays through the headless engine to **164,096 points in 19 moves** with no replay problems. The execution receipt binds the candidate, subject, recording, checker, runtime bundle, and reusable replay challenge receipt. This pilot recording passes the qualified replay predicate; the reusable checker challenge separately passed its real qualification subject and failed a controlled broken twin through that same predicate. The owner attested that the session was personally played with no automated player. This establishes one exact replayable session and nothing about calibration, representativeness, eligibility, ranking, shipping readiness, or a human-performance distribution.
 - **evidence:** execution receipt `pilots/HUMAN-PILOT-0001/execution-receipt.json`, identity `1f45d07cc9a8a2b38493e9f6d022c9549cf60e3c0ba57a057ef5e3ea5d4f89bb`; recording file identity `687dfd7d9bc25a858e50d398830b7b6bb52b697e5364e3b104824047adb3a903`, recording identity `3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b`; reusable replay challenge `pilots/HUMAN-PILOT-0001/replay-challenge.json`, identity `85dbc51d6bef9d89bd96a25f861c9f773070e7f352dee1fa9fb2700f5e4b269c`; owner attestation and disposition `pilots/HUMAN-PILOT-0001/owner-disposition.json`, identity `284c9d4aa6223f965c206714ab5f833a387ac27f7015bc7181223c856a748dfb`.
@@ -648,13 +648,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node tools/human-pilot.js verify-execution` and `node --test solver/tests/humanPilot.test.js solver/tests/recordingReplay.test.js`; expect execution PASS and all focused tests PASS, including real-subject PASS, broken-twin FAIL, and covered-identity invalidation.
 - **updated:** 2026-09-02
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** Candidate labels are batch-local. Use the candidate and subject identities, not bare `gen-0008` or the pilot's presentation level, to refer to this session. The challenge receipt qualifies the reusable checker on its own real recording and broken twin; the execution receipt is the per-invocation application to this pilot's distinct recording.
 
 ### RESULT-0026 — The frozen handmade policy saves moves on average but regresses six wins
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** frozen handmade policy identity `338be26be2b8` versus current reference identity `ec59341e1a98`; levels `5,11,17,23,29,35,41,47,50`; fresh seeds `24000000..24000024`; real shipped move budgets; 450 games forming 225 paired comparisons; one preregistered confirmation
 - **statement:** The qualified comparison gate passed its real burned-seed subject, failed a controlled wrong-outcome twin, failed a covered source-identity twin, and issued Challenge Receipt `56b8b29e...`; the confirmation runner and final admission both consumed that exact receipt. On the fresh registered panel, the handmade policy saved **0.68 effective moves/game** on average (`SE 0.4881769708`, `t 1.392937481`) but won **216/225** games against the reference bot's **222/225**. It converted six reference wins into losses: Level 47 seeds `24000000`, `24000008`, `24000011`, and Level 50 seeds `24000010`, `24000019`, `24000023`. Because the predeclared win non-regression condition fails upon one such pair, the admissible empirical verdict is **`FALSIFIED`**. This frozen policy is not supported for promotion.
 - **evidence:** protocol `experiments/RESULT-0026/protocol.md` registered at commit `3d02387347c7872a2ce6d8052ade46836f6d874b`; report `experiments/RESULT-0026/report.md`; qualification identity `3a30456161b7f1cbbe9005b86a98fc4e50bd5007acaa2e0a873e794c3a4190c5`; Challenge Receipt identity `56b8b29e8acca8c98fd45acd1001a87e20b041405e8b1c630fd371d2498f3ed2`; raw confirmation identity `4a5ce7674faabab4a3b39ee47efb86d8adee93cf73c7cd2c65b8440b58b7d90b`; independent recomputation identity `8f9916dcd88e27d4220dc3964da19eb7617bc74a2113aae527cf31139b06760e`; downstream admission identity `95604ad0bcf98dcecc33692c89b36e6444faa368b817a09587fa5b6ae50fbc7f`.
@@ -663,7 +663,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node --test experiments/RESULT-0026/policy-comparison-gate.test.js` and `node tools/verify-experiments.js`; expect all focused tests and the experiment gate to pass. Regenerate the arithmetic with `node experiments/RESULT-0026/recompute.js --confirmation experiments/RESULT-0026/confirmation.json --out /private/tmp/result-0026-recomputation.json`; expect identity `8f9916dc...` and verdict `FALSIFIED`. Run `node experiments/RESULT-0026/admit.js --confirmation experiments/RESULT-0026/confirmation.json --qualification experiments/RESULT-0026/qualification.json --challenge-receipt experiments/RESULT-0026/challenge-receipt.json --independent experiments/RESULT-0026/recomputation.json --out /private/tmp/result-0026-admission.json`; expect `ADMITTED FALSIFIED` and identity `95604ad0...`. Do not rerun confirmation.
 - **updated:** 2026-09-02
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** The earlier sandbox `+0.72` estimate remains retrospective discovery, not confirmation. RESULT-0026's `+0.68` mean does not rescue the combined claim because P2 was frozen as a hard safety condition. A repaired policy is a new subject requiring a new protocol and fresh evidence.
 
 ### RESULT-0027 — Level authoring now uses a frozen evaluator without changing the shipped game
@@ -1297,6 +1297,26 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0031, RESULT-0032, RESULT-0033, RESULT-0034, RESULT-0035, RESULT-0043, RESULT-0048]
 - **superseded_by:** []
 - **notes:** Found by the first nightly reverify run (BL-0016 F1). Fifteen other records also failed or timed out that night; each needs its own diagnosis and is listed in BL-0016.
+
+### CORRECTION-0014 — Five results' reverify commands check today's source, not the tree they were admitted at
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` commands of `RESULT-0017`, `RESULT-0021`, `RESULT-0024`, `RESULT-0025`, and `RESULT-0026`; their measurements, dispositions, and proof classes are unchanged
+- **statement:** Narrows those five records. Each recorded `reverify` runs against today's tree, whose protected source has moved, so on 2026-09-26 they fail (`protected file changed: solver/bot.js`; `protocol identity mismatch`; control-gate assertion failure; human-pilot `status FAIL`; `challenge covered source identity changed`). That is a fact about the present tree. Run at the commit that admitted each result, every command passes on 2026-09-26. `RESULT-0021`, `RESULT-0024`, and `RESULT-0026` read git state, so they need a `git worktree` checkout; a `git archive` extract fails them (`not a git repository`; `protocol.md ... is not committed`). `tools/verify-frozen-experiment.js` does not apply (no `corpus.json`).
+- **evidence:** admission commits `be84336` (RESULT-0017), `1e5311e` (RESULT-0021), `6d24d6a` (RESULT-0024, RESULT-0025), `4dc17ad` (RESULT-0026); frozen-tree outputs below.
+- **proof_class:** `direct_source` for the failing current-tree commands and the passing frozen-tree runs
+- **as_of:** 2026-09-26
+- **reverify:** For each pair, `git worktree add --detach <dir> <commit>`, `cd <dir>`, run, then `git worktree remove <dir>`:
+  - `be84336`: `node solver/verify-map-elites.js solver/map-elites-output`; expect three PASS lines, 20 occupied cells, protected champion `52f500c`.
+  - `1e5311e`: `node experiments/RESULT-0021/verify.js`; expect `RESULT-0021 CHALLENGE PASS 95d45522...`.
+  - `6d24d6a`: `node --test experiments/RESULT-0024/control-gate.test.js`; expect 4/4 pass.
+  - `6d24d6a`: `node tools/human-pilot.js verify-execution`; expect `"status": "PASS"`, no problems.
+  - `4dc17ad`: `node --test experiments/RESULT-0026/policy-comparison-gate.test.js`; expect 8/8 pass. Then the recorded `experiments/RESULT-0026/admit.js` command with `--out` to a temp path; expect `ADMITTED FALSIFIED 95604ad0...`.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0017, RESULT-0021, RESULT-0024, RESULT-0025, RESULT-0026]
+- **superseded_by:** []
+- **notes:** Second batch from the nightly reverify run (BL-0016 F1). Only the named commands were rerun; the other commands in each record's reverify (focused suites, `tools/verify-experiments.js`) were not checked here.
 
 ## Assembly cut log
 

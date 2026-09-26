@@ -5,7 +5,7 @@ The short first read of [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md), which remains 
 Each entry gives status, proof class and claim only. Before relying on a record, open it in the
 ledger for its scope, evidence and limits; the ledger header defines every status and proof class.
 
-## Live records (63)
+## Live records (64)
 
 ### FACT-0001 — Chain legality
 
@@ -177,7 +177,9 @@ The owner described a strategy the bot did not play: build tiles a few doublings
 
 ### RESULT-0017 — A bounded MAP-Elites run finds 20 distinct behavior cells without changing the champion
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0014: Five results' reverify commands check today's source, not the tree they were admitted at.
 
 The two proposed behavior descriptors are usable for this bounded learning experiment rather than collapsing to one value. The pilot's mean-chain-length range is **2.4327 tiles** (9.7917 to 12.2244), above the preregistered 0.15 minimum, and its late-score-share range is **0.1089** (0.2758 to 0.3847), above the preregistered 0.02 minimum. The deterministic 5x5 MAP-Elites archive occupies **20 of 25 cells**, spanning all five bins on both axes, and retains the best screened policy independently inside each occupied cell. Three replayable representatives expose distinct styles: `a61e8b8e23b7` at cell `4,2` (12.61 mean-chain length, 32.9% late-score share, +3.30% screen lift, **-3.57% disjoint holdout lift**); `4cbec6509c34` at `0,0` (10.13, 27.9%, -35.07%, -36.55%); and `ebeb9e326a01` at `2,4` (11.24, 37.6%, -14.91%, -11.93%). The first representative is also a concrete winner's-curse lesson: it looked 3.30% better on the cases that selected it but 3.57% worse on unseen holdout cases. This is evidence of behavior diversity and honest selection/holdout separation, **not** evidence that any discovered policy is a stronger replacement champion.
 
@@ -201,7 +203,9 @@ Run under a protocol committed before any game was played, the target-aware imme
 
 ### RESULT-0021 — Structural level ranking is stable across disjoint seed samples
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0014: Five results' reverify commands check today's source, not the tree they were admitted at.
 
 Across the two predeclared 60-game samples, the 53 per-level mean scores correlate at **r = 0.99942855**. The one-way random-effects between-candidate variance component is **2,481,397,518.78**, pooled within-level seed variance is **84,459,875.41**, and between/within is **29.3796x**, yielding estimated single-seed reliability **0.967083**. Both predeclared support thresholds cleared. The same production check passed the real subject, failed a controlled twin whose sample-B candidate assignments were reversed, drove the exact production batch to selection only under the valid verdict, and invalidated on a covered evaluator identity change. Repeated human plays are therefore **not supported as necessary for seed-noise control** in candidate differentiation. This does not decide whether human qualitative play is needed. The older `r = 0.98` sentence remains provenance-inconclusive: its introducing commit changed only `HANDOFF.md`, and no original measurement artifact or seed ranges were found.
 
@@ -209,7 +213,9 @@ Across the two predeclared 60-game samples, the 53 per-level mean scores correla
 
 ### RESULT-0024 — The repaired topology-response study is entitled but inconclusive
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0014: Five results' reverify commands check today's source, not the tree they were admitted at.
 
 The valid real control passed with gameplay outcomes differing in all 48 one-stone/two-stone pairs; an outcome-identical twin had zero changed outcomes and failed the same check before confirmation. The confirmation runner consumed that exact qualified receipt. On fresh confirmation seeds, two-stone versus one-stone score responses ranged from **-18.338%** to **-22.071%**, an interaction spread of **0.0373308141** or **3.733 percentage points**. The policies remained behaviorally distinct on the open layout, clearing both style guards, but the most- and least-affected policies changed between fixed seed halves. The predeclared empirical verdict is therefore **`INCONCLUSIVE`**: this exact contrast neither supports nor falsifies a stable five-point policy-by-topology interaction. Aggregate evidence entitlement is **PASS**, but it does not authorize treating this topology response as a MAP-Elites axis or scaling it into OpenEvolve or co-evolution.
 
@@ -217,7 +223,9 @@ The valid real control passed with gameplay outcomes differing in all 48 one-sto
 
 ### RESULT-0025 — One owner pilot session replays exactly on its identified subject
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0014: Five results' reverify commands check today's source, not the tree they were admitted at.
 
 The browser-produced recording replays through the headless engine to **164,096 points in 19 moves** with no replay problems. The execution receipt binds the candidate, subject, recording, checker, runtime bundle, and reusable replay challenge receipt. This pilot recording passes the qualified replay predicate; the reusable checker challenge separately passed its real qualification subject and failed a controlled broken twin through that same predicate. The owner attested that the session was personally played with no automated player. This establishes one exact replayable session and nothing about calibration, representativeness, eligibility, ranking, shipping readiness, or a human-performance distribution.
 
@@ -225,7 +233,9 @@ The browser-produced recording replays through the headless engine to **164,096 
 
 ### RESULT-0026 — The frozen handmade policy saves moves on average but regresses six wins
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0014: Five results' reverify commands check today's source, not the tree they were admitted at.
 
 The qualified comparison gate passed its real burned-seed subject, failed a controlled wrong-outcome twin, failed a covered source-identity twin, and issued Challenge Receipt `56b8b29e...`; the confirmation runner and final admission both consumed that exact receipt. On the fresh registered panel, the handmade policy saved **0.68 effective moves/game** on average (`SE 0.4881769708`, `t 1.392937481`) but won **216/225** games against the reference bot's **222/225**. It converted six reference wins into losses: Level 47 seeds `24000000`, `24000008`, `24000011`, and Level 50 seeds `24000010`, `24000019`, `24000023`. Because the predeclared win non-regression condition fails upon one such pair, the admissible empirical verdict is **`FALSIFIED`**. This frozen policy is not supported for promotion.
 
@@ -536,6 +546,14 @@ Narrows `DECISION-0004`. The commit it cites as the immutable home of `RESULT-00
 Narrows those seven records. Each recorded `reverify` runs the experiment's own `verify.js` against today's source, which has moved since the run, so on 2026-09-26 all seven returned `FAIL: source identity closure mismatch`. That is a fact about the present tree, not the evidence. Run against each result's frozen tree with `tools/verify-frozen-experiment.js`, all seven exit 0 on 2026-09-26. The results stand; their reverify command is the frozen one below.
 
 *Proof class:* `direct_source` for the failing current-tree commands and the passing frozen-tree verifications
+
+### CORRECTION-0014 — Five results' reverify commands check today's source, not the tree they were admitted at
+
+**accepted**
+
+Narrows those five records. Each recorded `reverify` runs against today's tree, whose protected source has moved, so on 2026-09-26 they fail (`protected file changed: solver/bot.js`; `protocol identity mismatch`; control-gate assertion failure; human-pilot `status FAIL`; `challenge covered source identity changed`). That is a fact about the present tree. Run at the commit that admitted each result, every command passes on 2026-09-26. `RESULT-0021`, `RESULT-0024`, and `RESULT-0026` read git state, so they need a `git worktree` checkout; a `git archive` extract fails them (`not a git repository`; `protocol.md ... is not committed`). `tools/verify-frozen-experiment.js` does not apply (no `corpus.json`).
+
+*Proof class:* `direct_source` for the failing current-tree commands and the passing frozen-tree runs
 
 ## Closed records (9)
 
