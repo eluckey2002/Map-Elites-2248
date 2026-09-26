@@ -7,10 +7,24 @@ const { identity, serialize, validateCandidate } = require('./level-author');
 
 const ROOT = path.join(__dirname, '..');
 const MAX_BODY_BYTES = 256 * 1024;
+
+function staticFile(route, type, source = route) {
+  return [route, { file: path.join(ROOT, 'src', source.slice(1)), type }];
+}
+
 const STATIC_FILES = new Map([
-  ['/', { file: path.join(ROOT, 'src', 'index.html'), type: 'text/html; charset=utf-8' }],
-  ['/index.html', { file: path.join(ROOT, 'src', 'index.html'), type: 'text/html; charset=utf-8' }],
-  ['/game.js', { file: path.join(ROOT, 'src', 'game.js'), type: 'text/javascript; charset=utf-8' }],
+  staticFile('/', 'text/html; charset=utf-8', '/index.html'),
+  staticFile('/index.html', 'text/html; charset=utf-8'),
+  staticFile('/game.js', 'text/javascript; charset=utf-8'),
+  staticFile('/keeper-motion-prototype.css', 'text/css; charset=utf-8'),
+  staticFile('/keeper-motion-prototype.js', 'text/javascript; charset=utf-8'),
+  staticFile('/assets/keeper-alchemy-lab.png', 'image/png'),
+  staticFile('/assets/keeper-material-elements-v5.png', 'image/png'),
+  staticFile('/assets/keeper-material-compound-v4.png', 'image/png'),
+  staticFile('/assets/keeper-material-crystal-v6.png', 'image/png'),
+  staticFile('/assets/keeper-material-essence-v5.png', 'image/png'),
+  staticFile('/assets/keeper-material-4096-v3.png', 'image/png'),
+  staticFile('/assets/keeper-material-8192-v3.png', 'image/png'),
 ]);
 
 function readJson(file) {

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nemesis — beat the bot</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  html { background: #1a1a2e; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff; min-height: 100vh;
+  }
+  main { max-width: 560px; margin: 0 auto; padding: 24px 16px; }
+  h1 { font-size: 28px; letter-spacing: 0.02em; }
+  .sub { color: #a9b3d1; margin: 6px 0 20px; line-height: 1.4; }
+  .tally { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .pill { padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 14px; background: rgba(255,255,255,0.08); }
+  .pill.open { color: #ff9f7a; } .pill.tie { color: #ffd479; } .pill.beat { color: #7be0a4; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: #a9b3d1; margin: 18px 0 8px; }
+  .row {
+    display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px;
+    padding: 12px 14px; margin-bottom: 8px; border-radius: 12px;
+    background: rgba(255,255,255,0.06); border-left: 4px solid transparent;
+  }
+  .row.open { border-left-color: #ff9f7a; } .row.tie { border-left-color: #ffd479; } .row.beat { border-left-color: #7be0a4; }
+  .name { font-weight: 700; }
+  .meta { color: #a9b3d1; font-size: 14px; margin-top: 3px; }
+  .meta b { color: #fff; }
+  button {
+    font: inherit; font-weight: 700; border: 0; border-radius: 10px; cursor: pointer;
+    padding: 10px 16px; background: #e94560; color: #fff; min-height: 44px;
+  }
+  button.quiet { background: rgba(255,255,255,0.12); }
+  .status { color: #a9b3d1; padding: 24px 0; }
+  #play { display: flex; flex-direction: column; height: 100vh; }
+  .banner {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 10px 16px; background: rgba(0,0,0,0.35); border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .banner .goal { flex: 1; min-width: 200px; line-height: 1.35; }
+  .banner .big { font-size: 18px; font-weight: 800; }
+  .result { padding: 8px 16px; font-weight: 700; }
+  .result.beat { background: #1f6f47; } .result.tie { background: #7a5f12; } .result.loss { background: #7a2335; }
+  iframe { flex: 1; width: 100%; border: 0; }
+</style>
+</head>
+<body>
+<main id="list">
+  <h1>Nemesis</h1>
+  <p class="sub">Every shipped board you've played. The bot's result on the same board is shown before you start. Reach the target in fewer moves to beat it.</p>
+  <div class="tally" id="tally"></div>
+  <div id="boards"><p class="status">Running the bot on your boards… about 10 seconds the first time.</p></div>
+</main>
+
+<section id="play" hidden>
+  <div class="banner">
+    <div class="goal">
+      <div class="big" id="goalBig"></div>
+      <div class="meta" id="goalMeta"></div>
+    </div>
+    <button class="quiet" id="back">All boards</button>
+  </div>
+  <div class="result" id="result" hidden></div>
+  <iframe id="game" title="Game"></iframe>
+</section>
+
+<script>
+const LABEL = { open: 'To beat', tie: 'Tied', beat: 'Beaten' };
+const fmt = (n) => n.toLocaleString('en-US');
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+let poll = null;
+
+function botLine(c) {
+  return c.bot.outcome === 'win' ? `${c.bot.moves} moves` : 'did not reach the target';
+}
+
+function renderList(challenges) {
+  const tally = document.getElementById('tally');
+  const boards = document.getElementById('boards');
+  tally.replaceChildren();
+  boards.replaceChildren();
+  if (!challenges.length) { boards.append(el('p', 'status', 'No played shipped boards yet. Play any level from 50 up, then come back.')); return; }
+  for (const status of ['open', 'tie', 'beat']) {
+    const group = challenges.filter((c) => c.status === status);
+    tally.append(el('span', `pill ${status}`, `${group.length} ${LABEL[status].toLowerCase()}`));
+    if (!group.length) continue;
+    boards.append(el('h2', '', LABEL[status]));
+    for (const c of group) {
+      const row = el('div', `row ${status}`);
+      const info = el('div');
+      info.append(el('div', 'name', `Level ${c.level} · board ${c.seed}`));
+      const meta = el('div', 'meta');
+      meta.append('Bot ', el('b', '', botLine(c)), ' · You ', el('b', '', c.best ? `${c.best.moves} moves` : 'no win yet'), ` · ${c.attempts} ${c.attempts === 1 ? 'try' : 'tries'}`);
+      info.append(meta);
+      const play = el('button', '', status === 'beat' ? 'Replay' : 'Play');
+      play.addEventListener('click', () => startPlay(c));
+      row.append(info, play);
+      boards.append(row);
+    }
+  }
+}
+
+async function loadList() {
+  const response = await fetch('/api/nemesis');
+  const body = await response.json();
+  if (!response.ok) throw new Error(body.error || `HTTP ${response.status}`);
+  renderList(body.challenges);
+}
+
+function showGoal(c) {
+  const goal = c.bot.outcome === 'win'
+    ? (c.bot.moves > 1 ? `Beat it: reach ${fmt(c.target)} in ${c.bot.moves - 1} moves or fewer` : 'Tie it: reach the target in 1 move')
+    : `The bot lost this board. Reach ${fmt(c.target)} to beat it`;
+  document.getElementById('goalBig').textContent = goal;
+  document.getElementById('goalMeta').textContent =
+    `Level ${c.level} · board ${c.seed} · bot: ${c.bot.outcome === 'win' ? `${c.bot.moves} moves (${fmt(c.bot.score)})` : 'lost'}`
+    + ` · your best: ${c.best ? `${c.best.moves} moves` : 'none yet'}`;
+}
+
+function showResult(latest, bot) {
+  const box = document.getElementById('result');
+  const you = latest.outcome === 'win' ? `${latest.moves} moves` : `no win (${fmt(latest.score)} after ${latest.moves} moves)`;
+  const botText = bot.outcome === 'win' ? `${bot.moves} moves` : 'lost';
+  const words = { beat: 'You beat the bot', tie: 'Tie with the bot', loss: 'The bot wins this one' };
+  box.className = `result ${latest.verdict}`;
+  box.textContent = `${words[latest.verdict]} — you: ${you}, bot: ${botText}. Retry keeps the same board.`;
+  box.hidden = false;
+}
+
+function startPlay(c) {
+  document.getElementById('list').hidden = true;
+  document.getElementById('play').hidden = false;
+  document.getElementById('result').hidden = true;
+  showGoal(c);
+  document.getElementById('game').src = `index.html?level=${c.level}&seed=${c.seed}`;
+  let seen = c.attempts;
+  clearInterval(poll);
+  poll = setInterval(async () => {
+    try {
+      const response = await fetch(`/api/nemesis?level=${c.level}&seed=${c.seed}`);
+      if (!response.ok) return;
+      const { challenge } = await response.json();
+      if (challenge.attempts > seen) {
+        seen = challenge.attempts;
+        showGoal(challenge);
+        showResult(challenge.latest, challenge.bot);
+      }
+    } catch { /* the next tick retries */ }
+  }, 2000);
+}
+
+document.getElementById('back').addEventListener('click', () => {
+  clearInterval(poll);
+  document.getElementById('game').src = 'about:blank';
+  document.getElementById('play').hidden = true;
+  document.getElementById('list').hidden = false;
+  loadList().catch(showError);
+});
+
+function showError(error) {
+  document.getElementById('boards').replaceChildren(el('p', 'status', `Could not load boards: ${error.message}. Start the play server with node tools/play-server.js.`));
+}
+
+loadList().catch(showError);
+</script>
+</body>
+</html>
