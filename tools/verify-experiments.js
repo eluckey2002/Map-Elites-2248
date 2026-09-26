@@ -726,6 +726,45 @@ function assessSampleSizeSections(dir = EXPERIMENTS) {
   return problems;
 }
 
+// BL-0016 F2: a run under .orch/runs/ started from 2026-09-27 must end in an
+// outcome file (worklog.md or stop-record.md) with a line
+// `ledger: <RECORD-ID>` naming an existing ledger record, or
+// `ledger: not reportable` with a reason. A finished run whose result never
+// reaches the ledger is lost to the next session. Runs that are still in
+// progress fail too; that is the reminder. Older runs are exempt.
+// Does NOT check that the named record reports this run's result.
+const RUNS = path.join(ROOT, '.orch', 'runs');
+function runStartDate(rel) {
+  try {
+    const dates = execFileSync('git', ['log', '--diff-filter=A', '--format=%cs', '--', rel], {
+      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim().split('\n').filter(Boolean);
+    return dates.length ? dates[dates.length - 1] : null;
+  } catch { return null; }
+}
+function assessRunOutcomes(ledgerText, { runsDir = RUNS, startDate = runStartDate, today = new Date().toISOString().slice(0, 10) } = {}) {
+  const problems = [];
+  if (!fs.existsSync(runsDir)) return problems;
+  const ids = new Set([...ledgerText.matchAll(/^### ([A-Z]+-\d{4})\b/gm)].map((m) => m[1]));
+  for (const name of fs.readdirSync(runsDir)) {
+    const dir = path.join(runsDir, name);
+    if (!fs.statSync(dir).isDirectory()) continue;
+    const started = startDate(path.relative(ROOT, dir)) || today; // uncommitted: new
+    if (started < '2026-09-27') continue;
+    const outcomes = ['worklog.md', 'stop-record.md'].map((f) => path.join(dir, f)).filter((f) => fs.existsSync(f));
+    const lines = outcomes.flatMap((f) => [...fs.readFileSync(f, 'utf8').matchAll(/^ledger:[ \t]*(.+)$/gm)].map((m) => m[1].trim()));
+    if (!lines.length) { problems.push(`.orch/runs/${name}: no \`ledger:\` line in worklog.md or stop-record.md`); continue; }
+    for (const value of lines) {
+      if (/^not reportable\b.{8,}/.test(value)) continue;
+      if (/^not reportable/.test(value)) { problems.push(`.orch/runs/${name}: \`ledger: not reportable\` needs a reason`); continue; }
+      for (const id of value.match(/[A-Z]+-\d{4}/g) || ['(none)']) {
+        if (!ids.has(id)) problems.push(`.orch/runs/${name}: ledger line names ${id}, which is not in the ledger`);
+      }
+    }
+  }
+  return problems;
+}
+
 function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
@@ -733,6 +772,7 @@ function assessExperiments() {
   problems.push(...assessLedgerStructure(ledgerText));
   problems.push(...assessLedgerCitations(ledgerText));
   problems.push(...assessSampleSizeSections());
+  problems.push(...assessRunOutcomes(ledgerText));
   problems.push(...assessLedgerLinks(ledgerText));
   // BL-0016 F5: the generated index must match the ledger it summarizes.
   const { buildIndex } = require('./build-ledger-index.js');
@@ -833,7 +873,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerCitations, assessLedgerHistory, assessSampleSizeSections, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
+  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerCitations, assessLedgerHistory, assessRunOutcomes, assessSampleSizeSections, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,

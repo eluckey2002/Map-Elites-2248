@@ -18,6 +18,8 @@ Read [LEDGER-INDEX.md](LEDGER-INDEX.md) before substantive reasoning about game 
 
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
 
+Every run under `.orch/runs/` started from 2026-09-27 ends with a line `ledger: <RECORD-ID>` or `ledger: not reportable — <reason>` in its `worklog.md` or `stop-record.md`; the experiment gate enforces it, so a finished result cannot go unrecorded.
+
 Outside the ledger, cite a record ID instead of restating its numbers; a restated number drifts when the record is corrected.
 
 Append source-pinned updates using the ledger's record schema. Preserve each proof class exactly: a replayed lower bound, exact result, proven upper bound, heuristic observation, `UNKNOWN`, or unresolved question must not be promoted into another class.

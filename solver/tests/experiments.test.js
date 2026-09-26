@@ -698,3 +698,40 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     });
   }
 }
+
+// Run outcomes reach the ledger (BL-0016 F2).
+{
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const { assessRunOutcomes } = require('../../tools/verify-experiments.js');
+  const ledger = '### RESULT-0031 — x\n';
+  const check = (files, started = '2026-09-28') => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'f2-'));
+    fs.mkdirSync(path.join(dir, 'run'));
+    for (const [f, body] of Object.entries(files)) fs.writeFileSync(path.join(dir, 'run', f), body);
+    return assessRunOutcomes(ledger, { runsDir: dir, startDate: () => started });
+  };
+  test('the real runs pass the outcome check', () => {
+    assert.deepEqual(assessRunOutcomes(fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8')), []);
+  });
+  test('a run naming an existing record passes', () => {
+    assert.deepEqual(check({ 'worklog.md': 'done\nledger: RESULT-0031\n' }), []);
+  });
+  test('a stopped run marked not reportable with a reason passes', () => {
+    assert.deepEqual(check({ 'stop-record.md': 'ledger: not reportable — stopped before any data\n' }), []);
+  });
+  test('an older run needs no ledger line', () => {
+    assert.deepEqual(check({ 'spec.md': 'x' }, '2026-09-01'), []);
+  });
+  for (const [name, files] of [
+    ['no outcome file', { 'spec.md': 'x' }],
+    ['outcome file without a ledger line', { 'worklog.md': 'done\n' }],
+    ['a ledger line naming a missing record', { 'worklog.md': 'ledger: RESULT-9999\n' }],
+    ['not reportable with no reason', { 'worklog.md': 'ledger: not reportable\n' }],
+    ['a ledger line with no ID', { 'worklog.md': 'ledger: see chat\n' }],
+  ]) {
+    test(`outcome check rejects: ${name}`, () => {
+      assert.notDeepEqual(check(files), []);
+    });
+  }
+}
