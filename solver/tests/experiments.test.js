@@ -666,3 +666,35 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     assert.notDeepEqual(assessLedgerLinks(edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')), []);
   });
 }
+
+// Sample size and margin (BL-0016 F6): every protocol on disk, not only ones
+// with a ledger record, and no quoted or blank date slips past the cutoff.
+{
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const { assessSampleSizeSections } = require('../../tools/verify-experiments.js');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'f6-'));
+  const write = (name, registered, body = '') => {
+    fs.mkdirSync(path.join(dir, name), { recursive: true });
+    fs.writeFileSync(path.join(dir, name, 'protocol.md'), `---\nresult: ${name}\n${registered === null ? '' : `registered: ${registered}\n`}---\n\n${body}`);
+  };
+  test('the real experiments pass the sample-size check', () => {
+    assert.deepEqual(assessSampleSizeSections(), []);
+  });
+  test('an old protocol without the section passes', () => {
+    write('RESULT-9100', '2026-09-19T00:00:00Z');
+    assert.deepEqual(assessSampleSizeSections(dir), []);
+  });
+  test('a new protocol with the section passes', () => {
+    write('RESULT-9101', '2026-09-28T00:00:00Z', '## Sample size and margin\n');
+    assert.deepEqual(assessSampleSizeSections(dir), []);
+  });
+  for (const [name, date] of [['new, no section', '2026-09-28T00:00:00Z'], ['quoted date', '"2026-09-28"'], ['blank date', ''], ['missing date', null]]) {
+    test(`sample-size check rejects: ${name}`, () => {
+      const d = fs.mkdtempSync(path.join(os.tmpdir(), 'f6x-'));
+      fs.mkdirSync(path.join(d, 'RESULT-9102'));
+      fs.writeFileSync(path.join(d, 'RESULT-9102', 'protocol.md'), `---\nresult: RESULT-9102\n${date === null ? '' : `registered: ${date}\n`}---\n`);
+      assert.notDeepEqual(assessSampleSizeSections(d), []);
+    });
+  }
+}

@@ -705,12 +705,34 @@ function baseLedgerText() {
   } catch { return null; }
 }
 
+// BL-0016 F6: every protocol on disk, whether or not its ledger record exists
+// yet, registered from 2026-09-27 must state its sample size and margin. A
+// registered date that is missing or not YYYY-MM-DD is itself a problem, so a
+// quoted or blank date cannot slip past the cutoff.
+function assessSampleSizeSections(dir = EXPERIMENTS) {
+  const problems = [];
+  if (!fs.existsSync(dir)) return problems;
+  for (const name of fs.readdirSync(dir)) {
+    const file = path.join(dir, name, 'protocol.md');
+    if (!fs.existsSync(file)) continue;
+    const text = fs.readFileSync(file, 'utf8');
+    const raw = String((parseFrontmatter(text) || {}).registered || '').replace(/^['"]|['"]$/g, '');
+    const date = /^\d{4}-\d{2}-\d{2}/.exec(raw);
+    if (!date) { problems.push(`${name}: protocol registered date "${raw}" is missing or not YYYY-MM-DD`); continue; }
+    if (date[0] >= '2026-09-27' && !/^## Sample size and margin\b/m.test(text)) {
+      problems.push(`${name}: protocol registered ${date[0]} has no "## Sample size and margin" section`);
+    }
+  }
+  return problems;
+}
+
 function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
   const ledgerText = fs.readFileSync(LEDGER, 'utf8');
   problems.push(...assessLedgerStructure(ledgerText));
   problems.push(...assessLedgerCitations(ledgerText));
+  problems.push(...assessSampleSizeSections());
   problems.push(...assessLedgerLinks(ledgerText));
   // BL-0016 F5: the generated index must match the ledger it summarizes.
   const { buildIndex } = require('./build-ledger-index.js');
@@ -750,11 +772,6 @@ function assessExperiments() {
     if (!front) { problems.push(`${result.id}: protocol.md has no frontmatter`); continue; }
     if (front.result !== result.id) {
       problems.push(`${result.id}: protocol declares result ${front.result}`);
-    }
-
-    // BL-0016 F6: sample size and margin must be registered, from 2026-09-27.
-    if (String(front.registered || '') >= '2026-09-27' && !/^## Sample size and margin\b/m.test(protocol)) {
-      problems.push(`${result.id}: protocol registered ${front.registered} has no "## Sample size and margin" section`);
     }
 
     const reportPath = path.join(dir, 'report.md');
@@ -816,7 +833,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerCitations, assessLedgerHistory, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
+  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerCitations, assessLedgerHistory, assessSampleSizeSections, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,

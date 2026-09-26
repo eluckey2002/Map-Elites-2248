@@ -3,7 +3,9 @@
 // (BL-0016 F5). EVIDENCE_LEDGER.md stays the authority and the only file
 // anyone edits; this is generated from it. Live records carry their status,
 // proof class and statement; closed ones (superseded, stale, rejected) carry
-// only their title and what replaced them.
+// only their title and what replaced them. A corrected live record leads with
+// its correction's title, and every proof class is shown in full, because a
+// shortened class reads stronger than the record claims.
 // Does NOT carry evidence, scope, reverify or notes: open the record before
 // relying on it.
 //
@@ -20,6 +22,7 @@ const CLOSED = new Set(['superseded', 'stale', 'rejected']);
 function buildIndex(text) {
   const live = [];
   const closed = [];
+  const titles = new Map([...text.matchAll(/^### ([A-Z]+-\d{4})\b(.*)$/gm)].map((m) => [m[1], m[2].replace(/^\s*[—-]\s*/, '').trim()]));
   for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
     const heading = record.split('\n')[0].trim();
     const id = /^[A-Z]+-\d{4}/.exec(heading)[0];
@@ -28,9 +31,13 @@ function buildIndex(text) {
     if (CLOSED.has(status)) {
       closed.push(`- **${heading}** — ${status}; replaced by ${field('superseded_by') || '[]'}`);
     } else {
-      const proof = field('proof_class').split(/[;—]/)[0].trim();
       const claim = field('statement') || field('question');
-      live.push(`### ${heading}\n\n**${status}** · ${proof}${field('superseded_by') && field('superseded_by') !== '[]' ? ` · corrected by ${field('superseded_by')}` : ''}\n\n${claim}\n`);
+      // A corrected record's own wording may no longer hold: lead with what corrected it.
+      const corrections = [...field('superseded_by').matchAll(/[A-Z]+-\d{4}/g)].map((m) => m[0]);
+      const warning = corrections.length
+        ? `> **Corrected; the claim below is original wording and may no longer hold.** ${corrections.map((c) => `${c}: ${titles.get(c) || '(missing)'}`).join('; ')}.\n\n`
+        : '';
+      live.push(`### ${heading}\n\n**${status}**\n\n${warning}${claim}\n\n*Proof class:* ${field('proof_class')}\n`);
     }
   }
   return [

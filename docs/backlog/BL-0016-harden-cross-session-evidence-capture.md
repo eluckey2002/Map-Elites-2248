@@ -125,3 +125,14 @@ closes the most gaps).
 - 2026-09-26: F6 done. `experiments/TEMPLATE.md` has a "Sample size and margin" section (per-verdict n, how many misses flip it, a bar for any combined measure a later stage uses); the gate requires it for protocols registered from 2026-09-27. Planted a post-cutoff date on RESULT-0048: gate flagged it; restored.
 - 2026-09-26: F7 done. AGENTS.md and CURRENT.md cite `RESULT-0028` instead of restating 140,544; AGENTS.md gains the rule to cite record IDs rather than restate numbers. HANDOFF.md occurrences left: it is a dated session log. Suite: same 3 known failures.
 - 2026-09-26: F5 done as a generated index, not a split: `LEDGER-INDEX.md` (51.8 KB, ~13k tokens, vs 183 KB ledger) holds status, proof class and claim for 60 live records and one line per closed record, built by `tools/build-ledger-index.js`; the gate fails when it is stale (tested). AGENTS.md now points agents to the index first and to the ledger before relying on a record. The ledger stays the one authority and the only file edited, so no second source can drift. Suite: same 3 known failures.
+- 2026-09-26: Independent review of F5-F7. Index was an accurate copy (60/60
+  live records) but misleading as a summary: it cut proof classes at the
+  first `;`/`—`, dropping weaker classes (RESULT-0032/0036/0041), and showed
+  corrected claims (FACT-0006 and five others) in their old wording. Fixed:
+  full proof class, and a corrected record now leads with its correction's
+  title (index 59 KB). F6 could be dodged three ways (protocol with no ledger
+  record yet, quoted date, blank date); fixed by scanning every protocol and
+  rejecting a missing or malformed date, with tests. Open F7 follow-up: two
+  uncited numbers with no ledger record to point to, AGENTS.md:11 ("bot wins
+  71-100%") and CURRENT.md:122 ("lockouts up to ~5%"); they need a record or a
+  measuring command, not a reword.
