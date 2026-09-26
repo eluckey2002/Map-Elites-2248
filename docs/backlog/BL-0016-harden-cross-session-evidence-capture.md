@@ -158,3 +158,12 @@ closes the most gaps).
 - 2026-09-26: CORRECTION-0015: chain-coverage.js ran out of memory on Node's default heap (not a code change); with an 8 GB heap it reproduces 0.563 -> 0.688 (owner session re-ran). RESULT-0016's multipath confirmation is still running (screen stage +22.13% vs recorded +24.32%, on a moved tree); recorded when it finishes. 8 flagged records remain.
 - 2026-09-26: My CORRECTION-0014 narrowed RESULT-0017, which the Universe Map contract pinned as `accepted`; 12 map tests went red (a diagnosis agent noticed, not the gate). Fixed by pinning `narrowed` in `universe/contract.json` and updating two tests' expected status; `asOf` untouched. Full suite back to the same 3 known failures. Lesson: a status change must be followed by the full suite, not only the gate.
 - 2026-09-26: CORRECTION-0016: RESULT-0009/0011/0012/0014 reverify now runs the focused tests that back each claim (all pass) instead of the whole suite. verify-loop timed out at 20 min under load from parallel agents; it passed standalone twice today. Nightly per-command cap raised to 60 min.
+- 2026-09-26: Slow-command group diagnosed (runs of 1-8 h under load).
+  CORRECTION-0017: FACT-0007 holds (120/120; its "60/60" and "160/160" were
+  wrong from the start); RESULT-0011 holds smaller (+3.19%, t = 18.8, vs about
+  +5%). RESULT-0005/0006/0007 describe the pre-retune game and pre-promotion
+  bot and are marked `stale`. Nightly runner now lists timeouts separately and
+  fails only on commands that ran and disagreed. Code bugs found, not fixed:
+  `solver/game-tester.js` chapter table ends at level 50, so it exits 1 on
+  levels 51-58; `solver/spawn-experiment.js` refills scaled boards with
+  unscaled 2/4/8 tiles. Remaining: RESULT-0016 confirmation still running.

@@ -5,7 +5,7 @@ The short first read of [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md), which remains 
 Each entry gives status, proof class and claim only. Before relying on a record, open it in the
 ledger for its scope, evidence and limits; the ledger header defines every status and proof class.
 
-## Live records (66)
+## Live records (64)
 
 ### FACT-0001 — Chain legality
 
@@ -43,7 +43,9 @@ A merge leaves exactly one tile behind, valued at the chain's sum. Spawns are th
 
 ### FACT-0007 — Uniform integer tile scaling is an exact isomorphism
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0017: FACT-0007's check count and RESULT-0011's effect size, measured on today's tree.
 
 Multiplying every tile value on a level by a positive integer `k` multiplies the final score by exactly `k` and leaves play otherwise identical: same move count, same termination reason. Chain legality is equal-or-double and merges sum, and both relations are preserved by a uniform scale; stone blockers carry value 0, which scaling leaves unchanged. Verified 160 of 160 checks over the stated scope.
 
@@ -85,30 +87,6 @@ Thresholds 12,400, 12,600, 12,800, and 13,000 are `UNKNOWN` at their bounded run
 
 *Proof class:* `UNKNOWN`
 
-### RESULT-0005 — Level 26 is not a tuning outlier; the whole back half is unbeaten
-
-**accepted**
-
-Against the shipped targets, the current bot wins every level through 14, wins none from level 17 onward, and never once reaches a target between levels 17 and 50. Expressing each target as a multiple of the bot's median achievable score, Level 26 sits at **1.66** — the *lowest* demand of any level from 19 to 50, and below levels 24 (2.32), 28 (2.18), 29 (2.35), 30 (2.39), and 31 (2.22). Demand climbs to 6.24 by level 49. Targets rise in fixed 500-point steps while achievable score stays flat or declines as move budgets shrink, blockers accumulate, and the grid narrows from 5x8 to 5x7 at level 31. This is a heuristic observation about one policy; it bounds no optimal player.
-
-*Proof class:* `heuristic_observation`
-
-### RESULT-0006 — Spawning 16s does not lift the ceiling
-
-**accepted**
-
-Adding 16 to the refill pool was tested as a remedy for the recorded "hole at 16" and **fails as a fix**. Raising mean spawned value by 50% (16 at 10%) lifts Level 26's median from 7,832 to 8,416, about 7.5%. Raising it 76% (16 and 32) reaches 8,856, about 13%. Response is strongly sublinear, so input value is not the binding constraint; re-chaining of value already on the board is. Level 50 rises from 4,398 to 4,982 against a 25,000 target. This tests the remedy, not the diagnosis: the recorded value-conservation and recycling analysis stands.
-
-*Proof class:* `heuristic_observation`
-
-### RESULT-0007 — More moves rescue the mid levels and saturate on the late ones
-
-**accepted**
-
-Scaling the move budget is the effective lever in the mid game and dies in the late game. Level 26 goes 7,832 → 11,078 → **13,443** → 14,888 at 1x, 1.5x, 2x, and 3x its 32 moves, so doubling moves clears its 13,000 target. Level 40 saturates near 10,000 against a 20,000 target, and Level 50 returns an identical 6,072 at both 2x and 3x against a 25,000 target — the board reaches a terminal state before the extra moves can be spent. No move budget makes the late targets reachable.
-
-*Proof class:* `heuristic_observation`
-
 ### RESULT-0009 — Level 51 shipped: the first level admitted through the authoring tracer
 
 **narrowed**
@@ -133,7 +111,7 @@ The lookahead's pre-filter kept only the 12 highest-immediate-point chains, rank
 
 **narrowed**
 
-> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0015: The chain-coverage check needs more memory than Node's default; CORRECTION-0016: Four results' reverify runs the whole test suite, which fails for reasons outside their claims.
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0015: The chain-coverage check needs more memory than Node's default; CORRECTION-0016: Four results' reverify runs the whole test suite, which fails for reasons outside their claims; CORRECTION-0017: FACT-0007's check count and RESULT-0011's effect size, measured on today's tree.
 
 The bot's move generator walks one path from each start tile, taking the lowest-value legal neighbour and never backtracking, so it can wall itself off from tiles it could still have reached — it finds 11-tile chains on boards where 19-tile chains exist. Because points scale with the chain sum, that is close to half the points available: measured against full enumeration of every legal chain, the walk reaches **0.563** of the best chain the bot would accept (highest-scoring chain whose sum stays on the mergeable lattice, `FACT-0006`), averaged over 16 boards across six levels. Breaking ties by **Warnsdorff's rule** — among next tiles of equal value, take the one with the fewest onward moves, because a nearly cut-off tile must be used now or lost — lifts that to **0.688** and never scored below the plain walk on any board tested. In play it is worth **+5.25%** median score (geometric mean of per-game log-ratios, 51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, n = 51, **t = 15.7**), for about 1.16x the compute. 50 of 51 levels improve; the worst is level 45 at -0.5%. A 100-seed pilot on a separate disjoint seed set measured +4.87%, so the confirmation came back *larger* and the effect is not a selection artifact. It remains a tie-break: ranking on connectivity ahead of value scores **0.19**, far worse than doing nothing, because lowest-value-first is what makes the walk long in the first place.
 
@@ -581,10 +559,21 @@ Narrows those four records. Each recorded `reverify` includes `node --test solve
 
 *Proof class:* `direct_source` for the failing whole-suite run and the passing focused runs
 
-## Closed records (10)
+### CORRECTION-0017 — FACT-0007's check count and RESULT-0011's effect size, measured on today's tree
+
+**accepted**
+
+Narrows `FACT-0007` and `RESULT-0011`. `FACT-0007` holds: on 2026-09-26 `solver/game-tester.js` printed `PASS - 120/120 checks: score scales exactly, play is identical.` Its loop has run 120 checks (5 levels, 6 scales, 4 seeds) since the commit that wrote the record, so the record's "160 of 160" and expected "60/60" were wrong from the start. The same command then exits 1 on levels above 50, where its chapter table ends. `RESULT-0011` holds with a smaller effect: `solver/routing-ablation.js` measured the degree tie-break at +3.19% (t = 18.8) over 58 levels with no level hurt, against the recorded roughly +5%, because the gain is now measured on top of the later beam-width-8 bot.
+
+*Proof class:* `direct_source` for the printed check line, the loop's size, and the crash; `heuristic_observation` is not claimed afresh: the +3.19% figure is a single re-run of `RESULT-0011`'s own grandfathered measurement, reported for currency only
+
+## Closed records (13)
 
 - **FACT-0003 — Gravity, persistence, and spawn order** — superseded; replaced by [CORRECTION-0001]
 - **FACT-0004 — Level 26 configuration** — superseded; replaced by [CORRECTION-0002]
+- **RESULT-0005 — Level 26 is not a tuning outlier; the whole back half is unbeaten** — stale; replaced by []
+- **RESULT-0006 — Spawning 16s does not lift the ceiling** — stale; replaced by []
+- **RESULT-0007 — More moves rescue the mid levels and saturate on the late ones** — stale; replaced by []
 - **RESULT-0008 — Every level is winnable after the demand-based retune** — stale; replaced by []
 - **RESULT-0015 — Keeping eight low-value chain routes raises score 13.8% and win rate 5.5 points** — superseded; replaced by [CORRECTION-0004]
 - **RESULT-0029 — Exact micro-puzzle descriptors do not clear the frozen four-region promotion bar** — superseded; replaced by [CORRECTION-0005]

@@ -69,11 +69,15 @@ function main() {
     console.log(`${result.outcome.padEnd(7)} ${entry.id}  ${entry.command.slice(0, 100)}`);
   }
 
-  const failing = [...new Set(results.filter((r) => r.outcome === 'FAIL' || r.outcome === 'TIMEOUT').map((r) => r.id))];
+  // A timeout is reported, not failed: some recorded reproductions take hours
+  // and say so. A FAIL means the command ran and disagreed.
+  const failing = [...new Set(results.filter((r) => r.outcome === 'FAIL').map((r) => r.id))];
+  const slow = [...new Set(results.filter((r) => r.outcome === 'TIMEOUT').map((r) => r.id))];
   const summary = {
     records: new Set(results.map((r) => r.id)).size,
     commands: cache.size,
     failingRecords: failing,
+    timedOutRecords: slow,
     counts: results.reduce((c, r) => ({ ...c, [r.outcome]: (c[r.outcome] || 0) + 1 }), {}),
   };
   if (opt('--out')) fs.writeFileSync(opt('--out'), `${JSON.stringify({ summary, results }, null, 2)}\n`);

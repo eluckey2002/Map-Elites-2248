@@ -309,7 +309,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### FACT-0007 — Uniform integer tile scaling is an exact isomorphism
 
 - **type:** fact
-- **status:** accepted
+- **status:** narrowed
 - **scope:** levels 1, 15, 26, 35, 50 at scales 2, 3, 5, 6, 7, 11, 13, 16, seeds 0-3, reference bot at `solver/bot.js`
 - **statement:** Multiplying every tile value on a level by a positive integer `k` multiplies the final score by exactly `k` and leaves play otherwise identical: same move count, same termination reason. Chain legality is equal-or-double and merges sum, and both relations are preserved by a uniform scale; stone blockers carry value 0, which scaling leaves unchanged. Verified 160 of 160 checks over the stated scope.
 - **evidence:** `solver/game-tester.js`, `verifyScaleInvariance`, which compares score, move count, and end reason against `score x k` for each case and refuses to emit derived numbers if any case fails.
@@ -318,7 +318,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node solver/game-tester.js --seeds 20`; expect the header line `PASS - 60/60 checks: score scales exactly, play is identical.`
 - **updated:** 2026-08-12
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0017]
 - **notes:** Exactness holds only after two scale-dependent constants in the reference bot were corrected on 2026-08-12: its turnover bonus was a fixed 40 points per emptied cell while every other ranking term is in game points, and `isMergeableSum` tested for a power of two rather than for `k` times a power of two. Both are inert at scale 1, so no result recorded before this date changes. The structural argument generalises beyond the tested scope, but only the stated scope is verified. This fact is what permits a target to be derived by multiplication rather than re-measured per scale.
 
 ## Result registry
@@ -382,7 +382,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0005 — Level 26 is not a tuning outlier; the whole back half is unbeaten
 
 - **type:** result
-- **status:** accepted
+- **status:** stale
 - **scope:** all 50 shipped levels, current `solver/bot.js` policy, 200 seeds per level
 - **statement:** Against the shipped targets, the current bot wins every level through 14, wins none from level 17 onward, and never once reaches a target between levels 17 and 50. Expressing each target as a multiple of the bot's median achievable score, Level 26 sits at **1.66** — the *lowest* demand of any level from 19 to 50, and below levels 24 (2.32), 28 (2.18), 29 (2.35), 30 (2.39), and 31 (2.22). Demand climbs to 6.24 by level 49. Targets rise in fixed 500-point steps while achievable score stays flat or declines as move budgets shrink, blockers accumulate, and the grid narrows from 5x8 to 5x7 at level 31. This is a heuristic observation about one policy; it bounds no optimal player.
 - **evidence:** `solver/target-calibration.js` (full-budget play with the target raised out of reach; `chooseMove` never reads `targetScore`, so removing the target does not change play); consistent with the 500-seed Level 26 sample recorded under `HANDOFF.md`, **Synopsis** (median 7,842, max 11,370).
@@ -397,7 +397,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0006 — Spawning 16s does not lift the ceiling
 
 - **type:** result
-- **status:** accepted
+- **status:** stale
 - **scope:** levels 11, 20, 26, 30, 40, 45, 50; current `solver/bot.js` policy; 200 seeds per level per variant
 - **statement:** Adding 16 to the refill pool was tested as a remedy for the recorded "hole at 16" and **fails as a fix**. Raising mean spawned value by 50% (16 at 10%) lifts Level 26's median from 7,832 to 8,416, about 7.5%. Raising it 76% (16 and 32) reaches 8,856, about 13%. Response is strongly sublinear, so input value is not the binding constraint; re-chaining of value already on the board is. Level 50 rises from 4,398 to 4,982 against a 25,000 target. This tests the remedy, not the diagnosis: the recorded value-conservation and recycling analysis stands.
 - **evidence:** `solver/spawn-experiment.js`; its baseline variant reproduces `solver/target-calibration.js` exactly (level 11 → 6,832; level 26 → 7,832 at 200 seeds), which is the correctness check on its replicated spawn step; original diagnosis in `solver/README.md`, **The score-pace ceiling, quantified**, iteration 2.
@@ -412,7 +412,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0007 — More moves rescue the mid levels and saturate on the late ones
 
 - **type:** result
-- **status:** accepted
+- **status:** stale
 - **scope:** levels 26, 40, 50; current `solver/bot.js` policy; 200 seeds per level per budget
 - **statement:** Scaling the move budget is the effective lever in the mid game and dies in the late game. Level 26 goes 7,832 → 11,078 → **13,443** → 14,888 at 1x, 1.5x, 2x, and 3x its 32 moves, so doubling moves clears its 13,000 target. Level 40 saturates near 10,000 against a 20,000 target, and Level 50 returns an identical 6,072 at both 2x and 3x against a 25,000 target — the board reaches a terminal state before the extra moves can be spent. No move budget makes the late targets reachable.
 - **evidence:** `solver/move-budget.js`; shipped budgets and targets in `src/game.js`, `LEVELS`.
@@ -482,7 +482,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node --test solver/tests/*.test.js` (expect 82 pass); `node solver/routing-ablation.js` (expect roughly +5% at t > 3); `node solver/chain-coverage.js` (expect 0.563 -> 0.688); `node solver/verify-loop.js` (expect `RESULT: PASS`).
 - **updated:** 2026-08-20
 - **supersedes:** []
-- **superseded_by:** [CORRECTION-0015, CORRECTION-0016]
+- **superseded_by:** [CORRECTION-0015, CORRECTION-0016, CORRECTION-0017]
 - **notes:** Calibration consequence, unresolved: a target is `demand x measured achievable score` (`DECISION-0003`), so a level authored after this change is pitched about 5% higher at the same demand. Shipped levels keep the targets they were admitted with, and the curve gate passes unchanged, so nothing needs to move — but the two eras of authored target are no longer directly comparable. Candidate width is unaffected: a width-32 arm produced bit-identical play to width 24 under the new generator, so `RESULT-0010`'s saturation still holds, though its stated reason does not — see `CORRECTION-0003`. On the standing note that the reference bot is a weak proxy for a skilled player: on Level 51 the bot's median moves-to-target improves from 17 to 16 across 120 seeds, and it matches the owner's recorded 12-move pace on 8 of 120 boards against 1 of 119 before. The gap narrows and does not close; the margin remains unquantified in general.
 
 ### RESULT-0012 — Level 52 shipped at the target it was admitted with, not a re-derived one
@@ -1362,6 +1362,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0009, RESULT-0011, RESULT-0012, RESULT-0014]
 - **superseded_by:** []
 - **notes:** Found by the nightly reverify run (BL-0016). The whole-suite command is also exposed to concurrent edits: during this diagnosis a ledger commit landed mid-run and 12 `universeMap.test.js` tests failed ("RESULT-0017 status: expected accepted, got narrowed"), since fixed and unrelated to these four claims. The level-count expectations `51/51` and `52/52` in the original reverify lines are also stale now that more levels ship; `verify-loop.js` reports the current count. On 2026-09-26 `node solver/verify-loop.js` printed `RESULT: PASS` and exited 0 (an earlier attempt was killed at a 600-second tool limit with exit 143 before finishing).
+
+### CORRECTION-0017 — FACT-0007's check count and RESULT-0011's effect size, measured on today's tree
+
+- **type:** correction
+- **status:** accepted
+- **scope:** `FACT-0007`'s stated check count and reverify; `RESULT-0011`'s stated effect size and routing-ablation reverify; the direction of both claims is unchanged
+- **statement:** Narrows `FACT-0007` and `RESULT-0011`. `FACT-0007` holds: on 2026-09-26 `solver/game-tester.js` printed `PASS - 120/120 checks: score scales exactly, play is identical.` Its loop has run 120 checks (5 levels, 6 scales, 4 seeds) since the commit that wrote the record, so the record's "160 of 160" and expected "60/60" were wrong from the start. The same command then exits 1 on levels above 50, where its chapter table ends. `RESULT-0011` holds with a smaller effect: `solver/routing-ablation.js` measured the degree tie-break at +3.19% (t = 18.8) over 58 levels with no level hurt, against the recorded roughly +5%, because the gain is now measured on top of the later beam-width-8 bot.
+- **evidence:** `solver/game-tester.js` (chapter table ending at level 50); `solver/routing-ablation.js`; runs of 2026-09-26 on the current tree, captured by a BL-0016 diagnosis agent.
+- **proof_class:** `direct_source` for the printed check line, the loop's size, and the crash; `heuristic_observation` is not claimed afresh: the +3.19% figure is a single re-run of `RESULT-0011`'s own grandfathered measurement, reported for currency only
+- **as_of:** 2026-09-26
+- **reverify:** Run `node solver/game-tester.js --seeds 20` and read its first output line; expect `PASS - 120/120`; the later exit 1 on levels above 50 is the known chapter-table bug in BL-0016. Run `node solver/routing-ablation.js` (several hours); expect a positive lift with t > 3.
+- **updated:** 2026-09-26
+- **supersedes:** [FACT-0007, RESULT-0011]
+- **superseded_by:** []
+- **notes:** The same diagnosis found `RESULT-0005`, `RESULT-0006`, and `RESULT-0007` describe the levels and bot before the 2026-08-12 retune and the 2026-08-30 promotion; today's runs no longer test those claims, so they are marked `stale` rather than corrected. `solver/spawn-experiment.js` also refills with unscaled tiles on scaled boards, which makes its current win rates meaningless; that bug is in BL-0016.
 
 ## Assembly cut log
 
