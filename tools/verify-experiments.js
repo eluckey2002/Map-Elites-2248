@@ -480,10 +480,72 @@ function assessReportAnswers(result, protocol, report) {
   return problems;
 }
 
+// Vocabularies from the ledger's own Status and proof-class tables.
+const STATUSES = new Set(['accepted', 'provisional', 'open', 'superseded', 'narrowed', 'stale', 'rejected']);
+const PROOF_CLASSES = new Set([
+  'direct_source', 'exact_result', 'replayed_lower_bound', 'replayed_upper_bound', 'proven_upper_bound',
+  'heuristic_observation', 'UNKNOWN', 'unresolved', 'owner_decision', 'hypothesis',
+]);
+const TYPE_OF_PREFIX = {
+  FACT: 'fact', RESULT: 'result', DECISION: 'decision', HYPOTHESIS: 'hypothesis', QUESTION: 'question', CORRECTION: 'correction',
+};
+const REQUIRED_FIELDS = ['type', 'status', 'scope', 'evidence', 'proof_class', 'as_of', 'reverify', 'updated', 'supersedes', 'superseded_by'];
+
+// Every record, not just RESULTs: the rules in the ledger header that code can
+// check. It does not judge whether a claim is true or its class is earned.
+function assessLedgerStructure(text) {
+  const problems = [];
+  const records = [];
+  let current = null;
+  for (const line of text.split('\n')) {
+    const heading = /^### ([A-Z]+)-(\d+)\b/.exec(line);
+    if (heading) {
+      current = { id: `${heading[1]}-${heading[2]}`, prefix: heading[1], body: [] };
+      records.push(current);
+      continue;
+    }
+    if (/^#{2,3} /.test(line)) { current = null; continue; }
+    if (current) current.body.push(line);
+  }
+  if (!records.length) return ['EVIDENCE_LEDGER.md contains no records'];
+
+  const seen = new Set();
+  for (const { id, prefix, body } of records) {
+    if (seen.has(id)) problems.push(`${id}: duplicate record ID`);
+    seen.add(id);
+    const text = body.join('\n');
+    const field = (name) => {
+      const m = new RegExp(`^- \\*\\*${name}:\\*\\*\\s*(.*)$`, 'm').exec(text);
+      return m ? m[1].trim() : null;
+    };
+    const expectedType = TYPE_OF_PREFIX[prefix];
+    if (!expectedType) { problems.push(`${id}: unknown record type prefix ${prefix}`); continue; }
+    for (const name of REQUIRED_FIELDS) {
+      if (field(name) === null) problems.push(`${id}: missing field ${name}`);
+    }
+    if (field('statement') === null && field('question') === null) problems.push(`${id}: missing field statement`);
+    const type = field('type');
+    if (type !== null && type !== expectedType) problems.push(`${id}: type ${type} does not match its ID prefix (${expectedType})`);
+    const status = field('status');
+    if (status !== null && !STATUSES.has(status)) problems.push(`${id}: status ${status} is not in the status vocabulary`);
+    const proofClass = field('proof_class');
+    if (proofClass !== null) {
+      const tokens = [...proofClass.matchAll(/`([^`]+)`/g)].map((m) => m[1])
+        .filter((t) => !/^[A-Z]+-\d+$/.test(t));
+      const bad = tokens.filter((t) => !PROOF_CLASSES.has(t));
+      if (bad.length) problems.push(`${id}: proof_class ${bad.join(', ')} is not in the proof-class vocabulary`);
+      if (!tokens.some((t) => PROOF_CLASSES.has(t))) problems.push(`${id}: proof_class names no class`);
+    }
+  }
+  return problems;
+}
+
 function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
-  const results = readLedgerResults(fs.readFileSync(LEDGER, 'utf8'));
+  const ledgerText = fs.readFileSync(LEDGER, 'utf8');
+  problems.push(...assessLedgerStructure(ledgerText));
+  const results = readLedgerResults(ledgerText);
   const exempt = grandfathered();
 
   for (const result of results) {
@@ -573,7 +635,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessExperiments, citedArtifacts,
+  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerStructure, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,

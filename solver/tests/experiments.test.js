@@ -532,3 +532,43 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   }
   assert.ok(checked >= 6, `expected to inspect the real protocols, inspected ${checked}`);
 });
+
+// Ledger structure: the real ledger passes, and each defect the 2026-09-26
+// audit planted (BL-0016 F9) turns it red.
+{
+  const fs = require('node:fs');
+  const { assessLedgerStructure } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const good = (id = 'RESULT-9001', over = {}) => {
+    const f = {
+      type: 'result', status: 'accepted', scope: 's', statement: 'x', evidence: '`a.js`',
+      proof_class: '`direct_source`', as_of: '2026-09-26', reverify: 'n/a', updated: '2026-09-26',
+      supersedes: '[]', superseded_by: '[]', ...over,
+    };
+    return [`### ${id} — planted`, ...Object.entries(f).filter(([, v]) => v !== null).map(([k, v]) => `- **${k}:** ${v}`)].join('\n');
+  };
+
+  test('the real ledger passes the structure check', () => {
+    assert.deepEqual(assessLedgerStructure(real), []);
+  });
+  test('a well-formed planted record passes', () => {
+    assert.deepEqual(assessLedgerStructure(`${real}\n${good()}\n`), []);
+  });
+  test('an empty ledger fails', () => {
+    assert.notDeepEqual(assessLedgerStructure(''), []);
+  });
+  for (const [name, rec] of [
+    ['duplicate ID', good('RESULT-0017')],
+    ['invalid status', good('RESULT-9001', { status: 'confirmed' })],
+    ['invalid proof class', good('RESULT-9001', { proof_class: '`certain`' })],
+    ['proof class naming no class', good('RESULT-9001', { proof_class: 'see notes' })],
+    ['missing as_of', good('RESULT-9001', { as_of: null })],
+    ['missing evidence', good('RESULT-9001', { evidence: null })],
+    ['type not matching prefix', good('FACT-9001', { type: 'result' })],
+    ['unknown prefix', good('CLAIM-9001')],
+  ]) {
+    test(`structure check rejects: ${name}`, () => {
+      assert.notDeepEqual(assessLedgerStructure(`${real}\n${rec}\n`), []);
+    });
+  }
+}
