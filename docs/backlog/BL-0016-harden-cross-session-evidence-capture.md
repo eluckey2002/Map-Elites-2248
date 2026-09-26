@@ -149,3 +149,4 @@ closes the most gaps).
   source or identity drift (RESULT-0017/0021/0024/0025/0026, which
   have no corpus for the frozen verifier).
 - 2026-09-26: F2 built. Runs under `.orch/runs/` first committed from 2026-09-27 (or not yet committed) must carry `ledger: <ID>` naming an existing record, or `ledger: not reportable — <reason>`, in worklog.md or stop-record.md; the gate enforces it, with tests. This also settles F8's run-shape half: the one required file is an outcome file with that line. Older runs are exempt; the one known lost result (2026-08-28 archive) is handled separately.
+- 2026-09-26: F3 closed without inline edits. Marking the wrong sentence inside an old record would break the append-only rule the F11 gate now enforces. The read-side problem is solved instead in LEDGER-INDEX.md, which agents read first: every corrected record leads with its correction's title and a warning that the wording may no longer hold.
