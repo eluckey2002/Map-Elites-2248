@@ -6,7 +6,7 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 ## Evidence-capture hardening — 2026-09-26
 
-[BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. The lost 2026-08-28 MAP-Elites archives are now [RESULT-0049](EVIDENCE_LEDGER.md) and [RESULT-0050](EVIDENCE_LEDGER.md), neither replacing the `52f500c` champion. CORRECTION-0010 to CORRECTION-0014 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still flags 10 records, under diagnosis in BL-0016.
+[BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. The lost 2026-08-28 MAP-Elites archives are now [RESULT-0049](EVIDENCE_LEDGER.md) and [RESULT-0050](EVIDENCE_LEDGER.md), neither replacing the `52f500c` champion. CORRECTION-0010 to CORRECTION-0015 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still flags 8 records, under diagnosis in BL-0016.
 
 ## Current decision frontier — 2026-09-16
 

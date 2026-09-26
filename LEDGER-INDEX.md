@@ -5,7 +5,7 @@ The short first read of [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md), which remains 
 Each entry gives status, proof class and claim only. Before relying on a record, open it in the
 ledger for its scope, evidence and limits; the ledger header defines every status and proof class.
 
-## Live records (64)
+## Live records (65)
 
 ### FACT-0001 — Chain legality
 
@@ -129,7 +129,9 @@ The lookahead's pre-filter kept only the 12 highest-immediate-point chains, rank
 
 ### RESULT-0011 — The chain walk stranded tiles it could have used; a tie-break recovers 5%
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0015: The chain-coverage check needs more memory than Node's default.
 
 The bot's move generator walks one path from each start tile, taking the lowest-value legal neighbour and never backtracking, so it can wall itself off from tiles it could still have reached — it finds 11-tile chains on boards where 19-tile chains exist. Because points scale with the chain sum, that is close to half the points available: measured against full enumeration of every legal chain, the walk reaches **0.563** of the best chain the bot would accept (highest-scoring chain whose sum stays on the mergeable lattice, `FACT-0006`), averaged over 16 boards across six levels. Breaking ties by **Warnsdorff's rule** — among next tiles of equal value, take the one with the fewest onward moves, because a nearly cut-off tile must be used now or lost — lifts that to **0.688** and never scored below the plain walk on any board tested. In play it is worth **+5.25%** median score (geometric mean of per-game log-ratios, 51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, n = 51, **t = 15.7**), for about 1.16x the compute. 50 of 51 levels improve; the worst is level 45 at -0.5%. A 100-seed pilot on a separate disjoint seed set measured +4.87%, so the confirmation came back *larger* and the effect is not a selection artifact. It remains a tie-break: ranking on connectivity ahead of value scores **0.19**, far worse than doing nothing, because lowest-value-first is what makes the walk long in the first place.
 
@@ -461,7 +463,9 @@ Supersedes `FACT-0004`. Level 26 now has a 5x8 grid, no blockers, a minimum chai
 
 ### CORRECTION-0003 — Candidate width saturates because of the generator, not the board
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0015: The chain-coverage check needs more memory than Node's default.
 
 `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". That is not what boards offer. Level 51's opening boards hold **198,563 to 8,284,580 distinct legal chains** on the seeds measured. The 15-to-30 figure counts what `findGreedyChains` *produces* — it runs one walk per start tile and dedupes, so it can never return more candidates than the board has unblocked tiles, whatever the cap is set to. The cap saturates against the generator's output, not against the move space. `RESULT-0010`'s conclusion stands unchanged and was re-confirmed under the new generator: widths 26 and 32 still produce bit-identical play to width 24, and raising the cap still buys nothing. What changes is the reading of *why*, and therefore what was left on the table: the recorded wording implied the bot was near the limit of its options, when it was seeing a hand-filtered fraction of them. `RESULT-0011` measures that fraction and recovers part of it.
 
@@ -554,6 +558,14 @@ Narrows those seven records. Each recorded `reverify` runs the experiment's own 
 Narrows those five records. Each recorded `reverify` runs against today's tree, whose protected source has moved, so on 2026-09-26 they fail (`protected file changed: solver/bot.js`; `protocol identity mismatch`; control-gate assertion failure; human-pilot `status FAIL`; `challenge covered source identity changed`). That is a fact about the present tree. Run at the commit that admitted each result, every command passes on 2026-09-26. `RESULT-0021`, `RESULT-0024`, and `RESULT-0026` read git state, so they need a `git worktree` checkout; a `git archive` extract fails them (`not a git repository`; `protocol.md ... is not committed`). `tools/verify-frozen-experiment.js` does not apply (no `corpus.json`).
 
 *Proof class:* `direct_source` for the failing current-tree commands and the passing frozen-tree runs
+
+### CORRECTION-0015 — The chain-coverage check needs more memory than Node's default
+
+**accepted**
+
+Narrows `RESULT-0011` and `CORRECTION-0003`. Their recorded command crashes with `JavaScript heap out of memory` on its first board under Node's default heap of about 4 GB, before the enumeration reaches the Set size limit the script catches; the same crash occurs on Node 22 and at the admitting commit, so it is not a code change. Run with an 8 GB heap on 2026-09-26, the script completes and prints 16 boards with ground truth and mean best-chain share 0.563 for the shipped walk and 0.688 with the degree tie-break, the recorded figures.
+
+*Proof class:* `direct_source` for the crash cause and the reproduced output
 
 ## Closed records (10)
 

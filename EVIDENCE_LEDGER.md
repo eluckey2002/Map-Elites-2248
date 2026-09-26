@@ -473,7 +473,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0011 — The chain walk stranded tiles it could have used; a tie-break recovers 5%
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** `solver/engine.js` (`buildGreedyChain`, `findGreedyChains`), `solver/bot.js` `CHAIN_TIE_BREAK`; reference-bot strength only, no level, target, or rule changed
 - **statement:** The bot's move generator walks one path from each start tile, taking the lowest-value legal neighbour and never backtracking, so it can wall itself off from tiles it could still have reached — it finds 11-tile chains on boards where 19-tile chains exist. Because points scale with the chain sum, that is close to half the points available: measured against full enumeration of every legal chain, the walk reaches **0.563** of the best chain the bot would accept (highest-scoring chain whose sum stays on the mergeable lattice, `FACT-0006`), averaged over 16 boards across six levels. Breaking ties by **Warnsdorff's rule** — among next tiles of equal value, take the one with the fewest onward moves, because a nearly cut-off tile must be used now or lost — lifts that to **0.688** and never scored below the plain walk on any board tested. In play it is worth **+5.25%** median score (geometric mean of per-game log-ratios, 51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, n = 51, **t = 15.7**), for about 1.16x the compute. 50 of 51 levels improve; the worst is level 45 at -0.5%. A 100-seed pilot on a separate disjoint seed set measured +4.87%, so the confirmation came back *larger* and the effect is not a selection artifact. It remains a tie-break: ranking on connectivity ahead of value scores **0.19**, far worse than doing nothing, because lowest-value-first is what makes the walk long in the first place.
 - **evidence:** `solver/chain-coverage.js` (coverage against `enumerateLegalChains`); `solver/routing-ablation.js` and `.orch/routing-ablation-01.json` (paired outcome measurement); `solver/tests/engine.test.js` — three tests covering the stranding case, the tie-break's fix, and a negative control that fails if connectivity is made the primary rule; `node --test solver/tests/*.test.js` 82 pass; `node solver/verify-loop.js` -> `RESULT: PASS`, all seven checks.
@@ -482,7 +482,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node --test solver/tests/*.test.js` (expect 82 pass); `node solver/routing-ablation.js` (expect roughly +5% at t > 3); `node solver/chain-coverage.js` (expect 0.563 -> 0.688); `node solver/verify-loop.js` (expect `RESULT: PASS`).
 - **updated:** 2026-08-20
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0015]
 - **notes:** Calibration consequence, unresolved: a target is `demand x measured achievable score` (`DECISION-0003`), so a level authored after this change is pitched about 5% higher at the same demand. Shipped levels keep the targets they were admitted with, and the curve gate passes unchanged, so nothing needs to move — but the two eras of authored target are no longer directly comparable. Candidate width is unaffected: a width-32 arm produced bit-identical play to width 24 under the new generator, so `RESULT-0010`'s saturation still holds, though its stated reason does not — see `CORRECTION-0003`. On the standing note that the reference bot is a weak proxy for a skilled player: on Level 51 the bot's median moves-to-target improves from 17 to 16 across 120 seeds, and it matches the owner's recorded 12-move pace on 8 of 120 boards against 1 of 119 before. The gap narrows and does not close; the margin remains unquantified in general.
 
 ### RESULT-0012 — Level 52 shipped at the target it was admitted with, not a re-derived one
@@ -1151,7 +1151,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### CORRECTION-0003 — Candidate width saturates because of the generator, not the board
 
 - **type:** correction
-- **status:** accepted
+- **status:** narrowed
 - **scope:** the stated mechanism inside `RESULT-0010`; its conclusion is unaffected
 - **statement:** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". That is not what boards offer. Level 51's opening boards hold **198,563 to 8,284,580 distinct legal chains** on the seeds measured. The 15-to-30 figure counts what `findGreedyChains` *produces* — it runs one walk per start tile and dedupes, so it can never return more candidates than the board has unblocked tiles, whatever the cap is set to. The cap saturates against the generator's output, not against the move space. `RESULT-0010`'s conclusion stands unchanged and was re-confirmed under the new generator: widths 26 and 32 still produce bit-identical play to width 24, and raising the cap still buys nothing. What changes is the reading of *why*, and therefore what was left on the table: the recorded wording implied the bot was near the limit of its options, when it was seeing a hand-filtered fraction of them. `RESULT-0011` measures that fraction and recovers part of it.
 - **evidence:** `solver/chain-coverage.js` (enumerated chain counts per board, via `enumerateLegalChains` from `solver/exact-score.js`); `solver/engine.js`, `findGreedyChains` — one `buildGreedyChain` call per non-blocked tile; `solver/routing-ablation.js` width arms.
@@ -1160,7 +1160,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node solver/chain-coverage.js`; compare the enumerated totals against the candidate counts `findGreedyChains` returns on the same state.
 - **updated:** 2026-08-20
 - **supersedes:** [RESULT-0010]
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0015]
 - **notes:** Appended rather than edited into `RESULT-0010`, which keeps its original wording and receipt. The correction is to an explanation, not to a measurement — every number `RESULT-0010` reports was and remains correct.
 
 ### CORRECTION-0004 — RESULT-0015 was invalidated when the beam was made additive
@@ -1332,6 +1332,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0017, RESULT-0021, RESULT-0024, RESULT-0025, RESULT-0026]
 - **superseded_by:** []
 - **notes:** Second batch from the nightly reverify run (BL-0016 F1). Only the named commands were rerun; the other commands in each record's reverify (focused suites, `tools/verify-experiments.js`) were not checked here.
+
+### CORRECTION-0015 — The chain-coverage check needs more memory than Node's default
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `node solver/chain-coverage.js` step in the `reverify` of `RESULT-0011` and `CORRECTION-0003`; their measurements and conclusions are unchanged
+- **statement:** Narrows `RESULT-0011` and `CORRECTION-0003`. Their recorded command crashes with `JavaScript heap out of memory` on its first board under Node's default heap of about 4 GB, before the enumeration reaches the Set size limit the script catches; the same crash occurs on Node 22 and at the admitting commit, so it is not a code change. Run with an 8 GB heap on 2026-09-26, the script completes and prints 16 boards with ground truth and mean best-chain share 0.563 for the shipped walk and 0.688 with the degree tie-break, the recorded figures.
+- **evidence:** `solver/chain-coverage.js`; run of 2026-09-26 at commit `6b602bb` with `--max-old-space-size=8192`, exit 0.
+- **proof_class:** `direct_source` for the crash cause and the reproduced output
+- **as_of:** 2026-09-26
+- **reverify:** Run `node --max-old-space-size=8192 solver/chain-coverage.js`; expect exit 0, 16 boards with ground truth, and means 0.563 and 0.688.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0011, CORRECTION-0003]
+- **superseded_by:** []
+- **notes:** Diagnosed by a BL-0016 agent (Node 26 and Node 22, admitting commit `4ded51c`) and re-run by the owner session. Capping the enumeration instead would need a cap above 8,285,173 path states, or Level 51 seed 1 is wrongly reported `n/a`. `RESULT-0011`'s other reverify steps are handled separately.
 
 ## Assembly cut log
 
