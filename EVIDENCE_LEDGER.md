@@ -740,7 +740,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0030]
 - **superseded_by:** []
-- **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate.
+- **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (4/8 same bin (50%), 43,275 vs 11,594 states) with `node experiments/RESULT-0031/recompute.js experiments/RESULT-0031/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0032 — Choice density clears its bars; recovery lacks enough non-ceiling pairs
 
@@ -755,7 +755,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** []
-- **notes:** `initialViableStartFraction` counts viable starting tiles, not distinct paths or perceived decisions. `oneDetourRecoveryWitnessRate` samples up to eight lowest-scoring non-reference candidates from a deterministic 64-candidate pool and counts only replayed bounded-search successes. A repair needs a new protocol and fresh seeds; do not extend this opened range or lower its frozen eligibility denominator.
+- **notes:** `initialViableStartFraction` counts viable starting tiles, not distinct paths or perceived decisions. `oneDetourRecoveryWitnessRate` samples up to eight lowest-scoring non-reference candidates from a deterministic 64-candidate pool and counts only replayed bounded-search successes. A repair needs a new protocol and fresh seeds; do not extend this opened range or lower its frozen eligibility denominator. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (range 0.3833, 7/8 of 8 eligible, 47/58) with `node experiments/RESULT-0032/recompute.js experiments/RESULT-0032/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0033 — Merge depth and spatial spread clear the candidate-measure bars
 
@@ -770,7 +770,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** []
-- **notes:** Initial and spawned tiles have depth zero; each merged tile has one plus the maximum input depth. Spatial spread is mean per-move Chebyshev chain span divided by board diameter. Four Level 54 shallow misses remain `UNKNOWN`; deep witnesses make panel coverage complete. Eligibility permits a new preregistered corpus only and is not adoption by itself.
+- **notes:** Initial and spawned tiles have depth zero; each merged tile has one plus the maximum input depth. Spatial spread is mean per-move Chebyshev chain span divided by board diameter. Four Level 54 shallow misses remain `UNKNOWN`; deep witnesses make panel coverage complete. Eligibility permits a new preregistered corpus only and is not adoption by itself. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (32/32, range 0.2396, 25/28 and 27/28 on exactly 28 pairs) with `node experiments/RESULT-0033/recompute.js experiments/RESULT-0033/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0034 — Bounded opening diversity collapses on representative boards
 
@@ -785,7 +785,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** []
-- **notes:** The repair target is the success-set sampler, not the seed count. Ordered opening chains preserve survivor placement, so reversed chains remain distinct moves.
+- **notes:** The repair target is the success-set sampler, not the seed count. Ordered opening chains preserve survivor placement, so reversed chains remain distinct moves. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (range 0.1974, one diversity value populated, 26/28 on exactly 28 pairs) with `node experiments/RESULT-0034/recompute.js experiments/RESULT-0034/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0035 — Four-cell occupancy succeeds but witness-dependent cell stability does not
 

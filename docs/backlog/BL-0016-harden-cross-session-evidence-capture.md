@@ -116,3 +116,9 @@ closes the most gaps).
   that matters is one outcome file (worklog or stop-record) naming a ledger ID
   or `not reportable`, which is F2's rule; F8's run-shape part is folded into
   F2 rather than adding a second check.
+- 2026-09-26: F4 done for the four live results (RESULT-0029/0030 are
+  superseded). Four fresh agents, each given only `protocol.md` and
+  `corpus.json`, wrote `recompute.js` for RESULT-0031..0034; all four match
+  the ledger statements and dispositions. Not covered: control checks and
+  witness replay, which need the engine. RESULT-0033 and RESULT-0034 cleared
+  their width-stability bar on exactly the minimum 28 pairs (feeds F6).
