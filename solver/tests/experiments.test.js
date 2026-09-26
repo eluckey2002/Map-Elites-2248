@@ -608,6 +608,13 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     ['missing reverify path', 'reverify', 'run `tools/nope.js`'],
     ['unknown commit', 'evidence', 'commit `deadbeef`'],
     ['unknown commit, plural label', 'evidence', 'commits `deadbeef`'],
+    ['path inside a command', 'reverify', 'run `node --test solver/tests/nope.test.js`'],
+    ['top-level file without slash', 'evidence', '`NOPE.md`'],
+    ['commit with colon label', 'evidence', 'commit: `deadbeef1`'],
+    ['commit with equals label', 'evidence', 'Commit = deadbeef1'],
+    ['commit only on another branch', 'evidence', 'commit `6a07294`'],
+    ['absolute path', 'evidence', '`/Users/someone/nope.js`'],
+    ['list-form continuation line', 'evidence', '\n  - `solver/nope.js`'],
   ]) {
     test(`citation check rejects: ${name}`, () => {
       assert.notDeepEqual(assessLedgerCitations(real + rec(field, value)), []);

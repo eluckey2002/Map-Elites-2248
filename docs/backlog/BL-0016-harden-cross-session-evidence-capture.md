@@ -72,3 +72,12 @@ closes the most gaps).
 - 2026-09-26: Mechanizability audit added F9–F12; F10 spot-checked.
 - 2026-09-26: Owner decided F10: add `replayed_upper_bound` to the allowed proof classes (done in the ledger's class table and entry template).
 - 2026-09-26: F9 built (`11bd925`) and hardened after an independent mutation audit: kill rate 16/27 -> 26/27, no false positives on the real ledger or 4 legitimate variants. Known survivor: a bad class written in prose without backticks beside a good backticked one (scanning bare snake_case risks false positives).
+- 2026-09-26: F12 built (`2825cb0`) and hardened after an independent
+  mutation audit: kill rate 7/22 -> 16/22, no false positives. Remaining misses
+  are formats absent from the ledger (unbackticked paths, markdown links,
+  6-character SHAs, notes field). The stricter check found 6 real gaps in the
+  ledger, held in `KNOWN_CITATION_GAPS` so only new gaps fail; each needs a
+  CORRECTION record: RESULT-0001 and RESULT-0004 cite verifiers deleted in
+  `8e1e232`; RESULT-0026 cites two `/private/tmp` files; RESULT-0041 cites a
+  script outside the repo; DECISION-0004 cites commit `6a07294`, which is on
+  no branch.

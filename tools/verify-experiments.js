@@ -553,29 +553,63 @@ function assessLedgerStructure(text) {
 }
 
 // Every repository path and labelled commit a record's evidence or reverify
-// field cites must exist. A path is backticked and contains a slash and an
-// extension; `RESULT-NNNN/...` shorthand resolves under experiments/. A commit
-// counts only when labelled (`commit <sha>`), since bare hex is often a hash.
-// Notes are skipped: they may cite a file precisely because it is absent.
-// Does NOT check that a file says what the record claims, or content hashes.
+// field cites must exist. Paths are path-shaped tokens inside backtick spans
+// (so paths inside commands count); a bare filename or `RESULT-NNNN/...`
+// shorthand may also resolve under the record's or the named experiments/ dir.
+// A commit counts when labelled (`commit abc1234`, `Commit = abc1234`) and must
+// be reachable from HEAD, not merely present locally. Absolute paths are
+// machine-specific and rejected. Notes are skipped: they may cite a file
+// precisely because it is absent.
+// Does NOT check unbackticked paths, that a file says what the record claims,
+// or content hashes.
+// Citation gaps already in the ledger when this check landed (2026-09-26,
+// BL-0016 F12). Each needs a CORRECTION record, not a silent edit; listed here
+// so the gate stays green on history while failing on any new gap. Remove an
+// entry when its correction lands.
+const KNOWN_CITATION_GAPS = new Set([
+  'RESULT-0001 solver/target-witness-search/verify.js', // deleted in 8e1e232
+  'RESULT-0004 solver/hinted-cp-sat/verify-result.js', // deleted in 8e1e232
+  'RESULT-0026 /private/tmp/result-0026-recomputation.json', // temp file, not in repo
+  'RESULT-0026 /private/tmp/result-0026-admission.json', // temp file, not in repo
+  'RESULT-0041 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py', // outside repo
+  'DECISION-0004 6a07294571644d963a5a9b728f8e4aed3b29a835', // on no branch
+]);
+
 function assessLedgerCitations(text, {
   exists = (rel) => fs.existsSync(path.join(ROOT, rel)),
   isCommit = (sha) => {
-    try { execFileSync('git', ['cat-file', '-e', `${sha}^{commit}`], { cwd: ROOT, stdio: 'ignore' }); return true; } catch { return false; }
+    try {
+      execFileSync('git', ['merge-base', '--is-ancestor', sha, 'HEAD'], { cwd: ROOT, stdio: 'ignore' });
+      return true;
+    } catch { return false; }
   },
 } = {}) {
   const problems = [];
   for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
     const id = /^[A-Z]+-\d{4}/.exec(record)[0];
-    const fields = [...record.matchAll(/^- \*\*(evidence|reverify):\*\*(.*)$/gm)].map((m) => m[2]).join('\n');
-    for (const m of fields.matchAll(/`([A-Za-z0-9._-]+\/[A-Za-z0-9._/-]*\.[A-Za-z0-9]+)(?::[0-9,-]+)?`/g)) {
-      const rel = m[1];
-      if (!exists(rel) && !(/^RESULT-\d{4}\//.test(rel) && exists(`experiments/${rel}`))) {
-        problems.push(`${id}: cited path ${rel} does not exist`);
+    // A field runs until the next `- **field:**` line or heading, so list-form
+    // continuation lines are included.
+    const fields = [...record.matchAll(/^- \*\*(evidence|reverify):\*\*([\s\S]*?)(?=^- \*\*[a-z_]+:\*\*|^#|(?![\s\S]))/gm)]
+      .map((m) => m[2]).join('\n');
+    // A bare filename may be named relative to any directory the record cites.
+    const dirs = [...new Set([...record.matchAll(/`((?:[\w.-]+\/)+)[\w.-]*`/g)].map((m) => m[1].replace(/\/$/, '')))];
+    for (const span of fields.matchAll(/`([^`]+)`/g)) {
+      for (const m of span[1].matchAll(/(?:^|[\s=(,'"])((?:\.{0,2}\/)?(?:[\w.-]+\/)*[\w-][\w.-]*\.[A-Za-z][A-Za-z0-9]*)(?=$|[\s:#),'"])/g)) {
+        const rel = m[1];
+        // Without a slash, only a known file extension marks a path (not `Game.loadLevel`).
+        if (!rel.includes('/') && !/\.(js|mjs|json|jsonl|md|py|html|txt|tsv|csv|sh|png)$/.test(rel)) continue;
+        if (rel.startsWith('/')) { if (!KNOWN_CITATION_GAPS.has(`${id} ${rel}`)) problems.push(`${id}: cited path ${rel} is absolute`); continue; }
+        const clean = rel.replace(/^\.\//, '');
+        const named = /^(RESULT-\d{4})\//.test(clean) ? [`experiments/${clean}`] : [];
+        if (clean.startsWith('-')) continue; // suffix shorthand for the previous path
+        const local = clean.includes('/') ? [] : [`experiments/${id}`, ...dirs].map((d) => `${d}/${clean}`);
+        if (![clean, ...named, ...local].some(exists) && !KNOWN_CITATION_GAPS.has(`${id} ${rel}`)) {
+          problems.push(`${id}: cited path ${rel} does not exist`);
+        }
       }
     }
-    for (const m of fields.matchAll(/commits?\s+`([0-9a-f]{7,40})`/gi)) {
-      if (!isCommit(m[1])) problems.push(`${id}: cited commit ${m[1]} does not exist`);
+    for (const m of fields.matchAll(/\bcommits?\s*[:=]?\s*`?([0-9a-fA-F]{7,40})\b/gi)) {
+      if (!isCommit(m[1].toLowerCase()) && !KNOWN_CITATION_GAPS.has(`${id} ${m[1]}`)) problems.push(`${id}: cited commit ${m[1]} is not in this branch's history`);
     }
   }
   return problems;
