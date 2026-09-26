@@ -5,7 +5,7 @@ The short first read of [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md), which remains 
 Each entry gives status, proof class and claim only. Before relying on a record, open it in the
 ledger for its scope, evidence and limits; the ledger header defines every status and proof class.
 
-## Live records (61)
+## Live records (63)
 
 ### FACT-0001 — Chain legality
 
@@ -334,6 +334,22 @@ RESULT-0043 closed validly with primary outcome **`INCONCLUSIVE`**. All 128 game
 The registered run closed with primary outcome **`ISLANDS_SUFFICIENT`**. The blue-only arm retained at least eight target-family tiles and two viable target-family components through move six on **1,305/4,096 (31.9%)** boards and recorded a later rejoin of a blue-conversion tile on **656** boards. Every family cleared the frozen existence threshold: move-six sustained / conversion-rejoin counts were **396/136** for family 3, **350/164** for family 5, **288/175** for family 7, and **271/181** for family 9. Mixed-family refills were not required for candidate discovery, although their move-six persistence was materially higher at **55.5%, 58.8%, and 61.3%** for 25%, 50%, and 75% target-family refills. The result routes island-only openings to human playtesting; it does not adopt a spawn rule or establish human behavior, fun, or difficulty.
 
 *Proof class:* `direct_source` for frozen identities, counts, pairing, artifact verification, and executable closure; `heuristic_observation` for persistence and conversion behavior under the registered deterministic screening policy.
+
+### RESULT-0049 — A 120-mutation MAP-Elites archive on re-calibrated axes occupies 24 of 25 cells without changing the champion
+
+**accepted**
+
+The archive file contains **24 occupied cells** of 25, 60 archive replacements over 120 evaluated mutants, and three representatives whose recorded holdout lifts are all negative: `896748efe7b5` at cell `4,2` (screen lift +2.18%, holdout lift **-2.22%** over 288 holdout games), `7e8b57682e93` (-31.61%), and `0873a5b8c4e2` (-31.11%). No representative has positive holdout lift, so none meets the stronger-policy rule and the champion is unchanged. Because the axes differ from `RESULT-0017`'s, the 24 cells are **not** comparable cell-for-cell with that record's 20.
+
+*Proof class:* `direct_source` — the counts, identities, and recorded lifts are what the archive file literally contains. No generalizing claim is made; there was no preregistered protocol.
+
+### RESULT-0050 — On `RESULT-0017`'s exact axes with fresh seeds, a 120-mutation MAP-Elites archive occupies 23 of 25 cells without changing the champion
+
+**accepted**
+
+The archive's chain-style and patience axis objects are identical to those of the `RESULT-0017` archive, and its screen and holdout seeds are disjoint from each other and from both earlier archives. On those shared coordinates it occupies **23 of 25 cells** versus the original's 20: 19 cells shared, four newly occupied (`1,1`, `1,3`, `2,0`, `3,1`), one no longer occupied (`2,4`). It records 52 replacements over 120 evaluated mutants. The top screened elite `e7349b8a477a` at cell `4,1` has screen lift **+0.73%** and holdout lift **-1.47%** over 288 holdout games; the other two representatives record -28.26% (`d4dee742cedd`) and -27.92% (`0b207fb85a0f`). No representative has positive holdout lift; the champion is unchanged.
+
+*Proof class:* `direct_source` — axes equality, seed disjointness, cell counts, and recorded lifts are read directly from the two archive files. No generalizing claim is made; there was no preregistered protocol.
 
 ### DECISION-0002 — Park the exact-proof track; tune levels from measured calibration
 

@@ -30,7 +30,7 @@ function reverifyPlan(text) {
     const commands = [...reverify.matchAll(/(?:\bFrom `([^`\s]+)`, run )?`((?:node|python3|git)\s[^`]+)`/g)]
       .map((m) => ({ cwd: m[1] || '.', command: m[2] }));
     // A placeholder or pipe means a manual setup step; later commands depend on it.
-    const manual = commands.some((c) => /<[^>]+>|\|/.test(c.command));
+    const manual = commands.some((c) => /<[a-z][\w -]*>| \| /.test(c.command));
     for (const c of commands) plan.push({ id, ...c, manual });
   }
   return plan;
