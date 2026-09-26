@@ -712,6 +712,12 @@ function assessExperiments() {
   problems.push(...assessLedgerStructure(ledgerText));
   problems.push(...assessLedgerCitations(ledgerText));
   problems.push(...assessLedgerLinks(ledgerText));
+  // BL-0016 F5: the generated index must match the ledger it summarizes.
+  const { buildIndex } = require('./build-ledger-index.js');
+  const indexPath = path.join(ROOT, 'LEDGER-INDEX.md');
+  if (!fs.existsSync(indexPath) || fs.readFileSync(indexPath, 'utf8') !== buildIndex(ledgerText)) {
+    problems.push('LEDGER-INDEX.md is stale; run node tools/build-ledger-index.js');
+  }
   const baseText = baseLedgerText();
   if (baseText === null) problems.push('cannot read the base ledger from git; history check did not run');
   else problems.push(...assessLedgerHistory(ledgerText, baseText));

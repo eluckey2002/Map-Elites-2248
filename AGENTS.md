@@ -14,7 +14,7 @@ Each line here is a fact you can check in a minute. Check it rather than trust i
 - **`node solver/board-trace.js`** renders a recorded game as text boards with both players' chains drawn on the same position. Chain-value strings hide where the tiles are, which is the thing this game is about.
 - **`play-sessions/` is not the evidence corpus.** `tools/play-server.js` captures ordinary play there, bound to a level and a seed. `recordings/` holds receipted candidate evidence bound to a candidate identity; mixing them puts unresolvable entries where candidate resolution is expected.
 
-Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) before substantive reasoning about game rules, solver results, score feasibility, or experiment status. Use the ledger for current project status and follow its citations to primary repository evidence for factual support.
+Read [LEDGER-INDEX.md](LEDGER-INDEX.md) before substantive reasoning about game rules, solver results, score feasibility, or experiment status. It is generated from [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md), which remains the authority: before relying on or citing a record, open it in the ledger for its scope, evidence, and limits, and follow its citations to primary repository evidence. Edit only the ledger, then run `node tools/build-ledger-index.js`.
 
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
 
