@@ -8,9 +8,10 @@ import json
 import re
 import sqlite3
 from collections import Counter
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 
 ROOT = Path(__file__).resolve().parent
@@ -60,9 +61,24 @@ def count_by(items: list[dict[str, Any]], field: str) -> dict[str, int]:
     return dict(sorted(Counter(str(item.get(field) or "not_recorded") for item in items).items()))
 
 
-def capture_snapshot(database: Path) -> dict[str, Any]:
+@contextmanager
+def consistent_read(database: Path) -> Iterator[sqlite3.Connection]:
+    """Hold one read transaction so every SELECT and the file hash see one ledger version.
+
+    The ledger uses SQLite's rollback journal, so the shared lock held here keeps
+    writers from committing until the capture finishes.
+    """
     connection = readonly_connection(database)
     try:
+        connection.execute("BEGIN")
+        connection.execute("SELECT 1 FROM tasks LIMIT 1").fetchall()  # acquire the shared lock now
+        yield connection
+    finally:
+        connection.close()
+
+
+def capture_snapshot(database: Path) -> dict[str, Any]:
+    with consistent_read(database) as connection:
         tasks = [
             dict(row)
             for row in connection.execute(
@@ -76,14 +92,13 @@ def capture_snapshot(database: Path) -> dict[str, Any]:
             for row in connection.execute("SELECT id, task_id, state, reported_at FROM defects ORDER BY id")
         ]
         event_row = connection.execute("SELECT COUNT(*) AS count, MIN(sequence) AS minimum, MAX(sequence) AS maximum FROM events").fetchone()
-    finally:
-        connection.close()
+        ledger_sha256 = hashlib.sha256(database.read_bytes()).hexdigest()
     return {
         "schema_version": 1,
         "kind": "liveboard_operational_snapshot",
         "captured_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "boundary": BOUNDARY,
-        "ledger_sha256": hashlib.sha256(database.read_bytes()).hexdigest(),
+        "ledger_sha256": ledger_sha256,
         "summary": {
             "task_count": len(tasks),
             "task_state_counts": count_by(tasks, "state"),

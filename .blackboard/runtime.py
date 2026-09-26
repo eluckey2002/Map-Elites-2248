@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sqlite3
 import sys
 from contextlib import contextmanager
@@ -16,6 +17,8 @@ EVENT_KINDS = {
     "created", "claimed", "progress_reported", "submitted", "defect_recorded",
     "accepted", "repair_requested", "defect_disposition",
 }
+# Must match the read surfaces (query_liveboard, server, snapshot names).
+ID_PATTERN = re.compile(r"[A-Za-z0-9_-]+")
 LEGACY_REVIEWER = "legacy-reviewer-not-recorded"
 LEGACY_STOP_CONDITION = "legacy-stop-condition-not-recorded"
 
@@ -131,8 +134,8 @@ def text(value: str, label: str) -> str:
 
 def task_id(value: str) -> str:
     value = text(value, "id")
-    if not value.replace("-", "").replace("_", "").isalnum():
-        raise ValueError("id may contain only letters, numbers, hyphens, and underscores")
+    if not ID_PATTERN.fullmatch(value):
+        raise ValueError("id may contain only ASCII letters, numbers, hyphens, and underscores")
     return value
 
 
@@ -269,6 +272,8 @@ def dispose_defect(args: argparse.Namespace) -> None:
 
 
 def review(args: argparse.Namespace) -> None:
+    if args.decision == "repair" and not (args.assignee or "").strip():
+        raise ValueError("repair review requires --assignee")
     with transaction() as connection:
         schema(connection)
         row = one(connection, args.id)
@@ -345,11 +350,37 @@ def self_test(_: argparse.Namespace) -> None:
                 pass
             review(argparse.Namespace(id="test", actor="checker", decision="repair", note="needs repair", assignee=winner))
             claim(argparse.Namespace(id="test", assignee=winner, actor="test", reason="repair assigned by reviewer"))
+            for bad_id in ("café", "١٢"):
+                try:
+                    create(argparse.Namespace(id=bad_id, question="q", specialty="s", scope="bounded", acceptance="a", dependencies="", reviewer="checker", stop_condition="done", stale_after=1, actor="test"))
+                    raise AssertionError(f"non-ASCII id {bad_id!r} was accepted")
+                except ValueError:
+                    pass
+            progress(argparse.Namespace(id="test", actor=winner, detail="repaired"))
+            submit(argparse.Namespace(id="test", actor=winner, artifact=str(seed_artifact), detail="resubmitted"))
+            try:
+                review(argparse.Namespace(id="test", actor="checker", decision="repair", note="again", assignee=None))
+                raise AssertionError("repair review without an assignee was accepted")
+            except ValueError:
+                pass
+            import snapshot_liveboard
+            with snapshot_liveboard.consistent_read(DATABASE):
+                blocked = sqlite3.connect(DATABASE, timeout=0.2, isolation_level=None)
+                try:
+                    blocked.execute("BEGIN IMMEDIATE")
+                    blocked.execute("UPDATE tasks SET last_reported_at='x' WHERE id='test'")
+                    blocked.execute("COMMIT")
+                    raise AssertionError("a writer committed during a snapshot read")
+                except sqlite3.OperationalError:
+                    blocked.execute("ROLLBACK") if blocked.in_transaction else None
+                finally:
+                    blocked.close()
+            assert snapshot_liveboard.capture_snapshot(DATABASE)["summary"]["task_count"] == 1
             from server import app
             client = app.test_client()
             response = client.post("/api/snapshot")
             assert response.status_code == 405, "HTTP mutation method was not rejected"
-            print("self-test passed: concurrent claim winner, transitions, duplicate/invalid rejection, repair flow, and HTTP mutation rejection")
+            print("self-test passed: concurrent claim winner, transitions, duplicate/invalid rejection, ASCII ids, repair flow and missing-assignee rejection, consistent snapshot read, and HTTP mutation rejection")
     finally:
         DATABASE, RUNTIME = original_database, original_runtime
 
