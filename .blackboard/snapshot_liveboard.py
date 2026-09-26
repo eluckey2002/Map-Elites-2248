@@ -117,8 +117,14 @@ def write_snapshot(database: Path, name: str) -> Path:
     target = snapshot_path(database, name)
     if target.exists():
         raise ValueError("snapshot already exists")
+    payload = json.dumps(capture_snapshot(database), indent=2, ensure_ascii=False) + "\n"
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(json.dumps(capture_snapshot(database), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    # Exclusive create: a concurrent capture of the same name fails instead of replacing this one.
+    try:
+        with target.open("x", encoding="utf-8") as handle:
+            handle.write(payload)
+    except FileExistsError as error:
+        raise ValueError("snapshot already exists") from error
     return target
 
 

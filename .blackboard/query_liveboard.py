@@ -7,8 +7,9 @@ import json
 import re
 import sqlite3
 import sys
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterator
 
 
 ROOT = Path(__file__).resolve().parent
@@ -33,6 +34,22 @@ def connection_for(database: Path) -> sqlite3.Connection:
     connection = sqlite3.connect(f"file:{database.as_posix()}?mode=ro", uri=True)
     connection.row_factory = sqlite3.Row
     return connection
+
+
+@contextmanager
+def read_transaction(database: Path) -> Iterator[sqlite3.Connection]:
+    """Hold one read transaction so every SELECT in a response sees one ledger version.
+
+    The ledger uses SQLite's rollback journal, so the shared lock held here keeps
+    writers from committing until the response is built.
+    """
+    connection = connection_for(database)
+    try:
+        connection.execute("BEGIN")
+        connection.execute("SELECT 1 FROM tasks LIMIT 1").fetchall()  # acquire the shared lock now
+        yield connection
+    finally:
+        connection.close()
 
 
 def task_record(connection: sqlite3.Connection, task_id: str) -> dict[str, Any]:
@@ -115,7 +132,7 @@ def parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = parser().parse_args()
     try:
-        with connection_for(args.database.resolve()) as connection:
+        with read_transaction(args.database.resolve()) as connection:
             if args.command == "summary":
                 payload = summary_record(connection)
             elif args.command == "tasks":

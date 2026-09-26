@@ -376,11 +376,36 @@ def self_test(_: argparse.Namespace) -> None:
                 finally:
                     blocked.close()
             assert snapshot_liveboard.capture_snapshot(DATABASE)["summary"]["task_count"] == 1
+            import query_liveboard
+            with query_liveboard.read_transaction(DATABASE):
+                blocked = sqlite3.connect(DATABASE, timeout=0.2, isolation_level=None)
+                try:
+                    blocked.execute("BEGIN IMMEDIATE")
+                    blocked.execute("UPDATE tasks SET last_reported_at='x' WHERE id='test'")
+                    blocked.execute("COMMIT")
+                    raise AssertionError("a writer committed during a query read")
+                except sqlite3.OperationalError:
+                    blocked.execute("ROLLBACK") if blocked.in_transaction else None
+                finally:
+                    blocked.close()
+            first = snapshot_liveboard.write_snapshot(DATABASE, "race")
+            original = first.read_bytes()
+            first.write_bytes(b"sentinel")
+            real_exists = Path.exists
+            Path.exists = lambda self: False if self == first else real_exists(self)  # simulate losing the check-then-write race
+            try:
+                snapshot_liveboard.write_snapshot(DATABASE, "race")
+                raise AssertionError("a snapshot name was silently overwritten")
+            except ValueError:
+                pass
+            finally:
+                Path.exists = real_exists
+            assert first.read_bytes() == b"sentinel", "existing snapshot was modified"
             from server import app
             client = app.test_client()
             response = client.post("/api/snapshot")
             assert response.status_code == 405, "HTTP mutation method was not rejected"
-            print("self-test passed: concurrent claim winner, transitions, duplicate/invalid rejection, ASCII ids, repair flow and missing-assignee rejection, consistent snapshot read, and HTTP mutation rejection")
+            print("self-test passed: concurrent claim winner, transitions, duplicate/invalid rejection, ASCII ids, repair flow and missing-assignee rejection, consistent snapshot and query reads, exclusive snapshot names, and HTTP mutation rejection")
     finally:
         DATABASE, RUNTIME = original_database, original_runtime
 
