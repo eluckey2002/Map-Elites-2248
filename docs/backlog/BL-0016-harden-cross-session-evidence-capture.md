@@ -90,3 +90,12 @@ closes the most gaps).
   `/private/tmp` hits were scratch output arguments, not citations; the check
   now skips those. Known gaps are excused only while their correction exists.
   Full suite: 3 failures, the same 3 that fail at session start `ead3937`.
+- 2026-09-26: F11 built. The gate compares the ledger with its branch point
+  on `origin/main`: no record removed; type, scope, statement, question,
+  evidence, proof_class, as_of, reverify unchanged; links and notes only grow.
+  It also requires two-way supersede links. Planted rewrite in the real
+  ledger went red; restored ledger passes. Repaired five one-way links
+  (RESULT-0010/CORRECTION-0003, RESULT-0030, RESULT-0038, RESULT-0041).
+  Past in-place rewrites found in history, before the check existed:
+  RESULT-0027's proof_class (`3ce7f7e`, `85fe9b0`, 2026-09-03), evidence of
+  FACT-0001..0003 (`e6e0f21`) and DECISION-0006 (`5f7bf21`).

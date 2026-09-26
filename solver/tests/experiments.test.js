@@ -624,3 +624,39 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     });
   }
 }
+
+// Append-only history and supersede links (BL-0016 F11).
+{
+  const fs = require('node:fs');
+  const { assessLedgerHistory, assessLedgerLinks } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const edit = (id, field, fn) => real.replace(new RegExp(`(### ${id} [\\s\\S]*?^- \\*\\*${field}:\\*\\*[ \\t]*)(.*)$`, 'm'), (_, a, v) => a + fn(v));
+
+  test('the real ledger has two-way supersede links', () => {
+    assert.deepEqual(assessLedgerLinks(real), []);
+  });
+  test('an unchanged ledger passes the history check', () => {
+    assert.deepEqual(assessLedgerHistory(real, real), []);
+  });
+  test('a status change and added links and notes pass', () => {
+    let next = edit('RESULT-0005', 'status', () => 'stale');
+    next = next.replace(/(### RESULT-0010 [\s\S]*?^- \*\*notes:\*\*[ \t]*)(.*)$/m, (_, a, v) => `${a}${v} Added later.`);
+    assert.deepEqual(assessLedgerHistory(next, real), []);
+  });
+  for (const [name, next] of [
+    ['a rewritten statement', edit('RESULT-0001', 'statement', (v) => v.replace('12,336', '12,999'))],
+    ['a promoted proof class', edit('RESULT-0005', 'proof_class', () => '`exact_result`')],
+    ['a rewritten evidence field', edit('FACT-0001', 'evidence', (v) => `${v} extra`)],
+    ['a changed as_of', edit('RESULT-0001', 'as_of', () => '2026-09-26')],
+    ['a removed record', real.replace(/^### HYPOTHESIS-0001 [\s\S]*?(?=^### )/m, '')],
+    ['a dropped supersede link', edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')],
+    ['rewritten notes', edit('RESULT-0010', 'notes', () => 'different')],
+  ]) {
+    test(`history check rejects ${name}`, () => {
+      assert.notDeepEqual(assessLedgerHistory(next, real), []);
+    });
+  }
+  test('link check rejects a one-way supersede link', () => {
+    assert.notDeepEqual(assessLedgerLinks(edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')), []);
+  });
+}

@@ -537,8 +537,8 @@ function assessLedgerStructure(text) {
     const asOf = field('as_of');
     if (asOf !== null && !/^`?(\d{4}-\d{2}-\d{2}|not_time_sensitive)\b/.test(asOf)) problems.push(`${id}: as_of ${asOf} is not a date or not_time_sensitive`);
     const supersededBy = field('superseded_by');
-    if (status === 'superseded' && (supersededBy === null || /^`?\[\s*\]`?$/.test(supersededBy))) {
-      problems.push(`${id}: status superseded but superseded_by is empty`);
+    if ((status === 'superseded' || status === 'narrowed') && (supersededBy === null || /^`?\[\s*\]`?$/.test(supersededBy))) {
+      problems.push(`${id}: status ${status} but superseded_by is empty`);
     }
     const proofClass = field('proof_class');
     if (proofClass !== null) {
@@ -625,12 +625,77 @@ function assessLedgerCitations(text, {
   return problems;
 }
 
+function ledgerRecords(text) {
+  const records = new Map();
+  for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
+    const id = /^[A-Z]+-\d{4}/.exec(record)[0];
+    const fields = {};
+    for (const m of record.matchAll(/^- \*\*([a-z_]+):\*\*[ \t]*(.*)$/gm)) fields[m[1]] ??= m[2].trim();
+    records.set(id, fields);
+  }
+  return records;
+}
+const linkIds = (value) => [...(value || '').matchAll(/[A-Z]+-\d{4}/g)].map((m) => m[0]);
+
+// supersedes and superseded_by must name each other, both ways.
+function assessLedgerLinks(text) {
+  const problems = [];
+  const records = ledgerRecords(text);
+  for (const [id, f] of records) {
+    for (const [field, back] of [['supersedes', 'superseded_by'], ['superseded_by', 'supersedes']]) {
+      for (const other of linkIds(f[field])) {
+        if (!records.has(other)) problems.push(`${id}: ${field} names missing record ${other}`);
+        else if (!linkIds(records.get(other)[back]).includes(id)) problems.push(`${id}: ${field} ${other}, but ${other}'s ${back} does not name ${id}`);
+      }
+    }
+  }
+  return problems;
+}
+
+// Append-only: compared with the base ledger, no record disappears, no claim
+// field changes, links and notes only grow. Status may change; the structure
+// and link checks require a matching correction when it does.
+// Does NOT catch a wrong new record, or rewrites already on the base.
+const FROZEN_FIELDS = ['type', 'scope', 'statement', 'question', 'evidence', 'proof_class', 'as_of', 'reverify'];
+function assessLedgerHistory(text, baseText) {
+  const problems = [];
+  const now = ledgerRecords(text);
+  for (const [id, before] of ledgerRecords(baseText)) {
+    const after = now.get(id);
+    if (!after) { problems.push(`${id}: record removed; append a correction instead`); continue; }
+    for (const field of FROZEN_FIELDS) {
+      if ((before[field] ?? null) !== (after[field] ?? null)) problems.push(`${id}: ${field} was rewritten; append a correction instead`);
+    }
+    for (const field of ['supersedes', 'superseded_by']) {
+      const kept = new Set(linkIds(after[field]));
+      for (const other of linkIds(before[field])) if (!kept.has(other)) problems.push(`${id}: ${field} dropped ${other}`);
+    }
+    if (before.notes && !(after.notes || '').includes(before.notes)) problems.push(`${id}: notes were rewritten; only additions are allowed`);
+  }
+  return problems;
+}
+
+// The ledger as of the branch point with origin/main, or HEAD when on it, so
+// uncommitted and branch edits are both compared against shared history.
+function baseLedgerText() {
+  const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1e8 });
+  try {
+    let base = git(['merge-base', 'HEAD', 'origin/main']).trim();
+    if (base === git(['rev-parse', 'HEAD']).trim()) base = 'HEAD';
+    return git(['show', `${base}:EVIDENCE_LEDGER.md`]);
+  } catch { return null; }
+}
+
 function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
   const ledgerText = fs.readFileSync(LEDGER, 'utf8');
   problems.push(...assessLedgerStructure(ledgerText));
   problems.push(...assessLedgerCitations(ledgerText));
+  problems.push(...assessLedgerLinks(ledgerText));
+  const baseText = baseLedgerText();
+  if (baseText === null) problems.push('cannot read the base ledger from git; history check did not run');
+  else problems.push(...assessLedgerHistory(ledgerText, baseText));
   const results = readLedgerResults(ledgerText);
   const exempt = grandfathered();
 
@@ -721,7 +786,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerCitations, assessLedgerStructure, assessExperiments, citedArtifacts,
+  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerCitations, assessLedgerHistory, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,

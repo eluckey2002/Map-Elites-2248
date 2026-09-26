@@ -466,7 +466,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node --test solver/tests/*.test.js` (expect 79 pass); `node solver/verify-loop.js` (expect `RESULT: PASS`).
 - **updated:** 2026-08-19
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0003]
 - **notes:** Two corrections are recorded here deliberately, because both were believed and reported before being checked. (1) The searched policy's weight changes — `wRoll` 0.813, `wPlace` 1.432, `turnover` 44.655 — measured +1.31% at fixed width under an arithmetic mean of per-cell ratios, and **+0.10% (t 0.4)** under the log-ratio estimator. They are not adopted; essentially the entire gain is the width. (2) The same estimator change cut the headline holdout lift from +3.30% to +1.68%, because a mean of ratios was being carried by a right tail of games where the new policy scored several times the reference. Clustering by level inflated the standard error only 1.5x, well below the 3.7x that the seeds-per-level count would suggest, because the policy improves most levels by a similar amount rather than winning big on a few. The reference bot remains a weak proxy for a skilled player; 1.1% does not change that, and the open note on unquantified human margin stands.
 - **appended 2026-08-20:** The mechanism named in the statement above — "boards offer a median of 15 legal chains and at most 30" — is wrong, and `CORRECTION-0003` records why. Boards offer hundreds of thousands; 15 to 30 is what the candidate *generator* returns. Every measurement in this record stands and the saturation was re-confirmed under a changed generator, so the status stays `accepted`; only the explanation is narrowed. Read this record together with `CORRECTION-0003` and `RESULT-0011`.
 
@@ -724,7 +724,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node tools/verify-frozen-experiment.js RESULT-0030`; it checks out the first commit carrying the corpus and runs the frozen verifier against the frozen implementation, expecting `PASS`, artifact identity `4f961ed0…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node tools/verify-experiments.js`; expect the experiment gate to pass. The current-tree RESULT-0030 verifier is intentionally not the reverify path after `CORRECTION-0006` changed its shared instrument.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** [CORRECTION-0006]
+- **superseded_by:** [CORRECTION-0006, RESULT-0031]
 - **notes:** The three cell changes were threshold crossings: Level 10 seed 32,100,001 improved from 12 to 11 moves across the 0.5 tightness boundary; Level 53 and Level 54 seed 32,100,000 improved from full-board cap witnesses to cap 12. The next candidate should represent uncertainty or search qualification explicitly instead of treating a raw bounded upper bound as a settled archive coordinate.
 
 ### RESULT-0031 — Corrected-cap descriptor proxies cover all puzzles but remain search-sensitive
@@ -844,7 +844,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0038/verify.js experiments/RESULT-0038/corpus.json`; expect PASS, artifact `07531402…`, 128 rows, P1 `INCONCLUSIVE`, P2–P5 `SUPPORTED`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 f778503c60c6681e490df205735309e908fd83c56fee1b4407ccd9c5fa250b97`; expect `CLOSED`, recomputation PASS, and verifier PASS.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** [CORRECTION-0007]
+- **superseded_by:** [CORRECTION-0007, RESULT-0041]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
 ### RESULT-0041 — Hardened greed harness qualifies; confirmation watchdog invalidates the run
@@ -859,7 +859,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** From `experiments/RESULT-0041`, run `python3 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py closeout-contract.json closure.json --run-recomputation`; expect verifier `PASS`, `closure_status: INVALID`, and recomputation `NOT_RUN`. Run `node tools/verify-experiments.js` from the repository root; expect `EXPERIMENT GATE PASS`. Do not run the confirmation again or interpret its progress counts as outcomes.
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0038]
-- **superseded_by:** [CORRECTION-0011]
+- **superseded_by:** [CORRECTION-0011, RESULT-0042]
 - **notes:** RESULT-0039 and RESULT-0040 stopped during pre-outcome qualification and retain their failed attempt receipts. RESULT-0041 repaired those exact gaps and qualified; its separate terminal failure shows that the 30-second watchdog is not guaranteed to outlast the deterministic path-state cap on every registered board. Any future confirmation is a new subject and requires an owner-selected compute/denominator change, not a retry of this run.
 
 ### RESULT-0042 — Calibrated watchdog completes the matrix; frozen closeout path remains unverified
@@ -1114,7 +1114,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **as_of:** 2026-08-20
 - **reverify:** `node solver/chain-coverage.js`; compare the enumerated totals against the candidate counts `findGreedyChains` returns on the same state.
 - **updated:** 2026-08-20
-- **supersedes:** []
+- **supersedes:** [RESULT-0010]
 - **superseded_by:** []
 - **notes:** Appended rather than edited into `RESULT-0010`, which keeps its original wording and receipt. The correction is to an explanation, not to a measurement — every number `RESULT-0010` reports was and remains correct.
 
