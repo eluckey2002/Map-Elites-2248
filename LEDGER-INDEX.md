@@ -109,14 +109,6 @@ Scaling the move budget is the effective lever in the mid game and dies in the l
 
 *Proof class:* `heuristic_observation`
 
-### RESULT-0008 — Every level is winnable after the demand-based retune
-
-**accepted**
-
-With targets and tile scales set by `DECISION-0003`, no level sits below a 5% bot win rate. Win rate ranges from 37% to 100% across the 50 levels and trends downward with level number. Before the retune, 34 of 50 levels were at 0%. Seeds 100000-100099 are disjoint from seeds 0-149, on which the targets were fitted, so this is not the measurement that set them. Board lockouts persist at a low rate on the late levels, up to roughly 5% at level 50.
-
-*Proof class:* `heuristic_observation`
-
 ### RESULT-0009 — Level 51 shipped: the first level admitted through the authoring tracer
 
 **accepted**
@@ -361,6 +353,14 @@ The archive's chain-style and patience axis objects are identical to those of th
 
 *Proof class:* `direct_source` — axes equality, seed disjointness, cell counts, and recorded lifts are read directly from the two archive files; the promotion rule is quoted from the run's measurement file cited in the statement. No generalizing claim is made; there was no preregistered protocol.
 
+### RESULT-0051 — On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels
+
+**accepted**
+
+The verify loop printed win rates of 100% on every sampled level except level 50 at 97%, and 0% board lockouts on every sampled level, with `RESULT: PASS`. This replaces `RESULT-0008`'s 2026-08-12 figures (wins from 37%, lockouts up to about 5% at level 50), which predate later bot changes and are marked stale.
+
+*Proof class:* `direct_source` for what the named command printed at the named commit
+
 ### DECISION-0002 — Park the exact-proof track; tune levels from measured calibration
 
 **accepted**
@@ -555,10 +555,11 @@ Narrows those five records. Each recorded `reverify` runs against today's tree, 
 
 *Proof class:* `direct_source` for the failing current-tree commands and the passing frozen-tree runs
 
-## Closed records (9)
+## Closed records (10)
 
 - **FACT-0003 — Gravity, persistence, and spawn order** — superseded; replaced by [CORRECTION-0001]
 - **FACT-0004 — Level 26 configuration** — superseded; replaced by [CORRECTION-0002]
+- **RESULT-0008 — Every level is winnable after the demand-based retune** — stale; replaced by []
 - **RESULT-0015 — Keeping eight low-value chain routes raises score 13.8% and win rate 5.5 points** — superseded; replaced by [CORRECTION-0004]
 - **RESULT-0029 — Exact micro-puzzle descriptors do not clear the frozen four-region promotion bar** — superseded; replaced by [CORRECTION-0005]
 - **RESULT-0030 — Representative-board descriptor proxies reach every target but miss the stability bar** — superseded; replaced by [CORRECTION-0006, RESULT-0031]

@@ -123,7 +123,7 @@ The Level 26 exact-proof track, by [DECISION-0002](EVIDENCE_LEDGER.md#decision-0
 
 - **Roughly 15 levels have a target lower than the level before.** The remaining lever is the move budget, and spending it would make a level's pacing a side effect of target cosmetics. Revisit from playtest feel, not from a monotonicity rule.
 - **The reference bot is a weak proxy for a skilled player.** Every recorded win rate is a floor on human success, not an estimate. The margin is still unquantified in general, but it is no longer unmeasured: on Level 51 the owner reached the target in 12 moves where the bot's median is 16 across 120 seeds, and the bot matches that 12-move pace on 8 of 120 boards. The gap narrowed with `RESULT-0011` and did not close.
-- **Lockouts persist at up to ~5% on the late levels.** A lockout is a dead board, not a fair loss. Bounded by `solver/verify-loop.js`.
+- **Lockouts measured 0% on sampled levels as of 2026-09-26 (`RESULT-0051`); earlier measurements reached about 5% (`RESULT-0008`, stale).** A lockout is a dead board, not a fair loss. Bounded by `solver/verify-loop.js`.
 
 ## Priced and rejected — do not re-propose without new evidence
 

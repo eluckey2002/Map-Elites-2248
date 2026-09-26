@@ -427,7 +427,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0008 — Every level is winnable after the demand-based retune
 
 - **type:** result
-- **status:** accepted
+- **status:** stale
 - **scope:** all 50 shipped levels, reference bot at `solver/bot.js`, 100 seeds per level from seed 100000
 - **statement:** With targets and tile scales set by `DECISION-0003`, no level sits below a 5% bot win rate. Win rate ranges from 37% to 100% across the 50 levels and trends downward with level number. Before the retune, 34 of 50 levels were at 0%. Seeds 100000-100099 are disjoint from seeds 0-149, on which the targets were fitted, so this is not the measurement that set them. Board lockouts persist at a low rate on the late levels, up to roughly 5% at level 50.
 - **evidence:** `node solver/verify-loop.js` (60 seeds from 100000, sampled levels) exits 0 with all seven checks passing; per-level policy table reproducible with `node solver/game-tester.js --seeds 150 --policy powers2 --detail`.
@@ -936,6 +936,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** Not claimed: that MAP-Elites reliably fills more cells with more iterations (one run per configuration); that the new cells reflect new policy structure; any policy strength ordering. The `pilot` sub-object of `axes` differs between archives by design; only the two bin axes are shared. The first run of this round failed on a wrongly frozen prior-map hash, not on the experiment; the verification run admitted the same bytes without rerun. Clustered t-values (`t=-1.3563` for `e7349b8a477a`) are taken from `measurement.md` and were not recomputed here. `solver/verify-map-elites.js` now fails on the changed `solver/bot.js` protected hash and is not used as the reverify.
+
+### RESULT-0051 — On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels
+
+- **type:** result
+- **status:** accepted
+- **scope:** `node solver/verify-loop.js` as shipped at commit `217f945` (current bot after `DECISION-0004`); its sampled levels 1, 5, 10, ..., 50; 60 seeds per level from seed 100000; no claim about unsampled levels, other seeds, or human play
+- **statement:** The verify loop printed win rates of 100% on every sampled level except level 50 at 97%, and 0% board lockouts on every sampled level, with `RESULT: PASS`. This replaces `RESULT-0008`'s 2026-08-12 figures (wins from 37%, lockouts up to about 5% at level 50), which predate later bot changes and are marked stale.
+- **evidence:** `solver/verify-loop.js` output captured 2026-09-26 at commit `217f945`: level 50 win 97%, lockout 0%; levels 1-45 win 100%, lockout 0%.
+- **proof_class:** `direct_source` for what the named command printed at the named commit
+- **as_of:** 2026-09-26
+- **reverify:** Run `node solver/verify-loop.js`; expect `RESULT: PASS`, level 50 win near 97% and 0% lockouts on sampled levels. The bot may move after this date; then mark this record stale and add a new measurement.
+- **updated:** 2026-09-26
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Found while sourcing two uncited numbers (BL-0016 F7): AGENTS.md said "71-100%" wins, which matched no record, and CURRENT.md said lockouts reach about 5%, from `RESULT-0008`. Both now cite this record. Measured under CPU contention from a parallel run; timing does not affect the printed rates.
 
 ## Decision registry
 
