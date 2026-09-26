@@ -5,7 +5,7 @@ The short first read of [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md), which remains 
 Each entry gives status, proof class and claim only. Before relying on a record, open it in the
 ledger for its scope, evidence and limits; the ledger header defines every status and proof class.
 
-## Live records (65)
+## Live records (66)
 
 ### FACT-0001 — Chain legality
 
@@ -111,7 +111,9 @@ Scaling the move budget is the effective lever in the mid game and dies in the l
 
 ### RESULT-0009 — Level 51 shipped: the first level admitted through the authoring tracer
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0016: Four results' reverify runs the whole test suite, which fails for reasons outside their claims.
 
 Candidate "level-51-split-channel" (5×7 grid, min chain 4, 24 moves, tile scale 32, no blockers) is now shipped as Level 51, continuing the chapter tile-scale ladder (16→32). Its target, 124,000, is 70% of the measured achievable score (300-seed disjoint holdout, seeds 100000-100299: 297 wins, 0 lockouts, 0 bomb failures), per `DECISION-0003`'s methodology. Unlike every other shipped level, this one also has direct human evidence: three real playthroughs of the same seed were played, recorded, and independently replay-verified against `solver/engine.js` — a loss under a since-fixed input bug (24 moves, 59,584), and two different winning strategies once input was fixed (12 moves/127,040 and 14 moves/130,496). The owner's acceptance was explicitly informed by the tension between those two wins, not just winnability.
 
@@ -131,7 +133,7 @@ The lookahead's pre-filter kept only the 12 highest-immediate-point chains, rank
 
 **narrowed**
 
-> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0015: The chain-coverage check needs more memory than Node's default.
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0015: The chain-coverage check needs more memory than Node's default; CORRECTION-0016: Four results' reverify runs the whole test suite, which fails for reasons outside their claims.
 
 The bot's move generator walks one path from each start tile, taking the lowest-value legal neighbour and never backtracking, so it can wall itself off from tiles it could still have reached — it finds 11-tile chains on boards where 19-tile chains exist. Because points scale with the chain sum, that is close to half the points available: measured against full enumeration of every legal chain, the walk reaches **0.563** of the best chain the bot would accept (highest-scoring chain whose sum stays on the mergeable lattice, `FACT-0006`), averaged over 16 boards across six levels. Breaking ties by **Warnsdorff's rule** — among next tiles of equal value, take the one with the fewest onward moves, because a nearly cut-off tile must be used now or lost — lifts that to **0.688** and never scored below the plain walk on any board tested. In play it is worth **+5.25%** median score (geometric mean of per-game log-ratios, 51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, n = 51, **t = 15.7**), for about 1.16x the compute. 50 of 51 levels improve; the worst is level 45 at -0.5%. A 100-seed pilot on a separate disjoint seed set measured +4.87%, so the confirmation came back *larger* and the effect is not a selection artifact. It remains a tie-break: ranking on connectivity ahead of value scores **0.19**, far worse than doing nothing, because lowest-value-first is what makes the walk long in the first place.
 
@@ -139,7 +141,9 @@ The bot's move generator walks one path from each start tile, taking the lowest-
 
 ### RESULT-0012 — Level 52 shipped at the target it was admitted with, not a re-derived one
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0016: Four results' reverify runs the whole test suite, which fails for reasons outside their claims.
 
 Candidate "level-52-stone-gate" (Level 51's 5x7 shape with one stone at (2,3), min chain 4, 24 moves, tile scale 32) is shipped as Level 52. Target 102,000 is 70% of the measured achievable score (median 146,688; 300-seed disjoint holdout, seeds 100000-100299: **290 wins, 0 lockouts, 0 bomb failures**), by `DECISION-0003`'s methodology. It carries human evidence: the owner played and won it at 124,864 in 15 of 24 moves, replay-verified. Both the measurement and the playtest were done before `RESULT-0011` made the reference bot about 5% stronger, and the target is **held at the value it was admitted and played with rather than re-derived**. Re-deriving would raise it to roughly 107,000 and would silently retune a level a human had already validated at 102,000. The consequence is recorded rather than hidden: measured against the current bot this level's effective demand is nearer 0.667 than 0.700, so it sits marginally easier than its stated demand implies. Direction of error is safe — the level is more winnable than its label claims, not less.
 
@@ -155,7 +159,9 @@ The obvious objection to `RESULT-0010`'s finding that the ranking weights are wo
 
 ### RESULT-0014 — Teaching the bot to keep its built tiles usable is worth 2.6% and removes the sampled lockouts
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0016: Four results' reverify runs the whole test suite, which fails for reasons outside their claims.
 
 The owner described a strategy the bot did not play: build tiles a few doublings above the dealt ones, then chain **those** together mid game. The bot completed such a chain about **once per game** across a 24-30 move budget. The existing placement term could not express it — it asks only whether the survivor can begin *some* legal chain next move, so it is blind to which tile survived and to what sits near it. `harvestValue` scores how usable the built tile is, and is worth **+2.60%** median score (51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, **t = 9.4**), win rate 92.3% -> 93.9%. A 100-seed pilot on a separate disjoint seed set measured +1.76%, so the confirmation came back *larger* and the weight is not a selection artifact. The response is unimodal — 0.25 -> +0.80%, 0.5 -> +1.16%, 1 -> +1.67%, 2 -> +2.60%, 4 -> +1.43% — so 2 sits on a peak rather than at the edge of the swept range. **Side effect, larger than the score gain in practice:** every lockout in the curve gate's sample disappeared, from 7% at level 35 and 3% at level 50 to 0% across all eleven sampled levels, and level 50's win rate rose 42% -> 57%. Keeping built tiles mergeable is directly the opposite of the mechanism `FACT-0006` names as the cause of a dead board.
 
@@ -566,6 +572,14 @@ Narrows those five records. Each recorded `reverify` runs against today's tree, 
 Narrows `RESULT-0011` and `CORRECTION-0003`. Their recorded command crashes with `JavaScript heap out of memory` on its first board under Node's default heap of about 4 GB, before the enumeration reaches the Set size limit the script catches; the same crash occurs on Node 22 and at the admitting commit, so it is not a code change. Run with an 8 GB heap on 2026-09-26, the script completes and prints 16 boards with ground truth and mean best-chain share 0.563 for the shipped walk and 0.688 with the degree tie-break, the recorded figures.
 
 *Proof class:* `direct_source` for the crash cause and the reproduced output
+
+### CORRECTION-0016 — Four results' reverify runs the whole test suite, which fails for reasons outside their claims
+
+**accepted**
+
+Narrows those four records. Each recorded `reverify` includes `node --test solver/tests/*.test.js` with an expected pass count (73, 82, 82, 144). That command runs every test in the repository as it stands today, so both the count and the pass/fail outcome track unrelated later work. On 2026-09-26 it ran 494 tests: 490 pass, 1 skipped, 3 fail. The three failures are (1) and (2) `receiptGate.test.js` "candidate-levels-52.json / -54.json has a receipt that verifies against the current bot", which fail by design because those receipts predate the current bot and the owner decided on 2026-08-21 to hold their targets (the test's own message says so); and (3) `universeMap.test.js` "the builder is byte-stable and the committed generated views are current", a Universe Map staleness check. None of the three tests the claim of `RESULT-0009`, `RESULT-0011`, or `RESULT-0014`. The Level 52 receipt failure touches `RESULT-0012`'s cited receipt, but its message (receipt predates the current bot) is exactly what `RESULT-0012` states: the target was held at its pre-`RESULT-0011` value on purpose. It confirms the claim rather than contradicting it. The tests that do carry each claim pass on 2026-09-26: `solver/tests/engine.test.js` 45/45 (includes the three `buildGreedyChain` stranding / tie-break / negative-control tests `RESULT-0011` cites), `solver/tests/bot.test.js` 21/21 (includes the six `harvestValue` tests `RESULT-0014` cites), and `solver/tests/gameLevels.test.js` 1/1.
+
+*Proof class:* `direct_source` for the failing whole-suite run and the passing focused runs
 
 ## Closed records (10)
 

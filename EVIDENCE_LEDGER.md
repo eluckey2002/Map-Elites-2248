@@ -442,7 +442,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0009 — Level 51 shipped: the first level admitted through the authoring tracer
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** new shipped Level 51 (`src/game.js`, `LEVELS`), authoring tracer `authoring-tracer` / run `level-authoring-tracer-2026-08-12`
 - **statement:** Candidate "level-51-split-channel" (5×7 grid, min chain 4, 24 moves, tile scale 32, no blockers) is now shipped as Level 51, continuing the chapter tile-scale ladder (16→32). Its target, 124,000, is 70% of the measured achievable score (300-seed disjoint holdout, seeds 100000-100299: 297 wins, 0 lockouts, 0 bomb failures), per `DECISION-0003`'s methodology. Unlike every other shipped level, this one also has direct human evidence: three real playthroughs of the same seed were played, recorded, and independently replay-verified against `solver/engine.js` — a loss under a since-fixed input bug (24 moves, 59,584), and two different winning strategies once input was fixed (12 moves/127,040 and 14 moves/130,496). The owner's acceptance was explicitly informed by the tension between those two wins, not just winnability.
 - **evidence:** ticket `.orch/tickets/level-authoring-tracer-2026-08-12/authoring-tracer.md` (status `complete`, all six ACs `PASS`); replay verification `.orch/audits/recording-replay-verification-2026-08-17/finding.md` and `verdict.md` (independent re-derivation); worklog `.orch/runs/level-authoring-tracer-2026-08-12/worklog.md`, Iterations 5-8; `node solver/verify-loop.js` and `node --test solver/tests/*.test.js` both pass with 51 levels present.
@@ -451,7 +451,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node solver/verify-loop.js` (expect `RESULT: PASS`, `51/51` on the target/tileScale check); `node --test solver/tests/*.test.js` (expect 73 pass).
 - **updated:** 2026-08-17
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0016]
 - **notes:** This is the first level whose target was never hand-picked at all — BL-0004's stated milestone exit condition, for one level. Batch generation of further candidates and any additional shipping remain open, separate work.
 
 ### RESULT-0010 — The bot's candidate cap was discarding real options on two-thirds of moves
@@ -482,13 +482,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node --test solver/tests/*.test.js` (expect 82 pass); `node solver/routing-ablation.js` (expect roughly +5% at t > 3); `node solver/chain-coverage.js` (expect 0.563 -> 0.688); `node solver/verify-loop.js` (expect `RESULT: PASS`).
 - **updated:** 2026-08-20
 - **supersedes:** []
-- **superseded_by:** [CORRECTION-0015]
+- **superseded_by:** [CORRECTION-0015, CORRECTION-0016]
 - **notes:** Calibration consequence, unresolved: a target is `demand x measured achievable score` (`DECISION-0003`), so a level authored after this change is pitched about 5% higher at the same demand. Shipped levels keep the targets they were admitted with, and the curve gate passes unchanged, so nothing needs to move — but the two eras of authored target are no longer directly comparable. Candidate width is unaffected: a width-32 arm produced bit-identical play to width 24 under the new generator, so `RESULT-0010`'s saturation still holds, though its stated reason does not — see `CORRECTION-0003`. On the standing note that the reference bot is a weak proxy for a skilled player: on Level 51 the bot's median moves-to-target improves from 17 to 16 across 120 seeds, and it matches the owner's recorded 12-move pace on 8 of 120 boards against 1 of 119 before. The gap narrows and does not close; the margin remains unquantified in general.
 
 ### RESULT-0012 — Level 52 shipped at the target it was admitted with, not a re-derived one
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** new shipped Level 52 (`src/game.js`, `LEVELS`); no rule, bot, or existing level changed
 - **statement:** Candidate "level-52-stone-gate" (Level 51's 5x7 shape with one stone at (2,3), min chain 4, 24 moves, tile scale 32) is shipped as Level 52. Target 102,000 is 70% of the measured achievable score (median 146,688; 300-seed disjoint holdout, seeds 100000-100299: **290 wins, 0 lockouts, 0 bomb failures**), by `DECISION-0003`'s methodology. It carries human evidence: the owner played and won it at 124,864 in 15 of 24 moves, replay-verified. Both the measurement and the playtest were done before `RESULT-0011` made the reference bot about 5% stronger, and the target is **held at the value it was admitted and played with rather than re-derived**. Re-deriving would raise it to roughly 107,000 and would silently retune a level a human had already validated at 102,000. The consequence is recorded rather than hidden: measured against the current bot this level's effective demand is nearer 0.667 than 0.700, so it sits marginally easier than its stated demand implies. Direction of error is safe — the level is more winnable than its label claims, not less.
 - **evidence:** candidate store and receipt `solver/candidate-levels-52.json` and `-52.receipt.json` (`targetDerivation`, `holdout`); `src/game.js` `LEVELS` entry for level 52; `node --test solver/tests/*.test.js` 82 pass; `node solver/verify-loop.js` -> `RESULT: PASS`, all seven checks with 52 levels present.
@@ -498,7 +498,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-08-20
 - **citation-repair:** 2026-08-31. The candidate-store path above previously pointed into `.orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/`, a linked worktree excluded by `.gitignore`, so the citation never resolved in any clone. Repointed to the committed copy at `solver/candidate-levels-52.json`, SHA-256 `6637108c3a067491a4ca6221e8d869a41dfc565f6095d740891c61a0e0aaaaba`, byte-identical to the worktree copy. The claim, its proof class, and its receipt are unchanged; only the pointer moved.
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0016]
 - **notes:** This is the first level to land on the far side of a bot-strength change, and it makes the split named in `RESULT-0011` concrete rather than hypothetical: levels 1-52 carry targets derived against the pre-`RESULT-0011` bot, anything authored later will not. That comparability question is open and is **not** settled by this record — it is only deferred for one level, on the ground that a human-validated target should not move underneath the human who validated it. Whether to re-derive the whole curve remains an owner decision.
 
 ### RESULT-0013 — Re-searching the ranking weights over the fixed generator still establishes nothing
@@ -519,7 +519,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0014 — Teaching the bot to keep its built tiles usable is worth 2.6% and removes the sampled lockouts
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** `solver/bot.js` `HARVEST_WEIGHT` / `harvestValue`; reference-bot strength only, no level, target, or rule changed
 - **statement:** The owner described a strategy the bot did not play: build tiles a few doublings above the dealt ones, then chain **those** together mid game. The bot completed such a chain about **once per game** across a 24-30 move budget. The existing placement term could not express it — it asks only whether the survivor can begin *some* legal chain next move, so it is blind to which tile survived and to what sits near it. `harvestValue` scores how usable the built tile is, and is worth **+2.60%** median score (51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, **t = 9.4**), win rate 92.3% -> 93.9%. A 100-seed pilot on a separate disjoint seed set measured +1.76%, so the confirmation came back *larger* and the weight is not a selection artifact. The response is unimodal — 0.25 -> +0.80%, 0.5 -> +1.16%, 1 -> +1.67%, 2 -> +2.60%, 4 -> +1.43% — so 2 sits on a peak rather than at the edge of the swept range. **Side effect, larger than the score gain in practice:** every lockout in the curve gate's sample disappeared, from 7% at level 35 and 3% at level 50 to 0% across all eleven sampled levels, and level 50's win rate rose 42% -> 57%. Keeping built tiles mergeable is directly the opposite of the mechanism `FACT-0006` names as the cause of a dead board.
 - **evidence:** `solver/bot.js` (`HARVEST_WEIGHT`, `HARVEST_KINSHIP`, `harvestValue`); `solver/tests/bot.test.js` (six tests, including that a built tile with only half-value company still counts and that the built threshold follows tile scale); `node --test solver/tests/*.test.js` 144 pass; `node solver/verify-loop.js` -> `RESULT: PASS`, all seven checks, 0% lockouts on every sampled level.
@@ -528,7 +528,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node --test solver/tests/*.test.js` (expect 144 pass); `node solver/verify-loop.js` (expect `RESULT: PASS`).
 - **updated:** 2026-08-21
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0016]
 - **notes:** The one rule here that comes from the engine rather than from a guess: to consume a tile of value v the board needs a v or a v/2 adjacent to it, because a chain opens with an equal pair and then climbs equal-or-double. A lone 32 is therefore *not* stranded — `16, 16, 32` is legal — and an earlier version of this term that counted only equal-valued twins was wrong, because it would have pushed the bot to reach the whole way in one chain instead of building a 16 and then a 32. Overshooting is how a sum lands off the lattice. **Everything else in the term is invented**: the 1.0/0.7/0.4 kinship weights, the `1/(1+distance)` decay, matching on exact ratios only. Those are guesses about good play and they cap the bot at what was thought of, which is the standing argument for a learned evaluation rather than more hand-written terms. Adopting this exposed a defect in `solver/calibration.js`: `chooseMove` resolves `{ ...DEFAULT_PARAMS, ...params }`, so a parameter present on the live bot but absent from the frozen ruler silently takes the live value — the ruler would look frozen and not be. `calib-1` now pins `wHarvest: 0` explicitly and a test fails if the two key sets ever diverge. Existing targets are therefore unaffected by this change.
 
 ### RESULT-0015 — Keeping eight low-value chain routes raises score 13.8% and win rate 5.5 points
@@ -1347,6 +1347,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [RESULT-0011, CORRECTION-0003]
 - **superseded_by:** []
 - **notes:** Diagnosed by a BL-0016 agent (Node 26 and Node 22, admitting commit `4ded51c`) and re-run by the owner session. Capping the enumeration instead would need a cap above 8,285,173 path states, or Level 51 seed 1 is wrongly reported `n/a`. `RESULT-0011`'s other reverify steps are handled separately.
+
+### CORRECTION-0016 — Four results' reverify runs the whole test suite, which fails for reasons outside their claims
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` commands of `RESULT-0009`, `RESULT-0011`, `RESULT-0012`, and `RESULT-0014`; their statements, measurements, and proof classes are unchanged
+- **statement:** Narrows those four records. Each recorded `reverify` includes `node --test solver/tests/*.test.js` with an expected pass count (73, 82, 82, 144). That command runs every test in the repository as it stands today, so both the count and the pass/fail outcome track unrelated later work. On 2026-09-26 it ran 494 tests: 490 pass, 1 skipped, 3 fail. The three failures are (1) and (2) `receiptGate.test.js` "candidate-levels-52.json / -54.json has a receipt that verifies against the current bot", which fail by design because those receipts predate the current bot and the owner decided on 2026-08-21 to hold their targets (the test's own message says so); and (3) `universeMap.test.js` "the builder is byte-stable and the committed generated views are current", a Universe Map staleness check. None of the three tests the claim of `RESULT-0009`, `RESULT-0011`, or `RESULT-0014`. The Level 52 receipt failure touches `RESULT-0012`'s cited receipt, but its message (receipt predates the current bot) is exactly what `RESULT-0012` states: the target was held at its pre-`RESULT-0011` value on purpose. It confirms the claim rather than contradicting it. The tests that do carry each claim pass on 2026-09-26: `solver/tests/engine.test.js` 45/45 (includes the three `buildGreedyChain` stranding / tie-break / negative-control tests `RESULT-0011` cites), `solver/tests/bot.test.js` 21/21 (includes the six `harvestValue` tests `RESULT-0014` cites), and `solver/tests/gameLevels.test.js` 1/1.
+- **evidence:** `node --test solver/tests/*.test.js` output of 2026-09-26 (494 tests, 490 pass, 3 fail); the focused runs named below; `solver/tests/receiptGate.test.js` line 165 failure text.
+- **proof_class:** `direct_source` for the failing whole-suite run and the passing focused runs
+- **as_of:** 2026-09-26
+- **reverify:** `RESULT-0009`: `node --test solver/tests/gameLevels.test.js` (expect 0 fail) and `node solver/verify-loop.js` (expect `RESULT: PASS`). `RESULT-0011`: `node --test solver/tests/engine.test.js` (expect 0 fail) plus its other commands, which this record does not change. `RESULT-0012`: `node --test solver/tests/gameLevels.test.js` (expect 0 fail) and `node solver/verify-loop.js` (expect `RESULT: PASS`). `RESULT-0014`: `node --test solver/tests/bot.test.js` (expect 0 fail) and `node solver/verify-loop.js` (expect `RESULT: PASS`). Pass counts are dropped because they grow whenever tests are added.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0009, RESULT-0011, RESULT-0012, RESULT-0014]
+- **superseded_by:** []
+- **notes:** Found by the nightly reverify run (BL-0016). The whole-suite command is also exposed to concurrent edits: during this diagnosis a ledger commit landed mid-run and 12 `universeMap.test.js` tests failed ("RESULT-0017 status: expected accepted, got narrowed"), since fixed and unrelated to these four claims. The level-count expectations `51/51` and `52/52` in the original reverify lines are also stale now that more levels ship; `verify-loop.js` reports the current count. On 2026-09-26 `node solver/verify-loop.js` printed `RESULT: PASS` and exited 0 (an earlier attempt was killed at a 600-second tool limit with exit 143 before finishing).
 
 ## Assembly cut log
 

@@ -13,7 +13,7 @@ jobs:
   reverify:
     name: ledger reverify report
     runs-on: ubuntu-latest
-    timeout-minutes: 300
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 24
       - name: Run recorded reverify commands
-        run: node tools/run-reverify.js --timeout-min 30 --out reverify-report.json
+        run: node tools/run-reverify.js --timeout-min 60 --out reverify-report.json
       - name: Keep the report
         if: always()
         uses: actions/upload-artifact@v4
