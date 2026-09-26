@@ -552,11 +552,41 @@ function assessLedgerStructure(text) {
   return problems;
 }
 
+// Every repository path and labelled commit a record's evidence or reverify
+// field cites must exist. A path is backticked and contains a slash and an
+// extension; `RESULT-NNNN/...` shorthand resolves under experiments/. A commit
+// counts only when labelled (`commit <sha>`), since bare hex is often a hash.
+// Notes are skipped: they may cite a file precisely because it is absent.
+// Does NOT check that a file says what the record claims, or content hashes.
+function assessLedgerCitations(text, {
+  exists = (rel) => fs.existsSync(path.join(ROOT, rel)),
+  isCommit = (sha) => {
+    try { execFileSync('git', ['cat-file', '-e', `${sha}^{commit}`], { cwd: ROOT, stdio: 'ignore' }); return true; } catch { return false; }
+  },
+} = {}) {
+  const problems = [];
+  for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
+    const id = /^[A-Z]+-\d{4}/.exec(record)[0];
+    const fields = [...record.matchAll(/^- \*\*(evidence|reverify):\*\*(.*)$/gm)].map((m) => m[2]).join('\n');
+    for (const m of fields.matchAll(/`([A-Za-z0-9._-]+\/[A-Za-z0-9._/-]*\.[A-Za-z0-9]+)(?::[0-9,-]+)?`/g)) {
+      const rel = m[1];
+      if (!exists(rel) && !(/^RESULT-\d{4}\//.test(rel) && exists(`experiments/${rel}`))) {
+        problems.push(`${id}: cited path ${rel} does not exist`);
+      }
+    }
+    for (const m of fields.matchAll(/commits?\s+`([0-9a-f]{7,40})`/gi)) {
+      if (!isCommit(m[1])) problems.push(`${id}: cited commit ${m[1]} does not exist`);
+    }
+  }
+  return problems;
+}
+
 function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
   const ledgerText = fs.readFileSync(LEDGER, 'utf8');
   problems.push(...assessLedgerStructure(ledgerText));
+  problems.push(...assessLedgerCitations(ledgerText));
   const results = readLedgerResults(ledgerText);
   const exempt = grandfathered();
 
@@ -647,7 +677,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerStructure, assessExperiments, citedArtifacts,
+  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerCitations, assessLedgerStructure, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,

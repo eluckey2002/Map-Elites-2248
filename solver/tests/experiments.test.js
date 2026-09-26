@@ -581,3 +581,36 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     });
   }
 }
+
+// Ledger citations (BL-0016 F12): the real ledger's evidence resolves, and a
+// missing path or unknown commit in evidence or reverify turns it red.
+{
+  const fs = require('node:fs');
+  const { assessLedgerCitations } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const rec = (field, value) => `\n### RESULT-9001 — planted\n- **${field}:** ${value}\n`;
+
+  test('the real ledger cites only paths and commits that exist', () => {
+    assert.deepEqual(assessLedgerCitations(real), []);
+  });
+  test('an existing path and commit pass', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('evidence', '`solver/bot.js:10-20`, commit `b82a9b6`')), []);
+  });
+  test('RESULT-NNNN shorthand resolves under experiments/', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('evidence', '`RESULT-0030/protocol.md`')), []);
+  });
+  test('a missing path in notes is not flagged', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('notes', '`solver/nope.js` was never written')), []);
+  });
+  for (const [name, field, value] of [
+    ['missing evidence path', 'evidence', '`solver/nope.js`'],
+    ['missing path with line range', 'evidence', '`solver/nope.js:1-5`'],
+    ['missing reverify path', 'reverify', 'run `tools/nope.js`'],
+    ['unknown commit', 'evidence', 'commit `deadbeef`'],
+    ['unknown commit, plural label', 'evidence', 'commits `deadbeef`'],
+  ]) {
+    test(`citation check rejects: ${name}`, () => {
+      assert.notDeepEqual(assessLedgerCitations(real + rec(field, value)), []);
+    });
+  }
+}
