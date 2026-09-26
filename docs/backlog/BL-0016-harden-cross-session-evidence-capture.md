@@ -122,3 +122,4 @@ closes the most gaps).
   the ledger statements and dispositions. Not covered: control checks and
   witness replay, which need the engine. RESULT-0033 and RESULT-0034 cleared
   their width-stability bar on exactly the minimum 28 pairs (feeds F6).
+- 2026-09-26: F6 done. `experiments/TEMPLATE.md` has a "Sample size and margin" section (per-verdict n, how many misses flip it, a bar for any combined measure a later stage uses); the gate requires it for protocols registered from 2026-09-27. Planted a post-cutoff date on RESULT-0048: gate flagged it; restored.

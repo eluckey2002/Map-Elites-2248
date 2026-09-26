@@ -746,6 +746,11 @@ function assessExperiments() {
       problems.push(`${result.id}: protocol declares result ${front.result}`);
     }
 
+    // BL-0016 F6: sample size and margin must be registered, from 2026-09-27.
+    if (String(front.registered || '') >= '2026-09-27' && !/^## Sample size and margin\b/m.test(protocol)) {
+      problems.push(`${result.id}: protocol registered ${front.registered} has no "## Sample size and margin" section`);
+    }
+
     const reportPath = path.join(dir, 'report.md');
     const hasReport = fs.existsSync(reportPath);
     problems.push(...assessProtocolLifecycle(result, front, hasReport));
