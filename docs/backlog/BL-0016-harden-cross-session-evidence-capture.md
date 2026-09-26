@@ -108,3 +108,11 @@ closes the most gaps).
   contradicting notes, header rules and snapshot edits, free paragraphs,
   `updated` changes. GitHub already requires "experiment gate" on `main`,
   enforced for admins, with force pushes disabled (checked via `gh api`).
+- 2026-09-26: F8 solved. The stray handoff is retired to
+  `docs/history/2026-08-18-pivot-handoff.md` with a banner: it recommended a
+  pivot to another game that was never taken; `HANDOFF.md` links updated.
+  Run-folder shape: the 16 runs without a worklog are runs that were planned
+  and never started (composition only) or stopped (stop-record). The minimum
+  that matters is one outcome file (worklog or stop-record) naming a ledger ID
+  or `not reportable`, which is F2's rule; F8's run-shape part is folded into
+  F2 rather than adding a second check.

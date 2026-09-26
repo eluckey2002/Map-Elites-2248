@@ -443,7 +443,7 @@ Two more corrections to that section, both from measurement rather than opinion:
    only correction-linked status is `superseded`, which would wrongly retire
    `RESULT-0010`. It is currently `accepted` with an appended note.
 5. **The "41 of 43, 48 of 48" human-vs-bot claim has no receipt.** It appears
-   once, as prose, in `HANDOFF-NEXT-MAP-ELITES.md`. Independent measurement
+   once, as prose, in `docs/history/2026-08-18-pivot-handoff.md`. Independent measurement
    points the same way and harder, but the figure itself is uncited.
 6. **Candidate 54's open question is still open.** Raising demand from 70% to
    85% was playtested on a board the owner had already memorised, so it cannot
@@ -470,7 +470,7 @@ spawns are the source of the noise and cannot be engineered away.
 > different levels measures reliably at 60 games (r = 0.98). Reseeding one shape and
 > ranking the draws is what fails.
 
-Read **[HANDOFF-NEXT-MAP-ELITES.md](HANDOFF-NEXT-MAP-ELITES.md)** first. It carries the full
+Read **[docs/history/2026-08-18-pivot-handoff.md](docs/history/2026-08-18-pivot-handoff.md)** first. It carries the full
 history, the pathology and its numbers, the three domain-independent fixes, the game
 recommendation, the build order, and the negative results not to re-litigate.
 
