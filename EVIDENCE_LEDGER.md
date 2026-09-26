@@ -195,7 +195,7 @@ Preserve the history of what the project believed and why. To correct an entry:
 
 1. Add a new `correction` record with its own ID, date, scope, evidence, and replacement statement.
 2. Set `supersedes` on the correction and `superseded_by` on the earlier entry.
-3. Change the earlier entry's status to `superseded`; retain its original statement, evidence, and dates.
+3. Change the earlier entry's status to `superseded`, or to `narrowed` when its measurements and conclusion still stand; retain its original statement, evidence, and dates.
 4. Update the current snapshot and any affected registry links.
 
 Never delete a receipt, erase a challenged claim, or edit an old statement so that the history appears to have always been correct. If the replacement lacks support, record the gap as an open question and leave the earlier entry's standing unchanged.
@@ -205,7 +205,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ```yaml
 - id: TYPE-NNNN
   type: fact | result | decision | hypothesis | question | correction
-  status: accepted | provisional | open | superseded | stale | rejected
+  status: accepted | provisional | open | superseded | narrowed | stale | rejected
   scope: <level, seed, ruleset, horizon, policy, checkout, or decision scope>
   statement: <one claim or question>
   evidence:
@@ -1251,7 +1251,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-09-26
 - **supersedes:** [DECISION-0004]
 - **superseded_by:** []
-- **notes:** Evidence branches under `evidence/` must never be deleted; the ledger citation check accepts commits reachable from them.
+- **notes:** Precision (2026-09-26 review): of the 31 files `6a07294` added, 25 are absent at `1456906` and 2 differ. Evidence branches under `evidence/` must never be deleted; the ledger citation check accepts commits reachable from them.
 
 ## Assembly cut log
 
