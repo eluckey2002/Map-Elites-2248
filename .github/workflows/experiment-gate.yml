@@ -27,6 +27,9 @@ jobs:
         with:
           node-version: 24
       - name: EXPERIMENT GATE
+        env:
+          # On a push to main, compare the ledger with the commit before the push.
+          LEDGER_BASE: ${{ github.event_name == 'push' && github.event.before || '' }}
         run: node tools/verify-experiments.js
 
   test-suite:

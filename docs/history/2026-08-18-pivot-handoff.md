@@ -1,3 +1,10 @@
+> **Historical, not current (retired 2026-09-26, BL-0016 F8).** This is the
+> 2026-08-18 handoff recommending a move to a different, deterministic puzzle.
+> That pivot was not taken; MAP-Elites work continued on 2248 descriptors. For
+> current state read [AGENTS.md](../../AGENTS.md), the
+> [evidence ledger](../../EVIDENCE_LEDGER.md), and [CURRENT.md](../../CURRENT.md).
+> Kept for its winner's-curse analysis, which `HANDOFF.md` cites.
+
 # Handoff: from 2248 level generation to MAP-Elites on a deterministic puzzle
 
 **Written:** 2026-08-18, at the end of the session that built the 2248 level generator.

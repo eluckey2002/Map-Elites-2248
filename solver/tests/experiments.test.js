@@ -532,3 +532,222 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   }
   assert.ok(checked >= 6, `expected to inspect the real protocols, inspected ${checked}`);
 });
+
+// Ledger structure: the real ledger passes, and each defect the 2026-09-26
+// audit planted (BL-0016 F9) turns it red.
+{
+  const fs = require('node:fs');
+  const { assessLedgerStructure } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const good = (id = 'RESULT-9001', over = {}) => {
+    const f = {
+      type: 'result', status: 'accepted', scope: 's', statement: 'x', evidence: '`a.js`',
+      proof_class: '`direct_source`', as_of: '2026-09-26', reverify: 'n/a', updated: '2026-09-26',
+      supersedes: '[]', superseded_by: '[]', ...over,
+    };
+    return [`### ${id} — planted`, ...Object.entries(f).filter(([, v]) => v !== null).map(([k, v]) => `- **${k}:** ${v}`)].join('\n');
+  };
+
+  test('the real ledger passes the structure check', () => {
+    assert.deepEqual(assessLedgerStructure(real), []);
+  });
+  test('a well-formed planted record passes', () => {
+    assert.deepEqual(assessLedgerStructure(`${real}\n${good()}\n`), []);
+  });
+  test('an empty ledger fails', () => {
+    assert.notDeepEqual(assessLedgerStructure(''), []);
+  });
+  for (const [name, rec] of [
+    ['duplicate ID', good('RESULT-0017')],
+    ['invalid status', good('RESULT-9001', { status: 'confirmed' })],
+    ['invalid proof class', good('RESULT-9001', { proof_class: '`certain`' })],
+    ['proof class naming no class', good('RESULT-9001', { proof_class: 'see notes' })],
+    ['missing as_of', good('RESULT-9001', { as_of: null })],
+    ['missing evidence', good('RESULT-9001', { evidence: null })],
+    ['type not matching prefix', good('FACT-9001', { type: 'result' })],
+    ['unknown prefix', good('CLAIM-9001')],
+    ['h2 heading', good('RESULT-9001').replace('### ', '## ')],
+    ['h4 heading', good('RESULT-9001').replace('### ', '#### ')],
+    ['lowercase heading', good('RESULT-9001').replace('RESULT', 'result')],
+    ['heading without space', good('RESULT-9001').replace('### ', '###')],
+    ['short ID', good('RESULT-91')],
+    ['empty evidence', good('RESULT-9001', { evidence: '' })],
+    ['status written twice', `${good()}\n- **status:** confirmed`],
+    ['superseded without link', good('RESULT-9001', { status: 'superseded' })],
+    ['free-text as_of', good('RESULT-9001', { as_of: 'yesterday' })],
+  ]) {
+    test(`structure check rejects: ${name}`, () => {
+      assert.notDeepEqual(assessLedgerStructure(`${real}\n${rec}\n`), []);
+    });
+  }
+}
+
+// Ledger citations (BL-0016 F12): the real ledger's evidence resolves, and a
+// missing path or unknown commit in evidence or reverify turns it red.
+{
+  const fs = require('node:fs');
+  const { assessLedgerCitations } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const rec = (field, value) => `\n### RESULT-9001 — planted\n- **${field}:** ${value}\n`;
+
+  test('the real ledger cites only paths and commits that exist', () => {
+    assert.deepEqual(assessLedgerCitations(real), []);
+  });
+  test('an existing path and commit pass', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('evidence', '`solver/bot.js:10-20`, commit `b82a9b6`')), []);
+  });
+  test('RESULT-NNNN shorthand resolves under experiments/', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('evidence', '`RESULT-0030/protocol.md`')), []);
+  });
+  test('a known gap stops being excused when its correction is missing', () => {
+    assert.notDeepEqual(assessLedgerCitations(real.replace('### CORRECTION-0010', '### CORRECTION-9010')), []);
+  });
+  test('a missing path in notes is not flagged', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('notes', '`solver/nope.js` was never written')), []);
+  });
+  for (const [name, field, value] of [
+    ['missing evidence path', 'evidence', '`solver/nope.js`'],
+    ['missing path with line range', 'evidence', '`solver/nope.js:1-5`'],
+    ['missing reverify path', 'reverify', 'run `tools/nope.js`'],
+    ['unknown commit', 'evidence', 'commit `deadbeef`'],
+    ['unknown commit, plural label', 'evidence', 'commits `deadbeef`'],
+    ['path inside a command', 'reverify', 'run `node --test solver/tests/nope.test.js`'],
+    ['top-level file without slash', 'evidence', '`NOPE.md`'],
+    ['commit with colon label', 'evidence', 'commit: `deadbeef1`'],
+    ['commit with equals label', 'evidence', 'Commit = deadbeef1'],
+    ['commit only on an unmerged branch', 'evidence', 'commit `95d75cc`'],
+    ['absolute path', 'evidence', '`/Users/someone/nope.js`'],
+    ['list-form continuation line', 'evidence', '\n  - `solver/nope.js`'],
+  ]) {
+    test(`citation check rejects: ${name}`, () => {
+      assert.notDeepEqual(assessLedgerCitations(real + rec(field, value)), []);
+    });
+  }
+}
+
+// Append-only history and supersede links (BL-0016 F11).
+{
+  const fs = require('node:fs');
+  const { assessLedgerHistory, assessLedgerLinks } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const edit = (id, field, fn) => real.replace(new RegExp(`(### ${id} [\\s\\S]*?^- \\*\\*${field}:\\*\\*[ \\t]*)(.*)$`, 'm'), (_, a, v) => a + fn(v));
+
+  test('the real ledger has two-way supersede links', () => {
+    assert.deepEqual(assessLedgerLinks(real), []);
+  });
+  test('an unchanged ledger passes the history check', () => {
+    assert.deepEqual(assessLedgerHistory(real, real), []);
+  });
+  test('a status change and added links and notes pass', () => {
+    let next = edit('RESULT-0005', 'status', () => 'stale'); // stale needs no correction
+    next = next.replace(/(### RESULT-0010 [\s\S]*?^- \*\*notes:\*\*[ \t]*)(.*)$/m, (_, a, v) => `${a}${v} Added later.`);
+    assert.deepEqual(assessLedgerHistory(next, real), []);
+  });
+  for (const [name, next] of [
+    ['a rewritten statement', edit('RESULT-0001', 'statement', (v) => v.replace('12,336', '12,999'))],
+    ['a promoted proof class', edit('RESULT-0005', 'proof_class', () => '`exact_result`')],
+    ['a rewritten evidence field', edit('FACT-0001', 'evidence', (v) => `${v} extra`)],
+    ['a changed as_of', edit('RESULT-0001', 'as_of', () => '2026-09-26')],
+    ['a removed record', real.replace(/^### HYPOTHESIS-0001 [\s\S]*?(?=^### )/m, '')],
+    ['a dropped supersede link', edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')],
+    ['rewritten notes', edit('RESULT-0010', 'notes', () => 'different')],
+    ['notes with text prepended', edit('RESULT-0010', 'notes', (v) => `[RETRACTED] ${v}`)],
+    ['a changed heading title', real.replace(/^### RESULT-0001 .*$/m, '### RESULT-0001 — Accepted 12,999 score')],
+    ['a rewritten ad hoc bold line', edit('RESULT-0010', 'appended 2026-08-20', (v) => `${v} changed`)],
+    ['a capitalised override field', real.replace(/^(### FACT-0001 .*\n)/m, '$1- **Statement:** the opposite\n')],
+    ['a superseded record revived as accepted', edit('RESULT-0030', 'status', () => 'accepted')],
+    ['a status change with no new correction', edit('FACT-0001', 'status', () => 'rejected')],
+  ]) {
+    test(`history check rejects ${name}`, () => {
+      assert.notDeepEqual(assessLedgerHistory(next, real), []);
+    });
+  }
+  test('link check rejects a one-way supersede link', () => {
+    assert.notDeepEqual(assessLedgerLinks(edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')), []);
+  });
+}
+
+// Sample size and margin (BL-0016 F6): every protocol on disk, not only ones
+// with a ledger record, and no quoted or blank date slips past the cutoff.
+{
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const { assessSampleSizeSections } = require('../../tools/verify-experiments.js');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'f6-'));
+  const write = (name, registered, body = '') => {
+    fs.mkdirSync(path.join(dir, name), { recursive: true });
+    fs.writeFileSync(path.join(dir, name, 'protocol.md'), `---\nresult: ${name}\n${registered === null ? '' : `registered: ${registered}\n`}---\n\n${body}`);
+  };
+  test('the real experiments pass the sample-size check', () => {
+    assert.deepEqual(assessSampleSizeSections(), []);
+  });
+  test('an old protocol without the section passes', () => {
+    write('RESULT-9100', '2026-09-19T00:00:00Z');
+    assert.deepEqual(assessSampleSizeSections(dir), []);
+  });
+  test('a new protocol with the section passes', () => {
+    write('RESULT-9101', '2026-09-28T00:00:00Z', '## Sample size and margin\n');
+    assert.deepEqual(assessSampleSizeSections(dir), []);
+  });
+  for (const [name, date] of [['new, no section', '2026-09-28T00:00:00Z'], ['quoted date', '"2026-09-28"'], ['blank date', ''], ['missing date', null]]) {
+    test(`sample-size check rejects: ${name}`, () => {
+      const d = fs.mkdtempSync(path.join(os.tmpdir(), 'f6x-'));
+      fs.mkdirSync(path.join(d, 'RESULT-9102'));
+      fs.writeFileSync(path.join(d, 'RESULT-9102', 'protocol.md'), `---\nresult: RESULT-9102\n${date === null ? '' : `registered: ${date}\n`}---\n`);
+      assert.notDeepEqual(assessSampleSizeSections(d), []);
+    });
+  }
+}
+
+// Run outcomes reach the ledger (BL-0016 F2).
+{
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const { assessRunOutcomes } = require('../../tools/verify-experiments.js');
+  const ledger = '### RESULT-0031 — x\n';
+  const check = (files, started = '2026-09-28') => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'f2-'));
+    fs.mkdirSync(path.join(dir, 'run'));
+    for (const [f, body] of Object.entries(files)) fs.writeFileSync(path.join(dir, 'run', f), body);
+    return assessRunOutcomes(ledger, { runsDir: dir, startDate: () => started });
+  };
+  test('the real runs pass the outcome check', () => {
+    assert.deepEqual(assessRunOutcomes(fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8')), []);
+  });
+  test('a run naming an existing record passes', () => {
+    assert.deepEqual(check({ 'worklog.md': 'done\nledger: RESULT-0031\n' }), []);
+  });
+  test('a stopped run marked not reportable with a reason passes', () => {
+    assert.deepEqual(check({ 'stop-record.md': 'ledger: not reportable — stopped before any data\n' }), []);
+  });
+  test('an older run needs no ledger line', () => {
+    assert.deepEqual(check({ 'spec.md': 'x' }, '2026-09-01'), []);
+  });
+  for (const [name, files] of [
+    ['no outcome file', { 'spec.md': 'x' }],
+    ['outcome file without a ledger line', { 'worklog.md': 'done\n' }],
+    ['a ledger line naming a missing record', { 'worklog.md': 'ledger: RESULT-9999\n' }],
+    ['not reportable with no reason', { 'worklog.md': 'ledger: not reportable\n' }],
+    ['a ledger line with no ID', { 'worklog.md': 'ledger: see chat\n' }],
+  ]) {
+    test(`outcome check rejects: ${name}`, () => {
+      assert.notDeepEqual(check(files), []);
+    });
+  }
+}
+
+// Session close-out: a new ledger record must come with a CURRENT.md update.
+{
+  const { assessCloseOut } = require('../../tools/verify-experiments.js');
+  const base = '### RESULT-0001 — a\n';
+  const grown = `${base}### RESULT-0002 — b\n`;
+  test('close-out passes when no record is added', () => {
+    assert.deepEqual(assessCloseOut(base, base, 'same', 'same'), []);
+  });
+  test('close-out passes when a record is added and CURRENT.md changes', () => {
+    assert.deepEqual(assessCloseOut(grown, base, 'new', 'old'), []);
+  });
+  test('close-out rejects a new record with CURRENT.md unchanged', () => {
+    assert.notDeepEqual(assessCloseOut(grown, base, 'same', 'same'), []);
+  });
+}

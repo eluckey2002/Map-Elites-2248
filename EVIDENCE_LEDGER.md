@@ -173,6 +173,7 @@ Use the narrowest class the evidence supports:
 | `direct_source` | A rule, configuration, identity, or state is present in cited primary evidence. |
 | `exact_result` | The stated value is exact within the recorded scope. |
 | `replayed_lower_bound` | A cited witness replays to the stated value; no higher-score claim follows. |
+| `replayed_upper_bound` | A cited witness replays to the target within the stated moves or cap, so the minimum needed is at most that; no lower bound or exact minimum follows. |
 | `proven_upper_bound` | A cited admissible proof caps the stated scope; it is not a witness or prediction. |
 | `heuristic_observation` | A named policy, sample, or incomplete search produced the observation; no policy-independent bound follows. |
 | `UNKNOWN` | A bounded decision attempt returned no answer; it excludes nothing. |
@@ -194,7 +195,7 @@ Preserve the history of what the project believed and why. To correct an entry:
 
 1. Add a new `correction` record with its own ID, date, scope, evidence, and replacement statement.
 2. Set `supersedes` on the correction and `superseded_by` on the earlier entry.
-3. Change the earlier entry's status to `superseded`; retain its original statement, evidence, and dates.
+3. Change the earlier entry's status to `superseded`, or to `narrowed` when its measurements and conclusion still stand; retain its original statement, evidence, and dates.
 4. Update the current snapshot and any affected registry links.
 
 Never delete a receipt, erase a challenged claim, or edit an old statement so that the history appears to have always been correct. If the replacement lacks support, record the gap as an open question and leave the earlier entry's standing unchanged.
@@ -204,12 +205,12 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ```yaml
 - id: TYPE-NNNN
   type: fact | result | decision | hypothesis | question | correction
-  status: accepted | provisional | open | superseded | stale | rejected
+  status: accepted | provisional | open | superseded | narrowed | stale | rejected
   scope: <level, seed, ruleset, horizon, policy, checkout, or decision scope>
   statement: <one claim or question>
   evidence:
     - <primary path plus symbol, frozen identity/hash, or reproducible command>
-  proof_class: direct_source | exact_result | replayed_lower_bound | proven_upper_bound | heuristic_observation | UNKNOWN | unresolved | owner_decision | hypothesis
+  proof_class: direct_source | exact_result | replayed_lower_bound | replayed_upper_bound | proven_upper_bound | heuristic_observation | UNKNOWN | unresolved | owner_decision | hypothesis
   as_of: YYYY-MM-DD | not_time_sensitive
   reverify: <command and expected observation, or not_applicable>
   updated: YYYY-MM-DD
@@ -308,7 +309,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### FACT-0007 — Uniform integer tile scaling is an exact isomorphism
 
 - **type:** fact
-- **status:** accepted
+- **status:** narrowed
 - **scope:** levels 1, 15, 26, 35, 50 at scales 2, 3, 5, 6, 7, 11, 13, 16, seeds 0-3, reference bot at `solver/bot.js`
 - **statement:** Multiplying every tile value on a level by a positive integer `k` multiplies the final score by exactly `k` and leaves play otherwise identical: same move count, same termination reason. Chain legality is equal-or-double and merges sum, and both relations are preserved by a uniform scale; stone blockers carry value 0, which scaling leaves unchanged. Verified 160 of 160 checks over the stated scope.
 - **evidence:** `solver/game-tester.js`, `verifyScaleInvariance`, which compares score, move count, and end reason against `score x k` for each case and refuses to emit derived numbers if any case fails.
@@ -317,7 +318,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node solver/game-tester.js --seeds 20`; expect the header line `PASS - 60/60 checks: score scales exactly, play is identical.`
 - **updated:** 2026-08-12
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0017]
 - **notes:** Exactness holds only after two scale-dependent constants in the reference bot were corrected on 2026-08-12: its turnover bonus was a fixed 40 points per emptied cell while every other ranking term is in game points, and `isMergeableSum` tested for a power of two rather than for `k` times a power of two. Both are inert at scale 1, so no result recorded before this date changes. The structural argument generalises beyond the tested scope, but only the stated scope is verified. This fact is what permits a target to be derived by multiplication rather than re-measured per scale.
 
 ## Result registry
@@ -325,7 +326,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0001 — Accepted 12,336 score
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** frozen Level 26 seed 0, 32 moves
 - **statement:** A 32-move witness replays to 12,336 at spawn cursor 520. This is a **replayed lower bound**, 664 short of 13,000. The search miss is not an upper bound and does not decide reachability.
 - **evidence:** `solver/target-witness-search/frozen-run.json:1-24,106-113`; receipt SHA-256 `4e47c05ed42cfd978e85591913ae2062c10525d003ece73e6b2feeef0e12094e`; integration at `.orch/runs/level26-certified-score-2026-08-10/worklog.md:111-120`.
@@ -334,7 +335,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node solver/target-witness-search/verify.js solver/target-witness-search/frozen-run.json`; expect `PASS`, score 12336, moves 32, cursor 520, and `targetReached: false`.
 - **updated:** 2026-08-11
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0010]
 
 ### RESULT-0002 — Mass/cursor upper bound
 
@@ -367,7 +368,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0004 — Higher hinted thresholds remained unknown
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** frozen Level 26 seed 0, bounded CP-SAT reachability checks
 - **statement:** Thresholds 12,400, 12,600, 12,800, and 13,000 are `UNKNOWN` at their bounded runs. These outcomes prove no upper bound and rule out no score.
 - **evidence:** `solver/hinted-cp-sat/frozen-run.json:1-35,36-75,2375-2412`; integration at `.orch/runs/level26-certified-score-2026-08-10/worklog.md:137-152`; receipt SHA-256 `5c076a3bbb8b58fc4d1f408b1b35b72f168194cb2101ad0bc977733cb8402b24`.
@@ -376,12 +377,12 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node solver/hinted-cp-sat/verify-result.js solver/hinted-cp-sat/frozen-run.json`; expect `PASS` and `UNKNOWN` at 12400, 12600, 12800, and 13000.
 - **updated:** 2026-08-11
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0010]
 
 ### RESULT-0005 — Level 26 is not a tuning outlier; the whole back half is unbeaten
 
 - **type:** result
-- **status:** accepted
+- **status:** stale
 - **scope:** all 50 shipped levels, current `solver/bot.js` policy, 200 seeds per level
 - **statement:** Against the shipped targets, the current bot wins every level through 14, wins none from level 17 onward, and never once reaches a target between levels 17 and 50. Expressing each target as a multiple of the bot's median achievable score, Level 26 sits at **1.66** — the *lowest* demand of any level from 19 to 50, and below levels 24 (2.32), 28 (2.18), 29 (2.35), 30 (2.39), and 31 (2.22). Demand climbs to 6.24 by level 49. Targets rise in fixed 500-point steps while achievable score stays flat or declines as move budgets shrink, blockers accumulate, and the grid narrows from 5x8 to 5x7 at level 31. This is a heuristic observation about one policy; it bounds no optimal player.
 - **evidence:** `solver/target-calibration.js` (full-budget play with the target raised out of reach; `chooseMove` never reads `targetScore`, so removing the target does not change play); consistent with the 500-seed Level 26 sample recorded under `HANDOFF.md`, **Synopsis** (median 7,842, max 11,370).
@@ -396,7 +397,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0006 — Spawning 16s does not lift the ceiling
 
 - **type:** result
-- **status:** accepted
+- **status:** stale
 - **scope:** levels 11, 20, 26, 30, 40, 45, 50; current `solver/bot.js` policy; 200 seeds per level per variant
 - **statement:** Adding 16 to the refill pool was tested as a remedy for the recorded "hole at 16" and **fails as a fix**. Raising mean spawned value by 50% (16 at 10%) lifts Level 26's median from 7,832 to 8,416, about 7.5%. Raising it 76% (16 and 32) reaches 8,856, about 13%. Response is strongly sublinear, so input value is not the binding constraint; re-chaining of value already on the board is. Level 50 rises from 4,398 to 4,982 against a 25,000 target. This tests the remedy, not the diagnosis: the recorded value-conservation and recycling analysis stands.
 - **evidence:** `solver/spawn-experiment.js`; its baseline variant reproduces `solver/target-calibration.js` exactly (level 11 → 6,832; level 26 → 7,832 at 200 seeds), which is the correctness check on its replicated spawn step; original diagnosis in `solver/README.md`, **The score-pace ceiling, quantified**, iteration 2.
@@ -411,7 +412,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0007 — More moves rescue the mid levels and saturate on the late ones
 
 - **type:** result
-- **status:** accepted
+- **status:** stale
 - **scope:** levels 26, 40, 50; current `solver/bot.js` policy; 200 seeds per level per budget
 - **statement:** Scaling the move budget is the effective lever in the mid game and dies in the late game. Level 26 goes 7,832 → 11,078 → **13,443** → 14,888 at 1x, 1.5x, 2x, and 3x its 32 moves, so doubling moves clears its 13,000 target. Level 40 saturates near 10,000 against a 20,000 target, and Level 50 returns an identical 6,072 at both 2x and 3x against a 25,000 target — the board reaches a terminal state before the extra moves can be spent. No move budget makes the late targets reachable.
 - **evidence:** `solver/move-budget.js`; shipped budgets and targets in `src/game.js`, `LEVELS`.
@@ -426,7 +427,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0008 — Every level is winnable after the demand-based retune
 
 - **type:** result
-- **status:** accepted
+- **status:** stale
 - **scope:** all 50 shipped levels, reference bot at `solver/bot.js`, 100 seeds per level from seed 100000
 - **statement:** With targets and tile scales set by `DECISION-0003`, no level sits below a 5% bot win rate. Win rate ranges from 37% to 100% across the 50 levels and trends downward with level number. Before the retune, 34 of 50 levels were at 0%. Seeds 100000-100099 are disjoint from seeds 0-149, on which the targets were fitted, so this is not the measurement that set them. Board lockouts persist at a low rate on the late levels, up to roughly 5% at level 50.
 - **evidence:** `node solver/verify-loop.js` (60 seeds from 100000, sampled levels) exits 0 with all seven checks passing; per-level policy table reproducible with `node solver/game-tester.js --seeds 150 --policy powers2 --detail`.
@@ -441,7 +442,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0009 — Level 51 shipped: the first level admitted through the authoring tracer
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** new shipped Level 51 (`src/game.js`, `LEVELS`), authoring tracer `authoring-tracer` / run `level-authoring-tracer-2026-08-12`
 - **statement:** Candidate "level-51-split-channel" (5×7 grid, min chain 4, 24 moves, tile scale 32, no blockers) is now shipped as Level 51, continuing the chapter tile-scale ladder (16→32). Its target, 124,000, is 70% of the measured achievable score (300-seed disjoint holdout, seeds 100000-100299: 297 wins, 0 lockouts, 0 bomb failures), per `DECISION-0003`'s methodology. Unlike every other shipped level, this one also has direct human evidence: three real playthroughs of the same seed were played, recorded, and independently replay-verified against `solver/engine.js` — a loss under a since-fixed input bug (24 moves, 59,584), and two different winning strategies once input was fixed (12 moves/127,040 and 14 moves/130,496). The owner's acceptance was explicitly informed by the tension between those two wins, not just winnability.
 - **evidence:** ticket `.orch/tickets/level-authoring-tracer-2026-08-12/authoring-tracer.md` (status `complete`, all six ACs `PASS`); replay verification `.orch/audits/recording-replay-verification-2026-08-17/finding.md` and `verdict.md` (independent re-derivation); worklog `.orch/runs/level-authoring-tracer-2026-08-12/worklog.md`, Iterations 5-8; `node solver/verify-loop.js` and `node --test solver/tests/*.test.js` both pass with 51 levels present.
@@ -450,7 +451,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node solver/verify-loop.js` (expect `RESULT: PASS`, `51/51` on the target/tileScale check); `node --test solver/tests/*.test.js` (expect 73 pass).
 - **updated:** 2026-08-17
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0016]
 - **notes:** This is the first level whose target was never hand-picked at all — BL-0004's stated milestone exit condition, for one level. Batch generation of further candidates and any additional shipping remain open, separate work.
 
 ### RESULT-0010 — The bot's candidate cap was discarding real options on two-thirds of moves
@@ -465,14 +466,14 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node --test solver/tests/*.test.js` (expect 79 pass); `node solver/verify-loop.js` (expect `RESULT: PASS`).
 - **updated:** 2026-08-19
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0003]
 - **notes:** Two corrections are recorded here deliberately, because both were believed and reported before being checked. (1) The searched policy's weight changes — `wRoll` 0.813, `wPlace` 1.432, `turnover` 44.655 — measured +1.31% at fixed width under an arithmetic mean of per-cell ratios, and **+0.10% (t 0.4)** under the log-ratio estimator. They are not adopted; essentially the entire gain is the width. (2) The same estimator change cut the headline holdout lift from +3.30% to +1.68%, because a mean of ratios was being carried by a right tail of games where the new policy scored several times the reference. Clustering by level inflated the standard error only 1.5x, well below the 3.7x that the seeds-per-level count would suggest, because the policy improves most levels by a similar amount rather than winning big on a few. The reference bot remains a weak proxy for a skilled player; 1.1% does not change that, and the open note on unquantified human margin stands.
 - **appended 2026-08-20:** The mechanism named in the statement above — "boards offer a median of 15 legal chains and at most 30" — is wrong, and `CORRECTION-0003` records why. Boards offer hundreds of thousands; 15 to 30 is what the candidate *generator* returns. Every measurement in this record stands and the saturation was re-confirmed under a changed generator, so the status stays `accepted`; only the explanation is narrowed. Read this record together with `CORRECTION-0003` and `RESULT-0011`.
 
 ### RESULT-0011 — The chain walk stranded tiles it could have used; a tie-break recovers 5%
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** `solver/engine.js` (`buildGreedyChain`, `findGreedyChains`), `solver/bot.js` `CHAIN_TIE_BREAK`; reference-bot strength only, no level, target, or rule changed
 - **statement:** The bot's move generator walks one path from each start tile, taking the lowest-value legal neighbour and never backtracking, so it can wall itself off from tiles it could still have reached — it finds 11-tile chains on boards where 19-tile chains exist. Because points scale with the chain sum, that is close to half the points available: measured against full enumeration of every legal chain, the walk reaches **0.563** of the best chain the bot would accept (highest-scoring chain whose sum stays on the mergeable lattice, `FACT-0006`), averaged over 16 boards across six levels. Breaking ties by **Warnsdorff's rule** — among next tiles of equal value, take the one with the fewest onward moves, because a nearly cut-off tile must be used now or lost — lifts that to **0.688** and never scored below the plain walk on any board tested. In play it is worth **+5.25%** median score (geometric mean of per-game log-ratios, 51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, n = 51, **t = 15.7**), for about 1.16x the compute. 50 of 51 levels improve; the worst is level 45 at -0.5%. A 100-seed pilot on a separate disjoint seed set measured +4.87%, so the confirmation came back *larger* and the effect is not a selection artifact. It remains a tie-break: ranking on connectivity ahead of value scores **0.19**, far worse than doing nothing, because lowest-value-first is what makes the walk long in the first place.
 - **evidence:** `solver/chain-coverage.js` (coverage against `enumerateLegalChains`); `solver/routing-ablation.js` and `.orch/routing-ablation-01.json` (paired outcome measurement); `solver/tests/engine.test.js` — three tests covering the stranding case, the tie-break's fix, and a negative control that fails if connectivity is made the primary rule; `node --test solver/tests/*.test.js` 82 pass; `node solver/verify-loop.js` -> `RESULT: PASS`, all seven checks.
@@ -481,13 +482,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node --test solver/tests/*.test.js` (expect 82 pass); `node solver/routing-ablation.js` (expect roughly +5% at t > 3); `node solver/chain-coverage.js` (expect 0.563 -> 0.688); `node solver/verify-loop.js` (expect `RESULT: PASS`).
 - **updated:** 2026-08-20
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0015, CORRECTION-0016, CORRECTION-0017]
 - **notes:** Calibration consequence, unresolved: a target is `demand x measured achievable score` (`DECISION-0003`), so a level authored after this change is pitched about 5% higher at the same demand. Shipped levels keep the targets they were admitted with, and the curve gate passes unchanged, so nothing needs to move — but the two eras of authored target are no longer directly comparable. Candidate width is unaffected: a width-32 arm produced bit-identical play to width 24 under the new generator, so `RESULT-0010`'s saturation still holds, though its stated reason does not — see `CORRECTION-0003`. On the standing note that the reference bot is a weak proxy for a skilled player: on Level 51 the bot's median moves-to-target improves from 17 to 16 across 120 seeds, and it matches the owner's recorded 12-move pace on 8 of 120 boards against 1 of 119 before. The gap narrows and does not close; the margin remains unquantified in general.
 
 ### RESULT-0012 — Level 52 shipped at the target it was admitted with, not a re-derived one
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** new shipped Level 52 (`src/game.js`, `LEVELS`); no rule, bot, or existing level changed
 - **statement:** Candidate "level-52-stone-gate" (Level 51's 5x7 shape with one stone at (2,3), min chain 4, 24 moves, tile scale 32) is shipped as Level 52. Target 102,000 is 70% of the measured achievable score (median 146,688; 300-seed disjoint holdout, seeds 100000-100299: **290 wins, 0 lockouts, 0 bomb failures**), by `DECISION-0003`'s methodology. It carries human evidence: the owner played and won it at 124,864 in 15 of 24 moves, replay-verified. Both the measurement and the playtest were done before `RESULT-0011` made the reference bot about 5% stronger, and the target is **held at the value it was admitted and played with rather than re-derived**. Re-deriving would raise it to roughly 107,000 and would silently retune a level a human had already validated at 102,000. The consequence is recorded rather than hidden: measured against the current bot this level's effective demand is nearer 0.667 than 0.700, so it sits marginally easier than its stated demand implies. Direction of error is safe — the level is more winnable than its label claims, not less.
 - **evidence:** candidate store and receipt `solver/candidate-levels-52.json` and `-52.receipt.json` (`targetDerivation`, `holdout`); `src/game.js` `LEVELS` entry for level 52; `node --test solver/tests/*.test.js` 82 pass; `node solver/verify-loop.js` -> `RESULT: PASS`, all seven checks with 52 levels present.
@@ -497,7 +498,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **updated:** 2026-08-20
 - **citation-repair:** 2026-08-31. The candidate-store path above previously pointed into `.orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/`, a linked worktree excluded by `.gitignore`, so the citation never resolved in any clone. Repointed to the committed copy at `solver/candidate-levels-52.json`, SHA-256 `6637108c3a067491a4ca6221e8d869a41dfc565f6095d740891c61a0e0aaaaba`, byte-identical to the worktree copy. The claim, its proof class, and its receipt are unchanged; only the pointer moved.
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0016]
 - **notes:** This is the first level to land on the far side of a bot-strength change, and it makes the split named in `RESULT-0011` concrete rather than hypothetical: levels 1-52 carry targets derived against the pre-`RESULT-0011` bot, anything authored later will not. That comparability question is open and is **not** settled by this record — it is only deferred for one level, on the ground that a human-validated target should not move underneath the human who validated it. Whether to re-derive the whole curve remains an owner decision.
 
 ### RESULT-0013 — Re-searching the ranking weights over the fixed generator still establishes nothing
@@ -518,7 +519,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0014 — Teaching the bot to keep its built tiles usable is worth 2.6% and removes the sampled lockouts
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** `solver/bot.js` `HARVEST_WEIGHT` / `harvestValue`; reference-bot strength only, no level, target, or rule changed
 - **statement:** The owner described a strategy the bot did not play: build tiles a few doublings above the dealt ones, then chain **those** together mid game. The bot completed such a chain about **once per game** across a 24-30 move budget. The existing placement term could not express it — it asks only whether the survivor can begin *some* legal chain next move, so it is blind to which tile survived and to what sits near it. `harvestValue` scores how usable the built tile is, and is worth **+2.60%** median score (51 levels x 300 unseen seeds = 15,300 games per arm, paired per (level, seed), standard error clustered by level, **t = 9.4**), win rate 92.3% -> 93.9%. A 100-seed pilot on a separate disjoint seed set measured +1.76%, so the confirmation came back *larger* and the weight is not a selection artifact. The response is unimodal — 0.25 -> +0.80%, 0.5 -> +1.16%, 1 -> +1.67%, 2 -> +2.60%, 4 -> +1.43% — so 2 sits on a peak rather than at the edge of the swept range. **Side effect, larger than the score gain in practice:** every lockout in the curve gate's sample disappeared, from 7% at level 35 and 3% at level 50 to 0% across all eleven sampled levels, and level 50's win rate rose 42% -> 57%. Keeping built tiles mergeable is directly the opposite of the mechanism `FACT-0006` names as the cause of a dead board.
 - **evidence:** `solver/bot.js` (`HARVEST_WEIGHT`, `HARVEST_KINSHIP`, `harvestValue`); `solver/tests/bot.test.js` (six tests, including that a built tile with only half-value company still counts and that the built threshold follows tile scale); `node --test solver/tests/*.test.js` 144 pass; `node solver/verify-loop.js` -> `RESULT: PASS`, all seven checks, 0% lockouts on every sampled level.
@@ -527,7 +528,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** `node --test solver/tests/*.test.js` (expect 144 pass); `node solver/verify-loop.js` (expect `RESULT: PASS`).
 - **updated:** 2026-08-21
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0016]
 - **notes:** The one rule here that comes from the engine rather than from a guess: to consume a tile of value v the board needs a v or a v/2 adjacent to it, because a chain opens with an equal pair and then climbs equal-or-double. A lone 32 is therefore *not* stranded — `16, 16, 32` is legal — and an earlier version of this term that counted only equal-valued twins was wrong, because it would have pushed the bot to reach the whole way in one chain instead of building a 16 and then a 32. Overshooting is how a sum lands off the lattice. **Everything else in the term is invented**: the 1.0/0.7/0.4 kinship weights, the `1/(1+distance)` decay, matching on exact ratios only. Those are guesses about good play and they cap the bot at what was thought of, which is the standing argument for a learned evaluation rather than more hand-written terms. Adopting this exposed a defect in `solver/calibration.js`: `chooseMove` resolves `{ ...DEFAULT_PARAMS, ...params }`, so a parameter present on the live bot but absent from the frozen ruler silently takes the live value — the ruler would look frozen and not be. `calib-1` now pins `wHarvest: 0` explicitly and a test fails if the two key sets ever diverge. Existing targets are therefore unaffected by this change.
 
 ### RESULT-0015 — Keeping eight low-value chain routes raises score 13.8% and win rate 5.5 points
@@ -563,7 +564,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0017 — A bounded MAP-Elites run finds 20 distinct behavior cells without changing the champion
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** isolated `map-elites-learning` experiment at champion commit `52f500c`; 11-policy descriptor pilot, 48 archive iterations, six fixed screen cases with six seeds each, and twelve disjoint holdout cases with twelve seeds each for three representative elites; no level, target, receipt, authoring path, or champion file changed
 - **statement:** The two proposed behavior descriptors are usable for this bounded learning experiment rather than collapsing to one value. The pilot's mean-chain-length range is **2.4327 tiles** (9.7917 to 12.2244), above the preregistered 0.15 minimum, and its late-score-share range is **0.1089** (0.2758 to 0.3847), above the preregistered 0.02 minimum. The deterministic 5x5 MAP-Elites archive occupies **20 of 25 cells**, spanning all five bins on both axes, and retains the best screened policy independently inside each occupied cell. Three replayable representatives expose distinct styles: `a61e8b8e23b7` at cell `4,2` (12.61 mean-chain length, 32.9% late-score share, +3.30% screen lift, **-3.57% disjoint holdout lift**); `4cbec6509c34` at `0,0` (10.13, 27.9%, -35.07%, -36.55%); and `ebeb9e326a01` at `2,4` (11.24, 37.6%, -14.91%, -11.93%). The first representative is also a concrete winner's-curse lesson: it looked 3.30% better on the cases that selected it but 3.57% worse on unseen holdout cases. This is evidence of behavior diversity and honest selection/holdout separation, **not** evidence that any discovered policy is a stronger replacement champion.
 - **evidence:** `solver/map-elites-output/archive.json` SHA-256 `11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c`; `solver/map-elites-output/map.html` SHA-256 `c1e27d78431f64e4378c286bc6a3cb1882db131573f1aa0cbba357174a692b1a`; producer `solver/map-elites.js`; independent checker `solver/verify-map-elites.js`; public-seam tests `solver/tests/mapElites.test.js` and `solver/tests/policy-eval.test.js`; rendered browser inspection of the generated 25-cell grid; durable execution record `.orch/tickets/2026-08-22-map-elites-learning/T-001.md`.
@@ -572,7 +573,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run the documented fixed command in `solver/README.md`, then `node solver/verify-map-elites.js solver/map-elites-output`; expect 20 occupied cells across five chain bins and five patience bins, three exact representative replays, and unchanged champion/authoring hashes. Run the focused 83-test command recorded in ticket T-001.
 - **updated:** 2026-08-22
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** The archive axes are calibrated from the bounded pilot and may clip policies outside that pilot's observed range. The experiment explores the existing parameter seam only; it does not learn a value function, add search depth, or discover new policy structure. The full solver suite remains 193/196 because of the same three pre-existing receipt-identity failures named in `RESULT-0016`; no receipt was refreshed or weakened.
 
 ### RESULT-0018 — A target-aware finish rule extracted from human Level 51 play generalizes across all shipped levels
@@ -608,7 +609,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0021 — Structural level ranking is stable across disjoint seed samples
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** all 53 shipped levels under the current reference policy and evaluator; disjoint seed ranges 30,000,000–30,000,059 and 31,000,000–31,000,059; 60 games per level per range, 6,360 games total; terminal achievable score before target stopping; registered protocol and frozen source identities
 - **statement:** Across the two predeclared 60-game samples, the 53 per-level mean scores correlate at **r = 0.99942855**. The one-way random-effects between-candidate variance component is **2,481,397,518.78**, pooled within-level seed variance is **84,459,875.41**, and between/within is **29.3796x**, yielding estimated single-seed reliability **0.967083**. Both predeclared support thresholds cleared. The same production check passed the real subject, failed a controlled twin whose sample-B candidate assignments were reversed, drove the exact production batch to selection only under the valid verdict, and invalidated on a covered evaluator identity change. Repeated human plays are therefore **not supported as necessary for seed-noise control** in candidate differentiation. This does not decide whether human qualitative play is needed. The older `r = 0.98` sentence remains provenance-inconclusive: its introducing commit changed only `HANDOFF.md`, and no original measurement artifact or seed ranges were found.
 - **evidence:** protocol `experiments/RESULT-0021/protocol.md` registered at commit `e63f83c70ad1cf0725237e37f82d41491676d778`, a strict ancestor of measurement commit `0acfb6b191a3c8f3633533fa3f36893a694d4516`; report `experiments/RESULT-0021/report.md`; canonical admission receipt `experiments/RESULT-0021/admission.json`, identity `aae5beca8a054b5d495e62f3da6c9d689a41ec2c2496200ff6382f4b61518549`, binding measurement artifact identity `73dfd91b04229cfcd2c60b4482f443ea73b9fa5a865cac9d170980b724f6710e`, challenge bundle identity `c099d3a38caa989253bda46f67b6d634ec491255e54292d25b9c38000158af3d`, and challenge receipt identity `95d4552269c15c8ff8f61631c3c5c03b930071a93da59673fe77e03490d2ce86`.
@@ -617,13 +618,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0021/verify.js`, `node tools/verify-experiments.js`, and `node --test solver/tests/generateLevels.test.js solver/tests/levelAuthor.test.js solver/tests/seedVariance.test.js solver/tests/experiments.test.js`. Expect challenge receipt `95d45522…`, experiment gate PASS, and 43/43 focused tests. The full suite remains 280/284 with the same three stale-receipt failures and one unrelated root-worktree state failure.
 - **updated:** 2026-09-01
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** The current `r = 0.99943` is a new registered result, not evidence for the exact historical `r = 0.98`. Human repetition may still be appropriate for learning, fun, frustration, strategy discovery, or reliability of subjective judgments; this result removes only seed averaging as an independently supported requirement.
 
 ### RESULT-0024 — The repaired topology-response study is entitled but inconclusive
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** four fixed policy identities on open, one-center-stone, and two-adjacent-center-stone 4x8 layouts; 48 control seeds and 200 fresh confirmation seeds `23000000..23000199`; exactly 2,400 reportable cells under one evaluator and 24-move budget; protocol, source identities, outcome-only control receipt, and downstream consumption frozen before confirmation
 - **statement:** The valid real control passed with gameplay outcomes differing in all 48 one-stone/two-stone pairs; an outcome-identical twin had zero changed outcomes and failed the same check before confirmation. The confirmation runner consumed that exact qualified receipt. On fresh confirmation seeds, two-stone versus one-stone score responses ranged from **-18.338%** to **-22.071%**, an interaction spread of **0.0373308141** or **3.733 percentage points**. The policies remained behaviorally distinct on the open layout, clearing both style guards, but the most- and least-affected policies changed between fixed seed halves. The predeclared empirical verdict is therefore **`INCONCLUSIVE`**: this exact contrast neither supports nor falsifies a stable five-point policy-by-topology interaction. Aggregate evidence entitlement is **PASS**, but it does not authorize treating this topology response as a MAP-Elites axis or scaling it into OpenEvolve or co-evolution.
 - **evidence:** protocol `experiments/RESULT-0024/protocol.md` registered at commit `e6da102cfbbfb6605bfb1c21c3c7e46a72565002`; report `experiments/RESULT-0024/report.md`; controls identity `aa69b1233176124efc086300c11584eae0820971d1d4c1f0a5d84ca1acbf7bf5`; control-entitlement identity `dabcb1b3e8313b7b1f3fff0c920ca4370623ec92798a1a51217be486f22b40d5`; confirmation identity `77a8d7d623d23d123cf383bd8b080db458574a7ef0a11a148f8291cb04ff84be`; primary verification identity `6634724c54ee448a57c5233d7b758e6fc89cf2eaba3549fc0a8dba75283e9ff6`; independent recomputation identity `049534b508eeedd748cdc57b7e8d40072dfadc1b558bfce91f050dc67d0e6d2c`; challenge receipt identity `e04ae952677fd59c851327329afe92455a8eecd9c2d9b30f7aa5208c362d560a`.
@@ -632,13 +633,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Call `verifyAll` from `experiments/RESULT-0024/verify.js` on the committed controls, control-entitlement, and confirmation artifacts; expect PASS, confirmation `77a8d7d6...`, empirical verdict `INCONCLUSIVE`, interaction spread `0.03733081406203867`, style guard true, and stable ordering false. Run `node --test experiments/RESULT-0024/control-gate.test.js` and `node tools/verify-experiments.js`; expect 4/4 and `EXPERIMENT GATE PASS`.
 - **updated:** 2026-09-02
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** `verification.json` says `ENTITLED` before reading the independent recomputation or final challenge receipt. The report narrows that component field to primary artifact-chain PASS; final entitlement is the report-level join over all six identified artifacts. The frozen component receipt is retained unchanged. The rejected `RESULT-0023` report preserves the predecessor's false-PASS finding and diagnostic arithmetic but is not admitted as its own ledger result; `RESULT-0022` contains only an unused incomplete protocol template and produced no measurement.
 
 ### RESULT-0025 — One owner pilot session replays exactly on its identified subject
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** `HUMAN-PILOT-0001`; one owner, candidate `gen-0008` identity `4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d`, fixed seed `424242`, subject identity `55b57be2805413f2e0466fad8b7272d9ee6caa89ae6e1da674ff0c158a7ff257`, one terminal browser recording; not the shipped Level 53 identity and not a population sample
 - **statement:** The browser-produced recording replays through the headless engine to **164,096 points in 19 moves** with no replay problems. The execution receipt binds the candidate, subject, recording, checker, runtime bundle, and reusable replay challenge receipt. This pilot recording passes the qualified replay predicate; the reusable checker challenge separately passed its real qualification subject and failed a controlled broken twin through that same predicate. The owner attested that the session was personally played with no automated player. This establishes one exact replayable session and nothing about calibration, representativeness, eligibility, ranking, shipping readiness, or a human-performance distribution.
 - **evidence:** execution receipt `pilots/HUMAN-PILOT-0001/execution-receipt.json`, identity `1f45d07cc9a8a2b38493e9f6d022c9549cf60e3c0ba57a057ef5e3ea5d4f89bb`; recording file identity `687dfd7d9bc25a858e50d398830b7b6bb52b697e5364e3b104824047adb3a903`, recording identity `3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b`; reusable replay challenge `pilots/HUMAN-PILOT-0001/replay-challenge.json`, identity `85dbc51d6bef9d89bd96a25f861c9f773070e7f352dee1fa9fb2700f5e4b269c`; owner attestation and disposition `pilots/HUMAN-PILOT-0001/owner-disposition.json`, identity `284c9d4aa6223f965c206714ab5f833a387ac27f7015bc7181223c856a748dfb`.
@@ -647,13 +648,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node tools/human-pilot.js verify-execution` and `node --test solver/tests/humanPilot.test.js solver/tests/recordingReplay.test.js`; expect execution PASS and all focused tests PASS, including real-subject PASS, broken-twin FAIL, and covered-identity invalidation.
 - **updated:** 2026-09-02
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** Candidate labels are batch-local. Use the candidate and subject identities, not bare `gen-0008` or the pilot's presentation level, to refer to this session. The challenge receipt qualifies the reusable checker on its own real recording and broken twin; the execution receipt is the per-invocation application to this pilot's distinct recording.
 
 ### RESULT-0026 — The frozen handmade policy saves moves on average but regresses six wins
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** frozen handmade policy identity `338be26be2b8` versus current reference identity `ec59341e1a98`; levels `5,11,17,23,29,35,41,47,50`; fresh seeds `24000000..24000024`; real shipped move budgets; 450 games forming 225 paired comparisons; one preregistered confirmation
 - **statement:** The qualified comparison gate passed its real burned-seed subject, failed a controlled wrong-outcome twin, failed a covered source-identity twin, and issued Challenge Receipt `56b8b29e...`; the confirmation runner and final admission both consumed that exact receipt. On the fresh registered panel, the handmade policy saved **0.68 effective moves/game** on average (`SE 0.4881769708`, `t 1.392937481`) but won **216/225** games against the reference bot's **222/225**. It converted six reference wins into losses: Level 47 seeds `24000000`, `24000008`, `24000011`, and Level 50 seeds `24000010`, `24000019`, `24000023`. Because the predeclared win non-regression condition fails upon one such pair, the admissible empirical verdict is **`FALSIFIED`**. This frozen policy is not supported for promotion.
 - **evidence:** protocol `experiments/RESULT-0026/protocol.md` registered at commit `3d02387347c7872a2ce6d8052ade46836f6d874b`; report `experiments/RESULT-0026/report.md`; qualification identity `3a30456161b7f1cbbe9005b86a98fc4e50bd5007acaa2e0a873e794c3a4190c5`; Challenge Receipt identity `56b8b29e8acca8c98fd45acd1001a87e20b041405e8b1c630fd371d2498f3ed2`; raw confirmation identity `4a5ce7674faabab4a3b39ee47efb86d8adee93cf73c7cd2c65b8440b58b7d90b`; independent recomputation identity `8f9916dcd88e27d4220dc3964da19eb7617bc74a2113aae527cf31139b06760e`; downstream admission identity `95604ad0bcf98dcecc33692c89b36e6444faa368b817a09587fa5b6ae50fbc7f`.
@@ -662,7 +663,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node --test experiments/RESULT-0026/policy-comparison-gate.test.js` and `node tools/verify-experiments.js`; expect all focused tests and the experiment gate to pass. Regenerate the arithmetic with `node experiments/RESULT-0026/recompute.js --confirmation experiments/RESULT-0026/confirmation.json --out /private/tmp/result-0026-recomputation.json`; expect identity `8f9916dc...` and verdict `FALSIFIED`. Run `node experiments/RESULT-0026/admit.js --confirmation experiments/RESULT-0026/confirmation.json --qualification experiments/RESULT-0026/qualification.json --challenge-receipt experiments/RESULT-0026/challenge-receipt.json --independent experiments/RESULT-0026/recomputation.json --out /private/tmp/result-0026-admission.json`; expect `ADMITTED FALSIFIED` and identity `95604ad0...`. Do not rerun confirmation.
 - **updated:** 2026-09-02
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0014]
 - **notes:** The earlier sandbox `+0.72` estimate remains retrospective discovery, not confirmation. RESULT-0026's `+0.68` mean does not rescue the combined claim because P2 was frozen as a hard safety condition. A repaired policy is a new subject requiring a new protocol and fresh evidence.
 
 ### RESULT-0027 — Level authoring now uses a frozen evaluator without changing the shipped game
@@ -723,13 +724,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node tools/verify-frozen-experiment.js RESULT-0030`; it checks out the first commit carrying the corpus and runs the frozen verifier against the frozen implementation, expecting `PASS`, artifact identity `4f961ed0…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node tools/verify-experiments.js`; expect the experiment gate to pass. The current-tree RESULT-0030 verifier is intentionally not the reverify path after `CORRECTION-0006` changed its shared instrument.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** [CORRECTION-0006]
+- **superseded_by:** [CORRECTION-0006, RESULT-0031]
 - **notes:** The three cell changes were threshold crossings: Level 10 seed 32,100,001 improved from 12 to 11 moves across the 0.5 tightness boundary; Level 53 and Level 54 seed 32,100,000 improved from full-board cap witnesses to cap 12. The next candidate should represent uncertainty or search qualification explicitly instead of treating a raw bounded upper bound as a settled archive coordinate.
 
 ### RESULT-0031 — Corrected-cap descriptor proxies cover all puzzles but remain search-sensitive
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped configurations for Levels 10 (5x8), 31 (5x7), 53 (6x5), and 54 (4x8 with two stones); confirmation seeds 32,200,000–32,200,001; paired bounded searches at widths 12 and 48; one combined 16-candidate cap per expanded state; no exact-search, player, level-change, rule-change, or MAP-Elites claim
 - **statement:** The corrected registered confirmation enforced its combined candidate limit on all 96 cap/search runs and found replayable target witnesses on all 8/8 puzzle identities across all four profiles, so coverage was **`SUPPORTED`**. Search-width stability was **`INCONCLUSIVE`**: all eight pairs produced witnesses and the deeper arm worsened neither upper bound, but only 4/8 retained the same coarse proxy bin, 50% against the frozen 75% bar. The deeper arm expanded 43,275 states versus 11,594 for the shallow arm (3.733x, diagnostic only). The disposition is `REVISE_BEFORE_MAP_CORPUS`.
 - **evidence:** registered protocol `experiments/RESULT-0031/protocol.md`, registration commit `3a6c38c`; canonical corpus `experiments/RESULT-0031/corpus.json`, artifact identity `d68b5492dd55464f9a957e0b72cb3ee5cb82022b9eef71b77eac7de474bb6048`; complete outcomes in `experiments/RESULT-0031/report.md`; corrected bounded instrument `solver/puzzle-descriptor-witness.js`; verifier `experiments/RESULT-0031/verify.js`.
@@ -738,13 +739,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0031/verify.js experiments/RESULT-0031/corpus.json`; expect `PASS`, artifact identity `d68b5492…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/puzzleDescriptorWitness.test.js` and `node tools/verify-experiments.js`; expect 6/6 focused tests and the experiment gate to pass.
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0030]
-- **superseded_by:** []
-- **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate.
+- **superseded_by:** [CORRECTION-0013]
+- **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (4/8 same bin (50%), 43,275 vs 11,594 states) with `node experiments/RESULT-0031/recompute.js experiments/RESULT-0031/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0032 — Choice density clears its bars; recovery lacks enough non-ceiling pairs
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** 32 fresh starting boards across static/no-blocker profiles derived from shipped Levels 10, 31, 53, and 54; seeds 32,400,000–32,400,007; calibration-selected tight move budgets 13, 15, 14, and 27 paired with `+4` moves; bounded searches at widths 12 and 48; no player, difficulty, level-change, gameplay-rule, or MAP-Elites claim
 - **statement:** The registered confirmation returned **`INCONCLUSIVE`** under its frozen joint disposition. The exact opening choice proxy was `SUPPORTED`: viable-start fractions spanned **0.3833** (0.5667–0.95) and remained identical across move-budget and search-width arms in all 32 rows. Search-width stability was `SUPPORTED`: 47/58 comparable recovery arms were within 0.25, or **81.0%** against the 75% bar. Held-out recovery sensitivity was `INCONCLUSIVE`: 7/8 eligible non-ceiling pairs improved by at least 0.125 with four extra moves and none decreased, but only eight pairs were eligible against the required twelve. The recovery-witness proxy is too ceiling-prone on this panel for promotion; the disposition is `REVISE_BEFORE_MAP_CORPUS`.
 - **evidence:** registered protocol `experiments/RESULT-0032/protocol.md`, registration commit `2c1f0f5`; canonical corpus `experiments/RESULT-0032/corpus.json`, artifact identity `2f2f31bbc6b772b0a1710cfac4d69f821ac6d06d8f869ec32117fbf45a5a61dc`; complete outcomes in `experiments/RESULT-0032/report.md`; instrument `solver/choice-recovery-descriptors.js`; verifier `experiments/RESULT-0032/verify.js`.
@@ -753,13 +754,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0032/verify.js experiments/RESULT-0032/corpus.json`; expect `PASS`, artifact identity `2f2f31bb…`, 32 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, P3 `SUPPORTED`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/choiceRecoveryDescriptors.test.js experiments/RESULT-0032/*.test.js` and `node tools/verify-experiments.js`; expect 8/8 focused tests and the experiment gate to pass.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
-- **notes:** `initialViableStartFraction` counts viable starting tiles, not distinct paths or perceived decisions. `oneDetourRecoveryWitnessRate` samples up to eight lowest-scoring non-reference candidates from a deterministic 64-candidate pool and counts only replayed bounded-search successes. A repair needs a new protocol and fresh seeds; do not extend this opened range or lower its frozen eligibility denominator.
+- **superseded_by:** [CORRECTION-0013]
+- **notes:** `initialViableStartFraction` counts viable starting tiles, not distinct paths or perceived decisions. `oneDetourRecoveryWitnessRate` samples up to eight lowest-scoring non-reference candidates from a deterministic 64-candidate pool and counts only replayed bounded-search successes. A repair needs a new protocol and fresh seeds; do not extend this opened range or lower its frozen eligibility denominator. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (range 0.3833, 7/8 of 8 eligible, 47/58) with `node experiments/RESULT-0032/recompute.js experiments/RESULT-0032/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0033 — Merge depth and spatial spread clear the candidate-measure bars
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped Levels 10, 31, 53, and 54; seeds 32,600,000–32,600,007; 32 fresh puzzle identities; paired deterministic bounded searches at widths 12 and 48 with 16 combined candidates per state and path width 2; static/no-blocker profiles only; no exact-search, player, difficulty, level-change, rule-change, or MAP-Elites claim
 - **statement:** The registered confirmation returned **`SUPPORTED`** under its frozen disposition. Deep search found replayable target witnesses on all 32/32 puzzles and all four profiles. Peak witness merge depth was 1 on 20 boards and 2 on 12; mean normalized witness-chain span ranged from 0.7143 to 0.9538, a **0.2396** range against the 0.15 bar. Twenty-eight puzzles had witnesses at both widths; 25/28 retained exact peak depth (**89.3%**) and 27/28 retained spatial spread within 0.10 (**96.4%**), both above 75%. The pair is `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS` with its witness-qualified names and proof standing.
 - **evidence:** registered protocol `experiments/RESULT-0033/protocol.md`, registration commit `dae2ef1`; canonical corpus `experiments/RESULT-0033/corpus.json`, artifact identity `48c31d54296c5ddf6f833717992e2039a32e504ce4d1debb6770e71626325e45`; complete outcomes in `experiments/RESULT-0033/report.md`; recursive-lineage and geometry instrument `solver/merge-spread-descriptors.js`; verifier `experiments/RESULT-0033/verify.js`.
@@ -768,13 +769,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0033/verify.js experiments/RESULT-0033/corpus.json`; expect `PASS`, artifact identity `48c31d54…`, 32 rows, P1–P3 `SUPPORTED`, and disposition `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS`. Run `node --test solver/tests/mergeSpreadDescriptors.test.js experiments/RESULT-0033/*.test.js` and `node tools/verify-experiments.js`; expect 8/8 focused tests and the experiment gate to pass.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
-- **notes:** Initial and spawned tiles have depth zero; each merged tile has one plus the maximum input depth. Spatial spread is mean per-move Chebyshev chain span divided by board diameter. Four Level 54 shallow misses remain `UNKNOWN`; deep witnesses make panel coverage complete. Eligibility permits a new preregistered corpus only and is not adoption by itself.
+- **superseded_by:** [CORRECTION-0013]
+- **notes:** Initial and spawned tiles have depth zero; each merged tile has one plus the maximum input depth. Spatial spread is mean per-move Chebyshev chain span divided by board diameter. Four Level 54 shallow misses remain `UNKNOWN`; deep witnesses make panel coverage complete. Eligibility permits a new preregistered corpus only and is not adoption by itself. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (32/32, range 0.2396, 25/28 and 27/28 on exactly 28 pairs) with `node experiments/RESULT-0033/recompute.js experiments/RESULT-0033/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0034 — Bounded opening diversity collapses on representative boards
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped Levels 10, 31, 53, and 54; seeds 32,800,000–32,800,007; 32 fresh puzzles; paired bounded successful-witness searches at widths 12 and 48, 16 candidates per state, path width 2, 64-success cap, and eight successes per opening; no exhaustive, player, difficulty, content, rule, or MAP-Elites claim
 - **statement:** The frozen disposition is **`INCONCLUSIVE`**. Deep search covered 32/32 puzzles and all profiles. Forced-prefix ratio spanned **0.1974**, clearing 0.15. Opening diversity failed range: 30 boards reported one represented opening and two boards reported two, so only one value met the four-row population floor. Width stability passed on 28 paired puzzles: 26/28 (**92.9%**) stayed within 0.15 for forced-prefix ratio and 26/28 retained exact opening diversity. The pair is `REVISE_BEFORE_MAP_CORPUS` because the bounded diversity coordinate collapsed.
 - **evidence:** protocol `experiments/RESULT-0034/protocol.md`, registration commit `a0608db`; corpus `experiments/RESULT-0034/corpus.json`, artifact identity `48876a4151535ec0b72b55059dabc91e962c2df424385e9686ac27a0a486999b`; report `experiments/RESULT-0034/report.md`; instrument `solver/forced-diversity-descriptors.js`; verifier `experiments/RESULT-0034/verify.js`.
@@ -783,13 +784,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0034/verify.js experiments/RESULT-0034/corpus.json`; expect `PASS`, artifact `48876a41…`, 32 rows, P1/P3 `SUPPORTED`, P2 `INCONCLUSIVE`, and `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/forcedDiversityDescriptors.test.js experiments/RESULT-0034/run.test.js` and `node tools/verify-experiments.js`; expect 3/3 and gate PASS.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
-- **notes:** The repair target is the success-set sampler, not the seed count. Ordered opening chains preserve survivor placement, so reversed chains remain distinct moves.
+- **superseded_by:** [CORRECTION-0013]
+- **notes:** The repair target is the success-set sampler, not the seed count. Ordered opening chains preserve survivor placement, so reversed chains remain distinct moves. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (range 0.1974, one diversity value populated, 26/28 on exactly 28 pairs) with `node experiments/RESULT-0034/recompute.js experiments/RESULT-0034/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0035 — Four-cell occupancy succeeds but witness-dependent cell stability does not
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped Levels 10, 31, 53, and 54; seeds 33,000,000–33,000,031; 128 fresh puzzle identities; paired bounded searches at widths 12 and 48 with 16 combined candidates per state and path width 2; fixed depth-1/depth-2-plus and compact/broad-at-0.82 cells; four retained representatives per cell; no evolutionary MAP-Elites, player, difficulty, fun, content, or rule claim
 - **statement:** The registered archive confirmation closed validly as **`MAP_CORPUS_INCONCLUSIVE`**. Deep search produced replayable target witnesses on 128/128 puzzles across all four profiles. Stable eligible counts were 12, 30, 10, and 11 across depth-1/compact, depth-1/broad, depth-2-plus/compact, and depth-2-plus/broad, so all four cells retained four representatives. But only 63/115 paired puzzles (**54.8%**) kept the same cell with spread difference at most 0.10, below the frozen 75% support bar and above the 50% falsification bar. The retained 16 are diagnostic and are not admitted as a canonical corpus.
 - **evidence:** immutable protocol `experiments/RESULT-0035/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0035/protocol.md`, registration commit `f68edd2`; canonical run artifact `experiments/RESULT-0035/corpus.json`, identity `52bf543e937358e4ba4f2f2fe2812df05bfae74b1b08b81ce226f3f452f4fef2`; complete outcomes `experiments/RESULT-0035/report.md`; executable closeout contract and receipt under `experiments/RESULT-0035/`; archive logic `solver/merge-spread-map.js`; verifier `experiments/RESULT-0035/verify.js`.
@@ -798,7 +799,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0035/verify.js experiments/RESULT-0035/corpus.json`; expect `PASS`, artifact `52bf543e…`, 128 rows, P1/P2 `SUPPORTED`, P3 `INCONCLUSIVE`, and `MAP_CORPUS_INCONCLUSIVE`. Run `node --test solver/tests/mergeSpreadMap.test.js solver/tests/mergeSpreadDescriptors.test.js experiments/RESULT-0035/*.test.js` and `node tools/verify-experiments.js`; expect 12/12 focused tests and gate PASS. Run the close-experiment verifier against the RESULT-0035 closeout pair with expected contract SHA-256 `b3e0389b74d48ab99be5770e7850f500e60e78e7019a55324d2e5dbb22c5c423`; expect a closed receipt and recomputation PASS.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** RESULT-0033 validated separate depth and spread stability bars on 32 puzzles; RESULT-0035's stricter joint cell assignment exposed boundary sensitivity at corpus scale. Do not move the 0.82 cut or extend this seed range after seeing the outcome. A repair is a new registered uncertainty-aware subject and fresh panel.
 
 ### RESULT-0036 — Exact greed confirmation is not entitled because timeout-sensitive closure did not reproduce
@@ -843,13 +844,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0038/verify.js experiments/RESULT-0038/corpus.json`; expect PASS, artifact `07531402…`, 128 rows, P1 `INCONCLUSIVE`, P2–P5 `SUPPORTED`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 f778503c60c6681e490df205735309e908fd83c56fee1b4407ccd9c5fa250b97`; expect `CLOSED`, recomputation PASS, and verifier PASS.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** [CORRECTION-0007]
+- **superseded_by:** [CORRECTION-0007, RESULT-0041]
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
 ### RESULT-0041 — Hardened greed harness qualifies; confirmation watchdog invalidates the run
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** mutation-qualified exact-denominator greed-ratio validation for percentile policies 0.25, 0.50, 0.75, and 1.00 on shipped Levels 10, 31, 53, and 54; confirmation seeds 33,800,000–33,800,007; deterministic 500,000-path-state cap and 30,000 ms emergency watchdog; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
 - **statement:** RESULT-0041's frozen harness qualified: the production verifier killed stale body identity, coherent seed-panel substitution, incorrect work-limit counts, and coherent source substitution for their intended reasons; its exact-modal stability statistic reported 0.50 on a planted unstable middle-bin policy; independent analysis matched work-limited, zero-exact-policy, null-cell, and non-default-policy fixtures; and source restoration passed. The single allowed confirmation attempt then hit the registered emergency watchdog at percentile 1.00, Level 10, seed 33,800,004 after reporting 96/128 completed games. The protocol declares any watchdog timeout invalid and forbids retry. Closure is therefore **`INVALID`**, recomputation is `NOT_RUN`, and P1–P6 are `UNVERIFIED`; no greed-ratio domain outcome or adoption evidence follows.
 - **evidence:** immutable protocol `experiments/RESULT-0041/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0041/protocol.md`, registration commit `4c6943b`; mutation [qualification receipt](experiments/RESULT-0041/qualification.json); retained [baseline output](experiments/RESULT-0041/baseline-output.txt); explicit invalid-run [corpus placeholder](experiments/RESULT-0041/corpus.json) with no outcome rows; complete [report](experiments/RESULT-0041/report.md); executable contract and [closure receipt](experiments/RESULT-0041/closure.json).
@@ -858,7 +859,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** From `experiments/RESULT-0041`, run `python3 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py closeout-contract.json closure.json --run-recomputation`; expect verifier `PASS`, `closure_status: INVALID`, and recomputation `NOT_RUN`. Run `node tools/verify-experiments.js` from the repository root; expect `EXPERIMENT GATE PASS`. Do not run the confirmation again or interpret its progress counts as outcomes.
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0038]
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0011, RESULT-0042]
 - **notes:** RESULT-0039 and RESULT-0040 stopped during pre-outcome qualification and retain their failed attempt receipts. RESULT-0041 repaired those exact gaps and qualified; its separate terminal failure shows that the 30-second watchdog is not guaranteed to outlast the deterministic path-state cap on every registered board. Any future confirmation is a new subject and requires an owner-selected compute/denominator change, not a retry of this run.
 
 ### RESULT-0042 — Calibrated watchdog completes the matrix; frozen closeout path remains unverified
@@ -879,7 +880,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0043 — Greed responds and tracks wins, but coverage, redundancy, and stability remain inconclusive
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** four fixed-percentile policies on shipped Levels 10, 31, 53, and 54; seeds 34,000,000–34,000,007; deterministic 500,000-path-state cap and 120,000 ms emergency watchdog; hardened verifier and executable-closeout qualification; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
 - **statement:** RESULT-0043 closed validly with primary outcome **`INCONCLUSIVE`**. All 128 games completed with zero watchdog timeouts; 61 were exact-complete and 201 move denominators stopped at the registered work cap. Greed responded strongly to the policy manipulation: exact means rose **0.385, 0.531, 0.741, 0.946** (range **0.561**), and policy win/greed correlation was **0.956**, so P2 and P3 are `SUPPORTED`. P1 is `INCONCLUSIVE` because every policy × Level 10 cell had zero exact games. P4 is `INCONCLUSIVE` because score/greed correlation **0.730** lies between the 0.70 support and 0.85 falsification thresholds. P5 is `INCONCLUSIVE` because minimum exact-modal stability **66.7%** lies between its 80% and 60% thresholds. Nothing was falsified, but the full promotion bar was not cleared. Greed ratio remains an unadopted candidate; half-score move occupied only the early bin and remains diagnostic.
 - **evidence:** immutable protocol `experiments/RESULT-0043/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0043/protocol.md`, registration commit `acfe8c6`; mutation and exact-command [qualification receipt](experiments/RESULT-0043/qualification.json); retained [corpus](experiments/RESULT-0043/corpus.json), artifact identity `560f436388daeebcd19a198918791f0d9d014aa47512b0520e500b4a20ca199e`; exact [report](experiments/RESULT-0043/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0043/closure.json), and [independent corpus reduction](experiments/RESULT-0043/primary-recomputation.json).
@@ -888,13 +889,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0043/verify.js experiments/RESULT-0043/corpus.json`; expect PASS, artifact `560f4363…`, 128 rows, P2/P3 `SUPPORTED`, P1/P4/P5 `INCONCLUSIVE`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 66c18f65643d528aa58b292116b005a4a96a4ef1cb1a2d5576394b19c6779f8f`; expect `CLOSED`, recomputation PASS, and verifier PASS.
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0042]
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** Do not add seeds or raise this run's cap after observing the result. The evidence supports greed as a responsive behavioral measure but does not yet support promotion as a MAP-Elites axis. A future change must address the exact-coverage strategy and score overlap as a genuinely new subject; repeated copies of this same panel are not the next step.
 
 ### RESULT-0048 — Blue-only refills yield family-island playtest candidates
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** 4,096 generated 5×8 openings across target families 3/5/7/9 and five registered island templates; four paired refill arms; deterministic highest-scoring degree-tiebreak greedy screening policy; 16-move bound; candidate discovery only
 - **statement:** The registered run closed with primary outcome **`ISLANDS_SUFFICIENT`**. The blue-only arm retained at least eight target-family tiles and two viable target-family components through move six on **1,305/4,096 (31.9%)** boards and recorded a later rejoin of a blue-conversion tile on **656** boards. Every family cleared the frozen existence threshold: move-six sustained / conversion-rejoin counts were **396/136** for family 3, **350/164** for family 5, **288/175** for family 7, and **271/181** for family 9. Mixed-family refills were not required for candidate discovery, although their move-six persistence was materially higher at **55.5%, 58.8%, and 61.3%** for 25%, 50%, and 75% target-family refills. The result routes island-only openings to human playtesting; it does not adopt a spawn rule or establish human behavior, fun, or difficulty.
 - **evidence:** immutable protocol `experiments/RESULT-0048/registered-protocol.md`, registration commit `b3fd0fb`; qualification commit `38f46ef` and [qualification receipt](experiments/RESULT-0048/qualification.json); retained [corpus](experiments/RESULT-0048/corpus.json), internal artifact identity `133e044ed418aa6a08befacbab3d0ad888bfe41e363dfdee5ac18489ee38166b`; exact outcomes and boundary in [report](experiments/RESULT-0048/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0048/closure.json), and [independent corpus reduction](experiments/RESULT-0048/primary-recomputation.json).
@@ -903,8 +904,53 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0048/verify.js experiments/RESULT-0048/corpus.json`; expect PASS, 4,096 paired openings, and artifact identity `133e044e…`. From `experiments/RESULT-0048`, run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 2e5a52bd651bf7d0b2b9a6b0a34f46bb9960ff4d44caada48f92418e364002f4`; expect `CLOSED`, recomputation PASS, and verifier PASS.
 - **updated:** 2026-09-19
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** The three-vertical-island template supplied 594 of the 1,305 blue-only sustained candidates and is the strongest first source for manual play. Candidate trace goals remain unadopted until human play validates them.
+
+### RESULT-0049 — A 120-mutation MAP-Elites archive on re-calibrated axes occupies 24 of 25 cells without replacing the `52f500c` champion
+
+- **type:** result
+- **status:** accepted
+- **scope:** the single archive produced by run `.orch/runs/2026-08-28-map-elites-transition/` (search seed 20260828, 120 iterations, 11 pilots, 5x5 bins, screen seeds 2000000–2000011, holdout seeds 3000000–3000023); its behavior axes were re-calibrated from its own pilot and are not the axes of `RESULT-0017`; archive committed in `530deb3`
+- **statement:** The archive file contains **24 occupied cells** of 25, 60 archive replacements over 120 evaluated mutants, and three representatives whose recorded holdout lifts are all negative: `896748efe7b5` at cell `4,2` (screen lift +2.18%, holdout lift **-2.22%** over 288 holdout games), `7e8b57682e93` (-31.61%), and `0873a5b8c4e2` (-31.11%). No representative has positive holdout lift against the then-champion `52f500c` (since superseded by `DECISION-0004`), so none meets the stronger-policy rule (positive holdout lift and t > 3, stated in `.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md`) and that champion was not replaced. Because the axes differ from `RESULT-0017`'s, the 24 cells are **not** comparable cell-for-cell with that record's 20.
+- **evidence:** `.orch/runs/2026-08-28-map-elites-transition/evidence/archive.json` SHA-256 `3905956c2fc0f32e078058938dd2128a47e862f6fd56fc184137cb1b26e63ffa`; `.orch/runs/2026-08-28-map-elites-transition/evidence/map.html` SHA-256 `d69c0dcf583ad41361a46609b49672f12f24be2d67515c29660a923b7f7a1201`; run synthesis `.orch/runs/2026-08-28-map-elites-transition/evidence/synthesis.md` SHA-256 `4305da5804a7a44ef136019de62b5b495f8dd3bf31ae66ab5afe09e9964b3c86`; run record `.orch/runs/2026-08-28-map-elites-transition/worklog.md`; producer `solver/map-elites.js` at isolated checkout `be843368be8e19ec59501aae38f19eebaf188b87`.
+- **proof_class:** `direct_source` — the counts, identities, and recorded lifts are what the archive file literally contains; the promotion rule is quoted from the run's measurement file cited in the statement. No generalizing claim is made; there was no preregistered protocol.
+- **as_of:** 2026-08-28
+- **reverify:** Run `node -e "const f=require('fs'),h=b=>require('crypto').createHash('sha256').update(b).digest('hex'),p='.orch/runs/2026-08-28-map-elites-transition/evidence/archive.json',b=f.readFileSync(p),a=JSON.parse(b);if(h(b)!=='3905956c2fc0f32e078058938dd2128a47e862f6fd56fc184137cb1b26e63ffa'||a.archive.length!==24||!a.representatives.every(r=>r.holdout.lift<0))process.exit(1);console.log('PASS 24 cells, no positive holdout lift')"`; expect exit 0 and `PASS 24 cells, no positive holdout lift`.
+- **updated:** 2026-09-26
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Not claimed: that the larger search expanded `RESULT-0017`'s behavior coverage (axes moved; see `RESULT-0050` for the shared-axis round); that any elite is weaker or stronger than the champion in general; the clustered t-statistic (`t=-1.392` per the worklog) was not recomputed for this record. `solver/verify-map-elites.js` passed on 2026-08-28 per the worklog but **fails today** on its protected-hash check because `solver/bot.js` has since changed, so it is not used as the reverify. Byte identity of recordings was never frozen and stays unverified per the worklog.
+
+### RESULT-0050 — On `RESULT-0017`'s exact axes with fresh seeds, a 120-mutation MAP-Elites archive occupies 23 of 25 cells without replacing the `52f500c` champion
+
+- **type:** result
+- **status:** accepted
+- **scope:** the single archive produced by run `.orch/runs/2026-08-28-map-elites-independent-round/` and admitted without rerun by `.orch/runs/2026-08-28-map-elites-independent-round-verification/` (search seed 20260829, 120 iterations, runner revision `8508c3b4aa2bac9eceaac0bcaf91e3838e303a53`, screen seeds 4000000–4000011, holdout seeds 5000000–5000023); chain-style and patience axes identical to `solver/map-elites-output/archive.json`
+- **statement:** The archive's chain-style and patience axis objects are identical to those of the `RESULT-0017` archive, and its screen and holdout seeds are disjoint from each other and from both earlier archives. On those shared coordinates it occupies **23 of 25 cells** versus the original's 20: 19 cells shared, four newly occupied (`1,1`, `1,3`, `2,0`, `3,1`), one no longer occupied (`2,4`). It records 52 replacements over 120 evaluated mutants. The top screened elite `e7349b8a477a` at cell `4,1` has screen lift **+0.73%** and holdout lift **-1.47%** over 288 holdout games; the other two representatives record -28.26% (`d4dee742cedd`) and -27.92% (`0b207fb85a0f`). No representative has positive holdout lift against the then-champion `52f500c` (since superseded by `DECISION-0004`), so under the same stronger-policy rule that champion was not replaced.
+- **evidence:** `.orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json` SHA-256 `ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22`; `.orch/runs/2026-08-28-map-elites-independent-round/evidence/map.html` SHA-256 `a94fc61469d36ab672bcb4722f1b08d628f9bee7d0137dfe0f4afb3568d7a0fb`; baseline `solver/map-elites-output/archive.json` SHA-256 `11e50d6b3c5a7f923de81eba772e9a48b67c6df4170fe0e8a5b825671a1d029c` (recorded as `axesSource.archiveSha256` inside the new archive); measurement `.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/measurement.md` SHA-256 `701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790`; synthesis `.orch/runs/2026-08-28-map-elites-independent-round-verification/evidence/synthesis.md` SHA-256 `401665cf9f3a2a863e0650759e729306a4e3cf4b8b5859f431446c44d7101c61`; recovery record `.orch/runs/2026-08-28-map-elites-comparable-round/composition.md`; archive committed in `530deb3`.
+- **proof_class:** `direct_source` — axes equality, seed disjointness, cell counts, and recorded lifts are read directly from the two archive files; the promotion rule is quoted from the run's measurement file cited in the statement. No generalizing claim is made; there was no preregistered protocol.
+- **as_of:** 2026-08-28
+- **reverify:** Run `node -e "const f=require('fs'),h=b=>require('crypto').createHash('sha256').update(b).digest('hex'),p='.orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json',b=f.readFileSync(p),a=JSON.parse(b),o=JSON.parse(f.readFileSync('solver/map-elites-output/archive.json')),S=JSON.stringify;if(h(b)!=='ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22'||a.archive.length!==23||S(a.axes.chainStyle)!==S(o.axes.chainStyle)||S(a.axes.patience)!==S(o.axes.patience)||!a.representatives.every(r=>r.holdout.lift<0))process.exit(1);console.log('PASS 23/25 on original axes, no positive holdout lift')"`; expect exit 0 and `PASS 23/25 on original axes, no positive holdout lift`.
+- **updated:** 2026-09-26
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Not claimed: that MAP-Elites reliably fills more cells with more iterations (one run per configuration); that the new cells reflect new policy structure; any policy strength ordering. The `pilot` sub-object of `axes` differs between archives by design; only the two bin axes are shared. The first run of this round failed on a wrongly frozen prior-map hash, not on the experiment; the verification run admitted the same bytes without rerun. Clustered t-values (`t=-1.3563` for `e7349b8a477a`) are taken from `measurement.md` and were not recomputed here. `solver/verify-map-elites.js` now fails on the changed `solver/bot.js` protected hash and is not used as the reverify.
+
+### RESULT-0051 — On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels
+
+- **type:** result
+- **status:** accepted
+- **scope:** `node solver/verify-loop.js` as shipped at commit `217f945` (current bot after `DECISION-0004`); its sampled levels 1, 5, 10, ..., 50; 60 seeds per level from seed 100000; no claim about unsampled levels, other seeds, or human play
+- **statement:** The verify loop printed win rates of 100% on every sampled level except level 50 at 97%, and 0% board lockouts on every sampled level, with `RESULT: PASS`. This replaces `RESULT-0008`'s 2026-08-12 figures (wins from 37%, lockouts up to about 5% at level 50), which predate later bot changes and are marked stale.
+- **evidence:** `solver/verify-loop.js` output captured 2026-09-26 at commit `217f945`: level 50 win 97%, lockout 0%; levels 1-45 win 100%, lockout 0%.
+- **proof_class:** `direct_source` for what the named command printed at the named commit
+- **as_of:** 2026-09-26
+- **reverify:** Run `node solver/verify-loop.js`; expect `RESULT: PASS`, level 50 win near 97% and 0% lockouts on sampled levels. The bot may move after this date; then mark this record stale and add a new measurement.
+- **updated:** 2026-09-26
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** Found while sourcing two uncited numbers (BL-0016 F7): AGENTS.md said "71-100%" wins, which matched no record, and CURRENT.md said lockouts reach about 5%, from `RESULT-0008`. Both now cite this record. Measured under CPU contention from a parallel run; timing does not affect the printed rates.
 
 ## Decision registry
 
@@ -955,7 +1001,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### DECISION-0004 — Promote the target-aware policy as the current engineering champion
 
 - **type:** decision
-- **status:** accepted
+- **status:** narrowed
 - **scope:** the reference solver policy on `main` beginning at commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`; historical experiment artifacts and level-authoring evidence excluded
 - **statement:** The owner promotes the target-aware immediate-finish policy in `solver/bot.js` as the current engineering champion. The policy keeps the prior chooser, but when a deterministic untrimmed legal route reaches the finite unmet target immediately, it takes that route; it never applies the override while a bomb is present. Promotion is an engineering decision supported by the bounded heuristic observation in `RESULT-0018` and post-promotion regression gates. It is not a claim of universal non-regression, higher terminal-score optimization, autonomous learning, or pristine experimental provenance. The previous champion remains the historical identity for artifacts that were generated against it; levels, targets, receipts, MAP/Universe artifacts, and the level-authoring system are not rewritten.
 - **evidence:** owner instructions `Promote it` and `Proceed with these tasks` on 2026-08-30; promoted code commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`, `solver/bot.js` SHA-256 `6f58e6c136f58dc52df5d1b4203d0c032b497109ef4c517cd0ca1628057e1fd1`; accepted `RESULT-0018` and its primary evidence at immutable commit `6a07294571644d963a5a9b728f8e4aed3b29a835`; promotion checks and corrected push status at `f0ba51864c11cc6a1bb2d97bdf8bb589efb886a3:.orch/tickets/proportional-target-aware-promotion-2026-08-30/T-001.md`.
@@ -964,7 +1010,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Inspect commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`; run `node --test solver/tests/bot.test.js`, `node solver/verify-loop.js`, and `node tools/verify-universe-map.js`; expect focused tests and both gates to pass. Resolve the bounded evidence with `git show 6a07294571644d963a5a9b728f8e4aed3b29a835:EVIDENCE_LEDGER.md` and retain its `heuristic_observation` limits.
 - **updated:** 2026-08-30
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0012]
 - **notes:** This decision changes which policy is current; it does not change the historical standing or identity of any earlier result. The evidence under it is now reproducible: `RESULT-0020` (2026-09-01) registered a protocol before running and reproduced RESULT-0018 holdout counts exactly, so this decision no longer rests solely on a grandfathered result. That replication also found that the promotion copied the target-aware policy into `solver/bot.js` rather than moving it — `chooseMove` and `chooseTargetAwareMove` are now byte-identical apart from their identifiers, and the experimental challenger called the promoted one, evaluating the override twice per move. The challenger was repointed at `chooseBaseMove` on 2026-09-01 (`c37c83a`), verified play-identical on 1,040 games; `solver/bot.js` still carries its own copy of the rule, which is a code question for this decision to answer, not a change this measurement makes.
 
 ### DECISION-0005 — Route the qualified owner pilot to variant/repair
@@ -1105,7 +1151,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### CORRECTION-0003 — Candidate width saturates because of the generator, not the board
 
 - **type:** correction
-- **status:** accepted
+- **status:** narrowed
 - **scope:** the stated mechanism inside `RESULT-0010`; its conclusion is unaffected
 - **statement:** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". That is not what boards offer. Level 51's opening boards hold **198,563 to 8,284,580 distinct legal chains** on the seeds measured. The 15-to-30 figure counts what `findGreedyChains` *produces* — it runs one walk per start tile and dedupes, so it can never return more candidates than the board has unblocked tiles, whatever the cap is set to. The cap saturates against the generator's output, not against the move space. `RESULT-0010`'s conclusion stands unchanged and was re-confirmed under the new generator: widths 26 and 32 still produce bit-identical play to width 24, and raising the cap still buys nothing. What changes is the reading of *why*, and therefore what was left on the table: the recorded wording implied the bot was near the limit of its options, when it was seeing a hand-filtered fraction of them. `RESULT-0011` measures that fraction and recovers part of it.
 - **evidence:** `solver/chain-coverage.js` (enumerated chain counts per board, via `enumerateLegalChains` from `solver/exact-score.js`); `solver/engine.js`, `findGreedyChains` — one `buildGreedyChain` call per non-blocked tile; `solver/routing-ablation.js` width arms.
@@ -1113,8 +1159,8 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **as_of:** 2026-08-20
 - **reverify:** `node solver/chain-coverage.js`; compare the enumerated totals against the candidate counts `findGreedyChains` returns on the same state.
 - **updated:** 2026-08-20
-- **supersedes:** []
-- **superseded_by:** []
+- **supersedes:** [RESULT-0010]
+- **superseded_by:** [CORRECTION-0015]
 - **notes:** Appended rather than edited into `RESULT-0010`, which keeps its original wording and receipt. The correction is to an explanation, not to a measurement — every number `RESULT-0010` reports was and remains correct.
 
 ### CORRECTION-0004 — RESULT-0015 was invalidated when the beam was made additive
@@ -1206,6 +1252,131 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The earlier 2026-09-05 snapshot is retained above as historical lineage. Its same-seed correction remains valid; only its human-continues premise and resulting uncapped comparison are superseded. The mixed 25-session corpus includes historical candidate boards and pilot boards, so current shipped-level claims must use the ordinary `play-sessions/` subset.
+
+### CORRECTION-0010 — RESULT-0001 and RESULT-0004 verifiers were deleted from the tree
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` commands of `RESULT-0001` and `RESULT-0004`; their scores, thresholds, proof classes, and conclusions are unchanged
+- **statement:** Narrows `RESULT-0001` and `RESULT-0004`. Their verifiers, `solver/target-witness-search/verify.js` and `solver/hinted-cp-sat/verify-result.js`, were deleted in commit `8e1e232`, so the recorded `reverify` commands no longer run in the current tree. The frozen run files they check are byte-identical between the parent of `8e1e232` and today. Run from a snapshot of that parent on 2026-09-26, both verifiers return `PASS`: the witness replays to 12,336 in 32 moves with `targetReached: false`, and thresholds 12,400 through 13,000 all return `UNKNOWN`. Both original claims stand.
+- **evidence:** commit `8e1e232` (deletion); frozen inputs `solver/target-witness-search/frozen-run.json` and `solver/hinted-cp-sat/frozen-run.json`, unchanged since the parent of `8e1e232`; the verifiers as preserved in that parent commit.
+- **proof_class:** `direct_source` for the deletion, the unchanged inputs, and the verifier verdicts
+- **as_of:** 2026-09-26
+- **reverify:** Extract the pre-deletion tree with `git archive 8e1e232^ | tar -x -C <scratch>`; from `<scratch>`, run `node solver/target-witness-search/verify.js solver/target-witness-search/frozen-run.json` and expect verdict `PASS`, score 12336, moves 32; run `node solver/hinted-cp-sat/verify-result.js solver/hinted-cp-sat/frozen-run.json` and expect `PASS` with `UNKNOWN` at 12400 and 13000.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0001, RESULT-0004]
+- **superseded_by:** []
+- **notes:** Found by the ledger citation check added under BL-0016 F12.
+
+### CORRECTION-0011 — RESULT-0041's closure verifier lived outside the repository
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` command of `RESULT-0041`; its qualification, invalid-run disposition, and conclusions are unchanged
+- **statement:** Narrows `RESULT-0041`. Its `reverify` command ran a closure verifier from a machine-local agent skill directory outside the repository, so no clone could rerun it. That script is now vendored at `tools/vendor/close-experiment/verify_closure.py` (SHA-256 `7ed2647d28bfe3df9bed227216f28959c9a7e767dd112c2952f7c2d3c3619830`, copied 2026-09-26; the source file was last modified 2026-09-10, before the run). Run on 2026-09-26, the vendored copy returns verdict `PASS`, `closure_status: INVALID`, and recomputation `NOT_RUN`, matching the original expectation.
+- **evidence:** `tools/vendor/close-experiment/verify_closure.py`; `experiments/RESULT-0041/closeout-contract.json`; `experiments/RESULT-0041/closure.json`.
+- **proof_class:** `direct_source` for the vendored identity and the verifier verdict
+- **as_of:** 2026-09-26
+- **reverify:** From the repository root, run `python3 tools/vendor/close-experiment/verify_closure.py experiments/RESULT-0041/closeout-contract.json experiments/RESULT-0041/closure.json --run-recomputation`; expect verdict `PASS`, `closure_status: INVALID`, recomputation `NOT_RUN`.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0041]
+- **superseded_by:** []
+- **notes:** The file's modification date predates the run, but which exact version ran on 2026-09-16 is not recorded; the matching verdict is the support, not a byte identity.
+
+### CORRECTION-0012 — DECISION-0004's evidence commit was on no branch
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the evidence pointer of `DECISION-0004` to `RESULT-0018`'s primary evidence; the promotion decision itself is unchanged
+- **statement:** Narrows `DECISION-0004`. The commit it cites as the immutable home of `RESULT-0018`'s primary evidence existed only in one local clone, on no branch and on no remote, so a fresh clone could not resolve it and the only copy of about 328,000 lines of evidence artifacts was one machine. It is now preserved on GitHub as branch `evidence/result-0018-6a07294`. The content of that commit is not on `main`: the first `main` commit adding the same source files differs from it in 27 files.
+- **evidence:** commit `6a07294571644d963a5a9b728f8e4aed3b29a835` on remote branch `evidence/result-0018-6a07294`; comparison against commit `1456906`.
+- **proof_class:** `direct_source` for reachability and the preserved identity
+- **as_of:** 2026-09-26
+- **reverify:** Run `git fetch origin evidence/result-0018-6a07294` then `git branch -r --contains 6a07294571644d963a5a9b728f8e4aed3b29a835`; expect `origin/evidence/result-0018-6a07294`.
+- **updated:** 2026-09-26
+- **supersedes:** [DECISION-0004]
+- **superseded_by:** []
+- **notes:** Precision (2026-09-26 review): of the 31 files `6a07294` added, 25 are absent at `1456906` and 2 differ. Evidence branches under `evidence/` must never be deleted; the ledger citation check accepts commits reachable from them.
+
+### CORRECTION-0013 — Seven results' reverify commands check today's source, not the frozen one
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` commands of `RESULT-0031`, `RESULT-0032`, `RESULT-0033`, `RESULT-0034`, `RESULT-0035`, `RESULT-0043`, and `RESULT-0048`; their measurements, dispositions, and proof classes are unchanged
+- **statement:** Narrows those seven records. Each recorded `reverify` runs the experiment's own `verify.js` against today's source, which has moved since the run, so on 2026-09-26 all seven returned `FAIL: source identity closure mismatch`. That is a fact about the present tree, not the evidence. Run against each result's frozen tree with `tools/verify-frozen-experiment.js`, all seven exit 0 on 2026-09-26. The results stand; their reverify command is the frozen one below.
+- **evidence:** `tools/verify-frozen-experiment.js`; `tools/run-reverify.js` report of 2026-09-26; frozen trees reported by the verifier: `RESULT-0031` `37185859`, `RESULT-0032` `36851ba8`, `RESULT-0033` `634d98b9`, `RESULT-0034` `e184a924`, `RESULT-0035` `158858c8`, `RESULT-0043` `0f539ed2`, `RESULT-0048` `20b96696`.
+- **proof_class:** `direct_source` for the failing current-tree commands and the passing frozen-tree verifications
+- **as_of:** 2026-09-26
+- **reverify:** Run `node tools/verify-frozen-experiment.js RESULT-0031`, `node tools/verify-frozen-experiment.js RESULT-0032`, `node tools/verify-frozen-experiment.js RESULT-0033`, `node tools/verify-frozen-experiment.js RESULT-0034`, `node tools/verify-frozen-experiment.js RESULT-0035`, `node tools/verify-frozen-experiment.js RESULT-0043`, `node tools/verify-frozen-experiment.js RESULT-0048`; expect exit 0 and a `FROZEN TREE` line for each.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0031, RESULT-0032, RESULT-0033, RESULT-0034, RESULT-0035, RESULT-0043, RESULT-0048]
+- **superseded_by:** []
+- **notes:** Found by the first nightly reverify run (BL-0016 F1). Fifteen other records also failed or timed out that night; each needs its own diagnosis and is listed in BL-0016.
+
+### CORRECTION-0014 — Five results' reverify commands check today's source, not the tree they were admitted at
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` commands of `RESULT-0017`, `RESULT-0021`, `RESULT-0024`, `RESULT-0025`, and `RESULT-0026`; their measurements, dispositions, and proof classes are unchanged
+- **statement:** Narrows those five records. Each recorded `reverify` runs against today's tree, whose protected source has moved, so on 2026-09-26 they fail (`protected file changed: solver/bot.js`; `protocol identity mismatch`; control-gate assertion failure; human-pilot `status FAIL`; `challenge covered source identity changed`). That is a fact about the present tree. Run at the commit that admitted each result, every command passes on 2026-09-26. `RESULT-0021`, `RESULT-0024`, and `RESULT-0026` read git state, so they need a `git worktree` checkout; a `git archive` extract fails them (`not a git repository`; `protocol.md ... is not committed`). `tools/verify-frozen-experiment.js` does not apply (no `corpus.json`).
+- **evidence:** admission commits `be84336` (RESULT-0017), `1e5311e` (RESULT-0021), `6d24d6a` (RESULT-0024, RESULT-0025), `4dc17ad` (RESULT-0026); frozen-tree outputs below.
+- **proof_class:** `direct_source` for the failing current-tree commands and the passing frozen-tree runs
+- **as_of:** 2026-09-26
+- **reverify:** For each pair, `git worktree add --detach <dir> <commit>`, `cd <dir>`, run, then `git worktree remove <dir>`:
+  - `be84336`: `node solver/verify-map-elites.js solver/map-elites-output`; expect three PASS lines, 20 occupied cells, protected champion `52f500c`.
+  - `1e5311e`: `node experiments/RESULT-0021/verify.js`; expect `RESULT-0021 CHALLENGE PASS 95d45522...`.
+  - `6d24d6a`: `node --test experiments/RESULT-0024/control-gate.test.js`; expect 4/4 pass.
+  - `6d24d6a`: `node tools/human-pilot.js verify-execution`; expect `"status": "PASS"`, no problems.
+  - `4dc17ad`: `node --test experiments/RESULT-0026/policy-comparison-gate.test.js`; expect 8/8 pass. Then the recorded `experiments/RESULT-0026/admit.js` command with `--out` to a temp path; expect `ADMITTED FALSIFIED 95604ad0...`.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0017, RESULT-0021, RESULT-0024, RESULT-0025, RESULT-0026]
+- **superseded_by:** []
+- **notes:** Second batch from the nightly reverify run (BL-0016 F1). Only the named commands were rerun; the other commands in each record's reverify (focused suites, `tools/verify-experiments.js`) were not checked here.
+
+### CORRECTION-0015 — The chain-coverage check needs more memory than Node's default
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `node solver/chain-coverage.js` step in the `reverify` of `RESULT-0011` and `CORRECTION-0003`; their measurements and conclusions are unchanged
+- **statement:** Narrows `RESULT-0011` and `CORRECTION-0003`. Their recorded command crashes with `JavaScript heap out of memory` on its first board under Node's default heap of about 4 GB, before the enumeration reaches the Set size limit the script catches; the same crash occurs on Node 22 and at the admitting commit, so it is not a code change. Run with an 8 GB heap on 2026-09-26, the script completes and prints 16 boards with ground truth and mean best-chain share 0.563 for the shipped walk and 0.688 with the degree tie-break, the recorded figures.
+- **evidence:** `solver/chain-coverage.js`; run of 2026-09-26 at commit `6b602bb` with `--max-old-space-size=8192`, exit 0.
+- **proof_class:** `direct_source` for the crash cause and the reproduced output
+- **as_of:** 2026-09-26
+- **reverify:** Run `node --max-old-space-size=8192 solver/chain-coverage.js`; expect exit 0, 16 boards with ground truth, and means 0.563 and 0.688.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0011, CORRECTION-0003]
+- **superseded_by:** []
+- **notes:** Diagnosed by a BL-0016 agent (Node 26 and Node 22, admitting commit `4ded51c`) and re-run by the owner session. Capping the enumeration instead would need a cap above 8,285,173 path states, or Level 51 seed 1 is wrongly reported `n/a`. `RESULT-0011`'s other reverify steps are handled separately.
+
+### CORRECTION-0016 — Four results' reverify runs the whole test suite, which fails for reasons outside their claims
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` commands of `RESULT-0009`, `RESULT-0011`, `RESULT-0012`, and `RESULT-0014`; their statements, measurements, and proof classes are unchanged
+- **statement:** Narrows those four records. Each recorded `reverify` includes `node --test solver/tests/*.test.js` with an expected pass count (73, 82, 82, 144). That command runs every test in the repository as it stands today, so both the count and the pass/fail outcome track unrelated later work. On 2026-09-26 it ran 494 tests: 490 pass, 1 skipped, 3 fail. The three failures are (1) and (2) `receiptGate.test.js` "candidate-levels-52.json / -54.json has a receipt that verifies against the current bot", which fail by design because those receipts predate the current bot and the owner decided on 2026-08-21 to hold their targets (the test's own message says so); and (3) `universeMap.test.js` "the builder is byte-stable and the committed generated views are current", a Universe Map staleness check. None of the three tests the claim of `RESULT-0009`, `RESULT-0011`, or `RESULT-0014`. The Level 52 receipt failure touches `RESULT-0012`'s cited receipt, but its message (receipt predates the current bot) is exactly what `RESULT-0012` states: the target was held at its pre-`RESULT-0011` value on purpose. It confirms the claim rather than contradicting it. The tests that do carry each claim pass on 2026-09-26: `solver/tests/engine.test.js` 45/45 (includes the three `buildGreedyChain` stranding / tie-break / negative-control tests `RESULT-0011` cites), `solver/tests/bot.test.js` 21/21 (includes the six `harvestValue` tests `RESULT-0014` cites), and `solver/tests/gameLevels.test.js` 1/1.
+- **evidence:** `node --test solver/tests/*.test.js` output of 2026-09-26 (494 tests, 490 pass, 3 fail); the focused runs named below; `solver/tests/receiptGate.test.js` line 165 failure text.
+- **proof_class:** `direct_source` for the failing whole-suite run and the passing focused runs
+- **as_of:** 2026-09-26
+- **reverify:** `RESULT-0009`: `node --test solver/tests/gameLevels.test.js` (expect 0 fail) and `node solver/verify-loop.js` (expect `RESULT: PASS`). `RESULT-0011`: `node --test solver/tests/engine.test.js` (expect 0 fail) plus its other commands, which this record does not change. `RESULT-0012`: `node --test solver/tests/gameLevels.test.js` (expect 0 fail) and `node solver/verify-loop.js` (expect `RESULT: PASS`). `RESULT-0014`: `node --test solver/tests/bot.test.js` (expect 0 fail) and `node solver/verify-loop.js` (expect `RESULT: PASS`). Pass counts are dropped because they grow whenever tests are added.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0009, RESULT-0011, RESULT-0012, RESULT-0014]
+- **superseded_by:** []
+- **notes:** Found by the nightly reverify run (BL-0016). The whole-suite command is also exposed to concurrent edits: during this diagnosis a ledger commit landed mid-run and 12 `universeMap.test.js` tests failed ("RESULT-0017 status: expected accepted, got narrowed"), since fixed and unrelated to these four claims. The level-count expectations `51/51` and `52/52` in the original reverify lines are also stale now that more levels ship; `verify-loop.js` reports the current count. On 2026-09-26 `node solver/verify-loop.js` printed `RESULT: PASS` and exited 0 (an earlier attempt was killed at a 600-second tool limit with exit 143 before finishing).
+
+### CORRECTION-0017 — FACT-0007's check count and RESULT-0011's effect size, measured on today's tree
+
+- **type:** correction
+- **status:** accepted
+- **scope:** `FACT-0007`'s stated check count and reverify; `RESULT-0011`'s stated effect size and routing-ablation reverify; the direction of both claims is unchanged
+- **statement:** Narrows `FACT-0007` and `RESULT-0011`. `FACT-0007` holds: on 2026-09-26 `solver/game-tester.js` printed `PASS - 120/120 checks: score scales exactly, play is identical.` Its loop has run 120 checks (5 levels, 6 scales, 4 seeds) since the commit that wrote the record, so the record's "160 of 160" and expected "60/60" were wrong from the start. The same command then exits 1 on levels above 50, where its chapter table ends. `RESULT-0011` holds with a smaller effect: `solver/routing-ablation.js` measured the degree tie-break at +3.19% (t = 18.8) over 58 levels with no level hurt, against the recorded roughly +5%, because the gain is now measured on top of the later beam-width-8 bot.
+- **evidence:** `solver/game-tester.js` (chapter table ending at level 50); `solver/routing-ablation.js`; runs of 2026-09-26 on the current tree, captured by a BL-0016 diagnosis agent.
+- **proof_class:** `direct_source` for the printed check line, the loop's size, and the crash; `heuristic_observation` is not claimed afresh: the +3.19% figure is a single re-run of `RESULT-0011`'s own grandfathered measurement, reported for currency only
+- **as_of:** 2026-09-26
+- **reverify:** Run `node solver/game-tester.js --seeds 20` and read its first output line; expect `PASS - 120/120`; the later exit 1 on levels above 50 is the known chapter-table bug in BL-0016. Run `node solver/routing-ablation.js` (several hours); expect a positive lift with t > 3.
+- **updated:** 2026-09-26
+- **supersedes:** [FACT-0007, RESULT-0011]
+- **superseded_by:** []
+- **notes:** The same diagnosis found `RESULT-0005`, `RESULT-0006`, and `RESULT-0007` describe the levels and bot before the 2026-08-12 retune and the 2026-08-30 promotion; today's runs no longer test those claims, so they are marked `stale` rather than corrected. `solver/spawn-experiment.js` also refills with unscaled tiles on scaled boards, which makes its current win rates meaningless; that bug is in BL-0016.
 
 ## Assembly cut log
 

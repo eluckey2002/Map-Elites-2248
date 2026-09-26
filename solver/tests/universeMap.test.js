@@ -58,7 +58,7 @@ test('the selected ledger parser resolves one record without pretending to parse
 
   assert.equal(record.id, 'RESULT-0017');
   assert.equal(record.type, 'result');
-  assert.equal(record.status, 'accepted');
+  assert.equal(record.status, 'narrowed'); // CORRECTION-0014 repointed its reverify
   assert.match(record.title, /bounded MAP-Elites run/);
   assert.match(record.statement, /20 of 25 cells/);
   assert.match(record.proofClass, /heuristic_observation/);
@@ -205,10 +205,10 @@ test('verification fails closed when selected current evidence is not accepted',
   const heading = ledger.indexOf('### RESULT-0017');
   const nextHeading = ledger.indexOf('\n## Decision registry', heading);
   const before = ledger.slice(0, heading);
-  const selected = ledger.slice(heading, nextHeading).replace('- **status:** accepted', '- **status:** stale');
+  const selected = ledger.slice(heading, nextHeading).replace('- **status:** narrowed', '- **status:** stale');
   fs.writeFileSync(ledgerPath, `${before}${selected}${ledger.slice(nextHeading)}`);
 
-  assert.match(verifyUniverse(fixture).join('\n'), /RESULT-0017 status: expected accepted, got stale/);
+  assert.match(verifyUniverse(fixture).join('\n'), /RESULT-0017 status: expected narrowed, got stale/);
 });
 
 test('verification fails closed for receipt hash mismatch', (t) => {
