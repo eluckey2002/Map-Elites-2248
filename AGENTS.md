@@ -1,5 +1,40 @@
 # Project evidence instructions
 
+## Blackboard: use it during project work
+
+At the start of each working session, read [.blackboard/AGENTS.md](.blackboard/AGENTS.md)
+and run `python .blackboard/board.py query summary` from the project root. Inspect
+relevant existing tasks with `query task <id>` before creating duplicate work.
+If the summary shows tasks, run `query tasks` to list their IDs, states, and
+assignees.
+Do not start another server if the board is already running. CLI reads and
+updates work even when the web view is stopped.
+
+For implementation, investigation, or other substantive project work:
+
+- Create a bounded task before starting, with acceptance criteria, a named
+  reviewer, and a stop condition. Reuse an applicable existing task; do not
+  claim work already owned by another agent.
+- Claim the task before doing the work. Record progress at meaningful changes,
+  blockers, and handoffs rather than on every tool call. A blocker is a progress
+  note or defect; do not invent a task state the board does not support.
+- Save the result and verification evidence to `.blackboard/runtime/<id>.md`
+  (or `.json` / `.txt`) and submit it using `python .blackboard/board.py`.
+- Acceptance requires an actual check by the declared reviewer, distinct from
+  the producer and submitter. Never impersonate a reviewer or invent approval.
+  A coordinator may record a review only after receiving that reviewer's actual
+  decision, identifying its evidence in the note. If review is unavailable,
+  leave the task submitted and report that boundary honestly.
+- Before ending a session, ensure the board reflects the actual state of the
+  work. Brief questions and conversation do not need new tasks.
+
+Use the local writer commands, never direct SQLite edits. This is the default
+workflow for agents in this project; do not ask the owner whether to update the
+board. Blackboard records operational status only: `EVIDENCE_LEDGER.md` and its
+primary citations retain evidence authority, and `CURRENT.md` plus its backlog
+records retain milestone and intent authority. A board acceptance does not
+promote a scientific claim or replace the experiment gates below.
+
 ## Before you edit anything
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
