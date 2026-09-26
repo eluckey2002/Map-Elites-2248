@@ -123,3 +123,4 @@ closes the most gaps).
   witness replay, which need the engine. RESULT-0033 and RESULT-0034 cleared
   their width-stability bar on exactly the minimum 28 pairs (feeds F6).
 - 2026-09-26: F6 done. `experiments/TEMPLATE.md` has a "Sample size and margin" section (per-verdict n, how many misses flip it, a bar for any combined measure a later stage uses); the gate requires it for protocols registered from 2026-09-27. Planted a post-cutoff date on RESULT-0048: gate flagged it; restored.
+- 2026-09-26: F7 done. AGENTS.md and CURRENT.md cite `RESULT-0028` instead of restating 140,544; AGENTS.md gains the rule to cite record IDs rather than restate numbers. HANDOFF.md occurrences left: it is a dated session log. Suite: same 3 known failures.
