@@ -51,6 +51,18 @@ copy `experiments/TEMPLATE.md` to start one. The gate is
 Commit the protocol before the experiment runs. A protocol committed after its
 evidence is a reconstruction, not a preregistration.
 
+## Closing a session
+
+Before a session's work lands, in this order:
+
+1. Every run you started ends with its `ledger:` line (see above), and any new result or correction is in `EVIDENCE_LEDGER.md`.
+2. Run `node tools/build-ledger-index.js`.
+3. Update [CURRENT.md](CURRENT.md) so the next session sees what changed and what is open, citing record IDs rather than restating numbers. The gate fails a change that adds a ledger record without touching `CURRENT.md`.
+4. Append a dated line to the History of each backlog record you worked on.
+5. Run `node tools/verify-experiments.js`; it must pass before you open the pull request.
+
+Do not append to `HANDOFF.md`. It is a historical session journal; what it used to carry now goes in the ledger, `CURRENT.md`, and backlog history.
+
 ## Landing changes on `main`
 
 `main` is protected. Every change reaches it through a pull request whose

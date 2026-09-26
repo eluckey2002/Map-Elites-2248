@@ -1,3 +1,5 @@
+> **Historical journal, closed 2026-09-26.** Do not append. Sessions now close out through the ledger, [CURRENT.md](CURRENT.md), and backlog history; see "Closing a session" in [AGENTS.md](AGENTS.md).
+
 > **Current authority:** This document is the snapshot stopped on 2026-09-06. Read [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) for current project status and proof boundaries; this file is navigation and history, not evidence. Sections are newest first — anything below the 2026-08-20 section is retained history and at least one instruction in it has since been narrowed. Read this section before acting on any older one.
 
 # 2248 Challenge — Handoff

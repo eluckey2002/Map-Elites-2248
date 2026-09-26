@@ -693,7 +693,8 @@ function assessLedgerHistory(text, baseText) {
 // On main itself (HEAD is the branch point, as in a push run) compare with
 // LEDGER_BASE when CI supplies the pre-push commit, else HEAD's parent, so a
 // direct push is still checked.
-function baseLedgerText() {
+function baseLedgerText() { return baseFileText('EVIDENCE_LEDGER.md'); }
+function baseFileText(rel) {
   const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1e8 });
   try {
     let base = git(['merge-base', 'HEAD', 'origin/main']).trim();
@@ -701,7 +702,7 @@ function baseLedgerText() {
       const given = process.env.LEDGER_BASE;
       base = given && !/^0+$/.test(given) ? given : 'HEAD^';
     }
-    return git(['show', `${base}:EVIDENCE_LEDGER.md`]);
+    return git(['show', `${base}:${rel}`]);
   } catch { return null; }
 }
 
@@ -765,6 +766,19 @@ function assessRunOutcomes(ledgerText, { runsDir = RUNS, startDate = runStartDat
   return problems;
 }
 
+// Session close-out: a change that adds a ledger record must also update
+// CURRENT.md, or the "what's active now" page silently goes stale while the
+// ledger moves on. Does NOT check that the update is about the new record.
+function assessCloseOut(ledgerText, baseText, currentText, baseCurrentText) {
+  if (baseText === null || baseCurrentText === null) return [];
+  const had = new Set([...baseText.matchAll(/^### ([A-Z]+-\d{4})\b/gm)].map((m) => m[1]));
+  const added = [...ledgerText.matchAll(/^### ([A-Z]+-\d{4})\b/gm)].map((m) => m[1]).filter((id) => !had.has(id));
+  if (added.length && currentText === baseCurrentText) {
+    return [`ledger adds ${added.join(', ')} but CURRENT.md is unchanged; update it when closing out`];
+  }
+  return [];
+}
+
 function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
@@ -783,6 +797,9 @@ function assessExperiments() {
   const baseText = baseLedgerText();
   if (baseText === null) problems.push('cannot read the base ledger from git; history check did not run');
   else problems.push(...assessLedgerHistory(ledgerText, baseText));
+  const currentPath = path.join(ROOT, 'CURRENT.md');
+  problems.push(...assessCloseOut(ledgerText, baseText,
+    fs.existsSync(currentPath) ? fs.readFileSync(currentPath, 'utf8') : '', baseFileText('CURRENT.md')));
   const results = readLedgerResults(ledgerText);
   const exempt = grandfathered();
 
@@ -873,7 +890,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessLedgerCitations, assessLedgerHistory, assessRunOutcomes, assessSampleSizeSections, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
+  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessCloseOut, assessLedgerCitations, assessLedgerHistory, assessRunOutcomes, assessSampleSizeSections, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,

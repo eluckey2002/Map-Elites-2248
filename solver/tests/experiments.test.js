@@ -735,3 +735,19 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     });
   }
 }
+
+// Session close-out: a new ledger record must come with a CURRENT.md update.
+{
+  const { assessCloseOut } = require('../../tools/verify-experiments.js');
+  const base = '### RESULT-0001 — a\n';
+  const grown = `${base}### RESULT-0002 — b\n`;
+  test('close-out passes when no record is added', () => {
+    assert.deepEqual(assessCloseOut(base, base, 'same', 'same'), []);
+  });
+  test('close-out passes when a record is added and CURRENT.md changes', () => {
+    assert.deepEqual(assessCloseOut(grown, base, 'new', 'old'), []);
+  });
+  test('close-out rejects a new record with CURRENT.md unchanged', () => {
+    assert.notDeepEqual(assessCloseOut(grown, base, 'same', 'same'), []);
+  });
+}

@@ -4,6 +4,10 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
+## Evidence-capture hardening — 2026-09-26
+
+[BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. The lost 2026-08-28 MAP-Elites archives are now [RESULT-0049](EVIDENCE_LEDGER.md) and [RESULT-0050](EVIDENCE_LEDGER.md), neither replacing the `52f500c` champion. CORRECTION-0010 to CORRECTION-0013 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still flags 15 records, under diagnosis in BL-0016.
+
 ## Current decision frontier — 2026-09-16
 
 The latest trustworthy sequence is now visible in the ledger:
