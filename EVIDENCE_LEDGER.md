@@ -173,6 +173,7 @@ Use the narrowest class the evidence supports:
 | `direct_source` | A rule, configuration, identity, or state is present in cited primary evidence. |
 | `exact_result` | The stated value is exact within the recorded scope. |
 | `replayed_lower_bound` | A cited witness replays to the stated value; no higher-score claim follows. |
+| `replayed_upper_bound` | A cited witness replays to the target within the stated moves or cap, so the minimum needed is at most that; no lower bound or exact minimum follows. |
 | `proven_upper_bound` | A cited admissible proof caps the stated scope; it is not a witness or prediction. |
 | `heuristic_observation` | A named policy, sample, or incomplete search produced the observation; no policy-independent bound follows. |
 | `UNKNOWN` | A bounded decision attempt returned no answer; it excludes nothing. |
@@ -209,7 +210,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
   statement: <one claim or question>
   evidence:
     - <primary path plus symbol, frozen identity/hash, or reproducible command>
-  proof_class: direct_source | exact_result | replayed_lower_bound | proven_upper_bound | heuristic_observation | UNKNOWN | unresolved | owner_decision | hypothesis
+  proof_class: direct_source | exact_result | replayed_lower_bound | replayed_upper_bound | proven_upper_bound | heuristic_observation | UNKNOWN | unresolved | owner_decision | hypothesis
   as_of: YYYY-MM-DD | not_time_sensitive
   reverify: <command and expected observation, or not_applicable>
   updated: YYYY-MM-DD

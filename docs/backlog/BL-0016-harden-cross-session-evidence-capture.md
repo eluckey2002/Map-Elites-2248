@@ -70,3 +70,4 @@ closes the most gaps).
 - 2026-09-26: Proposed from three-part audit (size/shape, finding quality,
   mechanizability pending).
 - 2026-09-26: Mechanizability audit added F9–F12; F10 spot-checked.
+- 2026-09-26: Owner decided F10: add `replayed_upper_bound` to the allowed proof classes (done in the ledger's class table and entry template).
