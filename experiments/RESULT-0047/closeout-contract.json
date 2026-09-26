@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "protocol.md",
+    "sha256": "fbd91791134fbb9b57c2ca07573599515b543e3fd4342d679df3c257645deb28"
+  },
+  "final_subject_identity": "f4812d343fba94eb6140d77ff3ad09455a43fe12aad19ad0ca1865131a8c2d66",
+  "required_claims": ["C1", "C2", "C3", "P1", "P2", "P3"],
+  "required_artifacts": ["corpus", "report", "primary-recomputation"],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": ["node", "recompute.js"],
+    "cwd": ".",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}

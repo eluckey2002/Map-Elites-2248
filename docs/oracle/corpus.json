@@ -1,0 +1,5546 @@
+{
+  "schemaVersion": 1,
+  "scope": "exact captured corpus; development cases, not a holdout",
+  "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+  "gameIdentity": "3d405595707621ce28ab2ff4a8f509b8e3099462d42e8e0b304d3459907936c1",
+  "recordingCount": 25,
+  "puzzles": [
+    {
+      "puzzleIdentity": "1726f3e5190fa65fa5e337639c1e142589ecb86abf728b764ebccafc26ea7a92",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 4,
+          "gridH": 8,
+          "moves": 24,
+          "minChain": 3,
+          "target": 126000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "duration": 10,
+              "type": "ice",
+              "x": 1,
+              "y": 3
+            },
+            {
+              "duration": 6,
+              "type": "ice",
+              "x": 2,
+              "y": 1
+            },
+            {
+              "type": "stone",
+              "x": 2,
+              "y": 2
+            }
+          ]
+        },
+        "seed": 424242,
+        "initialBoard": [
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              "ice",
+              6,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              "ice",
+              10,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "cf71cb2f136b325f72a715ff56f27ed6d1e7f524fcc78549f76a75dafe13ffb6"
+      },
+      "humanBestMoves": 19,
+      "recordings": [
+        {
+          "file": "pilots/HUMAN-PILOT-0001/recordings/3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b.json",
+          "fileIdentity": "687dfd7d9bc25a858e50d398830b7b6bb52b697e5364e3b104824047adb3a903",
+          "candidateIdentity": "4db4d815f7f36f59b2710b195a56a1a36b35053a5c19ad283db679b6c4f7876d",
+          "candidate": {
+            "blockers": [
+              {
+                "duration": 10,
+                "type": "ice",
+                "x": 1,
+                "y": 3
+              },
+              {
+                "duration": 6,
+                "type": "ice",
+                "x": 2,
+                "y": 1
+              },
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 2
+              }
+            ],
+            "gridH": 8,
+            "gridW": 4,
+            "level": 53,
+            "minChain": 3,
+            "moves": 24,
+            "name": "gen-0008",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "32ab430d79a42ab17993568b2a32d9fe7bdc4724a1370f676c492f46ec26d073",
+            "target": 126000,
+            "tileScale": 32
+          },
+          "levelNumber": 53,
+          "source": "generated-batch-04.json (gen-0008)",
+          "outcome": "win",
+          "moves": 19,
+          "score": 164096
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "24a49a4c8fa2c0cb71131d61d8419c81a301b6d2eff5e4224e73e3dcfc2ad5ed",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 7,
+          "moves": 28,
+          "minChain": 4,
+          "target": 162000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "bomb",
+              "x": 1,
+              "y": 2,
+              "timer": 7
+            },
+            {
+              "type": "bomb",
+              "x": 3,
+              "y": 5,
+              "timer": 9
+            }
+          ]
+        },
+        "seed": 4010386357,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              "bomb",
+              0,
+              7
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              "bomb",
+              0,
+              9
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "26ffd619d3595a409484afbe5bd92627925675efee2f11817c70488232ad5e6c"
+      },
+      "humanBestMoves": 15,
+      "recordings": [
+        {
+          "file": "play-sessions/959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a.json",
+          "fileIdentity": "959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 58,
+            "target": 162000,
+            "tileScale": 32,
+            "moves": 28,
+            "minChain": 4,
+            "gridW": 5,
+            "gridH": 7,
+            "blockers": [
+              {
+                "type": "bomb",
+                "x": 1,
+                "y": 2,
+                "timer": 7
+              },
+              {
+                "type": "bomb",
+                "x": 3,
+                "y": 5,
+                "timer": 9
+              }
+            ],
+            "intro": "Two timers running at once."
+          },
+          "levelNumber": 58,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 15,
+          "score": 162560
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "2bb321b435751a652f9a76dfba255b720fd810fd2470842389d5cab73ca03823",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 6,
+          "gridH": 5,
+          "moves": 16,
+          "minChain": 3,
+          "target": 101000,
+          "tileScale": 32,
+          "blockers": []
+        },
+        "seed": 2,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "1aa7e3f083c55ba032aa03df7312b54136140f0f573d9cc5f2e5487a70df73df"
+      },
+      "humanBestMoves": 13,
+      "recordings": [
+        {
+          "file": "recordings/7061bbf0132f36d071d6aa1367653116bbac064777a13461cda3e5e170f39af0.json",
+          "fileIdentity": "24ec42431143886b81678f37793621d68ca6904a52a3c6518e598dabb6d2eddf",
+          "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+          "candidate": {
+            "blockers": [],
+            "gridH": 5,
+            "gridW": 6,
+            "level": 53,
+            "minChain": 3,
+            "moves": 16,
+            "name": "gen-0014-wide-sprint",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "129c358075bb4cca00678ebc597be45bf59dea7b8c661a2372b2e4b3ee2be0a4",
+            "target": 101000,
+            "tileScale": 32
+          },
+          "levelNumber": 53,
+          "source": "candidate-levels-gen0014-wide-sprint-043ca53f.json",
+          "outcome": "win",
+          "moves": 13,
+          "score": 101120
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "3214dbd437170b396b9f1b6c4d63cbe11bebe4d93ae8e3e1476b3e7f64300537",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 7,
+          "moves": 24,
+          "minChain": 4,
+          "target": 150000,
+          "tileScale": 32,
+          "blockers": []
+        },
+        "seed": 1,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "ce6688e458928323bfaef7fbf4975d61bf4ae10cd28e61f223c71135c154e93b"
+      },
+      "humanBestMoves": 16,
+      "recordings": [
+        {
+          "file": "recordings/3d3ba1f05b08030337e805c61c0584e99d157caade3e7e62298769219806258a.json",
+          "fileIdentity": "d10f50a26b0eb69cec12dcf54194c13450c960a73e5a8f4574612629067d5c85",
+          "candidateIdentity": "56c8eab00e4a6e2dbf836d0d9aecc041fda4226a53f965e51ac6eaaf837a262f",
+          "candidate": {
+            "blockers": [],
+            "gridH": 7,
+            "gridW": 5,
+            "level": 54,
+            "minChain": 4,
+            "moves": 24,
+            "name": "level-54-tighter-pace",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "81bdf91567545b0619c82d9a550c8cda48d68aa7a5806575bf950d0f46ed9047",
+            "target": 150000,
+            "tileScale": 32
+          },
+          "levelNumber": 54,
+          "source": "candidate-levels-54-tighter-pace-56c8eab0.json",
+          "outcome": "win",
+          "moves": 16,
+          "score": 152704
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "342fa0366822801eef10348ce98b188e39f4d9072eac4601331b874b382488f1",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 7,
+          "moves": 24,
+          "minChain": 4,
+          "target": 102000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 2,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 2173441018,
+        "initialBoard": [
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "ab887d3a2cc098b4da32b11bc91c414ce6a6cd719563379e5b0a34e6330d8d57"
+      },
+      "humanBestMoves": 11,
+      "recordings": [
+        {
+          "file": "play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json",
+          "fileIdentity": "b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 52,
+            "target": 102000,
+            "tileScale": 32,
+            "moves": 24,
+            "minChain": 4,
+            "gridW": 5,
+            "gridH": 7,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ]
+          },
+          "levelNumber": 52,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 11,
+          "score": 112000
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "3808ee8892e6eb828388ecd37095633d9fe3c89950e2337a4d2bcf1ba18fa386",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 4,
+          "gridH": 8,
+          "moves": 24,
+          "minChain": 3,
+          "target": 126000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 1,
+              "y": 3
+            },
+            {
+              "type": "stone",
+              "x": 2,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 2832419099,
+        "initialBoard": [
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "eb6bc6ec8c0e5ebe0061cc24ea93da4e741b5a4e6e9e3fbf6fd537fdfad907cc"
+      },
+      "humanBestMoves": 16,
+      "recordings": [
+        {
+          "file": "play-sessions/ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf.json",
+          "fileIdentity": "ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 54,
+            "target": 126000,
+            "tileScale": 32,
+            "moves": 24,
+            "minChain": 3,
+            "gridW": 4,
+            "gridH": 8,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 3
+              },
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "intro": "A narrow board with a blocked centre."
+          },
+          "levelNumber": 54,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 16,
+          "score": 129280
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "3e0d1c86d58ceee50a3a22c45e446d0e2f7afec77232dc0c41638c7e7031c058",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 4,
+          "gridH": 8,
+          "moves": 24,
+          "minChain": 3,
+          "target": 126000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 1,
+              "y": 3
+            },
+            {
+              "type": "stone",
+              "x": 2,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 424242,
+        "initialBoard": [
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "cf71cb2f136b325f72a715ff56f27ed6d1e7f524fcc78549f76a75dafe13ffb6"
+      },
+      "humanBestMoves": 20,
+      "recordings": [
+        {
+          "file": "pilots/HUMAN-PILOT-0002/recordings/c50b34f85e9ee53762ab3093bc4af0839965dd8c275bdc7893c31e011e0a32f6.json",
+          "fileIdentity": "846513bc9a0e1e31d5f42b9378ba12a0bad092e9e95b8bc6ebc5c7e9dbfec48a",
+          "candidateIdentity": "0d7604e7b6d6142dce6ad8c6f4d1a2a62b2ea1031b5e3ccf3fd93643799585f4",
+          "candidate": {
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 3
+              },
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "gridH": 8,
+            "gridW": 4,
+            "level": 54,
+            "minChain": 3,
+            "moves": 24,
+            "name": "prototype-central-choke",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "bbf619d8b0789111e4d2b29c5c82853e78cf198f445683c6ca972f940052a963",
+            "target": 126000,
+            "tileScale": 32
+          },
+          "levelNumber": 54,
+          "source": "pilot",
+          "outcome": "win",
+          "moves": 20,
+          "score": 140544
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "6b0d3ffdb44b7ef9a67a479d2214a82b1ed5d9abb6bb16e1d20a2bde26090e24",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 8,
+          "moves": 26,
+          "minChain": 4,
+          "target": 129000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 1,
+              "y": 4
+            },
+            {
+              "type": "stone",
+              "x": 3,
+              "y": 4
+            },
+            {
+              "type": "ice",
+              "x": 2,
+              "y": 2,
+              "duration": 4
+            }
+          ]
+        },
+        "seed": 2389915636,
+        "initialBoard": [
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              "ice",
+              4,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "86ee7ee173cdf5cd7b73b98da3910ecf36849be9cfcd8eb5b36c51670a9c121b"
+      },
+      "humanBestMoves": 15,
+      "recordings": [
+        {
+          "file": "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json",
+          "fileIdentity": "b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 57,
+            "target": 129000,
+            "tileScale": 32,
+            "moves": 26,
+            "minChain": 4,
+            "gridW": 5,
+            "gridH": 8,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 4
+              },
+              {
+                "type": "stone",
+                "x": 3,
+                "y": 4
+              },
+              {
+                "type": "ice",
+                "x": 2,
+                "y": 2,
+                "duration": 4
+              }
+            ],
+            "intro": "Stone walls with a frozen gate between them."
+          },
+          "levelNumber": 57,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 15,
+          "score": 133760
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "742e23f0305a8fc7cf4fcf4ba244d22d0d12dbe299e4793a0aab5c4736e5399e",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 5,
+          "moves": 16,
+          "minChain": 3,
+          "target": 69000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "timer": 11,
+              "type": "bomb",
+              "x": 0,
+              "y": 0
+            },
+            {
+              "timer": 11,
+              "type": "bomb",
+              "x": 4,
+              "y": 1
+            },
+            {
+              "timer": 15,
+              "type": "bomb",
+              "x": 2,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 777,
+        "initialBoard": [
+          [
+            [
+              128,
+              "bomb",
+              0,
+              11
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              "bomb",
+              0,
+              11
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              "bomb",
+              0,
+              15
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "4dfe80a26d7353ce75b0b45acc3084303e3e596af6174a4789e93eb88c0c1e1c"
+      },
+      "humanBestMoves": 11,
+      "recordings": [
+        {
+          "file": "recordings/44d3802d551202d19d8833768f7ee60562797bbdc874fb4d785ee819c54271f2.json",
+          "fileIdentity": "036a2af07a1d88026022a2ffbc6928062aea59194b0c78f7b883692e910edd23",
+          "candidateIdentity": "5b12806fa862b5308496fc3897148973203f550e7c1a6e7a78235038bb735b15",
+          "candidate": {
+            "blockers": [
+              {
+                "timer": 11,
+                "type": "bomb",
+                "x": 0,
+                "y": 0
+              },
+              {
+                "timer": 11,
+                "type": "bomb",
+                "x": 4,
+                "y": 1
+              },
+              {
+                "timer": 15,
+                "type": "bomb",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "gridH": 5,
+            "gridW": 5,
+            "level": 52,
+            "minChain": 3,
+            "moves": 16,
+            "name": "gen-0017",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "11cb8493426b69fa9084952d146cc11b3769eb0d1b2f69fca7ac2f08bfb21f7c",
+            "target": 69000,
+            "tileScale": 32
+          },
+          "levelNumber": 52,
+          "source": "generated-batch-02.json (gen-0017)",
+          "outcome": "win",
+          "moves": 11,
+          "score": 69888
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "783ac318ddeea191cc2d62bfa78318d023e5e3c64dd9fc9fb877f672d4d8343e",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 4,
+          "gridH": 8,
+          "moves": 24,
+          "minChain": 3,
+          "target": 126000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 1,
+              "y": 3
+            },
+            {
+              "type": "stone",
+              "x": 2,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 1044860360,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "dd2995eb5e163d7cd951e86dd4eb7dc6017d143981091b97ab1a58bf00d91c7f"
+      },
+      "humanBestMoves": null,
+      "recordings": [
+        {
+          "file": "play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json",
+          "fileIdentity": "9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 54,
+            "target": 126000,
+            "tileScale": 32,
+            "moves": 24,
+            "minChain": 3,
+            "gridW": 4,
+            "gridH": 8,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 3
+              },
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "intro": "A narrow board with a blocked centre."
+          },
+          "levelNumber": 54,
+          "source": "shipped-level",
+          "outcome": "lose",
+          "moves": 24,
+          "score": 123712
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "7ab85e63f0b2ce34d3c0bde2971b2a3560da11d053461d60f027079c422181e8",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 4,
+          "gridH": 8,
+          "moves": 24,
+          "minChain": 3,
+          "target": 126000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 1,
+              "y": 3
+            },
+            {
+              "type": "stone",
+              "x": 2,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 3310936729,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "aa636961270f074c5ea4adf660ac5f3d33f5054709f200d88eac583496f1cdc1"
+      },
+      "humanBestMoves": 16,
+      "recordings": [
+        {
+          "file": "play-sessions/3391ec8ea6304e62cf489d8231cc9fffd1c90b60caab9ca9586f941a6a96a678.json",
+          "fileIdentity": "3391ec8ea6304e62cf489d8231cc9fffd1c90b60caab9ca9586f941a6a96a678",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 54,
+            "target": 126000,
+            "tileScale": 32,
+            "moves": 24,
+            "minChain": 3,
+            "gridW": 4,
+            "gridH": 8,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 3
+              },
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "intro": "A narrow board with a blocked centre."
+          },
+          "levelNumber": 54,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 19,
+          "score": 132352
+        },
+        {
+          "file": "play-sessions/b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28.json",
+          "fileIdentity": "b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 54,
+            "target": 126000,
+            "tileScale": 32,
+            "moves": 24,
+            "minChain": 3,
+            "gridW": 4,
+            "gridH": 8,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 3
+              },
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "intro": "A narrow board with a blocked centre."
+          },
+          "levelNumber": 54,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 18,
+          "score": 126400
+        },
+        {
+          "file": "play-sessions/bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json",
+          "fileIdentity": "bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 54,
+            "target": 126000,
+            "tileScale": 32,
+            "moves": 24,
+            "minChain": 3,
+            "gridW": 4,
+            "gridH": 8,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 3
+              },
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "intro": "A narrow board with a blocked centre."
+          },
+          "levelNumber": 54,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 16,
+          "score": 129472
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "81d2beb28b6cf96cbfb9ffb4a89fb3cd612b95f8724563284820f387c89c5c08",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 6,
+          "gridH": 5,
+          "moves": 16,
+          "minChain": 3,
+          "target": 101000,
+          "tileScale": 32,
+          "blockers": []
+        },
+        "seed": 10,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "f8b0fbcd5a60e60eb92e35af9cd0f33742811f7e5ace6f2d09594da2ce3abe6c"
+      },
+      "humanBestMoves": 12,
+      "recordings": [
+        {
+          "file": "recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json",
+          "fileIdentity": "7666abeada41cec51a3a87dca1f5cb249d475d102f001488bb1f6149478aff1e",
+          "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+          "candidate": {
+            "blockers": [],
+            "gridH": 5,
+            "gridW": 6,
+            "level": 53,
+            "minChain": 3,
+            "moves": 16,
+            "name": "gen-0014-wide-sprint",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "129c358075bb4cca00678ebc597be45bf59dea7b8c661a2372b2e4b3ee2be0a4",
+            "target": 101000,
+            "tileScale": 32
+          },
+          "levelNumber": 53,
+          "source": "candidate-levels-gen0014-wide-sprint-043ca53f.json",
+          "outcome": "win",
+          "moves": 13,
+          "score": 110208
+        },
+        {
+          "file": "recordings/7ad0978f96196c4ffe7ac15035340454d8e79ab23ea98003a84443bdcbd01526.json",
+          "fileIdentity": "b0be97d7ce940b4620157b1fef677014d791f3d3756f25add7a2ace650743776",
+          "candidateIdentity": "043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16",
+          "candidate": {
+            "blockers": [],
+            "gridH": 5,
+            "gridW": 6,
+            "level": 53,
+            "minChain": 3,
+            "moves": 16,
+            "name": "gen-0014-wide-sprint",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "129c358075bb4cca00678ebc597be45bf59dea7b8c661a2372b2e4b3ee2be0a4",
+            "target": 101000,
+            "tileScale": 32
+          },
+          "levelNumber": 53,
+          "source": "candidate-levels-gen0014-wide-sprint-043ca53f.json",
+          "outcome": "win",
+          "moves": 12,
+          "score": 105216
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "8de7adce947dfcaa3d14aa051176c7051ac034c1b6737a0532f467cce3e27911",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 6,
+          "gridH": 5,
+          "moves": 18,
+          "minChain": 3,
+          "target": 108000,
+          "tileScale": 32,
+          "blockers": []
+        },
+        "seed": 1761047823,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "2d19bedf9a29789508af6b41afd8358d44bee531ea3d5362a3f48d5e40e78c9c"
+      },
+      "humanBestMoves": 10,
+      "recordings": [
+        {
+          "file": "play-sessions/de1be9125b0aeb1008f0eef6ae966db847187d03b1073d2a0b1d3ebe6df50d23.json",
+          "fileIdentity": "de1be9125b0aeb1008f0eef6ae966db847187d03b1073d2a0b1d3ebe6df50d23",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 56,
+            "target": 108000,
+            "tileScale": 32,
+            "moves": 18,
+            "minChain": 3,
+            "gridW": 6,
+            "gridH": 5,
+            "blockers": [],
+            "intro": "Wide and shallow. Fewer moves than you want."
+          },
+          "levelNumber": 56,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 10,
+          "score": 113344
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "8fe7db24e4ac6b36a0999ecd8d61b2594637b1a17ec02978e0f3b5aede38e104",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 7,
+          "moves": 28,
+          "minChain": 4,
+          "target": 162000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "bomb",
+              "x": 1,
+              "y": 2,
+              "timer": 7
+            },
+            {
+              "type": "bomb",
+              "x": 3,
+              "y": 5,
+              "timer": 9
+            }
+          ]
+        },
+        "seed": 4255346895,
+        "initialBoard": [
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              "bomb",
+              0,
+              7
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              "bomb",
+              0,
+              9
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "423595e5fa00f599e56620b92bc2d4db123931b2c36c02735aa3a3f8ca693cba"
+      },
+      "humanBestMoves": 16,
+      "recordings": [
+        {
+          "file": "play-sessions/640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6.json",
+          "fileIdentity": "640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 58,
+            "target": 162000,
+            "tileScale": 32,
+            "moves": 28,
+            "minChain": 4,
+            "gridW": 5,
+            "gridH": 7,
+            "blockers": [
+              {
+                "type": "bomb",
+                "x": 1,
+                "y": 2,
+                "timer": 7
+              },
+              {
+                "type": "bomb",
+                "x": 3,
+                "y": 5,
+                "timer": 9
+              }
+            ],
+            "intro": "Two timers running at once."
+          },
+          "levelNumber": 58,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 16,
+          "score": 170240
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "a2577c1f104d3391578caf4039b2b4fec4d83290d76c70abe8a952ab8e2be8ea",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 7,
+          "moves": 24,
+          "minChain": 4,
+          "target": 124000,
+          "tileScale": 32,
+          "blockers": []
+        },
+        "seed": 1,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "ce6688e458928323bfaef7fbf4975d61bf4ae10cd28e61f223c71135c154e93b"
+      },
+      "humanBestMoves": 12,
+      "recordings": [
+        {
+          "file": "recordings/1c87356748ee23c9388d27f6c66ae60ed7d448f2f327f27dbe4d36a46ea6a0d0.json",
+          "fileIdentity": "335bdcf43b446fa6ed9f1a35df221f9a9bfcb4eb4a4c440c9cbb06774af78bb9",
+          "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+          "candidate": {
+            "blockers": [],
+            "gridH": 7,
+            "gridW": 5,
+            "level": 51,
+            "minChain": 4,
+            "moves": 24,
+            "name": "level-51-split-channel",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "4703c7e773bcab2fa5bdae28bd58604f555a5d5e8ae21a5087c2ecfd09495e1a",
+            "target": 124000,
+            "tileScale": 32
+          },
+          "levelNumber": 51,
+          "source": "candidate-levels-51-split-channel-524f37c0.json",
+          "outcome": "win",
+          "moves": 12,
+          "score": 127040
+        },
+        {
+          "file": "recordings/78749fc07834f892542e7abd3317e9ed0b124082fe5b9b36876dac5918aa4b40.json",
+          "fileIdentity": "ffbf55ae111b4f71fe608c34336585ea3a05e898873d3b5a304d80d4cd0d9de3",
+          "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+          "candidate": {
+            "blockers": [],
+            "gridH": 7,
+            "gridW": 5,
+            "level": 51,
+            "minChain": 4,
+            "moves": 24,
+            "name": "level-51-split-channel",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "4703c7e773bcab2fa5bdae28bd58604f555a5d5e8ae21a5087c2ecfd09495e1a",
+            "target": 124000,
+            "tileScale": 32
+          },
+          "levelNumber": 51,
+          "source": "candidate-levels-51-split-channel-524f37c0.json",
+          "outcome": "win",
+          "moves": 14,
+          "score": 130496
+        },
+        {
+          "file": "recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json",
+          "fileIdentity": "ed367f1e504cd241ecf215a4845a16aa1e18ffd773ad5aa0e02087d95bbb34b5",
+          "candidateIdentity": "524f37c0063d61e5ab4b636b720f3cd644ec83cba62324e48304d5a12bb3dd5c",
+          "candidate": {
+            "blockers": [],
+            "gridH": 7,
+            "gridW": 5,
+            "level": 51,
+            "minChain": 4,
+            "moves": 24,
+            "name": "level-51-split-channel",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "4703c7e773bcab2fa5bdae28bd58604f555a5d5e8ae21a5087c2ecfd09495e1a",
+            "target": 124000,
+            "tileScale": 32
+          },
+          "levelNumber": 51,
+          "source": "candidate-levels-51-split-channel-524f37c0.json",
+          "outcome": "lose",
+          "moves": 24,
+          "score": 59584
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "aa9efa2f04ce7c87b0352f9478222a0bf723b16eeb6c558fa87ce32067328ec9",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 6,
+          "gridH": 5,
+          "moves": 18,
+          "minChain": 3,
+          "target": 108000,
+          "tileScale": 32,
+          "blockers": []
+        },
+        "seed": 3504920448,
+        "initialBoard": [
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "85ad25945c0fa30328fc3d9a15e325426f223986610ef1a622829148480aa808"
+      },
+      "humanBestMoves": 11,
+      "recordings": [
+        {
+          "file": "play-sessions/31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232.json",
+          "fileIdentity": "31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 56,
+            "target": 108000,
+            "tileScale": 32,
+            "moves": 18,
+            "minChain": 3,
+            "gridW": 6,
+            "gridH": 5,
+            "blockers": [],
+            "intro": "Wide and shallow. Fewer moves than you want."
+          },
+          "levelNumber": 56,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 11,
+          "score": 109120
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "abcba5172111e30b205ead70b9f01d6648aee32434126f847fdd01174c7b3a2c",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 7,
+          "moves": 26,
+          "minChain": 4,
+          "target": 122000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 1,
+              "y": 2
+            },
+            {
+              "type": "bomb",
+              "x": 3,
+              "y": 4,
+              "timer": 8
+            }
+          ]
+        },
+        "seed": 2600645753,
+        "initialBoard": [
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              "bomb",
+              0,
+              8
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "84d53dc6fe84fe15b20ba4b51e530820e7e4efe5cd075734642530b04c34080f"
+      },
+      "humanBestMoves": 14,
+      "recordings": [
+        {
+          "file": "play-sessions/10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90.json",
+          "fileIdentity": "10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 55,
+            "target": 122000,
+            "tileScale": 32,
+            "moves": 26,
+            "minChain": 4,
+            "gridW": 5,
+            "gridH": 7,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 2
+              },
+              {
+                "type": "bomb",
+                "x": 3,
+                "y": 4,
+                "timer": 8
+              }
+            ],
+            "intro": "Bombs are back, and the board is tighter."
+          },
+          "levelNumber": 55,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 14,
+          "score": 123008
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "bd5bda0e646de4636021ba5498f0aea723a235072dd2b391910409ff547e16a5",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 5,
+          "gridH": 7,
+          "moves": 24,
+          "minChain": 4,
+          "target": 102000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 2,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 1,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "ce6688e458928323bfaef7fbf4975d61bf4ae10cd28e61f223c71135c154e93b"
+      },
+      "humanBestMoves": 15,
+      "recordings": [
+        {
+          "file": "recordings/f0ae3e75fe38b75b961d564b767e1937da54e3be5517e5a121a4e8cb45521d61.json",
+          "fileIdentity": "c776f73b8044e19fe82ff5265b4019f836f7b4212a9630fe2224077bfe139602",
+          "candidateIdentity": "6f99c09bfae98500617b27af62ac28385e0c99036af41919c54a4ddbb429b084",
+          "candidate": {
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "gridH": 7,
+            "gridW": 5,
+            "level": 52,
+            "minChain": 4,
+            "moves": 24,
+            "name": "level-52-stone-gate",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "e8b746480442e177fe8d85570f26f738cc815c0aa8e7a744193ef189c48cd49a",
+            "target": 102000,
+            "tileScale": 32
+          },
+          "levelNumber": 52,
+          "source": "candidate-levels-52.json",
+          "outcome": "win",
+          "moves": 15,
+          "score": 124864
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "c1bd39cbead6dd2fe0da32839269b37b04e78b45eee61beaeb205a3957dc8406",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 4,
+          "gridH": 8,
+          "moves": 24,
+          "minChain": 3,
+          "target": 126000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "type": "stone",
+              "x": 1,
+              "y": 3
+            },
+            {
+              "type": "stone",
+              "x": 2,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 1313839221,
+        "initialBoard": [
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              0,
+              "stone",
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "6751e372f55cbb5fe6e1d29399a9ae54e49602b1f4cd49e04b7a9c0b2a8cfa0d"
+      },
+      "humanBestMoves": 15,
+      "recordings": [
+        {
+          "file": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+          "fileIdentity": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+          "candidateIdentity": null,
+          "candidate": {
+            "level": 54,
+            "target": 126000,
+            "tileScale": 32,
+            "moves": 24,
+            "minChain": 3,
+            "gridW": 4,
+            "gridH": 8,
+            "blockers": [
+              {
+                "type": "stone",
+                "x": 1,
+                "y": 3
+              },
+              {
+                "type": "stone",
+                "x": 2,
+                "y": 3
+              }
+            ],
+            "intro": "A narrow board with a blocked centre."
+          },
+          "levelNumber": 54,
+          "source": "shipped-level",
+          "outcome": "win",
+          "moves": 15,
+          "score": 127040
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "ebe52ad45659503a3523cfba7f96a6a3d6d49f2d2bcfff67a6bdf80d20e8c373",
+      "input": {
+        "engineIdentity": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+        "level": {
+          "gridW": 6,
+          "gridH": 5,
+          "moves": 21,
+          "minChain": 3,
+          "target": 114000,
+          "tileScale": 32,
+          "blockers": [
+            {
+              "duration": 11,
+              "type": "ice",
+              "x": 2,
+              "y": 1
+            },
+            {
+              "duration": 4,
+              "type": "ice",
+              "x": 1,
+              "y": 3
+            }
+          ]
+        },
+        "seed": 777,
+        "initialBoard": [
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              "ice",
+              11,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              256,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              "ice",
+              4,
+              0
+            ],
+            [
+              512,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ],
+            [
+              64,
+              null,
+              0,
+              0
+            ],
+            [
+              128,
+              null,
+              0,
+              0
+            ]
+          ]
+        ],
+        "spawnIdentity": "deb327976b9d3c0c26083989344f7fd07e80332767a774c5aa2ad6d2730c645d"
+      },
+      "humanBestMoves": 16,
+      "recordings": [
+        {
+          "file": "recordings/d36e875d08396c3d17bd3137478625f713f8fd3e7c35274f2ccfc5de0273841c.json",
+          "fileIdentity": "f20246723c0ca89a9eb77782b5cabdc14fb9277f99c1a3819e3fec918eb2833e",
+          "candidateIdentity": "7dfcb0568b983691486a122ee02bdad383ed230a4d39bcd2d91c19865cf20d86",
+          "candidate": {
+            "blockers": [
+              {
+                "duration": 11,
+                "type": "ice",
+                "x": 2,
+                "y": 1
+              },
+              {
+                "duration": 4,
+                "type": "ice",
+                "x": 1,
+                "y": 3
+              }
+            ],
+            "gridH": 5,
+            "gridW": 6,
+            "level": 52,
+            "minChain": 3,
+            "moves": 21,
+            "name": "gen-0010",
+            "schemaVersion": 1,
+            "sourceShapeIdentity": "ac835e7cd326ce3f0ae121466e6eda8b1784be45be196aa57cf28a0c7191f577",
+            "target": 114000,
+            "tileScale": 32
+          },
+          "levelNumber": 52,
+          "source": "candidate-levels-gen0010.json",
+          "outcome": "win",
+          "moves": 16,
+          "score": 114944
+        }
+      ]
+    }
+  ],
+  "manifestIdentity": "59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308"
+}
