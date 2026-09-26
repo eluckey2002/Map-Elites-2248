@@ -38,10 +38,13 @@ reported by a subagent.
 | F6 | Stability verdicts rest on tiny samples | Reported: 8 pairs (RESULT-0031), 28 pairs (RESULT-0033); joint same-cell rate 22/28 never a registered bar, and RESULT-0035 then fell to 54.8% | Protocol template requires a minimum sample per verdict and a registered test of the joint quantity the next stage consumes |
 | F7 | Same fact restated in many files with no pointer | Reported: "140,544 points in 20 moves" in 4 files, 6 places (all agree today) | Non-ledger files cite the record ID instead of restating the number |
 | F8 | Handoff outside the read chain; uneven run shape | Reported: `HANDOFF-NEXT-MAP-ELITES.md` not linked from AGENTS.md or CURRENT.md; worklog in 26/42 runs, spec in 24/42 | Link or retire the handoff; fixed minimum file set per run, checked by the gate |
+| F9 | The only ledger gate checks RESULT records' `proof_class` and `.json` paths, nothing else | Reported: `tools/verify-experiments.js` parses only `### RESULT-` (:36). 5 of 7 bad records planted in a scratch clone passed (duplicate ID, invalid status/class, promoted class, fake commit, bad FACT citation); an empty ledger passes | Parse every `### ID` record: required fields, allowed values, unique IDs, fail on zero records (~40 lines in the existing gate) |
+| F10 | Live vocabulary violation | Checked: `replayed_upper_bound` used at EVIDENCE_LEDGER.md:721, :736, :1157; allowed list has only `proven_upper_bound` (:176) | Owner call: add the class to the allowed list, or correct the three records |
+| F11 | Nothing blocks rewriting history | Reported: no check that an existing record's `proof_class`/`statement`/`evidence` stays unchanged, or that `supersedes`/`superseded_by` point at each other | Gate diffs the parsed records against `main`: only a status change backed by a CORRECTION record is allowed; supersede links must match |
+| F12 | Citations other than `.json` paths are not resolved | Reported: 0/10 hand samples broke; 27/27 labelled commits resolve; 4/145 paths unresolved, all shorthand or deliberately absent; 53 unlabelled hex strings can't be told apart | Label commits and hashes in prose (`commit`, `SHA-256`); the gate resolves every labelled citation |
 
-Pending: the mechanizability audit (which invariants code enforces, whether
-checkers read the real ledger, citation resolvability) has not reported yet;
-its findings get appended to History.
+Order: F9 → F10 → F12 → F11 → F1 runner (nightly, slow) → F5 JSONL
+source of truth only after the gates exist.
 
 ## Acceptance criteria
 
@@ -59,9 +62,11 @@ RESULT-0017, RESULT-0029, CORRECTION-0005, RESULT-0031 to RESULT-0035 in the
 
 ## Next action
 
-Owner accepts or trims the fix list; then F1 (smallest, highest value).
+Owner accepts or trims the fix list and decides F10; then F9 (smallest,
+closes the most gaps).
 
 ## History
 
 - 2026-09-26: Proposed from three-part audit (size/shape, finding quality,
   mechanizability pending).
+- 2026-09-26: Mechanizability audit added F9–F12; F10 spot-checked.
