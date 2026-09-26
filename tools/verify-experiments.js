@@ -146,9 +146,13 @@ function reachableFromHead(sha) {
   } catch { return false; }
 }
 
+function gitObjectPath(relPath) {
+  return String(relPath).replaceAll('\\', '/');
+}
+
 function pathExistsAtCommit(sha, relPath) {
   try {
-    execFileSync('git', ['cat-file', '-e', `${sha}:${relPath}`], { cwd: ROOT, stdio: 'ignore' });
+    execFileSync('git', ['cat-file', '-e', `${sha}:${gitObjectPath(relPath)}`], { cwd: ROOT, stdio: 'ignore' });
     return true;
   } catch { return false; }
 }
@@ -159,7 +163,7 @@ function pathExistsAtCommit(sha, relPath) {
 // wrote.
 function showAtCommit(sha, relPath, cwd = ROOT, { raw = false } = {}) {
   try {
-    const out = execFileSync('git', ['show', `${sha}:${relPath}`], {
+    const out = execFileSync('git', ['show', `${sha}:${gitObjectPath(relPath)}`], {
       cwd, stdio: ['ignore', 'pipe', 'ignore'], ...(raw ? {} : { encoding: 'utf8' }),
     });
     return out;
