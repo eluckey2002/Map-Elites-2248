@@ -106,5 +106,5 @@ closes the most gaps).
   and ad hoc bold lines; a status change needs a new correction link (stale
   excepted); notes may only grow at the end. Accepted by design: appended
   contradicting notes, header rules and snapshot edits, free paragraphs,
-  `updated` changes. Owner step outside the repo: make "experiment gate" a
-  required check and block direct pushes on `main` in GitHub settings.
+  `updated` changes. GitHub already requires "experiment gate" on `main`,
+  enforced for admins, with force pushes disabled (checked via `gh api`).
