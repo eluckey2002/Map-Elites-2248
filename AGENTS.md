@@ -40,7 +40,7 @@ promote a scientific claim or replace the experiment gates below.
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
 <<<<<<< ours
-- **`node --test solver/tests/*.test.js` reports 443 tests: 439 pass, three fail deliberately, and one is skipped.** The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
+- **`node --test solver/tests/*.test.js` reports 445 tests: 441 pass, three fail deliberately, and one is skipped.** The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
 =======
 - **`node --test solver/tests/*.test.js` reports 424 tests: 420 pass, three fail deliberately, and one is skipped.** The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
 >>>>>>> theirs

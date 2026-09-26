@@ -12,12 +12,17 @@
 //   - such a record must also name a `checked_by` who is not the writer when it
 //     is `accepted` or `narrowed` now, or was `accepted` or `narrowed` on the
 //     base. So accepting a claim and retiring accepted evidence both need an
-//     independent check.
+//     independent check;
+//   - when a record that was accepted or narrowed on the base changes, its
+//     `checked_by` must differ from the base's, so a sign-off already recorded
+//     for an earlier version cannot authorize a later rewrite. Record the new
+//     check (for example `checked_by: codex, 2026-09-26`).
 // Records the change does not touch need nothing, so records written before
 // this gate existed stay valid without authorship fields.
 //
 // The base is `git merge-base HEAD origin/main`; when HEAD is itself on main
-// (a push to main), it is HEAD's first parent. Set LEDGER_BASE to override.
+// (a push to main), it is HEAD's first parent. Set LEDGER_BASE to override;
+// the pre-push hook sets it to the destination remote's current main.
 
 const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');
@@ -35,7 +40,12 @@ function git(args) {
 function baseCommit() {
   if (process.env.LEDGER_BASE) return git(['rev-parse', process.env.LEDGER_BASE]);
   const head = git(['rev-parse', 'HEAD']);
-  const base = git(['merge-base', 'HEAD', 'origin/main']);
+  let base;
+  try {
+    base = git(['merge-base', 'HEAD', 'origin/main']);
+  } catch {
+    throw new Error('no origin/main to compare against; fetch it, or set LEDGER_BASE to the base commit');
+  }
   return base === head ? git(['rev-parse', 'HEAD^1']) : base;
 }
 
@@ -73,6 +83,8 @@ function assessChanges(baseRecords, records) {
       problems.push(`${r.id}: ${what} record, ${why}, but no checked_by. An independent check must be recorded first.`);
     } else if (writer && checker === writer) {
       problems.push(`${r.id}: checked_by is the same as written_by (${writer}). A record may not be checked by its own writer.`);
+    } else if (touchesAccepted && checker === normalized(before.fields.checked_by)) {
+      problems.push(`${r.id}: changed record still carries the base's checked_by (${checker}). That check was of the earlier version; record a new independent check of this change.`);
     }
   }
   return problems;

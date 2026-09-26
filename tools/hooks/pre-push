@@ -21,9 +21,20 @@ while read -r local_ref local_sha remote_ref remote_sha; do
     rm -rf "$tree"
     exit 1
   fi
+  # Compare the ledger with the destination's main, not an assumed origin/main.
+  if [ "$remote_sha" != "$zero" ]; then
+    if ! git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+      echo "pre-push: REFUSED — $remote/main ($remote_sha) is not in this clone; fetch $remote first." >&2
+      git worktree remove --force "$tree" >&2
+      exit 1
+    fi
+    ledger_base="$remote_sha"
+  else
+    ledger_base="$local_sha^1"
+  fi
   failed=""
   (cd "$tree" && node tools/verify-experiments.js >&2) || failed="EXPERIMENT GATE"
-  (cd "$tree" && node tools/verify-ledger-authorship.js >&2) || failed="$failed LEDGER AUTHORSHIP GATE"
+  (cd "$tree" && LEDGER_BASE="$ledger_base" node tools/verify-ledger-authorship.js >&2) || failed="$failed LEDGER AUTHORSHIP GATE"
   (cd "$tree" && node tools/ledger-index.js --check >&2) || failed="$failed LEDGER INDEX CHECK"
   git worktree remove --force "$tree" >&2
   if [ -n "$failed" ]; then

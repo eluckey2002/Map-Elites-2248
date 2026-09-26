@@ -77,3 +77,17 @@ test('the live ledger passes the gate against its base', () => {
   const out = execFileSync('node', ['tools/verify-ledger-authorship.js'], { cwd: ROOT, encoding: 'utf8' });
   assert.match(out, /LEDGER AUTHORSHIP GATE PASS/);
 });
+
+test('a sign-off recorded for an earlier version cannot authorize a later rewrite', () => {
+  const signedBase = record('RESULT-0003', { status: 'accepted', statement: 'Claim.', evidence: 'receipt A', written_by: 'a', checked_by: 'b' });
+  const rewritten = record('RESULT-0003', { status: 'accepted', statement: 'Claim.', evidence: 'receipt B', written_by: 'a', checked_by: 'b' });
+  assert.match(problems([signedBase], [rewritten]), /RESULT-0003: changed record still carries the base's checked_by/);
+  const rechecked = record('RESULT-0003', { status: 'accepted', statement: 'Claim.', evidence: 'receipt B', written_by: 'a', checked_by: 'c, 2026-09-26' });
+  assert.equal(problems([signedBase], [rechecked]), '');
+});
+
+test('the pre-push hook compares the ledger with the destination remote, not origin/main', () => {
+  const hook = require('node:fs').readFileSync(path.join(ROOT, 'tools', 'hooks', 'pre-push'), 'utf8');
+  assert.match(hook, /ledger_base="\$remote_sha"/);
+  assert.match(hook, /LEDGER_BASE="\$ledger_base" node tools\/verify-ledger-authorship\.js/);
+});
