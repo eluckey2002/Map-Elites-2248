@@ -1,10 +1,46 @@
 # Project evidence instructions
 
+## Blackboard: use it during project work
+
+At the start of each working session, read [.blackboard/AGENTS.md](.blackboard/AGENTS.md)
+and run `python .blackboard/board.py query summary` from the project root. Inspect
+relevant existing tasks with `query task <id>` before creating duplicate work.
+If the summary shows tasks, run `query tasks` to list their IDs, states, and
+assignees.
+Do not start another server if the board is already running. CLI reads and
+updates work even when the web view is stopped.
+
+For implementation, investigation, or other substantive project work:
+
+- Create a bounded task before starting, with acceptance criteria, a named
+  reviewer, and a stop condition. Reuse an applicable existing task; do not
+  claim work already owned by another agent.
+- Claim the task before doing the work. Record progress at meaningful changes,
+  blockers, and handoffs rather than on every tool call. A blocker is a progress
+  note or defect; do not invent a task state the board does not support.
+- Save the result and verification evidence to `.blackboard/runtime/<id>.md`
+  (or `.json` / `.txt`) and submit it using `python .blackboard/board.py`.
+- Acceptance requires an actual check by the declared reviewer, distinct from
+  the producer and submitter. Never impersonate a reviewer or invent approval.
+  A coordinator may record a review only after receiving that reviewer's actual
+  decision, identifying its evidence in the note. If review is unavailable,
+  leave the task submitted and report that boundary honestly.
+- Before ending a session, ensure the board reflects the actual state of the
+  work. Brief questions and conversation do not need new tasks.
+
+Use the local writer commands, never direct SQLite edits. This is the default
+workflow for agents in this project; do not ask the owner whether to update the
+board. Blackboard records operational status only: `EVIDENCE_LEDGER.md` and its
+primary citations retain evidence authority, and `CURRENT.md` plus its backlog
+records retain milestone and intent authority. A board acceptance does not
+promote a scientific claim or replace the experiment gates below.
+
 ## Before you edit anything
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
 - **`node --test solver/tests/*.test.js` reports 437 tests: 432 pass, four fail deliberately, and one is skipped.** The four failures are two stale candidate receipts, a generated-view staleness check, and a date-drift check. One of them carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
+- **The Universe Map is a 2026-08-28 snapshot, and its staleness failure is true.** It still names champion `52f500c` and selects only `RESULT-0017`; `DECISION-0004` promoted `b82a9b6` and explicitly did not rewrite the map. Do not clear the failure by bumping `universe/contract.json`'s `asOf` and rebuilding: that restamps the old champion and frontier as current. Refreshing it means re-curating the contract's selected records against the ledger first.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still reads PASS, 140,544 points in 20 moves — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
 - **Shipped-level win rate cannot rank two policies.** The bot wins 71-100% of every shipped level, so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
