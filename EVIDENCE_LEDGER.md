@@ -730,7 +730,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0031 — Corrected-cap descriptor proxies cover all puzzles but remain search-sensitive
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped configurations for Levels 10 (5x8), 31 (5x7), 53 (6x5), and 54 (4x8 with two stones); confirmation seeds 32,200,000–32,200,001; paired bounded searches at widths 12 and 48; one combined 16-candidate cap per expanded state; no exact-search, player, level-change, rule-change, or MAP-Elites claim
 - **statement:** The corrected registered confirmation enforced its combined candidate limit on all 96 cap/search runs and found replayable target witnesses on all 8/8 puzzle identities across all four profiles, so coverage was **`SUPPORTED`**. Search-width stability was **`INCONCLUSIVE`**: all eight pairs produced witnesses and the deeper arm worsened neither upper bound, but only 4/8 retained the same coarse proxy bin, 50% against the frozen 75% bar. The deeper arm expanded 43,275 states versus 11,594 for the shallow arm (3.733x, diagnostic only). The disposition is `REVISE_BEFORE_MAP_CORPUS`.
 - **evidence:** registered protocol `experiments/RESULT-0031/protocol.md`, registration commit `3a6c38c`; canonical corpus `experiments/RESULT-0031/corpus.json`, artifact identity `d68b5492dd55464f9a957e0b72cb3ee5cb82022b9eef71b77eac7de474bb6048`; complete outcomes in `experiments/RESULT-0031/report.md`; corrected bounded instrument `solver/puzzle-descriptor-witness.js`; verifier `experiments/RESULT-0031/verify.js`.
@@ -739,13 +739,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0031/verify.js experiments/RESULT-0031/corpus.json`; expect `PASS`, artifact identity `d68b5492…`, 8 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/puzzleDescriptorWitness.test.js` and `node tools/verify-experiments.js`; expect 6/6 focused tests and the experiment gate to pass.
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0030]
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (4/8 same bin (50%), 43,275 vs 11,594 states) with `node experiments/RESULT-0031/recompute.js experiments/RESULT-0031/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0032 — Choice density clears its bars; recovery lacks enough non-ceiling pairs
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** 32 fresh starting boards across static/no-blocker profiles derived from shipped Levels 10, 31, 53, and 54; seeds 32,400,000–32,400,007; calibration-selected tight move budgets 13, 15, 14, and 27 paired with `+4` moves; bounded searches at widths 12 and 48; no player, difficulty, level-change, gameplay-rule, or MAP-Elites claim
 - **statement:** The registered confirmation returned **`INCONCLUSIVE`** under its frozen joint disposition. The exact opening choice proxy was `SUPPORTED`: viable-start fractions spanned **0.3833** (0.5667–0.95) and remained identical across move-budget and search-width arms in all 32 rows. Search-width stability was `SUPPORTED`: 47/58 comparable recovery arms were within 0.25, or **81.0%** against the 75% bar. Held-out recovery sensitivity was `INCONCLUSIVE`: 7/8 eligible non-ceiling pairs improved by at least 0.125 with four extra moves and none decreased, but only eight pairs were eligible against the required twelve. The recovery-witness proxy is too ceiling-prone on this panel for promotion; the disposition is `REVISE_BEFORE_MAP_CORPUS`.
 - **evidence:** registered protocol `experiments/RESULT-0032/protocol.md`, registration commit `2c1f0f5`; canonical corpus `experiments/RESULT-0032/corpus.json`, artifact identity `2f2f31bbc6b772b0a1710cfac4d69f821ac6d06d8f869ec32117fbf45a5a61dc`; complete outcomes in `experiments/RESULT-0032/report.md`; instrument `solver/choice-recovery-descriptors.js`; verifier `experiments/RESULT-0032/verify.js`.
@@ -754,13 +754,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0032/verify.js experiments/RESULT-0032/corpus.json`; expect `PASS`, artifact identity `2f2f31bb…`, 32 rows, P1 `SUPPORTED`, P2 `INCONCLUSIVE`, P3 `SUPPORTED`, and disposition `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/choiceRecoveryDescriptors.test.js experiments/RESULT-0032/*.test.js` and `node tools/verify-experiments.js`; expect 8/8 focused tests and the experiment gate to pass.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** `initialViableStartFraction` counts viable starting tiles, not distinct paths or perceived decisions. `oneDetourRecoveryWitnessRate` samples up to eight lowest-scoring non-reference candidates from a deterministic 64-candidate pool and counts only replayed bounded-search successes. A repair needs a new protocol and fresh seeds; do not extend this opened range or lower its frozen eligibility denominator. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (range 0.3833, 7/8 of 8 eligible, 47/58) with `node experiments/RESULT-0032/recompute.js experiments/RESULT-0032/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0033 — Merge depth and spatial spread clear the candidate-measure bars
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped Levels 10, 31, 53, and 54; seeds 32,600,000–32,600,007; 32 fresh puzzle identities; paired deterministic bounded searches at widths 12 and 48 with 16 combined candidates per state and path width 2; static/no-blocker profiles only; no exact-search, player, difficulty, level-change, rule-change, or MAP-Elites claim
 - **statement:** The registered confirmation returned **`SUPPORTED`** under its frozen disposition. Deep search found replayable target witnesses on all 32/32 puzzles and all four profiles. Peak witness merge depth was 1 on 20 boards and 2 on 12; mean normalized witness-chain span ranged from 0.7143 to 0.9538, a **0.2396** range against the 0.15 bar. Twenty-eight puzzles had witnesses at both widths; 25/28 retained exact peak depth (**89.3%**) and 27/28 retained spatial spread within 0.10 (**96.4%**), both above 75%. The pair is `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS` with its witness-qualified names and proof standing.
 - **evidence:** registered protocol `experiments/RESULT-0033/protocol.md`, registration commit `dae2ef1`; canonical corpus `experiments/RESULT-0033/corpus.json`, artifact identity `48c31d54296c5ddf6f833717992e2039a32e504ce4d1debb6770e71626325e45`; complete outcomes in `experiments/RESULT-0033/report.md`; recursive-lineage and geometry instrument `solver/merge-spread-descriptors.js`; verifier `experiments/RESULT-0033/verify.js`.
@@ -769,13 +769,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0033/verify.js experiments/RESULT-0033/corpus.json`; expect `PASS`, artifact identity `48c31d54…`, 32 rows, P1–P3 `SUPPORTED`, and disposition `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS`. Run `node --test solver/tests/mergeSpreadDescriptors.test.js experiments/RESULT-0033/*.test.js` and `node tools/verify-experiments.js`; expect 8/8 focused tests and the experiment gate to pass.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** Initial and spawned tiles have depth zero; each merged tile has one plus the maximum input depth. Spatial spread is mean per-move Chebyshev chain span divided by board diameter. Four Level 54 shallow misses remain `UNKNOWN`; deep witnesses make panel coverage complete. Eligibility permits a new preregistered corpus only and is not adoption by itself. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (32/32, range 0.2396, 25/28 and 27/28 on exactly 28 pairs) with `node experiments/RESULT-0033/recompute.js experiments/RESULT-0033/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0034 — Bounded opening diversity collapses on representative boards
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped Levels 10, 31, 53, and 54; seeds 32,800,000–32,800,007; 32 fresh puzzles; paired bounded successful-witness searches at widths 12 and 48, 16 candidates per state, path width 2, 64-success cap, and eight successes per opening; no exhaustive, player, difficulty, content, rule, or MAP-Elites claim
 - **statement:** The frozen disposition is **`INCONCLUSIVE`**. Deep search covered 32/32 puzzles and all profiles. Forced-prefix ratio spanned **0.1974**, clearing 0.15. Opening diversity failed range: 30 boards reported one represented opening and two boards reported two, so only one value met the four-row population floor. Width stability passed on 28 paired puzzles: 26/28 (**92.9%**) stayed within 0.15 for forced-prefix ratio and 26/28 retained exact opening diversity. The pair is `REVISE_BEFORE_MAP_CORPUS` because the bounded diversity coordinate collapsed.
 - **evidence:** protocol `experiments/RESULT-0034/protocol.md`, registration commit `a0608db`; corpus `experiments/RESULT-0034/corpus.json`, artifact identity `48876a4151535ec0b72b55059dabc91e962c2df424385e9686ac27a0a486999b`; report `experiments/RESULT-0034/report.md`; instrument `solver/forced-diversity-descriptors.js`; verifier `experiments/RESULT-0034/verify.js`.
@@ -784,13 +784,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0034/verify.js experiments/RESULT-0034/corpus.json`; expect `PASS`, artifact `48876a41…`, 32 rows, P1/P3 `SUPPORTED`, P2 `INCONCLUSIVE`, and `REVISE_BEFORE_MAP_CORPUS`. Run `node --test solver/tests/forcedDiversityDescriptors.test.js experiments/RESULT-0034/run.test.js` and `node tools/verify-experiments.js`; expect 3/3 and gate PASS.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** The repair target is the success-set sampler, not the seed count. Ordered opening chains preserve survivor placement, so reversed chains remain distinct moves. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (range 0.1974, one diversity value populated, 26/28 on exactly 28 pairs) with `node experiments/RESULT-0034/recompute.js experiments/RESULT-0034/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0035 — Four-cell occupancy succeeds but witness-dependent cell stability does not
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** shipped Levels 10, 31, 53, and 54; seeds 33,000,000–33,000,031; 128 fresh puzzle identities; paired bounded searches at widths 12 and 48 with 16 combined candidates per state and path width 2; fixed depth-1/depth-2-plus and compact/broad-at-0.82 cells; four retained representatives per cell; no evolutionary MAP-Elites, player, difficulty, fun, content, or rule claim
 - **statement:** The registered archive confirmation closed validly as **`MAP_CORPUS_INCONCLUSIVE`**. Deep search produced replayable target witnesses on 128/128 puzzles across all four profiles. Stable eligible counts were 12, 30, 10, and 11 across depth-1/compact, depth-1/broad, depth-2-plus/compact, and depth-2-plus/broad, so all four cells retained four representatives. But only 63/115 paired puzzles (**54.8%**) kept the same cell with spread difference at most 0.10, below the frozen 75% support bar and above the 50% falsification bar. The retained 16 are diagnostic and are not admitted as a canonical corpus.
 - **evidence:** immutable protocol `experiments/RESULT-0035/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0035/protocol.md`, registration commit `f68edd2`; canonical run artifact `experiments/RESULT-0035/corpus.json`, identity `52bf543e937358e4ba4f2f2fe2812df05bfae74b1b08b81ce226f3f452f4fef2`; complete outcomes `experiments/RESULT-0035/report.md`; executable closeout contract and receipt under `experiments/RESULT-0035/`; archive logic `solver/merge-spread-map.js`; verifier `experiments/RESULT-0035/verify.js`.
@@ -799,7 +799,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0035/verify.js experiments/RESULT-0035/corpus.json`; expect `PASS`, artifact `52bf543e…`, 128 rows, P1/P2 `SUPPORTED`, P3 `INCONCLUSIVE`, and `MAP_CORPUS_INCONCLUSIVE`. Run `node --test solver/tests/mergeSpreadMap.test.js solver/tests/mergeSpreadDescriptors.test.js experiments/RESULT-0035/*.test.js` and `node tools/verify-experiments.js`; expect 12/12 focused tests and gate PASS. Run the close-experiment verifier against the RESULT-0035 closeout pair with expected contract SHA-256 `b3e0389b74d48ab99be5770e7850f500e60e78e7019a55324d2e5dbb22c5c423`; expect a closed receipt and recomputation PASS.
 - **updated:** 2026-09-16
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** RESULT-0033 validated separate depth and spread stability bars on 32 puzzles; RESULT-0035's stricter joint cell assignment exposed boundary sensitivity at corpus scale. Do not move the 0.82 cut or extend this seed range after seeing the outcome. A repair is a new registered uncertainty-aware subject and fresh panel.
 
 ### RESULT-0036 — Exact greed confirmation is not entitled because timeout-sensitive closure did not reproduce
@@ -880,7 +880,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0043 — Greed responds and tracks wins, but coverage, redundancy, and stability remain inconclusive
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** four fixed-percentile policies on shipped Levels 10, 31, 53, and 54; seeds 34,000,000–34,000,007; deterministic 500,000-path-state cap and 120,000 ms emergency watchdog; hardened verifier and executable-closeout qualification; half-score move diagnostic only; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
 - **statement:** RESULT-0043 closed validly with primary outcome **`INCONCLUSIVE`**. All 128 games completed with zero watchdog timeouts; 61 were exact-complete and 201 move denominators stopped at the registered work cap. Greed responded strongly to the policy manipulation: exact means rose **0.385, 0.531, 0.741, 0.946** (range **0.561**), and policy win/greed correlation was **0.956**, so P2 and P3 are `SUPPORTED`. P1 is `INCONCLUSIVE` because every policy × Level 10 cell had zero exact games. P4 is `INCONCLUSIVE` because score/greed correlation **0.730** lies between the 0.70 support and 0.85 falsification thresholds. P5 is `INCONCLUSIVE` because minimum exact-modal stability **66.7%** lies between its 80% and 60% thresholds. Nothing was falsified, but the full promotion bar was not cleared. Greed ratio remains an unadopted candidate; half-score move occupied only the early bin and remains diagnostic.
 - **evidence:** immutable protocol `experiments/RESULT-0043/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0043/protocol.md`, registration commit `acfe8c6`; mutation and exact-command [qualification receipt](experiments/RESULT-0043/qualification.json); retained [corpus](experiments/RESULT-0043/corpus.json), artifact identity `560f436388daeebcd19a198918791f0d9d014aa47512b0520e500b4a20ca199e`; exact [report](experiments/RESULT-0043/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0043/closure.json), and [independent corpus reduction](experiments/RESULT-0043/primary-recomputation.json).
@@ -889,13 +889,13 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0043/verify.js experiments/RESULT-0043/corpus.json`; expect PASS, artifact `560f4363…`, 128 rows, P2/P3 `SUPPORTED`, P1/P4/P5 `INCONCLUSIVE`, and primary `INCONCLUSIVE`. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 66c18f65643d528aa58b292116b005a4a96a4ef1cb1a2d5576394b19c6779f8f`; expect `CLOSED`, recomputation PASS, and verifier PASS.
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0042]
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** Do not add seeds or raise this run's cap after observing the result. The evidence supports greed as a responsive behavioral measure but does not yet support promotion as a MAP-Elites axis. A future change must address the exact-coverage strategy and score overlap as a genuinely new subject; repeated copies of this same panel are not the next step.
 
 ### RESULT-0048 — Blue-only refills yield family-island playtest candidates
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** 4,096 generated 5×8 openings across target families 3/5/7/9 and five registered island templates; four paired refill arms; deterministic highest-scoring degree-tiebreak greedy screening policy; 16-move bound; candidate discovery only
 - **statement:** The registered run closed with primary outcome **`ISLANDS_SUFFICIENT`**. The blue-only arm retained at least eight target-family tiles and two viable target-family components through move six on **1,305/4,096 (31.9%)** boards and recorded a later rejoin of a blue-conversion tile on **656** boards. Every family cleared the frozen existence threshold: move-six sustained / conversion-rejoin counts were **396/136** for family 3, **350/164** for family 5, **288/175** for family 7, and **271/181** for family 9. Mixed-family refills were not required for candidate discovery, although their move-six persistence was materially higher at **55.5%, 58.8%, and 61.3%** for 25%, 50%, and 75% target-family refills. The result routes island-only openings to human playtesting; it does not adopt a spawn rule or establish human behavior, fun, or difficulty.
 - **evidence:** immutable protocol `experiments/RESULT-0048/registered-protocol.md`, registration commit `b3fd0fb`; qualification commit `38f46ef` and [qualification receipt](experiments/RESULT-0048/qualification.json); retained [corpus](experiments/RESULT-0048/corpus.json), internal artifact identity `133e044ed418aa6a08befacbab3d0ad888bfe41e363dfdee5ac18489ee38166b`; exact outcomes and boundary in [report](experiments/RESULT-0048/report.md); executable contract, `CLOSED` [closure receipt](experiments/RESULT-0048/closure.json), and [independent corpus reduction](experiments/RESULT-0048/primary-recomputation.json).
@@ -904,7 +904,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node experiments/RESULT-0048/verify.js experiments/RESULT-0048/corpus.json`; expect PASS, 4,096 paired openings, and artifact identity `133e044e…`. From `experiments/RESULT-0048`, run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 2e5a52bd651bf7d0b2b9a6b0a34f46bb9960ff4d44caada48f92418e364002f4`; expect `CLOSED`, recomputation PASS, and verifier PASS.
 - **updated:** 2026-09-19
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0013]
 - **notes:** The three-vertical-island template supplied 594 of the 1,305 blue-only sustained candidates and is the strongest first source for manual play. Candidate trace goals remain unadopted until human play validates them.
 
 ## Decision registry
@@ -1252,6 +1252,21 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** [DECISION-0004]
 - **superseded_by:** []
 - **notes:** Precision (2026-09-26 review): of the 31 files `6a07294` added, 25 are absent at `1456906` and 2 differ. Evidence branches under `evidence/` must never be deleted; the ledger citation check accepts commits reachable from them.
+
+### CORRECTION-0013 — Seven results' reverify commands check today's source, not the frozen one
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` commands of `RESULT-0031`, `RESULT-0032`, `RESULT-0033`, `RESULT-0034`, `RESULT-0035`, `RESULT-0043`, and `RESULT-0048`; their measurements, dispositions, and proof classes are unchanged
+- **statement:** Narrows those seven records. Each recorded `reverify` runs the experiment's own `verify.js` against today's source, which has moved since the run, so on 2026-09-26 all seven returned `FAIL: source identity closure mismatch`. That is a fact about the present tree, not the evidence. Run against each result's frozen tree with `tools/verify-frozen-experiment.js`, all seven exit 0 on 2026-09-26. The results stand; their reverify command is the frozen one below.
+- **evidence:** `tools/verify-frozen-experiment.js`; `tools/run-reverify.js` report of 2026-09-26; frozen trees reported by the verifier: `RESULT-0031` `37185859`, `RESULT-0032` `36851ba8`, `RESULT-0033` `634d98b9`, `RESULT-0034` `e184a924`, `RESULT-0035` `158858c8`, `RESULT-0043` `0f539ed2`, `RESULT-0048` `20b96696`.
+- **proof_class:** `direct_source` for the failing current-tree commands and the passing frozen-tree verifications
+- **as_of:** 2026-09-26
+- **reverify:** Run `node tools/verify-frozen-experiment.js RESULT-0031`, `node tools/verify-frozen-experiment.js RESULT-0032`, `node tools/verify-frozen-experiment.js RESULT-0033`, `node tools/verify-frozen-experiment.js RESULT-0034`, `node tools/verify-frozen-experiment.js RESULT-0035`, `node tools/verify-frozen-experiment.js RESULT-0043`, `node tools/verify-frozen-experiment.js RESULT-0048`; expect exit 0 and a `FROZEN TREE` line for each.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0031, RESULT-0032, RESULT-0033, RESULT-0034, RESULT-0035, RESULT-0043, RESULT-0048]
+- **superseded_by:** []
+- **notes:** Found by the first nightly reverify run (BL-0016 F1). Fifteen other records also failed or timed out that night; each needs its own diagnosis and is listed in BL-0016.
 
 ## Assembly cut log
 

@@ -5,7 +5,7 @@ The short first read of [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md), which remains 
 Each entry gives status, proof class and claim only. Before relying on a record, open it in the
 ledger for its scope, evidence and limits; the ledger header defines every status and proof class.
 
-## Live records (60)
+## Live records (61)
 
 ### FACT-0001 — Chain legality
 
@@ -249,7 +249,9 @@ The browser-produced recording replays through the headless engine to **140,544 
 
 ### RESULT-0031 — Corrected-cap descriptor proxies cover all puzzles but remain search-sensitive
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0013: Seven results' reverify commands check today's source, not the frozen one.
 
 The corrected registered confirmation enforced its combined candidate limit on all 96 cap/search runs and found replayable target witnesses on all 8/8 puzzle identities across all four profiles, so coverage was **`SUPPORTED`**. Search-width stability was **`INCONCLUSIVE`**: all eight pairs produced witnesses and the deeper arm worsened neither upper bound, but only 4/8 retained the same coarse proxy bin, 50% against the frozen 75% bar. The deeper arm expanded 43,275 states versus 11,594 for the shallow arm (3.733x, diagnostic only). The disposition is `REVISE_BEFORE_MAP_CORPUS`.
 
@@ -257,7 +259,9 @@ The corrected registered confirmation enforced its combined candidate limit on a
 
 ### RESULT-0032 — Choice density clears its bars; recovery lacks enough non-ceiling pairs
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0013: Seven results' reverify commands check today's source, not the frozen one.
 
 The registered confirmation returned **`INCONCLUSIVE`** under its frozen joint disposition. The exact opening choice proxy was `SUPPORTED`: viable-start fractions spanned **0.3833** (0.5667–0.95) and remained identical across move-budget and search-width arms in all 32 rows. Search-width stability was `SUPPORTED`: 47/58 comparable recovery arms were within 0.25, or **81.0%** against the 75% bar. Held-out recovery sensitivity was `INCONCLUSIVE`: 7/8 eligible non-ceiling pairs improved by at least 0.125 with four extra moves and none decreased, but only eight pairs were eligible against the required twelve. The recovery-witness proxy is too ceiling-prone on this panel for promotion; the disposition is `REVISE_BEFORE_MAP_CORPUS`.
 
@@ -265,7 +269,9 @@ The registered confirmation returned **`INCONCLUSIVE`** under its frozen joint d
 
 ### RESULT-0033 — Merge depth and spatial spread clear the candidate-measure bars
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0013: Seven results' reverify commands check today's source, not the frozen one.
 
 The registered confirmation returned **`SUPPORTED`** under its frozen disposition. Deep search found replayable target witnesses on all 32/32 puzzles and all four profiles. Peak witness merge depth was 1 on 20 boards and 2 on 12; mean normalized witness-chain span ranged from 0.7143 to 0.9538, a **0.2396** range against the 0.15 bar. Twenty-eight puzzles had witnesses at both widths; 25/28 retained exact peak depth (**89.3%**) and 27/28 retained spatial spread within 0.10 (**96.4%**), both above 75%. The pair is `ELIGIBLE_FOR_A_SEPARATE_MAP_CORPUS` with its witness-qualified names and proof standing.
 
@@ -273,7 +279,9 @@ The registered confirmation returned **`SUPPORTED`** under its frozen dispositio
 
 ### RESULT-0034 — Bounded opening diversity collapses on representative boards
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0013: Seven results' reverify commands check today's source, not the frozen one.
 
 The frozen disposition is **`INCONCLUSIVE`**. Deep search covered 32/32 puzzles and all profiles. Forced-prefix ratio spanned **0.1974**, clearing 0.15. Opening diversity failed range: 30 boards reported one represented opening and two boards reported two, so only one value met the four-row population floor. Width stability passed on 28 paired puzzles: 26/28 (**92.9%**) stayed within 0.15 for forced-prefix ratio and 26/28 retained exact opening diversity. The pair is `REVISE_BEFORE_MAP_CORPUS` because the bounded diversity coordinate collapsed.
 
@@ -281,7 +289,9 @@ The frozen disposition is **`INCONCLUSIVE`**. Deep search covered 32/32 puzzles 
 
 ### RESULT-0035 — Four-cell occupancy succeeds but witness-dependent cell stability does not
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0013: Seven results' reverify commands check today's source, not the frozen one.
 
 The registered archive confirmation closed validly as **`MAP_CORPUS_INCONCLUSIVE`**. Deep search produced replayable target witnesses on 128/128 puzzles across all four profiles. Stable eligible counts were 12, 30, 10, and 11 across depth-1/compact, depth-1/broad, depth-2-plus/compact, and depth-2-plus/broad, so all four cells retained four representatives. But only 63/115 paired puzzles (**54.8%**) kept the same cell with spread difference at most 0.10, below the frozen 75% support bar and above the 50% falsification bar. The retained 16 are diagnostic and are not admitted as a canonical corpus.
 
@@ -307,7 +317,9 @@ RESULT-0041's frozen harness qualified: the production verifier killed stale bod
 
 ### RESULT-0043 — Greed responds and tracks wins, but coverage, redundancy, and stability remain inconclusive
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0013: Seven results' reverify commands check today's source, not the frozen one.
 
 RESULT-0043 closed validly with primary outcome **`INCONCLUSIVE`**. All 128 games completed with zero watchdog timeouts; 61 were exact-complete and 201 move denominators stopped at the registered work cap. Greed responded strongly to the policy manipulation: exact means rose **0.385, 0.531, 0.741, 0.946** (range **0.561**), and policy win/greed correlation was **0.956**, so P2 and P3 are `SUPPORTED`. P1 is `INCONCLUSIVE` because every policy × Level 10 cell had zero exact games. P4 is `INCONCLUSIVE` because score/greed correlation **0.730** lies between the 0.70 support and 0.85 falsification thresholds. P5 is `INCONCLUSIVE` because minimum exact-modal stability **66.7%** lies between its 80% and 60% thresholds. Nothing was falsified, but the full promotion bar was not cleared. Greed ratio remains an unadopted candidate; half-score move occupied only the early bin and remains diagnostic.
 
@@ -315,7 +327,9 @@ RESULT-0043 closed validly with primary outcome **`INCONCLUSIVE`**. All 128 game
 
 ### RESULT-0048 — Blue-only refills yield family-island playtest candidates
 
-**accepted**
+**narrowed**
+
+> **Corrected; the claim below is original wording and may no longer hold.** CORRECTION-0013: Seven results' reverify commands check today's source, not the frozen one.
 
 The registered run closed with primary outcome **`ISLANDS_SUFFICIENT`**. The blue-only arm retained at least eight target-family tiles and two viable target-family components through move six on **1,305/4,096 (31.9%)** boards and recorded a later rejoin of a blue-conversion tile on **656** boards. Every family cleared the frozen existence threshold: move-six sustained / conversion-rejoin counts were **396/136** for family 3, **350/164** for family 5, **288/175** for family 7, and **271/181** for family 9. Mixed-family refills were not required for candidate discovery, although their move-six persistence was materially higher at **55.5%, 58.8%, and 61.3%** for 25%, 50%, and 75% target-family refills. The result routes island-only openings to human playtesting; it does not adopt a spawn rule or establish human behavior, fun, or difficulty.
 
@@ -498,6 +512,14 @@ Narrows `RESULT-0041`. Its `reverify` command ran a closure verifier from a mach
 Narrows `DECISION-0004`. The commit it cites as the immutable home of `RESULT-0018`'s primary evidence existed only in one local clone, on no branch and on no remote, so a fresh clone could not resolve it and the only copy of about 328,000 lines of evidence artifacts was one machine. It is now preserved on GitHub as branch `evidence/result-0018-6a07294`. The content of that commit is not on `main`: the first `main` commit adding the same source files differs from it in 27 files.
 
 *Proof class:* `direct_source` for reachability and the preserved identity
+
+### CORRECTION-0013 — Seven results' reverify commands check today's source, not the frozen one
+
+**accepted**
+
+Narrows those seven records. Each recorded `reverify` runs the experiment's own `verify.js` against today's source, which has moved since the run, so on 2026-09-26 all seven returned `FAIL: source identity closure mismatch`. That is a fact about the present tree, not the evidence. Run against each result's frozen tree with `tools/verify-frozen-experiment.js`, all seven exit 0 on 2026-09-26. The results stand; their reverify command is the frozen one below.
+
+*Proof class:* `direct_source` for the failing current-tree commands and the passing frozen-tree verifications
 
 ## Closed records (9)
 

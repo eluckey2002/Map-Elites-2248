@@ -136,3 +136,15 @@ closes the most gaps).
   uncited numbers with no ledger record to point to, AGENTS.md:11 ("bot wins
   71-100%") and CURRENT.md:122 ("lockouts up to ~5%"); they need a record or a
   measuring command, not a reword.
+- 2026-09-26: F1 built: `tools/run-reverify.js` runs every live record's
+  backticked reverify commands; `.github/workflows/nightly-reverify.yml` runs
+  it daily as a report, not a gate. First run: 39 records, 22 failing or
+  timing out. Seven (RESULT-0031..0035, 0043, 0048) failed only because their
+  verifiers check today's source; all seven pass on their frozen trees, so
+  CORRECTION-0013 repoints them. Still to diagnose, one by one:
+  full suite (RESULT-0009/0011/0012/0014: the 3 known failures);
+  timeouts at 20 min (FACT-0007, RESULT-0005/0006/0007/0011);
+  `solver/chain-coverage.js` crashes (RESULT-0011, CORRECTION-0003);
+  `multipath-ablation.js` now demands `--protocol` (RESULT-0016);
+  source or identity drift (RESULT-0017/0021/0024/0025/0026, which
+  have no corpus for the frozen verifier).

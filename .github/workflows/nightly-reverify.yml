@@ -1,0 +1,31 @@
+# Nightly report, not a gate (BL-0016 F1). Re-runs every live ledger record's
+# recorded reverify commands and fails the run, visibly, when a record no longer
+# reproduces. It blocks nothing: some commands take over ten minutes, and a
+# failure means "append a correction", not "stop the merge".
+name: nightly-reverify
+
+on:
+  schedule:
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  reverify:
+    name: ledger reverify report
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # some reverify commands read commits and evidence branches
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Run recorded reverify commands
+        run: node tools/run-reverify.js --timeout-min 30 --out reverify-report.json
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reverify-report
+          path: reverify-report.json
