@@ -99,3 +99,12 @@ closes the most gaps).
   Past in-place rewrites found in history, before the check existed:
   RESULT-0027's proof_class (`3ce7f7e`, `85fe9b0`, 2026-09-03), evidence of
   FACT-0001..0003 (`e6e0f21`) and DECISION-0006 (`5f7bf21`).
+- 2026-09-26: F11 hardened after an independent mutation audit: kill rate
+  11/26 -> 17/25 text cases, plus direct pushes to main (the push run now
+  compares with the pre-push commit; tested in a throwaway clone). Every
+  field except status, updated, links and notes is frozen, including titles
+  and ad hoc bold lines; a status change needs a new correction link (stale
+  excepted); notes may only grow at the end. Accepted by design: appended
+  contradicting notes, header rules and snapshot edits, free paragraphs,
+  `updated` changes. Owner step outside the repo: make "experiment gate" a
+  required check and block direct pushes on `main` in GitHub settings.

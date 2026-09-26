@@ -639,7 +639,7 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     assert.deepEqual(assessLedgerHistory(real, real), []);
   });
   test('a status change and added links and notes pass', () => {
-    let next = edit('RESULT-0005', 'status', () => 'stale');
+    let next = edit('RESULT-0005', 'status', () => 'stale'); // stale needs no correction
     next = next.replace(/(### RESULT-0010 [\s\S]*?^- \*\*notes:\*\*[ \t]*)(.*)$/m, (_, a, v) => `${a}${v} Added later.`);
     assert.deepEqual(assessLedgerHistory(next, real), []);
   });
@@ -651,6 +651,12 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     ['a removed record', real.replace(/^### HYPOTHESIS-0001 [\s\S]*?(?=^### )/m, '')],
     ['a dropped supersede link', edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')],
     ['rewritten notes', edit('RESULT-0010', 'notes', () => 'different')],
+    ['notes with text prepended', edit('RESULT-0010', 'notes', (v) => `[RETRACTED] ${v}`)],
+    ['a changed heading title', real.replace(/^### RESULT-0001 .*$/m, '### RESULT-0001 — Accepted 12,999 score')],
+    ['a rewritten ad hoc bold line', edit('RESULT-0010', 'appended 2026-08-20', (v) => `${v} changed`)],
+    ['a capitalised override field', real.replace(/^(### FACT-0001 .*\n)/m, '$1- **Statement:** the opposite\n')],
+    ['a superseded record revived as accepted', edit('RESULT-0030', 'status', () => 'accepted')],
+    ['a status change with no new correction', edit('FACT-0001', 'status', () => 'rejected')],
   ]) {
     test(`history check rejects ${name}`, () => {
       assert.notDeepEqual(assessLedgerHistory(next, real), []);

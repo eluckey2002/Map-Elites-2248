@@ -629,8 +629,8 @@ function ledgerRecords(text) {
   const records = new Map();
   for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
     const id = /^[A-Z]+-\d{4}/.exec(record)[0];
-    const fields = {};
-    for (const m of record.matchAll(/^- \*\*([a-z_]+):\*\*[ \t]*(.*)$/gm)) fields[m[1]] ??= m[2].trim();
+    const fields = { title: record.split('\n')[0].slice(id.length).trim() };
+    for (const m of record.matchAll(/^- \*\*([^*]+?):\*\*[ \t]*(.*)$/gm)) fields[m[1]] ??= m[2].trim();
     records.set(id, fields);
   }
   return records;
@@ -642,6 +642,9 @@ function assessLedgerLinks(text) {
   const problems = [];
   const records = ledgerRecords(text);
   for (const [id, f] of records) {
+    if (linkIds(f.superseded_by).length && !['superseded', 'narrowed'].includes(f.status)) {
+      problems.push(`${id}: superseded_by is set but status is ${f.status}`);
+    }
     for (const [field, back] of [['supersedes', 'superseded_by'], ['superseded_by', 'supersedes']]) {
       for (const other of linkIds(f[field])) {
         if (!records.has(other)) problems.push(`${id}: ${field} names missing record ${other}`);
@@ -656,32 +659,48 @@ function assessLedgerLinks(text) {
 // field changes, links and notes only grow. Status may change; the structure
 // and link checks require a matching correction when it does.
 // Does NOT catch a wrong new record, or rewrites already on the base.
-const FROZEN_FIELDS = ['type', 'scope', 'statement', 'question', 'evidence', 'proof_class', 'as_of', 'reverify'];
+// Every field except these is frozen, including the heading title and any
+// ad hoc bold line such as an old `**appended ...:**` narrowing.
+const MUTABLE_FIELDS = new Set(['status', 'updated', 'supersedes', 'superseded_by', 'notes']);
 function assessLedgerHistory(text, baseText) {
   const problems = [];
   const now = ledgerRecords(text);
   for (const [id, before] of ledgerRecords(baseText)) {
     const after = now.get(id);
     if (!after) { problems.push(`${id}: record removed; append a correction instead`); continue; }
-    for (const field of FROZEN_FIELDS) {
+    for (const field of new Set([...Object.keys(before), ...Object.keys(after)])) {
+      if (MUTABLE_FIELDS.has(field)) continue;
       if ((before[field] ?? null) !== (after[field] ?? null)) problems.push(`${id}: ${field} was rewritten; append a correction instead`);
+    }
+    // A status change needs a new correction link, except marking a record stale.
+    if (before.status !== after.status && after.status !== 'stale') {
+      const had = new Set(linkIds(before.superseded_by));
+      if (!linkIds(after.superseded_by).some((x) => !had.has(x))) {
+        problems.push(`${id}: status ${before.status} -> ${after.status} without a new superseded_by correction`);
+      }
     }
     for (const field of ['supersedes', 'superseded_by']) {
       const kept = new Set(linkIds(after[field]));
       for (const other of linkIds(before[field])) if (!kept.has(other)) problems.push(`${id}: ${field} dropped ${other}`);
     }
-    if (before.notes && !(after.notes || '').includes(before.notes)) problems.push(`${id}: notes were rewritten; only additions are allowed`);
+    if (before.notes && !(after.notes || '').startsWith(before.notes)) problems.push(`${id}: notes were rewritten; only additions at the end are allowed`);
   }
   return problems;
 }
 
-// The ledger as of the branch point with origin/main, or HEAD when on it, so
-// uncommitted and branch edits are both compared against shared history.
+// The ledger as of the branch point with origin/main, so branch and
+// uncommitted edits are compared against shared history.
+// On main itself (HEAD is the branch point, as in a push run) compare with
+// LEDGER_BASE when CI supplies the pre-push commit, else HEAD's parent, so a
+// direct push is still checked.
 function baseLedgerText() {
   const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1e8 });
   try {
     let base = git(['merge-base', 'HEAD', 'origin/main']).trim();
-    if (base === git(['rev-parse', 'HEAD']).trim()) base = 'HEAD';
+    if (base === git(['rev-parse', 'HEAD']).trim()) {
+      const given = process.env.LEDGER_BASE;
+      base = given && !/^0+$/.test(given) ? given : 'HEAD^';
+    }
     return git(['show', `${base}:EVIDENCE_LEDGER.md`]);
   } catch { return null; }
 }
