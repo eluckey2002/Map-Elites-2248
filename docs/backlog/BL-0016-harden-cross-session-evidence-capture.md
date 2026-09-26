@@ -81,3 +81,12 @@ closes the most gaps).
   `8e1e232`; RESULT-0026 cites two `/private/tmp` files; RESULT-0041 cites a
   script outside the repo; DECISION-0004 cites commit `6a07294`, which is on
   no branch.
+- 2026-09-26: Owner chose corrections before F11. Added CORRECTION-0010
+  (RESULT-0001/0004 verifiers deleted; re-run from `8e1e232^`, both PASS),
+  CORRECTION-0011 (RESULT-0041 closure verifier vendored into
+  `tools/vendor/close-experiment/`, re-run PASS), CORRECTION-0012
+  (DECISION-0004's evidence commit `6a07294` existed on one machine only; now
+  preserved as remote branch `evidence/result-0018-6a07294`). The RESULT-0026
+  `/private/tmp` hits were scratch output arguments, not citations; the check
+  now skips those. Known gaps are excused only while their correction exists.
+  Full suite: 3 failures, the same 3 that fail at session start `ead3937`.

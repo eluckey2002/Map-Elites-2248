@@ -326,7 +326,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0001 — Accepted 12,336 score
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** frozen Level 26 seed 0, 32 moves
 - **statement:** A 32-move witness replays to 12,336 at spawn cursor 520. This is a **replayed lower bound**, 664 short of 13,000. The search miss is not an upper bound and does not decide reachability.
 - **evidence:** `solver/target-witness-search/frozen-run.json:1-24,106-113`; receipt SHA-256 `4e47c05ed42cfd978e85591913ae2062c10525d003ece73e6b2feeef0e12094e`; integration at `.orch/runs/level26-certified-score-2026-08-10/worklog.md:111-120`.
@@ -335,7 +335,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node solver/target-witness-search/verify.js solver/target-witness-search/frozen-run.json`; expect `PASS`, score 12336, moves 32, cursor 520, and `targetReached: false`.
 - **updated:** 2026-08-11
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0010]
 
 ### RESULT-0002 — Mass/cursor upper bound
 
@@ -368,7 +368,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0004 — Higher hinted thresholds remained unknown
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** frozen Level 26 seed 0, bounded CP-SAT reachability checks
 - **statement:** Thresholds 12,400, 12,600, 12,800, and 13,000 are `UNKNOWN` at their bounded runs. These outcomes prove no upper bound and rule out no score.
 - **evidence:** `solver/hinted-cp-sat/frozen-run.json:1-35,36-75,2375-2412`; integration at `.orch/runs/level26-certified-score-2026-08-10/worklog.md:137-152`; receipt SHA-256 `5c076a3bbb8b58fc4d1f408b1b35b72f168194cb2101ad0bc977733cb8402b24`.
@@ -377,7 +377,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Run `node solver/hinted-cp-sat/verify-result.js solver/hinted-cp-sat/frozen-run.json`; expect `PASS` and `UNKNOWN` at 12400, 12600, 12800, and 13000.
 - **updated:** 2026-08-11
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0010]
 
 ### RESULT-0005 — Level 26 is not a tuning outlier; the whole back half is unbeaten
 
@@ -850,7 +850,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### RESULT-0041 — Hardened greed harness qualifies; confirmation watchdog invalidates the run
 
 - **type:** result
-- **status:** accepted
+- **status:** narrowed
 - **scope:** mutation-qualified exact-denominator greed-ratio validation for percentile policies 0.25, 0.50, 0.75, and 1.00 on shipped Levels 10, 31, 53, and 54; confirmation seeds 33,800,000–33,800,007; deterministic 500,000-path-state cap and 30,000 ms emergency watchdog; no human, difficulty, fun, preference, fitness, MAP-Elites, build-potential, content, timing-axis, or outside-panel claim
 - **statement:** RESULT-0041's frozen harness qualified: the production verifier killed stale body identity, coherent seed-panel substitution, incorrect work-limit counts, and coherent source substitution for their intended reasons; its exact-modal stability statistic reported 0.50 on a planted unstable middle-bin policy; independent analysis matched work-limited, zero-exact-policy, null-cell, and non-default-policy fixtures; and source restoration passed. The single allowed confirmation attempt then hit the registered emergency watchdog at percentile 1.00, Level 10, seed 33,800,004 after reporting 96/128 completed games. The protocol declares any watchdog timeout invalid and forbids retry. Closure is therefore **`INVALID`**, recomputation is `NOT_RUN`, and P1–P6 are `UNVERIFIED`; no greed-ratio domain outcome or adoption evidence follows.
 - **evidence:** immutable protocol `experiments/RESULT-0041/registered-protocol.md`, lifecycle protocol `experiments/RESULT-0041/protocol.md`, registration commit `4c6943b`; mutation [qualification receipt](experiments/RESULT-0041/qualification.json); retained [baseline output](experiments/RESULT-0041/baseline-output.txt); explicit invalid-run [corpus placeholder](experiments/RESULT-0041/corpus.json) with no outcome rows; complete [report](experiments/RESULT-0041/report.md); executable contract and [closure receipt](experiments/RESULT-0041/closure.json).
@@ -859,7 +859,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** From `experiments/RESULT-0041`, run `python3 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py closeout-contract.json closure.json --run-recomputation`; expect verifier `PASS`, `closure_status: INVALID`, and recomputation `NOT_RUN`. Run `node tools/verify-experiments.js` from the repository root; expect `EXPERIMENT GATE PASS`. Do not run the confirmation again or interpret its progress counts as outcomes.
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0038]
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0011]
 - **notes:** RESULT-0039 and RESULT-0040 stopped during pre-outcome qualification and retain their failed attempt receipts. RESULT-0041 repaired those exact gaps and qualified; its separate terminal failure shows that the 30-second watchdog is not guaranteed to outlast the deterministic path-state cap on every registered board. Any future confirmation is a new subject and requires an owner-selected compute/denominator change, not a retry of this run.
 
 ### RESULT-0042 — Calibrated watchdog completes the matrix; frozen closeout path remains unverified
@@ -956,7 +956,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 ### DECISION-0004 — Promote the target-aware policy as the current engineering champion
 
 - **type:** decision
-- **status:** accepted
+- **status:** narrowed
 - **scope:** the reference solver policy on `main` beginning at commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`; historical experiment artifacts and level-authoring evidence excluded
 - **statement:** The owner promotes the target-aware immediate-finish policy in `solver/bot.js` as the current engineering champion. The policy keeps the prior chooser, but when a deterministic untrimmed legal route reaches the finite unmet target immediately, it takes that route; it never applies the override while a bomb is present. Promotion is an engineering decision supported by the bounded heuristic observation in `RESULT-0018` and post-promotion regression gates. It is not a claim of universal non-regression, higher terminal-score optimization, autonomous learning, or pristine experimental provenance. The previous champion remains the historical identity for artifacts that were generated against it; levels, targets, receipts, MAP/Universe artifacts, and the level-authoring system are not rewritten.
 - **evidence:** owner instructions `Promote it` and `Proceed with these tasks` on 2026-08-30; promoted code commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`, `solver/bot.js` SHA-256 `6f58e6c136f58dc52df5d1b4203d0c032b497109ef4c517cd0ca1628057e1fd1`; accepted `RESULT-0018` and its primary evidence at immutable commit `6a07294571644d963a5a9b728f8e4aed3b29a835`; promotion checks and corrected push status at `f0ba51864c11cc6a1bb2d97bdf8bb589efb886a3:.orch/tickets/proportional-target-aware-promotion-2026-08-30/T-001.md`.
@@ -965,7 +965,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **reverify:** Inspect commit `b82a9b6a0786ab1518fb534735c5f08d5539a4cf`; run `node --test solver/tests/bot.test.js`, `node solver/verify-loop.js`, and `node tools/verify-universe-map.js`; expect focused tests and both gates to pass. Resolve the bounded evidence with `git show 6a07294571644d963a5a9b728f8e4aed3b29a835:EVIDENCE_LEDGER.md` and retain its `heuristic_observation` limits.
 - **updated:** 2026-08-30
 - **supersedes:** []
-- **superseded_by:** []
+- **superseded_by:** [CORRECTION-0012]
 - **notes:** This decision changes which policy is current; it does not change the historical standing or identity of any earlier result. The evidence under it is now reproducible: `RESULT-0020` (2026-09-01) registered a protocol before running and reproduced RESULT-0018 holdout counts exactly, so this decision no longer rests solely on a grandfathered result. That replication also found that the promotion copied the target-aware policy into `solver/bot.js` rather than moving it — `chooseMove` and `chooseTargetAwareMove` are now byte-identical apart from their identifiers, and the experimental challenger called the promoted one, evaluating the override twice per move. The challenger was repointed at `chooseBaseMove` on 2026-09-01 (`c37c83a`), verified play-identical on 1,040 games; `solver/bot.js` still carries its own copy of the rule, which is a code question for this decision to answer, not a change this measurement makes.
 
 ### DECISION-0005 — Route the qualified owner pilot to variant/repair
@@ -1207,6 +1207,51 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The earlier 2026-09-05 snapshot is retained above as historical lineage. Its same-seed correction remains valid; only its human-continues premise and resulting uncapped comparison are superseded. The mixed 25-session corpus includes historical candidate boards and pilot boards, so current shipped-level claims must use the ordinary `play-sessions/` subset.
+
+### CORRECTION-0010 — RESULT-0001 and RESULT-0004 verifiers were deleted from the tree
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` commands of `RESULT-0001` and `RESULT-0004`; their scores, thresholds, proof classes, and conclusions are unchanged
+- **statement:** Narrows `RESULT-0001` and `RESULT-0004`. Their verifiers, `solver/target-witness-search/verify.js` and `solver/hinted-cp-sat/verify-result.js`, were deleted in commit `8e1e232`, so the recorded `reverify` commands no longer run in the current tree. The frozen run files they check are byte-identical between the parent of `8e1e232` and today. Run from a snapshot of that parent on 2026-09-26, both verifiers return `PASS`: the witness replays to 12,336 in 32 moves with `targetReached: false`, and thresholds 12,400 through 13,000 all return `UNKNOWN`. Both original claims stand.
+- **evidence:** commit `8e1e232` (deletion); frozen inputs `solver/target-witness-search/frozen-run.json` and `solver/hinted-cp-sat/frozen-run.json`, unchanged since the parent of `8e1e232`; the verifiers as preserved in that parent commit.
+- **proof_class:** `direct_source` for the deletion, the unchanged inputs, and the verifier verdicts
+- **as_of:** 2026-09-26
+- **reverify:** Extract the pre-deletion tree with `git archive 8e1e232^ | tar -x -C <scratch>`; from `<scratch>`, run `node solver/target-witness-search/verify.js solver/target-witness-search/frozen-run.json` and expect verdict `PASS`, score 12336, moves 32; run `node solver/hinted-cp-sat/verify-result.js solver/hinted-cp-sat/frozen-run.json` and expect `PASS` with `UNKNOWN` at 12400 and 13000.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0001, RESULT-0004]
+- **superseded_by:** []
+- **notes:** Found by the ledger citation check added under BL-0016 F12.
+
+### CORRECTION-0011 — RESULT-0041's closure verifier lived outside the repository
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the `reverify` command of `RESULT-0041`; its qualification, invalid-run disposition, and conclusions are unchanged
+- **statement:** Narrows `RESULT-0041`. Its `reverify` command ran a closure verifier from a machine-local agent skill directory outside the repository, so no clone could rerun it. That script is now vendored at `tools/vendor/close-experiment/verify_closure.py` (SHA-256 `7ed2647d28bfe3df9bed227216f28959c9a7e767dd112c2952f7c2d3c3619830`, copied 2026-09-26; the source file was last modified 2026-09-10, before the run). Run on 2026-09-26, the vendored copy returns verdict `PASS`, `closure_status: INVALID`, and recomputation `NOT_RUN`, matching the original expectation.
+- **evidence:** `tools/vendor/close-experiment/verify_closure.py`; `experiments/RESULT-0041/closeout-contract.json`; `experiments/RESULT-0041/closure.json`.
+- **proof_class:** `direct_source` for the vendored identity and the verifier verdict
+- **as_of:** 2026-09-26
+- **reverify:** From the repository root, run `python3 tools/vendor/close-experiment/verify_closure.py experiments/RESULT-0041/closeout-contract.json experiments/RESULT-0041/closure.json --run-recomputation`; expect verdict `PASS`, `closure_status: INVALID`, recomputation `NOT_RUN`.
+- **updated:** 2026-09-26
+- **supersedes:** [RESULT-0041]
+- **superseded_by:** []
+- **notes:** The file's modification date predates the run, but which exact version ran on 2026-09-16 is not recorded; the matching verdict is the support, not a byte identity.
+
+### CORRECTION-0012 — DECISION-0004's evidence commit was on no branch
+
+- **type:** correction
+- **status:** accepted
+- **scope:** the evidence pointer of `DECISION-0004` to `RESULT-0018`'s primary evidence; the promotion decision itself is unchanged
+- **statement:** Narrows `DECISION-0004`. The commit it cites as the immutable home of `RESULT-0018`'s primary evidence existed only in one local clone, on no branch and on no remote, so a fresh clone could not resolve it and the only copy of about 328,000 lines of evidence artifacts was one machine. It is now preserved on GitHub as branch `evidence/result-0018-6a07294`. The content of that commit is not on `main`: the first `main` commit adding the same source files differs from it in 27 files.
+- **evidence:** commit `6a07294571644d963a5a9b728f8e4aed3b29a835` on remote branch `evidence/result-0018-6a07294`; comparison against commit `1456906`.
+- **proof_class:** `direct_source` for reachability and the preserved identity
+- **as_of:** 2026-09-26
+- **reverify:** Run `git fetch origin evidence/result-0018-6a07294` then `git branch -r --contains 6a07294571644d963a5a9b728f8e4aed3b29a835`; expect `origin/evidence/result-0018-6a07294`.
+- **updated:** 2026-09-26
+- **supersedes:** [DECISION-0004]
+- **superseded_by:** []
+- **notes:** Evidence branches under `evidence/` must never be deleted; the ledger citation check accepts commits reachable from them.
 
 ## Assembly cut log
 

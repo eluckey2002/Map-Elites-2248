@@ -599,6 +599,9 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   test('RESULT-NNNN shorthand resolves under experiments/', () => {
     assert.deepEqual(assessLedgerCitations(real + rec('evidence', '`RESULT-0030/protocol.md`')), []);
   });
+  test('a known gap stops being excused when its correction is missing', () => {
+    assert.notDeepEqual(assessLedgerCitations(real.replace('### CORRECTION-0010', '### CORRECTION-9010')), []);
+  });
   test('a missing path in notes is not flagged', () => {
     assert.deepEqual(assessLedgerCitations(real + rec('notes', '`solver/nope.js` was never written')), []);
   });
@@ -612,7 +615,7 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     ['top-level file without slash', 'evidence', '`NOPE.md`'],
     ['commit with colon label', 'evidence', 'commit: `deadbeef1`'],
     ['commit with equals label', 'evidence', 'Commit = deadbeef1'],
-    ['commit only on another branch', 'evidence', 'commit `6a07294`'],
+    ['commit only on an unmerged branch', 'evidence', 'commit `95d75cc`'],
     ['absolute path', 'evidence', '`/Users/someone/nope.js`'],
     ['list-form continuation line', 'evidence', '\n  - `solver/nope.js`'],
   ]) {

@@ -557,22 +557,21 @@ function assessLedgerStructure(text) {
 // (so paths inside commands count); a bare filename or `RESULT-NNNN/...`
 // shorthand may also resolve under the record's or the named experiments/ dir.
 // A commit counts when labelled (`commit abc1234`, `Commit = abc1234`) and must
-// be reachable from HEAD, not merely present locally. Absolute paths are
+// be reachable from HEAD or an origin/evidence/* branch, not merely present locally. Absolute paths are
 // machine-specific and rejected. Notes are skipped: they may cite a file
 // precisely because it is absent.
 // Does NOT check unbackticked paths, that a file says what the record claims,
 // or content hashes.
-// Citation gaps already in the ledger when this check landed (2026-09-26,
-// BL-0016 F12). Each needs a CORRECTION record, not a silent edit; listed here
-// so the gate stays green on history while failing on any new gap. Remove an
-// entry when its correction lands.
-const KNOWN_CITATION_GAPS = new Set([
-  'RESULT-0001 solver/target-witness-search/verify.js', // deleted in 8e1e232
-  'RESULT-0004 solver/hinted-cp-sat/verify-result.js', // deleted in 8e1e232
-  'RESULT-0026 /private/tmp/result-0026-recomputation.json', // temp file, not in repo
-  'RESULT-0026 /private/tmp/result-0026-admission.json', // temp file, not in repo
-  'RESULT-0041 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py', // outside repo
-  'DECISION-0004 6a07294571644d963a5a9b728f8e4aed3b29a835', // on no branch
+// Citation gaps in append-only history, each excused only by the correction
+// that records it (BL-0016 F12). The excuse fails if that correction is absent.
+const KNOWN_CITATION_GAPS = new Map([
+  ['RESULT-0001 solver/target-witness-search/verify.js', 'CORRECTION-0010'],
+  ['RESULT-0004 solver/hinted-cp-sat/verify-result.js', 'CORRECTION-0010'],
+  ['RESULT-0041 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py', 'CORRECTION-0011'],
+  ['DECISION-0004 6a07294571644d963a5a9b728f8e4aed3b29a835', 'CORRECTION-0012'],
+  // These run from a snapshot of 8e1e232^, where the files still exist.
+  ['CORRECTION-0010 solver/target-witness-search/verify.js', 'CORRECTION-0010'],
+  ['CORRECTION-0010 solver/hinted-cp-sat/verify-result.js', 'CORRECTION-0010'],
 ]);
 
 function assessLedgerCitations(text, {
@@ -581,10 +580,20 @@ function assessLedgerCitations(text, {
     try {
       execFileSync('git', ['merge-base', '--is-ancestor', sha, 'HEAD'], { cwd: ROOT, stdio: 'ignore' });
       return true;
-    } catch { return false; }
+    } catch {
+      // Evidence kept off main is preserved on an origin/evidence/* branch.
+      try {
+        return execFileSync('git', ['branch', '-r', '--contains', sha, '--list', 'origin/evidence/*'], {
+          cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+        }).trim() !== '';
+      } catch { return false; }
+    }
   },
 } = {}) {
   const problems = [];
+  for (const [gap, correction] of KNOWN_CITATION_GAPS) {
+    if (!new RegExp(`^### ${correction}\\b`, 'm').test(text)) problems.push(`${gap.split(' ')[0]}: known gap excused by missing ${correction}`);
+  }
   for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
     const id = /^[A-Z]+-\d{4}/.exec(record)[0];
     // A field runs until the next `- **field:**` line or heading, so list-form
@@ -598,6 +607,7 @@ function assessLedgerCitations(text, {
         const rel = m[1];
         // Without a slash, only a known file extension marks a path (not `Game.loadLevel`).
         if (!rel.includes('/') && !/\.(js|mjs|json|jsonl|md|py|html|txt|tsv|csv|sh|png)$/.test(rel)) continue;
+        if (/^\/(private\/)?tmp\//.test(rel)) continue; // scratch output of a command, not a citation
         if (rel.startsWith('/')) { if (!KNOWN_CITATION_GAPS.has(`${id} ${rel}`)) problems.push(`${id}: cited path ${rel} is absolute`); continue; }
         const clean = rel.replace(/^\.\//, '');
         const named = /^(RESULT-\d{4})\//.test(clean) ? [`experiments/${clean}`] : [];
