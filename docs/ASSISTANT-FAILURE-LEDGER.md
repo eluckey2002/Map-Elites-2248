@@ -193,3 +193,41 @@
     No missing device explains this. Every rule needed was present and readable, and
     the two files that would have prevented the largest single waste — `AGENTS.md`
     and `EVIDENCE_LEDGER.md` — sat unopened for the entire day.
+
+    ---
+
+    ## 2026-09-23 — Plan Hardening / Progressive Rigor
+
+    **F25 — Off-goal execution: the three-hour MAP-Elites runner implemented and
+    verified U1 instead of selecting and running Case 002 for Challenge → Repair.**
+    Intended work: select a new Case 002 whose artifact had already passed L1, test
+    the L2 Challenge → Repair level on that plan/control artifact, and stop at the
+    Arena boundary. Actual work: implement U1, run focused, replay, protocol, and
+    full-suite verification, obtain an independent check, repair three defects, and
+    re-run verification. The work was useful, but it was off-goal relative to the
+    intended Plan Hardening experiment. class: `evidence` · **PASS**
+
+    **F26 — Handoff/run-contract failure: the execution brief permitted locally
+    reasonable continuation into underlying project implementation.** The brief did
+    not freeze the non-goals, forbidden actions, hard-stop boundary, or required
+    first deliverable strongly enough. As a result, “continue from Case 001” could
+    be interpreted as continuing MAP-Elites implementation rather than testing the
+    Challenge → Repair control artifact. class: `evidence` · **PASS**
+
+    **Cost / impact.** Roughly three hours and substantial token usage were spent on
+    useful but unintended work. The intended L2 experiment was not completed by
+    that run.
+
+    **Useful accidental outcome — preserve separately from experiment success.** U1
+    implementation and verification completed successfully, including independent
+    checking and correction of three defects. This is valid project progress, but
+    it is not evidence that the intended Challenge → Repair experiment ran; for the
+    Plan Hardening / Progressive Rigor workstream it remains an off-goal outcome.
+
+    **Corrective action.** Every long-running worker must begin from a frozen run
+    contract containing an explicit goal, non-goals, allowed actions, forbidden
+    actions, hard stop, required first output, and budget/checkpoint. Underlying
+    project implementation is prohibited unless the contract explicitly authorizes
+    it. For the next Challenge → Repair run, the first deliverable must identify and
+    justify the L2 candidate before any other action, and the runner must stop and
+    report if the work would cross the frozen boundary or materially exceed budget.
