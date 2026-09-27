@@ -195,3 +195,7 @@ test('replay display renders every verified move as a spatial board', () => {
   assert.equal((text.match(/Move \d+:/g) || []).length, row.result.best.movesUsed);
   assert.match(text, /\[ 1\]/);
 });
+
+test('oracle source identities cover the harvest ranking module search depends on', () => {
+  assert.ok(Object.hasOwn(sourceIdentities(), 'solver/oracle/harvest-policy.js'));
+});

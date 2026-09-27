@@ -11,7 +11,7 @@ const { renderBoard } = require('../board-trace');
 
 const SOURCE_FILES = [
   'solver/oracle/cli.js', 'solver/oracle/corpus.js', 'solver/oracle/worker.js',
-  'solver/oracle/search.js', 'solver/oracle/simulation.js', 'solver/oracle/verify.js',
+  'solver/oracle/search.js', 'solver/oracle/harvest-policy.js', 'solver/oracle/simulation.js', 'solver/oracle/verify.js',
   'solver/engine.js', 'solver/bot.js', 'solver/benchmark-inputs.js',
   'solver/benchmark-replay.js', 'solver/human-benchmark.js', 'solver/recording-replay.js',
   'solver/board-trace.js', 'solver/tests/oracle.test.js', 'src/game.js',
