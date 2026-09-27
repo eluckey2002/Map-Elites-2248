@@ -25,7 +25,10 @@ function reverifyPlan(text) {
     const id = /^[A-Z]+-\d{4}/.exec(record)[0];
     const status = (/^- \*\*status:\*\*[ \t]*(\S+)/m.exec(record) || [])[1];
     if (status !== 'accepted') continue;
-    const reverify = (/^- \*\*reverify:\*\*[ \t]*(.*)$/m.exec(record) || [])[1] || '';
+    // The field runs through its continuation lines (for example a list of
+    // per-commit checks) up to the next field or heading, so no command in a
+    // wrapped reverify silently drops out of the report.
+    const reverify = (/^- \*\*reverify:\*\*[ \t]*([\s\S]*?)(?=^- \*\*[a-z_]+:\*\*|^#|(?![\s\S]))/m.exec(record) || [])[1] || '';
     // "From `dir`, run `cmd`" sets the directory for that command only.
     const commands = [...reverify.matchAll(/(?:\bFrom `([^`\s]+)`, run )?`((?:node|python3|git)\s[^`]+)`/g)]
       .map((m) => ({ cwd: m[1] || '.', command: m[2] }));

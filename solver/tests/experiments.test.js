@@ -797,3 +797,34 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     assert.notDeepEqual(assessCloseOut(grown, base, 'same', 'same'), []);
   });
 }
+
+// Nightly reverify plan: a wrapped reverify field keeps every command
+// (Codex review of PR #46).
+{
+  const { reverifyPlan } = require('../../tools/run-reverify.js');
+  test('reverify plan includes commands on continuation lines', () => {
+    const text = [
+      '### CORRECTION-9001 — t', '- **status:** accepted',
+      '- **reverify:** For each commit, `git worktree add --detach <dir> <commit>`:',
+      '  - `abc1234`: `node tools/one.js`', '  - `def5678`: `node tools/two.js`',
+      '- **updated:** 2026-09-27', '',
+    ].join('\n');
+    const commands = reverifyPlan(text).map((e) => e.command);
+    assert.ok(commands.includes('node tools/one.js') && commands.includes('node tools/two.js'), commands.join(' / '));
+    assert.ok(reverifyPlan(text).every((e) => e.manual), 'a placeholder setup step keeps the record manual');
+  });
+}
+
+// RESULT-0031's blind recompute normalizes caps as its producer does
+// (Codex review of PR #46): its committed corpus has no integrity issues.
+{
+  const { execFileSync } = require('node:child_process');
+  test('RESULT-0031 recompute finds no cap mismatches on its corpus', () => {
+    const root = path.join(__dirname, '..', '..');
+    const out = JSON.parse(execFileSync(process.execPath, ['experiments/RESULT-0031/recompute.js', 'experiments/RESULT-0031/corpus.json'], { cwd: root, encoding: 'utf8' }));
+    assert.equal(out.C4partial.outcome, 'PASS (partial)');
+    assert.deepEqual(out.C4partial.witnessIssues, []);
+    assert.equal(out.P1.outcome, 'SUPPORTED');
+    assert.equal(out.P2.outcome, 'INCONCLUSIVE');
+  });
+}

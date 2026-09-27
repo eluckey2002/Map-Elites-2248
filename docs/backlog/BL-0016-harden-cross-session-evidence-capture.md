@@ -180,3 +180,11 @@ closes the most gaps).
   reads LEDGER_BASE the same way. After Codex review, F11 also freezes wrapped
   continuation lines, F6 requires each sample-size item filled in, and F2
   requires the `ledger:` line to end its outcome file.
+- 2026-09-27: Second Codex review. `tools/run-reverify.js` read only the first
+  line of a `reverify` field, so CORRECTION-0014's five per-commit checks never
+  reached the nightly report. It now parses through the next field. The
+  RESULT-0031 blind recompute compared caps without the producer's
+  `normalizeCaps` clamp, so it reported 12 spurious cap mismatches and
+  `C4partial: FAIL`. That is corrected: it now reports PASS (partial) with
+  unchanged P1/P2. The 2026-09-26 "all four match" entry held for the
+  decisions but missed this integrity-check failure. Both fixes are tested.

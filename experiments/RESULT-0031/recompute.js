@@ -6,7 +6,9 @@ const EXPECT_CAPS=[2,3,4,6,8,12];
 let capViol=0,capRuns=0,idMismatch=0,witnessIssues=[],unknownIssues=[];
 function arm(row,a,name){
   const L=lv[row.level];const cells=L.gridW*L.gridH;
-  const caps=[...EXPECT_CAPS,cells];
+  // Same normalization as the producer (normalizeCaps in solver/puzzle-descriptor-witness.js):
+  // clamp each cap to [minChain, cells], add cells, deduplicate, sort.
+  const caps=[...new Set(EXPECT_CAPS.map(x=>Math.max(L.minChain,Math.min(cells,x))).concat(cells))].sort((x,y)=>x-y);
   if(JSON.stringify(a.testedCaps)!==JSON.stringify(caps))witnessIssues.push(`${row.level}/${row.seed}/${name} caps ${a.testedCaps}`);
   if(a.puzzleIdentity!==row.puzzleIdentity)idMismatch++;
   let best=null;
