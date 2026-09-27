@@ -231,12 +231,7 @@ function taskCard(task, noteSource) {
 
   const meta = element("p", "card-meta");
   meta.append(text(element("span", "card-assignee"), task.assignee || "Unassigned"));
-  const [verb, stamp] = task.state === "accepted" ? ["reviewed", task.reviewed_at]
-    : task.state === "repair_requested" ? ["changes requested", task.reviewed_at]
-    : task.state === "submitted" ? ["sent for review", task.submitted_at]
-    : task.last_reported_at ? ["updated", task.last_reported_at]
-    : task.state === "claimed" ? ["started", task.claimed_at]
-    : ["waiting", null];
+  const [verb, stamp] = currentActivity(task);
   if (stamp) meta.append(timeNode(stamp, verb));
   if (task.state === "claimed" && ["stale", "never_reported"].includes(task.reporting_state)) {
     meta.append(statusBadge(task.reporting_state));
@@ -286,9 +281,22 @@ function cardGrid(tasks, noteSource) {
   return grid;
 }
 
+// The timestamp that belongs to the task's current state. Earlier-cycle
+// fields persist across repair loops (reviewed_at survives a resubmission,
+// last_reported_at predates a repair request), so pick by state.
+function currentActivity(task) {
+  if (task.state === "accepted") return ["reviewed", task.reviewed_at];
+  if (task.state === "repair_requested") return ["changes requested", task.reviewed_at];
+  if (task.state === "submitted") return ["sent for review", task.submitted_at];
+  if (task.state === "claimed") {
+    const reported = task.last_reported_at || "";
+    return reported > (task.claimed_at || "") ? ["updated", reported] : ["started", task.claimed_at];
+  }
+  return ["waiting", null];
+}
+
 function byRecentUpdate(a, b) {
-  const stamp = (task) => task.last_reported_at || task.submitted_at || task.claimed_at || "";
-  return stamp(b).localeCompare(stamp(a));
+  return (currentActivity(b)[1] || "").localeCompare(currentActivity(a)[1] || "");
 }
 
 // A collapsible group of cards, open the first time it appears.
@@ -374,12 +382,11 @@ function renderNow(tasks, defects) {
 function renderResults(tasks) {
   const results = tasks.filter((task) => ["submitted", "accepted", "repair_requested"].includes(task.state));
   if (!results.length) return emptyState("No finished work has been recorded.");
-  const byReview = (a, b) => (b.reviewed_at || b.submitted_at || "").localeCompare(a.reviewed_at || a.submitted_at || "");
   const fragment = document.createDocumentFragment();
   fragment.append(
-    cardGroup("waiting", "Waiting for review", results.filter((task) => task.state === "submitted").sort(byReview), "review"),
-    cardGroup("repair", "Needs changes", results.filter((task) => task.state === "repair_requested").sort(byReview), "review"),
-    cardGroup("reviewed", "Reviewed", results.filter((task) => task.state === "accepted").sort(byReview), "review"),
+    cardGroup("waiting", "Waiting for review", results.filter((task) => task.state === "submitted").sort(byRecentUpdate), "review"),
+    cardGroup("repair", "Needs changes", results.filter((task) => task.state === "repair_requested").sort(byRecentUpdate), "review"),
+    cardGroup("reviewed", "Reviewed", results.filter((task) => task.state === "accepted").sort(byRecentUpdate), "review"),
   );
   return fragment;
 }
