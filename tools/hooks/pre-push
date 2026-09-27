@@ -4,17 +4,41 @@
 # GitHub branch protection is unavailable on this private repository, so this
 # hook is the refusal. Install once per clone (worktrees share it):
 #   node tools/hooks/install.js
-# It runs tools/verify-experiments.js against the tree being pushed whenever
-# any ref is pushed to refs/heads/main, and exits non-zero on failure.
+# Whenever any ref is pushed to refs/heads/main, it checks out the exact commit
+# being pushed into a temporary worktree and runs the gates there, so a clean
+# working tree cannot approve a red pushed commit (`git push origin other:main`)
+# or reject a green one. Exits non-zero on failure.
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 remote="$1"
 zero=0000000000000000000000000000000000000000
 while read -r local_ref local_sha remote_ref remote_sha; do
   [ "$remote_ref" = "refs/heads/main" ] || continue
   [ "$local_sha" = "$zero" ] && continue   # deleting main is refused elsewhere
-  echo "pre-push: experiment gate on $local_sha for $remote/main" >&2
-  if ! node tools/verify-experiments.js >&2; then
-    echo "pre-push: REFUSED — EXPERIMENT GATE FAILED. Fix the ledger before pushing to main." >&2
+  echo "pre-push: gates on $local_sha for $remote/main" >&2
+  tree=$(mktemp -d "${TMPDIR:-/tmp}/pre-push-XXXXXX")
+  if ! git worktree add --quiet --detach "$tree" "$local_sha" >&2; then
+    echo "pre-push: REFUSED — could not check out $local_sha to verify it." >&2
+    rm -rf "$tree"
+    exit 1
+  fi
+  # Compare the ledger with the destination's main, not an assumed origin/main.
+  if [ "$remote_sha" != "$zero" ]; then
+    if ! git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+      echo "pre-push: REFUSED — $remote/main ($remote_sha) is not in this clone; fetch $remote first." >&2
+      git worktree remove --force "$tree" >&2
+      exit 1
+    fi
+    ledger_base="$remote_sha"
+  else
+    ledger_base="$local_sha^1"
+  fi
+  failed=""
+  (cd "$tree" && node tools/verify-experiments.js >&2) || failed="EXPERIMENT GATE"
+  (cd "$tree" && LEDGER_BASE="$ledger_base" node tools/verify-ledger-authorship.js >&2) || failed="$failed LEDGER AUTHORSHIP GATE"
+  (cd "$tree" && node tools/ledger-index.js --check >&2) || failed="$failed LEDGER INDEX CHECK"
+  git worktree remove --force "$tree" >&2
+  if [ -n "$failed" ]; then
+    echo "pre-push: REFUSED — FAILED:$failed. Fix the ledger before pushing to main." >&2
     exit 1
   fi
 done

@@ -31,6 +31,10 @@ jobs:
           # On a push to main, compare the ledger with the commit before the push.
           LEDGER_BASE: ${{ github.event_name == 'push' && github.event.before || '' }}
         run: node tools/verify-experiments.js
+      - name: LEDGER AUTHORSHIP GATE
+        run: node tools/verify-ledger-authorship.js
+      - name: LEDGER INDEX CURRENT
+        run: node tools/ledger-index.js --check
 
   test-suite:
     name: full test suite (informational until the four known failures are retired)

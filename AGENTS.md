@@ -1,10 +1,45 @@
 # Project evidence instructions
 
+## Blackboard: use it during project work
+
+At the start of each working session, read [.blackboard/AGENTS.md](.blackboard/AGENTS.md)
+and run `python .blackboard/board.py query summary` from the project root. Inspect
+relevant existing tasks with `query task <id>` before creating duplicate work.
+If the summary shows tasks, run `query tasks` to list their IDs, states, and
+assignees.
+Do not start another server if the board is already running. CLI reads and
+updates work even when the web view is stopped.
+
+For implementation, investigation, or other substantive project work:
+
+- Create a bounded task before starting, with acceptance criteria, a named
+  reviewer, and a stop condition. Reuse an applicable existing task; do not
+  claim work already owned by another agent.
+- Claim the task before doing the work. Record progress at meaningful changes,
+  blockers, and handoffs rather than on every tool call. A blocker is a progress
+  note or defect; do not invent a task state the board does not support.
+- Save the result and verification evidence to `.blackboard/runtime/<id>.md`
+  (or `.json` / `.txt`) and submit it using `python .blackboard/board.py`.
+- Acceptance requires an actual check by the declared reviewer, distinct from
+  the producer and submitter. Never impersonate a reviewer or invent approval.
+  A coordinator may record a review only after receiving that reviewer's actual
+  decision, identifying its evidence in the note. If review is unavailable,
+  leave the task submitted and report that boundary honestly.
+- Before ending a session, ensure the board reflects the actual state of the
+  work. Brief questions and conversation do not need new tasks.
+
+Use the local writer commands, never direct SQLite edits. This is the default
+workflow for agents in this project; do not ask the owner whether to update the
+board. Blackboard records operational status only: `EVIDENCE_LEDGER.md` and its
+primary citations retain evidence authority, and `CURRENT.md` plus its backlog
+records retain milestone and intent authority. A board acceptance does not
+promote a scientific claim or replace the experiment gates below.
+
 ## Before you edit anything
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
-- **`node --test solver/tests/*.test.js` reports 422 tests: 418 pass, three fail deliberately, and one is skipped.** The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
+- **`node --test solver/tests/*.test.js` reports 446 tests: 442 pass, three fail deliberately, and one is skipped.** The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
 - **The Universe Map is a 2026-08-28 snapshot, and its staleness failure is true.** It still names champion `52f500c` and selects only `RESULT-0017`; `DECISION-0004` promoted `b82a9b6` and explicitly did not rewrite the map. Do not clear the failure by bumping `universe/contract.json`'s `asOf` and rebuilding: that restamps the old champion and frontier as current. Refreshing it means re-curating the contract's selected records against the ledger first.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still matches `RESULT-0028` in the ledger — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
@@ -14,7 +49,9 @@ Each line here is a fact you can check in a minute. Check it rather than trust i
 - **`node solver/board-trace.js`** renders a recorded game as text boards with both players' chains drawn on the same position. Chain-value strings hide where the tiles are, which is the thing this game is about.
 - **`play-sessions/` is not the evidence corpus.** `tools/play-server.js` captures ordinary play there, bound to a level and a seed. `recordings/` holds receipted candidate evidence bound to a candidate identity; mixing them puts unresolvable entries where candidate resolution is expected.
 
-Read [LEDGER-INDEX.md](LEDGER-INDEX.md) before substantive reasoning about game rules, solver results, score feasibility, or experiment status. It is generated from [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md), which remains the authority: before relying on or citing a record, open it in the ledger for its scope, evidence, and limits, and follow its citations to primary repository evidence. Edit only the ledger, then run `node tools/build-ledger-index.js`.
+Read [LEDGER-INDEX.md](LEDGER-INDEX.md) before substantive reasoning about game rules, solver results, score feasibility, or experiment status. It lists every ledger record's standing in one line. Then open the relevant records in [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at their listed lines; the ledger, not the index, is the authority for current status, and its citations lead to the primary repository evidence. The index is generated: after changing the ledger, run `node tools/ledger-index.js` and commit both files.
+
+You may write a ledger record; you may not accept your own. Every new record names `written_by` (your agent or session). A record reaches `accepted` or `narrowed` only when `checked_by` names a different agent, a script run, or the owner who actually checked it. Until then it stays `provisional`. The gate is `tools/verify-ledger-authorship.js`.
 
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
 
@@ -56,7 +93,7 @@ evidence is a reconstruction, not a preregistration.
 Before a session's work lands, in this order:
 
 1. Every run you started ends with its `ledger:` line (see above), and any new result or correction is in `EVIDENCE_LEDGER.md`.
-2. Run `node tools/build-ledger-index.js`.
+2. Run `node tools/ledger-index.js` and commit `LEDGER-INDEX.md` with the ledger.
 3. Update [CURRENT.md](CURRENT.md) so the next session sees what changed and what is open, citing record IDs rather than restating numbers. The gate fails a change that adds a ledger record without touching `CURRENT.md`.
 4. Append a dated line to the History of each backlog record you worked on.
 5. Run `node tools/verify-experiments.js`; it must pass before you open the pull request.
@@ -68,7 +105,8 @@ Do not append to `HANDOFF.md`. It is a historical session journal; what it used 
 `main` is protected. Every change reaches it through a pull request whose
 `experiment gate` check is green; a direct push to `main` is refused by GitHub.
 `tools/hooks/pre-push` is a second, narrower safeguard, not a substitute: where
-it has been installed (`node tools/hooks/install.js`, once per clone) it
+it has been installed (`node tools/hooks/install.js`, once per clone; clones
+installed before 2026-09-25 hold a stale copy and must run it once more) it
 refuses to push a red gate to `main` before the push leaves the machine, and
 it lets a green push through. Two more rules no mechanism enforces:
 

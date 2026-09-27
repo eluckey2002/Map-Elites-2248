@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Live Blackboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="eyebrow">Live Blackboard</span>
+        <span class="readonly">Read-only</span>
+      </div>
+      <dl class="meta" aria-label="Board status">
+        <div>
+          <dt>Last checked</dt>
+          <dd id="last-refreshed">Never</dd>
+        </div>
+        <div>
+          <dt>Service</dt>
+          <dd id="service-state" data-state="unknown">Unknown</dd>
+        </div>
+      </dl>
+    </header>
+
+    <div class="layout">
+      <nav class="rail" aria-label="Blackboard views">
+        <button class="nav-item is-active" type="button" data-view="now" aria-current="page">Now</button>
+        <button class="nav-item" type="button" data-view="queue">Queue</button>
+        <button class="nav-item" type="button" data-view="results">Finished work</button>
+        <button class="nav-item" type="button" data-view="defects">Problems</button>
+        <button class="nav-item" type="button" data-view="snapshots">Saved comparisons</button>
+      </nav>
+
+      <main class="surface">
+        <div class="surface-heading">
+          <p class="eyebrow" id="view-kicker">What this board currently shows</p>
+          <h1 id="view-title">Now</h1>
+        </div>
+        <div id="refresh-error" class="notice notice-error" hidden role="status"></div>
+        <p id="view-disclaimer" class="disclaimer">This page shows recorded updates. It cannot tell whether someone is working right now.</p>
+        <section id="view-content" aria-live="polite"></section>
+        <section class="history" id="history" aria-labelledby="history-title">
+          <div class="section-heading">
+            <h2 id="history-title">Activity history</h2>
+            <span id="event-count" class="count"></span>
+          </div>
+          <ol id="event-list" class="event-list"></ol>
+        </section>
+      </main>
+    </div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

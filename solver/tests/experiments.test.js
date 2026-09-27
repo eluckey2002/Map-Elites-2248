@@ -326,6 +326,16 @@ function registrationRepo({ freezeLine } = {}) {
   return { root, git, bot, hash, protocolPath, protocol, argv, registration: git('rev-parse', 'HEAD') };
 }
 
+test('Git object paths use repository separators when callers supply Windows separators', () => {
+  const repo = registrationRepo();
+  const registered = showAtCommit(
+    repo.registration,
+    'experiments\\RESULT-0001\\protocol.md',
+    repo.root,
+  );
+  assert.equal(registered, repo.protocol(`  solver/bot.js: ${repo.hash}`));
+});
+
 test('an honest registration passes and stamps its own commit', () => {
   const repo = registrationRepo();
   const reg = requireProtocol(repo.argv, { root: repo.root });
@@ -648,7 +658,6 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     ['a promoted proof class', edit('RESULT-0005', 'proof_class', () => '`exact_result`')],
     ['a rewritten evidence field', edit('FACT-0001', 'evidence', (v) => `${v} extra`)],
     ['a changed as_of', edit('RESULT-0001', 'as_of', () => '2026-09-26')],
-    ['a removed record', real.replace(/^### HYPOTHESIS-0001 [\s\S]*?(?=^### )/m, '')],
     ['a dropped supersede link', edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')],
     ['rewritten notes', edit('RESULT-0010', 'notes', () => 'different')],
     ['notes with text prepended', edit('RESULT-0010', 'notes', (v) => `[RETRACTED] ${v}`)],
@@ -660,6 +669,25 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   ]) {
     test(`history check rejects ${name}`, () => {
       assert.notDeepEqual(assessLedgerHistory(next, real), []);
+    });
+  }
+  test('a removed record is left to the authorship gate', () => {
+    assert.deepEqual(assessLedgerHistory(real.replace(/^### HYPOTHESIS-0001 [\s\S]*?(?=^### )/m, ''), real), []);
+  });
+  test('adding written_by and checked_by to an existing record passes', () => {
+    const next = real.replace(/^(### FACT-0001 .*\n)/m, '$1- **written_by:** someone\n- **checked_by:** someone else\n');
+    assert.deepEqual(assessLedgerHistory(next, real), []);
+  });
+  {
+    const base = '### RESULT-9300 — t\n- **statement:** first line\n  continued here\n- **status:** accepted\n';
+    test('history check rejects a rewritten continuation line', () => {
+      assert.notDeepEqual(assessLedgerHistory(base.replace('continued here', 'changed here'), base), []);
+    });
+    test('history check rejects a deleted continuation line', () => {
+      assert.notDeepEqual(assessLedgerHistory(base.replace('  continued here\n', ''), base), []);
+    });
+    test('history check accepts an unchanged wrapped field', () => {
+      assert.deepEqual(assessLedgerHistory(base, base), []);
     });
   }
   test('link check rejects a one-way supersede link', () => {
@@ -678,6 +706,20 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     fs.mkdirSync(path.join(dir, name), { recursive: true });
     fs.writeFileSync(path.join(dir, name, 'protocol.md'), `---\nresult: ${name}\n${registered === null ? '' : `registered: ${registered}\n`}---\n\n${body}`);
   };
+  const FILLED = '## Sample size and margin\n\n- **Per verdict:** 40 paired games.\n- **Margin:** 3 misses flip it.\n- **Downstream quantity:** none.\n\n## Seeds\n';
+  for (const [name, body] of [
+    ['a bare heading', '## Sample size and margin\n\n## Seeds\n'],
+    ['template placeholders left in', FILLED.replace('40 paired games.', '<the number of games>')],
+    ['a missing margin item', FILLED.replace('- **Margin:** 3 misses flip it.\n', '')],
+    ['an empty downstream item', FILLED.replace(' none.', '')],
+  ]) {
+    test(`sample-size check rejects: ${name}`, () => {
+      const d = fs.mkdtempSync(path.join(os.tmpdir(), 'f6c-'));
+      fs.mkdirSync(path.join(d, 'RESULT-9103'));
+      fs.writeFileSync(path.join(d, 'RESULT-9103', 'protocol.md'), `---\nresult: RESULT-9103\nregistered: 2026-09-28T00:00:00Z\n---\n\n${body}`);
+      assert.notDeepEqual(assessSampleSizeSections(d), []);
+    });
+  }
   test('the real experiments pass the sample-size check', () => {
     assert.deepEqual(assessSampleSizeSections(), []);
   });
@@ -686,7 +728,7 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     assert.deepEqual(assessSampleSizeSections(dir), []);
   });
   test('a new protocol with the section passes', () => {
-    write('RESULT-9101', '2026-09-28T00:00:00Z', '## Sample size and margin\n');
+    write('RESULT-9101', '2026-09-28T00:00:00Z', FILLED);
     assert.deepEqual(assessSampleSizeSections(dir), []);
   });
   for (const [name, date] of [['new, no section', '2026-09-28T00:00:00Z'], ['quoted date', '"2026-09-28"'], ['blank date', ''], ['missing date', null]]) {
@@ -720,6 +762,9 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   test('a stopped run marked not reportable with a reason passes', () => {
     assert.deepEqual(check({ 'stop-record.md': 'ledger: not reportable — stopped before any data\n' }), []);
   });
+  test('trailing blank lines after the ledger line pass', () => {
+    assert.deepEqual(check({ 'worklog.md': 'done\nledger: RESULT-0031\n\n\n' }), []);
+  });
   test('an older run needs no ledger line', () => {
     assert.deepEqual(check({ 'spec.md': 'x' }, '2026-09-01'), []);
   });
@@ -729,6 +774,7 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     ['a ledger line naming a missing record', { 'worklog.md': 'ledger: RESULT-9999\n' }],
     ['not reportable with no reason', { 'worklog.md': 'ledger: not reportable\n' }],
     ['a ledger line with no ID', { 'worklog.md': 'ledger: see chat\n' }],
+    ['a ledger line followed by later output', { 'worklog.md': 'ledger: RESULT-0031\nresumed; new result 42\n' }],
   ]) {
     test(`outcome check rejects: ${name}`, () => {
       assert.notDeepEqual(check(files), []);

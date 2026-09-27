@@ -146,9 +146,13 @@ function reachableFromHead(sha) {
   } catch { return false; }
 }
 
+function gitObjectPath(relPath) {
+  return String(relPath).replaceAll('\\', '/');
+}
+
 function pathExistsAtCommit(sha, relPath) {
   try {
-    execFileSync('git', ['cat-file', '-e', `${sha}:${relPath}`], { cwd: ROOT, stdio: 'ignore' });
+    execFileSync('git', ['cat-file', '-e', `${sha}:${gitObjectPath(relPath)}`], { cwd: ROOT, stdio: 'ignore' });
     return true;
   } catch { return false; }
 }
@@ -159,7 +163,7 @@ function pathExistsAtCommit(sha, relPath) {
 // wrote.
 function showAtCommit(sha, relPath, cwd = ROOT, { raw = false } = {}) {
   try {
-    const out = execFileSync('git', ['show', `${sha}:${relPath}`], {
+    const out = execFileSync('git', ['show', `${sha}:${gitObjectPath(relPath)}`], {
       cwd, stdio: ['ignore', 'pipe', 'ignore'], ...(raw ? {} : { encoding: 'utf8' }),
     });
     return out;
@@ -625,12 +629,25 @@ function assessLedgerCitations(text, {
   return problems;
 }
 
+// A field's value runs from its `- **field:**` line through every following
+// line up to the next field or heading, so wrapped continuation lines are part
+// of the value and frozen with it. Surrounding blank lines are dropped.
 function ledgerRecords(text) {
   const records = new Map();
-  for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
-    const id = /^[A-Z]+-\d{4}/.exec(record)[0];
-    const fields = { title: record.split('\n')[0].slice(id.length).trim() };
-    for (const m of record.matchAll(/^- \*\*([^*]+?):\*\*[ \t]*(.*)$/gm)) fields[m[1]] ??= m[2].trim();
+  for (const record of text.replace(/\r\n/g, '\n').split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
+    const lines = record.split('\n');
+    const id = /^[A-Z]+-\d{4}/.exec(lines[0])[0];
+    const fields = { title: lines[0].slice(id.length).trim() };
+    let name = null;
+    let parts = [];
+    const close = () => { if (name !== null) fields[name] ??= parts.join('\n').trim(); };
+    for (const line of lines.slice(1)) {
+      if (/^#/.test(line)) break;
+      const m = /^- \*\*([^*]+?):\*\*[ \t]*(.*)$/.exec(line);
+      if (m) { close(); name = m[1]; parts = [m[2].trim()]; continue; }
+      if (name !== null) parts.push(line.trimEnd());
+    }
+    close();
     records.set(id, fields);
   }
   return records;
@@ -655,19 +672,25 @@ function assessLedgerLinks(text) {
   return problems;
 }
 
-// Append-only: compared with the base ledger, no record disappears, no claim
-// field changes, links and notes only grow. Status may change; the structure
-// and link checks require a matching correction when it does.
+// Append-only: compared with the base ledger, no claim field changes, links
+// and notes only grow. Status may change; the structure and link checks
+// require a matching correction when it does.
+// One rule set across two scripts: tools/verify-ledger-authorship.js owns
+// record removal, duplicate IDs, and the written_by/checked_by sign-off that a
+// new, changed, or accepted record needs; this check owns what may change
+// inside a record. written_by and checked_by are therefore mutable here: the
+// authorship gate requires adding or renewing them whenever an existing record
+// changes, and freezing them here would forbid exactly that.
 // Does NOT catch a wrong new record, or rewrites already on the base.
-// Every field except these is frozen, including the heading title and any
-// ad hoc bold line such as an old `**appended ...:**` narrowing.
-const MUTABLE_FIELDS = new Set(['status', 'updated', 'supersedes', 'superseded_by', 'notes']);
+// Every other field is frozen, including the heading title and any ad hoc
+// bold line such as an old `**appended ...:**` narrowing.
+const MUTABLE_FIELDS = new Set(['status', 'updated', 'supersedes', 'superseded_by', 'notes', 'written_by', 'checked_by']);
 function assessLedgerHistory(text, baseText) {
   const problems = [];
   const now = ledgerRecords(text);
   for (const [id, before] of ledgerRecords(baseText)) {
     const after = now.get(id);
-    if (!after) { problems.push(`${id}: record removed; append a correction instead`); continue; }
+    if (!after) continue; // a removed record is the authorship gate's failure
     for (const field of new Set([...Object.keys(before), ...Object.keys(after)])) {
       if (MUTABLE_FIELDS.has(field)) continue;
       if ((before[field] ?? null) !== (after[field] ?? null)) problems.push(`${id}: ${field} was rewritten; append a correction instead`);
@@ -697,11 +720,10 @@ function baseLedgerText() { return baseFileText('EVIDENCE_LEDGER.md'); }
 function baseFileText(rel) {
   const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1e8 });
   try {
-    let base = git(['merge-base', 'HEAD', 'origin/main']).trim();
-    if (base === git(['rev-parse', 'HEAD']).trim()) {
-      const given = process.env.LEDGER_BASE;
-      base = given && !/^0+$/.test(given) ? given : 'HEAD^';
-    }
+    // Same base as tools/verify-ledger-authorship.js: LEDGER_BASE wins when set.
+    const given = process.env.LEDGER_BASE;
+    let base = given && !/^0+$/.test(given) ? given : git(['merge-base', 'HEAD', 'origin/main']).trim();
+    if (base === git(['rev-parse', 'HEAD']).trim()) base = 'HEAD^';
     return git(['show', `${base}:${rel}`]);
   } catch { return null; }
 }
@@ -710,6 +732,7 @@ function baseFileText(rel) {
 // yet, registered from 2026-09-27 must state its sample size and margin. A
 // registered date that is missing or not YYYY-MM-DD is itself a problem, so a
 // quoted or blank date cannot slip past the cutoff.
+const SAMPLE_SIZE_ITEMS = ['Per verdict', 'Margin', 'Downstream quantity'];
 function assessSampleSizeSections(dir = EXPERIMENTS) {
   const problems = [];
   if (!fs.existsSync(dir)) return problems;
@@ -720,8 +743,15 @@ function assessSampleSizeSections(dir = EXPERIMENTS) {
     const raw = String((parseFrontmatter(text) || {}).registered || '').replace(/^['"]|['"]$/g, '');
     const date = /^\d{4}-\d{2}-\d{2}/.exec(raw);
     if (!date) { problems.push(`${name}: protocol registered date "${raw}" is missing or not YYYY-MM-DD`); continue; }
-    if (date[0] >= '2026-09-27' && !/^## Sample size and margin\b/m.test(text)) {
-      problems.push(`${name}: protocol registered ${date[0]} has no "## Sample size and margin" section`);
+    if (date[0] < '2026-09-27') continue;
+    const section = /^## Sample size and margin\b[^\n]*\n([\s\S]*?)(?=^## |(?![\s\S]))/m.exec(text);
+    if (!section) { problems.push(`${name}: protocol registered ${date[0]} has no "## Sample size and margin" section`); continue; }
+    // Every item the template asks for must be present and filled in, not left
+    // blank or as the template's <placeholder>.
+    for (const item of SAMPLE_SIZE_ITEMS) {
+      const m = new RegExp(`^- \\*\\*${item}:\\*\\*[ \\t]*([\\s\\S]*?)(?=^- \\*\\*|(?![\\s\\S]))`, 'm').exec(section[1]);
+      const value = m ? m[1].trim() : '';
+      if (!value || value.startsWith('<')) problems.push(`${name}: "## Sample size and margin" does not fill in **${item}:**`);
     }
   }
   return problems;
@@ -753,8 +783,11 @@ function assessRunOutcomes(ledgerText, { runsDir = RUNS, startDate = runStartDat
     const started = startDate(path.relative(ROOT, dir)) || today; // uncommitted: new
     if (started < '2026-09-27') continue;
     const outcomes = ['worklog.md', 'stop-record.md'].map((f) => path.join(dir, f)).filter((f) => fs.existsSync(f));
-    const lines = outcomes.flatMap((f) => [...fs.readFileSync(f, 'utf8').matchAll(/^ledger:[ \t]*(.+)$/gm)].map((m) => m[1].trim()));
-    if (!lines.length) { problems.push(`.orch/runs/${name}: no \`ledger:\` line in worklog.md or stop-record.md`); continue; }
+    // The marker must be the final nonblank line of its outcome file, so output
+    // appended after it (a resumed run) makes the run unrecorded again.
+    const finals = outcomes.map((f) => fs.readFileSync(f, 'utf8').split(/\r?\n/).filter((l) => l.trim()).pop() || '');
+    const lines = finals.map((l) => /^ledger:[ \t]*(.+)$/.exec(l.trim())).filter(Boolean).map((m) => m[1].trim());
+    if (!lines.length) { problems.push(`.orch/runs/${name}: no \`ledger:\` line ends worklog.md or stop-record.md`); continue; }
     for (const value of lines) {
       if (/^not reportable\b.{8,}/.test(value)) continue;
       if (/^not reportable/.test(value)) { problems.push(`.orch/runs/${name}: \`ledger: not reportable\` needs a reason`); continue; }
@@ -788,12 +821,8 @@ function assessExperiments() {
   problems.push(...assessSampleSizeSections());
   problems.push(...assessRunOutcomes(ledgerText));
   problems.push(...assessLedgerLinks(ledgerText));
-  // BL-0016 F5: the generated index must match the ledger it summarizes.
-  const { buildIndex } = require('./build-ledger-index.js');
-  const indexPath = path.join(ROOT, 'LEDGER-INDEX.md');
-  if (!fs.existsSync(indexPath) || fs.readFileSync(indexPath, 'utf8') !== buildIndex(ledgerText)) {
-    problems.push('LEDGER-INDEX.md is stale; run node tools/build-ledger-index.js');
-  }
+  // LEDGER-INDEX.md freshness is `node tools/ledger-index.js --check`, its own
+  // CI and pre-push step; it is not repeated here.
   const baseText = baseLedgerText();
   if (baseText === null) problems.push('cannot read the base ledger from git; history check did not run');
   else problems.push(...assessLedgerHistory(ledgerText, baseText));
