@@ -125,6 +125,16 @@ playtest candidates. This is a deterministic screening-policy observation,
 not evidence about human strategy, fun, difficulty, or a production spawn
 rule.
 
+As of 2026-09-27, `RESULT-0049` supplied a clean post-adoption confirmation of
+the current target-aware champion against its preserved base chooser. Across
+17,400 fresh paired cells on all 58 shipped levels, there were zero base-only
+wins and zero slower champion wins; the champion converted 17 losses to wins
+and finished 10,466 mutual wins earlier. The frozen outcome is
+`SUPPORTS_CURRENT_CHAMPION`, with a mean 1.184 target-cost moves saved and a
+conservative 95% interval of 1.050–1.319. This validates the current policy in
+the registered shipped-level scope; it is not a new promotion, a future-level
+guarantee, or evidence about human play.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -990,6 +1000,23 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The three-vertical-island template supplied 594 of the 1,305 blue-only sustained candidates and is the strongest first source for manual play. Candidate trace goals remain unadopted until human play validates them.
+
+### RESULT-0049 — Fresh paired confirmation supports the current target-aware champion
+
+- **type:** result
+- **status:** accepted
+- **scope:** current `chooseMove` target-aware champion versus preserved `chooseBaseMove`; all 58 shipped levels; fresh seeds 45,000,000–45,000,299; 17,400 level-seed pairs and 34,800 games; identical target-stop objective, transitions, spawn stream, and lookahead construction; current frozen ruleset and policy identities only
+- **statement:** The preregistered one-shot confirmation closed with primary outcome **`SUPPORTS_CURRENT_CHAMPION`**. All 17,400 pairs were complete. The base policy won no cell that the champion lost, and the champion was slower in no mutual win. The champion converted **17** base losses into wins and reached the target earlier in **10,466** mutual wins; 6,863 mutual wins tied on moves. Mean paired target-cost reduction was **1.184425 moves** in favor of the champion, with conservative two-axis standard error **0.068599** and registered 95% interval **[1.049972, 1.318879]**. The 5,638 same-speed crossing-score differences are final-move overshoot diagnostics, not regressions under the shared race-to-target objective. This supports retaining the current engineering champion within the registered shipped-level scope; it does not newly promote the policy, prove safety on unseen future levels, compare human play, or optimize terminal score.
+- **evidence:** immutable protocol `experiments/RESULT-0049/registered-protocol.md`, registration commit `24c38d8b5fe5b1ae90aaa0cdb3872453bc728840`; [qualification receipt](experiments/RESULT-0049/qualification.json); retained [corpus](experiments/RESULT-0049/corpus.json), file SHA-256 `fcd7b85690c8afdc0108385ff9fd827b9672726d9e42addae0df941bcc6c97f4` and internal artifact identity `43b50ee34bf8c850172adbb8debce27e2e6d9b5d2672392581505524a9dd5062`; exact counts, thresholds, and limitations in [report](experiments/RESULT-0049/report.md); externally anchored executable contract, `CLOSED` [closure receipt](experiments/RESULT-0049/closure.json), and byte-matched [primary recomputation](experiments/RESULT-0049/primary-recomputation.json).
+- **proof_class:** `direct_source` for frozen identities, complete pairing, artifact integrity, and executable closure; `heuristic_observation` for policy performance over the registered fresh seeded panel.
+- **as_of:** 2026-09-27
+- **reverify:** From `experiments/RESULT-0049`, run `node recompute.js corpus.json`; expect artifact identity `43b50ee3…`, 17,400 pairs, zero `baseOnlyWin`, zero `baseFaster`, and `SUPPORTS_CURRENT_CHAMPION`. Then run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 c2fc316ae65bb1b120f2c53f17de167c99568aecd669b0796a71c5cc9e17642f`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-27
+- **written_by:** Codex session on branch `codex/champion-confirmation-2026-09-27`
+- **checked_by:** script run, 2026-09-27: the close-experiment verifier recomputed `primary-recomputation.json`, byte-matched SHA-256 `14a627d69ca513da0d9a9109a4bac5946e51bafdf9c9adefad583650b570481c`, checked all nine claims and three artifacts, and returned `CLOSED`, recomputation `PASS`, verdict `PASS`, exit 0
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** `DECISION-0004` already made this policy the champion. This result validates that standing under a current, preregistered comparison; adoption or rollback remains a separate owner decision.
 
 
 ## Decision registry
