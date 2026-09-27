@@ -485,7 +485,7 @@ function assessReportAnswers(result, protocol, report) {
 }
 
 // Vocabularies from the ledger's own Status and proof-class tables.
-const STATUSES = new Set(['accepted', 'provisional', 'open', 'superseded', 'narrowed', 'stale', 'rejected']);
+const STATUSES = new Set(['accepted', 'provisional', 'open', 'superseded', 'narrowed', 'stale', 'blocked', 'rejected']);
 const PROOF_CLASSES = new Set([
   'direct_source', 'exact_result', 'replayed_lower_bound', 'replayed_upper_bound', 'proven_upper_bound',
   'heuristic_observation', 'UNKNOWN', 'unresolved', 'owner_decision', 'hypothesis',

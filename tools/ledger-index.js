@@ -13,7 +13,7 @@ const ROOT = path.join(__dirname, '..');
 const LEDGER = path.join(ROOT, 'EVIDENCE_LEDGER.md');
 const INDEX = path.join(ROOT, 'LEDGER-INDEX.md');
 
-const CURRENT = ['accepted', 'narrowed', 'provisional', 'open', 'stale'];
+const CURRENT = ['accepted', 'narrowed', 'provisional', 'open', 'blocked', 'stale'];
 const TYPE_ORDER = ['FACT', 'DECISION', 'RESULT', 'CORRECTION', 'HYPOTHESIS', 'QUESTION'];
 const CLAIM_LIMIT = 220;
 
