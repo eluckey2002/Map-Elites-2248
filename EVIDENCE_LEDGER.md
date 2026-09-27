@@ -327,6 +327,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-12
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0017]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: CORRECTION-0017 names this record; ran `node solver/game-tester.js --seeds 20`, first line `PASS - 120/120 checks: score scales exactly, play is identical.`
 - **notes:** Exactness holds only after two scale-dependent constants in the reference bot were corrected on 2026-08-12: its turnover bonus was a fixed 40 points per emptied cell while every other ranking term is in game points, and `isMergeableSum` tested for a power of two rather than for `k` times a power of two. Both are inert at scale 1, so no result recorded before this date changes. The structural argument generalises beyond the tested scope, but only the stated scope is verified. This fact is what permits a target to be derived by multiplication rather than re-measured per scale.
 
 ## Result registry
@@ -344,6 +346,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-11
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0010]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran CORRECTION-0010's reverify in a `git archive 8e1e232^` extract: witness verify PASS, score 12336, 32 moves, cursor 520; hinted verify PASS with UNKNOWN at 12400, 12600, 12800, 13000
 
 ### RESULT-0002 — Mass/cursor upper bound
 
@@ -386,6 +390,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-11
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0010]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran CORRECTION-0010's reverify in a `git archive 8e1e232^` extract: witness verify PASS, score 12336, 32 moves, cursor 520; hinted verify PASS with UNKNOWN at 12400, 12600, 12800, 13000
 
 ### RESULT-0005 — Level 26 is not a tuning outlier; the whole back half is unbeaten
 
@@ -400,6 +406,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-11
 - **supersedes:** []
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: stale per CORRECTION-0017's notes; ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level, so the no-wins-from-17 claim no longer describes the game
 - **notes:** Level 26 became the proof subject because it was studied first, not because it was the worst-tuned level. Thirty-four levels share its condition.
 
 ### RESULT-0006 — Spawning 16s does not lift the ceiling
@@ -415,6 +423,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-11
 - **supersedes:** []
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: stale per CORRECTION-0017's notes (pre-retune levels, pre-promotion bot); ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level; the claim itself was not re-measured
 - **notes:** `src/game.js:607-611` already seeds the initial board with 16s while `src/game.js:460-463` omits them from refills. That asymmetry is real, but closing it does not make the targets reachable.
 
 ### RESULT-0007 — More moves rescue the mid levels and saturate on the late ones
@@ -430,6 +440,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-11
 - **supersedes:** []
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: stale per CORRECTION-0017's notes (pre-retune levels, pre-promotion bot); ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level; the claim itself was not re-measured
 - **notes:** Identical scores at 2x and 3x are the signature of a terminal board, not of a scoring plateau.
 
 ### RESULT-0008 — Every level is winnable after the demand-based retune
@@ -445,6 +457,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-12
 - **supersedes:** []
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: stale per RESULT-0051; ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level, not this record's 37% floor and about 5% lockouts
 - **notes:** Policy-dependent and no bound follows. The reference bot understates a skilled player by an unquantified margin, so these win rates are floors on human success rather than estimates of it. `RESULT-0005`'s finding that the back half was unbeatable is superseded in practice by this retune but is retained as the measurement that motivated it.
 
 ### RESULT-0009 — Level 51 shipped: the first level admitted through the authoring tracer
@@ -460,6 +474,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-17
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0016]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: CORRECTION-0016's reverify: `node --test solver/tests/gameLevels.test.js` 0 fail; ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level
 - **notes:** This is the first level whose target was never hand-picked at all — BL-0004's stated milestone exit condition, for one level. Batch generation of further candidates and any additional shipping remain open, separate work.
 
 ### RESULT-0010 — The bot's candidate cap was discarding real options on two-thirds of moves
@@ -475,6 +491,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-19
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0003]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: backfilled link only: CORRECTION-0003 already names this record in `supersedes` and this record's appended note already cites it; the two-way link check passes
 - **notes:** Two corrections are recorded here deliberately, because both were believed and reported before being checked. (1) The searched policy's weight changes — `wRoll` 0.813, `wPlace` 1.432, `turnover` 44.655 — measured +1.31% at fixed width under an arithmetic mean of per-cell ratios, and **+0.10% (t 0.4)** under the log-ratio estimator. They are not adopted; essentially the entire gain is the width. (2) The same estimator change cut the headline holdout lift from +3.30% to +1.68%, because a mean of ratios was being carried by a right tail of games where the new policy scored several times the reference. Clustering by level inflated the standard error only 1.5x, well below the 3.7x that the seeds-per-level count would suggest, because the policy improves most levels by a similar amount rather than winning big on a few. The reference bot remains a weak proxy for a skilled player; 1.1% does not change that, and the open note on unquantified human margin stands.
 - **appended 2026-08-20:** The mechanism named in the statement above — "boards offer a median of 15 legal chains and at most 30" — is wrong, and `CORRECTION-0003` records why. Boards offer hundreds of thousands; 15 to 30 is what the candidate *generator* returns. Every measurement in this record stands and the saturation was re-confirmed under a changed generator, so the status stays `accepted`; only the explanation is narrowed. Read this record together with `CORRECTION-0003` and `RESULT-0011`.
 
@@ -507,6 +525,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **citation-repair:** 2026-08-31. The candidate-store path above previously pointed into `.orch/runs/level-authoring-tracer-2026-08-12/workspace/repo/`, a linked worktree excluded by `.gitignore`, so the citation never resolved in any clone. Repointed to the committed copy at `solver/candidate-levels-52.json`, SHA-256 `6637108c3a067491a4ca6221e8d869a41dfc565f6095d740891c61a0e0aaaaba`, byte-identical to the worktree copy. The claim, its proof class, and its receipt are unchanged; only the pointer moved.
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0016]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: CORRECTION-0016's reverify: `node --test solver/tests/gameLevels.test.js` 0 fail; ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level
 - **notes:** This is the first level to land on the far side of a bot-strength change, and it makes the split named in `RESULT-0011` concrete rather than hypothetical: levels 1-52 carry targets derived against the pre-`RESULT-0011` bot, anything authored later will not. That comparability question is open and is **not** settled by this record — it is only deferred for one level, on the ground that a human-validated target should not move underneath the human who validated it. Whether to re-derive the whole curve remains an owner decision.
 
 ### RESULT-0013 — Re-searching the ranking weights over the fixed generator still establishes nothing
@@ -537,6 +557,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-21
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0016]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: CORRECTION-0016's reverify: `node --test solver/tests/bot.test.js` 21/21 pass; ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level
 - **notes:** The one rule here that comes from the engine rather than from a guess: to consume a tile of value v the board needs a v or a v/2 adjacent to it, because a chain opens with an equal pair and then climbs equal-or-double. A lone 32 is therefore *not* stranded — `16, 16, 32` is legal — and an earlier version of this term that counted only equal-valued twins was wrong, because it would have pushed the bot to reach the whole way in one chain instead of building a 16 and then a 32. Overshooting is how a sum lands off the lattice. **Everything else in the term is invented**: the 1.0/0.7/0.4 kinship weights, the `1/(1+distance)` decay, matching on exact ratios only. Those are guesses about good play and they cap the bot at what was thought of, which is the standing argument for a learned evaluation rather than more hand-written terms. Adopting this exposed a defect in `solver/calibration.js`: `chooseMove` resolves `{ ...DEFAULT_PARAMS, ...params }`, so a parameter present on the live bot but absent from the frozen ruler silently takes the live value — the ruler would look frozen and not be. `calib-1` now pins `wHarvest: 0` explicitly and a test fails if the two key sets ever diverge. Existing targets are therefore unaffected by this change.
 
 ### RESULT-0015 — Keeping eight low-value chain routes raises score 13.8% and win rate 5.5 points
@@ -582,6 +604,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-22
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0014]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: in a worktree at `be84336`, `node solver/verify-map-elites.js solver/map-elites-output` printed three PASS lines: 20 occupied cells, 3 replays, protected champion `52f500c`
 - **notes:** The archive axes are calibrated from the bounded pilot and may clip policies outside that pilot's observed range. The experiment explores the existing parameter seam only; it does not learn a value function, add search depth, or discover new policy structure. The full solver suite remains 193/196 because of the same three pre-existing receipt-identity failures named in `RESULT-0016`; no receipt was refreshed or weakened.
 
 ### RESULT-0018 — A target-aware finish rule extracted from human Level 51 play generalizes across all shipped levels
@@ -627,6 +651,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-01
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0014]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: in a worktree at `1e5311e`, `node experiments/RESULT-0021/verify.js` printed `RESULT-0021 CHALLENGE PASS 95d45522...` once `path.relative` was forced to `/` separators (a Windows-only path mismatch in the spawned `generate-levels.js`; without the shim it fails `consumer subject identity mismatch`)
 - **notes:** The current `r = 0.99943` is a new registered result, not evidence for the exact historical `r = 0.98`. Human repetition may still be appropriate for learning, fun, frustration, strategy discovery, or reliability of subjective judgments; this result removes only seed averaging as an independently supported requirement.
 
 ### RESULT-0024 — The repaired topology-response study is entitled but inconclusive
@@ -642,6 +668,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-02
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0014]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: in a worktree at `6d24d6a`, `node --test experiments/RESULT-0024/control-gate.test.js` passed 4/4
 - **notes:** `verification.json` says `ENTITLED` before reading the independent recomputation or final challenge receipt. The report narrows that component field to primary artifact-chain PASS; final entitlement is the report-level join over all six identified artifacts. The frozen component receipt is retained unchanged. The rejected `RESULT-0023` report preserves the predecessor's false-PASS finding and diagnostic arithmetic but is not admitted as its own ledger result; `RESULT-0022` contains only an unused incomplete protocol template and produced no measurement.
 
 ### RESULT-0025 — One owner pilot session replays exactly on its identified subject
@@ -657,6 +685,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-02
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0014]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: in a worktree at `6d24d6a`, `node tools/human-pilot.js verify-execution` printed `"status": "PASS"` with no problems
 - **notes:** Candidate labels are batch-local. Use the candidate and subject identities, not bare `gen-0008` or the pilot's presentation level, to refer to this session. The challenge receipt qualifies the reusable checker on its own real recording and broken twin; the execution receipt is the per-invocation application to this pilot's distinct recording.
 
 ### RESULT-0026 — The frozen handmade policy saves moves on average but regresses six wins
@@ -672,6 +702,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-02
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0014]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: in a worktree at `4dc17ad`, `policy-comparison-gate.test.js` passed 8/8 and the recorded `admit.js` command printed `ADMITTED FALSIFIED 95604ad0...`
 - **notes:** The earlier sandbox `+0.72` estimate remains retrospective discovery, not confirmation. RESULT-0026's `+0.68` mean does not rescue the combined claim because P2 was frozen as a hard safety condition. A repaired policy is a new subject requiring a new protocol and fresh evidence.
 
 ### RESULT-0027 — Level authoring now uses a frozen evaluator without changing the shipped game
@@ -733,6 +765,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0006, RESULT-0031]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: backfilled link only: RESULT-0031 names this record in `supersedes`; the two-way link check passes
 - **notes:** The three cell changes were threshold crossings: Level 10 seed 32,100,001 improved from 12 to 11 moves across the 0.5 tightness boundary; Level 53 and Level 54 seed 32,100,000 improved from full-board cap witnesses to cap 12. The next candidate should represent uncertainty or search qualification explicitly instead of treating a raw bounded upper bound as a settled archive coordinate.
 
 ### RESULT-0031 — Corrected-cap descriptor proxies cover all puzzles but remain search-sensitive
@@ -748,6 +782,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0030]
 - **superseded_by:** [CORRECTION-0013]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node tools/verify-frozen-experiment.js RESULT-0031` (CORRECTION-0013's reverify): exit 0, PASS and a FROZEN TREE line
 - **notes:** Four cell changes were threshold crossings under the deeper search: three tight-to-relaxed changes at the 0.5 budget boundary and one long-to-short change at cap 12. The next candidate should represent uncertainty or search qualification rather than treating one bounded upper bound as a settled archive coordinate. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (4/8 same bin (50%), 43,275 vs 11,594 states) with `node experiments/RESULT-0031/recompute.js experiments/RESULT-0031/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0032 — Choice density clears its bars; recovery lacks enough non-ceiling pairs
@@ -763,6 +799,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0013]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node tools/verify-frozen-experiment.js RESULT-0032` (CORRECTION-0013's reverify): exit 0, PASS and a FROZEN TREE line
 - **notes:** `initialViableStartFraction` counts viable starting tiles, not distinct paths or perceived decisions. `oneDetourRecoveryWitnessRate` samples up to eight lowest-scoring non-reference candidates from a deterministic 64-candidate pool and counts only replayed bounded-search successes. A repair needs a new protocol and fresh seeds; do not extend this opened range or lower its frozen eligibility denominator. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (range 0.3833, 7/8 of 8 eligible, 47/58) with `node experiments/RESULT-0032/recompute.js experiments/RESULT-0032/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0033 — Merge depth and spatial spread clear the candidate-measure bars
@@ -778,6 +816,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0013]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node tools/verify-frozen-experiment.js RESULT-0033` (CORRECTION-0013's reverify): exit 0, PASS and a FROZEN TREE line
 - **notes:** Initial and spawned tiles have depth zero; each merged tile has one plus the maximum input depth. Spatial spread is mean per-move Chebyshev chain span divided by board diameter. Four Level 54 shallow misses remain `UNKNOWN`; deep witnesses make panel coverage complete. Eligibility permits a new preregistered corpus only and is not adoption by itself. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (32/32, range 0.2396, 25/28 and 27/28 on exactly 28 pairs) with `node experiments/RESULT-0033/recompute.js experiments/RESULT-0033/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0034 — Bounded opening diversity collapses on representative boards
@@ -793,6 +833,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0013]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node tools/verify-frozen-experiment.js RESULT-0034` (CORRECTION-0013's reverify): exit 0, PASS and a FROZEN TREE line
 - **notes:** The repair target is the success-set sampler, not the seed count. Ordered opening chains preserve survivor placement, so reversed chains remain distinct moves. Blind recompute (2026-09-26, BL-0016 F4): a fresh agent given only `protocol.md` and `corpus.json` reproduced P1-P3 and the disposition (range 0.1974, one diversity value populated, 26/28 on exactly 28 pairs) with `node experiments/RESULT-0034/recompute.js experiments/RESULT-0034/corpus.json`; control checks need the engine and were not recomputed.
 
 ### RESULT-0035 — Four-cell occupancy succeeds but witness-dependent cell stability does not
@@ -808,6 +850,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0013]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node tools/verify-frozen-experiment.js RESULT-0035` (CORRECTION-0013's reverify): exit 0, PASS and a FROZEN TREE line
 - **notes:** RESULT-0033 validated separate depth and spread stability bars on 32 puzzles; RESULT-0035's stricter joint cell assignment exposed boundary sensitivity at corpus scale. Do not move the 0.82 cut or extend this seed range after seeing the outcome. A repair is a new registered uncertainty-aware subject and fresh panel.
 
 ### RESULT-0036 — Exact greed confirmation is not entitled because timeout-sensitive closure did not reproduce
@@ -853,6 +897,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0007, RESULT-0041]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: backfilled link only: RESULT-0041 names this record in `supersedes`; the two-way link check passes
 - **notes:** Do not extend this seed panel or raise its cap after observing the empty Level 10 cell. The next descriptor step is not another retry: either retain greed ratio as a strong candidate while independently manipulating a timing axis, or preregister a materially different exact-denominator strategy. Build potential remains a policy term, not a descriptor axis.
 
 ### RESULT-0041 — Hardened greed harness qualifies; confirmation watchdog invalidates the run
@@ -868,6 +914,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0038]
 - **superseded_by:** [CORRECTION-0011, RESULT-0042]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran CORRECTION-0011's reverify (`python3 tools/vendor/close-experiment/verify_closure.py ... --run-recomputation`): verdict PASS, `closure_status: INVALID`, recomputation NOT_RUN; RESULT-0042 link is two-way
 - **notes:** RESULT-0039 and RESULT-0040 stopped during pre-outcome qualification and retain their failed attempt receipts. RESULT-0041 repaired those exact gaps and qualified; its separate terminal failure shows that the 30-second watchdog is not guaranteed to outlast the deterministic path-state cap on every registered board. Any future confirmation is a new subject and requires an owner-selected compute/denominator change, not a retry of this run.
 
 ### RESULT-0042 — Calibrated watchdog completes the matrix; frozen closeout path remains unverified
@@ -898,6 +946,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-16
 - **supersedes:** [RESULT-0042]
 - **superseded_by:** [CORRECTION-0013]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node tools/verify-frozen-experiment.js RESULT-0043` (CORRECTION-0013's reverify): exit 0, PASS and a FROZEN TREE line
 - **notes:** Do not add seeds or raise this run's cap after observing the result. The evidence supports greed as a responsive behavioral measure but does not yet support promotion as a MAP-Elites axis. A future change must address the exact-coverage strategy and score overlap as a genuinely new subject; repeated copies of this same panel are not the next step.
 
 ### RESULT-0048 — Blue-only refills yield family-island playtest candidates
@@ -913,6 +963,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-19
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0013]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node tools/verify-frozen-experiment.js RESULT-0048` (CORRECTION-0013's reverify): exit 0, PASS and a FROZEN TREE line
 - **notes:** The three-vertical-island template supplied 594 of the 1,305 blue-only sustained candidates and is the strongest first source for manual play. Candidate trace goals remain unadopted until human play validates them.
 
 ### RESULT-0049 — A 120-mutation MAP-Elites archive on re-calibrated axes occupies 24 of 25 cells without replacing the `52f500c` champion
@@ -928,6 +980,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** []
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran the recorded reverify: exit 0, `PASS 24 cells, no positive holdout lift`
 - **notes:** Not claimed: that the larger search expanded `RESULT-0017`'s behavior coverage (axes moved; see `RESULT-0050` for the shared-axis round); that any elite is weaker or stronger than the champion in general; the clustered t-statistic (`t=-1.392` per the worklog) was not recomputed for this record. `solver/verify-map-elites.js` passed on 2026-08-28 per the worklog but **fails today** on its protected-hash check because `solver/bot.js` has since changed, so it is not used as the reverify. Byte identity of recordings was never frozen and stays unverified per the worklog.
 
 ### RESULT-0050 — On `RESULT-0017`'s exact axes with fresh seeds, a 120-mutation MAP-Elites archive occupies 23 of 25 cells without replacing the `52f500c` champion
@@ -943,6 +997,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** []
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran the recorded reverify: exit 0, `PASS 23/25 on original axes, no positive holdout lift`
 - **notes:** Not claimed: that MAP-Elites reliably fills more cells with more iterations (one run per configuration); that the new cells reflect new policy structure; any policy strength ordering. The `pilot` sub-object of `axes` differs between archives by design; only the two bin axes are shared. The first run of this round failed on a wrongly frozen prior-map hash, not on the experiment; the verification run admitted the same bytes without rerun. Clustered t-values (`t=-1.3563` for `e7349b8a477a`) are taken from `measurement.md` and were not recomputed here. `solver/verify-map-elites.js` now fails on the changed `solver/bot.js` protected hash and is not used as the reverify.
 
 ### RESULT-0051 — On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels
@@ -958,6 +1014,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** []
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level
 - **notes:** Found while sourcing two uncited numbers (BL-0016 F7): AGENTS.md said "71-100%" wins, which matched no record, and CURRENT.md said lockouts reach about 5%, from `RESULT-0008`. Both now cite this record. Measured under CPU contention from a parallel run; timing does not affect the printed rates.
 
 ## Decision registry
@@ -1019,6 +1077,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-30
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0012]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran CORRECTION-0012's reverify: after fetching, `git branch -r --contains 6a07294...` lists `origin/evidence/result-0018-6a07294`
 - **notes:** This decision changes which policy is current; it does not change the historical standing or identity of any earlier result. The evidence under it is now reproducible: `RESULT-0020` (2026-09-01) registered a protocol before running and reproduced RESULT-0018 holdout counts exactly, so this decision no longer rests solely on a grandfathered result. That replication also found that the promotion copied the target-aware policy into `solver/bot.js` rather than moving it — `chooseMove` and `chooseTargetAwareMove` are now byte-identical apart from their identifiers, and the experimental challenger called the promoted one, evaluating the override twice per move. The challenger was repointed at `chooseBaseMove` on 2026-09-01 (`c37c83a`), verified play-identical on 1,040 games; `solver/bot.js` still carries its own copy of the rule, which is a code question for this decision to answer, not a change this measurement makes.
 
 ### DECISION-0005 — Route the qualified owner pilot to variant/repair
@@ -1169,6 +1229,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-20
 - **supersedes:** [RESULT-0010]
 - **superseded_by:** [CORRECTION-0015]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran CORRECTION-0015's reverify, `node --max-old-space-size=8192 solver/chain-coverage.js`: exit 0, 16 boards with ground truth, means 0.563 and 0.688
 - **notes:** Appended rather than edited into `RESULT-0010`, which keeps its original wording and receipt. The correction is to an explanation, not to a measurement — every number `RESULT-0010` reports was and remains correct.
 
 ### CORRECTION-0004 — RESULT-0015 was invalidated when the beam was made additive
@@ -1274,6 +1336,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** [RESULT-0001, RESULT-0004]
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran CORRECTION-0010's reverify in a `git archive 8e1e232^` extract: witness verify PASS, score 12336, 32 moves, cursor 520; hinted verify PASS with UNKNOWN at 12400, 12600, 12800, 13000
 - **notes:** Found by the ledger citation check added under BL-0016 F12.
 
 ### CORRECTION-0011 — RESULT-0041's closure verifier lived outside the repository
@@ -1289,6 +1353,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** [RESULT-0041]
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran the recorded reverify: verdict PASS, `closure_status: INVALID`, recomputation NOT_RUN
 - **notes:** The file's modification date predates the run, but which exact version ran on 2026-09-16 is not recorded; the matching verdict is the support, not a byte identity.
 
 ### CORRECTION-0012 — DECISION-0004's evidence commit was on no branch
@@ -1304,6 +1370,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** [DECISION-0004]
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran the recorded reverify: `git branch -r --contains` lists `origin/evidence/result-0018-6a07294`
 - **notes:** Precision (2026-09-26 review): of the 31 files `6a07294` added, 25 are absent at `1456906` and 2 differ. Evidence branches under `evidence/` must never be deleted; the ledger citation check accepts commits reachable from them.
 
 ### CORRECTION-0013 — Seven results' reverify commands check today's source, not the frozen one
@@ -1319,6 +1387,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** [RESULT-0031, RESULT-0032, RESULT-0033, RESULT-0034, RESULT-0035, RESULT-0043, RESULT-0048]
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran all seven `node tools/verify-frozen-experiment.js` commands: each exit 0 with PASS and a FROZEN TREE line
 - **notes:** Found by the first nightly reverify run (BL-0016 F1). Fifteen other records also failed or timed out that night; each needs its own diagnosis and is listed in BL-0016.
 
 ### CORRECTION-0014 — Five results' reverify commands check today's source, not the tree they were admitted at
@@ -1339,6 +1409,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** [RESULT-0017, RESULT-0021, RESULT-0024, RESULT-0025, RESULT-0026]
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran every listed command in a worktree at its commit: all passed as recorded, RESULT-0021 only with `path.relative` forced to `/` separators (Windows-only path mismatch; see RESULT-0021)
 - **notes:** Second batch from the nightly reverify run (BL-0016 F1). Only the named commands were rerun; the other commands in each record's reverify (focused suites, `tools/verify-experiments.js`) were not checked here.
 
 ### CORRECTION-0015 — The chain-coverage check needs more memory than Node's default
@@ -1354,6 +1426,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** [RESULT-0011, CORRECTION-0003]
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran the recorded reverify: exit 0, 16 boards with ground truth, means 0.563 and 0.688
 - **notes:** Diagnosed by a BL-0016 agent (Node 26 and Node 22, admitting commit `4ded51c`) and re-run by the owner session. Capping the enumeration instead would need a cap above 8,285,173 path states, or Level 51 seed 1 is wrongly reported `n/a`. `RESULT-0011`'s other reverify steps are handled separately.
 
 ### CORRECTION-0016 — Four results' reverify runs the whole test suite, which fails for reasons outside their claims
@@ -1369,6 +1443,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** [RESULT-0009, RESULT-0011, RESULT-0012, RESULT-0014]
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran the named focused tests (gameLevels 0 fail, engine 45/45, bot 21/21); ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level
 - **notes:** Found by the nightly reverify run (BL-0016). The whole-suite command is also exposed to concurrent edits: during this diagnosis a ledger commit landed mid-run and 12 `universeMap.test.js` tests failed ("RESULT-0017 status: expected accepted, got narrowed"), since fixed and unrelated to these four claims. The level-count expectations `51/51` and `52/52` in the original reverify lines are also stale now that more levels ship; `verify-loop.js` reports the current count. On 2026-09-26 `node solver/verify-loop.js` printed `RESULT: PASS` and exited 0 (an earlier attempt was killed at a 600-second tool limit with exit 143 before finishing).
 
 ### CORRECTION-0017 — FACT-0007's check count and RESULT-0011's effect size, measured on today's tree
