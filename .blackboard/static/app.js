@@ -139,6 +139,7 @@ function artifactValue(task) {
   link.href = `/artifacts/tasks/${encodeURIComponent(task.id)}`;
   link.target = "_blank";
   link.rel = "noopener";
+  link.dataset.focusKey = `artifact:${task.id}`;
   text(link, `Open ${task.id} artifact`);
   return link;
 }
@@ -149,6 +150,13 @@ function reportingValue(task) {
   const wrap = element("span", "reporting");
   wrap.append(statusBadge(state), document.createTextNode(` ${detail}`));
   return wrap;
+}
+
+function shortDate(value) {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+  return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(date);
 }
 
 function relativeTime(value) {
@@ -204,7 +212,11 @@ function eventItem(event, withTask) {
   const detail = element("p");
   const prefix = [label(event.kind), withTask && event.task_id ? `· ${event.task_id}` : "", event.actor ? `· ${event.actor}` : ""].filter(Boolean).join(" ");
   text(detail, `${prefix}${event.detail ? ` — ${event.detail}` : ""}`);
-  item.append(timeNode(event.at, ""), detail);
+  const time = element("time");
+  time.dateTime = event.at || "";
+  time.title = relativeTime(event.at);
+  text(time, shortDate(event.at));
+  item.append(time, detail);
   return item;
 }
 
@@ -234,7 +246,7 @@ function taskCard(task, noteSource) {
   card.append(head, question, meta);
 
   const trail = eventsFor(task.id);
-  const noteText = noteSource === "review"
+  const noteText = noteSource === "review" || (task.state === "repair_requested" && task.review_note)
     ? task.review_note
     : (trail.find((event) => event.kind === "progress_reported") || {}).detail;
   if (noteText) {
@@ -301,12 +313,15 @@ function summaryStrip(tasks, defects) {
   const strip = element("nav", "summary-strip");
   strip.setAttribute("aria-label", "Board totals");
   items.forEach(([name, value, view, cls]) => {
-    const button = element("button", `summary-item ${cls}${value ? "" : " is-zero"}`);
-    button.type = "button";
-    button.dataset.focusKey = `strip:${name}`;
-    button.append(text(element("strong"), value), text(element("span"), name));
-    button.addEventListener("click", () => selectView(view));
-    strip.append(button);
+    const here = view === activeView;
+    const item = element(here ? "div" : "button", `summary-item ${cls}${value ? "" : " is-zero"}${here ? " is-here" : ""}`);
+    item.append(text(element("strong"), value), text(element("span"), name));
+    if (!here) {
+      item.type = "button";
+      item.dataset.focusKey = `strip:${name}`;
+      item.addEventListener("click", () => selectView(view));
+    }
+    strip.append(item);
   });
   return strip;
 }
