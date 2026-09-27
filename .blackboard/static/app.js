@@ -286,6 +286,7 @@ function cardGrid(tasks, noteSource) {
 // whole seconds, so read the newest matching event (events arrive newest
 // first) and fall back to the task fields only when no event is present.
 const ACTIVITY = {
+  queued: [["created", "added"]],
   accepted: [["accepted", "reviewed"]],
   repair_requested: [["repair_requested", "changes requested"]],
   submitted: [["submitted", "sent for review"]],
@@ -300,6 +301,7 @@ function currentActivity(task) {
   if (latest) return [verbs[latest.kind], latest.at, Number(latest.sequence) || 0];
   const fallback = task.state === "claimed"
     ? (task.last_reported_at > (task.claimed_at || "") ? ["updated", task.last_reported_at] : ["started", task.claimed_at])
+    : task.state === "queued" ? ["waiting", null]
     : [kinds[0][1], task.state === "submitted" ? task.submitted_at : task.reviewed_at];
   return [...fallback, -1];
 }
@@ -562,7 +564,7 @@ function renderContent() {
   const defects = Array.isArray(snapshot.defects) ? snapshot.defects : [];
   const queued = tasks.filter((task) => task.state === "queued");
   const content = activeView === "now" ? renderNow(tasks, defects)
-    : activeView === "queue" ? (queued.length ? cardGrid(queued, "progress") : emptyState("No work is waiting to be picked up."))
+    : activeView === "queue" ? (queued.length ? cardGrid(queued.sort(byRecentUpdate).reverse(), "progress") : emptyState("No work is waiting to be picked up."))
     : activeView === "results" ? renderResults(tasks)
     : activeView === "defects" ? renderDefects(defects)
     : activeView === "snapshots" ? renderSnapshots()
