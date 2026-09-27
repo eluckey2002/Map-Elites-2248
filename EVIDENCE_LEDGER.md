@@ -537,6 +537,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-08-20
 - **supersedes:** []
 - **superseded_by:** [CORRECTION-0015, CORRECTION-0016, CORRECTION-0017]
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by); the earlier text predates the authorship rule
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26/27: reran all three corrections' commands: CORRECTION-0015 `node --max-old-space-size=8192 solver/chain-coverage.js` means 0.563 and 0.688; CORRECTION-0016 `node --test solver/tests/engine.test.js` 45/45; CORRECTION-0017 `node solver/routing-ablation.js` (300 seeds, 58 levels, 460 min) printed `degree tie-break +3.19%`, t = 18.8, 0 of 58 levels hurt, `ESTABLISHED`
 - **notes:** Calibration consequence, unresolved: a target is `demand x measured achievable score` (`DECISION-0003`), so a level authored after this change is pitched about 5% higher at the same demand. Shipped levels keep the targets they were admitted with, and the curve gate passes unchanged, so nothing needs to move — but the two eras of authored target are no longer directly comparable. Candidate width is unaffected: a width-32 arm produced bit-identical play to width 24 under the new generator, so `RESULT-0010`'s saturation still holds, though its stated reason does not — see `CORRECTION-0003`. On the standing note that the reference bot is a weak proxy for a skilled player: on Level 51 the bot's median moves-to-target improves from 17 to 16 across 120 seeds, and it matches the owner's recorded 12-move pace on 8 of 120 boards against 1 of 119 before. The gap narrows and does not close; the margin remains unquantified in general.
 
 ### RESULT-0012 — Level 52 shipped at the target it was admitted with, not a re-derived one
@@ -1538,6 +1540,8 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **updated:** 2026-09-26
 - **supersedes:** [FACT-0007, RESULT-0011]
 - **superseded_by:** []
+- **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26/27: ran both recorded reverify commands: `node solver/game-tester.js --seeds 20` first line `PASS - 120/120 checks: score scales exactly, play is identical.`; `node solver/routing-ablation.js` (300 seeds, 58 levels, 460 min) printed `degree tie-break +3.19%`, t = 18.8, 0 of 58 levels hurt, `ESTABLISHED`
 - **notes:** The same diagnosis found `RESULT-0005`, `RESULT-0006`, and `RESULT-0007` describe the levels and bot before the 2026-08-12 retune and the 2026-08-30 promotion; today's runs no longer test those claims, so they are marked `stale` rather than corrected. `solver/spawn-experiment.js` also refills with unscaled tiles on scaled boards, which makes its current win rates meaningless; that bug is in BL-0016.
 
 ## Assembly cut log
