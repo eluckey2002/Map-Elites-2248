@@ -505,8 +505,9 @@ function assessLedgerStructure(text) {
     // A near-miss heading would silently drop the whole record from checking.
     // The accepted form is the one tools/ledger-index.js parses (ID, a dash,
     // a title), so the index and the authorship gate see every record this
-    // check sees.
-    if (/^#{1,6}\s*[A-Za-z]+-\d+/i.test(line) && !/^### [A-Z]+-\d{4}\s*[—–-]\s*\S/.test(line)) {
+    // check sees. Markdown still renders a heading indented by up to three
+    // spaces, which no parser reads, so indentation is a near miss too.
+    if (/^ {0,3}#{1,6}\s*[A-Za-z]+-\d+/i.test(line) && !/^### [A-Z]+-\d{4}\s*[—–-]\s*\S/.test(line)) {
       problems.push(`malformed record heading: ${line.trim()}`);
     }
     const heading = /^### ([A-Z]+)-(\d{4})\b/.exec(line);
