@@ -290,7 +290,7 @@ function currentActivity(task) {
   if (task.state === "submitted") return ["sent for review", task.submitted_at];
   if (task.state === "claimed") {
     const reported = task.last_reported_at || "";
-    return reported > (task.claimed_at || "") ? ["updated", reported] : ["started", task.claimed_at];
+    return reported && reported >= (task.claimed_at || "") ? ["updated", reported] : ["started", task.claimed_at];
   }
   return ["waiting", null];
 }
