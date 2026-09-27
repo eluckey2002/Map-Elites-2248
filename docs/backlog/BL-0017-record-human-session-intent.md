@@ -42,15 +42,29 @@ target-stop objective, as the measurement standard already requires.
 
 ## Acceptance criteria
 
-1. The recording format gains an `intent` field (at minimum `race` and
-   `explore`) and a `for` field naming the backlog item, experiment, or study
-   the session served.
-2. Existing sessions are tagged, including the five above as `explore` and
-   `8ac6c9d4` as excluded with its reason, without altering their replay data.
-3. `solver/human-benchmark.js` counts only `race` sessions and prints how many
-   sessions it excluded and why.
+1. Intent/for/exclusion labels live in a **sidecar index** (for example
+   `play-sessions/intent-index.json` or `recordings/INTENT.json`), keyed by
+   recording id (at minimum `intent`: `race` | `explore`, and `for` naming
+   the backlog item, experiment, or study the session served). Recording
+   files themselves are never edited: they are content-addressed (filename =
+   SHA-256 of contents, per `authoring-server.js`'s `recordingIdentity`), and
+   at least one — `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`
+   — has its exact hash independently re-derived and pinned by
+   `.orch/audits/recording-replay-verification-2026-08-17/verdict.md` for
+   RESULT-0009; tagging in place would change that hash and break the
+   verified chain.
+2. The sidecar index is populated for existing sessions, including the five
+   explore sessions above (`267a4373`, `4721079f`, `8dc8e825`, `8f9e1207`,
+   `e81f8323`) tagged `explore`, and `8ac6c9d4` tagged excluded with its
+   reason — the recording files are untouched.
+3. `solver/human-benchmark.js` counts only sessions the sidecar index marks
+   `race` and prints how many it excluded and why.
 4. A test fails if an untagged or `explore` session enters the speed
    comparison.
+5. A test asserts that no hash-pinned recording file changed: it re-derives
+   the SHA-256 of `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`
+   (and any other recording a verification record cites by hash) and fails if
+   it no longer matches the filename/verdict.
 
 ## Current evidence
 
@@ -66,3 +80,11 @@ Decide the field names and allowed values; then tag the six sessions above.
 
 - 2026-09-27: Proposed from the blast-radius audit and the owner's statement
   about exploration sessions.
+- 2026-09-27: Codex review (finding 4117027130) noted that tagging in the
+  recording file itself would change the SHA-256 of at least
+  `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`,
+  which `.orch/audits/recording-replay-verification-2026-08-17/verdict.md`
+  independently re-derived and pinned for RESULT-0009. Confirmed by reading
+  that verdict and `git grep`ing the repo for the recording's filename/hash;
+  rewrote acceptance criteria 1-2 to move labels into a sidecar index and
+  added criterion 5, a test that no hash-pinned recording changed.
