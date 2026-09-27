@@ -604,9 +604,9 @@ function assessLedgerCitations(text, {
   }
   for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
     const id = /^[A-Z]+-\d{4}/.exec(record)[0];
-    // A field runs until the next `- **field:**` line or heading, so list-form
-    // continuation lines are included.
-    const fields = [...record.matchAll(/^- \*\*(evidence|reverify):\*\*([\s\S]*?)(?=^- \*\*[a-z_]+:\*\*|^#|(?![\s\S]))/gm)]
+    // A field runs until the next `- **field:**` line or a record-ending H1-H3
+    // heading, so list-form continuation lines and H4-H6 content are included.
+    const fields = [...record.matchAll(/^- \*\*(evidence|reverify):\*\*([\s\S]*?)(?=^- \*\*[a-z_]+:\*\*|^#{1,3} |(?![\s\S]))/gm)]
       .map((m) => m[2]).join('\n');
     // A bare filename may be named relative to any directory the record cites.
     const dirs = [...new Set([...record.matchAll(/`((?:[\w.-]+\/)+)[\w.-]*`/g)].map((m) => m[1].replace(/\/$/, '')))];

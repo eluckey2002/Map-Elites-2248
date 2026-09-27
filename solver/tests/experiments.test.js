@@ -864,6 +864,13 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
       assert.notDeepEqual(assessLedgerHistory(base.replace('frozen text', 'rewritten text'), base), []);
     });
   }
+  test('citation check rejects a missing path below an H4 inside evidence', () => {
+    assert.notDeepEqual(assessLedgerCitations(rec('see below\n#### Details\n- `solver/nope.js`')), []);
+  });
+  test('reverify plan keeps commands below an H4 inside the field', () => {
+    const plan = reverifyPlan('### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Steps:\n#### Run\n`node tools/one.js`\n- **updated:** 2026-09-27\n');
+    assert.deepEqual(plan.map((e) => e.command), ['node tools/one.js']);
+  });
   for (const value of ['runner revision `deadbeef1234`', 'isolated checkout `deadbeef1234`', 'checkout at `deadbeef1234`']) {
     test(`citation check rejects unknown SHA: ${value}`, () => {
       assert.notDeepEqual(assessLedgerCitations(rec(value)), []);
