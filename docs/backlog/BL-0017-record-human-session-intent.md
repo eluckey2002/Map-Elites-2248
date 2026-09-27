@@ -65,6 +65,19 @@ target-stop objective, as the measurement standard already requires.
    the SHA-256 of `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`
    (and any other recording a verification record cites by hash) and fails if
    it no longer matches the filename/verdict.
+6. Both capture paths that write a recording without any intent field today
+   — `tools/play-server.js:116-132` (`POST /api/play-sessions`, which stamps
+   `capturedAt`/`source` but never `intent`) and
+   `solver/authoring-server.js:157-193` (`POST /api/recordings`, which
+   validates and writes the recording verbatim with no intent field at all)
+   — are changed so each either writes the corresponding sidecar intent entry
+   at capture time (same request, before responding success) or rejects an
+   intent-less capture outright; a capture is never accepted silently
+   untagged.
+7. A test per endpoint proves criterion 6: one test posts to
+   `/api/play-sessions` and asserts a sidecar entry now exists (or the
+   request is rejected) before the session is considered captured; one test
+   posts to `/api/recordings` and asserts the same.
 
 ## Current evidence
 
@@ -88,3 +101,9 @@ Decide the field names and allowed values; then tag the six sessions above.
   that verdict and `git grep`ing the repo for the recording's filename/hash;
   rewrote acceptance criteria 1-2 to move labels into a sidecar index and
   added criterion 5, a test that no hash-pinned recording changed.
+- 2026-09-27: Codex review (finding 4117108538) asked whether
+  `tools/play-server.js:116-132` and `solver/authoring-server.js:157-193`
+  store recordings without intent. Confirmed by reading both: neither writes
+  or checks any intent field today. Added criterion 6 requiring both capture
+  paths to write the sidecar intent entry at capture time or reject an
+  intent-less capture, and criterion 7, a test per endpoint.

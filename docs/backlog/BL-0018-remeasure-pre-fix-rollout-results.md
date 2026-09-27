@@ -58,13 +58,18 @@ is needed.
    record rather than editing it"; `experiments/RESULT-0026/protocol.md:29-30`:
    "Any policy... change creates a superseding result rather than editing
    this run"; `:209-215`: "Invoke confirmation exactly once. Do not retry").
-   Each gets a NEW result (its own protocol, commit, and fresh seeds,
-   registered and gated before any post-fix outcome is measured or
-   inspected), with old and new values reported side by side.
-3. Each remaining listed result gets a new superseding re-measurement (same
-   rule: fresh protocol and seeds registered first, never a re-run of the
-   old protocol) or a ledger note explaining why its conclusion does not
-   depend on the rollout.
+   Each gets a NEW result registered under its own fresh protocol, and that
+   protocol runs both the frozen PRE-fix `rolloutValue` (commit `4ded51c`)
+   and the POST-fix `rolloutValue` (`a2bf18d` or later) bot implementations
+   on the SAME fresh, freshly-drawn seed set (paired, not two separate seed
+   samples), so the pre/post comparison is internally controlled; the old
+   record's historical figures are cited as context only, never mixed into
+   the new protocol's own comparison.
+3. Each remaining listed result gets a new superseding re-measurement — same
+   rule: fresh protocol registered first, paired PRE-fix/POST-fix bot runs on
+   identical fresh seeds, historical figures as context only, never a re-run
+   of the old protocol — or a ledger note explaining why its conclusion does
+   not depend on the rollout.
 4. Nothing re-measured here edits a prior record's statement or re-invokes
    its frozen protocol; each re-measurement is a new result registered under
    its own protocol, and the superseded record gets a `CORRECTION-NNNN`
@@ -93,3 +98,9 @@ re-measurement.
   each remaining result are re-measured as NEW superseding results, each
   registered under its own fresh protocol and seeds before any post-fix
   outcome data, with the old records corrected to cite the new ones.
+- 2026-09-27: Codex review (finding 4117108536) noted the criteria did not
+  require the pre/post comparison to be paired on identical seeds. Confirmed
+  by re-reading criteria 2-3. Rewrote them so each superseding protocol runs
+  the frozen PRE-fix (`4ded51c`) and POST-fix (`a2bf18d`+) `rolloutValue`
+  implementations on the SAME fresh seed set, with historical figures cited
+  as context only.

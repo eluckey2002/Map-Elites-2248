@@ -92,29 +92,35 @@ filesystem by hand.
    their next natural update.
 4. The same startup mechanism separately lists worktrees (via `git worktree
    list` from the main clone) whose branch is merged into `origin/main` and
-   whose tree is clean, and: removes each with `git worktree remove` (never
-   `rm -rf`, and never a directory whose `.git` is a directory rather than a
-   file, since that means a real clone, not a worktree); deletes the
-   corresponding merged local branch with `git branch -d`. A worktree that is
-   dirty, has unpushed commits, or whose branch is merged only on a remote
-   other than `origin/main` is reported, not removed. Remote merged branches
-   are reported only — deleting them needs owner action. The sweep always
-   excludes the current session's own active worktree — the one containing
-   the process's cwd, identified via `git rev-parse --show-toplevel` (and any
-   worktree that is an ancestor directory of the cwd) — even when that
-   worktree is merged and clean; it is reported for explicit post-session
-   cleanup instead of removed, since removing the tree a session is running
-   from out from under itself is its own hazard.
+   whose tree is clean. A cwd check alone only protects the session running
+   the sweep — it says nothing about a different agent session concurrently
+   working in some other merged-and-clean worktree, which this mechanism
+   cannot see from its own cwd. Instead, removal is gated on a **lease**: each
+   agent session writes and periodically refreshes an untracked lease file
+   scoped to its own worktree (for example `.git`-adjacent, or under
+   `$GIT_DIR/worktrees/<name>/agent-lease`) containing its pid, host, and last
+   heartbeat time. The sweep removes a clean, merged worktree with
+   `git worktree remove` (never `rm -rf`, and never a directory whose `.git`
+   is a directory rather than a file, since that means a real clone, not a
+   worktree) — and deletes the corresponding merged local branch with
+   `git branch -d` — only when BOTH: the lease is absent, or its heartbeat is
+   older than a stated staleness threshold; AND the leased pid is not alive on
+   this host. A worktree that is dirty, has unpushed commits, has a live
+   lease, or whose branch is merged only on a remote other than `origin/main`
+   is reported, not removed. Remote merged branches are reported only —
+   deleting them needs owner action. **Until the lease mechanism exists and is
+   wired into every agent's session start, the sweep is report-only**: it
+   never removes a worktree or deletes a branch, only lists candidates.
 5. `AGENTS.md`'s read chain also runs the freshness check before
    `LEDGER-INDEX.md`, as a repo-level backstop, but criterion 1 is what makes
    this record's outcome true for checkouts that predate that line.
 6. Tested against real repository state: a checkout one evidence commit
    behind `main` fails the freshness check; an up-to-date checkout passes
    (the baseline); a checkout behind only on non-evidence files passes; a
-   merged-and-clean worktree is swept and removed; a merged-but-dirty or
-   merged-but-unpushed worktree is reported, not removed; a clean,
-   merged worktree that is the session's own active cwd is NOT removed and
-   is reported instead.
+   merged-and-clean worktree with a live lease is NOT removed and is
+   reported; a merged-and-clean worktree with a stale (or absent) lease AND a
+   dead pid IS removed; and, until the lease mechanism exists, the sweep
+   removes nothing and only reports candidates (report-only mode).
 7. The mechanism never pulls, merges, or resets on its own, and never removes
    a worktree it does not own: other agents own those trees, and this
    criterion holds even when criterion 4's sweep runs.
@@ -154,3 +160,13 @@ wiring, the merged-worktree sweep, and their tests in a fresh worktree off
   containing the process's cwd (via `git rev-parse --show-toplevel`) and any
   ancestor-directory worktree, reported rather than removed, plus a test
   case for a clean merged worktree that is the active cwd.
+- 2026-09-27: Codex review (finding 4117108539) noted a cwd exclusion only
+  protects the session running the sweep, not a different concurrent agent
+  session working in some other merged-and-clean worktree. Confirmed by
+  re-reading criterion 4. Replaced the cwd exclusion with a lease mechanism:
+  each session writes and refreshes an untracked lease file (pid, host,
+  heartbeat) in its own worktree; the sweep removes a clean, merged worktree
+  only when its lease is absent/stale AND its pid is dead on this host, and
+  the sweep is report-only until the lease mechanism exists and is wired into
+  every agent's session start. Rewrote the test cases in criterion 6
+  accordingly.
