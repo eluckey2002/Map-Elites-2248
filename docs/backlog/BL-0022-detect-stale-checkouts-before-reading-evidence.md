@@ -107,10 +107,12 @@ filesystem by hand.
    older than a stated staleness threshold; AND the leased pid is not alive on
    this host. A worktree that is dirty, has unpushed commits, has a live
    lease, or whose branch is merged only on a remote other than `origin/main`
-   is reported, not removed. Remote merged branches are reported only —
-   deleting them needs owner action. **Until the lease mechanism exists and is
-   wired into every agent's session start, the sweep is report-only**: it
-   never removes a worktree or deletes a branch, only lists candidates.
+   is reported, not removed. A lease whose host differs from the sweeping host
+   is always report-only, because its process cannot be checked from here.
+   Remote merged branches are reported only — deleting them needs owner action.
+   **Until the lease mechanism exists and is wired into every agent's session
+   start, the sweep is report-only**: it never removes a worktree or deletes a
+   branch, only lists candidates.
 5. `AGENTS.md`'s read chain also runs the freshness check before
    `LEDGER-INDEX.md`, as a repo-level backstop, but criterion 1 is what makes
    this record's outcome true for checkouts that predate that line.
@@ -119,8 +121,9 @@ filesystem by hand.
    (the baseline); a checkout behind only on non-evidence files passes; a
    merged-and-clean worktree with a live lease is NOT removed and is
    reported; a merged-and-clean worktree with a stale (or absent) lease AND a
-   dead pid IS removed; and, until the lease mechanism exists, the sweep
-   removes nothing and only reports candidates (report-only mode).
+   dead pid IS removed; a stale lease from another host → reported, not
+   removed; and, until the lease mechanism exists, the sweep removes nothing
+   and only reports candidates (report-only mode).
 7. The mechanism never pulls, merges, or resets on its own, and never removes
    a worktree it does not own: other agents own those trees, and this
    criterion holds even when criterion 4's sweep runs.
@@ -170,3 +173,4 @@ wiring, the merged-worktree sweep, and their tests in a fresh worktree off
   the sweep is report-only until the lease mechanism exists and is wired into
   every agent's session start. Rewrote the test cases in criterion 6
   accordingly.
+- 2026-09-27: Addressed Codex review on b774c96 (sidecar location; foreign-host leases).

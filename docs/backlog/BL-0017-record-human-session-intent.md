@@ -42,13 +42,17 @@ target-stop objective, as the measurement standard already requires.
 
 ## Acceptance criteria
 
-1. Intent/for/exclusion labels live in a **sidecar index** (for example
-   `play-sessions/intent-index.json` or `recordings/INTENT.json`), keyed by
-   recording id (at minimum `intent`: `race` | `explore`, and `for` naming
-   the backlog item, experiment, or study the session served). Recording
-   files themselves are never edited: they are content-addressed (filename =
-   SHA-256 of contents, per `authoring-server.js`'s `recordingIdentity`), and
-   at least one — `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`
+1. Intent/for/exclusion labels live in a **sidecar index** outside both
+   `play-sessions/` and `recordings/` (for example `data/session-intent.json`),
+   keyed by recording id (at minimum `intent`: `race` | `explore`, and `for`
+   naming the backlog item, experiment, or study the session served).
+   `solver/human-benchmark.js` reads every JSON file under `play-sessions/`,
+   and `solver/recording-replay.js` and its zero-orphan check read every JSON
+   file under `recordings/`, so an index inside either folder would be treated
+   as a recording. Recording files themselves are never edited: they are
+   content-addressed (filename = SHA-256 of contents, per
+   `authoring-server.js`'s `recordingIdentity`), and at least one —
+   `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`
    — has its exact hash independently re-derived and pinned by
    `.orch/audits/recording-replay-verification-2026-08-17/verdict.md` for
    RESULT-0009; tagging in place would change that hash and break the
@@ -107,3 +111,4 @@ Decide the field names and allowed values; then tag the six sessions above.
   or checks any intent field today. Added criterion 6 requiring both capture
   paths to write the sidecar intent entry at capture time or reject an
   intent-less capture, and criterion 7, a test per endpoint.
+- 2026-09-27: Addressed Codex review on b774c96 (sidecar location; foreign-host leases).
