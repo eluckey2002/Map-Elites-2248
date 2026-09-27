@@ -281,25 +281,34 @@ function cardGrid(tasks, noteSource) {
   return grid;
 }
 
-// The timestamp that belongs to the task's current state. Earlier-cycle
-// fields persist across repair loops (reviewed_at survives a resubmission,
-// last_reported_at predates a repair request), so pick by state.
+// What the task's current state last did, as [verb, timestamp, sequence].
+// Fields from earlier cycles persist across repair loops and timestamps are
+// whole seconds, so read the newest matching event (events arrive newest
+// first) and fall back to the task fields only when no event is present.
+const ACTIVITY = {
+  accepted: [["accepted", "reviewed"]],
+  repair_requested: [["repair_requested", "changes requested"]],
+  submitted: [["submitted", "sent for review"]],
+  claimed: [["claimed", "started"], ["progress_reported", "updated"]],
+};
+
 function currentActivity(task) {
-  if (task.state === "accepted") return ["reviewed", task.reviewed_at];
-  if (task.state === "repair_requested") return ["changes requested", task.reviewed_at];
-  if (task.state === "submitted") return ["sent for review", task.submitted_at];
-  if (task.state === "claimed") {
-    // Timestamps are whole seconds, so settle claim-vs-progress by event
-    // sequence: events arrive newest first.
-    const latest = eventsFor(task.id).find((event) => event.kind === "claimed" || event.kind === "progress_reported");
-    if (latest) return latest.kind === "progress_reported" ? ["updated", latest.at] : ["started", latest.at];
-    return task.last_reported_at > (task.claimed_at || "") ? ["updated", task.last_reported_at] : ["started", task.claimed_at];
-  }
-  return ["waiting", null];
+  const kinds = ACTIVITY[task.state];
+  if (!kinds) return ["waiting", null, -1];
+  const verbs = Object.fromEntries(kinds);
+  const latest = eventsFor(task.id).find((event) => Object.hasOwn(verbs, event.kind));
+  if (latest) return [verbs[latest.kind], latest.at, Number(latest.sequence) || 0];
+  const fallback = task.state === "claimed"
+    ? (task.last_reported_at > (task.claimed_at || "") ? ["updated", task.last_reported_at] : ["started", task.claimed_at])
+    : [kinds[0][1], task.state === "submitted" ? task.submitted_at : task.reviewed_at];
+  return [...fallback, -1];
 }
 
 function byRecentUpdate(a, b) {
-  return (currentActivity(b)[1] || "").localeCompare(currentActivity(a)[1] || "");
+  const [, stampA, sequenceA] = currentActivity(a);
+  const [, stampB, sequenceB] = currentActivity(b);
+  if (sequenceA >= 0 && sequenceB >= 0) return sequenceB - sequenceA;
+  return (stampB || "").localeCompare(stampA || "");
 }
 
 // A collapsible group of cards, open the first time it appears.
