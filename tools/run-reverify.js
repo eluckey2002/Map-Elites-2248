@@ -35,6 +35,8 @@ function reverifyPlan(text) {
     // A placeholder or pipe means a manual setup step; later commands depend on it.
     const manual = commands.some((c) => /<[a-z][\w -]*>| \| /.test(c.command));
     for (const c of commands) plan.push({ id, ...c, manual });
+    // A prose-only reverify still needs a human; list it rather than drop it.
+    if (!commands.length) plan.push({ id, cwd: '.', command: `(no runnable command) ${reverify.trim().replace(/\s+/g, ' ').slice(0, 80)}`, manual: true });
   }
   return plan;
 }

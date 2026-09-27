@@ -622,7 +622,8 @@ function assessLedgerCitations(text, {
         }
       }
     }
-    for (const m of fields.matchAll(/\bcommits?\s*[:=]?\s*`?([0-9a-fA-F]{7,40})\b/gi)) {
+    // `revision` and `checkout` label producer identities the same way `commit` does.
+    for (const m of fields.matchAll(/\b(?:commits?|revision|checkout)(?:\s+at)?\s*[:=]?\s*`?([0-9a-fA-F]{7,40})\b/gi)) {
       if (!isCommit(m[1].toLowerCase()) && !KNOWN_CITATION_GAPS.has(`${id} ${m[1]}`)) problems.push(`${id}: cited commit ${m[1]} is not in this branch's history`);
     }
   }

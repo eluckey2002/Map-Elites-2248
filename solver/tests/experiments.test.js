@@ -828,3 +828,26 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     assert.equal(out.P2.outcome, 'INCONCLUSIVE');
   });
 }
+
+// Third Codex review of PR #46: prose-only reverify is reported, and
+// revision/checkout labels are resolved like commit labels.
+{
+  const fs = require('node:fs');
+  const { reverifyPlan } = require('../../tools/run-reverify.js');
+  const { assessLedgerCitations } = require('../../tools/verify-experiments.js');
+  test('a prose-only reverify is listed as manual, not dropped', () => {
+    const plan = reverifyPlan('### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Inspect the code by hand.\n- **updated:** 2026-09-27\n');
+    assert.equal(plan.length, 1);
+    assert.equal(plan[0].manual, true);
+  });
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const rec = (value) => `${real}\n### RESULT-9001 — planted\n- **evidence:** ${value}\n`;
+  test('a real revision and checkout label pass', () => {
+    assert.deepEqual(assessLedgerCitations(rec('runner revision `be84336`, isolated checkout at `b82a9b6`')), []);
+  });
+  for (const value of ['runner revision `deadbeef1234`', 'isolated checkout `deadbeef1234`', 'checkout at `deadbeef1234`']) {
+    test(`citation check rejects unknown SHA: ${value}`, () => {
+      assert.notDeepEqual(assessLedgerCitations(rec(value)), []);
+    });
+  }
+}
