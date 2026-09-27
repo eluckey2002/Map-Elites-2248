@@ -220,6 +220,16 @@ function eventItem(event, withTask) {
   return item;
 }
 
+// Progress from the current claim only. After a repair re-claim, earlier-cycle
+// progress is stale, so show the reviewer's repair note until new progress.
+function currentProgressNote(task, trail) {
+  for (const event of trail) {
+    if (event.kind === "progress_reported") return event.detail;
+    if (event.kind === "claimed") break;
+  }
+  return task.review_note || "";
+}
+
 // One task as a compact card: the essentials stay visible, and the full record
 // and its update trail open on demand.
 function taskCard(task, noteSource) {
@@ -241,9 +251,9 @@ function taskCard(task, noteSource) {
   card.append(head, question, meta);
 
   const trail = eventsFor(task.id);
-  const noteText = noteSource === "review" || (task.state === "repair_requested" && task.review_note)
+  const noteText = noteSource === "review" || task.state === "repair_requested"
     ? task.review_note
-    : (trail.find((event) => event.kind === "progress_reported") || {}).detail;
+    : currentProgressNote(task, trail);
   if (noteText) {
     const note = text(element("p", "card-note"), noteText);
     note.title = noteText;
