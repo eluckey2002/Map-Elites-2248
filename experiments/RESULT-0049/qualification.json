@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "result": "RESULT-0049",
+  "qualification": "PASS",
+  "oracle": {
+    "path": "registered-protocol.md",
+    "commit": "24c38d8b5fe5b1ae90aaa0cdb3872453bc728840",
+    "sha256": "4dc2419b7e586fdc490719e44317257a393cc98311ffb2eb6965a5f5594a3681"
+  },
+  "profiles": {
+    "ab-comparison": "a6f1c86ab5ce9c942a12888b0b8f9885d4ca53e5530683d382a7666d1a0fade9",
+    "simulation-policy": "63dbce14106578b3973cf6308f1820de8395099558c9b4ae91438aa3b0461f8a",
+    "mutation-qualification": "dc67e21d0c4938b85e853e4e9c4868408f53a9a85e88006e029a500d8f08632f"
+  },
+  "closeout_contract_sha256": "c2fc316ae65bb1b120f2c53f17de167c99568aecd669b0796a71c5cc9e17642f",
+  "closure_verifier_sha256": "7ed2647d28bfe3df9bed227216f28959c9a7e767dd112c2952f7c2d3c3619830",
+  "harness_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+  "trusted_input_identity_source": "version_freeze and final subject identity committed in protocol.md at registration commit 24c38d8b5fe5b1ae90aaa0cdb3872453bc728840",
+  "controls": [
+    {
+      "id": "C1-A-A",
+      "status": "PASS",
+      "command": "node --test experiments/RESULT-0049/subject.test.js experiments/RESULT-0049/run.test.js solver/tests/persistBeforeVerdict.test.js solver/tests/failedRunLedger.test.js",
+      "exit_code": 0,
+      "observed": "18 tests passed. chooseBaseMove used as both arms was outcome-identical and classified INCONCLUSIVE; the worker collector completed an ordered disposable panel."
+    },
+    {
+      "id": "C2-positive-exposure",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "The real chooseBaseMove and production chooseMove exports produced different trace identities on excluded Level 51 seed 1 while sharing the target-stop seam."
+    },
+    {
+      "id": "C3-C4-pairing-objective",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "A missing pair failed the real corpus validator; the real worker output preserved exact level/seed pairing and equal move budgets."
+    },
+    {
+      "id": "C5-known-kill",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "The planted one-move champion regression was present, incremented baseFaster, and returned DOES_NOT_SUPPORT_CURRENT_CHAMPION for the intended reason."
+    },
+    {
+      "id": "C6-source-substitution-persistence",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "A coherently re-signed bot-source substitution failed against the external source identity, and a thrown verdict left the complete raw pair artifact readable."
+    },
+    {
+      "id": "pre-outcome-registration-admission",
+      "status": "PASS",
+      "command": "requireProtocol for RESULT-0049, then experiment and failed-run ledger gates",
+      "exit_code": 0,
+      "observed": "The registration resolved to 24c38d8b5fe5b1ae90aaa0cdb3872453bc728840; all 14 frozen hashes matched committed bytes; the experiment gate and failed-run ledger gate passed; corpus.json, report.md, and closure.json were absent."
+    },
+    {
+      "id": "C6-exact-closeout-route",
+      "status": "PASS",
+      "command": "python3 verify_closure.py closeout-contract.json closure.json --run-recomputation --require-closed --expected-contract-sha256 c2fc316ae65bb1b120f2c53f17de167c99568aecd669b0796a71c5cc9e17642f",
+      "exit_code": 0,
+      "observed": "In detached disposable worktree /private/tmp/result0049-qualification.1SwYzp at registration commit 24c38d8, the exact contract resolved cwd '.', executed node recompute.js corpus.json, byte-matched primary-recomputation, rechecked all artifacts, and returned verdict PASS."
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "ABORTED",
+      "scope": "disposable synthetic corpus construction only",
+      "observed": "The first disposable corpus carried a guessed 40-character registration identity. It was deleted before any verifier execution; no reportable seed was opened and no qualification result was claimed."
+    },
+    {
+      "attempt": 2,
+      "status": "PASS",
+      "scope": "complete frozen qualification and exact synthetic closeout",
+      "observed": "The synthetic corpus carried the exact registration identity and all declared controls plus executable closeout passed."
+    }
+  ],
+  "reportable_seed_state": {
+    "range": "45000000-45000299",
+    "opened_before_qualification": false,
+    "corpus_present_before_qualification": false
+  },
+  "uncertainties": [
+    "Qualification establishes harness behavior and evidence custody only; it contains no reportable domain outcome.",
+    "The paired panel can support claims only about the 58 current shipped levels under the seeded game process, not future levels or human play.",
+    "The decision rule is intentionally stricter than the effect estimate: one observed base-only or slower champion win defeats support even if the mean favors the champion."
+  ]
+}
