@@ -32,6 +32,9 @@ jobs:
         run: node tools/verify-ledger-authorship.js
       - name: LEDGER INDEX CURRENT
         run: node tools/ledger-index.js --check
+      - name: NO MERGE-CONFLICT MARKERS
+        # On 2026-09-26 a PR reached "ready" with <<<<<<< markers committed in AGENTS.md.
+        run: "! git grep -nE '^(<<<<<<<|>>>>>>>)( |$)'"
 
   test-suite:
     name: full test suite (informational until the four known failures are retired)
