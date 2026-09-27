@@ -580,6 +580,8 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     ['h4 heading', good('RESULT-9001').replace('### ', '#### ')],
     ['lowercase heading', good('RESULT-9001').replace('RESULT', 'result')],
     ['heading without space', good('RESULT-9001').replace('### ', '###')],
+    ['heading with a colon instead of a dash', good('RESULT-9001').replace('### RESULT-9001 — planted', '### RESULT-9001: planted')],
+    ['heading with no title', good('RESULT-9001').replace(/^(### RESULT-9001).*$/m, '$1')],
     ['short ID', good('RESULT-91')],
     ['empty evidence', good('RESULT-9001', { evidence: '' })],
     ['status written twice', `${good()}\n- **status:** confirmed`],
