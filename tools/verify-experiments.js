@@ -627,8 +627,15 @@ function assessLedgerCitations(text, {
       }
     }
     // `revision` and `checkout` label producer identities the same way `commit` does.
-    for (const m of fields.matchAll(/\b(?:commits?|revision|checkout)(?:\s+at)?\s*[:=]?\s*`?([0-9a-fA-F]{7,40})\b/gi)) {
-      if (!isCommit(m[1].toLowerCase()) && !KNOWN_CITATION_GAPS.has(`${id} ${m[1]}`)) problems.push(`${id}: cited commit ${m[1]} is not in this branch's history`);
+    // A plural label covers a whole list: `commits `a` (X), `b` (Y), and `c``.
+    for (const m of fields.matchAll(/\b(?:commits?|revisions?|checkouts?)(?:\s+at)?\s*[:=]?\s*`?([0-9a-fA-F]{7,40})\b`?/gi)) {
+      const shas = [m[1]];
+      const next = /^\s*(?:\([^)]*\))?\s*(?:,\s*(?:and\s+)?|and\s+)`?([0-9a-fA-F]{7,40})\b`?/i;
+      let rest = fields.slice(m.index + m[0].length);
+      for (let n = next.exec(rest); n; n = next.exec(rest)) { shas.push(n[1]); rest = rest.slice(n[0].length); }
+      for (const sha of shas) {
+        if (!isCommit(sha.toLowerCase()) && !KNOWN_CITATION_GAPS.has(`${id} ${sha}`)) problems.push(`${id}: cited commit ${sha} is not in this branch's history`);
+      }
     }
   }
   return problems;
@@ -647,7 +654,9 @@ function ledgerRecords(text) {
     let parts = [];
     const close = () => { if (name !== null) fields[name] ??= parts.join('\n').trim(); };
     for (const line of lines.slice(1)) {
-      if (/^#/.test(line)) break;
+      // Only a heading that ends a record (as the structure check reads it)
+      // stops parsing; an H4-H6 inside a field stays part of the frozen value.
+      if (/^#{1,3} /.test(line)) break;
       const m = /^- \*\*([^*]+?):\*\*[ \t]*(.*)$/.exec(line);
       if (m) { close(); name = m[1]; parts = [m[2].trim()]; continue; }
       if (name !== null) parts.push(line.trimEnd());

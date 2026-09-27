@@ -849,6 +849,21 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   test('a real revision and checkout label pass', () => {
     assert.deepEqual(assessLedgerCitations(rec('runner revision `be84336`, isolated checkout at `b82a9b6`')), []);
   });
+  test('every SHA in a real plural commit list passes', () => {
+    assert.deepEqual(assessLedgerCitations(rec('admission commits `be84336` (RESULT-0017), `1e5311e` (RESULT-0021), and `b82a9b6`')), []);
+  });
+  for (const value of ['commits `be84336`, `deadbeef1234`', 'commits `be84336` (X), `1e5311e` (Y), and `deadbeef1234` (Z)']) {
+    test(`citation check rejects a bad later SHA in: ${value}`, () => {
+      assert.notDeepEqual(assessLedgerCitations(rec(value)), []);
+    });
+  }
+  {
+    const { assessLedgerHistory } = require('../../tools/verify-experiments.js');
+    const base = '### RESULT-9300 — t\n- **statement:** first\n#### detail\nfrozen text below a subheading\n- **status:** accepted\n';
+    test('history check rejects a rewrite below an H4 inside a field', () => {
+      assert.notDeepEqual(assessLedgerHistory(base.replace('frozen text', 'rewritten text'), base), []);
+    });
+  }
   for (const value of ['runner revision `deadbeef1234`', 'isolated checkout `deadbeef1234`', 'checkout at `deadbeef1234`']) {
     test(`citation check rejects unknown SHA: ${value}`, () => {
       assert.notDeepEqual(assessLedgerCitations(rec(value)), []);
