@@ -228,6 +228,12 @@ Preserve the history of what the project believed and why. To correct an entry:
 
 Never delete a receipt, erase a challenged claim, or edit an old statement so that the history appears to have always been correct. If the replacement lacks support, record the gap as an open question and leave the earlier entry's standing unchanged.
 
+## Authorship and the index
+
+Every record created after 2026-09-25 names `written_by`. A record reaches `accepted` or `narrowed` only when `checked_by` names someone other than the writer: an independent agent, a script run, or the owner. The gate compares this file with `main`: a record may never be removed; a new or changed record names `written_by`; and it also names an independent `checked_by` when it is `accepted` or `narrowed`, or was on `main`, so retiring accepted evidence needs a check too. Records a change does not touch need nothing, so records written before 2026-09-25 stay valid without these fields. `tools/verify-ledger-authorship.js` enforces this.
+
+`LEDGER-INDEX.md` lists every record in one line and is generated from this file by `node tools/ledger-index.js`. Regenerate and commit it with every ledger change; `node tools/ledger-index.js --check` fails when it is stale.
+
 ## Entry template
 
 ```yaml
@@ -242,6 +248,8 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
   as_of: YYYY-MM-DD | not_time_sensitive
   reverify: <command and expected observation, or not_applicable>
   updated: YYYY-MM-DD
+  written_by: <agent, session, or person who wrote this record>
+  checked_by: <a different agent, script run, or the owner; required for accepted or narrowed>
   supersedes: []
   superseded_by: []
   notes: <optional implication, rationale, or explicit evidence gap>
@@ -931,6 +939,7 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **as_of:** 2026-09-22
 - **reverify:** No closure exists yet under this identity; `experiments/RESULT-0044/protocol.md` is the current state.
 - **updated:** 2026-09-22
+- **written_by:** agent session(s) on branch `experiment/harvest-policy-corpus`, commits authored as eluckey2002, 2026-09-16..22
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** Do not attempt to complete this record by fabricating owner play. The two-board design and its real historical outcome are preserved in the protocol for whichever closure path the owner chooses.
@@ -946,6 +955,8 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **as_of:** 2026-09-16
 - **reverify:** `node solver/oracle/cli.js --verify docs/oracle/runs/attempt-05-full-corpus.json` from the producing source version; expect exit 0 and `valid:true, pass:true, puzzles:20, wins:20`. New search runs use a new output path and may differ under wall-clock load.
 - **updated:** 2026-09-16
+- **written_by:** agent session(s) on branch `experiment/harvest-policy-corpus`, commits authored as eluckey2002, 2026-09-16..22
+- **checked_by:** script run, 2026-09-26: `node solver/oracle/cli.js --verify docs/oracle/runs/attempt-05-full-corpus.json` at producing commit `5205535` printed `{"valid":true,"pass":true,"puzzles":20,"wins":20}`, exit 0 (run by Claude session 01YCJfqhCdwXmesG5LarxQsX, not the writer)
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The search worker receives rules, seed and budget, not human chains or performance labels. Historical boards were inspected during development; this is not a blind evaluation. Timing and work counts are run observations, not replay-proven wall time. Failed and partial attempts remain in `docs/oracle/runs/`. The goal, qualification and readable comparison are in `docs/oracle/CONTRACT.md`, `QUALIFICATION.md`, and `RESULT.md`. No gameplay, target, live-policy or frozen-calibration promotion follows. This record was originally registered 2026-09-16 as `RESULT-0039` on `experiment/harvest-policy-corpus`. That number collided with an unrelated, independently-registered `RESULT-0039` on `main` — a greed-ratio qualification attempt that stopped before producing an outcome and retains its own frozen experiment directory. This record carries no frozen experiment directory and no hash pinned to its identifier, so it is the side renumbered; `RESULT-0045` was unused on both branches. No scope, statement, evidence or proof_class changed.
@@ -961,6 +972,8 @@ Never delete a receipt, erase a challenged claim, or edit an old statement so th
 - **as_of:** 2026-09-22
 - **reverify:** Run `node experiments/RESULT-0047/verify.js experiments/RESULT-0047/corpus.json` to reproduce the retained rows and checks. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 c5aa631465631a14b3bd74a714b926e06d98b23a62683962c98d70c52c4bf24a`; expect verifier `PASS`, closure `CLOSED`, recomputation `PASS`, exit 0.
 - **updated:** 2026-09-22
+- **written_by:** agent session(s) on branch `experiment/harvest-policy-corpus`, commits authored as eluckey2002, 2026-09-16..22
+- **checked_by:** script run, 2026-09-26: `node experiments/RESULT-0047/verify.js experiments/RESULT-0047/corpus.json` reproduced primary 15/18 vs 18/18 wins, 338 vs 253 loss-adjusted moves, 7 vs 3 human misses, 2 paired regressions, P1/P2 SUPPORTED, P3 FALSIFIED, outcome FALSIFIED (run by Claude session 01YCJfqhCdwXmesG5LarxQsX, not the writer)
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The evolved policy is generic code rather than board lookup, and this panel shows broad fixed-corpus transfer, but the two regressions disprove strict dominance on the measured rows. This is directly relevant to `BL-0013` (missing fitness-function term for policy search): the evolved ranker is a candidate carrying a "hold value for a bigger chain" term, but does not yet clear a strict-dominance bar on held-out puzzles. A reportable successor requires a new result identity and fresh evaluation boards; do not rerun this matrix under RESULT-0047.

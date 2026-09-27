@@ -28,6 +28,10 @@ jobs:
           node-version: 24
       - name: EXPERIMENT GATE
         run: node tools/verify-experiments.js
+      - name: LEDGER AUTHORSHIP GATE
+        run: node tools/verify-ledger-authorship.js
+      - name: LEDGER INDEX CURRENT
+        run: node tools/ledger-index.js --check
 
   test-suite:
     name: full test suite (informational until the four known failures are retired)
