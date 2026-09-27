@@ -135,6 +135,11 @@ test('the registration stamp rides outside the hashed body, so old artifacts sti
 test('an exploratory artifact cannot back a generalizing claim', () => {
   const { assessArtifactStamps, citedArtifacts } = require('../../tools/verify-experiments.js');
   assert.deepEqual(citedArtifacts('cited `a/b.json` and `c.json` but not `d.md`'), ['a/b.json', 'c.json']);
+  assert.deepEqual(
+    citedArtifacts('retained [corpus](experiments/RESULT-0049/corpus.json) and `experiments/RESULT-0049/corpus.json`'),
+    ['experiments/RESULT-0049/corpus.json'],
+    'Markdown-linked JSON evidence must be visible to the gate without duplicate reads',
+  );
   // grandfathered results predate stamping and are skipped
   assert.deepEqual(
     assessArtifactStamps({ id: 'RESULT-0005', body: 'sees `.orch/policy-search-01.json`' }, new Set(['RESULT-0005'])),
@@ -186,6 +191,33 @@ test('LIVE: tampering with one cell of the real holdout breaks its identity', ()
   const problems = assessArtifactIdentity(result, opened);
   assert.equal(problems.length, 1, 'one tampered cell must produce exactly one failure');
   assert.match(problems[0], /does not hash to its own artifactIdentity/);
+});
+
+test('LIVE: RESULT-0049 Markdown-linked evidence cannot disappear or change silently', () => {
+  const result = liveResult('RESULT-0049');
+  const opened = openCitedArtifacts(result);
+  assert.deepEqual(assessCitationsResolve(result, opened), [], 'the real citations must resolve before mutation');
+  assert.deepEqual(assessArtifactIdentity(result, opened), [], 'the real artifacts must verify before mutation');
+
+  const corpus = opened.find((entry) => entry.rel === 'experiments/RESULT-0049/corpus.json');
+  assert.ok(corpus && corpus.exists && corpus.artifact, 'the Markdown-linked corpus must be opened by the live gate');
+  assert.equal(corpus.artifact.cells.length, 17400, 'the check must inspect all 17,400 paired cells');
+
+  const missing = opened.map((entry) => (
+    entry.rel === corpus.rel ? { ...entry, exists: false, artifact: null } : entry
+  ));
+  assert.match(
+    assessCitationsResolve(result, missing).find((problem) => problem.includes(corpus.rel)),
+    /does not exist/,
+    'removing the primary corpus must make citation validation fail',
+  );
+
+  corpus.artifact.cells[0].champion.movesToTarget += 1;
+  assert.match(
+    assessArtifactIdentity(result, opened).find((problem) => problem.includes(corpus.rel)),
+    /does not hash to its own artifactIdentity/,
+    'changing one real paired cell must make identity validation fail',
+  );
 });
 
 test('LIVE: a citation that resolves to nothing fails; a filename in prose does not', () => {

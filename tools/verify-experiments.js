@@ -68,10 +68,26 @@ function declaredChecks(text) {
   return [...text.matchAll(/^### ([CP]\d+)(?:['′])?\s*[—-]/gm)].map((m) => m[1]);
 }
 
-// Paths a ledger record cites as evidence. Only artifacts we can open are
-// checked; prose citations are the ordering check's job, not this one.
+// Paths a ledger record cites as evidence. Code-span citations are reportable
+// run artifacts and therefore require registration stamps. Markdown links can
+// also name supporting receipts (qualification and closure files), so they
+// participate in existence and identity checks without acquiring that
+// requirement merely because the ledger rendered them as links.
+function artifactCitations(body) {
+  const citations = new Map();
+  for (const match of body.matchAll(/`([A-Za-z0-9._/\-]+\.json)`/g)) {
+    citations.set(match[1], { rel: match[1], requiresRegistration: true });
+  }
+  for (const match of body.matchAll(/\[[^\]]*\]\(([A-Za-z0-9._/\-]+\.json)\)/g)) {
+    if (!citations.has(match[1])) {
+      citations.set(match[1], { rel: match[1], requiresRegistration: false });
+    }
+  }
+  return [...citations.values()];
+}
+
 function citedArtifacts(body) {
-  return [...body.matchAll(/`([A-Za-z0-9._/\-]+\.json)`/g)].map((m) => m[1]);
+  return artifactCitations(body).map(({ rel }) => rel);
 }
 
 // An --exploratory run is allowed to exist; it is not allowed to be the
@@ -80,14 +96,16 @@ function citedArtifacts(body) {
 function assessArtifactStamps(result, exempt) {
   const problems = [];
   if (exempt.has(result.id)) return problems;
-  for (const rel of citedArtifacts(result.body)) {
+  for (const { rel, requiresRegistration } of artifactCitations(result.body)) {
     const abs = path.join(ROOT, rel);
     if (!fs.existsSync(abs)) continue;
     let artifact;
     try { artifact = JSON.parse(fs.readFileSync(abs, 'utf8')); } catch { continue; }
     const stamp = artifact.registration;
     if (!stamp) {
-      problems.push(`${result.id}: ${rel} carries no registration stamp; it cannot back a ${REQUIRES_PROTOCOL} claim`);
+      if (requiresRegistration) {
+        problems.push(`${result.id}: ${rel} carries no registration stamp; it cannot back a ${REQUIRES_PROTOCOL} claim`);
+      }
     } else if (stamp.exploratory) {
       problems.push(`${result.id}: ${rel} was produced by an --exploratory run and cannot back a ${REQUIRES_PROTOCOL} claim. Register a protocol and re-run.`);
     } else if (stamp.protocol && stamp.protocol !== result.id) {
@@ -275,7 +293,7 @@ function freezeProblem(freeze) {
 // One read per cited artifact, shared by every artifact-level assertion below,
 // because the holdouts are 6.5 MB each.
 function openCitedArtifacts(result) {
-  return citedArtifacts(result.body).map((rel) => {
+  return artifactCitations(result.body).map(({ rel, requiresRegistration }) => {
     const abs = path.join(ROOT, rel);
     const exists = fs.existsSync(abs);
     let artifact = null;
@@ -286,7 +304,7 @@ function openCitedArtifacts(result) {
     // A citation with no slash is a filename named in prose, not a path into
     // the repo. Four such exist in the ledger today ("-52.receipt.json"), and
     // reading them as paths would make this gate red on English.
-    return { rel, abs, looksLikePath: rel.includes('/'), exists, artifact, parseError };
+    return { rel, abs, looksLikePath: rel.includes('/'), exists, artifact, parseError, requiresRegistration };
   });
 }
 
@@ -313,8 +331,13 @@ function assessCitationsResolve(result, opened) {
 // one, so any cell could be edited and every gate stayed green.
 function assessArtifactIdentity(result, opened) {
   const problems = [];
-  for (const { rel, artifact } of opened) {
+  for (const { rel, artifact, requiresRegistration } of opened) {
     if (!artifact || typeof artifact.artifactIdentity !== 'string') continue;
+    // A Markdown-linked recomputation receipt may repeat the source corpus's
+    // identity without claiming that the receipt hashes to that value. A
+    // registered artifact, or one explicitly cited as a run artifact with a
+    // code-span path, does make the gate's historical self-identity claim.
+    if (!requiresRegistration && !artifact.registration) continue;
     const { artifactIdentity, registration, ...body } = artifact;
     const actual = crypto.createHash('sha256').update(canonicalJson(body)).digest('hex');
     if (actual !== artifactIdentity) {
