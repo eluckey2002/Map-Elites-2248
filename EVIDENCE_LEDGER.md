@@ -8,25 +8,23 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
-As of 2026-09-17, `RESULT-0041` preserves a complete deterministic paired
-comparison of the evolved harvesting ranker against its pre-evolution baseline
-on the captured corpus, but closed `UNVERIFIED` because the preregistered
-recomputation command resolves from the wrong working directory and one source
-freeze was recorded with 17 characters instead of 16. On the 18
-non-tuning puzzles, the evolved arm won 18/18 versus 15/18, reduced
-loss-adjusted moves from 338 to 253, and reduced human misses from 7 to 3; it
-was nevertheless slower on two baseline-winning puzzles. Those rows and replay
-checks are retained direct observations. The registered primary outcome is
-`UNKNOWN`, and the broken frozen command cannot be repaired after outcomes.
+As of 2026-09-22, `RESULT-0047` (corrected identity for this branch's former
+`RESULT-0041`, which collided with `main`) closed `CLOSED` with primary outcome
+`FALSIFIED`. The deterministic paired comparison of the evolved harvesting
+ranker against its pre-evolution baseline was re-executed under the new
+identity with bit-identical rows. On the 18 non-tuning puzzles, the evolved arm
+won 18/18 versus 15/18, reduced loss-adjusted moves from 338 to 253, and
+reduced human misses from 7 to 3, but it was slower on two baseline-winning
+puzzles, which the registered stopping rule makes sufficient to falsify strict
+dominance.
 
-As of 2026-09-16, `RESULT-0040` preserves two fresh-board observations but
-closed `UNVERIFIED` with no entitled primary outcome. On shipped Level 56 /
-seed 41,000,000, the owner won in 10 moves and the retained oracle witness in
-11; on shipped Level 58 / seed 41,000,001, both won in 14. Every witness
-replays. The run report nevertheless fails the repository's source-closure and
-self-identity gate, so its row reduction to `FALSIFIED` is partial evidence,
-not an admitted fresh-panel conclusion. A successor needs a fully frozen
-adapter and fresh cases.
+As of 2026-09-22, `RESULT-0044` (corrected identity for this branch's former
+`RESULT-0040`) is `blocked` pending owner play. The original 2026-09-16 event
+is retained as history: on shipped Level 56 / seed 41,000,000, the owner won in
+10 moves and the oracle witness in 11; on shipped Level 58 / seed 41,000,001,
+both won in 14. That run's closure was defective, so no panel conclusion is
+admitted; `experiments/RESULT-0044/protocol.md` sets out the owner's two
+closure paths.
 
 As of 2026-09-16, `RESULT-0045` records verified oracle witnesses for all 20
 exact puzzles grouped from the 25 captured sessions. On the 19 puzzles with a
