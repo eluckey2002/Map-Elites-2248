@@ -81,6 +81,11 @@ let selectedBefore = "";
 let selectedAfter = "";
 let lastRefreshAt = null;
 let refreshError = "";
+// Progressive-disclosure state survives the 2-second refresh.
+const openDetails = new Set();
+let showAllEvents = false;
+let lastRenderKey = "";
+const EVENTS_SHOWN = 8;
 
 function element(tagName, className) {
   const node = document.createElement(tagName);
@@ -146,71 +151,164 @@ function reportingValue(task) {
   return wrap;
 }
 
-function taskTable(tasks, emptyMessage) {
-  if (!tasks.length) return emptyState(emptyMessage);
-  const table = element("table", "task-table");
-  const caption = element("caption", "sr-only");
-  text(caption, "Task records");
-  const head = element("thead");
-  const headRow = element("tr");
-  ["Task", "State", "Assignee", "Last update", "Review status"].forEach((heading) => {
-    const cell = element("th");
-    cell.scope = "col";
-    text(cell, heading);
-    headRow.append(cell);
-  });
-  head.append(headRow);
-  const body = element("tbody");
-  tasks.forEach((task) => {
-    const row = element("tr");
-    const taskCell = element("th", "task-name");
-    taskCell.scope = "row";
-    const id = element("span", "task-id");
-    const question = element("span", "task-question");
-    text(id, task.id);
-    text(question, task.diagnostic_question);
-    taskCell.append(id, question);
-    const stateCell = element("td");
-    stateCell.dataset.label = "State";
-    stateCell.append(statusBadge(task.state));
-    const assigneeCell = element("td");
-    assigneeCell.dataset.label = "Assignee";
-    text(assigneeCell, task.assignee || "Unassigned");
-    const reportCell = element("td");
-    reportCell.dataset.label = "Last reported";
-    reportCell.append(reportingValue(task));
-    const reviewCell = element("td");
-    reviewCell.dataset.label = "Review status";
-    text(reviewCell, task.review_note || (task.state === "submitted" ? "Waiting for review" : "—"));
-    row.append(taskCell, stateCell, assigneeCell, reportCell, reviewCell);
-    body.append(row);
-  });
-  table.append(caption, head, body);
-  return table;
+function relativeTime(value) {
+  if (!value) return "never";
+  const then = new Date(value).getTime();
+  if (Number.isNaN(then)) return String(value);
+  const reference = snapshot.now ? new Date(snapshot.now).getTime() : Date.now();
+  const seconds = Math.max(0, Math.round((reference - then) / 1000));
+  if (seconds < 60) return "just now";
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 48) return `${hours} h ago`;
+  return `${Math.round(hours / 24)} days ago`;
 }
 
-function taskDetail(task) {
-  const article = element("article", "task-detail");
-  const heading = element("h2");
-  text(heading, task.id || "Recorded task");
-  const statusLine = element("div", "status-line");
-  statusLine.append(statusBadge(task.state), reportingValue(task));
+function timeNode(value, prefix) {
+  const node = element("time");
+  if (value) {
+    node.dateTime = value;
+    node.title = formatDate(value);
+  }
+  return text(node, [prefix, relativeTime(value)].filter(Boolean).join(" "));
+}
+
+function eventsFor(taskId) {
+  const events = Array.isArray(snapshot.events) ? snapshot.events : [];
+  return events.filter((event) => event.task_id === taskId);
+}
+
+function openDefectsFor(taskId) {
+  const defects = Array.isArray(snapshot.defects) ? snapshot.defects : [];
+  return defects.filter((defect) => defect.task_id === taskId && defect.state === "open");
+}
+
+// A disclosure whose open state is remembered by key across refreshes.
+function disclosure(key, summaryText, className) {
+  const details = element("details", className);
+  details.open = openDetails.has(key);
+  details.addEventListener("toggle", () => {
+    if (details.open) openDetails.add(key);
+    else openDetails.delete(key);
+  });
+  const summary = element("summary");
+  summary.dataset.focusKey = `summary:${key}`;
+  text(summary, summaryText);
+  details.append(summary);
+  return details;
+}
+
+function eventItem(event, withTask) {
+  const item = element("li", "event");
+  const detail = element("p");
+  const prefix = [label(event.kind), withTask && event.task_id ? `· ${event.task_id}` : "", event.actor ? `· ${event.actor}` : ""].filter(Boolean).join(" ");
+  text(detail, `${prefix}${event.detail ? ` — ${event.detail}` : ""}`);
+  item.append(timeNode(event.at, ""), detail);
+  return item;
+}
+
+// One task as a compact card: the essentials stay visible, and the full record
+// and its update trail open on demand.
+function taskCard(task, noteSource) {
+  const card = element("article", `task-card card-${stateClass(task.state).slice(6)}`);
+  const head = element("header", "card-head");
+  head.append(text(element("span", "task-id"), task.id), statusBadge(task.state));
+  const question = text(element("p", "card-question"), task.diagnostic_question);
+  question.title = task.diagnostic_question || "";
+
+  const meta = element("p", "card-meta");
+  meta.append(text(element("span", "card-assignee"), task.assignee || "Unassigned"));
+  const [verb, stamp] = task.state === "accepted" ? ["reviewed", task.reviewed_at]
+    : task.state === "repair_requested" ? ["changes requested", task.reviewed_at]
+    : task.state === "submitted" ? ["sent for review", task.submitted_at]
+    : task.last_reported_at ? ["updated", task.last_reported_at]
+    : task.state === "claimed" ? ["started", task.claimed_at]
+    : ["waiting", null];
+  if (stamp) meta.append(timeNode(stamp, verb));
+  if (task.state === "claimed" && ["stale", "never_reported"].includes(task.reporting_state)) {
+    meta.append(statusBadge(task.reporting_state));
+  }
+  const problems = openDefectsFor(task.id).length;
+  if (problems) meta.append(text(element("span", "badge state-open"), `${problems} open ${problems === 1 ? "problem" : "problems"}`));
+  card.append(head, question, meta);
+
+  const trail = eventsFor(task.id);
+  const noteText = noteSource === "review"
+    ? task.review_note
+    : (trail.find((event) => event.kind === "progress_reported") || {}).detail;
+  if (noteText) {
+    const note = text(element("p", "card-note"), noteText);
+    note.title = noteText;
+    card.append(note);
+  }
+
+  const more = disclosure(`task:${task.id}`, "Details", "card-more");
   const facts = element("dl", "facts");
   facts.append(
-    field("Diagnostic question", task.diagnostic_question),
-    field("Specialty", task.specialty),
     field("Scope", task.scope),
     field("Acceptance", task.acceptance),
-    field("Assignee", task.assignee || "Unassigned"),
+    field("Stop condition", task.stop_condition || "Not recorded"),
+    field("Reviewer", task.reviewer || "Not recorded"),
+    field("Specialty", task.specialty),
+    field("Last update", reportingValue(task)),
     field("Started", formatDate(task.claimed_at)),
     field("Sent for review", formatDate(task.submitted_at)),
     field("Reviewed", formatDate(task.reviewed_at)),
-    field("Reviewer", task.reviewer || "Not recorded"),
-    field("Stop condition", task.stop_condition || "Not recorded"),
     field("Artifact", artifactValue(task)),
   );
-  article.append(heading, statusLine, facts);
-  return article;
+  if (task.review_note && noteSource !== "review") facts.append(field("Review note", task.review_note));
+  more.append(facts);
+  if (trail.length) {
+    const list = element("ol", "event-list card-trail");
+    trail.forEach((event) => list.append(eventItem(event, false)));
+    more.append(text(element("h3", "card-trail-title"), `Updates for this task (${trail.length})`), list);
+  }
+  card.append(more);
+  return card;
+}
+
+function cardGrid(tasks, noteSource) {
+  const grid = element("div", "card-grid");
+  tasks.forEach((task) => grid.append(taskCard(task, noteSource)));
+  return grid;
+}
+
+function byRecentUpdate(a, b) {
+  const stamp = (task) => task.last_reported_at || task.submitted_at || task.claimed_at || "";
+  return stamp(b).localeCompare(stamp(a));
+}
+
+// A collapsible group of cards, open the first time it appears.
+function cardGroup(key, title, tasks, noteSource) {
+  if (!tasks.length) return document.createDocumentFragment();
+  const groupKey = `group:${key}`;
+  if (!openDetails.has(`${groupKey}:seen`)) openDetails.add(`${groupKey}:seen`).add(groupKey);
+  const group = disclosure(groupKey, `${title} (${tasks.length})`, "card-group");
+  group.append(cardGrid(tasks, noteSource));
+  return group;
+}
+
+function summaryStrip(tasks, defects) {
+  const count = (state) => tasks.filter((task) => task.state === state).length;
+  const items = [
+    ["In progress", count("claimed"), "now", "state-claimed"],
+    ["Needs changes", count("repair_requested"), "now", "state-repair_requested"],
+    ["Waiting for review", count("submitted"), "results", "state-submitted"],
+    ["Waiting to start", count("queued"), "queue", "state-queued"],
+    ["Open problems", defects.filter((defect) => defect.state === "open").length, "defects", "state-open"],
+  ];
+  const strip = element("nav", "summary-strip");
+  strip.setAttribute("aria-label", "Board totals");
+  items.forEach(([name, value, view, cls]) => {
+    const button = element("button", `summary-item ${cls}${value ? "" : " is-zero"}`);
+    button.type = "button";
+    button.dataset.focusKey = `strip:${name}`;
+    button.append(text(element("strong"), value), text(element("span"), name));
+    button.addEventListener("click", () => selectView(view));
+    strip.append(button);
+  });
+  return strip;
 }
 
 function emptyState(message) {
@@ -220,6 +318,7 @@ function emptyState(message) {
 
 function selectView(view) {
   activeView = view;
+  lastRenderKey = "";
   render();
 }
 
@@ -243,58 +342,31 @@ function restingState(tasks) {
   return fragment;
 }
 
-function renderNow(tasks) {
-  const current = tasks.filter((task) => ["claimed", "repair_requested"].includes(task.state));
-  if (!current.length) return restingState(tasks);
+function renderNow(tasks, defects) {
   const fragment = document.createDocumentFragment();
-  current.forEach((task) => fragment.append(taskDetail(task)));
+  fragment.append(summaryStrip(tasks, defects));
+  const current = tasks.filter((task) => ["claimed", "repair_requested"].includes(task.state));
+  if (!current.length) {
+    fragment.append(restingState(tasks));
+    return fragment;
+  }
+  const needsChanges = current.filter((task) => task.state === "repair_requested").sort(byRecentUpdate);
+  const inProgress = current.filter((task) => task.state === "claimed").sort(byRecentUpdate);
+  fragment.append(cardGrid([...needsChanges, ...inProgress], "progress"));
   return fragment;
 }
 
 function renderResults(tasks) {
   const results = tasks.filter((task) => ["submitted", "accepted", "repair_requested"].includes(task.state));
   if (!results.length) return emptyState("No finished work has been recorded.");
-  const table = element("table", "task-table results-table");
-  const caption = element("caption", "sr-only");
-  text(caption, "Finished task records");
-  const head = element("thead");
-  const headRow = element("tr");
-  ["Task", "State", "Reviewer", "Stop condition", "Review state", "Artifact"].forEach((heading) => {
-    const cell = element("th");
-    cell.scope = "col";
-    text(cell, heading);
-    headRow.append(cell);
-  });
-  head.append(headRow);
-  const body = element("tbody");
-  results.forEach((task) => {
-    const row = element("tr");
-    const taskCell = element("th", "task-name");
-    taskCell.scope = "row";
-    taskCell.append(text(element("span", "task-id"), task.id), text(element("span", "task-question"), task.diagnostic_question));
-    const stateCell = element("td");
-    stateCell.dataset.label = "State";
-    stateCell.append(statusBadge(task.state));
-    const reviewerCell = element("td");
-    reviewerCell.dataset.label = "Reviewer";
-    text(reviewerCell, task.reviewer || "Not recorded");
-    const stopCell = element("td");
-    stopCell.dataset.label = "Stop condition";
-    text(stopCell, task.stop_condition || "Not recorded");
-    const reviewCell = element("td");
-    reviewCell.dataset.label = "Review state";
-    reviewCell.append(statusBadge(task.state));
-    if (task.review_note) reviewCell.append(text(element("span", "review-note"), task.review_note));
-    const artifactCell = element("td");
-    artifactCell.dataset.label = "Artifact";
-    const artifact = artifactValue(task);
-    if (artifact instanceof Node) artifactCell.append(artifact);
-    else text(artifactCell, artifact);
-    row.append(taskCell, stateCell, reviewerCell, stopCell, reviewCell, artifactCell);
-    body.append(row);
-  });
-  table.append(caption, head, body);
-  return table;
+  const byReview = (a, b) => (b.reviewed_at || b.submitted_at || "").localeCompare(a.reviewed_at || a.submitted_at || "");
+  const fragment = document.createDocumentFragment();
+  fragment.append(
+    cardGroup("waiting", "Waiting for review", results.filter((task) => task.state === "submitted").sort(byReview), "review"),
+    cardGroup("repair", "Needs changes", results.filter((task) => task.state === "repair_requested").sort(byReview), "review"),
+    cardGroup("reviewed", "Reviewed", results.filter((task) => task.state === "accepted").sort(byReview), "review"),
+  );
+  return fragment;
 }
 
 function renderDefects(defects) {
@@ -454,30 +526,37 @@ function renderSnapshots() {
 function renderContent() {
   const tasks = Array.isArray(snapshot.tasks) ? snapshot.tasks : [];
   const defects = Array.isArray(snapshot.defects) ? snapshot.defects : [];
-  const content = activeView === "now" ? renderNow(tasks)
-    : activeView === "queue" ? taskTable(tasks.filter((task) => task.state === "queued"), "No work is waiting to be picked up.")
+  const queued = tasks.filter((task) => task.state === "queued");
+  const content = activeView === "now" ? renderNow(tasks, defects)
+    : activeView === "queue" ? (queued.length ? cardGrid(queued, "progress") : emptyState("No work is waiting to be picked up."))
     : activeView === "results" ? renderResults(tasks)
     : activeView === "defects" ? renderDefects(defects)
     : activeView === "snapshots" ? renderSnapshots()
-    : renderNow(tasks);
+    : renderNow(tasks, defects);
   elements.content.replaceChildren(content);
 }
 
 function renderEvents() {
   const events = Array.isArray(snapshot.events) ? snapshot.events : [];
   elements.eventCount.textContent = `${events.length} updates`;
-  const items = events.map((event) => {
-    const item = element("li", "event");
-    const time = element("time");
-    time.dateTime = event.at || "";
-    text(time, formatDate(event.at));
-    const detail = element("p");
-    const prefix = [label(event.kind), event.task_id ? `· ${event.task_id}` : "", event.actor ? `· ${event.actor}` : ""].filter(Boolean).join(" ");
-    text(detail, `${prefix}${event.detail ? ` — ${event.detail}` : ""}`);
-    item.append(time, detail);
-    return item;
-  });
-  elements.eventList.replaceChildren(...(items.length ? items : [emptyState("No updates have been recorded.")]));
+  const shown = showAllEvents ? events : events.slice(0, EVENTS_SHOWN);
+  const items = shown.map((event) => eventItem(event, true));
+  if (!items.length) items.push(emptyState("No updates have been recorded."));
+  if (events.length > EVENTS_SHOWN) {
+    const more = element("li", "event-more");
+    const button = element("button", "results-affordance");
+    button.type = "button";
+    button.dataset.focusKey = "events:toggle";
+    text(button, showAllEvents ? "Show fewer updates" : `Show all ${events.length} updates`);
+    button.addEventListener("click", () => {
+      showAllEvents = !showAllEvents;
+      lastRenderKey = "";
+      render();
+    });
+    more.append(button);
+    items.push(more);
+  }
+  elements.eventList.replaceChildren(...items);
 }
 
 function renderStatus() {
@@ -502,8 +581,22 @@ function render() {
   });
   renderStatus();
   elements.history.hidden = activeView === "snapshots";
+  // Rebuilding the lists on every refresh would drop text selection and
+  // focus, so rebuild only when the recorded data changes, or once a minute
+  // so relative times advance.
+  const key = renderKey();
+  if (key === lastRenderKey) return;
+  lastRenderKey = key;
+  const focusKey = document.activeElement?.dataset?.focusKey;
   renderContent();
   renderEvents();
+  if (focusKey) document.querySelector(`[data-focus-key="${CSS.escape(focusKey)}"]`)?.focus();
+}
+
+function renderKey() {
+  const tasks = (snapshot.tasks || []).map(({ reported_age_seconds, ...task }) => task);
+  const minute = snapshot.now ? String(snapshot.now).slice(0, 16) : "";
+  return JSON.stringify([activeView, minute, tasks, snapshot.defects, snapshot.events, journal, journalComparison, selectedBefore, selectedAfter]);
 }
 
 async function refresh() {
