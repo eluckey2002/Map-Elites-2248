@@ -167,3 +167,16 @@ closes the most gaps).
   `solver/game-tester.js` chapter table ends at level 50, so it exits 1 on
   levels 51-58; `solver/spawn-experiment.js` refills scaled boards with
   unscaled 2/4/8 tiles. Remaining: RESULT-0016 confirmation still running.
+- 2026-09-26: Reconciled with main's PR #41 (successor owner of PR #46). F5 and
+  F3 now rest on main's `tools/ledger-index.js`, the one index generator:
+  `tools/build-ledger-index.js` and its hook inside `verify-experiments.js` are
+  removed, and index freshness is `node tools/ledger-index.js --check` (CI and
+  pre-push). F3's read-side fix was ported: a live record with a correction
+  leads its index row with that correction's ID and title (tested in
+  `solver/tests/ledgerIndex.test.js`). F11 is split with
+  `tools/verify-ledger-authorship.js` into one rule set: that gate owns record
+  removal, duplicate IDs and written_by/checked_by; F11's history check owns
+  frozen fields, links and notes, treats written_by/checked_by as mutable, and
+  reads LEDGER_BASE the same way. After Codex review, F11 also freezes wrapped
+  continuation lines, F6 requires each sample-size item filled in, and F2
+  requires the `ledger:` line to end its outcome file.
