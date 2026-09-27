@@ -289,8 +289,11 @@ function currentActivity(task) {
   if (task.state === "repair_requested") return ["changes requested", task.reviewed_at];
   if (task.state === "submitted") return ["sent for review", task.submitted_at];
   if (task.state === "claimed") {
-    const reported = task.last_reported_at || "";
-    return reported && reported >= (task.claimed_at || "") ? ["updated", reported] : ["started", task.claimed_at];
+    // Timestamps are whole seconds, so settle claim-vs-progress by event
+    // sequence: events arrive newest first.
+    const latest = eventsFor(task.id).find((event) => event.kind === "claimed" || event.kind === "progress_reported");
+    if (latest) return latest.kind === "progress_reported" ? ["updated", latest.at] : ["started", latest.at];
+    return task.last_reported_at > (task.claimed_at || "") ? ["updated", task.last_reported_at] : ["started", task.claimed_at];
   }
   return ["waiting", null];
 }
