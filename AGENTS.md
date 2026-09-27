@@ -39,7 +39,7 @@ promote a scientific claim or replace the experiment gates below.
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
-- **`node --test solver/tests/*.test.js` reports 547 tests: 543 pass, three fail deliberately, and one is skipped.** The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
+- **`node --test solver/tests/*.test.js` passes except for three deliberate failures and one skip.** CI's `full test suite` job prints the current totals. This line carries no count on purpose: every pull request that added a test used to edit it, and open pull requests collided on it. The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
 - **The Universe Map is a 2026-08-28 snapshot, and its staleness failure is true.** It still names champion `52f500c` and selects only `RESULT-0017`; `DECISION-0004` promoted `b82a9b6` and explicitly did not rewrite the map. Do not clear the failure by bumping `universe/contract.json`'s `asOf` and rebuilding: that restamps the old champion and frontier as current. Refreshing it means re-curating the contract's selected records against the ledger first.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still matches `RESULT-0028` in the ledger — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
@@ -108,18 +108,25 @@ Do not append to `HANDOFF.md`. It is a historical session journal; what it used 
 it has been installed (`node tools/hooks/install.js`, once per clone; clones
 installed before 2026-09-25 hold a stale copy and must run it once more) it
 refuses to push a red gate to `main` before the push leaves the machine, and
-it lets a green push through. Two more rules no mechanism enforces:
+it lets a green push through. CI also refuses committed merge-conflict markers.
+Three more rules no mechanism enforces:
 
 1. **Do not merge until the Codex review has completed.** Codex reviews every
    pull request when it opens and either leaves inline findings or reacts 👍.
    Wait for one or the other. On 2026-09-03 PR #3 was merged thirty seconds
    before its review landed; the finding was correct and `main` carried a
    mislabelled record until PR #4.
+   Codex does not re-review later pushes on its own: after pushing fixes,
+   comment `@codex review` on the pull request and wait for its new verdict.
 2. **The agent that opened the pull request owns it to the end.** Address every
    inline finding with a fix commit or a written rebuttal on the thread,
    resolve the thread, then merge. Do not ask Codex to push fixes into a pull
    request another agent opened: two writers on one branch is the concurrent
    writer problem again.
+3. **Check open pull requests before starting.** Run `gh pr list` and read the
+   titles of anything touching the same files. On 2026-09-26, PR #41 and PR #46
+   each built a separate generator for `LEDGER-INDEX.md`. Extend or coordinate
+   with the open work instead of duplicating it.
 
 A red gate is fixed in the ledger or the protocol, never by editing the gate,
 grandfathering the record, or `--no-verify`.
