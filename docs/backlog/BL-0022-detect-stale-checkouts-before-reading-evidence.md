@@ -98,7 +98,13 @@ filesystem by hand.
    corresponding merged local branch with `git branch -d`. A worktree that is
    dirty, has unpushed commits, or whose branch is merged only on a remote
    other than `origin/main` is reported, not removed. Remote merged branches
-   are reported only — deleting them needs owner action.
+   are reported only — deleting them needs owner action. The sweep always
+   excludes the current session's own active worktree — the one containing
+   the process's cwd, identified via `git rev-parse --show-toplevel` (and any
+   worktree that is an ancestor directory of the cwd) — even when that
+   worktree is merged and clean; it is reported for explicit post-session
+   cleanup instead of removed, since removing the tree a session is running
+   from out from under itself is its own hazard.
 5. `AGENTS.md`'s read chain also runs the freshness check before
    `LEDGER-INDEX.md`, as a repo-level backstop, but criterion 1 is what makes
    this record's outcome true for checkouts that predate that line.
@@ -106,7 +112,9 @@ filesystem by hand.
    behind `main` fails the freshness check; an up-to-date checkout passes
    (the baseline); a checkout behind only on non-evidence files passes; a
    merged-and-clean worktree is swept and removed; a merged-but-dirty or
-   merged-but-unpushed worktree is reported, not removed.
+   merged-but-unpushed worktree is reported, not removed; a clean,
+   merged worktree that is the session's own active cwd is NOT removed and
+   is reported instead.
 7. The mechanism never pulls, merges, or resets on its own, and never removes
    a worktree it does not own: other agents own those trees, and this
    criterion holds even when criterion 4's sweep runs.
@@ -140,3 +148,9 @@ wiring, the merged-worktree sweep, and their tests in a fresh worktree off
   (never `rm -rf`, never a real clone, never dirty/unpushed trees), and
   delete merged local branches with `git branch -d`, reporting remote merged
   branches for owner action rather than deleting them.
+- 2026-09-27: Codex review (finding 4117059308) noted the sweep as written
+  could remove the session's own active worktree out from under it.
+  Confirmed by re-reading criterion 4. Added an exclusion for the worktree
+  containing the process's cwd (via `git rev-parse --show-toplevel`) and any
+  ancestor-directory worktree, reported rather than removed, plus a test
+  case for a clean merged worktree that is the active cwd.

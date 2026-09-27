@@ -34,11 +34,18 @@ option stated.
 
 ## Acceptance criteria
 
-1. Win rates at 126,000 for both the shipped bot and `calib-1` on a fresh,
-   logged seed range that avoids seeds 200000-200039.
-2. A same-seed comparison of every speed-intent owner session on Level 54
+1. A protocol is registered and committed before either bot is measured: the
+   seed range (fresh, logged, avoiding seeds 200000-200039), both bots to be
+   measured (shipped bot and `calib-1`), and the decision thresholds that
+   determine keep, retune, or re-author, all fixed before any outcome data
+   exists.
+2. Win rates at 126,000 for both the shipped bot and `calib-1`, measured
+   under that registered protocol.
+3. A same-seed comparison of every speed-intent owner session on Level 54
    (depends on BL-0017's intent tags).
-3. A written recommendation to keep, retune, or re-author, with costs.
+4. A written recommendation to keep, retune, or re-author, with costs, made
+   against the protocol's pre-registered thresholds rather than chosen after
+   seeing the outcome.
 
 ## Current evidence
 
@@ -47,8 +54,14 @@ rules.
 
 ## Next action
 
-Measure both bots at 126,000 on a fresh logged seed range.
+Register a protocol (seed range, both bots, keep/retune/re-author thresholds)
+before measuring either bot at 126,000.
 
 ## History
 
 - 2026-09-27: Proposed from the blast-radius audit.
+- 2026-09-27: Codex review (finding 4117059304) noted the record had no
+  requirement to register a protocol before measuring either bot. Added
+  criterion 1 requiring a registered protocol (seed range, both bots,
+  keep/retune/re-author thresholds) committed before either bot is measured,
+  renumbered the prior criteria, and updated Next action to match.

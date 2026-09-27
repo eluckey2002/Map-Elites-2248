@@ -44,14 +44,31 @@ is needed.
 
 ## Acceptance criteria
 
-1. RESULT-0011 is re-measured first, at the current head of whichever branch
-   carries CORRECTION-0017 (which already revises RESULT-0011).
-2. RESULT-0018/RESULT-0020 and RESULT-0026 are re-run under their registered
-   protocols on the fixed bot, with old and new values side by side.
-3. Each remaining listed result gets a re-measurement or a ledger note
-   explaining why its conclusion does not depend on the rollout.
-4. Nothing re-measured here edits a prior record's statement; changes land as
-   corrections.
+1. RESULT-0011 is re-measured first, as a NEW superseding result (fresh
+   protocol, fresh seeds, registered before any post-fix outcome data),
+   registered at the current head of whichever branch carries
+   CORRECTION-0017 (which already revises RESULT-0011). RESULT-0011's frozen
+   protocol is never re-invoked: its own text says a completed run is never
+   re-run on new seeds.
+2. RESULT-0018/RESULT-0020 and RESULT-0026 are never re-run under their own
+   registered protocols — both are frozen, one-confirmation-only protocols
+   that require supersession, not re-invocation, when inputs move
+   (`experiments/RESULT-0020/protocol.md:256-260`: "One confirmation run. No
+   re-runs on different seeds"; any frozen hash moving "supersedes this
+   record rather than editing it"; `experiments/RESULT-0026/protocol.md:29-30`:
+   "Any policy... change creates a superseding result rather than editing
+   this run"; `:209-215`: "Invoke confirmation exactly once. Do not retry").
+   Each gets a NEW result (its own protocol, commit, and fresh seeds,
+   registered and gated before any post-fix outcome is measured or
+   inspected), with old and new values reported side by side.
+3. Each remaining listed result gets a new superseding re-measurement (same
+   rule: fresh protocol and seeds registered first, never a re-run of the
+   old protocol) or a ledger note explaining why its conclusion does not
+   depend on the rollout.
+4. Nothing re-measured here edits a prior record's statement or re-invokes
+   its frozen protocol; each re-measurement is a new result registered under
+   its own protocol, and the superseded record gets a `CORRECTION-NNNN`
+   citing the new result.
 
 ## Current evidence
 
@@ -66,3 +83,13 @@ re-measurement.
 ## History
 
 - 2026-09-27: Proposed from the blast-radius audit.
+- 2026-09-27: Codex review (finding 4117059299) noted RESULT-0020's protocol
+  (`experiments/RESULT-0020/protocol.md:256-260`) allows one confirmation and
+  requires supersession when frozen hashes move, and RESULT-0026's
+  (`experiments/RESULT-0026/protocol.md:29-30,209-215`) freezes the policy
+  and allows confirmation once — so re-running either under its own
+  registered protocol is not permitted. Confirmed by reading both files.
+  Rewrote criteria 1-4 so RESULT-0011, RESULT-0018/0020, RESULT-0026, and
+  each remaining result are re-measured as NEW superseding results, each
+  registered under its own fresh protocol and seeds before any post-fix
+  outcome data, with the old records corrected to cite the new ones.
