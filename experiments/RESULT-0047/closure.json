@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "c5aa631465631a14b3bd74a714b926e06d98b23a62683962c98d70c52c4bf24a"
+  },
+  "run_id": "5096dd0cf0440f7ef63ce8836281d9ad548bc8049187832c726dbb779c7fb99e",
+  "final_subject_identity": "f4812d343fba94eb6140d77ff3ad09455a43fe12aad19ad0ca1865131a8c2d66",
+  "closure_status": "CLOSED",
+  "registration": {"protocol": "RESULT-0047", "protocolCommit": "bf370cbd5accffa9891cc615cf7d08edf6653205", "exploratory": false},
+  "claims": [
+    {"id": "C1", "status": "PASS", "evidence_subject_identity": "f4812d343fba94eb6140d77ff3ad09455a43fe12aad19ad0ca1865131a8c2d66", "reason": "baseline ranker run twice on the same puzzle under identical budget returned bit-identical output"},
+    {"id": "C2", "status": "PASS", "evidence_subject_identity": "f4812d343fba94eb6140d77ff3ad09455a43fe12aad19ad0ca1865131a8c2d66", "reason": "baseline and evolved diverge on the corpus's first puzzle (no-win vs win/17/127616)"},
+    {"id": "C3", "status": "PASS", "evidence_subject_identity": "f4812d343fba94eb6140d77ff3ad09455a43fe12aad19ad0ca1865131a8c2d66", "reason": "437 tests, 430 pass, 4 pre-existing documented failures, 1 skip, unchanged before/after this record's registration"},
+    {"id": "P1", "status": "PASS", "evidence_subject_identity": "f4812d343fba94eb6140d77ff3ad09455a43fe12aad19ad0ca1865131a8c2d66", "reason": "check ran to a definitive result: SUPPORTED (18/18 vs 15/18 wins, 338->253 loss-adjusted moves)"},
+    {"id": "P2", "status": "PASS", "evidence_subject_identity": "f4812d343fba94eb6140d77ff3ad09455a43fe12aad19ad0ca1865131a8c2d66", "reason": "check ran to a definitive result: SUPPORTED (3 human misses vs baseline's 7)"},
+    {"id": "P3", "status": "PASS", "evidence_subject_identity": "f4812d343fba94eb6140d77ff3ad09455a43fe12aad19ad0ca1865131a8c2d66", "reason": "check ran to a definitive result: FALSIFIED (2 regressions: puzzle 2bb321b4 9->10 moves, puzzle 3808ee88 17->22 moves)"}
+  ],
+  "artifacts": [
+    {"id": "corpus", "path": "corpus.json", "sha256": "2ad1fc94e4c28bfdbbd5df9cdd0579b04190a86e3efaacbf31a5f91df6484f44"},
+    {"id": "report", "path": "report.md", "sha256": "5a2f594eaadc82a61c7ef5606b3da78081515b47c7dc06b5f0b548b30a369447"},
+    {"id": "primary-recomputation", "path": "primary-recomputation.json", "sha256": "37f9498239d31246a0d72815302d7e2473db72537330dee2410503460f473ff7"}
+  ],
+  "primary_outcome": "FALSIFIED",
+  "deviations": [
+    "This is a corrected-identity re-registration; the underlying comparison was originally run 2026-09-17 under the colliding ID RESULT-0041. The computation was genuinely re-executed here, not copied -- all 40 rows independently verified bit-identical to the original artifact."
+  ],
+  "attempts": [
+    {"id": "run-1", "exit_code": 0, "artifact_ids": ["corpus"]},
+    {"id": "recompute-1", "exit_code": 0, "artifact_ids": ["primary-recomputation"]}
+  ]
+}
