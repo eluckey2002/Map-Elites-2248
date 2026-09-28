@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0007-decision-lineage-manifest",
+  "paths": {
+    "contract": "docs/learning-cycles/LC-0007-decision-lineage-contract.md",
+    "priorRaw": "docs/learning-cycles/LC-0003-four-miss-diagnostic-raw.json",
+    "lc0003Manifest": "docs/learning-cycles/LC-0003-three-step-target-progress-manifest.json",
+    "lc0003Qualification": "docs/learning-cycles/LC-0003-three-step-target-progress-raw.json",
+    "priorHarness": "tools/diagnose-lc0003-misses.js",
+    "recording": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+    "engine": "solver/engine.js",
+    "bot": "solver/bot.js",
+    "lc0005Result": "docs/learning-cycles/LC-0005-complete-harvest-chain-result.md",
+    "lc0006Result": "docs/learning-cycles/LC-0006-complete-harvest-counterexample-result.md",
+    "harness": "tools/diagnose-lc0007-decision-lineage.js",
+    "test": "solver/tests/lc0007DecisionLineage.test.js"
+  },
+  "identities": {
+    "contract": "f4b7b577e8fef08406b0e24dcd2d40b752e7a124d4e09addad0a2f9fb7de1a3d",
+    "priorRaw": "58a6458367295823d56b29f5e4589077161648b0e3619c6e5d6d6cca8eb3c284",
+    "lc0003Manifest": "5877e06cc51a0bac598a30d55ba63b631aaabb91ea843720d335f4127ad08d48",
+    "lc0003Qualification": "e6f523dd72f60309351d4a2d8bd5a8d8851c43eadb44b4e3b86fa4f17394b2e2",
+    "priorHarness": "2d46260aaa540bead45f19f658544a13512eaef93517ac63b4f093dd89e31cd2",
+    "recording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "lc0005Result": "19605fb32d05472abd4050301570dd8bc3852316315d5525827f7df8636b802f",
+    "lc0006Result": "f8a10cfc80803940550adbdc51abd78d807c9c1eb0020f88baf123899612c77d",
+    "harness": "d5c68a094bbbff716954cbfd21243ba77e83819beed6a26dc848ce4b57bedf37",
+    "test": "be0a65e534f89667d06292a16cbc50b7802d9013745c5b4afc070a87612868aa"
+  },
+  "artifactIdentity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01"
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "LC-0007-decision-lineage-contract.md",
+    "sha256": "f4b7b577e8fef08406b0e24dcd2d40b752e7a124d4e09addad0a2f9fb7de1a3d"
+  },
+  "final_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+  "required_claims": [
+    "C1-frozen-replay-and-panel-identity",
+    "C2-objective-and-continuation-equivalence",
+    "C3-lineage-transfer-known-good",
+    "C4-unrelated-chain-known-negative",
+    "C5-planted-false-carrier",
+    "C6-restoration-and-persistence",
+    "move-4-lineage",
+    "move-6-lineage",
+    "move-9-lineage",
+    "move-11-lineage"
+  ],
+  "required_artifacts": [
+    "raw",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "tools/diagnose-lc0007-decision-lineage.js",
+      "--summarize",
+      "docs/learning-cycles/LC-0007-decision-lineage-raw.json"
+    ],
+    "cwd": "../..",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}
