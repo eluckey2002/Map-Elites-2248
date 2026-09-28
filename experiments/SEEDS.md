@@ -62,6 +62,7 @@ file and the repository before declaring a range fresh.
 | 42,000,000–42,000,001 | RESULT-0044 fresh run (protocol option 1), committed before owner play: Level 56 uses 42,000,000; Level 58 uses 42,000,001 | 2026-09-28 | `experiments/RESULT-0044/fresh-boards.json` |
 | 43,999,999; 44,000,000–44,004,095 | RESULT-0048 family-island qualification fixture and paired island/refill confirmation panel | 2026-09-19 | `experiments/RESULT-0048/registered-protocol.md` |
 | 44,999,999; 45,000,000–45,000,299 | RESULT-0049 excluded harness qualification and fresh paired current-champion confirmation across all 58 shipped levels | 2026-09-27 | `experiments/RESULT-0049/registered-protocol.md` |
+| 45,999,999; 46,000,000–46,000,019 | RESULT-0057 excluded harness qualification and fresh paired equal-score continuation-density validation across all 58 shipped levels | 2026-09-28 | `experiments/RESULT-0057/registered-protocol.md` |
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
 | 1, 2, 10, 777 | owner play recordings on levels 51–54 (ten recordings in `recordings/`; seed 777 twice on level 52) | 2026-08 | `recordings/*.json` |
 | 9,100,000–9,100,001 and 9,200,004–9,200,005 | seed-variance bounded test, real control through the production `playMeasured` seam | 2026-09-01 | `solver/tests/seedVariance.test.js`, `experiments/RESULT-0021/protocol.md` |
