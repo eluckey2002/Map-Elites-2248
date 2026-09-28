@@ -41,9 +41,9 @@ Each line here is a fact you can check in a minute. Check it rather than trust i
 
 - **`node --test solver/tests/*.test.js` passes except for three deliberate failures and one skip.** CI's `full test suite` job prints the current totals. This line carries no count on purpose: every pull request that added a test used to edit it, and open pull requests collided on it. The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
 - **The Universe Map is a 2026-08-28 snapshot, and its staleness failure is true.** It still names champion `52f500c` and selects only `RESULT-0017`; `DECISION-0004` promoted `b82a9b6` and explicitly did not rewrite the map. Do not clear the failure by bumping `universe/contract.json`'s `asOf` and rebuilding: that restamps the old champion and frontier as current. Refreshing it means re-curating the contract's selected records against the ledger first.
-- **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still reads PASS, 140,544 points in 20 moves — only the two identity fields should change.
+- **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still matches `RESULT-0028` in the ledger — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
-- **Shipped-level win rate cannot rank two policies.** The bot wins 71-100% of every shipped level, so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
+- **Shipped-level win rate cannot rank two policies.** The bot wins nearly every shipped level (`RESULT-0052`), so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
 - **Recorded human play and the shipped bot already share the target-stop objective.** Both games end on the move that crosses the target. Compare reliability first and moves-to-target among mutual wins. Crossing score is only final-move overshoot. The benchmark's uncapped bot continues alone to the move budget and has no recorded human comparator; never present that arm as a human comparison.
 - **Never compare one seed against a median over other seeds.** That measures the seed. Pair on identical seeds instead.
 - **`node solver/board-trace.js`** renders a recorded game as text boards with both players' chains drawn on the same position. Chain-value strings hide where the tiles are, which is the thing this game is about.
@@ -54,6 +54,10 @@ Read [LEDGER-INDEX.md](LEDGER-INDEX.md) before substantive reasoning about game 
 You may write a ledger record; you may not accept your own. Every new record names `written_by` (your agent or session). A record reaches `accepted` or `narrowed` only when `checked_by` names a different agent, a script run, or the owner who actually checked it. Until then it stays `provisional`. The gate is `tools/verify-ledger-authorship.js`.
 
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
+
+Every run under `.orch/runs/` started from 2026-09-27 ends with a line `ledger: <RECORD-ID>` or `ledger: not reportable — <reason>` as the final line of its `worklog.md` or `stop-record.md`; the experiment gate enforces it, so a finished result cannot go unrecorded.
+
+Outside the ledger, cite a record ID instead of restating its numbers; a restated number drifts when the record is corrected.
 
 Append source-pinned updates using the ledger's record schema. Preserve each proof class exactly: a replayed lower bound, exact result, proven upper bound, heuristic observation, `UNKNOWN`, or unresolved question must not be promoted into another class.
 
@@ -91,6 +95,18 @@ an implemented prevention artifact with a negative test. A `CLOSED`
 `FALSIFIED` or `INCONCLUSIVE` result is not a failed run. For one-shot paired
 comparisons, use `tools/persist-before-verdict.js` so the complete raw pairs are
 written before any fail-fast verdict.
+
+## Closing a session
+
+Before a session's work lands, in this order:
+
+1. Every run you started ends with its `ledger:` line (see above), and any new result or correction is in `EVIDENCE_LEDGER.md`.
+2. Run `node tools/ledger-index.js` and commit `LEDGER-INDEX.md` with the ledger.
+3. Update [CURRENT.md](CURRENT.md) so the next session sees what changed and what is open, citing record IDs rather than restating numbers. The gate fails a change that adds a ledger record without touching `CURRENT.md`.
+4. Append a dated line to the History of each backlog record you worked on.
+5. Run `node tools/verify-experiments.js`; it must pass before you open the pull request.
+
+Do not append to `HANDOFF.md`. It is a historical session journal; what it used to carry now goes in the ledger, `CURRENT.md`, and backlog history.
 
 ## Landing changes on `main`
 

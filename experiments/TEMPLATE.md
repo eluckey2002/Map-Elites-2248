@@ -42,6 +42,17 @@ what it is not.>
 <Levels x seeds = games per arm, arms, paired or unpaired. Record any conflict
 between two sources of truth rather than settling it for convenience.>
 
+## Sample size and margin
+
+<Required for protocols registered from 2026-09-27 (BL-0016 F6).>
+- **Per verdict:** <the number of games, pairs, or rows each verdict rests on,
+  and why that number can tell the verdict apart from chance.>
+- **Margin:** <how many more misses would flip each verdict. If one miss flips
+  it, say so here; that is a fragile bar, not a pass with room.>
+- **Downstream quantity:** <if a later stage will use a combined measure (for
+  example the joint rate at which two descriptors both stay in the same cell),
+  register a bar for that combined measure here, not only for its parts.>
+
 ## Seeds
 
 - **Pilot:** <range> (<n> seeds).

@@ -695,11 +695,417 @@ function assessReportAnswers(result, protocol, report) {
   return problems;
 }
 
+// Vocabularies from the ledger's own Status and proof-class tables.
+const STATUSES = new Set(['accepted', 'provisional', 'open', 'superseded', 'narrowed', 'stale', 'blocked', 'rejected']);
+const PROOF_CLASSES = new Set([
+  'direct_source', 'exact_result', 'replayed_lower_bound', 'replayed_upper_bound', 'proven_upper_bound',
+  'heuristic_observation', 'UNKNOWN', 'unresolved', 'owner_decision', 'hypothesis',
+]);
+const TYPE_OF_PREFIX = {
+  FACT: 'fact', RESULT: 'result', DECISION: 'decision', HYPOTHESIS: 'hypothesis', QUESTION: 'question', CORRECTION: 'correction',
+};
+const REQUIRED_FIELDS = ['type', 'status', 'scope', 'evidence', 'proof_class', 'as_of', 'reverify', 'updated', 'supersedes', 'superseded_by'];
+
+// Every record, not just RESULTs: the rules in the ledger header that code can
+// check. It does not judge whether a claim is true or its class is earned.
+function assessLedgerStructure(text) {
+  const problems = [];
+  const records = [];
+  let current = null;
+  for (const line of text.split('\n')) {
+    // A near-miss heading would silently drop the whole record from checking.
+    // The accepted form is the one tools/ledger-index.js parses (ID, a dash,
+    // a title), so the index and the authorship gate see every record this
+    // check sees. Markdown still renders a heading indented by up to three
+    // spaces, which no parser reads, so indentation is a near miss too.
+    if (/^ {0,3}#{1,6}\s*[A-Za-z]+-\d+/i.test(line) && !/^### [A-Z]+-\d{4}\s*[—–-]\s*\S/.test(line)) {
+      problems.push(`malformed record heading: ${line.trim()}`);
+    }
+    const heading = /^### ([A-Z]+)-(\d{4})\b/.exec(line);
+    if (heading) {
+      current = { id: `${heading[1]}-${heading[2]}`, prefix: heading[1], body: [] };
+      records.push(current);
+      continue;
+    }
+    if (/^#{2,3} /.test(line)) { current = null; continue; }
+    if (current) current.body.push(line);
+  }
+  if (!records.length) return ['EVIDENCE_LEDGER.md contains no records'];
+
+  const seen = new Set();
+  for (const { id, prefix, body } of records) {
+    if (seen.has(id)) problems.push(`${id}: duplicate record ID`);
+    seen.add(id);
+    const text = body.join('\n');
+    const field = (name) => {
+      const all = [...text.matchAll(new RegExp(`^- \\*\\*${name}:\\*\\*[ \\t]*(.*)$`, 'gm'))];
+      if (all.length > 1) problems.push(`${id}: field ${name} appears ${all.length} times`);
+      const value = all.length ? all[0][1].trim() : '';
+      return value === '' ? null : value;
+    };
+    const expectedType = TYPE_OF_PREFIX[prefix];
+    if (!expectedType) { problems.push(`${id}: unknown record type prefix ${prefix}`); continue; }
+    for (const name of REQUIRED_FIELDS) {
+      if (field(name) === null) problems.push(`${id}: missing field ${name}`);
+    }
+    if (field('statement') === null && field('question') === null) problems.push(`${id}: missing field statement`);
+    const type = field('type');
+    if (type !== null && type !== expectedType) problems.push(`${id}: type ${type} does not match its ID prefix (${expectedType})`);
+    const status = field('status');
+    if (status !== null && !STATUSES.has(status)) problems.push(`${id}: status ${status} is not in the status vocabulary`);
+    const asOf = field('as_of');
+    if (asOf !== null && !/^`?(\d{4}-\d{2}-\d{2}|not_time_sensitive)\b/.test(asOf)) problems.push(`${id}: as_of ${asOf} is not a date or not_time_sensitive`);
+    const supersededBy = field('superseded_by');
+    if ((status === 'superseded' || status === 'narrowed') && (supersededBy === null || /^`?\[\s*\]`?$/.test(supersededBy))) {
+      problems.push(`${id}: status ${status} but superseded_by is empty`);
+    }
+    const proofClass = field('proof_class');
+    if (proofClass !== null) {
+      const tokens = [...proofClass.matchAll(/`([^`]+)`/g)].map((m) => m[1])
+        .filter((t) => !/^[A-Z]+-\d+$/.test(t));
+      const bad = tokens.filter((t) => !PROOF_CLASSES.has(t));
+      if (bad.length) problems.push(`${id}: proof_class ${bad.join(', ')} is not in the proof-class vocabulary`);
+      if (!tokens.some((t) => PROOF_CLASSES.has(t))) problems.push(`${id}: proof_class names no class`);
+    }
+  }
+  return problems;
+}
+
+// Every repository path and labelled commit a record's evidence or reverify
+// field cites must exist. Paths are path-shaped tokens inside backtick spans
+// (so paths inside commands count); a bare filename or `RESULT-NNNN/...`
+// shorthand may also resolve under the record's or the named experiments/ dir.
+// A commit counts when labelled (`commit abc1234`, `Commit = abc1234`) and must
+// be reachable from HEAD or an origin/evidence/* branch, not merely present locally. Absolute paths are
+// machine-specific and rejected. Notes are skipped: they may cite a file
+// precisely because it is absent.
+// Does NOT check unbackticked paths, that a file says what the record claims,
+// or content hashes.
+// Citation gaps in append-only history, each excused only by the correction
+// that records it (BL-0016 F12). The excuse fails if that correction is absent.
+const KNOWN_CITATION_GAPS = new Map([
+  ['RESULT-0001 solver/target-witness-search/verify.js', 'CORRECTION-0010'],
+  ['RESULT-0004 solver/hinted-cp-sat/verify-result.js', 'CORRECTION-0010'],
+  ['RESULT-0041 /Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py', 'CORRECTION-0011'],
+  ['DECISION-0004 6a07294571644d963a5a9b728f8e4aed3b29a835', 'CORRECTION-0012'],
+  // These run from a snapshot of 8e1e232^, where the files still exist.
+  ['CORRECTION-0010 solver/target-witness-search/verify.js', 'CORRECTION-0010'],
+  ['CORRECTION-0010 solver/hinted-cp-sat/verify-result.js', 'CORRECTION-0010'],
+]);
+
+function assessLedgerCitations(text, {
+  exists = (rel) => fs.existsSync(path.join(ROOT, rel)),
+  isCommit = (sha) => {
+    try {
+      execFileSync('git', ['merge-base', '--is-ancestor', sha, 'HEAD'], { cwd: ROOT, stdio: 'ignore' });
+      return true;
+    } catch {
+      // Evidence kept off main is preserved on an origin/evidence/* branch.
+      try {
+        return execFileSync('git', ['branch', '-r', '--contains', sha, '--list', 'origin/evidence/*'], {
+          cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+        }).trim() !== '';
+      } catch { return false; }
+    }
+  },
+} = {}) {
+  const problems = [];
+  for (const [gap, correction] of KNOWN_CITATION_GAPS) {
+    if (!new RegExp(`^### ${correction}\\b`, 'm').test(text)) problems.push(`${gap.split(' ')[0]}: known gap excused by missing ${correction}`);
+  }
+  for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
+    const id = /^[A-Z]+-\d{4}/.exec(record)[0];
+    // A field runs until the next `- **field:**` line or a record-ending H1-H3
+    // heading, so list-form continuation lines and H4-H6 content are included.
+    const fields = [...record.matchAll(/^- \*\*(evidence|reverify):\*\*([\s\S]*?)(?=^- \*\*[a-z_]+:\*\*|^#{1,3} |(?![\s\S]))/gm)]
+      .map((m) => m[2]).join('\n');
+    // A bare filename may be named relative to any directory the record cites.
+    const dirs = [...new Set([...record.matchAll(/`((?:[\w.-]+\/)+)[\w.-]*`/g)].map((m) => m[1].replace(/\/$/, '')))];
+    const citations = new Set([
+      ...[...fields.matchAll(/`([^`]+)`/g)].map((m) => m[1]),
+      ...[...fields.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)].map((m) => m[1]),
+    ]);
+    for (const citation of citations) {
+      for (const m of citation.matchAll(/(?:^|[\s=(,'"])((?:\.{0,2}\/)?(?:[\w.-]+\/)*[\w-][\w.-]*\.[A-Za-z][A-Za-z0-9]*)(?=$|[\s:#),'"])/g)) {
+        const rel = m[1];
+        // Without a slash, only a known file extension marks a path (not `Game.loadLevel`).
+        if (!rel.includes('/') && !/\.(js|mjs|json|jsonl|md|py|html|txt|tsv|csv|sh|png)$/.test(rel)) continue;
+        if (/^\/(private\/)?tmp\//.test(rel)) continue; // scratch output of a command, not a citation
+        if (rel.startsWith('/')) { if (!KNOWN_CITATION_GAPS.has(`${id} ${rel}`)) problems.push(`${id}: cited path ${rel} is absolute`); continue; }
+        const clean = rel.replace(/^\.\//, '');
+        const relativeToRoot = path.relative(ROOT, path.resolve(ROOT, clean));
+        if (relativeToRoot === '..' || relativeToRoot.startsWith(`..${path.sep}`) || path.isAbsolute(relativeToRoot)) {
+          problems.push(`${id}: cited path ${rel} escapes the repository`);
+          continue;
+        }
+        const named = /^(RESULT-\d{4})\//.test(clean) ? [`experiments/${clean}`] : [];
+        if (clean.startsWith('-')) continue; // suffix shorthand for the previous path
+        const local = clean.includes('/') ? [] : [`experiments/${id}`, ...dirs].map((d) => `${d}/${clean}`);
+        if (![clean, ...named, ...local].some(exists) && !KNOWN_CITATION_GAPS.has(`${id} ${rel}`)) {
+          problems.push(`${id}: cited path ${rel} does not exist`);
+        }
+      }
+    }
+    // `revision` and `checkout` label producer identities the same way `commit` does.
+    // A plural label covers a whole list: `commits `a` (X), `b` (Y), and `c``.
+    for (const m of fields.matchAll(/\b(?:commits?|revisions?|checkouts?)(?:\s+at)?\s*[:=]?\s*`?([0-9a-fA-F]{7,40})\b`?/gi)) {
+      const shas = [m[1]];
+      const next = /^\s*(?:\([^)]*\))?\s*(?:,\s*(?:and\s+)?|and\s+)`?([0-9a-fA-F]{7,40})\b`?/i;
+      let rest = fields.slice(m.index + m[0].length);
+      for (let n = next.exec(rest); n; n = next.exec(rest)) { shas.push(n[1]); rest = rest.slice(n[0].length); }
+      for (const sha of shas) {
+        if (!isCommit(sha.toLowerCase()) && !KNOWN_CITATION_GAPS.has(`${id} ${sha}`)) problems.push(`${id}: cited commit ${sha} is not in this branch's history`);
+      }
+    }
+  }
+  return problems;
+}
+
+// A field's value runs from its `- **field:**` line through every following
+// line up to the next field or heading, so wrapped continuation lines are part
+// of the value and frozen with it. Surrounding blank lines are dropped.
+function ledgerRecords(text) {
+  const records = new Map();
+  for (const record of text.replace(/\r\n/g, '\n').split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
+    const lines = record.split('\n');
+    const id = /^[A-Z]+-\d{4}/.exec(lines[0])[0];
+    const fields = { title: lines[0].slice(id.length).trim() };
+    let name = null;
+    let parts = [];
+    const close = () => { if (name !== null) fields[name] ??= parts.join('\n').trim(); };
+    for (const line of lines.slice(1)) {
+      // Only a heading that ends a record (as the structure check reads it)
+      // stops parsing; an H4-H6 inside a field stays part of the frozen value.
+      if (/^#{1,3} /.test(line)) break;
+      const m = /^- \*\*([^*]+?):\*\*[ \t]*(.*)$/.exec(line);
+      if (m) { close(); name = m[1]; parts = [m[2].trim()]; continue; }
+      if (name !== null) parts.push(line.trimEnd());
+    }
+    close();
+    records.set(id, fields);
+  }
+  return records;
+}
+const linkIds = (value) => [...(value || '').matchAll(/[A-Z]+-\d{4}/g)].map((m) => m[0]);
+
+// supersedes and superseded_by must name each other, both ways.
+function assessLedgerLinks(text) {
+  const problems = [];
+  const records = ledgerRecords(text);
+  for (const [id, f] of records) {
+    if (linkIds(f.superseded_by).length && !['superseded', 'narrowed'].includes(f.status)) {
+      problems.push(`${id}: superseded_by is set but status is ${f.status}`);
+    }
+    for (const [field, back] of [['supersedes', 'superseded_by'], ['superseded_by', 'supersedes']]) {
+      for (const other of linkIds(f[field])) {
+        if (other === id) problems.push(`${id}: ${field} cannot name itself`);
+        else if (!records.has(other)) problems.push(`${id}: ${field} names missing record ${other}`);
+        else if (!linkIds(records.get(other)[back]).includes(id)) problems.push(`${id}: ${field} ${other}, but ${other}'s ${back} does not name ${id}`);
+      }
+    }
+  }
+  return problems;
+}
+
+// Append-only: compared with the base ledger, no claim field changes, links
+// and notes only grow. Status may change; the structure and link checks
+// require a matching correction when it does.
+// One rule set across two scripts: tools/verify-ledger-authorship.js owns
+// record removal, duplicate IDs, and the written_by/checked_by sign-off that a
+// new, changed, or accepted record needs; this check owns what may change
+// inside a record. written_by and checked_by are therefore mutable here: the
+// authorship gate requires adding or renewing them whenever an existing record
+// changes, and freezing them here would forbid exactly that.
+// Does NOT catch a wrong new record, or rewrites already on the base.
+// Every other field is frozen, including the heading title and any ad hoc
+// bold line such as an old `**appended ...:**` narrowing.
+const MUTABLE_FIELDS = new Set(['status', 'updated', 'supersedes', 'superseded_by', 'notes', 'written_by', 'checked_by']);
+function assessLedgerHistory(text, baseText) {
+  const problems = [];
+  const now = ledgerRecords(text);
+  for (const [id, before] of ledgerRecords(baseText)) {
+    const after = now.get(id);
+    if (!after) continue; // a removed record is the authorship gate's failure
+    for (const field of new Set([...Object.keys(before), ...Object.keys(after)])) {
+      if (MUTABLE_FIELDS.has(field)) continue;
+      if ((before[field] ?? null) !== (after[field] ?? null)) problems.push(`${id}: ${field} was rewritten; append a correction instead`);
+    }
+    // A status change needs a new correction link, except marking a record stale.
+    if (before.status !== after.status && after.status !== 'stale') {
+      const had = new Set(linkIds(before.superseded_by));
+      if (!linkIds(after.superseded_by).some((x) => !had.has(x))) {
+        problems.push(`${id}: status ${before.status} -> ${after.status} without a new superseded_by correction`);
+      }
+    }
+    for (const field of ['supersedes', 'superseded_by']) {
+      const kept = new Set(linkIds(after[field]));
+      for (const other of linkIds(before[field])) if (!kept.has(other)) problems.push(`${id}: ${field} dropped ${other}`);
+    }
+    if (before.notes && !(after.notes || '').startsWith(before.notes)) problems.push(`${id}: notes were rewritten; only additions at the end are allowed`);
+  }
+  return problems;
+}
+
+// The ledger as of the branch point with origin/main, so branch and
+// uncommitted edits are compared against shared history.
+// On main itself (HEAD is the branch point, as in a push run) compare with
+// LEDGER_BASE when CI supplies the pre-push commit, else HEAD's parent, so a
+// direct push is still checked.
+function baseLedgerText() { return baseFileText('EVIDENCE_LEDGER.md'); }
+function baseFileText(rel) {
+  const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1e8 });
+  try {
+    // Same base as tools/verify-ledger-authorship.js: LEDGER_BASE wins when set.
+    const given = process.env.LEDGER_BASE;
+    let base = given && !/^0+$/.test(given) ? given : git(['merge-base', 'HEAD', 'origin/main']).trim();
+    if (base === git(['rev-parse', 'HEAD']).trim()) base = 'HEAD^';
+    return git(['show', `${base}:${rel}`]);
+  } catch { return null; }
+}
+
+// BL-0016 F6: every protocol on disk, whether or not its ledger record exists
+// yet, registered from 2026-09-27 must state its sample size and margin. A
+// registered date that is missing or not YYYY-MM-DD is itself a problem, so a
+// quoted or blank date cannot slip past the cutoff.
+const SAMPLE_SIZE_ITEMS = ['Per verdict', 'Margin', 'Downstream quantity'];
+function markdownH2(text, heading) {
+  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = new RegExp(`^## ${escaped}\\b[^\\n]*\\n([\\s\\S]*?)(?=^## |(?![\\s\\S]))`, 'm').exec(text);
+  return match ? match[1].trim() : '';
+}
+
+function assessStructuredSampleSizeCompanion(text) {
+  const problems = [];
+  const units = markdownH2(text, 'Units, assignment, panel, and completeness');
+  if (!/^- Matrix:[^\n]*\d[^\n]*(?:paired cells|games|units)/m.test(units)) {
+    problems.push('has no explicit numeric matrix in "## Units, assignment, panel, and completeness"');
+  }
+  const objective = markdownH2(text, 'Objective and termination');
+  if (!/\b95% interval\b/.test(objective) || !/\b1\.96\b/.test(objective)) {
+    problems.push('has no quantitative margin in "## Objective and termination"');
+  }
+  const adoption = markdownH2(text, 'Adoption boundary');
+  if (adoption.length < 40 || /<[^>]+>/.test(adoption)) {
+    problems.push('has no filled "## Adoption boundary" for downstream use');
+  }
+  return problems;
+}
+
+function assessSampleSizeSections(dir = EXPERIMENTS) {
+  const problems = [];
+  if (!fs.existsSync(dir)) return problems;
+  for (const name of fs.readdirSync(dir)) {
+    const file = path.join(dir, name, 'protocol.md');
+    if (!fs.existsSync(file)) continue;
+    const text = fs.readFileSync(file, 'utf8');
+    const front = parseFrontmatter(text) || {};
+    const raw = String(front.registered || '').replace(/^['"]|['"]$/g, '');
+    const date = /^\d{4}-\d{2}-\d{2}/.exec(raw);
+    if (!date) { problems.push(`${name}: protocol registered date "${raw}" is missing or not YYYY-MM-DD`); continue; }
+    if (date[0] < '2026-09-27') continue;
+    const section = /^## Sample size and margin\b[^\n]*\n([\s\S]*?)(?=^## |(?![\s\S]))/m.exec(text);
+    if (!section) {
+      const companion = path.join(dir, name, 'registered-protocol.md');
+      const companionRel = `experiments/${name}/registered-protocol.md`;
+      if (!fs.existsSync(companion)) {
+        problems.push(`${name}: protocol registered ${date[0]} has no "## Sample size and margin" section`);
+        continue;
+      }
+      if (!front.version_freeze || !Object.prototype.hasOwnProperty.call(front.version_freeze, companionRel)) {
+        problems.push(`${name}: registered-protocol.md supplies sample-size fields but is not frozen as ${companionRel}`);
+        continue;
+      }
+      const companionProblems = assessStructuredSampleSizeCompanion(fs.readFileSync(companion, 'utf8'));
+      if (companionProblems.length) {
+        for (const problem of companionProblems) problems.push(`${name}: registered-protocol.md ${problem}`);
+      }
+      continue;
+    }
+    // Every item the template asks for must be present and filled in, not left
+    // blank or as the template's <placeholder>.
+    for (const item of SAMPLE_SIZE_ITEMS) {
+      const m = new RegExp(`^- \\*\\*${item}:\\*\\*[ \\t]*([\\s\\S]*?)(?=^- \\*\\*|(?![\\s\\S]))`, 'm').exec(section[1]);
+      const value = m ? m[1].trim() : '';
+      if (!value || value.startsWith('<')) problems.push(`${name}: "## Sample size and margin" does not fill in **${item}:**`);
+    }
+  }
+  return problems;
+}
+
+// BL-0016 F2: a run under .orch/runs/ started from 2026-09-27 must end in an
+// outcome file (worklog.md or stop-record.md) with a line
+// `ledger: <RECORD-ID>` naming an existing ledger record, or
+// `ledger: not reportable` with a reason. A finished run whose result never
+// reaches the ledger is lost to the next session. Runs that are still in
+// progress fail too; that is the reminder. Older runs are exempt.
+// Does NOT check that the named record reports this run's result.
+const RUNS = path.join(ROOT, '.orch', 'runs');
+function runStartDate(rel) {
+  try {
+    const dates = execFileSync('git', ['log', '--diff-filter=A', '--format=%cs', '--', rel], {
+      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim().split('\n').filter(Boolean);
+    return dates.length ? dates[dates.length - 1] : null;
+  } catch { return null; }
+}
+function assessRunOutcomes(ledgerText, { runsDir = RUNS, startDate = runStartDate, today = new Date().toISOString().slice(0, 10) } = {}) {
+  const problems = [];
+  if (!fs.existsSync(runsDir)) return problems;
+  const ids = new Set([...ledgerText.matchAll(/^### ([A-Z]+-\d{4})\b/gm)].map((m) => m[1]));
+  for (const name of fs.readdirSync(runsDir)) {
+    const dir = path.join(runsDir, name);
+    if (!fs.statSync(dir).isDirectory()) continue;
+    const started = startDate(path.relative(ROOT, dir)) || today; // uncommitted: new
+    if (started < '2026-09-27') continue;
+    const outcomes = ['worklog.md', 'stop-record.md'].map((f) => path.join(dir, f)).filter((f) => fs.existsSync(f));
+    // The marker must be the final nonblank line of its outcome file, so output
+    // appended after it (a resumed run) makes the run unrecorded again.
+    const finals = outcomes.map((f) => fs.readFileSync(f, 'utf8').split(/\r?\n/).filter((l) => l.trim()).pop() || '');
+    const lines = finals.map((l) => /^ledger:[ \t]*(.+)$/.exec(l.trim())).filter(Boolean).map((m) => m[1].trim());
+    if (!lines.length) { problems.push(`.orch/runs/${name}: no \`ledger:\` line ends worklog.md or stop-record.md`); continue; }
+    for (const value of lines) {
+      if (/^not reportable\b.{8,}/.test(value)) continue;
+      if (/^not reportable/.test(value)) { problems.push(`.orch/runs/${name}: \`ledger: not reportable\` needs a reason`); continue; }
+      for (const id of value.match(/[A-Z]+-\d{4}/g) || ['(none)']) {
+        if (!ids.has(id)) problems.push(`.orch/runs/${name}: ledger line names ${id}, which is not in the ledger`);
+      }
+    }
+  }
+  return problems;
+}
+
+// Session close-out: a change that adds a ledger record must also update
+// CURRENT.md, or the "what's active now" page silently goes stale while the
+// ledger moves on. Does NOT check that the update is about the new record.
+function assessCloseOut(ledgerText, baseText, currentText, baseCurrentText) {
+  if (baseText === null || baseCurrentText === null) return [];
+  const had = new Set([...baseText.matchAll(/^### ([A-Z]+-\d{4})\b/gm)].map((m) => m[1]));
+  const added = [...ledgerText.matchAll(/^### ([A-Z]+-\d{4})\b/gm)].map((m) => m[1]).filter((id) => !had.has(id));
+  if (added.length && currentText === baseCurrentText) {
+    return [`ledger adds ${added.join(', ')} but CURRENT.md is unchanged; update it when closing out`];
+  }
+  return [];
+}
+
 function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
+  const ledgerText = fs.readFileSync(LEDGER, 'utf8');
   problems.push(...assessFailedRunLedger(ROOT));
-  const results = readLedgerResults(fs.readFileSync(LEDGER, 'utf8'));
+  problems.push(...assessLedgerStructure(ledgerText));
+  problems.push(...assessLedgerCitations(ledgerText));
+  problems.push(...assessSampleSizeSections());
+  problems.push(...assessRunOutcomes(ledgerText));
+  problems.push(...assessLedgerLinks(ledgerText));
+  // LEDGER-INDEX.md freshness is `node tools/ledger-index.js --check`, its own
+  // CI and pre-push step; it is not repeated here.
+  const baseText = baseLedgerText();
+  if (baseText === null) problems.push('cannot read the base ledger from git; history check did not run');
+  else problems.push(...assessLedgerHistory(ledgerText, baseText));
+  const currentPath = path.join(ROOT, 'CURRENT.md');
+  problems.push(...assessCloseOut(ledgerText, baseText,
+    fs.existsSync(currentPath) ? fs.readFileSync(currentPath, 'utf8') : '', baseFileText('CURRENT.md')));
+  const results = readLedgerResults(ledgerText);
   const exempt = grandfathered();
 
   for (const result of results) {
@@ -791,7 +1197,7 @@ function main() {
 if (require.main === module) main();
 
 module.exports = {
-  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessExperiments, citedArtifacts,
+  REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessCloseOut, assessLedgerCitations, assessLedgerHistory, assessRunOutcomes, assessSampleSizeSections, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
   assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
