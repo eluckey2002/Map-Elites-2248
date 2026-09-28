@@ -35,7 +35,7 @@ option stated.
 ## Acceptance criteria
 
 1. A protocol is registered and committed before either bot is measured: the
-   seed range (fresh, logged, avoiding seeds 200000-200039), both bots to be
+   seed range (never observed for Level 54: exclude the whole prior panel 200000-200119 that `src/game.js`'s Level 54 comment records, plus any range in `experiments/SEEDS.md`; logged in `SEEDS.md` before use), both bots to be
    measured (shipped bot and `calib-1`), and the decision thresholds that
    determine keep, retune, or re-author, all fixed before any outcome data
    exists.
@@ -65,3 +65,4 @@ before measuring either bot at 126,000.
   criterion 1 requiring a registered protocol (seed range, both bots,
   keep/retune/re-author thresholds) committed before either bot is measured,
   renumbered the prior criteria, and updated Next action to match.
+- 2026-09-27: Corrected the excluded seed range to the full prior Level 54 panel 200000-200119 (Codex review on b625881).
