@@ -100,3 +100,8 @@ the whole space. Not one term at a time.
   decisions. It failed the strict qualification and stopped before fresh
   evidence: current maximum harvest detects preservation at one decision but
   cannot represent setup, accumulation, realization, or target timing.
+- 2026-09-28 — `LC-0003` tested an exactly three-step target-progress proxy
+  against the same known panel. It failed 4/10 decision cells and stopped
+  before fresh evidence: short-horizon target gap reversed eventual takeover
+  value at harmful moves 4 and 9 and helpful moves 6 and 11. Do not tune the
+  horizon on this opened panel.
