@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "kind": "built-reservoir-proxy-manifest",
+  "paths": {
+    "recording": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+    "contract": "docs/learning-cycles/LC-0002-built-reservoir-proxy-contract.md"
+  },
+  "identities": {
+    "recording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+    "contract": "23fba043366d5b0d4ec1261ca45e85dc31ac0ae6b156c8c11eaa812a30ddc57d",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "probe": "a3a11f9ba8db149430b05f6864b2cd70977e207fdc8872f2cf9d221f2b4b7e00",
+    "harness": "bc09c149750d8659d46d6e6592b293d58ecdb45583b5f628e84208c34e5cdfe1"
+  },
+  "artifactIdentity": "fe7c47bf58575281954b9bee5bc9facee8aeed98bf9082f19968debb0bea7167"
+}
