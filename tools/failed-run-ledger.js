@@ -132,6 +132,20 @@ function scanFailedClosures(root = ROOT) {
     }
     failures.push({ resultId, runId: closure.run_id, status: closure.closure_status, evidencePath: rel });
   }
+  const failuresByRun = new Map();
+  for (const failure of failures) {
+    const matching = failuresByRun.get(failure.runId) || [];
+    matching.push(failure);
+    failuresByRun.set(failure.runId, matching);
+  }
+  for (const [runId, matching] of failuresByRun) {
+    if (matching.length > 1) {
+      problems.push(
+        `${runId}: retained failed closures ${matching.map(({ resultId }) => resultId).join(', ')} share a run_id; `
+        + 'run_id must uniquely identify one closure',
+      );
+    }
+  }
   return { failures, problems };
 }
 
@@ -187,7 +201,12 @@ function assessFailedRunLedger(root = ROOT) {
 
   const ids = new Set();
   const runIds = new Set();
-  const closureByRun = new Map(scan.failures.map((failure) => [failure.runId, failure]));
+  const closuresByRun = new Map();
+  for (const failure of scan.failures) {
+    const matching = closuresByRun.get(failure.runId) || [];
+    matching.push(failure);
+    closuresByRun.set(failure.runId, matching);
+  }
   for (const record of records) {
     const label = record.failure_id || '<missing failure_id>';
     if (!/^FR-\d{4}$/.test(record.failure_id)) problems.push(`${label}: failure_id must be FR-NNNN`);
@@ -218,10 +237,13 @@ function assessFailedRunLedger(root = ROOT) {
     }
 
     if (record.source_kind === 'closure') {
-      const failure = closureByRun.get(record.run_id);
-      if (!failure) {
+      const matching = closuresByRun.get(record.run_id) || [];
+      if (matching.length === 0) {
         problems.push(`${label}: closure row does not match a retained INVALID or UNVERIFIED run (${record.run_id})`);
+      } else if (matching.length > 1) {
+        problems.push(`${label}: closure row is ambiguous because ${record.run_id} identifies ${matching.length} retained failed closures`);
       } else {
+        const [failure] = matching;
         if (record.result_id !== failure.resultId) {
           problems.push(`${label}: result_id ${record.result_id} does not match ${failure.resultId}`);
         }
@@ -242,11 +264,20 @@ function assessFailedRunLedger(root = ROOT) {
   }
 
   for (const failure of scan.failures) {
-    const matching = records.filter((record) => record.source_kind === 'closure' && record.run_id === failure.runId);
+    const matching = records.filter((record) => (
+      record.source_kind === 'closure'
+      && record.result_id === failure.resultId
+      && record.run_id === failure.runId
+      && record.evidence_path === failure.evidencePath
+    ));
     if (matching.length === 0) {
-      problems.push(`${failure.runId}: retained ${failure.status} closure has no row in ${LEDGER_NAME}`);
+      problems.push(
+        `${failure.resultId}/${failure.runId}: retained ${failure.status} closure has no exact row in ${LEDGER_NAME}`,
+      );
     } else if (matching.length > 1) {
-      problems.push(`${failure.runId}: retained closure has ${matching.length} ledger rows; expected exactly one`);
+      problems.push(
+        `${failure.resultId}/${failure.runId}: retained closure has ${matching.length} exact ledger rows; expected exactly one`,
+      );
     }
   }
   for (const failure of legacyFailures) {

@@ -1,5 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 const path = require('node:path');
 const {
@@ -163,7 +164,7 @@ test('an exploratory artifact cannot back a generalizing claim', () => {
 const {
   assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
   assessClosureReceipt, assessReportAnswers,
-  assessStampProvenance, assessVersionFreeze, openCitedArtifacts, reachableFromHead, sha16,
+  assessStampProvenance, assessVersionFreeze, canonicalJson, openCitedArtifacts, reachableFromHead, sha16,
 } = require('../../tools/verify-experiments.js');
 
 const ROOT = path.join(__dirname, '..', '..');
@@ -251,17 +252,60 @@ test('LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit', 
   const qualification = structuredClone(opened.find((entry) => entry.rel === qualificationRel).artifact);
   qualification.qualification = 'FAIL';
   qualification.controls[0].status = 'FAIL';
+  qualification.registration = structuredClone(
+    opened.find((entry) => entry.rel === 'experiments/RESULT-0049/corpus.json').artifact.registration,
+  );
+  const { registration: forgedRegistration, ...qualificationBody } = qualification;
+  assert.ok(forgedRegistration, 'the forged receipt must carry a plausible registration');
+  qualification.artifactIdentity = crypto.createHash('sha256')
+    .update(canonicalJson(qualificationBody))
+    .digest('hex');
+  const qualificationBytes = Buffer.from(JSON.stringify(qualification));
+  const attackedOpened = opened.map((entry) => (
+    entry.rel === qualificationRel
+      ? { ...entry, artifact: qualification, bytes: qualificationBytes }
+      : entry
+  ));
   const reportRel = 'experiments/RESULT-0049/report.md';
   const report = fsx.readFileSync(path.join(ROOT, reportRel), 'utf8')
     .replace('| Champion-only wins | 17 |', '| Champion-only wins | 999999 |');
   const overrides = new Map([
-    [qualificationRel, Buffer.from(JSON.stringify(qualification))],
     [reportRel, Buffer.from(report)],
   ]);
 
-  const problems = assessClosedEvidenceImmutability(result, protocol, opened, overrides);
+  const problems = assessClosedEvidenceImmutability(result, protocol, attackedOpened, overrides);
+  assert.equal(
+    assessArtifactIdentity(result, attackedOpened)
+      .some((problem) => problem.includes(qualificationRel)),
+    false,
+    'the forged qualification has a valid self-identity; closing-commit immutability must still own it',
+  );
   assert.ok(problems.some((problem) => problem.includes(`${qualificationRel} differs from closing commit`)));
   assert.ok(problems.some((problem) => problem.includes(`${reportRel} differs from closing commit`)));
+});
+
+test('LIVE: every RESULT-0049 cited JSON artifact is closing-commit bound', () => {
+  const result = liveResult('RESULT-0049');
+  const opened = openCitedArtifacts(result);
+  const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0049', 'protocol.md'), 'utf8');
+  const reportRel = 'experiments/RESULT-0049/report.md';
+  const evidence = [
+    ...opened.filter(({ exists, bytes, looksLikePath }) => exists && bytes && looksLikePath),
+    { rel: reportRel, bytes: fsx.readFileSync(path.join(ROOT, reportRel)) },
+  ];
+
+  for (const { rel, bytes } of evidence) {
+    const problems = assessClosedEvidenceImmutability(
+      result,
+      protocol,
+      opened,
+      new Map([[rel, Buffer.concat([bytes, Buffer.from('\n')])]]),
+    );
+    assert.ok(
+      problems.some((problem) => problem.includes(`${rel} differs from closing commit`)),
+      `${rel} must not be able to leave the closing-commit trust boundary`,
+    );
+  }
 });
 
 test('LIVE: a citation that resolves to nothing fails; a filename in prose does not', () => {

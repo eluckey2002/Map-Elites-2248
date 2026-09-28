@@ -74,8 +74,30 @@ test('a real UNVERIFIED closure fails when its ledger row is absent', () => {
   write(root, rel, fs.readFileSync(path.join(ROOT, rel)));
   write(root, 'FAILED-RUN-LEDGER.CSV', `${HEADER.join(',')}\n`);
   assert.deepEqual(assessFailedRunLedger(root), [
-    'RESULT-0036-confirmation-33200000-33200007: retained UNVERIFIED closure has no row in FAILED-RUN-LEDGER.CSV',
+    'RESULT-0036/RESULT-0036-confirmation-33200000-33200007: retained UNVERIFIED closure has no exact row in FAILED-RUN-LEDGER.CSV',
   ]);
+});
+
+test('two failed closures cannot share one run_id and one ledger row', () => {
+  const root = tempRoot();
+  for (const [resultId, status] of [['RESULT-0001', 'INVALID'], ['RESULT-0002', 'UNVERIFIED']]) {
+    write(root, `experiments/${resultId}/closure.json`, JSON.stringify({
+      run_id: 'copied-template-run',
+      closure_status: status,
+    }));
+  }
+  write(root, 'tools/prevent.js');
+  write(root, 'solver/tests/prevent.test.js');
+  write(root, 'FAILED-RUN-LEDGER.CSV', `${HEADER.join(',')}\n${validRow({
+    result_id: 'RESULT-0001',
+    run_id: 'copied-template-run',
+    evidence_path: 'experiments/RESULT-0001/closure.json',
+  })}\n`);
+
+  const problems = assessFailedRunLedger(root).join('\n');
+  assert.match(problems, /retained failed closures RESULT-0001, RESULT-0002 share a run_id/);
+  assert.match(problems, /closure row is ambiguous because copied-template-run identifies 2 retained failed closures/);
+  assert.match(problems, /RESULT-0002\/copied-template-run: retained UNVERIFIED closure has no exact row/);
 });
 
 test('a ledger row cannot claim prevention through missing files', () => {

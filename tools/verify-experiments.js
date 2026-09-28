@@ -193,7 +193,7 @@ function pathExistsAtCommit(sha, relPath) {
 function showAtCommit(sha, relPath, cwd = ROOT, { raw = false } = {}) {
   try {
     const out = execFileSync('git', ['show', `${sha}:${gitObjectPath(relPath)}`], {
-      cwd, stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024,
+      cwd, stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 128 * 1024 * 1024,
       ...(raw ? {} : { encoding: 'utf8' }),
     });
     return out;
@@ -397,9 +397,7 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
   }
 
   const entries = opened
-    .filter(({ exists, bytes, artifact }) => (
-      exists && bytes && !(artifact && typeof artifact.artifactIdentity === 'string')
-    ))
+    .filter((entry) => entry.exists && entry.bytes)
     .map(({ rel, bytes }) => ({ rel, bytes }));
   const reportRel = `experiments/${result.id}/report.md`;
   const reportPath = path.join(ROOT, reportRel);
