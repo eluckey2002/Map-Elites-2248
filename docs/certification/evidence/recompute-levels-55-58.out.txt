@@ -1,0 +1,6 @@
+{"level":55,"measuredMedian":152832,"demand":0.9,"recomputedTarget":137000,"shippedTarget":122000,"match":false}
+{"level":57,"measuredMedian":152640,"demand":0.85,"recomputedTarget":129000,"shippedTarget":129000,"match":true}
+{"level":58,"measuredMedian":191104,"demand":0.85,"recomputedTarget":162000,"shippedTarget":162000,"match":true}
+real 77.49
+user 55.34
+sys 0.56

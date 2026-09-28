@@ -1,0 +1,1504 @@
+[
+  {
+    "level": 1,
+    "line": 35,
+    "target": 520,
+    "tileScale": 1,
+    "moves": 25,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 2,
+    "line": 36,
+    "target": 970,
+    "tileScale": 1,
+    "moves": 25,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 3,
+    "line": 37,
+    "target": 1400,
+    "tileScale": 1,
+    "moves": 25,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 4,
+    "line": 38,
+    "target": 1850,
+    "tileScale": 1,
+    "moves": 25,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 5,
+    "line": 39,
+    "target": 2300,
+    "tileScale": 1,
+    "moves": 25,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 6,
+    "line": 40,
+    "target": 2650,
+    "tileScale": 1,
+    "moves": 24,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 7,
+    "line": 41,
+    "target": 3050,
+    "tileScale": 1,
+    "moves": 24,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 8,
+    "line": 42,
+    "target": 3350,
+    "tileScale": 1,
+    "moves": 23,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 9,
+    "line": 43,
+    "target": 3750,
+    "tileScale": 1,
+    "moves": 23,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 10,
+    "line": 44,
+    "target": 4000,
+    "tileScale": 1,
+    "moves": 22,
+    "minChain": 2,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 11,
+    "line": 47,
+    "target": 7500,
+    "tileScale": 2,
+    "moves": 28,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 12,
+    "line": 48,
+    "target": 7700,
+    "tileScale": 2,
+    "moves": 27,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 13,
+    "line": 49,
+    "target": 8150,
+    "tileScale": 2,
+    "moves": 27,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 14,
+    "line": 50,
+    "target": 8250,
+    "tileScale": 2,
+    "moves": 26,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 15,
+    "line": 51,
+    "target": 8100,
+    "tileScale": 2,
+    "moves": 28,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 16,
+    "line": 52,
+    "target": 8300,
+    "tileScale": 2,
+    "moves": 27,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 17,
+    "line": 53,
+    "target": 8800,
+    "tileScale": 2,
+    "moves": 27,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 18,
+    "line": 54,
+    "target": 8050,
+    "tileScale": 2,
+    "moves": 26,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone",
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 19,
+    "line": 55,
+    "target": 7750,
+    "tileScale": 2,
+    "moves": 26,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone",
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 20,
+    "line": 56,
+    "target": 9150,
+    "tileScale": 2,
+    "moves": 25,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone",
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 21,
+    "line": 57,
+    "target": 13600,
+    "tileScale": 4,
+    "moves": 28,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 22,
+    "line": 58,
+    "target": 13500,
+    "tileScale": 4,
+    "moves": 27,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 23,
+    "line": 59,
+    "target": 14800,
+    "tileScale": 4,
+    "moves": 27,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 24,
+    "line": 60,
+    "target": 13600,
+    "tileScale": 4,
+    "moves": 26,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone",
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 25,
+    "line": 61,
+    "target": 18300,
+    "tileScale": 4,
+    "moves": 26,
+    "minChain": 3,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "ice"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 26,
+    "line": 64,
+    "target": 23700,
+    "tileScale": 4,
+    "moves": 32,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 27,
+    "line": 65,
+    "target": 23800,
+    "tileScale": 4,
+    "moves": 31,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 28,
+    "line": 66,
+    "target": 21000,
+    "tileScale": 4,
+    "moves": 31,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 29,
+    "line": 67,
+    "target": 21600,
+    "tileScale": 4,
+    "moves": 30,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 30,
+    "line": 68,
+    "target": 22300,
+    "tileScale": 4,
+    "moves": 30,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone",
+      "ice"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 31,
+    "line": 71,
+    "target": 33700,
+    "tileScale": 8,
+    "moves": 30,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 32,
+    "line": 72,
+    "target": 29400,
+    "tileScale": 8,
+    "moves": 30,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 33,
+    "line": 73,
+    "target": 29900,
+    "tileScale": 8,
+    "moves": 29,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 34,
+    "line": 74,
+    "target": 32700,
+    "tileScale": 8,
+    "moves": 29,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "ice"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 35,
+    "line": 75,
+    "target": 26700,
+    "tileScale": 8,
+    "moves": 28,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 36,
+    "line": 76,
+    "target": 37200,
+    "tileScale": 8,
+    "moves": 28,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "ice"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 37,
+    "line": 77,
+    "target": 29900,
+    "tileScale": 8,
+    "moves": 27,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 38,
+    "line": 78,
+    "target": 34500,
+    "tileScale": 8,
+    "moves": 27,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "ice"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 39,
+    "line": 79,
+    "target": 32500,
+    "tileScale": 8,
+    "moves": 26,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "stone"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 40,
+    "line": 80,
+    "target": 47200,
+    "tileScale": 8,
+    "moves": 30,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 41,
+    "line": 83,
+    "target": 53000,
+    "tileScale": 16,
+    "moves": 29,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 42,
+    "line": 84,
+    "target": 67300,
+    "tileScale": 16,
+    "moves": 29,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 43,
+    "line": 85,
+    "target": 60100,
+    "tileScale": 16,
+    "moves": 28,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 44,
+    "line": 86,
+    "target": 74000,
+    "tileScale": 16,
+    "moves": 28,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "ice",
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 45,
+    "line": 87,
+    "target": 63900,
+    "tileScale": 16,
+    "moves": 27,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "stone",
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 46,
+    "line": 88,
+    "target": 71500,
+    "tileScale": 16,
+    "moves": 27,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "ice"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 47,
+    "line": 89,
+    "target": 67800,
+    "tileScale": 16,
+    "moves": 26,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 48,
+    "line": 90,
+    "target": 66400,
+    "tileScale": 16,
+    "moves": 26,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "stone",
+      "ice"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 49,
+    "line": 91,
+    "target": 63100,
+    "tileScale": 16,
+    "moves": 25,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "stone",
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 50,
+    "line": 92,
+    "target": 75900,
+    "tileScale": 16,
+    "moves": 28,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "stone",
+      "bomb",
+      "bomb"
+    ],
+    "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
+    "last_changed_commit": "8e1e232",
+    "last_changed_date": "2026-08-12",
+    "last_changed_message": "Make every level winnable by deriving targets from measured score",
+    "ledger_records": [
+      "DECISION-0003 (EVIDENCE_LEDGER.md) -- status: accepted, owner_decision -- targets = demand x measured achievable score, tile scale doubles per 10-level chapter",
+      "RESULT-0008 (EVIDENCE_LEDGER.md) -- status: accepted, heuristic_observation -- 100 seeds/level from seed 100000, all 50 levels >=5% bot win rate (was 34/50 at 0% before)"
+    ],
+    "seeds": "Fitted on seeds 0-149 (game-tester.js); RESULT-0008 verification used seeds 100000-100099, disjoint from fitting seeds. Not itemized per-level in experiments/SEEDS.md.",
+    "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
+    "custody_verdict": "TRACED",
+    "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 51,
+    "line": 101,
+    "target": 124000,
+    "tileScale": 32,
+    "moves": 24,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [],
+    "origin": "RESULT-0009 -- level-author pipeline / authoring tracer (BL-0004), target = 70% of measured achievable score (300-seed holdout)",
+    "last_changed_commit": "32b90b3",
+    "last_changed_date": "2026-08-20",
+    "last_changed_message": "Ship Level 51, the first level whose target was measured rather than chosen",
+    "ledger_records": [
+      "RESULT-0009 (EVIDENCE_LEDGER.md) -- status: accepted -- 300-seed disjoint holdout seeds 100000-100299: 297 wins, 0 lockouts, 0 bomb failures; demand 0.70 per DECISION-0003 methodology; direct human evidence: 3 playthroughs of same seed, replay-verified (one loss under a since-fixed input bug, two winning strategies 12/127,040 and 14/130,496)"
+    ],
+    "seeds": "Holdout seeds 100000-100299 (300 seeds); human playtests on same fixed seed (specific seed value not given in ledger excerpt). Logged in EVIDENCE_LEDGER.md, not itemized by exact seed in experiments/SEEDS.md.",
+    "code_identity": "Pre-RESULT-0011 reference bot (RESULT-0011 notes Level 51 bot median moves-to-target improved 17->16 after that later change)",
+    "custody_verdict": "TRACED",
+    "notes": "First level whose target was never hand-picked (BL-0004 milestone). Ledger entry cites ticket, replay-verification audit, and worklog.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 52,
+    "line": 112,
+    "target": 102000,
+    "tileScale": 32,
+    "moves": 24,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone"
+    ],
+    "origin": "RESULT-0012 -- level-author pipeline, target = 70% of measured achievable score, held at pre-RESULT-0011 bot value (owner decision not to re-derive)",
+    "last_changed_commit": "0a73bf5",
+    "last_changed_date": "2026-08-20",
+    "last_changed_message": "Ship Level 52, holding the target its playtest was run against",
+    "ledger_records": [
+      "RESULT-0012 (EVIDENCE_LEDGER.md) -- status: accepted -- median 146,688, 300-seed holdout seeds 100000-100299: 290 wins, 0 lockouts, 0 bomb failures; target held at 102,000 (pre-RESULT-0011 bot) rather than re-derived (~107,000 post-RESULT-0011); owner played and won 124,864 in 15/24 moves, replay-verified",
+      "RESULT-0011 -- reference-bot chain-walk tie-break change (+5.25% median score) that came after Level 52's target was set; explains why 52's effective demand (~0.667) differs from its stated 0.700 label"
+    ],
+    "seeds": "Holdout seeds 100000-100299 (same disjoint block as Level 51); receipt candidate-levels-52.json/.receipt.json",
+    "code_identity": "Pre-RESULT-0011 bot (explicit -- decision was to NOT re-derive against RESULT-0011's stronger bot)",
+    "custody_verdict": "TRACED",
+    "notes": "Receipt files solver/candidate-levels-52.json and solver/candidate-levels-52.receipt.json cited by SHA-256 in ledger (citation-repair 2026-08-31 repointed path, same content).",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 53,
+    "line": 128,
+    "target": 101000,
+    "tileScale": 32,
+    "moves": 16,
+    "minChain": 3,
+    "gridW": 6,
+    "gridH": 5,
+    "blockers": [],
+    "origin": "UNKNOWN at the ledger level -- entered src/game.js via a MAP-Elites-evidence-integration commit with no accompanying DECISION/RESULT record. Level's in-code comment cites a gen-0014 authoring receipt (043ca53f) and later RESULT-0027 acknowledges that receipt but explicitly disclaims retargeting or shipping it.",
+    "last_changed_commit": "530deb3",
+    "last_changed_date": "2026-08-28",
+    "last_changed_message": "Integrate preserved MAP-Elites baseline evidence",
+    "ledger_records": [
+      "No DECISION/RESULT record for the Level 53 shipping decision itself.",
+      "RESULT-0027 (2026-09-03, accepted) -- freezes calib-1 evaluator; re-authored gen-0014 candidate identity a6c3e360... reproduces fitting median 107,904, rounded target 102,000 (NOT 101,000 -- differs from shipped value), 300-seed holdout 196 wins/104 out-of-moves/0 lockouts/0 bombs; explicitly states the archived 101,000 candidate (identity 043ca53f...) is preserved byte-identically but its old bot measurements are 'stale and non-quotable', and the record 'does not... retarget Level 53'.",
+      "CURRENT.md (main, 2026-09-05 section) states plainly: \"Level 53's move from rejected to shipped carries no ledger record; it entered src/game.js in 530deb3, a commit about MAP-Elites evidence. Adjudicating that is open.\""
+    ],
+    "seeds": "In-code comment claims 150 fit seeds + 300-seed holdout (191 wins/0 lockouts/0 bombs) and three owner replays (seeds 2, 10, 10) -- these numbers appear only in the game.js comment and the archived (not currently authoritative) receipt, not in an accepted ledger record for the shipped value.",
+    "code_identity": "Comment cites receipt 043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16 (solver/candidates-archive/candidate-levels-gen0014-wide-sprint-043ca53f.json/.receipt.json); RESULT-0027 confirms this identity is preserved but does not adopt it as Level 53's shipping justification.",
+    "custody_verdict": "PARTIAL",
+    "notes": "Matches the task's known answer: no ledger record for the shipping decision; CURRENT.md explicitly flags this as open. Downgraded from UNTRACED to PARTIAL only because the shipped code comment (game.js:113-127) cites a real, hash-identified receipt file -- but no accepted DECISION/RESULT sanctions using that receipt's numbers (102,000 fitted, per RESULT-0027) or the shipped 101,000 value for Level 53.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 54,
+    "line": 147,
+    "target": 126000,
+    "tileScale": 32,
+    "moves": 24,
+    "minChain": 3,
+    "gridW": 4,
+    "gridH": 8,
+    "blockers": [
+      "stone",
+      "stone"
+    ],
+    "origin": "Owner decision / deliberate exception to the demand rule, based on human evidence (HUMAN-PILOT-0002 / RESULT-0028) rather than bot measurement. Formalized as DECISION-0007, but that decision record lives on branch docs/owner-decisions-0007-0008, NOT on main.",
+    "last_changed_commit": "3bcb5a6",
+    "last_changed_date": "2026-09-05",
+    "last_changed_message": "Ship levels 54-58 -- \"Level 54 is a deliberate exception to the demand rule ... It is the one level whose difficulty comes from human evidence rather than bot measurement.\"",
+    "ledger_records": [
+      "DECISION-0007 (EVIDENCE_LEDGER.md on branch docs/owner-decisions-0007-0008 only, status: provisional, as_of 2026-09-28) -- \"Level 54's 126,000 target is a deliberate owner exception to the demand rule\"; demand rule would have given 89,800; cites shipping commit 3bcb5a6, owner reaffirmation 2026-09-28, RESULT-0028 (owner replay 140,544/20 moves, seed 424242), and shipped-bot comparison 136,832/19 moves same seed. NOT present on main (origin/main) as of ce0930a.",
+      "RESULT-0028 (main, accepted) -- HUMAN-PILOT-0002 recording replays to 140,544 in 20 moves, seed 424242, replay-verified with challenge receipt; explicitly 'establishes ... nothing about calibration (the 126,000 target is inherited from HUMAN-PILOT-0001 and uncalibrated for this layout)'."
+    ],
+    "seeds": "Seed 424242 (HUMAN-PILOT-0002 owner recording, RESULT-0028); bot comparison same seed via solver/human-benchmark.js and recording c50b34f8...; not itemized in experiments/SEEDS.md's per-block table (SEEDS.md lists owner recordings for levels 51-54 generically under seeds 1,2,10,777).",
+    "code_identity": "calib-1 bot median cited in commit message (105,664) but DECISION-0007's own notes say that comparison and the '23.3% win rate' figure are NOT valid under docs/MEASUREMENT-AND-ANALYSIS-STANDARDS.md and must not be cited as evidence.",
+    "custody_verdict": "PARTIAL",
+    "notes": "Matches the task's known answer exactly: on main, the exception is stated only in the commit message (3bcb5a6); DECISION-0007 is drafted but not merged to main as of the read snapshot ce0930a. DECISION-0007 itself is status 'provisional', not 'accepted'.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 55,
+    "line": 149,
+    "target": 122000,
+    "tileScale": 32,
+    "moves": 26,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "stone",
+      "bomb"
+    ],
+    "origin": "Level-authoring pipeline's own rule (roundTarget(measured median achievable x demand)) under the frozen calib-1 evaluator (mechanism traced to RESULT-0027), applied directly without generating an authoring receipt for these specific levels.",
+    "last_changed_commit": "3bcb5a6",
+    "last_changed_date": "2026-09-05",
+    "last_changed_message": "Ship levels 54-58 -- \"calibrated with the authoring pipeline's own rule ... using the frozen calib-1 evaluator over the standard 150 fit seeds, then checked over 120 fresh seeds at the derived target. All five came back with zero lockouts and zero bomb losses.\" ... \"These carry no authoring receipt: they were calibrated by the pipeline's rule, not produced through deriveCandidate, so they are shipped play content rather than receipted authoring evidence.\"",
+    "ledger_records": [
+      "RESULT-0027 (accepted, 2026-09-03) -- freezes calib-1 evaluator and the demand-rule mechanism these levels claim to use, but was admitted BEFORE these five levels shipped (2026-09-05) and does not itself certify levels 55-58.",
+      "No per-level RESULT/DECISION record for 55, 56, 57, or 58. Per-level bot median / demand / win-rate figures (e.g. Level 55: median 152,832, demand 0.80, win rate 88.3%) exist only as game.js comments, not ledger entries.",
+      "experiments/SEEDS.md entry: 41,000,000-41,000,001 registered (not yet run) for RESULT-0044, an owner-versus-oracle challenge touching Levels 56 and 58 -- a later, still-open follow-on, not the original calibration evidence."
+    ],
+    "seeds": "Commit message: 'standard 150 fit seeds' + 120 fresh seeds (200000-200119) checked at derived target, zero lockouts/zero bomb losses across all five. These seed ranges are stated in the commit message/comment only; experiments/SEEDS.md does not carry a dedicated row for the 150-fit-seed or 200000-200119 check block for levels 54-58.",
+    "code_identity": "Frozen calib-1 evaluator per RESULT-0027 (calibration solver identity c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed); commit message names the evaluator as calib-1 explicitly.",
+    "custody_verdict": "PARTIAL",
+    "notes": "Matches the task's known answer: commit 3bcb5a6 explicitly states these five levels 'carry no authoring receipt'. The general mechanism (calib-1, demand rule) is TRACED via RESULT-0027, but the specific per-level derivation for 55-58 is asserted only in the commit message and in-code comments, never captured in an accepted ledger record.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 56,
+    "line": 152,
+    "target": 108000,
+    "tileScale": 32,
+    "moves": 18,
+    "minChain": 3,
+    "gridW": 6,
+    "gridH": 5,
+    "blockers": [],
+    "origin": "Level-authoring pipeline's own rule (roundTarget(measured median achievable x demand)) under the frozen calib-1 evaluator (mechanism traced to RESULT-0027), applied directly without generating an authoring receipt for these specific levels.",
+    "last_changed_commit": "3bcb5a6",
+    "last_changed_date": "2026-09-05",
+    "last_changed_message": "Ship levels 54-58 -- \"calibrated with the authoring pipeline's own rule ... using the frozen calib-1 evaluator over the standard 150 fit seeds, then checked over 120 fresh seeds at the derived target. All five came back with zero lockouts and zero bomb losses.\" ... \"These carry no authoring receipt: they were calibrated by the pipeline's rule, not produced through deriveCandidate, so they are shipped play content rather than receipted authoring evidence.\"",
+    "ledger_records": [
+      "RESULT-0027 (accepted, 2026-09-03) -- freezes calib-1 evaluator and the demand-rule mechanism these levels claim to use, but was admitted BEFORE these five levels shipped (2026-09-05) and does not itself certify levels 55-58.",
+      "No per-level RESULT/DECISION record for 55, 56, 57, or 58. Per-level bot median / demand / win-rate figures (e.g. Level 55: median 152,832, demand 0.80, win rate 88.3%) exist only as game.js comments, not ledger entries.",
+      "experiments/SEEDS.md entry: 41,000,000-41,000,001 registered (not yet run) for RESULT-0044, an owner-versus-oracle challenge touching Levels 56 and 58 -- a later, still-open follow-on, not the original calibration evidence."
+    ],
+    "seeds": "Commit message: 'standard 150 fit seeds' + 120 fresh seeds (200000-200119) checked at derived target, zero lockouts/zero bomb losses across all five. These seed ranges are stated in the commit message/comment only; experiments/SEEDS.md does not carry a dedicated row for the 150-fit-seed or 200000-200119 check block for levels 54-58.",
+    "code_identity": "Frozen calib-1 evaluator per RESULT-0027 (calibration solver identity c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed); commit message names the evaluator as calib-1 explicitly.",
+    "custody_verdict": "PARTIAL",
+    "notes": "Matches the task's known answer: commit 3bcb5a6 explicitly states these five levels 'carry no authoring receipt'. The general mechanism (calib-1, demand rule) is TRACED via RESULT-0027, but the specific per-level derivation for 55-58 is asserted only in the commit message and in-code comments, never captured in an accepted ledger record.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 57,
+    "line": 155,
+    "target": 129000,
+    "tileScale": 32,
+    "moves": 26,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 8,
+    "blockers": [
+      "stone",
+      "stone",
+      "ice"
+    ],
+    "origin": "Level-authoring pipeline's own rule (roundTarget(measured median achievable x demand)) under the frozen calib-1 evaluator (mechanism traced to RESULT-0027), applied directly without generating an authoring receipt for these specific levels.",
+    "last_changed_commit": "3bcb5a6",
+    "last_changed_date": "2026-09-05",
+    "last_changed_message": "Ship levels 54-58 -- \"calibrated with the authoring pipeline's own rule ... using the frozen calib-1 evaluator over the standard 150 fit seeds, then checked over 120 fresh seeds at the derived target. All five came back with zero lockouts and zero bomb losses.\" ... \"These carry no authoring receipt: they were calibrated by the pipeline's rule, not produced through deriveCandidate, so they are shipped play content rather than receipted authoring evidence.\"",
+    "ledger_records": [
+      "RESULT-0027 (accepted, 2026-09-03) -- freezes calib-1 evaluator and the demand-rule mechanism these levels claim to use, but was admitted BEFORE these five levels shipped (2026-09-05) and does not itself certify levels 55-58.",
+      "No per-level RESULT/DECISION record for 55, 56, 57, or 58. Per-level bot median / demand / win-rate figures (e.g. Level 55: median 152,832, demand 0.80, win rate 88.3%) exist only as game.js comments, not ledger entries.",
+      "experiments/SEEDS.md entry: 41,000,000-41,000,001 registered (not yet run) for RESULT-0044, an owner-versus-oracle challenge touching Levels 56 and 58 -- a later, still-open follow-on, not the original calibration evidence."
+    ],
+    "seeds": "Commit message: 'standard 150 fit seeds' + 120 fresh seeds (200000-200119) checked at derived target, zero lockouts/zero bomb losses across all five. These seed ranges are stated in the commit message/comment only; experiments/SEEDS.md does not carry a dedicated row for the 150-fit-seed or 200000-200119 check block for levels 54-58.",
+    "code_identity": "Frozen calib-1 evaluator per RESULT-0027 (calibration solver identity c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed); commit message names the evaluator as calib-1 explicitly.",
+    "custody_verdict": "PARTIAL",
+    "notes": "Matches the task's known answer: commit 3bcb5a6 explicitly states these five levels 'carry no authoring receipt'. The general mechanism (calib-1, demand rule) is TRACED via RESULT-0027, but the specific per-level derivation for 55-58 is asserted only in the commit message and in-code comments, never captured in an accepted ledger record.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  },
+  {
+    "level": 58,
+    "line": 158,
+    "target": 162000,
+    "tileScale": 32,
+    "moves": 28,
+    "minChain": 4,
+    "gridW": 5,
+    "gridH": 7,
+    "blockers": [
+      "bomb",
+      "bomb"
+    ],
+    "origin": "Level-authoring pipeline's own rule (roundTarget(measured median achievable x demand)) under the frozen calib-1 evaluator (mechanism traced to RESULT-0027), applied directly without generating an authoring receipt for these specific levels.",
+    "last_changed_commit": "3bcb5a6",
+    "last_changed_date": "2026-09-05",
+    "last_changed_message": "Ship levels 54-58 -- \"calibrated with the authoring pipeline's own rule ... using the frozen calib-1 evaluator over the standard 150 fit seeds, then checked over 120 fresh seeds at the derived target. All five came back with zero lockouts and zero bomb losses.\" ... \"These carry no authoring receipt: they were calibrated by the pipeline's rule, not produced through deriveCandidate, so they are shipped play content rather than receipted authoring evidence.\"",
+    "ledger_records": [
+      "RESULT-0027 (accepted, 2026-09-03) -- freezes calib-1 evaluator and the demand-rule mechanism these levels claim to use, but was admitted BEFORE these five levels shipped (2026-09-05) and does not itself certify levels 55-58.",
+      "No per-level RESULT/DECISION record for 55, 56, 57, or 58. Per-level bot median / demand / win-rate figures (e.g. Level 55: median 152,832, demand 0.80, win rate 88.3%) exist only as game.js comments, not ledger entries.",
+      "experiments/SEEDS.md entry: 41,000,000-41,000,001 registered (not yet run) for RESULT-0044, an owner-versus-oracle challenge touching Levels 56 and 58 -- a later, still-open follow-on, not the original calibration evidence."
+    ],
+    "seeds": "Commit message: 'standard 150 fit seeds' + 120 fresh seeds (200000-200119) checked at derived target, zero lockouts/zero bomb losses across all five. These seed ranges are stated in the commit message/comment only; experiments/SEEDS.md does not carry a dedicated row for the 150-fit-seed or 200000-200119 check block for levels 54-58.",
+    "code_identity": "Frozen calib-1 evaluator per RESULT-0027 (calibration solver identity c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed); commit message names the evaluator as calib-1 explicitly.",
+    "custody_verdict": "PARTIAL",
+    "notes": "Matches the task's known answer: commit 3bcb5a6 explicitly states these five levels 'carry no authoring receipt'. The general mechanism (calib-1, demand rule) is TRACED via RESULT-0027, but the specific per-level derivation for 55-58 is asserted only in the commit message and in-code comments, never captured in an accepted ledger record.",
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+  }
+]
