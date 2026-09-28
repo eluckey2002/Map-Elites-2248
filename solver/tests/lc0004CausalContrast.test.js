@@ -81,13 +81,27 @@ test('the committed manifest inspects the real frozen files and rejects a plante
   );
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   assert.equal(verifyArtifactIdentity(manifest), true);
-  const paths = validateManifest(manifest);
+  const paths = validateManifest(manifest, manifest.artifactIdentity);
   assert.equal(paths.harness, path.join(ROOT, 'tools', 'diagnose-lc0004-move6-move8.js'));
 
   const corrupted = structuredClone(manifest);
   corrupted.identities.bot = '0'.repeat(64);
   assert.equal(verifyArtifactIdentity(corrupted), false);
-  assert.throws(() => validateManifest(corrupted), /manifest artifact identity mismatch/);
+  assert.throws(
+    () => validateManifest(corrupted, manifest.artifactIdentity),
+    /manifest artifact identity mismatch/,
+  );
+
+  const coherent = structuredClone(manifest);
+  coherent.identities.bot = '0'.repeat(64);
+  const { artifactIdentity: ignored, ...body } = coherent;
+  coherent.artifactIdentity = require('node:crypto')
+    .createHash('sha256').update(JSON.stringify(body)).digest('hex');
+  assert.equal(verifyArtifactIdentity(coherent), true);
+  assert.throws(
+    () => validateManifest(coherent, manifest.artifactIdentity),
+    /expected manifest identity/,
+  );
 });
 
 test('the diagnostic source cannot define a metric or policy verdict', () => {

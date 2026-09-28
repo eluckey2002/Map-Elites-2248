@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const crypto = require('node:crypto');
+const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
@@ -511,8 +512,14 @@ function createManifest({ contractPath }) {
   });
 }
 
-function validateManifest(manifest) {
+function validateManifest(manifest, expectedManifestIdentity) {
+  if (!/^[0-9a-f]{64}$/.test(expectedManifestIdentity || '')) {
+    throw new TypeError('expected manifest identity must be a full SHA-256');
+  }
   if (!verifyArtifactIdentity(manifest)) throw new Error('manifest artifact identity mismatch');
+  if (manifest.artifactIdentity !== expectedManifestIdentity) {
+    throw new Error(`expected manifest identity ${expectedManifestIdentity}, observed ${manifest.artifactIdentity}`);
+  }
   if (manifest.kind !== 'lc0004-move6-move8-causal-contrast-manifest') {
     throw new Error(`unexpected manifest kind ${manifest.kind}`);
   }
@@ -528,14 +535,117 @@ function validateManifest(manifest) {
   return paths;
 }
 
-function collectFromManifest(manifestPath) {
+function loadBoundInputs(manifestPath, expectedManifestIdentity) {
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-  const paths = validateManifest(manifest);
+  const paths = validateManifest(manifest, expectedManifestIdentity);
   const recording = JSON.parse(fs.readFileSync(paths.recording, 'utf8'));
   const resolved = resolveRecordedBoard(recording);
   if (!resolved || !resolved.candidate) throw new Error('could not resolve recording board');
   const candidate = resolved.candidate;
   const panel = JSON.parse(fs.readFileSync(paths.lc0003Panel, 'utf8'));
+  return { manifest, paths, recording, candidate, panel };
+}
+
+function committedFileMatches(file) {
+  const relative = path.relative(ROOT, file);
+  const committed = execFileSync('git', ['show', `HEAD:${relative}`], { cwd: ROOT });
+  return committed.equals(fs.readFileSync(file));
+}
+
+function qualifyHarness({ manifestPath, expectedManifestIdentity, reportableOut }) {
+  try {
+    const inputs = loadBoundInputs(manifestPath, expectedManifestIdentity);
+    const { manifest, paths, recording, candidate, panel } = inputs;
+    const controls = runPreflightControls({ candidate, recording, panel });
+
+    const substituted = structuredClone(manifest);
+    substituted.identities.bot = '0'.repeat(64);
+    const { artifactIdentity: ignored, ...substitutedBody } = substituted;
+    substituted.artifactIdentity = sha256Bytes(JSON.stringify(substitutedBody));
+    let coherentSubstitutionRejected = false;
+    let coherentSubstitutionMessage = null;
+    try {
+      validateManifest(substituted, expectedManifestIdentity);
+    } catch (error) {
+      coherentSubstitutionRejected = true;
+      coherentSubstitutionMessage = error.message;
+    }
+
+    let focusedTestOutput = null;
+    let focusedTestPass = false;
+    try {
+      focusedTestOutput = execFileSync(
+        process.execPath,
+        ['--test', 'solver/tests/lc0004CausalContrast.test.js'],
+        { cwd: ROOT, encoding: 'utf8', stderr: 'redirect' },
+      );
+      focusedTestPass = true;
+    } catch (error) {
+      focusedTestOutput = `${error.stdout || ''}${error.stderr || ''}`;
+    }
+
+    const committed = Object.fromEntries(
+      ['contract', 'harness', 'test'].map((name) => [name, committedFileMatches(paths[name])]),
+    );
+    committed.manifest = committedFileMatches(path.resolve(manifestPath));
+    const outputAbsent = !fs.existsSync(path.resolve(reportableOut));
+    const admission = {
+      expectedManifestIdentity,
+      observedManifestIdentity: manifest.artifactIdentity,
+      committed,
+      focusedTest: {
+        command: 'node --test solver/tests/lc0004CausalContrast.test.js',
+        pass: focusedTestPass,
+        output: focusedTestOutput,
+      },
+      coherentSubstitution: {
+        changed: 'manifest identities.bot plus a recomputed internal artifact identity',
+        rejected: coherentSubstitutionRejected,
+        message: coherentSubstitutionMessage,
+      },
+      reportableOutput: {
+        path: path.relative(ROOT, path.resolve(reportableOut)),
+        absent: outputAbsent,
+      },
+      closeoutPath: 'not applicable: exact-case exploratory probe has no closure contract or population outcome',
+    };
+    const pass = controls.every(({ pass: controlPass }) => controlPass)
+      && Object.values(committed).every(Boolean)
+      && focusedTestPass
+      && coherentSubstitutionRejected
+      && /expected manifest identity/.test(coherentSubstitutionMessage || '')
+      && outputAbsent;
+    return artifactWithIdentity({
+      schemaVersion: 1,
+      kind: 'lc0004-harness-qualification',
+      status: pass ? 'PASS' : 'FAIL',
+      attempt: 1,
+      oracleIdentity: manifest.identities.contract,
+      harnessIdentity: manifest.identities.harness,
+      manifestIdentity: manifest.artifactIdentity,
+      admission,
+      controls,
+      uncertainties: [
+        'qualification entitles only the frozen exact-case collector and four named swaps',
+        'no general topology or policy claim is qualified',
+      ],
+    });
+  } catch (error) {
+    return artifactWithIdentity({
+      schemaVersion: 1,
+      kind: 'lc0004-harness-qualification',
+      status: 'UNVERIFIED',
+      attempt: 1,
+      error: error.stack || error.message,
+      uncertainties: ['qualification did not reach every required control'],
+    });
+  }
+}
+
+function collectFromManifest(manifestPath, expectedManifestIdentity) {
+  const {
+    manifest, recording, candidate, panel,
+  } = loadBoundInputs(manifestPath, expectedManifestIdentity);
   const controls = runPreflightControls({ candidate, recording, panel });
 
   const common = {
@@ -611,7 +721,23 @@ function main() {
     return;
   }
 
-  const artifact = collectFromManifest(path.resolve(arg('manifest')));
+  const qualificationOut = optionalArg('qualify-out');
+  if (qualificationOut) {
+    const receipt = qualifyHarness({
+      manifestPath: path.resolve(arg('manifest')),
+      expectedManifestIdentity: arg('expected-manifest-identity'),
+      reportableOut: path.resolve(arg('reportable-out')),
+    });
+    writeJsonOnce(path.resolve(qualificationOut), receipt);
+    process.stdout.write(`${JSON.stringify(receipt, null, 2)}\n`);
+    if (receipt.status !== 'PASS') process.exitCode = 1;
+    return;
+  }
+
+  const artifact = collectFromManifest(
+    path.resolve(arg('manifest')),
+    arg('expected-manifest-identity'),
+  );
   const summary = persistBeforeVerdict({
     file: path.resolve(arg('out')),
     artifact,
@@ -643,6 +769,7 @@ module.exports = {
   builtComponentSizes,
   collectFromManifest,
   createManifest,
+  qualifyHarness,
   stateIdentity,
   summarizeExactChanges,
   swapNormalizedTiles,
