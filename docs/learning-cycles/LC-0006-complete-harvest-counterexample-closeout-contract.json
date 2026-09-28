@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "LC-0006-complete-harvest-counterexample-contract.md",
+    "sha256": "78413b9d5f44f3527802f043f8a7b32b4d44b209db39366e86c40c217ea5ba13"
+  },
+  "final_subject_identity": "4e419df2c6143cfa998445fe68b9b72508ba319b881018e2758ed767658d8285",
+  "required_claims": [
+    "C1-frozen-source-identity",
+    "C2-retained-comparison-identity",
+    "C3-real-predicate-known-kill",
+    "C4-planted-coverage-mutation",
+    "C5-persistence",
+    "exact-topology-classification",
+    "retained-target-cost-comparison"
+  ],
+  "required_artifacts": [
+    "raw",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "tools/diagnose-lc0006-harvest-counterexample.js",
+      "--summarize",
+      "docs/learning-cycles/LC-0006-complete-harvest-counterexample-raw.json"
+    ],
+    "cwd": "../..",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}

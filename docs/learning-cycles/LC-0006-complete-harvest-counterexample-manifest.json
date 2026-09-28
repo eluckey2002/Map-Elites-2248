@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0006-complete-harvest-counterexample-manifest",
+  "paths": {
+    "contract": "docs/learning-cycles/LC-0006-complete-harvest-counterexample-contract.md",
+    "lc0004Raw": "docs/learning-cycles/LC-0004-move6-move8-causal-contrast-raw.json",
+    "engine": "solver/engine.js",
+    "bot": "solver/bot.js",
+    "lc0005Result": "docs/learning-cycles/LC-0005-complete-harvest-chain-result.md",
+    "harness": "tools/diagnose-lc0006-harvest-counterexample.js",
+    "test": "solver/tests/lc0006HarvestCounterexample.test.js"
+  },
+  "identities": {
+    "contract": "78413b9d5f44f3527802f043f8a7b32b4d44b209db39366e86c40c217ea5ba13",
+    "lc0004Raw": "5afba90eada26b0d3a5b6e5d0f6d92578a4db606c0adaadf93250d746f4d8d90",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "lc0005Result": "19605fb32d05472abd4050301570dd8bc3852316315d5525827f7df8636b802f",
+    "harness": "9d9037da7dc2f685c2044ddf652e4d4248122b415723634a6aa3dfd712ef3313",
+    "test": "ea49a5028ffcb3e888929bdeca5b950e8ebfe629670640bb3d99516d78832a6a"
+  },
+  "artifactIdentity": "4e419df2c6143cfa998445fe68b9b72508ba319b881018e2758ed767658d8285"
+}
