@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0007-harness-qualification",
+  "status": "PASS",
+  "oracle": "docs/learning-cycles/LC-0007-decision-lineage-contract.md",
+  "manifestIdentity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+  "harnessIdentity": "d5c68a094bbbff716954cbfd21243ba77e83819beed6a26dc848ce4b57bedf37",
+  "attempt": 1,
+  "committed": {
+    "contract": true,
+    "priorRaw": true,
+    "lc0003Manifest": true,
+    "lc0003Qualification": true,
+    "priorHarness": true,
+    "recording": true,
+    "engine": true,
+    "bot": true,
+    "lc0005Result": true,
+    "lc0006Result": true,
+    "harness": true,
+    "test": true
+  },
+  "coherentSubstitutionRejected": true,
+  "trackerIdentityBefore": "175a96aa3a8aa9dfcd32ed2e4dd1aa55c54a2516f3466af1556ebad8a4fbce1a",
+  "trackerIdentityAfter": "175a96aa3a8aa9dfcd32ed2e4dd1aa55c54a2516f3466af1556ebad8a4fbce1a",
+  "preOutcomeAdmission": {
+    "pass": true,
+    "verifier": "/Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py",
+    "resolvedCwd": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27",
+    "resolvedArgvFiles": [
+      "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/tools/diagnose-lc0007-decision-lineage.js",
+      "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/docs/learning-cycles/LC-0007-decision-lineage-raw.json"
+    ],
+    "resolvedArgvFilesExist": true,
+    "verdict": {
+      "checked_artifacts": [
+        "primary-recomputation",
+        "raw"
+      ],
+      "checked_claims": [
+        "C1-frozen-replay-and-panel-identity",
+        "C2-objective-and-continuation-equivalence",
+        "C3-lineage-transfer-known-good",
+        "C4-unrelated-chain-known-negative",
+        "C5-planted-false-carrier",
+        "C6-restoration-and-persistence",
+        "move-11-lineage",
+        "move-4-lineage",
+        "move-6-lineage",
+        "move-9-lineage"
+      ],
+      "closure_status": "CLOSED",
+      "contract_sha256": "300aed307bc6c82af8f2aed0c15480d3e53d6b7c55ec4fe592b90b9b24b7770c",
+      "errors": [],
+      "expected_contract_sha256": "300aed307bc6c82af8f2aed0c15480d3e53d6b7c55ec4fe592b90b9b24b7770c",
+      "recomputation": "PASS",
+      "recomputed_output_sha256": "e84b4877f91e356925b81edbe55bf87e4fb53b0bd208511ec7d8b995dd6c861c",
+      "verdict": "PASS"
+    }
+  },
+  "controls": [
+    {
+      "id": "C1-frozen-replay-and-panel-identity",
+      "pass": true,
+      "observed": {
+        "priorArtifactIdentity": "10a05405746480e7232690115a877c6a0a431cdc7bc182f1147178444d4b23fd",
+        "moves": [
+          4,
+          6,
+          9,
+          11
+        ],
+        "corrections": [
+          {
+            "move": 4,
+            "continuationMoves": 4
+          },
+          {
+            "move": 6,
+            "continuationMoves": 5
+          },
+          {
+            "move": 9,
+            "continuationMoves": 4
+          },
+          {
+            "move": 11,
+            "continuationMoves": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": "C2-objective-and-continuation-equivalence",
+      "pass": true,
+      "observed": [
+        {
+          "move": 4,
+          "sharedDecisionState": "64b7efe06b0b8b16af0eaaa6d6bbb6db8d170ae238f7e00b37c196e9ac992867"
+        },
+        {
+          "move": 6,
+          "sharedDecisionState": "dbf8b552f217936251a94c544bf90735fc950f711628f271c7d6627f4068ac1e"
+        },
+        {
+          "move": 9,
+          "sharedDecisionState": "243480414fbe094562a9ec1c0a286ce1b3172285326bb317b55555a6cf59e08f"
+        },
+        {
+          "move": 11,
+          "sharedDecisionState": "e04e5ef11ccdb83f572a58330601f3f130c791731790019660ba0ad1fc8b6671"
+        }
+      ]
+    },
+    {
+      "id": "C3-lineage-transfer-known-good",
+      "pass": true,
+      "observed": {
+        "points": 96,
+        "length": 5,
+        "sum": 48,
+        "chain": [
+          {
+            "x": 0,
+            "y": 1,
+            "value": 8
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "value": 8
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "value": 8
+          },
+          {
+            "x": 3,
+            "y": 1,
+            "value": 16
+          }
+        ],
+        "usesLineage": true,
+        "lineageIndex": 2,
+        "transferred": true,
+        "carrierBefore": {
+          "x": 2,
+          "y": 0,
+          "value": 8
+        },
+        "carrierAfter": {
+          "x": 3,
+          "y": 1,
+          "value": 48
+        }
+      }
+    },
+    {
+      "id": "C4-unrelated-chain-known-negative",
+      "pass": true,
+      "observed": {
+        "points": 36,
+        "length": 3,
+        "sum": 24,
+        "chain": [
+          {
+            "x": 0,
+            "y": 1,
+            "value": 8
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "value": 8
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "value": 8
+          }
+        ],
+        "usesLineage": false,
+        "lineageIndex": -1,
+        "transferred": false,
+        "carrierBefore": {
+          "x": 2,
+          "y": 0,
+          "value": 8
+        },
+        "carrierAfter": {
+          "x": 2,
+          "y": 0,
+          "value": 8
+        }
+      }
+    },
+    {
+      "id": "C5-planted-false-carrier",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "mutationMessage": "lineage carrier mismatch: expected {\"x\":3,\"y\":1,\"value\":48}, observed {\"x\":2,\"y\":1,\"value\":48}"
+      }
+    },
+    {
+      "id": "C6-restoration-and-persistence",
+      "pass": true,
+      "observed": {
+        "plantedFailureObserved": true,
+        "rawRetained": true
+      }
+    }
+  ],
+  "uncertainties": [],
+  "artifactIdentity": "592ad88a1804095baee2fbd01381bb6e0c41ab533eb8f4d32716aeecb0d1a4ac"
+}
