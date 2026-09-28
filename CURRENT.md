@@ -96,6 +96,16 @@ target on move 14. Keep the result exact and provisional: the remaining next
 step is an already-existing superficially similar state where maximizing
 built-tile coverage is harmful or impossible, before any metric is named.
 
+[RESULT-0059](EVIDENCE_LEDGER.md#result-0059--a-connected-built-reservoir-can-still-be-impossible-to-harvest-completely)
+supplies that counterexample from the already-retained `M6-CONNECT` state.
+Its eight built tiles are one connected component, but neither `16` can enter
+a built `32`, exhaustive traversal covers at most seven of eight, and the
+connected arm costs one move versus baseline. Together, RESULT-0058 and
+RESULT-0059 support a narrower exact-state explanation: harvest readiness
+requires both ladder entry and a complete value-ordered path, not connectivity
+alone. The next bounded step is to check that explanation against the four
+already-opened misses without naming or implementing a metric.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.

@@ -1174,6 +1174,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-28, branch `codex/game51-learning-cycle-2026-09-27`
 - **notes:** Provisional pending an independent checker. The production champion, levels, targets, receipts, recordings, and authoring system were not modified. The next honest test is an already-existing counterexample; do not turn this one-state success into an “always use every built tile” rule.
 
+### RESULT-0059 — A connected built reservoir can still be impossible to harvest completely
+
+- **type:** result
+- **status:** provisional
+- **scope:** the single already-retained LC-0004 `M6-CONNECT` after-state on Level 54 seed 1313839221, state identity `535a53040732ccc4047de5254dd7c9da278d0cd2e005f28e2316c0d3d2e4b2aa`; unchanged LC-0004 champion, rules, objective, and continuation; retrospective exact topology only, with no new intervention, fresh seed, or population claim
+- **statement:** The exact `M6-CONNECT` state refutes the broad rule that one connected built component is necessarily ready for complete harvest. All eight built tiles form one king-adjacent component, but neither normalized `16` has a legal adjacency into a built `32`, exhaustive traversal of the eight-node built graph finds no complete value-ordered path and a maximum coverage of seven, and the retained champion choice covers zero built tiles. The retained connected arm also reaches the target on move 16 versus move 15 for `M6-BASELINE`. This exact counterexample sharpens the owner's strategy: complete harvest requires both lower-to-built ladder entry and a value-ordered path through the whole reservoir; connectivity alone is insufficient. It does not establish a general metric or authorize a policy change.
+- **evidence:** frozen [LC-0006 contract](docs/learning-cycles/LC-0006-complete-harvest-counterexample-contract.md); [qualification and pre-outcome admission](docs/learning-cycles/LC-0006-complete-harvest-counterexample-qualification.json); retained [raw artifact](docs/learning-cycles/LC-0006-complete-harvest-counterexample-raw.json), file SHA-256 `12c0c730274d7851c30052faa9689462f11fb480d98785624f924d06f057c5cc`, internal artifact identity `92c59fd63c591b0abc303602a2438b0ee33284d153e401b3045767d2171e3947`; [result explanation](docs/learning-cycles/LC-0006-complete-harvest-counterexample-result.md); externally anchored [closure](docs/learning-cycles/LC-0006-complete-harvest-counterexample-closure.json), file SHA-256 `f4f037710b5a95894785f485c7d29112c674cd15f7da2ef3742dba39f0088e1c`; byte-matched [primary recomputation](docs/learning-cycles/LC-0006-complete-harvest-counterexample-recomputed.json), SHA-256 `593e4370dec2c39b5befbf079b69b9d4d7c84f0be9bca3ffaccdbdaeb2428ea8`; closeout-contract SHA-256 `47dae9cbed4c3ccf62b19694c1a82c54464c0759771ea8f1758a2a60de127530`
+- **proof_class:** `exact_result`, `direct_source` — exact exhaustive traversal and retained outcome comparison on one named state; no claim beyond that state
+- **as_of:** 2026-09-28
+- **reverify:** Run `python3 tools/vendor/close-experiment/verify_closure.py docs/learning-cycles/LC-0006-complete-harvest-counterexample-closeout-contract.json docs/learning-cycles/LC-0006-complete-harvest-counterexample-closure.json --run-recomputation --require-closed --expected-contract-sha256 47dae9cbed4c3ccf62b19694c1a82c54464c0759771ea8f1758a2a60de127530`; expect `verdict: PASS`, `closure_status: CLOSED`, `recomputation: PASS`, and primary outcome `IMPOSSIBLE_COMPLETE_HARVEST` in the closure.
+- **updated:** 2026-09-28
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-28, branch `codex/game51-learning-cycle-2026-09-27`
+- **notes:** Provisional pending an independent checker. No champion, game rule, level, target, receipt, recording, or authoring file changed, and no fresh gameplay outcome was generated. The next bounded step is to apply the two-part structural explanation to the four already-opened misses without defining a policy metric.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

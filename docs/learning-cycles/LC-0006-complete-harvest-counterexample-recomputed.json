@@ -1,0 +1,52 @@
+{
+  "artifactIdentity": "92c59fd63c591b0abc303602a2438b0ee33284d153e401b3045767d2171e3947",
+  "status": "COMPLETE",
+  "disposition": "IMPOSSIBLE_COMPLETE_HARVEST",
+  "evidence": {
+    "builtCount": 8,
+    "connectedComponentCount": 1,
+    "entryEdgeCount": 0,
+    "maximumLegalBuiltCoverage": 7,
+    "selectedBuiltCoverage": 0,
+    "bestBuiltPath": [
+      {
+        "x": 1,
+        "y": 4,
+        "value": 32
+      },
+      {
+        "x": 0,
+        "y": 5,
+        "value": 32
+      },
+      {
+        "x": 1,
+        "y": 6,
+        "value": 32
+      },
+      {
+        "x": 2,
+        "y": 6,
+        "value": 32
+      },
+      {
+        "x": 1,
+        "y": 7,
+        "value": 32
+      },
+      {
+        "x": 0,
+        "y": 7,
+        "value": 32
+      },
+      {
+        "x": 0,
+        "y": 6,
+        "value": 64
+      }
+    ],
+    "targetCostBaseline": 15,
+    "targetCostConnected": 16,
+    "targetCostDelta": 1
+  }
+}

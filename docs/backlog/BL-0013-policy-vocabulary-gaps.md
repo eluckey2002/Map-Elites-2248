@@ -87,11 +87,13 @@ is the reason to define the vocabulary as a set rather than as four patches.
 
 ## Next action
 
-Do not implement another term yet. `RESULT-0058` traced the exact mixed-tier
-bridge and showed that repairing one fork let the unchanged champion harvest
-all ten built tiles. Now find an already-existing superficially similar bridge
-where maximizing built-tile coverage is harmful or impossible. Only after that
-counterexample test should this direction become a named candidate measure.
+Do not implement another term yet. `RESULT-0058` showed the positive exact
+case: repairing one fork let the unchanged champion harvest all ten built
+tiles. `RESULT-0059` supplied the negative exact case: one connected eight-tile
+reservoir had no `16→32` entry, no legal path covering all eight tiles, and
+cost one move versus baseline. Now state the smallest two-part explanation—
+ladder entry plus complete value-ordered path—and check it against the four
+already-opened misses. Keep that diagnostic; do not name a metric yet.
 
 ## History
 
@@ -127,3 +129,9 @@ counterexample test should this direction become a named candidate measure.
   on move 14. This validates the complete-harvest interpretation only for the
   named state; an already-existing counterexample remains required before a
   measure is designed.
+- 2026-09-28 — `RESULT-0059` found that counterexample in the already-retained
+  `M6-CONNECT` state. All eight built tiles were connected, but neither `16`
+  touched a built `32`, exhaustive traversal covered at most seven built tiles,
+  and the connected arm took one extra move versus baseline. Connectivity is
+  therefore not harvest readiness; the next diagnostic must test the narrower
+  ladder-entry plus complete-path explanation on the four opened misses.

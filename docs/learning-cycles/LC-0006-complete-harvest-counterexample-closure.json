@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "LC-0006-complete-harvest-counterexample-closeout-contract.json",
+    "sha256": "47dae9cbed4c3ccf62b19694c1a82c54464c0759771ea8f1758a2a60de127530"
+  },
+  "run_id": "LC-0006-M6-CONNECT-RETROSPECTIVE-1",
+  "final_subject_identity": "c2203c4df46a65d312d1f65d9b93722535e122cc6bcd7a0b5bacfbfe4c8e6832",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1-frozen-source-identity",
+      "status": "PASS",
+      "evidence_subject_identity": "c2203c4df46a65d312d1f65d9b93722535e122cc6bcd7a0b5bacfbfe4c8e6832",
+      "reason": "LC-0004 external, internal, and M6-CONNECT state identities matched."
+    },
+    {
+      "id": "C2-retained-comparison-identity",
+      "status": "PASS",
+      "evidence_subject_identity": "c2203c4df46a65d312d1f65d9b93722535e122cc6bcd7a0b5bacfbfe4c8e6832",
+      "reason": "Retained target costs were 15 baseline and 16 connected; all frozen objective-equivalence invariants passed."
+    },
+    {
+      "id": "C3-real-predicate-known-kill",
+      "status": "PASS",
+      "evidence_subject_identity": "c2203c4df46a65d312d1f65d9b93722535e122cc6bcd7a0b5bacfbfe4c8e6832",
+      "reason": "The public path accepted the known complete reservoir and rejected the planted adjacency break."
+    },
+    {
+      "id": "C4-planted-coverage-mutation",
+      "status": "PASS",
+      "evidence_subject_identity": "c2203c4df46a65d312d1f65d9b93722535e122cc6bcd7a0b5bacfbfe4c8e6832",
+      "reason": "The coverage verifier rejected a claimed coordinate absent from the path."
+    },
+    {
+      "id": "C5-persistence",
+      "status": "PASS",
+      "evidence_subject_identity": "c2203c4df46a65d312d1f65d9b93722535e122cc6bcd7a0b5bacfbfe4c8e6832",
+      "reason": "A planted interpretation failure left the complete disposable raw artifact intact."
+    },
+    {
+      "id": "exact-topology-classification",
+      "status": "PASS",
+      "evidence_subject_identity": "c2203c4df46a65d312d1f65d9b93722535e122cc6bcd7a0b5bacfbfe4c8e6832",
+      "reason": "Exact enumeration found zero 16-to-32 entry edges, maximum legal built coverage 7 of 8, and no complete built path."
+    },
+    {
+      "id": "retained-target-cost-comparison",
+      "status": "PASS",
+      "evidence_subject_identity": "c2203c4df46a65d312d1f65d9b93722535e122cc6bcd7a0b5bacfbfe4c8e6832",
+      "reason": "The connected arm required 16 moves versus 15 for the baseline in the retained LC-0004 comparison."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw",
+      "path": "LC-0006-complete-harvest-counterexample-raw.json",
+      "sha256": "12c0c730274d7851c30052faa9689462f11fb480d98785624f924d06f057c5cc"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "LC-0006-complete-harvest-counterexample-recomputed.json",
+      "sha256": "593e4370dec2c39b5befbf079b69b9d4d7c84f0be9bca3ffaccdbdaeb2428ea8"
+    }
+  ],
+  "primary_outcome": "IMPOSSIBLE_COMPLETE_HARVEST",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "LC-0006-M6-CONNECT-RETROSPECTIVE-1",
+      "exit_code": 0,
+      "artifact_ids": [
+        "raw",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}
