@@ -62,9 +62,9 @@ target-stop objective, as the measurement standard already requires.
    `e81f8323`) tagged `explore`, and `8ac6c9d4` tagged excluded with its
    reason — the recording files are untouched.
 3. `solver/human-benchmark.js` counts only sessions the sidecar index marks
-   `race` and prints how many it excluded and why.
-4. A test fails if an untagged or `explore` session enters the speed
-   comparison.
+   `race` AND not excluded, and prints how many it left out and why.
+4. A test fails if an untagged, `explore`, or excluded session (including an
+   excluded `race` session such as `8ac6c9d4`) enters the speed comparison.
 5. A test asserts that no hash-pinned recording changed: it parses
    `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`
    (and any other recording a verification record cites by hash), calls
@@ -117,3 +117,4 @@ Decide the field names and allowed values; then tag the six sessions above.
   intent-less capture, and criterion 7, a test per endpoint.
 - 2026-09-27: Addressed Codex review on b774c96 (sidecar location; foreign-host leases).
 - 2026-09-27: Criterion 5 now checks `recordingIdentity` of the parsed recording, not raw bytes (Codex review on 5174e82; confirmed raw bytes hash to `ed367f1e...` vs identity `8ac6c9d4...`).
+- 2026-09-27: Benchmark filter is `race` AND not excluded, tested with an excluded race session (Codex review on 0d9fdb3).
