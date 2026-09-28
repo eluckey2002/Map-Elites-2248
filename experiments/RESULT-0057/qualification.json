@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "result": "RESULT-0057",
+  "qualification": "PASS",
+  "oracle": {
+    "path": "registered-protocol.md",
+    "commit": "21e6c5057e0845babdbe19e50ded01e4bbee593e",
+    "sha256": "32d89466b7ea0f5316ad4f12e2da2a741b688e630f46c8583fa63e602962a4db"
+  },
+  "profiles": {
+    "candidate-measure": "5b1edc87a2e4c7bdcea493c7ba6b03c017fae6a13d05044b8df99586e5d167e4",
+    "simulation-policy": "63dbce14106578b3973cf6308f1820de8395099558c9b4ae91438aa3b0461f8a",
+    "mutation-qualification": "dc67e21d0c4938b85e853e4e9c4868408f53a9a85e88006e029a500d8f08632f"
+  },
+  "closeout_contract_sha256": "dae081391227bb8cdab04a6fcc7f7f4a2870fbe1bf75e22486578ddad649fb36",
+  "closure_verifier_sha256": "7ed2647d28bfe3df9bed227216f28959c9a7e767dd112c2952f7c2d3c3619830",
+  "harness_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+  "trusted_input_identity_source": "version_freeze and final subject identity committed in protocol.md at registration commit 21e6c5057e0845babdbe19e50ded01e4bbee593e",
+  "controls": [
+    {
+      "id": "C1-C3-candidate-measure-controls",
+      "status": "PASS",
+      "command": "node --test experiments/RESULT-0057/subject.test.js experiments/RESULT-0057/run.test.js solver/tests/continuationDensityChallenger.test.js solver/tests/continuationDensityProbe.test.js solver/tests/routeDiverseChallenger.test.js solver/tests/persistBeforeVerdict.test.js solver/tests/failedRunLedger.test.js",
+      "exit_code": 0,
+      "observed": "32 tests passed. Fixed-count topology moved density from 1 to 6; uniform 64x value scaling and an unrelated isolated tile left density exactly 6."
+    },
+    {
+      "id": "C4-reference-treatment-exposure",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "A/A through the real collector had identical traces and classified INCONCLUSIVE; the excluded motivating decision exposed a strictly denser equal-immediate-score route without any training-case identifier in the policy."
+    },
+    {
+      "id": "C5-assignment-objective-integrity",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "The real worker completed an ordered disposable panel with equal move budgets, while missing pairs and coherent source substitution failed validation."
+    },
+    {
+      "id": "C6-known-kill",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "A present planted one-move challenger regression classified FALSIFIED for the intended championFaster safety reason."
+    },
+    {
+      "id": "C7-breadth-compute-boundaries",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "Safe benefit on two levels at 1.5x classified SUPPORTED; the same shape on one level and a two-level benefit at 2.001x each classified INCONCLUSIVE."
+    },
+    {
+      "id": "C8-source-substitution-persistence",
+      "status": "PASS",
+      "command": "the same focused test command",
+      "exit_code": 0,
+      "observed": "Coherently re-signed source substitution failed against frozen live sources, and a thrown verdict left the raw pair artifact readable."
+    },
+    {
+      "id": "pre-outcome-registration-admission",
+      "status": "PASS",
+      "command": "requireProtocol for RESULT-0057, exact hash checks, experiment gate, failed-run ledger tests, and absence checks",
+      "exit_code": 0,
+      "observed": "Registration resolved to 21e6c5057e0845babdbe19e50ded01e4bbee593e; all frozen hashes matched; the experiment gate and focused failed-run ledger tests passed; corpus.json, report.md, and closure.json were absent."
+    },
+    {
+      "id": "C8-exact-closeout-route",
+      "status": "PASS",
+      "command": "python3 verify_closure.py closeout-contract.json closure.json --run-recomputation --require-closed --expected-contract-sha256 dae081391227bb8cdab04a6fcc7f7f4a2870fbe1bf75e22486578ddad649fb36",
+      "exit_code": 0,
+      "observed": "In detached disposable worktree /private/tmp/result0057-qualification.4w2juN at registration commit 21e6c50, the exact contract executed node recompute.js corpus.json, byte-matched primary-recomputation, rechecked all artifacts and 12 claims, and returned PASS."
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "PASS",
+      "scope": "complete frozen qualification and exact synthetic closeout",
+      "observed": "All declared controls and the executable closeout route passed without opening a reportable game."
+    }
+  ],
+  "reportable_seed_state": {
+    "range": "46000000-46000019",
+    "opened_before_qualification": false,
+    "corpus_present_before_qualification": false
+  },
+  "uncertainties": [
+    "Qualification proves harness behavior and evidence custody only; synthetic rows are not a reportable domain outcome.",
+    "The panel can support claims only about the 58 current shipped levels under the seeded process, not future levels or human play.",
+    "One observed champion-only win or slower challenger mutual win defeats support even if aggregate target cost favors the challenger.",
+    "Runtime is measured in-process and arm order is balanced, but this is not a compute-matched comparison."
+  ]
+}
