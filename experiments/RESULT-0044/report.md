@@ -20,6 +20,7 @@ This page reports the run. It is not evidence by itself; the cited files are.
 | --- | --- | --- | --- |
 | board-1 | win, 9 | win, 10 | fixed-case row only |
 | board-2 | loss, 7 (invalid) | win, 12 | no valid human row |
+| board-2 replay (`b0dc980`, observation only) | win, 11 (173,568) | win, 12 | not blind: second attempt after seeing the opening and first 7 moves' spawns; excluded from the outcome rule |
 
 Both captures replay valid. Both oracle witnesses verify as wins.
 
