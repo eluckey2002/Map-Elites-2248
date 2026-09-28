@@ -211,7 +211,10 @@ function replay(candidate, recording) {
   return { problems, score: state.score, moves: state.moves };
 }
 
-const INDEX = candidateIndex();
+// The production index also includes candidates preserved by CLOSED
+// experiments. Use that real seam for the corpus-wide orphan ratchet; the
+// local index above remains the independent oracle for its focused fixtures.
+const INDEX = sharedReplay.candidateIndex();
 const { replayable: REPLAYABLE, orphans: ORPHANS } = partition(readRecordings(), INDEX);
 
 test('at least one recording is replayable', () => {

@@ -8,6 +8,16 @@ The ledger is the authority for a record's current standing. It is not the autho
 
 ## Current snapshot
 
+As of 2026-09-17, `RESULT-0055` preserves five exact owner playtests of
+retained RESULT-0054 elites. All five candidate-bound recordings replay, and
+the owner reached the target faster than the current reference bot on every
+identified board. The three played cell-0,5 elites finished in 11, 10, and 8
+moves and received distinct owner descriptions: good tactical containment,
+quick and easy, and quick and balanced. The high-breadth cell-6,1 board was
+judged a repetitive low-pressure grind despite its record 153,600-point final
+chain. These are fixed-session results and owner judgments, not a general
+preference, difficulty, fun, or future-board claim.
+
 As of 2026-09-22, `RESULT-0047` (corrected identity for this branch's former
 `RESULT-0041`, which collided with `main`) closed `CLOSED` with primary outcome
 `FALSIFIED`. The deterministic paired comparison of the evolved harvesting
@@ -990,6 +1000,74 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **supersedes:** []
 - **superseded_by:** []
 - **notes:** The three-vertical-island template supplied 594 of the 1,305 blue-only sustained candidates and is the strongest first source for manual play. Candidate trace goals remain unadopted until human play validates them.
+
+
+### RESULT-0052 — Bounded 2048 opportunity counts distinguish four captured board starts
+
+- **type:** result
+- **status:** accepted
+- **scope:** the initial positions of shipped Levels 55–58 on captured seeds `2600645753`, `3504920448`, `2389915636`, and `4255346895`; exact tile value 2048; one move; at most 100,000 landmark path states and 512 returned outcomes per board; no total-route, future-board, human-difficulty, enjoyment, fitness, MAP-Elites-axis, or outside-panel claim
+- **statement:** The landmark-frontier probe found and replayed **11**, **370**, **at least 512**, and **4** distinct post-move board outcomes containing a 2048 tile on the four fixed board starts, respectively. Different legal actions that converged on the same post-move board were collapsed: the corresponding generated-action counts were 17, 973, 734, and 7, with 6, 603, 222, and 3 duplicate outcomes removed. Level 56 and Level 58 reached the 100,000 path-state bound; Level 57 reached the 512-result bound. Every count is therefore retained only as a replayed lower bound, and a bounded miss would remain `UNKNOWN`. The observed spread establishes that this probe distinguishes these four identified positions; it does not establish that more 2048 routes improve a level.
+- **evidence:** executable fixed comparison `solver/landmark-frontier-sample.js`; search, board-outcome deduplication, and route replay `solver/landmark-frontier.js`; controlled one-route, multiple-route, duplicate-outcome, capped-miss, planted-bad-route, serialized-position CLI, and owner-opening tests in `solver/tests/landmarkFrontier.test.js`; captured-board identities named by the sample are ordinary sessions under `play-sessions/` and are not promoted to candidate evidence
+- **proof_class:** `replayed_lower_bound` for the four found outcome counts; `direct_source` for the fixed inputs, bounds, deduplication rule, replay checks, and observed differentiation; `unresolved` for total route multiplicity and for any gameplay-quality or authoring-value relationship
+- **as_of:** 2026-09-17
+- **reverify:** Run `node --test solver/tests/landmarkFrontier.test.js`; expect 7/7 passing. Run `node solver/landmark-frontier-sample.js`; expect outcomes found `11`, `370`, `512`, and `4`, action counts `17`, `973`, `734`, and `7`, and bounds `none`, `landmark-path-states`, `results`, and `landmark-path-states`. The command replays every route before printing the comparison.
+- **updated:** 2026-09-17
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Claude Opus 5.5 (1M context) session, port/family-board-map-elites, 2026-09-27
+- **checked_by:** script run, 2026-09-27: `node --test solver/tests/landmarkFrontier.test.js` and `node solver/landmark-frontier-sample.js` reproduced 7/7 passing and outcomes `11`/`370`/`512`/`4`, exit 0 (run in an independent full clone, not the writer's working tree)
+- **notes:** This record was renumbered from the unmerged landmark-probe branch's colliding `RESULT-0039` during integration with the oracle branch. It is an exploratory fixed-panel observation, not a preregistered generalization. It makes landmark opportunity measurable without adopting it as a descriptor or beginning MAP-Elites integration. Renumbered from RESULT-0044 on branch feat/family-board-map-elites-20260919 (commit b5e5a85) because main reused that ID; content unchanged.
+
+### RESULT-0053 — First board MAP-Elites confirmation is invalid because its verifier contradicts the producer
+
+- **type:** result
+- **status:** invalid
+- **scope:** one preregistered 36-shape Level-56 generator panel at seed `20260918`; the first 16 screen survivors evaluated on gameplay seeds `42,000,000–42,000,002`; successful-plan-breadth × harvesting-advantage 7×7 archive with up to three boards per cell; no domain inference, adoption, human-quality, fun, difficulty, exhaustive-route, or outside-panel claim
+- **statement:** The sole confirmation attempt produced a complete raw archive but closed **`INVALID`** with no primary domain outcome. The frozen producer correctly classified an exhausted one-move search with zero 2048 outcomes as `exact_result`; the frozen independent verifier still asserted that every zero-route row must be `UNKNOWN`, so it rejected the clean artifact before archive integrity could be established. The raw artifact is preserved with identity `aa7d441e…` and reports 36 screened shapes, 16 evaluated boards, 15 eligible boards, seven occupied cells, five occupied successful-plan-breadth bins, and three occupied harvesting-advantage bins. Those counts are partial direct observations only and do not establish the preregistered map premise. A successor requires a regression-guarded verifier repair, a new subject and protocol identity, and fresh generator and gameplay seeds.
+- **evidence:** immutable registered protocol `experiments/RESULT-0053/registered-protocol.md`; registration commit `b0eaf9c`; qualified harness `experiments/RESULT-0053/qualification.json`; preserved raw artifact identity `aa7d441e7e6aab6c87e8db1d96ee5b48b3d7cde61150b9b4c36fd860a944e2f8` and rendered-map hash bound through the closure; failure analysis `experiments/RESULT-0053/report.md`; verified honest invalid closure `experiments/RESULT-0053/closure.json`
+- **proof_class:** `direct_source` for the identities, complete raw rows, raw counts, verifier contradiction, failed exit, and invalid closure; `UNKNOWN` for all preregistered prediction claims and the primary board-map conclusion. Individual replayed nonzero routes retain lower-bound status inside the preserved artifact; exact-zero rows are not promoted through this invalid experiment.
+- **as_of:** 2026-09-17
+- **reverify:** Run the close-experiment verifier with `--run-recomputation --expected-contract-sha256 0e55b063ec896ceda319b260908e07d1241ebe0a4cdca9c55c99ba066b854f78` but without `--require-closed`; expect verifier `PASS`, closure `INVALID`, and recomputation `NOT_RUN`. Running the frozen experiment verifier on the raw artifact reproduces the `exact_result` versus `UNKNOWN` assertion failure. Do not rerun RESULT-0053 or promote its raw occupancy counts into a domain outcome.
+- **updated:** 2026-09-17
+- **supersedes:** []
+- **superseded_by:** [RESULT-0054]
+- **written_by:** Claude Opus 5.5 (1M context) session, port/family-board-map-elites, 2026-09-27
+- **notes:** Qualification killed its seven planned mutations but lacked a clean fixture containing a complete empty breadth row, so it did not expose this producer/verifier semantic disagreement. The successor regression must plant that exact case before any fresh confirmation run. Renumbered from RESULT-0045 on branch feat/family-board-map-elites-20260919 (commit b5e5a85) because main reused that ID; content unchanged. Observed 2026-09-27 during the port: the raw `verify.js` reverify fails at `verifyArtifactIdentity` (computed body hash 0c35ba5a9eaf9fc840d5c09de6fa4936ea2deb6b1c19d242e05b7851d5b94db7… vs stored aa7d441e7e6aab6c87e8db1d96ee5b48b3d7cde61150b9b4c36fd860a944e2f8…) before reaching the `exact_result` versus `UNKNOWN` assertion this record names; the close-experiment verifier still reproduces PASS / INVALID / NOT_RUN. The INVALID closure is unaffected; which assertion fires first is unresolved.
+
+### RESULT-0054 — Verified board MAP-Elites archive spans both agreed axes
+
+- **type:** result
+- **status:** accepted
+- **scope:** one preregistered 36-shape Level-56 generator panel at seed `20260919`; the first 16 screen survivors evaluated on gameplay seeds `43,000,000–43,000,002`; successful-plan-breadth × harvesting-advantage 7×7 archive with up to three distinct boards per cell; no fun, human-difficulty, exhaustive-route, full-map, future-board, policy-optimality, or shipping claim
+- **statement:** The repaired successor closed **`CLOSED`** with primary outcome **`SUPPORTED`**. The one reproducible command generated and independently verified a 49-cell MAP-Elites archive: 36 shapes screened, 16 boards fully evaluated, 15 authoring-eligible, and 12 distinct elites retained across **6 occupied cells**, **3 successful-plan-breadth bins**, and **4 harvesting-advantage bins**. The registered minima were 4 cells and 2 bins on each axis. Three cells hold the full capacity of three elites; no cell exceeds it and no board identity appears twice. The public verifier passed both during production and from the saved artifact, replaying retained landmark routes and oracle witnesses, rebuilding selection and placement, checking frozen sources and configuration, and byte-checking the rendered map. The repository experiment gate's independent identity convention reproduced artifact identity `a3a8cd7b…` exactly. Empty cells remain honest bounded-search absences, not impossibility claims.
+- **evidence:** immutable protocol `experiments/RESULT-0054/registered-protocol.md`, registration commit `4091e60`; [qualified repaired harness](experiments/RESULT-0054/qualification.json); canonical archive `experiments/RESULT-0054/output/archive.json`, identity `a3a8cd7b217232d6151cafa4b2643f3e908c8742d3a42b081ea478b36a738ba6`; readable 49-cell map `experiments/RESULT-0054/output/map.html`; [independent reduction](experiments/RESULT-0054/primary-recomputation.json); report `experiments/RESULT-0054/report.md`; executable `CLOSED` [closure receipt](experiments/RESULT-0054/closure.json)
+- **proof_class:** `direct_source` for frozen identities, archive contents, replay checks, capacity/uniqueness, artifact verification, exact-zero semantics, deterministic reduction, and executable closure; `heuristic_observation` for the registered fixed-panel axis spread and joint occupancy. Each nonzero breadth row retains `replayed_lower_bound` standing unless its bounded search completed; the single capped zero remains `UNKNOWN`.
+- **as_of:** 2026-09-17
+- **reverify:** Run `node experiments/RESULT-0054/verify.js experiments/RESULT-0054/output/archive.json`; expect PASS, artifact `a3a8cd7b…`, 36 screened, 16 evaluated, 15 eligible, 6 cells, 3 breadth bins, and 4 harvest bins. Run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 2be1659b53060de81188ca6317169373518e64dbaec5268a06df55734c6d5ac5`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-17
+- **supersedes:** [RESULT-0053]
+- **superseded_by:** []
+- **written_by:** Claude Opus 5.5 (1M context) session, port/family-board-map-elites, 2026-09-27
+- **checked_by:** script run, 2026-09-27: `node experiments/RESULT-0054/verify.js experiments/RESULT-0054/output/archive.json` in an independent full clone printed `PASS {"verdict":"PASS","artifactIdentity":"a3a8cd7b217232d6151cafa4b2643f3e908c8742d3a42b081ea478b36a738ba6","screened":36,"screenSurvivors":36,"evaluated":16,"eligible":15,"occupiedCells":6,"occupiedBreadthBins":3,"occupiedHarvestBins":4,"premise":"SUPPORTED_AT_BOUNDED_SCOPE"}`, exit 0; the close-experiment verifier reproduced `CLOSED`/recomputation `PASS`/verdict `PASS`, exit 0 (run in an independent full clone, not the writer's working tree)
+- **notes:** RESULT-0053 remains preserved as invalid. Its two harness defects are regression-guarded here: exhausted empty breadth rows verify as exact zero while capped empties stay `UNKNOWN`, and registration provenance is excluded from artifact identity consistently with the repository experiment gate. This validates a bounded authoring map, not the desirability of every retained board; human playtesting and deliberate cell-filling are separate next steps. Renumbered from RESULT-0046 on branch feat/family-board-map-elites-20260919 (commit b5e5a85) because main reused that ID; content unchanged.
+
+### RESULT-0055 — Five retained board elites replay and receive distinct owner judgments
+
+- **type:** result
+- **status:** accepted
+- **scope:** one owner session on each of five RESULT-0054 elites — `gen-0006` seed `43,000,002`, `gen-0003` seed `43,000,002`, `gen-0002` seed `43,000,001`, `gen-0010` seed `43,000,000`, and `gen-0004` seed `43,000,001`; exact candidate identities, seeds, recordings, and current reference bot only
+- **statement:** All five candidate-bound owner recordings replay without divergence and reach their bound target. Owner/reference-bot move counts are `15/21`, `19/20`, `11/13`, `10/11`, and `8/12`; the owner is faster on all five fixed sessions. With these sessions included, the live all-corpus benchmark reports 32 paired sessions: human 30 wins, reference bot 32 wins; among 30 mutual wins, human faster 16, bot faster 9, tied 5. The three played cell-0,5 boards received distinct judgments: `gen-0002` immediately conveyed containment and was judged a good level, `gen-0010` was quick and easy, and `gen-0004` was quick and balanced. `gen-0003` was judged too long and repetitive without meaningful pressure; its lone timer-10 bomb exploded in only 1/300 RESULT-0054 holdout games, and its owner session ended with a 153,600-point chain after an unexpected 4,096-producing penultimate chain. Across the five boards, the owner said most brought out a sense of gameplay and that their differences were notable. These are exact fixed-session results and owner judgments, not estimates of fun, difficulty, preference frequency, policy superiority, optimality, or unplayed boards.
+- **evidence:** candidate recordings `recordings/efc156d36033580dacfc95e003b038f3285121c497f875d4e3a88ee85ff05a6f.json`, `recordings/e3f484119b650659e2a1a546a26a94af3f3e75a375cf61e645b23a444867c703.json`, `recordings/86e778a28499b151f237fd25eb4924a018f94065410f4437028d3619b09acb93.json`, `recordings/ef9f371939c637162d49b2e551ffa18a5e783934fb78e6034b925c69465ae497.json`, and `recordings/0e612993635c924ec12aaa6b331b0419c850e08495a8eecdcc49a0054405c56c.json`; canonical candidate and mapped-policy rows in `experiments/RESULT-0054/output/archive.json`; replay and same-seed reduction `experiments/RESULT-0054/replay-playtests.js`; readable synthesis `experiments/RESULT-0054/playtest-report.md`
+- **proof_class:** `exact_result` for the five replayed owner outcomes, scores, move counts, chains, and same-seed reference-bot comparisons; `direct_source` for the bound candidate/archive rows and the owner's captured descriptions; no generalized human-quality or policy claim
+- **as_of:** 2026-09-17
+- **reverify:** Run `node experiments/RESULT-0054/replay-playtests.js`; expect five rows with owner/reference-bot moves `15/21`, `19/20`, `11/13`, `10/11`, and `8/12`, and no replay error. Run `node solver/human-benchmark.js`; expect 32 paired sessions, human/reference-bot wins `30/32`, and mutual-win speed `16/9/5` for human faster / bot faster / tied.
+- **updated:** 2026-09-17
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Claude Opus 5.5 (1M context) session, port/family-board-map-elites, 2026-09-27
+- **checked_by:** script run, 2026-09-27: `node experiments/RESULT-0054/replay-playtests.js` reproduced moves `15/21, 19/20, 11/13, 10/11, 8/12` with no replay error, and `node solver/human-benchmark.js` reproduced 32 paired sessions, human/bot wins 30/32, mutual-win speed 16/9/5, exit 0 (run in an independent full clone, not the writer's working tree)
+- **notes:** This post-close follow-up does not alter RESULT-0054's registered conclusion. The normal replay index now admits candidates only from experiment archives whose closure status is `CLOSED`, so these sessions resolve through `solver/human-benchmark.js --recording` without treating invalid RESULT-0053 output as evidence or falling back to a shipped level with the same number. Retaining three elites per cell is now supported as an owner decision by the distinct fixed-session descriptions, not as a population-level quality claim. Renumbered from RESULT-0047 on branch feat/family-board-map-elites-20260919 (commit b5e5a85) because main reused that ID; content unchanged.
 
 
 ## Decision registry

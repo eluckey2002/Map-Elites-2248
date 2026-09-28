@@ -4,9 +4,13 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
-## Current decision frontier — 2026-09-16
+## Current decision frontier — 2026-09-27
 
 The latest trustworthy sequence is now visible in the ledger:
+
+- [RESULT-0055](EVIDENCE_LEDGER.md#result-0055--five-retained-board-elites-replay-and-receive-distinct-owner-judgments) adds five exact owner playtests to the closed board map without changing RESULT-0054's registered conclusion. The owner beat the current reference bot on all five fixed sessions. Three cell-0,5 elites finished in 11, 10, and 8 moves and were described respectively as good tactical containment, quick and easy, and quick and balanced; the cell-6,1 board was a repetitive low-pressure grind. Read the [playtest report](experiments/RESULT-0054/playtest-report.md) and reproduce it with `node experiments/RESULT-0054/replay-playtests.js`. These are fixed-session results and owner judgments, not a general fun or difficulty model.
+
+- [RESULT-0054](EVIDENCE_LEDGER.md#result-0054--verified-board-map-elites-archive-spans-both-agreed-axes) completes the first verified board-authoring MAP-Elites map on the agreed axes: successful plan breadth × harvesting advantage. The reproducible run retained 12 distinct elite boards across 6 of 49 cells, spanning 3 breadth bins and 4 harvesting bins, with at most 3 boards per cell. Open the [readable map](experiments/RESULT-0054/output/map.html) or the [canonical archive](experiments/RESULT-0054/output/archive.json). Empty cells are honest bounded-search gaps, not proof that no board exists there. RESULT-0053 is preserved as invalid; RESULT-0054 repairs and guards both defects it exposed.
 
 - [RESULT-0045](EVIDENCE_LEDGER.md#result-0045--oracle-witnesses-meet-every-frozen-captured-puzzle-move-comparator) closes the captured-corpus oracle milestone: all 20 exact puzzles have verified wins within the 30-second search allowance; 17 beat the best recorded human win, 2 tie, and the loss-only puzzle is also won. [Run, verify and inspect it](docs/oracle/README.md). This gives authoring an achieved move-count reference on these puzzles; it does not establish optimality, future-board superiority, or human difficulty, and does not replace `calib-1` or the live bot.
 
@@ -140,4 +144,4 @@ node solver/human-replay.js --from .orch/runs/2026-08-29-human-replay-explorator
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
-Last reviewed: 2026-09-16
+Last reviewed: 2026-09-27

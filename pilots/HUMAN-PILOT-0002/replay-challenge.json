@@ -1,5 +1,5 @@
 {
-  "artifactIdentity": "e1416049da8fac5224e2f1b592c4d700e7afdf6f27e30116bee3f71d13070d6f",
+  "artifactIdentity": "f4ed3c4c473ef373dcfb4e9bec2167f14c879cd90b685dbb56d276e8d39fb32f",
   "brokenTwin": {
     "location": "temporary directory, removed after check",
     "mutation": "recording.score + 1",
@@ -7,7 +7,7 @@
     "verdict": "FAIL"
   },
   "checker": {
-    "identity": "c7284bb2fac849db00049a46663f287edf34167cb1d688875b75f0ba543ddbd4",
+    "identity": "0ac6afd7b528247da89102c75e218ef1e423eff2efcc04d5e2f6e13f87ea9308",
     "path": "solver/recording-replay.js"
   },
   "claim": "The browser-produced recording replays exactly against its content-bound candidate and pinned seed through the headless engine.",
