@@ -1083,6 +1083,40 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **superseded_by:** []
 - **notes:** This decision makes no claim about human difficulty, fun, preference, solver fitness, policy quality, natural region frequency, shipped levels, or larger boards. It does not replace `RESULT-0017`'s policy-behavior axes. Recovery and wasted-move tolerance remain one candidate concept and were not evaluated.
 
+### DECISION-0007 — Level 54's 126,000 target is a deliberate owner exception to the demand rule
+
+- **type:** decision
+- **status:** provisional
+- **scope:** Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) only; no change to `DECISION-0003` for other levels
+- **statement:** The owner set Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) at 126,000 from human evidence rather than bot measurement; the demand rule would have given 89,800. Scope: Level 54 only; no change to `DECISION-0003` for other levels.
+- **evidence:** shipping commit `3bcb5a6` (2026-09-05) — quote "Level 54 is a deliberate exception to the demand rule" and "It is the one level whose difficulty comes from human evidence rather than bot measurement." Owner reaffirmation 2026-09-28 in session: "I thought I had already kept this as a deliberate choice." `RESULT-0028` (owner replay 140,544 in 20 moves on seed 424242). Same-seed shipped bot 136,832 in 19 (`node solver/human-benchmark.js`, recording `c50b34f8`).
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-09-28
+- **reverify:** `git show 3bcb5a6` for the quoted lines; `RESULT-0028` for the owner replay identities; `node solver/human-benchmark.js` against the `c50b34f8…` recording for the same-seed bot comparison.
+- **updated:** 2026-09-28
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude-sonnet owner-decisions 2026-09-28
+- **checked_by:** pending
+- **notes:** The commit's supporting comparison of the owner's game with a calib-1 median over other seeds (105,664) and its "bot wins 23.3%" figure are not valid comparisons under `docs/MEASUREMENT-AND-ANALYSIS-STANDARDS.md` and must not be cited as evidence for the target; `BL-0020` (re-examination) was dropped on this basis (PR #51).
+
+### DECISION-0008 — Pause porting the family-board MAP-Elites work until frozen renumbering is defined
+
+- **type:** decision
+- **status:** provisional
+- **scope:** branch `feat/family-board-map-elites-20260919` and its port only
+- **statement:** Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the paused port is preserved on branch `port/family-board-map-elites` (commit `1fa518f`). Scope: this branch only.
+- **evidence:** owner choice "A" in session 2026-09-27 among options A (pause + `BL-0023`), B (merge history, keep folders), C (cite off-main), D (rerun); `BL-0023` criterion 7 and its evidence section (merged in PR #50, `f4eea85`); port commit `1fa518f` message.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-09-27
+- **reverify:** `git cat-file -e 1fa518f` and read its commit message; `docs/backlog/BL-0023-reserve-ledger-ids-across-branches.md` criterion 7 and History for the 2026-09-27 pause entry; confirm PR #50 merged as `f4eea85`.
+- **updated:** 2026-09-27
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude-sonnet owner-decisions 2026-09-28
+- **checked_by:** pending
+- **notes:** This pauses porting only; it does not resolve `BL-0023`, does not merge or delete `feat/family-board-map-elites-20260919`, and does not admit or disposition the RESULT-0044..0047 findings themselves.
+
 ## Hypothesis registry
 
 ### HYPOTHESIS-0001 — Compact state may guide an approximate search

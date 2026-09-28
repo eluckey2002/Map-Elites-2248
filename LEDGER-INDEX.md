@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it.
 
-Records: 69 (51 accepted, 1 blocked, 2 narrowed, 3 open, 3 provisional, 9 superseded).
+Records: 71 (51 accepted, 1 blocked, 2 narrowed, 3 open, 5 provisional, 9 superseded).
 
 ## Current records
 
@@ -23,6 +23,8 @@ Records: 69 (51 accepted, 1 blocked, 2 narrowed, 3 open, 3 provisional, 9 supers
 | DECISION-0004 | Promote the target-aware policy as the current engineering champion | accepted | owner_decision | The owner promotes the target-aware immediate-finish policy in `solver/bot.js` as the current engineering champion. | 1041 |
 | DECISION-0005 | Route the qualified owner pilot to variant/repair | accepted | owner_decision | The owner disposes the played candidate as `variant/repair`. | 1056 |
 | DECISION-0006 | Do not promote the two puzzle-instance descriptors from RESULT-0029 | accepted | owner_decision, exact_result | Reject promotion of both `budget tightness` and `chain-length dependence` for the scoped exact micro-puzzle map because `RESULT-0029` did not clear its frozen four-region occupancy and starting-board-diversity requireme… | 1071 |
+| DECISION-0007 | Level 54's 126,000 target is a deliberate owner exception to the demand rule | provisional | owner_decision | The owner set Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) at 126,000 from human evidence rather than bot measurement; the demand rule would have given 89,800. | 1086 |
+| DECISION-0008 | Pause porting the family-board MAP-Elites work until frozen renumbering is defined | provisional | owner_decision | Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the paused port is… | 1103 |
 | RESULT-0001 | Accepted 12,336 score | accepted | replayed_lower_bound | A 32-move witness replays to 12,336 at spawn cursor 520. | 360 |
 | RESULT-0002 | Mass/cursor upper bound | accepted | proven_upper_bound | Complete enumeration of the mass/cursor relaxation proves a 326,390 upper bound. | 374 |
 | RESULT-0003 | Exact move-one envelope | accepted | exact_result | Complete position-aware enumeration finds 1,868,975 physical first moves and an exact move-one maximum of 430. | 388 |
@@ -58,20 +60,20 @@ Records: 69 (51 accepted, 1 blocked, 2 narrowed, 3 open, 3 provisional, 9 supers
 | RESULT-0045 | Oracle witnesses meet every frozen captured-puzzle move comparator | accepted | direct_source | The report contains 20 legal target-reaching oracle witnesses. | 945 |
 | RESULT-0047 | Evolved harvesting policy transfers broadly but two regressions falsify strict dominance (corrected identity, closed) | accepted | direct_source, heuristic_observation | This is the corrected identity for a record originally registered 2026-09-17 as `RESULT-0041` on `experiment/harvest-policy-corpus`, which collided with an unrelated, independently-registered `RESULT-0041` on `main`. | 962 |
 | RESULT-0048 | Blue-only refills yield family-island playtest candidates | accepted | direct_source, heuristic_observation | The registered run closed with primary outcome `ISLANDS_SUFFICIENT`. | 979 |
-| CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1162 |
-| CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1176 |
-| CORRECTION-0003 | Candidate width saturates because of the generator, not the board | accepted | direct_source, heuristic_observation | `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1191 |
-| CORRECTION-0004 | RESULT-0015 was invalidated when the beam was made additive | accepted | direct_source, heuristic_observation | Supersedes `RESULT-0015`. | 1206 |
-| CORRECTION-0005 | RESULT-0029 screened 103 distinct starting boards | accepted | exact_result | Supersedes only `RESULT-0029`'s claim that its 104 screened seed observations were 104 distinct starting boards. | 1221 |
-| CORRECTION-0006 | RESULT-0030 exceeded its registered candidate cap | accepted | direct_source, replayed_upper_bound | Supersedes `RESULT-0030` as a protocol-conforming confirmation. | 1236 |
-| CORRECTION-0007 | RESULT-0037 and RESULT-0038 overstate stability and receipt closure | accepted | direct_source, heuristic_observation, unresolved, UNKNOWN | Supersedes the evidence standing of `RESULT-0037` and `RESULT-0038`. | 1251 |
-| CORRECTION-0008 | Off-lattice tiles are recoverable, not permanently dead | accepted | direct_source, unresolved | Narrows `FACT-0006`. | 1266 |
-| CORRECTION-0009 | Recorded human games stop at the target | accepted | exact_result, direct_source | Supersedes the objective interpretation, not the recorded scores. | 1281 |
-| HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1088 |
-| HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1102 |
-| QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1118 |
-| QUESTION-0002 | What is the exact maximum? | open | unresolved | What is the maximum legal score over the full frozen horizon? | 1132 |
-| QUESTION-0003 | Which first move is globally best? | open | unresolved | Which first move maximizes final score rather than immediate score? | 1146 |
+| CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1196 |
+| CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1210 |
+| CORRECTION-0003 | Candidate width saturates because of the generator, not the board | accepted | direct_source, heuristic_observation | `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1225 |
+| CORRECTION-0004 | RESULT-0015 was invalidated when the beam was made additive | accepted | direct_source, heuristic_observation | Supersedes `RESULT-0015`. | 1240 |
+| CORRECTION-0005 | RESULT-0029 screened 103 distinct starting boards | accepted | exact_result | Supersedes only `RESULT-0029`'s claim that its 104 screened seed observations were 104 distinct starting boards. | 1255 |
+| CORRECTION-0006 | RESULT-0030 exceeded its registered candidate cap | accepted | direct_source, replayed_upper_bound | Supersedes `RESULT-0030` as a protocol-conforming confirmation. | 1270 |
+| CORRECTION-0007 | RESULT-0037 and RESULT-0038 overstate stability and receipt closure | accepted | direct_source, heuristic_observation, unresolved, UNKNOWN | Supersedes the evidence standing of `RESULT-0037` and `RESULT-0038`. | 1285 |
+| CORRECTION-0008 | Off-lattice tiles are recoverable, not permanently dead | accepted | direct_source, unresolved | Narrows `FACT-0006`. | 1300 |
+| CORRECTION-0009 | Recorded human games stop at the target | accepted | exact_result, direct_source | Supersedes the objective interpretation, not the recorded scores. | 1315 |
+| HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1122 |
+| HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1136 |
+| QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1152 |
+| QUESTION-0002 | What is the exact maximum? | open | unresolved | What is the maximum legal score over the full frozen horizon? | 1166 |
+| QUESTION-0003 | Which first move is globally best? | open | unresolved | Which first move maximizes final score rather than immediate score? | 1180 |
 
 ## Superseded or rejected records
 
