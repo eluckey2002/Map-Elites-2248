@@ -821,8 +821,12 @@ function assessLedgerCitations(text, {
       .map((m) => m[2]).join('\n');
     // A bare filename may be named relative to any directory the record cites.
     const dirs = [...new Set([...record.matchAll(/`((?:[\w.-]+\/)+)[\w.-]*`/g)].map((m) => m[1].replace(/\/$/, '')))];
-    for (const span of fields.matchAll(/`([^`]+)`/g)) {
-      for (const m of span[1].matchAll(/(?:^|[\s=(,'"])((?:\.{0,2}\/)?(?:[\w.-]+\/)*[\w-][\w.-]*\.[A-Za-z][A-Za-z0-9]*)(?=$|[\s:#),'"])/g)) {
+    const citations = new Set([
+      ...[...fields.matchAll(/`([^`]+)`/g)].map((m) => m[1]),
+      ...[...fields.matchAll(/\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)].map((m) => m[1]),
+    ]);
+    for (const citation of citations) {
+      for (const m of citation.matchAll(/(?:^|[\s=(,'"])((?:\.{0,2}\/)?(?:[\w.-]+\/)*[\w-][\w.-]*\.[A-Za-z][A-Za-z0-9]*)(?=$|[\s:#),'"])/g)) {
         const rel = m[1];
         // Without a slash, only a known file extension marks a path (not `Game.loadLevel`).
         if (!rel.includes('/') && !/\.(js|mjs|json|jsonl|md|py|html|txt|tsv|csv|sh|png)$/.test(rel)) continue;
@@ -894,7 +898,8 @@ function assessLedgerLinks(text) {
     }
     for (const [field, back] of [['supersedes', 'superseded_by'], ['superseded_by', 'supersedes']]) {
       for (const other of linkIds(f[field])) {
-        if (!records.has(other)) problems.push(`${id}: ${field} names missing record ${other}`);
+        if (other === id) problems.push(`${id}: ${field} cannot name itself`);
+        else if (!records.has(other)) problems.push(`${id}: ${field} names missing record ${other}`);
         else if (!linkIds(records.get(other)[back]).includes(id)) problems.push(`${id}: ${field} ${other}, but ${other}'s ${back} does not name ${id}`);
       }
     }

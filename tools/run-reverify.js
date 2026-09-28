@@ -47,8 +47,8 @@ function reverifyPlan(text) {
 
 function run(entry, timeoutMs) {
   const started = Date.now();
-  const r = spawnSync(entry.command, {
-    cwd: path.join(ROOT, entry.cwd), shell: '/bin/sh', encoding: 'utf8',
+  const r = spawnSync('/bin/bash', ['-e', '-o', 'pipefail', '-c', entry.command], {
+    cwd: path.join(ROOT, entry.cwd), encoding: 'utf8',
     timeout: timeoutMs, maxBuffer: 256 * 1024 * 1024,
   });
   const tail = `${r.stdout || ''}${r.stderr || ''}`.trim().split('\n').slice(-3).join(' | ').slice(0, 400);
@@ -96,4 +96,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { reverifyPlan };
+module.exports = { reverifyPlan, run };

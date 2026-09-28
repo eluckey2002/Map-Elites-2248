@@ -764,6 +764,13 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     });
     assert.ok(problems.some((problem) => problem.includes('escapes the repository')), problems.join('\n'));
   });
+  test('citation check rejects a missing Markdown-linked evidence path', () => {
+    const problems = assessLedgerCitations(real + '\n### FACT-9001 — planted\n- **evidence:** [report](docs/missing.md)\n', {
+      exists: (rel) => rel !== 'docs/missing.md',
+      isCommit: () => true,
+    });
+    assert.ok(problems.some((problem) => problem.includes('docs/missing.md does not exist')), problems.join('\n'));
+  });
 }
 
 // Append-only history and supersede links (BL-0016 F11).
@@ -823,6 +830,11 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   }
   test('link check rejects a one-way supersede link', () => {
     assert.notDeepEqual(assessLedgerLinks(edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')), []);
+  });
+  test('link check rejects a record that supersedes itself in both directions', () => {
+    const selfLinked = '### RESULT-9001 — t\n- **status:** narrowed\n- **supersedes:** [RESULT-9001]\n- **superseded_by:** [RESULT-9001]\n';
+    assert.ok(assessLedgerLinks(selfLinked).every((problem) => problem.includes('cannot name itself')));
+    assert.equal(assessLedgerLinks(selfLinked).length, 2);
   });
 }
 
@@ -969,7 +981,7 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
 // Nightly reverify plan: a wrapped reverify field keeps every command
 // (Codex review of PR #46).
 {
-  const { reverifyPlan } = require('../../tools/run-reverify.js');
+  const { reverifyPlan, run } = require('../../tools/run-reverify.js');
   test('reverify plan includes commands on continuation lines', () => {
     const text = [
       '### CORRECTION-9001 — t', '- **status:** accepted',
@@ -999,6 +1011,11 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   test('reverify plan reports a pipeline as manual regardless of pipe spacing', () => {
     const text = '### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Run `node verify.js|git --version`; expect PASS.\n- **updated:** 2026-09-27\n';
     assert.equal(reverifyPlan(text)[0].manual, true);
+  });
+  test('automatic reverify commands fail on an earlier semicolon-separated error', () => {
+    const result = run({ cwd: '.', command: 'node -e "process.exit(1)"; node -e "process.exit(0)"' }, 10_000);
+    assert.equal(result.outcome, 'FAIL');
+    assert.notEqual(result.exit, 0);
   });
   test('LIVE: RESULT-0049 mixed reverify instructions are reported as manual', () => {
     const root = path.join(__dirname, '..', '..');
