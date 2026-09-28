@@ -66,6 +66,14 @@ takeover value of harmful moves 4 and 9 and helpful moves 6 and 11. The result
 rules out that exact horizon and proxy on the known panel; it is design
 material, not ledger-admitted evidence or a new policy.
 
+The follow-up
+[four-miss diagnostic](docs/learning-cycles/LC-0003-four-miss-diagnostic.md)
+found one common delayed state: at the three-move cutoff, the eventual winner
+had the larger immediately harvestable connected reservoir of built tiles in
+all four misses, and converted it one or two moves later. This is a post-hoc
+design clue, not a validated feature; do not fit another horizon to those
+opened cases.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.

@@ -105,3 +105,8 @@ the whole space. Not one term at a time.
   before fresh evidence: short-horizon target gap reversed eventual takeover
   value at harmful moves 4 and 9 and helpful moves 6 and 11. Do not tune the
   horizon on this opened panel.
+- 2026-09-28 — the bounded LC-0003 four-miss diagnostic found that the
+  eventual winner held the larger immediately harvestable connected built
+  reservoir at the cutoff in all four misses and converted it one or two moves
+  later. Raw built mass did not distinguish all four. This is a post-hoc clue
+  for a separately validated convertible-value construct, not an adopted term.
