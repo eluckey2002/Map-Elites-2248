@@ -1,5 +1,8 @@
 # Recompute with the bot as of commit 8e1e232
 
+> **Superseded by the full run.** This file records the first, 10-level sample (10/10 exact). The same method was then run on all 50 levels with `recompute-levels-1-50.js`; its complete output, `recompute-levels-1-50.out.txt`, shows 50/50 exact and is what the certificate relies on.
+
+
 ## Method (reproducing 8e1e232's `solver/game-tester.js`, `powers2` policy)
 
 Read directly from `solver/game-tester.js` at commit `8e1e232` (`/private/tmp/claude-501/-Users-eluckey-Developer/1258c844-d8c5-416f-bf4b-f74620be66ea/scratchpad/oldbot/repo`, the exact commit that set DECISION-0003 / RESULT-0008 targets):
