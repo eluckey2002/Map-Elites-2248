@@ -69,14 +69,24 @@ different work and collide when one lands.
    `feat/family-board-map-elites-20260919` are renumbered to fresh,
    registry-reserved IDs (or explicitly dropped, if the owner judges the
    branch's work superseded), and either brought to `main` under their new
-   IDs with the renamed `experiments/` folders and ledger entries, or the
+   IDs by the frozen-renumbering procedure in criterion 7, or the
    branch is deleted with the drop recorded here.
 5. The RESULT-0049 collision between `eluckey2002/Map-Elites-QA` (PR #46) and
    PR #49 is resolved by whichever of the two lands second renumbering its
-   RESULT-0049 to a fresh, registry-reserved ID, with the corresponding
-   `experiments/` folder renamed to match.
+   RESULT-0049 to a fresh, registry-reserved ID by the frozen-renumbering
+   procedure in criterion 7.
 6. A History note is added here, and to each renumbered ledger entry, that
    records the old ID, the new ID, and the date of the rename.
+7. A frozen-renumbering procedure exists and the gate enforces it. Renaming
+   a frozen experiment must not change any hashed artifact or orphan its
+   registration: the renumbered ledger record carries an explicit alias
+   (new ID -> original ID, original branch and commit); the artifacts stay
+   byte-identical under their original experiment ID; the original
+   registration and protocol commits are kept reachable from `main` by
+   merging the source history rather than copying files; and the gate
+   resolves a record to its artifacts through the alias instead of the
+   folder name. Tested on the family-board records: every reverify command
+   gives the same outcome before and after renumbering.
 
 ## Current evidence
 
@@ -88,6 +98,17 @@ different work and collide when one lands.
 - `eluckey2002/Map-Elites-QA`'s `EVIDENCE_LEDGER.md`: RESULT-0049 (PR #46).
 - PR #49 (`codex/champion-confirmation-2026-09-27`): adds
   `experiments/RESULT-0049/` for a different result.
+
+- 2026-09-27 port attempt (branch `port/family-board-map-elites`, paused as a
+  work-in-progress commit): a file-level copy renamed `experiments/RESULT-0046`
+  to `RESULT-0054`, but its frozen `output/archive.json` still embeds
+  `RESULT-0046` and its registration commit `4091e60f` is not reachable from
+  `main`, so `tools/verify-experiments.js` failed. The embedded ID is covered
+  by the artifact identity and cannot be edited. The source branch itself
+  still reverifies: RESULT-0046 PASS (artifact `a3a8cd7b...`), RESULT-0047
+  replay matches, RESULT-0045 closes INVALID as recorded (its raw verifier
+  fails at the artifact-identity check, earlier than the assertion its
+  reverify line names).
 
 ## Next action
 
@@ -102,3 +123,4 @@ stranded family-board records or resolving the RESULT-0049 collision.
   `git log`, and `gh pr view` against `origin/main`,
   `feat/family-board-map-elites-20260919`, `eluckey2002/Map-Elites-QA`, and
   PR #49.
+- 2026-09-27: Owner chose to pause the family-board port until this record defines frozen renumbering (criterion 7 added; criteria 4-5 now point to it). The source branch stays on GitHub.
