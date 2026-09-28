@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0004-harness-qualification",
+  "status": "PASS",
+  "attempt": 1,
+  "oracleIdentity": "024d1c58d5c4626b3e891f3cfc20c252473c7a46497771e70e297f55604b9f2a",
+  "harnessIdentity": "ad8b53311d129fe4eafb856637758d7d9e223680f5bef2cf840bb977f10d09e6",
+  "manifestIdentity": "54fe5e6027a8dbcc326260af239acb0a3531c45bb7ceefc827e7a8b426f4d4fb",
+  "admission": {
+    "expectedManifestIdentity": "54fe5e6027a8dbcc326260af239acb0a3531c45bb7ceefc827e7a8b426f4d4fb",
+    "observedManifestIdentity": "54fe5e6027a8dbcc326260af239acb0a3531c45bb7ceefc827e7a8b426f4d4fb",
+    "committed": {
+      "contract": true,
+      "harness": true,
+      "test": true,
+      "manifest": true
+    },
+    "focusedTest": {
+      "command": "node --test solver/tests/lc0004CausalContrast.test.js",
+      "pass": true,
+      "output": "✔ built components use king-move adjacency and exclude initial-value tiles (2.317167ms)\n✔ a declared coordinate swap preserves the exact tile multiset and changes placement (11.969459ms)\n✔ the real swap seam rejects a planted false endpoint value (0.394792ms)\n✔ the committed manifest inspects the real frozen files and rejects a planted identity twin (2.687667ms)\n✔ the diagnostic source cannot define a metric or policy verdict (0.211708ms)\nℹ tests 5\nℹ suites 0\nℹ pass 5\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 155.559875\n"
+    },
+    "coherentSubstitution": {
+      "changed": "manifest identities.bot plus a recomputed internal artifact identity",
+      "rejected": true,
+      "message": "expected manifest identity 54fe5e6027a8dbcc326260af239acb0a3531c45bb7ceefc827e7a8b426f4d4fb, observed b0978673635e8f68f00f8154cacb560eb4fba9bfd5486fc2ebca351a9d96c161"
+    },
+    "reportableOutput": {
+      "path": "docs/learning-cycles/LC-0004-move6-move8-causal-contrast-raw.json",
+      "absent": true
+    },
+    "closeoutPath": "not applicable: exact-case exploratory probe has no closure contract or population outcome"
+  },
+  "controls": [
+    {
+      "id": "C1-deterministic-replay-and-identity",
+      "expected": "clean replay and exact LC-0003 score, reservoir, and target-cost reproduction",
+      "observed": {
+        "replayProblems": [],
+        "references": [
+          {
+            "move": 6,
+            "expected": {
+              "owner": {
+                "score": 39424,
+                "reservoir": 14336,
+                "targetCost": 15
+              },
+              "champion": {
+                "score": 48448,
+                "reservoir": 6144,
+                "targetCost": 19
+              }
+            },
+            "observed": {
+              "owner": {
+                "score": 39424,
+                "reservoir": 14336,
+                "targetCost": 15,
+                "cutoffStateIdentity": "7f7d09bf06795905847478ae5561784da242f38fabda9b68f91f2593e9533962",
+                "continuationMoves": 6
+              },
+              "champion": {
+                "score": 48448,
+                "reservoir": 6144,
+                "targetCost": 19,
+                "cutoffStateIdentity": "6f979b63df3a5b64b3b7d8a1fbbca75371b4a1cf06f8e14497aa8d7a1b9d4260",
+                "continuationMoves": 10
+              }
+            }
+          },
+          {
+            "move": 8,
+            "expected": {
+              "owner": {
+                "score": 48896,
+                "reservoir": 24576,
+                "targetCost": 17
+              },
+              "champion": {
+                "score": 57664,
+                "reservoir": 14336,
+                "targetCost": 15
+              }
+            },
+            "observed": {
+              "owner": {
+                "score": 48896,
+                "reservoir": 24576,
+                "targetCost": 17,
+                "cutoffStateIdentity": "b066338137c18c5441937aad7e6387d818eba980b4a2d14d81f44b5ed9dd044b",
+                "continuationMoves": 6
+              },
+              "champion": {
+                "score": 57664,
+                "reservoir": 14336,
+                "targetCost": 15,
+                "cutoffStateIdentity": "a9616589e2d56773dcdbbdbb686cf7cec46197dea12873f662eaaf9019c3541a",
+                "continuationMoves": 4
+              }
+            }
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "C2-reference-aa",
+      "expected": "byte-identical reconstruction and finish for each owner cutoff",
+      "observed": [
+        {
+          "move": 6,
+          "equal": true,
+          "left": {
+            "score": 39424,
+            "reservoir": 14336,
+            "targetCost": 15,
+            "cutoffStateIdentity": "7f7d09bf06795905847478ae5561784da242f38fabda9b68f91f2593e9533962",
+            "continuationMoves": 6
+          },
+          "right": {
+            "score": 39424,
+            "reservoir": 14336,
+            "targetCost": 15,
+            "cutoffStateIdentity": "7f7d09bf06795905847478ae5561784da242f38fabda9b68f91f2593e9533962",
+            "continuationMoves": 6
+          }
+        },
+        {
+          "move": 8,
+          "equal": true,
+          "left": {
+            "score": 48896,
+            "reservoir": 24576,
+            "targetCost": 17,
+            "cutoffStateIdentity": "b066338137c18c5441937aad7e6387d818eba980b4a2d14d81f44b5ed9dd044b",
+            "continuationMoves": 6
+          },
+          "right": {
+            "score": 48896,
+            "reservoir": 24576,
+            "targetCost": 17,
+            "cutoffStateIdentity": "b066338137c18c5441937aad7e6387d818eba980b4a2d14d81f44b5ed9dd044b",
+            "continuationMoves": 6
+          }
+        }
+      ],
+      "pass": true
+    },
+    {
+      "id": "C3-planted-swap-endpoint",
+      "expected": "false normalized endpoint is refused before continuation",
+      "observed": {
+        "refused": true,
+        "message": "PLANTED-BAD-ENDPOINT endpoint 3,6 expected 16, observed 32"
+      },
+      "pass": true
+    },
+    {
+      "id": "C6-persistence-before-interpretation",
+      "expected": "complete disposable artifact exists before planted interpretation failure",
+      "observed": {
+        "threw": true,
+        "retained": {
+          "complete": true,
+          "arms": [
+            "baseline",
+            "intervention"
+          ]
+        }
+      },
+      "pass": true
+    }
+  ],
+  "uncertainties": [
+    "qualification entitles only the frozen exact-case collector and four named swaps",
+    "no general topology or policy claim is qualified"
+  ],
+  "artifactIdentity": "0b8f1baf09ce722b1442e19aa4d77a105824f9fecdd1d308ab69babd3bd49d4b"
+}
