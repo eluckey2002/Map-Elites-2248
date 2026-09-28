@@ -537,7 +537,86 @@ function committedFileMatches(file) {
   return committed.equals(fs.readFileSync(file));
 }
 
-function qualifyHarness({ manifestPath, expectedManifestIdentity, reportableOut }) {
+function exerciseCloseout({
+  contractPath,
+  expectedContractIdentity,
+  manifestIdentity,
+  reportableOut,
+  recomputedOut,
+}) {
+  if (sha256File(contractPath) !== expectedContractIdentity) {
+    throw new Error('closeout contract external identity mismatch');
+  }
+  if (fs.existsSync(reportableOut) || fs.existsSync(recomputedOut)) {
+    throw new Error('qualification requires absent reportable artifact paths');
+  }
+  const contract = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+  if (contract.final_subject_identity !== manifestIdentity) {
+    throw new Error('closeout final subject does not match manifest identity');
+  }
+  const receiptPath = path.join(path.dirname(contractPath), 'LC-0005-disposable-qualification-closure.json');
+  const synthetic = artifactWithIdentity({
+    schemaVersion: 1,
+    kind: 'lc0005-complete-harvest-raw',
+    status: 'SYNTHETIC_QUALIFICATION',
+  });
+  let verifierOutput;
+  try {
+    fs.writeFileSync(reportableOut, `${JSON.stringify(synthetic, null, 2)}\n`, { flag: 'wx' });
+    const summary = summaryFromArtifact(synthetic);
+    fs.writeFileSync(recomputedOut, `${JSON.stringify(summary, null, 2)}\n`, { flag: 'wx' });
+    const receipt = {
+      schema_version: 1,
+      contract: { path: path.basename(contractPath), sha256: expectedContractIdentity },
+      run_id: 'LC-0005-SYNTHETIC-QUALIFICATION',
+      final_subject_identity: manifestIdentity,
+      closure_status: 'CLOSED',
+      claims: contract.required_claims.map((id) => ({
+        id, status: 'PASS', evidence_subject_identity: manifestIdentity, reason: 'synthetic closeout-path qualification',
+      })),
+      artifacts: [
+        { id: 'raw', path: path.basename(reportableOut), sha256: sha256File(reportableOut) },
+        { id: 'primary-recomputation', path: path.basename(recomputedOut), sha256: sha256File(recomputedOut) },
+      ],
+      primary_outcome: 'SYNTHETIC_CLOSEOUT_PASS',
+      deviations: [],
+      attempts: [{ id: 'qualification-1', exit_code: 0, artifact_ids: ['raw', 'primary-recomputation'] }],
+    };
+    fs.writeFileSync(receiptPath, `${JSON.stringify(receipt, null, 2)}\n`, { flag: 'wx' });
+    const verifier = '/Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py';
+    verifierOutput = execFileSync('python3', [
+      verifier,
+      contractPath,
+      receiptPath,
+      '--run-recomputation',
+      '--require-closed',
+      '--expected-contract-sha256',
+      expectedContractIdentity,
+    ], { cwd: ROOT, encoding: 'utf8' });
+    const parsed = JSON.parse(verifierOutput);
+    return {
+      pass: parsed.verdict === 'PASS' && parsed.recomputation === 'PASS',
+      verifier,
+      resolvedCwd: path.resolve(path.dirname(contractPath), contract.recomputation.cwd),
+      resolvedArgvFiles: contract.recomputation.argv.filter((value) => value.includes('/'))
+        .map((value) => path.resolve(path.resolve(path.dirname(contractPath), contract.recomputation.cwd), value)),
+      verdict: parsed,
+    };
+  } finally {
+    for (const file of [receiptPath, recomputedOut, reportableOut]) {
+      if (fs.existsSync(file)) fs.unlinkSync(file);
+    }
+  }
+}
+
+function qualifyHarness({
+  manifestPath,
+  expectedManifestIdentity,
+  closeoutContract,
+  expectedCloseoutIdentity,
+  reportableOut,
+  recomputedOut,
+}) {
   const inputs = loadInputs(manifestPath, expectedManifestIdentity);
   const controls = qualificationControls(inputs.candidate, inputs.recording, inputs.lc0004);
   const substituted = structuredClone(inputs.manifest);
@@ -550,10 +629,20 @@ function qualifyHarness({ manifestPath, expectedManifestIdentity, reportableOut 
   } catch (error) {
     coherentRejected = /expected manifest identity/.test(error.message);
   }
+  const admission = exerciseCloseout({
+    contractPath: closeoutContract,
+    expectedContractIdentity: expectedCloseoutIdentity,
+    manifestIdentity: inputs.manifest.artifactIdentity,
+    reportableOut,
+    recomputedOut,
+  });
   const committed = ['contract', 'harness', 'test'].map((name) => ({ name, pass: committedFileMatches(inputs.paths[name]) }));
+  committed.push({ name: 'manifest', pass: committedFileMatches(manifestPath) });
+  committed.push({ name: 'closeoutContract', pass: committedFileMatches(closeoutContract) });
   const pass = controls.every(({ pass: controlPass }) => controlPass)
     && coherentRejected
     && committed.every(({ pass: filePass }) => filePass)
+    && admission.pass
     && !fs.existsSync(reportableOut);
   return artifactWithIdentity({
     schemaVersion: 1,
@@ -563,6 +652,8 @@ function qualifyHarness({ manifestPath, expectedManifestIdentity, reportableOut 
     manifestIdentity: inputs.manifest.artifactIdentity,
     harnessIdentity: inputs.manifest.identities.harness,
     controls,
+    preOutcomeAdmission: admission,
+    closeoutContractIdentity: expectedCloseoutIdentity,
     coherentSubstitutionRejected: coherentRejected,
     committed,
     reportableOutputAbsent: !fs.existsSync(reportableOut),
@@ -616,7 +707,10 @@ function main() {
     const receipt = qualifyHarness({
       manifestPath: path.resolve(arg('manifest')),
       expectedManifestIdentity: arg('expected-manifest-identity'),
+      closeoutContract: path.resolve(arg('closeout-contract')),
+      expectedCloseoutIdentity: arg('expected-closeout-identity'),
       reportableOut: path.resolve(arg('reportable-out')),
+      recomputedOut: path.resolve(arg('recomputed-out')),
     });
     writeJsonOnce(path.resolve(qualificationOut), receipt);
     process.stdout.write(`${JSON.stringify(receipt, null, 2)}\n`);
