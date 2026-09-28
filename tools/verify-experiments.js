@@ -193,7 +193,8 @@ function pathExistsAtCommit(sha, relPath) {
 function showAtCommit(sha, relPath, cwd = ROOT, { raw = false } = {}) {
   try {
     const out = execFileSync('git', ['show', `${sha}:${gitObjectPath(relPath)}`], {
-      cwd, stdio: ['ignore', 'pipe', 'ignore'], ...(raw ? {} : { encoding: 'utf8' }),
+      cwd, stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024,
+      ...(raw ? {} : { encoding: 'utf8' }),
     });
     return out;
   } catch { return null; }
@@ -306,15 +307,19 @@ function openCitedArtifacts(result) {
   return artifactCitations(result.body).map(({ rel, requiresRegistration }) => {
     const abs = path.join(ROOT, rel);
     const exists = fs.existsSync(abs);
+    let bytes = null;
     let artifact = null;
     let parseError = null;
     if (exists) {
-      try { artifact = JSON.parse(fs.readFileSync(abs, 'utf8')); } catch (error) { parseError = error.message; }
+      try {
+        bytes = fs.readFileSync(abs);
+        artifact = JSON.parse(bytes.toString('utf8'));
+      } catch (error) { parseError = error.message; }
     }
     // A citation with no slash is a filename named in prose, not a path into
     // the repo. Four such exist in the ledger today ("-52.receipt.json"), and
     // reading them as paths would make this gate red on English.
-    return { rel, abs, looksLikePath: rel.includes('/'), exists, artifact, parseError, requiresRegistration };
+    return { rel, abs, bytes, looksLikePath: rel.includes('/'), exists, artifact, parseError, requiresRegistration };
   });
 }
 
@@ -366,6 +371,55 @@ function primaryOutcome(recomputation) {
     if (typeof recomputation[key] === 'string') return recomputation[key];
   }
   return null;
+}
+
+// Modern executable closures pin their contract before reportable outcomes.
+// Once the closure lands, later evidence edits must supersede the result rather
+// than silently rewrite it. The commit adding closure.json is the independent,
+// immutable comparison point and still allows qualification work before close.
+function assessClosedEvidenceImmutability(result, protocol, opened, overrides = new Map()) {
+  const problems = [];
+  const resultDir = path.join(EXPERIMENTS, result.id);
+  const closureEntry = opened.find(({ rel, artifact }) => path.basename(rel) === 'closure.json' && artifact);
+  if (!closureEntry) return problems;
+
+  const contractRel = closureEntry.artifact.contract && closureEntry.artifact.contract.path;
+  const contractPath = resolveInside(resultDir, contractRel);
+  if (!contractPath || !fs.existsSync(contractPath)) return problems;
+  const contractHash = sha256(contractPath);
+  const externallyPinned = protocol.includes(contractRel)
+    && (protocol.includes(contractHash) || protocol.includes(contractHash.slice(0, 16)));
+  if (!externallyPinned) return problems;
+  const closureCommit = addedIn(closureEntry.rel);
+  if (!closureCommit) {
+    problems.push(`${result.id}: cited closure ${closureEntry.rel} has no readable closing commit`);
+    return problems;
+  }
+
+  const entries = opened
+    .filter(({ exists, bytes, artifact }) => (
+      exists && bytes && !(artifact && typeof artifact.artifactIdentity === 'string')
+    ))
+    .map(({ rel, bytes }) => ({ rel, bytes }));
+  const reportRel = `experiments/${result.id}/report.md`;
+  const reportPath = path.join(ROOT, reportRel);
+  if (result.body.includes(reportRel) && fs.existsSync(reportPath)) {
+    entries.push({ rel: reportRel, bytes: fs.readFileSync(reportPath) });
+  }
+
+  for (const entry of entries) {
+    const current = overrides.has(entry.rel) ? overrides.get(entry.rel) : entry.bytes;
+    const closed = showAtCommit(closureCommit, entry.rel, ROOT, { raw: true });
+    if (!closed) {
+      problems.push(`${result.id}: cited closed evidence ${entry.rel} is absent from closing commit ${closureCommit.slice(0, 8)}`);
+    } else if (!Buffer.isBuffer(current) || !current.equals(closed)) {
+      problems.push(
+        `${result.id}: cited closed evidence ${entry.rel} differs from closing commit ${closureCommit.slice(0, 8)}; `
+        + 'supersede the result instead of rewriting retained evidence',
+      );
+    }
+  }
+  return problems;
 }
 
 // A closure receipt is not self-authenticating: changing its verdict and then
@@ -674,6 +728,7 @@ function assessExperiments() {
     const protocol = fs.readFileSync(protocolPath, 'utf8');
     const front = parseFrontmatter(protocol);
     if (!front) { problems.push(`${result.id}: protocol.md has no frontmatter`); continue; }
+    problems.push(...assessClosedEvidenceImmutability(result, protocol, opened));
     problems.push(...assessClosureReceipt(result, protocol, opened));
     if (front.result !== result.id) {
       problems.push(`${result.id}: protocol declares result ${front.result}`);
@@ -741,7 +796,8 @@ module.exports = {
   REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
-  assessArtifactIdentity, assessCitationsResolve, assessClosureReceipt, assessReportAnswers, assessStampProvenance,
+  assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
+  assessClosureReceipt, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
   committedVersions, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };

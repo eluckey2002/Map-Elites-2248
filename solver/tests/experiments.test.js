@@ -161,7 +161,8 @@ test('an exploratory artifact cannot back a generalizing claim', () => {
 // ---------------------------------------------------------------------------
 
 const {
-  assessArtifactIdentity, assessCitationsResolve, assessClosureReceipt, assessReportAnswers,
+  assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
+  assessClosureReceipt, assessReportAnswers,
   assessStampProvenance, assessVersionFreeze, openCitedArtifacts, reachableFromHead, sha16,
 } = require('../../tools/verify-experiments.js');
 
@@ -234,6 +235,33 @@ test('LIVE: RESULT-0049 closure must agree with its pinned contract and fresh re
   const problems = assessClosureReceipt(result, protocol, opened);
   assert.ok(problems.some((problem) => /missing required claim C1/.test(problem)));
   assert.ok(problems.some((problem) => /contradicts recomputation "SUPPORTS_CURRENT_CHAMPION"/.test(problem)));
+});
+
+test('LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit', () => {
+  const result = liveResult('RESULT-0049');
+  const opened = openCitedArtifacts(result);
+  const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0049', 'protocol.md'), 'utf8');
+  assert.deepEqual(
+    assessClosedEvidenceImmutability(result, protocol, opened),
+    [],
+    'the real qualification, report, and cited receipts must match their closing-commit bytes',
+  );
+
+  const qualificationRel = 'experiments/RESULT-0049/qualification.json';
+  const qualification = structuredClone(opened.find((entry) => entry.rel === qualificationRel).artifact);
+  qualification.qualification = 'FAIL';
+  qualification.controls[0].status = 'FAIL';
+  const reportRel = 'experiments/RESULT-0049/report.md';
+  const report = fsx.readFileSync(path.join(ROOT, reportRel), 'utf8')
+    .replace('| Champion-only wins | 17 |', '| Champion-only wins | 999999 |');
+  const overrides = new Map([
+    [qualificationRel, Buffer.from(JSON.stringify(qualification))],
+    [reportRel, Buffer.from(report)],
+  ]);
+
+  const problems = assessClosedEvidenceImmutability(result, protocol, opened, overrides);
+  assert.ok(problems.some((problem) => problem.includes(`${qualificationRel} differs from closing commit`)));
+  assert.ok(problems.some((problem) => problem.includes(`${reportRel} differs from closing commit`)));
 });
 
 test('LIVE: a citation that resolves to nothing fails; a filename in prose does not', () => {

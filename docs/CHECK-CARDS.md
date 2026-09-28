@@ -617,13 +617,15 @@ that passed while inspecting nothing.
 - **Protects:** the rot `experiments/README.md` names as motivating the gate —
   "two ledger citations rotted to paths that never resolved".
 - **Where:** `assessCitationsResolve`, over `openCitedArtifacts`.
-- **Level:** citation. Every backticked `*.json` token in a ledger record that
-  **contains a slash** must exist on disk and parse as JSON.
+- **Level:** citation. Every backticked or Markdown-linked `*.json` path in a
+  ledger record that **contains a slash** must exist on disk and parse as JSON.
 - **Kind:** existence plus parseability. Not contents — `artifact-identity-verifies`
   owns that.
-- **Scope:** all 19 ledger records **including grandfathered ones** —
-  grandfathering waives the protocol requirement, never the requirement that a
-  receipt be a real file. 13 path-shaped citations today, all resolving.
+- **Scope:** every `### RESULT-NNNN` ledger record **including grandfathered
+  ones**; code-span and Markdown-link JSON paths containing `/`; UTF-8 JSON
+  parsing. Grandfathering waives protocol registration, never citation
+  resolution. Bare filenames, non-JSON links, decisions, and hypotheses are
+  excluded.
 - **Reads own output?:** no.
 - **Does NOT catch:**
   1. **A filename named in prose.** Four live citations have no slash
@@ -632,11 +634,77 @@ that passed while inspecting nothing.
      written without a directory is invisible here.
   2. **A path that resolves to the *wrong* file.** Existence only.
   3. **Non-JSON evidence.** `citedArtifacts` only matches `.json`; a cited `.md`,
-     `.html`, or commit-scoped path is not checked by anything.
+     `.html`, or commit-scoped path is not checked here. Modern closed
+     experiment reports are separately covered by
+     `closed-evidence-closing-commit-integrity` below.
   4. **A citation inside a decision or hypothesis record.** `readLedgerResults`
      only parses `### RESULT-NNNN` blocks, so `DECISION-0004`'s citations are
      unchecked.
-- **Rung:** blocking. **Decay:** live test plants a nonexistent path each run.
+- **Rung:** blocking. **Decay:** live tests plant a nonexistent path and remove
+  a real RESULT-0049 Markdown-linked receipt.
+
+### closed-evidence-closing-commit-integrity · HARD
+
+- **Protects:** a modern, executable closed experiment cannot keep an accepted
+  ledger record while its qualification, report, closure, corpus, or cited
+  receipts are rewritten after the commit that first closes the experiment.
+  Qualification work may evolve before close; corrections after close must
+  supersede the result instead of changing retained evidence in place.
+- **Where:** `tools/verify-experiments.js#assessClosedEvidenceImmutability`,
+  called by `assessExperiments`; exercised live by
+  `solver/tests/experiments.test.js`.
+- **Level:** whole file and result record. It detects any byte change but does
+  not identify which field or claim changed.
+- **Kind:** value. It compares current bytes with `git show` at the commit that
+  first added `closure.json`. Scientific truth at that closing commit remains owned by
+  the executable recomputation, result-local controls, and review.
+- **Scope:** ledger `RESULT` records whose cited `closure.json` names a closeout
+  contract whose full or 16-character SHA-256 is pinned in `protocol.md`; every
+  existing cited JSON path from that record that lacks its own
+  `artifactIdentity`; and its cited `experiments/<RESULT-ID>/report.md`.
+  Self-identifying corpora stay with `artifact-identity-verifies` and executable
+  closure recomputation. Legacy closures without a protocol-pinned contract,
+  uncited files, non-result ledger records, and evidence outside git history
+  are excluded.
+- **Reads own output?:** yes. The experiment workflow commits the evidence that
+  this gate later reads. The comparison source is each file's blob at the
+  immutable closing commit, not a hash stored in a mutable receipt; this makes
+  later rewriting visible but cannot prove the closing blob was correct.
+- **Sampling memory:** n/a — exhaustive over every in-scope cited file on every
+  experiment-gate run. Silence for a legacy unpinned closure means outside
+  scope, never authenticated.
+- **Does NOT catch:**
+  1. Evidence that was already wrong, contradictory, or fabricated when the
+     closure first committed it.
+  2. A coordinated history rewrite that replaces the closing commit; branch
+     protection, not this check, owns protected-history mutation.
+  3. An evidence file that the ledger never cites, or a report whose ledger
+     record does not link its canonical `report.md` path.
+  4. Whether unchanged report prose accurately explains every recomputed field;
+     `assessClosureReceipt` owns outcome and artifact agreement, while review
+     owns explanatory meaning.
+  5. Legacy executable closures whose protocols never pinned their contracts;
+     enforcing a new historical promise would reject accepted evidence that
+     predates the promise.
+  6. A self-identifying corpus rewritten together with a freshly valid identity;
+     the artifact-identity and closure-recomputation checks own that class.
+- **Crafted-bypass test:** `solver/tests/experiments.test.js`, case `LIVE:
+  RESULT-0049 evidence cannot be rewritten after its closing commit`.
+  It first proves the real cited evidence matches git, then changes the live
+  qualification to `FAIL`, changes a real failed control, and changes the
+  report's champion-only count to `999999`; both files must fail this check.
+- **Retires:** NO — this widens the existing experiment gate. Artifact
+  self-identities do not cover qualification/report files, and executable
+  closure recomputation does not detect a coordinated report-plus-closure hash
+  rewrite, so no existing check can be removed.
+- **Enforcement:** HARD inside the existing required experiment gate. The live
+  corpus was clean before promotion; the crafted qualification and report
+  rewrites both failed before this card was marked shippable.
+- **Decay:** `node --test solver/tests/experiments.test.js` reruns the clean
+  corpus assertion and both crafted mutations; `node tools/verify-experiments.js`
+  scans the real ledger and evidence on every required CI run.
+- **Shipped:** PR #49 review fix for `Authenticate the remaining RESULT-0049
+  evidence`.
 
 ### artifact-identity-verifies · HARD
 
