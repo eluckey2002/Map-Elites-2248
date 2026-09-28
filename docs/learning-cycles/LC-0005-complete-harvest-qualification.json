@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0005-harness-qualification",
+  "status": "PASS",
+  "attempt": 1,
+  "manifestIdentity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+  "harnessIdentity": "18ac216362d0e6c2434f70b27c99b12638188034cf65f054d8187b63e7ffd6aa",
+  "controls": [
+    {
+      "id": "C1-deterministic-source-and-replay",
+      "pass": true,
+      "observed": {
+        "replayProblems": [],
+        "retainedState": "416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6",
+        "reconstructedState": "416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6"
+      }
+    },
+    {
+      "id": "C2-reference-policy-aa",
+      "pass": true,
+      "observed": {
+        "equalChoice": true,
+        "equalFinish": true,
+        "targetCost": 14
+      }
+    },
+    {
+      "id": "C3-chain-legality-known-kill",
+      "pass": true,
+      "observed": {
+        "positive": {
+          "legal": true,
+          "reason": "legal",
+          "route": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 8
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 16
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 5,
+              "y": 0,
+              "value": 64
+            }
+          ]
+        },
+        "negative": {
+          "legal": false,
+          "reason": "non-adjacent step 2,0->3,2"
+        }
+      }
+    },
+    {
+      "id": "C4-planted-coverage-mutation",
+      "pass": true,
+      "observed": {
+        "mutantPresent": true,
+        "mutantReachedRealPredicate": true,
+        "mutationKilled": true,
+        "mutationMessage": "claimed built coverage mismatch: expected 0,3|0,4|0,5|1,6|2,5|3,6|3,7, observed 0,3|0,4|0,5|0,6|1,6|2,5|3,6|3,7"
+      }
+    },
+    {
+      "id": "C6-restoration-and-persistence",
+      "pass": true,
+      "observed": {
+        "predicateIdentityBefore": "144229a5001ce68c9b34916fc37230d8e7958487ba2834b1080e82fa6599b045",
+        "predicateIdentityAfter": "144229a5001ce68c9b34916fc37230d8e7958487ba2834b1080e82fa6599b045",
+        "persistence": {
+          "threw": true,
+          "retained": {
+            "complete": true,
+            "arms": [
+              "baseline",
+              "repair"
+            ]
+          },
+          "pass": true
+        }
+      }
+    }
+  ],
+  "preOutcomeAdmission": {
+    "pass": true,
+    "verifier": "/Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py",
+    "resolvedCwd": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27",
+    "resolvedArgvFiles": [
+      "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/tools/diagnose-lc0005-complete-harvest.js",
+      "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/docs/learning-cycles/LC-0005-complete-harvest-raw.json"
+    ],
+    "verdict": {
+      "checked_artifacts": [
+        "primary-recomputation",
+        "raw"
+      ],
+      "checked_claims": [
+        "C1-deterministic-source-and-replay",
+        "C2-reference-policy-aa",
+        "C3-chain-legality-known-kill",
+        "C4-planted-coverage-mutation",
+        "C5-objective-and-intervention-equivalence",
+        "C6-restoration-and-persistence",
+        "O1-complete-harvest-disposition"
+      ],
+      "closure_status": "CLOSED",
+      "contract_sha256": "470e005b9e5cfbe72860d6f9e99657c4f6ff4a0429272523d21c2d46c7b4a219",
+      "errors": [],
+      "expected_contract_sha256": "470e005b9e5cfbe72860d6f9e99657c4f6ff4a0429272523d21c2d46c7b4a219",
+      "recomputation": "PASS",
+      "recomputed_output_sha256": "1ac0f7b029f36d82683d746072e3671774dfb87cb1f927266e1c7ba56cab8759",
+      "verdict": "PASS"
+    }
+  },
+  "closeoutContractIdentity": "470e005b9e5cfbe72860d6f9e99657c4f6ff4a0429272523d21c2d46c7b4a219",
+  "coherentSubstitutionRejected": true,
+  "committed": [
+    {
+      "name": "contract",
+      "pass": true
+    },
+    {
+      "name": "harness",
+      "pass": true
+    },
+    {
+      "name": "test",
+      "pass": true
+    },
+    {
+      "name": "manifest",
+      "pass": true
+    },
+    {
+      "name": "closeoutContract",
+      "pass": true
+    }
+  ],
+  "reportableOutputAbsent": true,
+  "artifactIdentity": "db04aea211a0ae7e1e6c2ae536a3c1bf99f382cc61117617db45a84bdb74e4b9"
+}
