@@ -662,3 +662,425 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   }
   assert.ok(checked >= 6, `expected to inspect the real protocols, inspected ${checked}`);
 });
+
+// Ledger structure: the real ledger passes, and each defect the 2026-09-26
+// audit planted (BL-0016 F9) turns it red.
+{
+  const fs = require('node:fs');
+  const { assessLedgerStructure } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const good = (id = 'RESULT-9001', over = {}) => {
+    const f = {
+      type: 'result', status: 'accepted', scope: 's', statement: 'x', evidence: '`a.js`',
+      proof_class: '`direct_source`', as_of: '2026-09-26', reverify: 'n/a', updated: '2026-09-26',
+      supersedes: '[]', superseded_by: '[]', ...over,
+    };
+    return [`### ${id} — planted`, ...Object.entries(f).filter(([, v]) => v !== null).map(([k, v]) => `- **${k}:** ${v}`)].join('\n');
+  };
+
+  test('the real ledger passes the structure check', () => {
+    assert.deepEqual(assessLedgerStructure(real), []);
+  });
+  test('a well-formed planted record passes', () => {
+    assert.deepEqual(assessLedgerStructure(`${real}\n${good()}\n`), []);
+  });
+  test('an empty ledger fails', () => {
+    assert.notDeepEqual(assessLedgerStructure(''), []);
+  });
+  for (const [name, rec] of [
+    ['duplicate ID', good('RESULT-0017')],
+    ['invalid status', good('RESULT-9001', { status: 'confirmed' })],
+    ['invalid proof class', good('RESULT-9001', { proof_class: '`certain`' })],
+    ['proof class naming no class', good('RESULT-9001', { proof_class: 'see notes' })],
+    ['missing as_of', good('RESULT-9001', { as_of: null })],
+    ['missing evidence', good('RESULT-9001', { evidence: null })],
+    ['type not matching prefix', good('FACT-9001', { type: 'result' })],
+    ['unknown prefix', good('CLAIM-9001')],
+    ['h2 heading', good('RESULT-9001').replace('### ', '## ')],
+    ['h4 heading', good('RESULT-9001').replace('### ', '#### ')],
+    ['lowercase heading', good('RESULT-9001').replace('RESULT', 'result')],
+    ['heading without space', good('RESULT-9001').replace('### ', '###')],
+    ['heading with a colon instead of a dash', good('RESULT-9001').replace('### RESULT-9001 — planted', '### RESULT-9001: planted')],
+    ['heading indented one space', good('RESULT-9001').replace('### RESULT-9001', ' ### RESULT-9001')],
+    ['heading indented three spaces', good('RESULT-9001').replace('### RESULT-9001', '   ### RESULT-9001')],
+    ['heading with no title', good('RESULT-9001').replace(/^(### RESULT-9001).*$/m, '$1')],
+    ['short ID', good('RESULT-91')],
+    ['empty evidence', good('RESULT-9001', { evidence: '' })],
+    ['status written twice', `${good()}\n- **status:** confirmed`],
+    ['superseded without link', good('RESULT-9001', { status: 'superseded' })],
+    ['free-text as_of', good('RESULT-9001', { as_of: 'yesterday' })],
+  ]) {
+    test(`structure check rejects: ${name}`, () => {
+      assert.notDeepEqual(assessLedgerStructure(`${real}\n${rec}\n`), []);
+    });
+  }
+}
+
+// Ledger citations (BL-0016 F12): the real ledger's evidence resolves, and a
+// missing path or unknown commit in evidence or reverify turns it red.
+{
+  const fs = require('node:fs');
+  const { assessLedgerCitations } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const rec = (field, value) => `\n### RESULT-9001 — planted\n- **${field}:** ${value}\n`;
+
+  test('the real ledger cites only paths and commits that exist', () => {
+    assert.deepEqual(assessLedgerCitations(real), []);
+  });
+  test('an existing path and commit pass', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('evidence', '`solver/bot.js:10-20`, commit `b82a9b6`')), []);
+  });
+  test('RESULT-NNNN shorthand resolves under experiments/', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('evidence', '`RESULT-0030/protocol.md`')), []);
+  });
+  test('a known gap stops being excused when its correction is missing', () => {
+    assert.notDeepEqual(assessLedgerCitations(real.replace('### CORRECTION-0010', '### CORRECTION-9010')), []);
+  });
+  test('a missing path in notes is not flagged', () => {
+    assert.deepEqual(assessLedgerCitations(real + rec('notes', '`solver/nope.js` was never written')), []);
+  });
+  for (const [name, field, value] of [
+    ['missing evidence path', 'evidence', '`solver/nope.js`'],
+    ['missing path with line range', 'evidence', '`solver/nope.js:1-5`'],
+    ['missing reverify path', 'reverify', 'run `tools/nope.js`'],
+    ['unknown commit', 'evidence', 'commit `deadbeef`'],
+    ['unknown commit, plural label', 'evidence', 'commits `deadbeef`'],
+    ['path inside a command', 'reverify', 'run `node --test solver/tests/nope.test.js`'],
+    ['top-level file without slash', 'evidence', '`NOPE.md`'],
+    ['commit with colon label', 'evidence', 'commit: `deadbeef1`'],
+    ['commit with equals label', 'evidence', 'Commit = deadbeef1'],
+    ['commit only on an unmerged branch', 'evidence', 'commit `95d75cc`'],
+    ['absolute path', 'evidence', '`/Users/someone/nope.js`'],
+    ['list-form continuation line', 'evidence', '\n  - `solver/nope.js`'],
+  ]) {
+    test(`citation check rejects: ${name}`, () => {
+      assert.notDeepEqual(assessLedgerCitations(real + rec(field, value)), []);
+    });
+  }
+  test('citation check rejects parent traversal even when the external path exists', () => {
+    const problems = assessLedgerCitations(real + rec('evidence', '`../outside.md`'), {
+      exists: () => true,
+      isCommit: () => true,
+    });
+    assert.ok(problems.some((problem) => problem.includes('escapes the repository')), problems.join('\n'));
+  });
+  test('citation check rejects a missing Markdown-linked evidence path', () => {
+    const problems = assessLedgerCitations(real + '\n### FACT-9001 — planted\n- **evidence:** [report](docs/missing.md)\n', {
+      exists: (rel) => rel !== 'docs/missing.md',
+      isCommit: () => true,
+    });
+    assert.ok(problems.some((problem) => problem.includes('docs/missing.md does not exist')), problems.join('\n'));
+  });
+}
+
+// Append-only history and supersede links (BL-0016 F11).
+{
+  const fs = require('node:fs');
+  const { assessLedgerHistory, assessLedgerLinks } = require('../../tools/verify-experiments.js');
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const edit = (id, field, fn) => real.replace(new RegExp(`(### ${id} [\\s\\S]*?^- \\*\\*${field}:\\*\\*[ \\t]*)(.*)$`, 'm'), (_, a, v) => a + fn(v));
+
+  test('the real ledger has two-way supersede links', () => {
+    assert.deepEqual(assessLedgerLinks(real), []);
+  });
+  test('an unchanged ledger passes the history check', () => {
+    assert.deepEqual(assessLedgerHistory(real, real), []);
+  });
+  test('a status change and added links and notes pass', () => {
+    let next = edit('RESULT-0005', 'status', () => 'stale'); // stale needs no correction
+    next = next.replace(/(### RESULT-0010 [\s\S]*?^- \*\*notes:\*\*[ \t]*)(.*)$/m, (_, a, v) => `${a}${v} Added later.`);
+    assert.deepEqual(assessLedgerHistory(next, real), []);
+  });
+  for (const [name, next] of [
+    ['a rewritten statement', edit('RESULT-0001', 'statement', (v) => v.replace('12,336', '12,999'))],
+    ['a promoted proof class', edit('RESULT-0005', 'proof_class', () => '`exact_result`')],
+    ['a rewritten evidence field', edit('FACT-0001', 'evidence', (v) => `${v} extra`)],
+    ['a changed as_of', edit('RESULT-0001', 'as_of', () => '2026-09-26')],
+    ['a dropped supersede link', edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')],
+    ['rewritten notes', edit('RESULT-0010', 'notes', () => 'different')],
+    ['notes with text prepended', edit('RESULT-0010', 'notes', (v) => `[RETRACTED] ${v}`)],
+    ['a changed heading title', real.replace(/^### RESULT-0001 .*$/m, '### RESULT-0001 — Accepted 12,999 score')],
+    ['a rewritten ad hoc bold line', edit('RESULT-0010', 'appended 2026-08-20', (v) => `${v} changed`)],
+    ['a capitalised override field', real.replace(/^(### FACT-0001 .*\n)/m, '$1- **Statement:** the opposite\n')],
+    ['a superseded record revived as accepted', edit('RESULT-0030', 'status', () => 'accepted')],
+    ['a status change with no new correction', edit('FACT-0001', 'status', () => 'rejected')],
+  ]) {
+    test(`history check rejects ${name}`, () => {
+      assert.notDeepEqual(assessLedgerHistory(next, real), []);
+    });
+  }
+  test('a removed record is left to the authorship gate', () => {
+    assert.deepEqual(assessLedgerHistory(real.replace(/^### HYPOTHESIS-0001 [\s\S]*?(?=^### )/m, ''), real), []);
+  });
+  test('adding written_by and checked_by to an existing record passes', () => {
+    const next = real.replace(/^(### FACT-0001 .*\n)/m, '$1- **written_by:** someone\n- **checked_by:** someone else\n');
+    assert.deepEqual(assessLedgerHistory(next, real), []);
+  });
+  {
+    const base = '### RESULT-9300 — t\n- **statement:** first line\n  continued here\n- **status:** accepted\n';
+    test('history check rejects a rewritten continuation line', () => {
+      assert.notDeepEqual(assessLedgerHistory(base.replace('continued here', 'changed here'), base), []);
+    });
+    test('history check rejects a deleted continuation line', () => {
+      assert.notDeepEqual(assessLedgerHistory(base.replace('  continued here\n', ''), base), []);
+    });
+    test('history check accepts an unchanged wrapped field', () => {
+      assert.deepEqual(assessLedgerHistory(base, base), []);
+    });
+  }
+  test('link check rejects a one-way supersede link', () => {
+    assert.notDeepEqual(assessLedgerLinks(edit('RESULT-0030', 'superseded_by', () => '[CORRECTION-0006]')), []);
+  });
+  test('link check rejects a record that supersedes itself in both directions', () => {
+    const selfLinked = '### RESULT-9001 — t\n- **status:** narrowed\n- **supersedes:** [RESULT-9001]\n- **superseded_by:** [RESULT-9001]\n';
+    assert.ok(assessLedgerLinks(selfLinked).every((problem) => problem.includes('cannot name itself')));
+    assert.equal(assessLedgerLinks(selfLinked).length, 2);
+  });
+}
+
+// Sample size and margin (BL-0016 F6): every protocol on disk, not only ones
+// with a ledger record, and no quoted or blank date slips past the cutoff.
+{
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const { assessSampleSizeSections } = require('../../tools/verify-experiments.js');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'f6-'));
+  const write = (name, registered, body = '') => {
+    fs.mkdirSync(path.join(dir, name), { recursive: true });
+    fs.writeFileSync(path.join(dir, name, 'protocol.md'), `---\nresult: ${name}\n${registered === null ? '' : `registered: ${registered}\n`}---\n\n${body}`);
+  };
+  const FILLED = '## Sample size and margin\n\n- **Per verdict:** 40 paired games.\n- **Margin:** 3 misses flip it.\n- **Downstream quantity:** none.\n\n## Seeds\n';
+  for (const [name, body] of [
+    ['a bare heading', '## Sample size and margin\n\n## Seeds\n'],
+    ['template placeholders left in', FILLED.replace('40 paired games.', '<the number of games>')],
+    ['a missing margin item', FILLED.replace('- **Margin:** 3 misses flip it.\n', '')],
+    ['an empty downstream item', FILLED.replace(' none.', '')],
+  ]) {
+    test(`sample-size check rejects: ${name}`, () => {
+      const d = fs.mkdtempSync(path.join(os.tmpdir(), 'f6c-'));
+      fs.mkdirSync(path.join(d, 'RESULT-9103'));
+      fs.writeFileSync(path.join(d, 'RESULT-9103', 'protocol.md'), `---\nresult: RESULT-9103\nregistered: 2026-09-28T00:00:00Z\n---\n\n${body}`);
+      assert.notDeepEqual(assessSampleSizeSections(d), []);
+    });
+  }
+  test('the real experiments pass the sample-size check', () => {
+    assert.deepEqual(assessSampleSizeSections(), []);
+  });
+  test('an old protocol without the section passes', () => {
+    write('RESULT-9100', '2026-09-19T00:00:00Z');
+    assert.deepEqual(assessSampleSizeSections(dir), []);
+  });
+  test('a new protocol with the section passes', () => {
+    write('RESULT-9101', '2026-09-28T00:00:00Z', FILLED);
+    assert.deepEqual(assessSampleSizeSections(dir), []);
+  });
+  const REAL_COMPANION = fs.readFileSync(
+    path.join(ROOT, 'experiments', 'RESULT-0049', 'registered-protocol.md'),
+    'utf8',
+  );
+  const writeCompanion = (prefix, { frozen = true, body = REAL_COMPANION } = {}) => {
+    const d = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
+    const experiment = path.join(d, 'RESULT-0049');
+    fs.mkdirSync(experiment);
+    fs.writeFileSync(path.join(experiment, 'protocol.md'), [
+      '---',
+      'result: RESULT-0049',
+      'registered: 2026-09-27T14:33:46Z',
+      ...(frozen ? [
+        'version_freeze:',
+        '  experiments/RESULT-0049/registered-protocol.md: 4dc2419b7e586fdc',
+      ] : []),
+      '---',
+      '',
+      '# Pre-registration',
+    ].join('\n'));
+    fs.writeFileSync(path.join(experiment, 'registered-protocol.md'), body);
+    return d;
+  };
+  test('a frozen companion protocol with explicit denominator, margin, and adoption boundary passes', () => {
+    assert.deepEqual(assessSampleSizeSections(writeCompanion('f6-companion-')), []);
+  });
+  test('the frozen companion form fails when its quantitative margin is removed', () => {
+    const bad = REAL_COMPANION.replace(
+      /Uncertainty is the larger[\s\S]*?This estimate is descriptive;/,
+      'Uncertainty is reported descriptively. This estimate is descriptive;',
+    );
+    assert.notEqual(bad, REAL_COMPANION, 'the crafted bad input must remove the real margin rule');
+    assert.match(assessSampleSizeSections(writeCompanion('f6-companion-bad-', { body: bad })).join('\n'), /quantitative margin/);
+  });
+  test('an unfrozen companion cannot satisfy the sample-size check', () => {
+    assert.match(assessSampleSizeSections(writeCompanion('f6-companion-unfrozen-', { frozen: false })).join('\n'), /not frozen/);
+  });
+  for (const [name, date] of [['new, no section', '2026-09-28T00:00:00Z'], ['quoted date', '"2026-09-28"'], ['blank date', ''], ['missing date', null]]) {
+    test(`sample-size check rejects: ${name}`, () => {
+      const d = fs.mkdtempSync(path.join(os.tmpdir(), 'f6x-'));
+      fs.mkdirSync(path.join(d, 'RESULT-9102'));
+      fs.writeFileSync(path.join(d, 'RESULT-9102', 'protocol.md'), `---\nresult: RESULT-9102\n${date === null ? '' : `registered: ${date}\n`}---\n`);
+      assert.notDeepEqual(assessSampleSizeSections(d), []);
+    });
+  }
+}
+
+// Run outcomes reach the ledger (BL-0016 F2).
+{
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const { assessRunOutcomes } = require('../../tools/verify-experiments.js');
+  const ledger = '### RESULT-0031 — x\n';
+  const check = (files, started = '2026-09-28') => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'f2-'));
+    fs.mkdirSync(path.join(dir, 'run'));
+    for (const [f, body] of Object.entries(files)) fs.writeFileSync(path.join(dir, 'run', f), body);
+    return assessRunOutcomes(ledger, { runsDir: dir, startDate: () => started });
+  };
+  test('the real runs pass the outcome check', () => {
+    assert.deepEqual(assessRunOutcomes(fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8')), []);
+  });
+  test('a run naming an existing record passes', () => {
+    assert.deepEqual(check({ 'worklog.md': 'done\nledger: RESULT-0031\n' }), []);
+  });
+  test('a stopped run marked not reportable with a reason passes', () => {
+    assert.deepEqual(check({ 'stop-record.md': 'ledger: not reportable — stopped before any data\n' }), []);
+  });
+  test('trailing blank lines after the ledger line pass', () => {
+    assert.deepEqual(check({ 'worklog.md': 'done\nledger: RESULT-0031\n\n\n' }), []);
+  });
+  test('an older run needs no ledger line', () => {
+    assert.deepEqual(check({ 'spec.md': 'x' }, '2026-09-01'), []);
+  });
+  for (const [name, files] of [
+    ['no outcome file', { 'spec.md': 'x' }],
+    ['outcome file without a ledger line', { 'worklog.md': 'done\n' }],
+    ['a ledger line naming a missing record', { 'worklog.md': 'ledger: RESULT-9999\n' }],
+    ['not reportable with no reason', { 'worklog.md': 'ledger: not reportable\n' }],
+    ['a ledger line with no ID', { 'worklog.md': 'ledger: see chat\n' }],
+    ['a ledger line followed by later output', { 'worklog.md': 'ledger: RESULT-0031\nresumed; new result 42\n' }],
+  ]) {
+    test(`outcome check rejects: ${name}`, () => {
+      assert.notDeepEqual(check(files), []);
+    });
+  }
+}
+
+// Session close-out: a new ledger record must come with a CURRENT.md update.
+{
+  const { assessCloseOut } = require('../../tools/verify-experiments.js');
+  const base = '### RESULT-0001 — a\n';
+  const grown = `${base}### RESULT-0002 — b\n`;
+  test('close-out passes when no record is added', () => {
+    assert.deepEqual(assessCloseOut(base, base, 'same', 'same'), []);
+  });
+  test('close-out passes when a record is added and CURRENT.md changes', () => {
+    assert.deepEqual(assessCloseOut(grown, base, 'new', 'old'), []);
+  });
+  test('close-out rejects a new record with CURRENT.md unchanged', () => {
+    assert.notDeepEqual(assessCloseOut(grown, base, 'same', 'same'), []);
+  });
+}
+
+// Nightly reverify plan: a wrapped reverify field keeps every command
+// (Codex review of PR #46).
+{
+  const { reverifyPlan, run } = require('../../tools/run-reverify.js');
+  test('reverify plan includes commands on continuation lines', () => {
+    const text = [
+      '### CORRECTION-9001 — t', '- **status:** accepted',
+      '- **reverify:** For each commit, `git worktree add --detach <dir> <commit>`:',
+      '  - `abc1234`: `node tools/one.js`', '  - `def5678`: `node tools/two.js`',
+      '- **updated:** 2026-09-27', '',
+    ].join('\n');
+    const commands = reverifyPlan(text).map((e) => e.command);
+    assert.ok(commands.includes('node tools/one.js') && commands.includes('node tools/two.js'), commands.join(' / '));
+    assert.ok(reverifyPlan(text).every((e) => e.manual), 'a placeholder setup step keeps the record manual');
+  });
+  test('reverify plan reports a runnable command followed by prose-only flags as manual', () => {
+    const text = [
+      '### RESULT-9002 — t', '- **status:** accepted',
+      '- **reverify:** Run `node recompute.js corpus.json`. Then run the close-experiment verifier with `--run-recomputation --require-closed`; expect PASS.',
+      '- **updated:** 2026-09-27', '',
+    ].join('\n');
+    const plan = reverifyPlan(text);
+    assert.equal(plan.length, 1);
+    assert.equal(plan[0].command, 'node recompute.js corpus.json');
+    assert.equal(plan[0].manual, true);
+  });
+  test('reverify plan keeps a complete runnable command automatic', () => {
+    const text = '### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Run `node recompute.js corpus.json`; expect PASS.\n- **updated:** 2026-09-27\n';
+    assert.equal(reverifyPlan(text)[0].manual, false);
+  });
+  test('reverify plan reports a pipeline as manual regardless of pipe spacing', () => {
+    const text = '### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Run `node verify.js|git --version`; expect PASS.\n- **updated:** 2026-09-27\n';
+    assert.equal(reverifyPlan(text)[0].manual, true);
+  });
+  test('automatic reverify commands fail on an earlier semicolon-separated error', () => {
+    const result = run({ cwd: '.', command: 'node -e "process.exit(1)"; node -e "process.exit(0)"' }, 10_000);
+    assert.equal(result.outcome, 'FAIL');
+    assert.notEqual(result.exit, 0);
+  });
+  test('LIVE: RESULT-0049 mixed reverify instructions are reported as manual', () => {
+    const root = path.join(__dirname, '..', '..');
+    const ledger = require('node:fs').readFileSync(path.join(root, 'EVIDENCE_LEDGER.md'), 'utf8');
+    const entries = reverifyPlan(ledger).filter((entry) => entry.id === 'RESULT-0049');
+    assert.ok(entries.length > 0, 'RESULT-0049 must remain visible to the reverify planner');
+    assert.ok(entries.every((entry) => entry.manual), 'a partial closure command must prevent automatic PASS');
+  });
+}
+
+// RESULT-0031's blind recompute normalizes caps as its producer does
+// (Codex review of PR #46): its committed corpus has no integrity issues.
+{
+  const { execFileSync } = require('node:child_process');
+  test('RESULT-0031 recompute finds no cap mismatches on its corpus', () => {
+    const root = path.join(__dirname, '..', '..');
+    const out = JSON.parse(execFileSync(process.execPath, ['experiments/RESULT-0031/recompute.js', 'experiments/RESULT-0031/corpus.json'], { cwd: root, encoding: 'utf8' }));
+    assert.equal(out.C4partial.outcome, 'PASS (partial)');
+    assert.deepEqual(out.C4partial.witnessIssues, []);
+    assert.equal(out.P1.outcome, 'SUPPORTED');
+    assert.equal(out.P2.outcome, 'INCONCLUSIVE');
+  });
+}
+
+// Third Codex review of PR #46: prose-only reverify is reported, and
+// revision/checkout labels are resolved like commit labels.
+{
+  const fs = require('node:fs');
+  const { reverifyPlan } = require('../../tools/run-reverify.js');
+  const { assessLedgerCitations } = require('../../tools/verify-experiments.js');
+  test('a prose-only reverify is listed as manual, not dropped', () => {
+    const plan = reverifyPlan('### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Inspect the code by hand.\n- **updated:** 2026-09-27\n');
+    assert.equal(plan.length, 1);
+    assert.equal(plan[0].manual, true);
+  });
+  const real = fs.readFileSync(path.join(__dirname, '..', '..', 'EVIDENCE_LEDGER.md'), 'utf8');
+  const rec = (value) => `${real}\n### RESULT-9001 — planted\n- **evidence:** ${value}\n`;
+  test('a real revision and checkout label pass', () => {
+    assert.deepEqual(assessLedgerCitations(rec('runner revision `be84336`, isolated checkout at `b82a9b6`')), []);
+  });
+  test('every SHA in a real plural commit list passes', () => {
+    assert.deepEqual(assessLedgerCitations(rec('admission commits `be84336` (RESULT-0017), `1e5311e` (RESULT-0021), and `b82a9b6`')), []);
+  });
+  for (const value of ['commits `be84336`, `deadbeef1234`', 'commits `be84336` (X), `1e5311e` (Y), and `deadbeef1234` (Z)']) {
+    test(`citation check rejects a bad later SHA in: ${value}`, () => {
+      assert.notDeepEqual(assessLedgerCitations(rec(value)), []);
+    });
+  }
+  {
+    const { assessLedgerHistory } = require('../../tools/verify-experiments.js');
+    const base = '### RESULT-9300 — t\n- **statement:** first\n#### detail\nfrozen text below a subheading\n- **status:** accepted\n';
+    test('history check rejects a rewrite below an H4 inside a field', () => {
+      assert.notDeepEqual(assessLedgerHistory(base.replace('frozen text', 'rewritten text'), base), []);
+    });
+  }
+  test('citation check rejects a missing path below an H4 inside evidence', () => {
+    assert.notDeepEqual(assessLedgerCitations(rec('see below\n#### Details\n- `solver/nope.js`')), []);
+  });
+  test('reverify plan keeps commands below an H4 inside the field', () => {
+    const plan = reverifyPlan('### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Steps:\n#### Run\n`node tools/one.js`\n- **updated:** 2026-09-27\n');
+    assert.deepEqual(plan.map((e) => e.command), ['node tools/one.js']);
+  });
+  for (const value of ['runner revision `deadbeef1234`', 'isolated checkout `deadbeef1234`', 'checkout at `deadbeef1234`']) {
+    test(`citation check rejects unknown SHA: ${value}`, () => {
+      assert.notDeepEqual(assessLedgerCitations(rec(value)), []);
+    });
+  }
+}

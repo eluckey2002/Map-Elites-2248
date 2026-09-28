@@ -40,13 +40,13 @@ different work and collide when one lands.
   harvesting policy transfers broadly but two regressions falsify strict
   dominance (corrected identity, closed)") for three unrelated experiments.
   RESULT-0046 is unused on `main`.
-- Checked: `eluckey2002/Map-Elites-QA` (PR #46) defines RESULT-0049 ("A
+- Checked: `eluckey2002/Map-Elites-QA` (PR #46) originally defined RESULT-0049 ("A
   120-mutation MAP-Elites archive on re-calibrated axes occupies 24 of 25
   cells without replacing the `52f500c` champion") in its
-  `EVIDENCE_LEDGER.md`. PR #49 (`codex/champion-confirmation-2026-09-27`, open
-  against `main`) separately adds `experiments/RESULT-0049/` for champion
-  confirmation — a different result, same ID, on branches that have not yet
-  merged with each other.
+  `EVIDENCE_LEDGER.md`. Merged PR #49 separately added
+  `experiments/RESULT-0049/` for champion confirmation — a different result,
+  same original ID. The PR #46 records are therefore renumbered on the
+  reconciliation branch as RESULT-0050, RESULT-0051, and RESULT-0052.
 - No existing mechanism reserves an ID before a branch starts using it; two
   branches can each pick the next free ID on `main` at branch time and drift
   apart as `main` moves.
@@ -95,9 +95,11 @@ different work and collide when one lands.
 - `feat/family-board-map-elites-20260919`'s `EVIDENCE_LEDGER.md`:
   RESULT-0044..0047 (stranded, colliding titles) and
   `experiments/RESULT-0045/`, `experiments/RESULT-0046/`.
-- `eluckey2002/Map-Elites-QA`'s `EVIDENCE_LEDGER.md`: RESULT-0049 (PR #46).
-- PR #49 (`codex/champion-confirmation-2026-09-27`): adds
-  `experiments/RESULT-0049/` for a different result.
+- `eluckey2002/Map-Elites-QA`'s original `EVIDENCE_LEDGER.md`: RESULT-0049
+  (PR #46), now mapped to RESULT-0050 on the reconciliation branch; its two
+  following direct-source records map from RESULT-0050/0051 to RESULT-0051/0052.
+- Merged PR #49: `experiments/RESULT-0049/` and the authoritative champion
+  confirmation record.
 
 - 2026-09-27 port attempt (branch `port/family-board-map-elites`, paused as a
   work-in-progress commit): a file-level copy renamed `experiments/RESULT-0046`
@@ -114,7 +116,7 @@ different work and collide when one lands.
 
 Decide the registry's file location and shape, then wire it into
 `tools/verify-experiments.js` as a required check before renumbering the
-stranded family-board records or resolving the RESULT-0049 collision.
+stranded family-board records.
 
 ## History
 
@@ -124,3 +126,4 @@ stranded family-board records or resolving the RESULT-0049 collision.
   `feat/family-board-map-elites-20260919`, `eluckey2002/Map-Elites-QA`, and
   PR #49.
 - 2026-09-27: Owner chose to pause the family-board port until this record defines frozen renumbering (criterion 7 added; criteria 4-5 now point to it). The source branch stays on GitHub.
+- 2026-09-27: The owner approved resolving the PR #46/PR #49 collision by landing PR #49 first, then mapping PR #46's RESULT-0049 → RESULT-0050, RESULT-0050 → RESULT-0051, and RESULT-0051 → RESULT-0052. All three are direct-source records without preregistered experiment directories, so the reconciliation preserves their cited artifact bytes and original branch/commit while changing only ledger labels and references. The registry and frozen-experiment alias mechanism remain open for the separate family-board records.

@@ -43,6 +43,17 @@ test('superseded records leave the current table', () => {
   assert.match(retired, /FACT-0101.*CORRECTION-0100/);
 });
 
+test('a narrowed record leads with the correction that narrowed it (BL-0016 F3)', () => {
+  const text = renderIndex(parseLedgerRecords([
+    record('FACT-0100', { status: 'narrowed', statement: 'Old wording.', superseded_by: '[CORRECTION-0100]' }),
+    record('CORRECTION-0100', { status: 'accepted', statement: 'Fix.', supersedes: '[FACT-0100]' }),
+  ].join('\n')));
+  const row = text.split('\n').find((l) => l.startsWith('| FACT-0100'));
+  assert.match(row, /\*\*Corrected by CORRECTION-0100 \(a title\); the wording below may no longer hold\.\*\* Old wording\./);
+  const clean = text.split('\n').find((l) => l.startsWith('| CORRECTION-0100'));
+  assert.doesNotMatch(clean, /Corrected by/);
+});
+
 test('the committed index matches the live ledger', () => {
   const out = execFileSync('node', ['tools/ledger-index.js', '--check'], { cwd: ROOT, encoding: 'utf8' });
   assert.match(out, /LEDGER INDEX CURRENT/);
