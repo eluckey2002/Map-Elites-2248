@@ -1,10 +1,10 @@
 ---
 id: BL-0020
 title: Re-examine Level 54's shipped target with same-seed comparisons
-status: proposed
+status: dropped
 milestone: level-difficulty-calibration
 depends_on: [BL-0017]
-updated: 2026-09-27
+updated: 2026-09-28
 ---
 
 # BL-0020 — Re-examine the Level 54 target
@@ -54,8 +54,22 @@ rules.
 
 ## Next action
 
-Register a protocol (seed range, both bots, keep/retune/re-author thresholds)
-before measuring either bot at 126,000.
+None: dropped. See Disposition.
+
+## Disposition
+
+Dropped 2026-09-28. The 126,000 target is a deliberate owner decision, recorded
+in the shipping commit `3bcb5a6` (2026-09-05): "Level 54 is a deliberate
+exception to the demand rule ... the one level whose difficulty comes from
+human evidence rather than bot measurement." This record wrongly treated the
+decision as unjustified because one supporting sentence in that commit compared
+the owner's game with the bot's median over other seeds (not a valid
+comparison) and quoted a `calib-1` win rate. That sentence should not be cited
+as a comparison; the decision itself stands. The valid same-seed comparison
+(seed 424242: owner 140,544 in 20 moves, shipped bot 136,832 in 19) is
+consistent with it. An exploratory 2026-09-27 run also found one `calib-1`
+lockout at this target (seed 91,000,047; the shipped bot had none); it is a
+note, not a reason to reopen.
 
 ## History
 
@@ -66,3 +80,4 @@ before measuring either bot at 126,000.
   keep/retune/re-author thresholds) committed before either bot is measured,
   renumbered the prior criteria, and updated Next action to match.
 - 2026-09-27: Corrected the excluded seed range to the full prior Level 54 panel 200000-200119 (Codex review on b625881).
+- 2026-09-28: Dropped: the target is an owner decision already recorded in `3bcb5a6`; see Disposition.
