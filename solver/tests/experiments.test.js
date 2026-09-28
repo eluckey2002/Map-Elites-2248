@@ -161,7 +161,7 @@ test('an exploratory artifact cannot back a generalizing claim', () => {
 // ---------------------------------------------------------------------------
 
 const {
-  assessArtifactIdentity, assessCitationsResolve, assessReportAnswers,
+  assessArtifactIdentity, assessCitationsResolve, assessClosureReceipt, assessReportAnswers,
   assessStampProvenance, assessVersionFreeze, openCitedArtifacts, reachableFromHead, sha16,
 } = require('../../tools/verify-experiments.js');
 
@@ -218,6 +218,22 @@ test('LIVE: RESULT-0049 Markdown-linked evidence cannot disappear or change sile
     /does not hash to its own artifactIdentity/,
     'changing one real paired cell must make identity validation fail',
   );
+});
+
+test('LIVE: RESULT-0049 closure must agree with its pinned contract and fresh recomputation', () => {
+  const result = liveResult('RESULT-0049');
+  const opened = openCitedArtifacts(result);
+  const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0049', 'protocol.md'), 'utf8');
+  assert.deepEqual(assessClosureReceipt(result, protocol, opened), [], 'the real executable closure must verify');
+
+  const closureEntry = opened.find((entry) => entry.rel === 'experiments/RESULT-0049/closure.json');
+  assert.ok(closureEntry && closureEntry.artifact, 'the live gate must open the cited closure receipt');
+  closureEntry.artifact.primary_outcome = 'DOES_NOT_SUPPORT_CURRENT_CHAMPION';
+  closureEntry.artifact.claims = [];
+
+  const problems = assessClosureReceipt(result, protocol, opened);
+  assert.ok(problems.some((problem) => /missing required claim C1/.test(problem)));
+  assert.ok(problems.some((problem) => /contradicts recomputation "SUPPORTS_CURRENT_CHAMPION"/.test(problem)));
 });
 
 test('LIVE: a citation that resolves to nothing fails; a filename in prose does not', () => {
