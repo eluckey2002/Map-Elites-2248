@@ -1,0 +1,115 @@
+{
+  "artifactIdentity": "6074b33ac0d68aba78c0ddd68c94041dc2e871392f9c50d573c00e1fd218dc19",
+  "status": "COMPLETE",
+  "disposition": "WINNER_LINEAGE_EXPLAINS_SOME",
+  "cells": [
+    {
+      "move": 4,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "correctionContinuation": 4,
+      "winnerCorrectionUsesLineage": true,
+      "loserCorrectionUsesLineage": false,
+      "outcome": "WINNER_ONLY",
+      "owner": {
+        "landedCarrier": {
+          "x": 1,
+          "y": 7,
+          "value": 1024
+        },
+        "firstReuseDelay": 7,
+        "lineageUsingMergesThroughCorrection": 0
+      },
+      "champion": {
+        "landedCarrier": {
+          "x": 1,
+          "y": 7,
+          "value": 1024
+        },
+        "firstReuseDelay": 4,
+        "lineageUsingMergesThroughCorrection": 1
+      }
+    },
+    {
+      "move": 6,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "correctionContinuation": 5,
+      "winnerCorrectionUsesLineage": false,
+      "loserCorrectionUsesLineage": false,
+      "outcome": "NEITHER",
+      "owner": {
+        "landedCarrier": {
+          "x": 3,
+          "y": 7,
+          "value": 1024
+        },
+        "firstReuseDelay": 8,
+        "lineageUsingMergesThroughCorrection": 0
+      },
+      "champion": {
+        "landedCarrier": {
+          "x": 2,
+          "y": 2,
+          "value": 512
+        },
+        "firstReuseDelay": 1,
+        "lineageUsingMergesThroughCorrection": 1
+      }
+    },
+    {
+      "move": 9,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "correctionContinuation": 4,
+      "winnerCorrectionUsesLineage": true,
+      "loserCorrectionUsesLineage": false,
+      "outcome": "WINNER_ONLY",
+      "owner": {
+        "landedCarrier": {
+          "x": 2,
+          "y": 7,
+          "value": 1024
+        },
+        "firstReuseDelay": 1,
+        "lineageUsingMergesThroughCorrection": 1
+      },
+      "champion": {
+        "landedCarrier": {
+          "x": 2,
+          "y": 5,
+          "value": 1024
+        },
+        "firstReuseDelay": 3,
+        "lineageUsingMergesThroughCorrection": 2
+      }
+    },
+    {
+      "move": 11,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "correctionContinuation": 4,
+      "winnerCorrectionUsesLineage": false,
+      "loserCorrectionUsesLineage": false,
+      "outcome": "NEITHER",
+      "owner": {
+        "landedCarrier": {
+          "x": 0,
+          "y": 3,
+          "value": 1024
+        },
+        "firstReuseDelay": 1,
+        "lineageUsingMergesThroughCorrection": 1
+      },
+      "champion": {
+        "landedCarrier": {
+          "x": 3,
+          "y": 1,
+          "value": 1600
+        },
+        "firstReuseDelay": null,
+        "lineageUsingMergesThroughCorrection": 0
+      }
+    }
+  ]
+}

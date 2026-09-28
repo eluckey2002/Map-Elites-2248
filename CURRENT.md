@@ -106,6 +106,16 @@ requires both ladder entry and a complete value-ordered path, not connectivity
 alone. The next bounded step is to check that explanation against the four
 already-opened misses without naming or implementing a metric.
 
+[RESULT-0060](EVIDENCE_LEDGER.md#result-0060--exact-decision-tile-lineage-explains-two-of-four-delayed-reversals)
+performs the first “stay the course” check on those four misses. The winner's
+exact decision survivor enters the reversal chain at moves 4 and 9, but not at
+moves 6 and 11. At move 6 the winning owner leaves its anchor untouched until
+three moves after the ordering has reversed; at move 11 it uses the anchor in
+an earlier setup merge while other tiles deliver the reversal. Course
+persistence is therefore broader than one tile: the next diagnostic should
+trace the full reversal chain back to the post-decision board and expose the
+persistent entry, connectors, and reservoir. Do not define a metric yet.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.

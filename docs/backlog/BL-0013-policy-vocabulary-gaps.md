@@ -87,13 +87,14 @@ is the reason to define the vocabulary as a set rather than as four patches.
 
 ## Next action
 
-Do not implement another term yet. `RESULT-0058` showed the positive exact
-case: repairing one fork let the unchanged champion harvest all ten built
-tiles. `RESULT-0059` supplied the negative exact case: one connected eight-tile
-reservoir had no `16→32` entry, no legal path covering all eight tiles, and
-cost one move versus baseline. Now state the smallest two-part explanation—
-ladder entry plus complete value-ordered path—and check it against the four
-already-opened misses. Keep that diagnostic; do not name a metric yet.
+Do not implement another term yet. `RESULT-0058` and `RESULT-0059` establish
+the positive and negative exact topology cases. `RESULT-0060` then shows that
+literal persistence of the newly created tile explains only moves 4 and 9:
+the helpful move-6 winner preserves its anchor beyond the reversal, and the
+helpful move-11 winner uses it in an earlier setup rather than the reversal
+chain. Next trace each full reversal chain backward to the post-decision board
+to reveal the persistent entry, connectors, reservoir, and spawned additions.
+Keep that diagnostic; do not name a metric yet.
 
 ## History
 
@@ -135,3 +136,10 @@ already-opened misses. Keep that diagnostic; do not name a metric yet.
   and the connected arm took one extra move versus baseline. Connectivity is
   therefore not harvest readiness; the next diagnostic must test the narrower
   ladder-entry plus complete-path explanation on the four opened misses.
+- 2026-09-28 — `RESULT-0060` traced the exact survivor created by both options
+  through all eight retained arms. Winner lineage directly powered the move-4
+  and move-9 reversals, but not move 6 or 11. At move 6, earlier reuse belonged
+  to the loser while the winner preserved its anchor; at move 11, the winner
+  used its anchor in an earlier setup and reversed with other tiles. “Stay the
+  course” is therefore a board-plan claim, not a one-tile claim. Trace the full
+  reversal-chain ancestry next; do not define a metric yet.

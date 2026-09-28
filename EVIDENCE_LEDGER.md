@@ -1190,6 +1190,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-28, branch `codex/game51-learning-cycle-2026-09-27`
 - **notes:** Provisional pending an independent checker. No champion, game rule, level, target, receipt, recording, or authoring file changed, and no fresh gameplay outcome was generated. The next bounded step is to apply the two-part structural explanation to the four already-opened misses without defining a policy metric.
 
+### RESULT-0060 — Exact decision-tile lineage explains two of four delayed reversals
+
+- **type:** result
+- **status:** provisional
+- **scope:** the eight already-retained owner/champion arms at Level 54 owner moves 4, 6, 9, and 11 on seed 1313839221; exact survivor-object lineage through the unchanged champion continuation to each frozen first-gap-order correction and terminal outcome; no alternative move, fresh seed, metric, policy change, or population claim
+- **statement:** The tile created by the eventual winner's decision directly enters the correction-producing chain in two of four cells. At harmful moves 4 and 9, only the champion winner's lineage enters the reversal chain: respectively 31,680 and 48,960 points. At helpful move 6, neither lineage enters the correction chain; the owner winner preserves its landed 1024 untouched through correction continuation 5 and first reuses it at continuation 8, while the losing champion reuses its carrier immediately. At helpful move 11, neither lineage enters the correction chain; the owner winner reused its lineage once at continuation 1, but other prepared tiles produce the continuation-4 56,320-point reversal. Thus literal one-tile persistence explains some but not all “stay the course” behavior. The broader exact-state interpretation is a persistent board plan—entry, connectors, reservoir, and value-ordered route—not compulsory repeated use of one anchor tile. This does not define a metric or establish behavior beyond the four named states.
+- **evidence:** frozen [LC-0007 contract](docs/learning-cycles/LC-0007-decision-lineage-contract.md); [qualification and pre-outcome admission](docs/learning-cycles/LC-0007-decision-lineage-qualification.json); retained [raw artifact](docs/learning-cycles/LC-0007-decision-lineage-raw.json), file SHA-256 `546582c6010eca867582505241e262ddff2888fe22057c2580dbe99c51da3fea`, internal artifact identity `6074b33ac0d68aba78c0ddd68c94041dc2e871392f9c50d573c00e1fd218dc19`; [result explanation](docs/learning-cycles/LC-0007-decision-lineage-result.md), file SHA-256 `30efdeb40feee04dfcaa6cd91451897113c94a3d0c56cd430a66526b2870a3fb`; externally anchored [closure](docs/learning-cycles/LC-0007-decision-lineage-closure.json), file SHA-256 `7f9f2b0cf9c2d1821cbe4201ed033e26005862bbd0ccec3e7472563c049727b3`; byte-matched [primary recomputation](docs/learning-cycles/LC-0007-decision-lineage-recomputed.json), SHA-256 `f46a65b13604bbffd094c6e88f969f104f660286752d618732cb60c31a3c4dbd`; closeout-contract SHA-256 `300aed307bc6c82af8f2aed0c15480d3e53d6b7c55ec4fe592b90b9b24b7770c`
+- **proof_class:** `exact_result`, `direct_source` — exact object provenance and deterministic replay on the eight named arms; no claim beyond those arms
+- **as_of:** 2026-09-28
+- **reverify:** Run `python3 tools/vendor/close-experiment/verify_closure.py docs/learning-cycles/LC-0007-decision-lineage-closeout-contract.json docs/learning-cycles/LC-0007-decision-lineage-closure.json --run-recomputation --require-closed --expected-contract-sha256 300aed307bc6c82af8f2aed0c15480d3e53d6b7c55ec4fe592b90b9b24b7770c`; expect `verdict: PASS`, `closure_status: CLOSED`, `recomputation: PASS`, and primary outcome `WINNER_LINEAGE_EXPLAINS_SOME` in the closure.
+- **updated:** 2026-09-28
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-28, branch `codex/game51-learning-cycle-2026-09-27`
+- **notes:** Provisional pending an independent checker. No protected gameplay or content file changed and no fresh outcome was generated. The next bounded diagnostic is to trace the full reversal chain backward to the post-decision board, rather than force course persistence into one tile.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

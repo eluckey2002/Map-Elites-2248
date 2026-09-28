@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "LC-0007-decision-lineage-closeout-contract.json",
+    "sha256": "300aed307bc6c82af8f2aed0c15480d3e53d6b7c55ec4fe592b90b9b24b7770c"
+  },
+  "run_id": "LC-0007-DECISION-LINEAGE-1",
+  "final_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1-frozen-replay-and-panel-identity",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "All frozen identities, four decision states, correction continuations, intermediate states, and terminal outcomes reproduced."
+    },
+    {
+      "id": "C2-objective-and-continuation-equivalence",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "Each paired arm shared its decision state, RNG prefix, target, move budget, champion continuation, and target-stop objective."
+    },
+    {
+      "id": "C3-lineage-transfer-known-good",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "The tracker followed a non-final carrier into the later final survivor at the correct coordinate and summed value."
+    },
+    {
+      "id": "C4-unrelated-chain-known-negative",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "An unrelated chain reported no lineage use and retained the original carrier object."
+    },
+    {
+      "id": "C5-planted-false-carrier",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "The public validator rejected the planted false carrier coordinate for the intended lineage-mismatch reason."
+    },
+    {
+      "id": "C6-restoration-and-persistence",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "Tracker identity was restored and a planted interpretation failure left its complete disposable raw artifact intact."
+    },
+    {
+      "id": "move-4-lineage",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "WINNER_ONLY: the champion winner's 1024 lineage entered the continuation-4 31,680-point reversal chain; the owner loser's did not."
+    },
+    {
+      "id": "move-6-lineage",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "NEITHER: neither decision lineage entered its continuation-5 correction chain; the owner winner preserved its 1024 carrier until first reuse at continuation 8."
+    },
+    {
+      "id": "move-9-lineage",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "WINNER_ONLY: the champion winner's lineage entered the continuation-4 48,960-point reversal chain; the owner loser's did not."
+    },
+    {
+      "id": "move-11-lineage",
+      "status": "PASS",
+      "evidence_subject_identity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+      "reason": "NEITHER: neither decision lineage entered its continuation-4 correction chain; the owner winner had reused its lineage once at continuation 1."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw",
+      "path": "LC-0007-decision-lineage-raw.json",
+      "sha256": "546582c6010eca867582505241e262ddff2888fe22057c2580dbe99c51da3fea"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "LC-0007-decision-lineage-recomputed.json",
+      "sha256": "f46a65b13604bbffd094c6e88f969f104f660286752d618732cb60c31a3c4dbd"
+    }
+  ],
+  "primary_outcome": "WINNER_LINEAGE_EXPLAINS_SOME",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "LC-0007-DECISION-LINEAGE-1",
+      "exit_code": 0,
+      "artifact_ids": [
+        "raw",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}

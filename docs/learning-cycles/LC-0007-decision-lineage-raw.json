@@ -1,0 +1,6612 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0007-decision-lineage-raw",
+  "status": "COMPLETE",
+  "finalSubjectIdentity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+  "sources": {
+    "priorArtifactIdentity": "10a05405746480e7232690115a877c6a0a431cdc7bc182f1147178444d4b23fd",
+    "lc0003ManifestIdentity": "f1a001094916ac3e6220a030b2cf3e9b83be116f3cd89e48071bc54f86812a7a",
+    "lc0003QualificationIdentity": "e922f53063f04213c49ee7b39cb9aafbf1c3ca4531765f3dcf5b68502b50c8ae",
+    "recordingIdentity": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78"
+  },
+  "controls": {
+    "exactPanelReproduced": true,
+    "objectiveEquivalent": true,
+    "unchangedContinuation": true
+  },
+  "cells": [
+    {
+      "move": 4,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "loser": "owner",
+      "correctionContinuation": 4,
+      "winnerCorrectionUsesLineage": true,
+      "loserCorrectionUsesLineage": false,
+      "outcome": "WINNER_ONLY",
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "decision": {
+            "points": 3072,
+            "length": 8,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 256
+              }
+            ],
+            "landedCarrier": {
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            "postStateIdentity": "cf11fc9bd8c6ed1453939d095ef04d86b712d4ed9b0ce8416695d8a3eb2375dc"
+          },
+          "correctionContinuation": 4,
+          "correctionUsesLineage": false,
+          "correctionEvent": {
+            "continuationMoves": 4,
+            "points": 5120,
+            "length": 9,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 256
+              }
+            ],
+            "usesLineage": false,
+            "lineageIndex": -1,
+            "transferred": false,
+            "carrierBefore": {
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            "carrierAfter": {
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            "postStateIdentity": "74c20a7a0399c9ad38d7000a96268fa86cb95311f6a22dea4610cab70e0af569"
+          },
+          "firstReuseDelay": 7,
+          "lineageUsingMergesThroughCorrection": 0,
+          "carrierAtCorrection": {
+            "x": 1,
+            "y": 7,
+            "value": 1024
+          },
+          "events": [
+            {
+              "continuationMoves": 1,
+              "points": 1536,
+              "length": 7,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "fefb5dde84fc17386fc6cf71e20d49147a69b6a12bbbf5bc1e067a27ee0d4c28"
+            },
+            {
+              "continuationMoves": 2,
+              "points": 10240,
+              "length": 11,
+              "sum": 2048,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 512
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "d05c77ab51c1485b8c60a2385ee90dea8141d55c7c67884fe9c5c7a6ca757e03"
+            },
+            {
+              "continuationMoves": 3,
+              "points": 3264,
+              "length": 8,
+              "sum": 1088,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "e6b0df612841c12a3d7891dc752383db4f3bfe782361ff1beeddd50800ce051f"
+            },
+            {
+              "continuationMoves": 4,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "74c20a7a0399c9ad38d7000a96268fa86cb95311f6a22dea4610cab70e0af569"
+            },
+            {
+              "continuationMoves": 5,
+              "points": 3072,
+              "length": 8,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "514352181b6d013a2ca838e62ce2944a46d97d27301fac716800e6dae7dca775"
+            },
+            {
+              "continuationMoves": 6,
+              "points": 5120,
+              "length": 12,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "ccfb4ad957722eb1fff8f923153ee9e846e964a30700fbfd8b205bc5ea59165d"
+            },
+            {
+              "continuationMoves": 7,
+              "points": 24576,
+              "length": 7,
+              "sum": 8192,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "usesLineage": true,
+              "lineageIndex": 4,
+              "transferred": true,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "53d4883d0073ba1ad44577c8daac24ec92a829a0d03bb1e3fd3f249f758126dd"
+            },
+            {
+              "continuationMoves": 8,
+              "points": 6080,
+              "length": 9,
+              "sum": 1216,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "1a17133424d790d57f6c8cf241db4e88af451ae1df1fd35e6c269bae367ebce4"
+            },
+            {
+              "continuationMoves": 9,
+              "points": 5120,
+              "length": 10,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "80a7406741dfb16553ac97e5cf8b7af62fa38c6862be09369cbcaa62ed37874e"
+            },
+            {
+              "continuationMoves": 10,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "d8e48f63376f9a70a2ca1f745b8adf79b72c1a6352367df7d3852d2b35159a56"
+            },
+            {
+              "continuationMoves": 11,
+              "points": 3072,
+              "length": 7,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "3c4406ea2a3862b239e4026ec539744a0281e3abfc8b566ee9f7ef900705e886"
+            },
+            {
+              "continuationMoves": 12,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "b348b223e8200297145f50541bfce2450d184473a78dfb10a876834b7afe34dc"
+            },
+            {
+              "continuationMoves": 13,
+              "points": 1536,
+              "length": 8,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "fff0d459a3b9800f991e15803d83a9006795c747ef27ef291c4d821ac2ef3f2c"
+            },
+            {
+              "continuationMoves": 14,
+              "points": 5440,
+              "length": 9,
+              "sum": 1088,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "568e26d28b78818cc44f40294fe9de3bed0a97ffea1ad87c4cfbb57b4a887b22"
+            },
+            {
+              "continuationMoves": 15,
+              "points": 21760,
+              "length": 10,
+              "sum": 4352,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 8192
+              },
+              "postStateIdentity": "ab1c4dffeb15fe951be0c8abc5cb3565946e4121486d7eb3543d85c14a0940b0"
+            }
+          ],
+          "terminal": {
+            "status": "win",
+            "reason": "target",
+            "moves": 19,
+            "score": 129728,
+            "targetCost": 19
+          }
+        },
+        "champion": {
+          "arm": "champion",
+          "decision": {
+            "points": 3072,
+            "length": 8,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 256
+              }
+            ],
+            "landedCarrier": {
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            "postStateIdentity": "64545cc2e8a678aa33d525176360a90a77b48757274c388d7e0b986edd38becc"
+          },
+          "correctionContinuation": 4,
+          "correctionUsesLineage": true,
+          "correctionEvent": {
+            "continuationMoves": 4,
+            "points": 31680,
+            "length": 11,
+            "sum": 6336,
+            "chain": [
+              {
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 512
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              }
+            ],
+            "usesLineage": true,
+            "lineageIndex": 8,
+            "transferred": true,
+            "carrierBefore": {
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            "carrierAfter": {
+              "x": 0,
+              "y": 7,
+              "value": 6336
+            },
+            "postStateIdentity": "d7e46f52119aff37348235c42f2a6e75687ec8a797679c40faf06d42f80b3469"
+          },
+          "firstReuseDelay": 4,
+          "lineageUsingMergesThroughCorrection": 1,
+          "carrierAtCorrection": {
+            "x": 0,
+            "y": 7,
+            "value": 6336
+          },
+          "events": [
+            {
+              "continuationMoves": 1,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "f9961f127fa2f20725a638e53fd9cbb8df6e1b014167df921691027b6d01c266"
+            },
+            {
+              "continuationMoves": 2,
+              "points": 3648,
+              "length": 7,
+              "sum": 1216,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "45c330ae37938c59fe8dd73937d20f787e3da68f286c6850c885b12f1ca68ad3"
+            },
+            {
+              "continuationMoves": 3,
+              "points": 1024,
+              "length": 6,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "748f83424a3c8df168de524e6dea9b977a1fdc5022e3eca426e8643360481e5a"
+            },
+            {
+              "continuationMoves": 4,
+              "points": 31680,
+              "length": 11,
+              "sum": 6336,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "usesLineage": true,
+              "lineageIndex": 8,
+              "transferred": true,
+              "carrierBefore": {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "d7e46f52119aff37348235c42f2a6e75687ec8a797679c40faf06d42f80b3469"
+            },
+            {
+              "continuationMoves": 5,
+              "points": 5120,
+              "length": 11,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "ded2339c77f53c51506305e742d4ba879eefbea23f2ea15fe2d36f10d92978cf"
+            },
+            {
+              "continuationMoves": 6,
+              "points": 8000,
+              "length": 10,
+              "sum": 1600,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "70e286477299cc9d8bc0dc54c753a39faaaa07825a5e438d731bddc6134e418a"
+            },
+            {
+              "continuationMoves": 7,
+              "points": 1536,
+              "length": 7,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "8dd4c823dd6fd0a59a4a1bd7009dd3129b32e3181bfe657db92d1d57ad1c88ca"
+            },
+            {
+              "continuationMoves": 8,
+              "points": 3072,
+              "length": 7,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "0c8652d6fc30aeaf855730921d5d63cb0484ad249c89950c3847c46b03f8cf05"
+            },
+            {
+              "continuationMoves": 9,
+              "points": 20800,
+              "length": 9,
+              "sum": 4160,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "8259aba14f863f4fa7ab0af886d12a11a92cdc7224346a65221b3c136091d721"
+            },
+            {
+              "continuationMoves": 10,
+              "points": 6080,
+              "length": 9,
+              "sum": 1216,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "5d30716e425a5aefd2118ef63aa08304823b08fd68efe298d61164ac29e9016a"
+            },
+            {
+              "continuationMoves": 11,
+              "points": 5440,
+              "length": 9,
+              "sum": 1088,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "8072be786430d399742841fd6a1050d1b377ef7c3f2622ba3791b379d76031ab"
+            },
+            {
+              "continuationMoves": 12,
+              "points": 6720,
+              "length": 10,
+              "sum": 1344,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "1a336f6dbaffb1427db8bb3c79d04c95d7d1556f61713f937c78131840fd5598"
+            },
+            {
+              "continuationMoves": 13,
+              "points": 7360,
+              "length": 15,
+              "sum": 1472,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 6336
+              },
+              "postStateIdentity": "ddf9a82833153d06cba60ba6813efd1d308b9c7e5626829a0f62d12664a465a0"
+            }
+          ],
+          "terminal": {
+            "status": "win",
+            "reason": "target",
+            "moves": 17,
+            "score": 129152,
+            "targetCost": 17
+          }
+        }
+      }
+    },
+    {
+      "move": 6,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "loser": "champion",
+      "correctionContinuation": 5,
+      "winnerCorrectionUsesLineage": false,
+      "loserCorrectionUsesLineage": false,
+      "outcome": "NEITHER",
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "decision": {
+            "points": 3072,
+            "length": 7,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 256
+              }
+            ],
+            "landedCarrier": {
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            },
+            "postStateIdentity": "9dd1f37d8532c4ee2600df9960f50e7ace15f6e5a0a94d76ccb3b6e0e215f286"
+          },
+          "correctionContinuation": 5,
+          "correctionUsesLineage": false,
+          "correctionEvent": {
+            "continuationMoves": 5,
+            "points": 13120,
+            "length": 9,
+            "sum": 2624,
+            "chain": [
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 1024
+              }
+            ],
+            "usesLineage": false,
+            "lineageIndex": -1,
+            "transferred": false,
+            "carrierBefore": {
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            },
+            "carrierAfter": {
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            },
+            "postStateIdentity": "a9616589e2d56773dcdbbdbb686cf7cec46197dea12873f662eaaf9019c3541a"
+          },
+          "firstReuseDelay": 8,
+          "lineageUsingMergesThroughCorrection": 0,
+          "carrierAtCorrection": {
+            "x": 3,
+            "y": 7,
+            "value": 1024
+          },
+          "events": [
+            {
+              "continuationMoves": 1,
+              "points": 5120,
+              "length": 14,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "3c3caa939162e98704d7adcbf5e03d2dac98e41d8d5f044d07d9404e96dbea70"
+            },
+            {
+              "continuationMoves": 2,
+              "points": 3072,
+              "length": 8,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "8ea0a95362d3694be3a007ddbd827756a0b2c2fb0237bbd61ff627a2fd1402f3"
+            },
+            {
+              "continuationMoves": 3,
+              "points": 1536,
+              "length": 7,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "7f7d09bf06795905847478ae5561784da242f38fabda9b68f91f2593e9533962"
+            },
+            {
+              "continuationMoves": 4,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "8da2d73aeb030d98ecf6affa0f55dd79972ac97b62664aff6c5fefbc527aa742"
+            },
+            {
+              "continuationMoves": 5,
+              "points": 13120,
+              "length": 9,
+              "sum": 2624,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "a9616589e2d56773dcdbbdbb686cf7cec46197dea12873f662eaaf9019c3541a"
+            },
+            {
+              "continuationMoves": 6,
+              "points": 6144,
+              "length": 4,
+              "sum": 4096,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "2f99991073513391c49a83baf2edbbfe542c9753372d9eeb97e78431fc845da5"
+            },
+            {
+              "continuationMoves": 7,
+              "points": 3072,
+              "length": 8,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "postStateIdentity": "fc33113edbb9c4770802eb0e1e6d82ed9a885650a02de14a8e719beb8ee302ad"
+            },
+            {
+              "continuationMoves": 8,
+              "points": 57920,
+              "length": 14,
+              "sum": 11584,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 512
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 4096
+                }
+              ],
+              "usesLineage": true,
+              "lineageIndex": 9,
+              "transferred": true,
+              "carrierBefore": {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 11584
+              },
+              "postStateIdentity": "2c443d227f7d2294d1c53be85bbf709ce67a3041858b45d72083ffd9f978f47b"
+            },
+            {
+              "continuationMoves": 9,
+              "points": 9920,
+              "length": 14,
+              "sum": 1984,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 11584
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 11584
+              },
+              "postStateIdentity": "c220b6974a59c85c7f841e2717caa69649a5d15d41e1aad6d66ad4d45111c23c"
+            }
+          ],
+          "terminal": {
+            "status": "win",
+            "reason": "target",
+            "moves": 15,
+            "score": 134720,
+            "targetCost": 15
+          }
+        },
+        "champion": {
+          "arm": "champion",
+          "decision": {
+            "points": 1536,
+            "length": 8,
+            "sum": 512,
+            "chain": [
+              {
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64
+              }
+            ],
+            "landedCarrier": {
+              "x": 2,
+              "y": 2,
+              "value": 512
+            },
+            "postStateIdentity": "73a33c394b4d6f64df201ea77e636bebbefe093d65284774c4adfbf4e21af82b"
+          },
+          "correctionContinuation": 5,
+          "correctionUsesLineage": false,
+          "correctionEvent": {
+            "continuationMoves": 5,
+            "points": 2048,
+            "length": 6,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 256
+              }
+            ],
+            "usesLineage": false,
+            "lineageIndex": -1,
+            "transferred": false,
+            "carrierBefore": {
+              "x": 3,
+              "y": 5,
+              "value": 3136
+            },
+            "carrierAfter": {
+              "x": 3,
+              "y": 6,
+              "value": 3136
+            },
+            "postStateIdentity": "9f6c4dd1fb2a8f8728bae932c99b59a942fffbd62cca5f11bca7226beb82b00d"
+          },
+          "firstReuseDelay": 1,
+          "lineageUsingMergesThroughCorrection": 1,
+          "carrierAtCorrection": {
+            "x": 3,
+            "y": 6,
+            "value": 3136
+          },
+          "events": [
+            {
+              "continuationMoves": 1,
+              "points": 15680,
+              "length": 11,
+              "sum": 3136,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": true,
+              "lineageIndex": 9,
+              "transferred": true,
+              "carrierBefore": {
+                "x": 2,
+                "y": 2,
+                "value": 512
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 3,
+                "value": 3136
+              },
+              "postStateIdentity": "f14a0281f74cc433aa23d225e45643fa06f791c756573f4c874e40042dd02a6a"
+            },
+            {
+              "continuationMoves": 2,
+              "points": 3072,
+              "length": 7,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 3,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 5,
+                "value": 3136
+              },
+              "postStateIdentity": "690d6f1e3d86eef4d42d6ba424443d84ec5d40fb81aa76de300c5a7fee7a65d1"
+            },
+            {
+              "continuationMoves": 3,
+              "points": 1536,
+              "length": 8,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 5,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 5,
+                "value": 3136
+              },
+              "postStateIdentity": "6f979b63df3a5b64b3b7d8a1fbbca75371b4a1cf06f8e14497aa8d7a1b9d4260"
+            },
+            {
+              "continuationMoves": 4,
+              "points": 1024,
+              "length": 6,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 5,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 5,
+                "value": 3136
+              },
+              "postStateIdentity": "b5dccbd833babf44c3038175f6920491ae2bc8fca3ec630a8e82429a93090fb3"
+            },
+            {
+              "continuationMoves": 5,
+              "points": 2048,
+              "length": 6,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 5,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "9f6c4dd1fb2a8f8728bae932c99b59a942fffbd62cca5f11bca7226beb82b00d"
+            },
+            {
+              "continuationMoves": 6,
+              "points": 42560,
+              "length": 14,
+              "sum": 8512,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 256
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "08f4fc79a490cd6e356b14ff2103ef6bc4ee73e26aea9759f3d896003b9012f0"
+            },
+            {
+              "continuationMoves": 7,
+              "points": 5440,
+              "length": 10,
+              "sum": 1088,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "6baa54e3a84aedbee97d79be773cd8bade1f86d8493d2588f5517766e21111c4"
+            },
+            {
+              "continuationMoves": 8,
+              "points": 6720,
+              "length": 10,
+              "sum": 1344,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "a8d598ecce95638045c63136f9e2592645aecb5b2b5e4eede3521a465799cc5e"
+            },
+            {
+              "continuationMoves": 9,
+              "points": 6720,
+              "length": 9,
+              "sum": 1344,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "3611941671c0291355231152dac8e7a5fb4d4847d37969fe3f0639f4e1b4aa0a"
+            },
+            {
+              "continuationMoves": 10,
+              "points": 1024,
+              "length": 5,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "bab38a6d740aa66cc57c3ad691bad8ee6990b8a39d4206ad0a610affa4dc39be"
+            },
+            {
+              "continuationMoves": 11,
+              "points": 1024,
+              "length": 5,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "e487e32bce6d2e5c1e49d5b66a30a15e67e26b00de586cc2629fd4fe779fd4fb"
+            },
+            {
+              "continuationMoves": 12,
+              "points": 768,
+              "length": 4,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "b61274c3bcd66f7907cee8f11e7a8553330c404095ace39987830d1786492bd8"
+            },
+            {
+              "continuationMoves": 13,
+              "points": 14400,
+              "length": 13,
+              "sum": 2880,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 512
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 512
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 3136
+              },
+              "postStateIdentity": "e2e30f0100dd3c1cdaa5bb82322bf3c29c4813a1fad80993c5d66a1f72890572"
+            }
+          ],
+          "terminal": {
+            "status": "win",
+            "reason": "target",
+            "moves": 19,
+            "score": 130176,
+            "targetCost": 19
+          }
+        }
+      }
+    },
+    {
+      "move": 9,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "loser": "owner",
+      "correctionContinuation": 4,
+      "winnerCorrectionUsesLineage": true,
+      "loserCorrectionUsesLineage": false,
+      "outcome": "WINNER_ONLY",
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "decision": {
+            "points": 2048,
+            "length": 6,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 256
+              }
+            ],
+            "landedCarrier": {
+              "x": 2,
+              "y": 7,
+              "value": 1024
+            },
+            "postStateIdentity": "bada8872a439f7c22e0f74de09aac22a3a615fe740ce541e2de27c5aa02d43d0"
+          },
+          "correctionContinuation": 4,
+          "correctionUsesLineage": false,
+          "correctionEvent": {
+            "continuationMoves": 4,
+            "points": 10560,
+            "length": 10,
+            "sum": 2112,
+            "chain": [
+              {
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 512
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 512
+              }
+            ],
+            "usesLineage": false,
+            "lineageIndex": -1,
+            "transferred": false,
+            "carrierBefore": {
+              "x": 0,
+              "y": 6,
+              "value": 8192
+            },
+            "carrierAfter": {
+              "x": 0,
+              "y": 6,
+              "value": 8192
+            },
+            "postStateIdentity": "582434aa123cc7d0135152bec9de9a51c25c44948236bcf78b4124e13d9de618"
+          },
+          "firstReuseDelay": 1,
+          "lineageUsingMergesThroughCorrection": 1,
+          "carrierAtCorrection": {
+            "x": 0,
+            "y": 6,
+            "value": 8192
+          },
+          "events": [
+            {
+              "continuationMoves": 1,
+              "points": 24576,
+              "length": 7,
+              "sum": 8192,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "usesLineage": true,
+              "lineageIndex": 2,
+              "transferred": true,
+              "carrierBefore": {
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "d950a0fb842e33d2c58c9c817a833a96b4432475dbdc22dd84b6ff889756113b"
+            },
+            {
+              "continuationMoves": 2,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "25d5d8816eb1e87644400177c520ec653aa5606cb664193be57af8a23e3b177c"
+            },
+            {
+              "continuationMoves": 3,
+              "points": 1536,
+              "length": 7,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "05ae93cb128c3bda737b1af4358223ae53c611e4bc21f6772a9c8904ac3194ea"
+            },
+            {
+              "continuationMoves": 4,
+              "points": 10560,
+              "length": 10,
+              "sum": 2112,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 512
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "582434aa123cc7d0135152bec9de9a51c25c44948236bcf78b4124e13d9de618"
+            },
+            {
+              "continuationMoves": 5,
+              "points": 14400,
+              "length": 12,
+              "sum": 2880,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "d52266138003cba3f8c1df15fc1945722972cd4360867c6cfde6fd8eb8c7dc4d"
+            },
+            {
+              "continuationMoves": 6,
+              "points": 6720,
+              "length": 11,
+              "sum": 1344,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "54356da42e22ae39d2a42613831ec4cdf782f75b68d73ecc3c2e2bdb531f2e85"
+            },
+            {
+              "continuationMoves": 7,
+              "points": 5120,
+              "length": 10,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "4dd91c3632ea32851e5e3ce48eabcfd7f3d54309afedc321deb80f8de98eb62c"
+            },
+            {
+              "continuationMoves": 8,
+              "points": 5120,
+              "length": 13,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "7bf241fc5a8dbf976a68581186fe72ff5005d526143e0a18a2b2d4badf754499"
+            },
+            {
+              "continuationMoves": 9,
+              "points": 7360,
+              "length": 11,
+              "sum": 1472,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "c6e45fbb93acdb7aae956b2ef08636064977a7e8c37a5c4658f9b40878831041"
+            },
+            {
+              "continuationMoves": 10,
+              "points": 768,
+              "length": 4,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "f4bb0977f531f9d717421f17d179afcdb2d844dc5117941ec8c71b677c009566"
+            },
+            {
+              "continuationMoves": 11,
+              "points": 11840,
+              "length": 10,
+              "sum": 2368,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 6,
+                "value": 8192
+              },
+              "postStateIdentity": "4bb04f52376d3c6b3f41eb39e343234974969c65d6b4714fdfee0744bc2fb204"
+            }
+          ],
+          "terminal": {
+            "status": "win",
+            "reason": "target",
+            "moves": 20,
+            "score": 130752,
+            "targetCost": 20
+          }
+        },
+        "champion": {
+          "arm": "champion",
+          "decision": {
+            "points": 3072,
+            "length": 8,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 256
+              }
+            ],
+            "landedCarrier": {
+              "x": 2,
+              "y": 5,
+              "value": 1024
+            },
+            "postStateIdentity": "68cf27fcab93ba1919b9381870804abafca74d180a05da96188960f8957a2c40"
+          },
+          "correctionContinuation": 4,
+          "correctionUsesLineage": true,
+          "correctionEvent": {
+            "continuationMoves": 4,
+            "points": 48960,
+            "length": 12,
+            "sum": 9792,
+            "chain": [
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 4096
+              }
+            ],
+            "usesLineage": true,
+            "lineageIndex": 11,
+            "transferred": false,
+            "carrierBefore": {
+              "x": 0,
+              "y": 5,
+              "value": 4096
+            },
+            "carrierAfter": {
+              "x": 0,
+              "y": 7,
+              "value": 9792
+            },
+            "postStateIdentity": "bc2a79e4c4ca65270dbede62d7a8bf5c583753435e64e1080ada4b049e43e062"
+          },
+          "firstReuseDelay": 3,
+          "lineageUsingMergesThroughCorrection": 2,
+          "carrierAtCorrection": {
+            "x": 0,
+            "y": 7,
+            "value": 9792
+          },
+          "events": [
+            {
+              "continuationMoves": 1,
+              "points": 5120,
+              "length": 10,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 2,
+                "y": 5,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 2,
+                "y": 5,
+                "value": 1024
+              },
+              "postStateIdentity": "ca89a7dcc6131f5068582fed03a35a461b8beded2566d60ea169b08da156a08f"
+            },
+            {
+              "continuationMoves": 2,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 2,
+                "y": 5,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 2,
+                "y": 5,
+                "value": 1024
+              },
+              "postStateIdentity": "b066338137c18c5441937aad7e6387d818eba980b4a2d14d81f44b5ed9dd044b"
+            },
+            {
+              "continuationMoves": 3,
+              "points": 6144,
+              "length": 4,
+              "sum": 4096,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": true,
+              "lineageIndex": 1,
+              "transferred": true,
+              "carrierBefore": {
+                "x": 2,
+                "y": 5,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 5,
+                "value": 4096
+              },
+              "postStateIdentity": "41ab91b374c67d87bbfb25f2a72dd2e36f9268b6e58acc04830a8b1c8b75a07a"
+            },
+            {
+              "continuationMoves": 4,
+              "points": 48960,
+              "length": 12,
+              "sum": 9792,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 4096
+                }
+              ],
+              "usesLineage": true,
+              "lineageIndex": 11,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 5,
+                "value": 4096
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "postStateIdentity": "bc2a79e4c4ca65270dbede62d7a8bf5c583753435e64e1080ada4b049e43e062"
+            },
+            {
+              "continuationMoves": 5,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "postStateIdentity": "559e414c000669daa84e9716922ccd4aa673d79619a22f06f40520aacb263c04"
+            },
+            {
+              "continuationMoves": 6,
+              "points": 2048,
+              "length": 5,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "postStateIdentity": "c58f8932e5948658b27027e99161e40112d6cd42bec931b2845c7950853817ce"
+            },
+            {
+              "continuationMoves": 7,
+              "points": 8000,
+              "length": 9,
+              "sum": 1600,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "postStateIdentity": "8c4f4ead09bc3c0b60617d42489686112e316b92ceab87f5ed6d859447aef204"
+            },
+            {
+              "continuationMoves": 8,
+              "points": 10240,
+              "length": 5,
+              "sum": 5120,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 7,
+                "value": 9792
+              },
+              "postStateIdentity": "2c17ee6eb7cc3ab2c800db86771c5615e0ed005bf0c0140afb85fc44f3e14fda"
+            }
+          ],
+          "terminal": {
+            "status": "win",
+            "reason": "target",
+            "moves": 17,
+            "score": 129408,
+            "targetCost": 17
+          }
+        }
+      }
+    },
+    {
+      "move": 11,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "loser": "champion",
+      "correctionContinuation": 4,
+      "winnerCorrectionUsesLineage": false,
+      "loserCorrectionUsesLineage": false,
+      "outcome": "NEITHER",
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "decision": {
+            "points": 5120,
+            "length": 9,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 128
+              }
+            ],
+            "landedCarrier": {
+              "x": 0,
+              "y": 3,
+              "value": 1024
+            },
+            "postStateIdentity": "0cd93caff934dee876e633df22dc3d82f09ad641270b1ac1b085ec82197a45d6"
+          },
+          "correctionContinuation": 4,
+          "correctionUsesLineage": false,
+          "correctionEvent": {
+            "continuationMoves": 4,
+            "points": 56320,
+            "length": 10,
+            "sum": 11264,
+            "chain": [
+              {
+                "x": 2,
+                "y": 4,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              }
+            ],
+            "usesLineage": false,
+            "lineageIndex": -1,
+            "transferred": false,
+            "carrierBefore": {
+              "x": 0,
+              "y": 3,
+              "value": 2752
+            },
+            "carrierAfter": {
+              "x": 0,
+              "y": 5,
+              "value": 2752
+            },
+            "postStateIdentity": "d7e7b3c853ff50eb0d09295ed84580c943a7da77eea230973590ee8e54c63470"
+          },
+          "firstReuseDelay": 1,
+          "lineageUsingMergesThroughCorrection": 1,
+          "carrierAtCorrection": {
+            "x": 0,
+            "y": 5,
+            "value": 2752
+          },
+          "events": [
+            {
+              "continuationMoves": 1,
+              "points": 13760,
+              "length": 10,
+              "sum": 2752,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": true,
+              "lineageIndex": 9,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 3,
+                "value": 1024
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 3,
+                "value": 2752
+              },
+              "postStateIdentity": "3fcd71785d2d121277a1d4fb129e52f371408010d2c5347da09ae669fe951040"
+            },
+            {
+              "continuationMoves": 2,
+              "points": 5120,
+              "length": 10,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 3,
+                "value": 2752
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 3,
+                "value": 2752
+              },
+              "postStateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff"
+            },
+            {
+              "continuationMoves": 3,
+              "points": 3072,
+              "length": 8,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 3,
+                "value": 2752
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 3,
+                "value": 2752
+              },
+              "postStateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520"
+            },
+            {
+              "continuationMoves": 4,
+              "points": 56320,
+              "length": 10,
+              "sum": 11264,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 0,
+                "y": 3,
+                "value": 2752
+              },
+              "carrierAfter": {
+                "x": 0,
+                "y": 5,
+                "value": 2752
+              },
+              "postStateIdentity": "d7e7b3c853ff50eb0d09295ed84580c943a7da77eea230973590ee8e54c63470"
+            }
+          ],
+          "terminal": {
+            "status": "win",
+            "reason": "target",
+            "moves": 15,
+            "score": 126144,
+            "targetCost": 15
+          }
+        },
+        "champion": {
+          "arm": "champion",
+          "decision": {
+            "points": 8000,
+            "length": 12,
+            "sum": 1600,
+            "chain": [
+              {
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "value": 256
+              }
+            ],
+            "landedCarrier": {
+              "x": 3,
+              "y": 1,
+              "value": 1600
+            },
+            "postStateIdentity": "f29c3cf69630395a9b7759f5dabd1bacb00aea6f4bfab07d548f035f90e4ff98"
+          },
+          "correctionContinuation": 4,
+          "correctionUsesLineage": false,
+          "correctionEvent": {
+            "continuationMoves": 4,
+            "points": 6720,
+            "length": 10,
+            "sum": 1344,
+            "chain": [
+              {
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "value": 256
+              }
+            ],
+            "usesLineage": false,
+            "lineageIndex": -1,
+            "transferred": false,
+            "carrierBefore": {
+              "x": 3,
+              "y": 4,
+              "value": 1600
+            },
+            "carrierAfter": {
+              "x": 3,
+              "y": 5,
+              "value": 1600
+            },
+            "postStateIdentity": "b24e9f6ba22eb0460e4b1f1b4fdd58bbb7f9c486331470442ee736b4ce2653a4"
+          },
+          "firstReuseDelay": null,
+          "lineageUsingMergesThroughCorrection": 0,
+          "carrierAtCorrection": {
+            "x": 3,
+            "y": 5,
+            "value": 1600
+          },
+          "events": [
+            {
+              "continuationMoves": 1,
+              "points": 1536,
+              "length": 7,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 1,
+                "value": 1600
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 1,
+                "value": 1600
+              },
+              "postStateIdentity": "508e31498ec99f6387141df7dc8d87775ce7378f62f89e8f7224a74149796af8"
+            },
+            {
+              "continuationMoves": 2,
+              "points": 48960,
+              "length": 15,
+              "sum": 9792,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 512
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 1024
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 1,
+                "value": 1600
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 3,
+                "value": 1600
+              },
+              "postStateIdentity": "4b3d049977691bd08fd21b6a41a6daf44f100fe8b7b715fbd2ea0d79014f171c"
+            },
+            {
+              "continuationMoves": 3,
+              "points": 5120,
+              "length": 9,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 128
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 3,
+                "value": 1600
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 4,
+                "value": 1600
+              },
+              "postStateIdentity": "365f1658eb06206ea5a013e573e5b8ce52cd038dedb7fdf3332f9551ca30b6d5"
+            },
+            {
+              "continuationMoves": 4,
+              "points": 6720,
+              "length": 10,
+              "sum": 1344,
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 4,
+                "value": 1600
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 5,
+                "value": 1600
+              },
+              "postStateIdentity": "b24e9f6ba22eb0460e4b1f1b4fdd58bbb7f9c486331470442ee736b4ce2653a4"
+            },
+            {
+              "continuationMoves": 5,
+              "points": 3072,
+              "length": 8,
+              "sum": 1024,
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 256
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 5,
+                "value": 1600
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 5,
+                "value": 1600
+              },
+              "postStateIdentity": "b576fe084eb89029f27c1ceb370b9c36816b4d6008e99726d48af58ea42c76c2"
+            },
+            {
+              "continuationMoves": 6,
+              "points": 1536,
+              "length": 8,
+              "sum": 512,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 5,
+                "value": 1600
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 5,
+                "value": 1600
+              },
+              "postStateIdentity": "bc280d6a57021470d449f49909e56a48d00cf33a381a7445c7e5988d172dfb60"
+            },
+            {
+              "continuationMoves": 7,
+              "points": 29120,
+              "length": 14,
+              "sum": 5824,
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 2048
+                }
+              ],
+              "usesLineage": false,
+              "lineageIndex": -1,
+              "transferred": false,
+              "carrierBefore": {
+                "x": 3,
+                "y": 5,
+                "value": 1600
+              },
+              "carrierAfter": {
+                "x": 3,
+                "y": 6,
+                "value": 1600
+              },
+              "postStateIdentity": "ef8658815301b75e30ecd3b6b867f2309ceceb37034f6ec5e06aa0981709af84"
+            }
+          ],
+          "terminal": {
+            "status": "win",
+            "reason": "target",
+            "moves": 18,
+            "score": 146816,
+            "targetCost": 18
+          }
+        }
+      }
+    }
+  ],
+  "disposition": "WINNER_LINEAGE_EXPLAINS_SOME",
+  "artifactIdentity": "6074b33ac0d68aba78c0ddd68c94041dc2e871392f9c50d573c00e1fd218dc19"
+}
