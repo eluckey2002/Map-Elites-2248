@@ -1150,7 +1150,7 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **status:** provisional
 - **scope:** Level 53 (`gen-0014-wide-sprint`) as it stands in `src/game.js`; no change to any other level or to `DECISION-0003`
 - **statement:** The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. The target is not re-derived against the frozen `calib-1` evaluator (which gives 102,000); like Level 52 (`RESULT-0012`), it is held at the value it was admitted and playtested with. This records the ship decision that `CURRENT.md` listed as open adjudication after the level entered `src/game.js` in `530deb3`.
-- **evidence:** owner reply "keep it" in session 2026-09-28, answering whether to keep Level 53 as shipped or re-examine it; `src/game.js` Level 53 comment (median 107,200 x 0.95 demand, rounded down; 300-seed holdout 191 wins, 0 lockouts, 0 bombs; three owner wins, replay verified); `RESULT-0027` context stating the frozen evaluator derives 102,000 "while the shipped 101,000 Level 53 board remains unchanged"; `RESULT-0012` hold precedent; commit `530deb3`.
+- **evidence:** owner reply "keep it" in session 2026-09-28, answering whether to keep Level 53 as shipped or re-examine it; `src/game.js` Level 53 entry (6x5, 16 moves, minChain 3, target 101,000) and its comment's record of three owner wins, replay verified; `RESULT-0027` context stating the frozen evaluator derives 102,000 "while the shipped 101,000 Level 53 board remains unchanged"; `RESULT-0012` hold precedent; commit `530deb3`.
 - **proof_class:** `owner_decision`
 - **as_of:** 2026-09-28
 - **reverify:** Read the Level 53 entry and comment in `src/game.js`; confirm `530deb3` exists; read `RESULT-0012` and the `RESULT-0027` context sentence on Level 53.
@@ -1159,7 +1159,7 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **superseded_by:** []
 - **written_by:** claude-opus orchestrator 2026-09-28
 - **checked_by:** pending
-- **notes:** Why Level 53 was earlier rejected as a candidate was not re-examined; the owner chose to keep it as played. The 1,000-point difference from the frozen evaluator is explained by the evaluator change, not by an error.
+- **notes:** The measurement figures in Level 53's `src/game.js` comment (median 107,200, 300-seed holdout 191 wins) come from archived receipt `043ca53f`, which `solver/candidates-archive/README.md` records as failing current verification (`calibration stamp mismatch`, 2026-09-03) and not to be quoted; this decision does not rely on them, and that comment's claim that the receipt "verifies against the current bot" is stale. Why Level 53 was earlier rejected as a candidate was not re-examined; the owner chose to keep it as played. The 1,000-point difference from the frozen evaluator is explained by the evaluator change, not by an error.
 
 ## Hypothesis registry
 
