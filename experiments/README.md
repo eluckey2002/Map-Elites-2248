@@ -47,8 +47,18 @@ generalize from a sample without having declared the test first.
 7. **An artifact that publishes an `artifactIdentity` still hashes to it**, and
    a non-exploratory `registration.protocolCommit` is a real commit, reachable
    from HEAD, that carries this protocol and precedes the report commit.
+8. **Every retained closure with `closure_status: INVALID` or `UNVERIFIED` has
+   exactly one row in [`FAILED-RUN-LEDGER.CSV`](../FAILED-RUN-LEDGER.CSV).**
+   The row names where the run failed, why, its evidence, and an implemented
+   prevention artifact plus the test that proves the prevention can fire.
 
-Each of 3, 4, 6 and 7 has a card in [docs/CHECK-CARDS.md](../docs/CHECK-CARDS.md)
+A valid `FALSIFIED` hypothesis or `INCONCLUSIVE` domain outcome is not a failed
+run when its closure is `CLOSED`. Likewise, an intentionally failing mutation
+or qualification control inside a `CLOSED` run is not a failed run. The closure
+receipt, not a grep over report prose or exit codes, is the source of this
+classification.
+
+Each of 3, 4, 6, 7 and 8 has a card in [docs/CHECK-CARDS.md](../docs/CHECK-CARDS.md)
 whose `Does NOT catch` list is the honest limit. Read those before trusting a
 green gate.
 
@@ -62,6 +72,12 @@ Register the protocol and **commit it before the experiment runs**. A
 protocol committed after its evidence is not a preregistration; it is a
 reconstruction, and the one property that makes preregistration worth
 anything is that it predates the data.
+
+For a one-shot paired comparison, persist the complete raw paired artifact
+before applying a verdict. Use `tools/persist-before-verdict.js`; a thrown
+verdict must leave every pair available for diagnosis. After a retained failed
+closure, add its ledger row and prevention test before expecting the experiment
+gate to pass.
 
 ## Why this exists
 
