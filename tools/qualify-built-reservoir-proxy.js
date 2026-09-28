@@ -18,7 +18,7 @@ const { replay } = require('../solver/recording-replay');
 const {
   normalizedBuiltReservoirHarvest,
 } = require('../solver/built-reservoir-probe');
-const { persistBeforeVerdict } = require('./persist-before-verdict');
+const { persistBeforeVerdict, writeJsonOnce } = require('./persist-before-verdict');
 
 const ROOT = path.join(__dirname, '..');
 const LOOKAHEAD_BASE = 987654321;
@@ -53,6 +53,57 @@ function requireIdentity(label, file, expected) {
     throw new Error(`${label} identity mismatch: expected ${expected}, observed ${observed}`);
   }
   return observed;
+}
+
+function createManifest({ recordingPath, contractPath }) {
+  const absoluteRecording = path.resolve(recordingPath);
+  const absoluteContract = path.resolve(contractPath);
+  const files = {
+    recording: absoluteRecording,
+    contract: absoluteContract,
+    bot: path.join(ROOT, 'solver', 'bot.js'),
+    engine: path.join(ROOT, 'solver', 'engine.js'),
+    probe: path.join(ROOT, 'solver', 'built-reservoir-probe.js'),
+    harness: __filename,
+  };
+  const identities = Object.fromEntries(
+    Object.entries(files).map(([name, file]) => [name, sha256File(file)]),
+  );
+  const contract = fs.readFileSync(absoluteContract, 'utf8');
+  for (const name of ['recording', 'bot', 'engine']) {
+    if (!contract.includes(identities[name])) {
+      throw new Error(`contract does not freeze the observed ${name} identity ${identities[name]}`);
+    }
+  }
+
+  return artifactWithIdentity({
+    schemaVersion: 1,
+    kind: 'built-reservoir-proxy-manifest',
+    paths: {
+      recording: path.relative(ROOT, absoluteRecording),
+      contract: path.relative(ROOT, absoluteContract),
+    },
+    identities,
+  });
+}
+
+function collectFromManifest(manifestPath) {
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+  if (!verifyArtifactIdentity(manifest)) throw new Error('manifest artifact identity mismatch');
+  if (manifest.kind !== 'built-reservoir-proxy-manifest') {
+    throw new Error(`unexpected manifest kind ${manifest.kind}`);
+  }
+  return collectQualification({
+    recordingPath: path.join(ROOT, manifest.paths.recording),
+    contractPath: path.join(ROOT, manifest.paths.contract),
+    expectedRecordingSha256: manifest.identities.recording,
+    expectedBotSha256: manifest.identities.bot,
+    expectedEngineSha256: manifest.identities.engine,
+    expectedContractSha256: manifest.identities.contract,
+    expectedProbeSha256: manifest.identities.probe,
+    expectedHarnessSha256: manifest.identities.harness,
+    manifestIdentity: manifest.artifactIdentity,
+  });
 }
 
 function fixture(points, { scale = 1, width = 5, height = 5, minChain = 3 } = {}) {
@@ -254,6 +305,9 @@ function collectQualification({
   expectedBotSha256,
   expectedEngineSha256,
   expectedContractSha256,
+  expectedProbeSha256 = null,
+  expectedHarnessSha256 = null,
+  manifestIdentity = null,
 }) {
   const absoluteRecording = path.resolve(recordingPath);
   const absoluteContract = path.resolve(contractPath);
@@ -262,8 +316,12 @@ function collectQualification({
     bot: requireIdentity('champion', path.join(ROOT, 'solver', 'bot.js'), expectedBotSha256),
     engine: requireIdentity('ruleset', path.join(ROOT, 'solver', 'engine.js'), expectedEngineSha256),
     contract: requireIdentity('contract', absoluteContract, expectedContractSha256),
-    probe: sha256File(path.join(ROOT, 'solver', 'built-reservoir-probe.js')),
-    harness: sha256File(__filename),
+    probe: expectedProbeSha256
+      ? requireIdentity('probe', path.join(ROOT, 'solver', 'built-reservoir-probe.js'), expectedProbeSha256)
+      : sha256File(path.join(ROOT, 'solver', 'built-reservoir-probe.js')),
+    harness: expectedHarnessSha256
+      ? requireIdentity('harness', __filename, expectedHarnessSha256)
+      : sha256File(__filename),
   };
 
   const recording = JSON.parse(fs.readFileSync(absoluteRecording, 'utf8'));
@@ -279,6 +337,7 @@ function collectQualification({
       schemaVersion: 1,
       kind: 'built-reservoir-proxy-qualification',
       sources,
+      manifestIdentity,
       controls,
       panel: null,
     });
@@ -288,6 +347,7 @@ function collectQualification({
     schemaVersion: 1,
     kind: 'built-reservoir-proxy-qualification',
     sources,
+    manifestIdentity,
     controls,
     panel: collectPanel(candidate, recording),
   });
@@ -354,16 +414,25 @@ function arg(name) {
   return process.argv[index + 1];
 }
 
+function optionalArg(name) {
+  const index = process.argv.indexOf(`--${name}`);
+  return index === -1 || index === process.argv.length - 1 ? null : process.argv[index + 1];
+}
+
 function main() {
+  const manifestOut = optionalArg('write-manifest');
+  if (manifestOut) {
+    const manifest = createManifest({
+      recordingPath: arg('recording'),
+      contractPath: arg('contract'),
+    });
+    writeJsonOnce(path.resolve(manifestOut), manifest);
+    process.stdout.write(`${JSON.stringify(manifest, null, 2)}\n`);
+    return 0;
+  }
+
   const out = path.resolve(arg('out'));
-  const artifact = collectQualification({
-    recordingPath: arg('recording'),
-    contractPath: arg('contract'),
-    expectedRecordingSha256: arg('expected-recording-sha256'),
-    expectedBotSha256: arg('expected-bot-sha256'),
-    expectedEngineSha256: arg('expected-engine-sha256'),
-    expectedContractSha256: arg('expected-contract-sha256'),
-  });
+  const artifact = collectFromManifest(path.resolve(arg('manifest')));
   const result = persistBeforeVerdict({
     file: out,
     artifact,
@@ -395,7 +464,9 @@ module.exports = {
   NEUTRAL_MOVES,
   artifactWithIdentity,
   collectPanel,
+  collectFromManifest,
   collectQualification,
+  createManifest,
   qualify,
   realInputIntegrityControl,
   runSyntheticControls,

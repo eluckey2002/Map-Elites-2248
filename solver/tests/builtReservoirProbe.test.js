@@ -13,6 +13,8 @@ const {
 const { resolveRecordedBoard } = require('../human-benchmark');
 const {
   collectQualification,
+  collectFromManifest,
+  createManifest,
   qualify,
   realInputIntegrityControl,
   runSyntheticControls,
@@ -44,6 +46,8 @@ function identities(recordingPath = RECORDING) {
     expectedBotSha256: sha256(path.join(ROOT, 'solver', 'bot.js')),
     expectedEngineSha256: sha256(path.join(ROOT, 'solver', 'engine.js')),
     expectedContractSha256: sha256(CONTRACT),
+    expectedProbeSha256: sha256(path.join(ROOT, 'solver', 'built-reservoir-probe.js')),
+    expectedHarnessSha256: sha256(path.join(ROOT, 'tools', 'qualify-built-reservoir-proxy.js')),
   };
 }
 
@@ -98,6 +102,20 @@ test('trusted recording identity rejects a coherent path substitution', () => {
     () => collectQualification(identities(substituted)),
     /recording identity mismatch/,
   );
+});
+
+test('a mechanically derived manifest binds every input used by collection', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'reservoir-manifest-'));
+  const manifestPath = path.join(directory, 'manifest.json');
+  const manifest = createManifest({ recordingPath: RECORDING, contractPath: CONTRACT });
+  fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+
+  assert.equal(verifyArtifactIdentity(manifest), true);
+  assert.equal(manifest.identities.contract, sha256(CONTRACT));
+  assert.equal(manifest.identities.harness, sha256(path.join(ROOT, 'tools', 'qualify-built-reservoir-proxy.js')));
+  const artifact = collectFromManifest(manifestPath);
+  assert.equal(artifact.manifestIdentity, manifest.artifactIdentity);
+  assert.equal(verifyArtifactIdentity(artifact), true);
 });
 
 test('the complete known-case panel honestly fails the frozen discriminator', () => {
