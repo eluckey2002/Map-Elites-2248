@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ideation: What Level 54 is actually teaching us</title>
+  <style>
+    :root {
+      --paper: #fbf8f1;
+      --ink: #3c3a32;
+      --muted: #6f6a5e;
+      --line: #ded6c6;
+      --cream: #eee4da;
+      --tan: #ede0c8;
+      --orange: #f2b179;
+      --red: #f67c5f;
+      --gold: #edc53f;
+      --green: #49725f;
+      --green-soft: #e2eee8;
+      --red-soft: #fae7e2;
+      --blue-soft: #e6eef4;
+      --shadow: 0 14px 36px rgba(60,58,50,.08);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font: 15px/1.58 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(940px, calc(100% - 32px)); margin: 0 auto; padding: 54px 0 70px; }
+    header { padding: 0 0 30px; border-bottom: 1px solid var(--line); }
+    .eyebrow { color: #9d4f36; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 760px; margin: 8px 0 12px; font-size: clamp(32px, 6vw, 54px); line-height: 1.04; letter-spacing: -.045em; }
+    h2 { margin: 54px 0 16px; font-size: 24px; letter-spacing: -.02em; }
+    h3 { margin: 0; font-size: 20px; line-height: 1.25; }
+    p { max-width: 72ch; }
+    a { color: #8d452f; text-underline-offset: 3px; }
+    code { font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--cream); padding: 2px 5px; border-radius: 5px; }
+    .meta, .stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .pill { display: inline-flex; align-items: center; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: #fffaf2; color: #5b574e; font-size: 12px; }
+    .lede { margin-top: 24px; font-size: 18px; line-height: 1.55; }
+    .thesis { margin: 26px 0 0; padding: 22px 24px; border-radius: 14px; background: var(--tan); }
+    .thesis .eyebrow { color: #744b25; }
+    .thesis p { margin: 7px 0 0; font-size: 18px; font-weight: 650; }
+    .stats { margin-top: 26px; }
+    .stat { flex: 1 1 180px; padding: 17px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.52); }
+    .stat b { display: block; font-size: 25px; line-height: 1.15; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .axes { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 10px; }
+    .axis { padding: 14px; border-radius: 11px; background: var(--blue-soft); color: #314d60; font-weight: 700; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin: 22px 0; }
+    .contrast { padding: 18px; border-radius: 13px; border: 1px solid var(--line); background: white; }
+    .contrast.helpful { background: var(--green-soft); }
+    .contrast.harmful { background: var(--red-soft); }
+    .contrast small { display: block; margin-bottom: 6px; color: var(--muted); font-weight: 750; text-transform: uppercase; letter-spacing: .08em; }
+    .contrast strong { font-size: 22px; }
+    .equation { margin: 18px 0; padding: 16px 18px; border-radius: 11px; background: #3c3a32; color: #fffaf2; font: 14px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    .curve { overflow-x: auto; padding: 22px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+    .curve svg { min-width: 740px; width: 100%; height: auto; display: block; }
+    .jump-list { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 8px; padding: 0; list-style: none; }
+    .jump-list a { display: block; height: 100%; padding: 11px 13px; border-radius: 9px; background: var(--cream); text-decoration: none; font-weight: 650; }
+    .idea { margin: 20px 0; padding: 24px; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,.72); box-shadow: var(--shadow); }
+    .idea-top { display: flex; align-items: flex-start; gap: 13px; }
+    .rank { flex: 0 0 auto; min-width: 36px; height: 36px; display: grid; place-items: center; border-radius: 9px; background: var(--orange); color: #493021; font-weight: 900; }
+    .idea dl { display: grid; grid-template-columns: 105px 1fr; gap: 8px 14px; margin: 18px 0 0; }
+    .idea dt { color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .idea dd { margin: 0; }
+    .badges { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+    .badge { padding: 5px 9px; border-radius: 999px; background: var(--green-soft); color: #305242; font-size: 12px; font-weight: 750; }
+    table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,.6); }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+    .callout { padding: 18px 20px; border-radius: 12px; background: var(--green-soft); color: #29483a; }
+    .refs li { margin: 9px 0; }
+    footer { margin-top: 58px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    @media (max-width: 650px) {
+      main { width: min(100% - 22px, 940px); padding-top: 30px; }
+      .evidence-grid { grid-template-columns: 1fr; }
+      .idea { padding: 18px; }
+      .idea dl { grid-template-columns: 1fr; gap: 2px; }
+      .idea dd { margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Grounded ideation</div>
+    <h1>What Level 54 is actually teaching us</h1>
+    <p class="lede">The next useful question is not “which board bonus should we add?” It is “what makes stored board value convertible, and over what sequence should a choice be judged?”</p>
+    <div class="meta" aria-label="Artifact metadata">
+      <span class="pill">Date: <time datetime="2026-09-28">2026-09-28</time></span>
+      <span class="pill">Topic: level-54-policy-learning</span>
+      <span class="pill">Focus: sharp next investigations</span>
+      <span class="pill">Mode: repo-grounded</span>
+    </div>
+    <div class="thesis">
+      <div class="eyebrow">Central reflection</div>
+      <p>Your play looks less like a series of independently good moves and more like a short policy: take temporary debt, preserve a convertible structure, then harvest it. Our recent labels mostly judged the pieces instead of the policy.</p>
+    </div>
+    <div class="stats" aria-label="Key evidence">
+      <div class="stat"><b>2</b><span>short episodes appear to create the durable advantage</span></div>
+      <div class="stat"><b>6 vs 8</b><span>the sharpest helpful/harmful matched contrast</span></div>
+      <div class="stat"><b>No fixed weight</b><span>can combine three-step score and reservoir correctly here</span></div>
+    </div>
+  </header>
+
+  <section id="codebase-context">
+    <h2>Codebase Context</h2>
+    <p>Level 51 produced the current target-aware champion. Level 54 then exposed a remaining difference: the owner completed the seeded game in 15 moves, the champion in 23, and the exact oracle witness in 14. The owner’s second move was absent from the champion’s candidate pool; route diversification recovered it, but the current scorer rejected it and the broad challenger was too expensive.</p>
+    <p>Three successive candidate explanations did not survive broad evidence. Continuation density caused 24 champion-win regressions. A built-reservoir proxy missed 5 of 10 labeled decisions. Exact three-step target progress missed 6 of 10, including four cases whose ordering reversed just beyond the horizon. The four-miss diagnostic showed that eventual winners held more ready reservoir at the short horizon—but move 8 is a direct counterexample to treating reservoir quantity as the answer.</p>
+  </section>
+
+  <section id="topic-axes">
+    <h2>Topic Axes</h2>
+    <div class="axes">
+      <div class="axis">Temporal unit — move or sequence?</div>
+      <div class="axis">Convertible state — quantity or topology?</div>
+      <div class="axis">Causal identification — what actually flips the result?</div>
+      <div class="axis">Compute allocation — where is deeper search worth it?</div>
+      <div class="axis">Training target — imitate a move or preserve an outcome?</div>
+    </div>
+  </section>
+
+  <section id="decisive-contrast">
+    <h2>The decisive contrast</h2>
+    <div class="evidence-grid">
+      <article class="contrast helpful">
+        <small>Move 6 · helpful</small>
+        <strong>Owner wins 15 vs 19</strong>
+        <p>At three steps, the owner is <b>9,024 points behind</b> but has <b>8,192 more reservoir points</b>.</p>
+      </article>
+      <article class="contrast harmful">
+        <small>Move 8 · harmful</small>
+        <strong>Owner loses 17 vs 15</strong>
+        <p>At three steps, the owner is <b>8,768 points behind</b> but has <b>10,240 more reservoir points</b>.</p>
+      </article>
+    </div>
+    <div class="equation">Move 6 needs reservoir weight w &gt; 9,024 / 8,192 = 1.1016<br>Move 8 needs reservoir weight w &lt; 8,768 / 10,240 = 0.8563<br>Therefore no fixed score + w × reservoir rule can classify both.</div>
+    <p>This is useful negative knowledge: the missing property is not simply “more stored value.” It is something about whether that value can survive, connect, and turn into score soon enough.</p>
+  </section>
+
+  <section id="prefix-curve">
+    <h2>The sequence shape</h2>
+    <p>The champion’s finishing cost after each longer owner prefix is not monotonic. It visibly contains short debt-and-repayment episodes. Most importantly, after owner move 6, champion continuation already finishes in 15—the same final cost as the complete owner game.</p>
+    <div class="curve">
+      <svg viewBox="0 0 820 240" role="img" aria-labelledby="curve-title curve-desc">
+        <title id="curve-title">Champion target cost after each owner prefix</title>
+        <desc id="curve-desc">The curve begins at 23, rises to 24, falls to 17 at owner move 2, rises to 19 at moves 4 and 5, reaches 15 at move 6, rises again at moves 8 through 10, and returns to 15 by move 11.</desc>
+        <line x1="45" y1="195" x2="790" y2="195" stroke="#cfc5b3" stroke-width="2"/>
+        <line x1="45" y1="28" x2="45" y2="195" stroke="#cfc5b3" stroke-width="2"/>
+        <polyline fill="none" stroke="#f67c5f" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" points="45,47 94,28 143,158 192,158 241,121 290,121 339,195 388,195 437,158 486,102 535,140 584,195 633,177 682,195 731,195 780,195"/>
+        <g fill="#3c3a32" font-family="system-ui,sans-serif" font-size="12" text-anchor="middle">
+          <text x="45" y="220">start</text><text x="143" y="220">2</text><text x="241" y="220">4</text><text x="339" y="220">6</text><text x="437" y="220">8</text><text x="535" y="220">10</text><text x="584" y="220">11</text><text x="682" y="220">13</text><text x="780" y="220">15</text>
+        </g>
+        <g fill="#8d452f" font-family="system-ui,sans-serif" font-size="12" font-weight="700" text-anchor="middle" style="paint-order:stroke fill;stroke:#fff;stroke-width:3px">
+          <text x="45" y="40">23</text><text x="94" y="21">24</text><text x="143" y="151">17</text><text x="241" y="114">19</text><text x="339" y="188">15</text><text x="486" y="95">20</text><text x="584" y="188">15</text><text x="780" y="188">15</text>
+        </g>
+        <rect x="127" y="65" width="112" height="38" rx="8" fill="#ede0c8"/>
+        <text x="183" y="81" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#5b4c36">major gain</text>
+        <text x="183" y="96" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#5b4c36">move 2: 24 → 17</text>
+        <rect x="269" y="50" width="140" height="39" rx="8" fill="#e2eee8"/>
+        <text x="339" y="66" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#305242">debt then repayment</text>
+        <text x="339" y="81" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#305242">moves 4–6: 17 → 19 → 15</text>
+      </svg>
+    </div>
+  </section>
+
+  <section id="ranked-ideas">
+    <h2>Ranked Ideas</h2>
+    <ol class="jump-list">
+      <li><a href="#idea-1">1. Dissect move 6 vs move 8</a></li>
+      <li><a href="#idea-2">2. Label sequences, not moves</a></li>
+      <li><a href="#idea-3">3. Find the minimal sufficient prefix</a></li>
+      <li><a href="#idea-4">4. Probe the existing harvest oracle</a></li>
+      <li><a href="#idea-5">5. Deepen only on disagreement</a></li>
+      <li><a href="#idea-6">6. Learn equivalent outcomes</a></li>
+    </ol>
+
+    <article class="idea" id="idea-1">
+      <div class="idea-top"><span class="rank">1</span><h3>Matched-pair causal dissection: move 6 versus move 8</h3></div>
+      <dl>
+        <dt>Description</dt><dd>Trace built material through ready reservoir to realized harvest in these two cases. Then minimally alter bridge or connecting tiles while keeping score and mass as stable as possible, and rerun takeover.</dd>
+        <dt>Axis</dt><dd>Causal identification; convertible board state.</dd>
+        <dt>Basis</dt><dd><b>Direct:</b> both owner choices trail in three-step score and lead in reservoir, but their terminal ordering flips.</dd>
+        <dt>Rationale</dt><dd>This is the smallest known contrast that controls the tempting explanations. It can tell us whether topology, survival, or time-to-conversion is the missing mechanism before we invent a metric.</dd>
+        <dt>Downsides</dt><dd>Perfectly matched interventions may be impossible; conclusions must stay local to the manipulated states until a new panel confirms them.</dd>
+      </dl>
+      <div class="badges"><span class="badge">Confidence 94%</span><span class="badge">Complexity Low</span><span class="badge">Recommended first</span></div>
+    </article>
+
+    <article class="idea" id="idea-2">
+      <div class="idea-top"><span class="rank">2</span><h3>Sequence labels: build, preserve, harvest</h3></div>
+      <dl>
+        <dt>Description</dt><dd>Represent a short strategy as an option with a starting condition, internal policy, and stopping condition. Judge the option’s result, not whether every component move helps immediately.</dd>
+        <dt>Axis</dt><dd>Temporal unit.</dd>
+        <dt>Basis</dt><dd><b>Direct + external:</b> the prefix curve contains repeated debt/repayment episodes; the options framework exists specifically for temporally extended policies.</dd>
+        <dt>Rationale</dt><dd>It explains why per-move labels call coherent play wrong and gives learning a unit that matches the observed behavior.</dd>
+        <dt>Downsides</dt><dd>We do not yet know the right episode boundaries. Choosing them prematurely can move, rather than solve, the overfitting problem.</dd>
+      </dl>
+      <div class="badges"><span class="badge">Confidence 91%</span><span class="badge">Complexity Medium</span></div>
+    </article>
+
+    <article class="idea" id="idea-3">
+      <div class="idea-top"><span class="rank">3</span><h3>Minimal sufficient prefix and causal bottlenecks</h3></div>
+      <dl>
+        <dt>Description</dt><dd>Find the shortest owner prefix that transfers the advantage to champion continuation, then perform splice counterfactuals only around the pivotal episodes.</dd>
+        <dt>Axis</dt><dd>Causal identification; training target.</dd>
+        <dt>Basis</dt><dd><b>Direct:</b> after move 6, champion continuation already reaches the target in 15 moves. The large durable changes occur at move 2 and across moves 4–6.</dd>
+        <dt>Rationale</dt><dd>It avoids teaching from all 15 human moves when two short episodes may contain nearly all of the useful information.</dd>
+        <dt>Downsides</dt><dd>Spliced episodes can interact nonlinearly, and a single level cannot prove generality.</dd>
+      </dl>
+      <div class="badges"><span class="badge">Confidence 93%</span><span class="badge">Complexity Low</span></div>
+    </article>
+
+    <article class="idea" id="idea-4">
+      <div class="idea-top"><span class="rank">4</span><h3>Use the existing harvest oracle as a diagnostic probe</h3></div>
+      <dl>
+        <dt>Description</dt><dd>Score the pivotal moves and the oracle’s two known regressions with the current compatible-mass ranker. Ask what it already distinguishes before adding another descriptor.</dd>
+        <dt>Axis</dt><dd>Convertible board state.</dd>
+        <dt>Basis</dt><dd><b>Direct:</b> the oracle reduced human misses from seven to three and improved aggregate moves, but RESULT-0047 was still falsified by two baseline-winning regressions.</dd>
+        <dt>Rationale</dt><dd>Its successes and failures are a cheap, ready-made contrast set for discovering a competence boundary.</dd>
+        <dt>Downsides</dt><dd>Correlation is not explanation. This remains a probe, not promotion evidence.</dd>
+      </dl>
+      <div class="badges"><span class="badge">Confidence 88%</span><span class="badge">Complexity Low</span></div>
+    </article>
+
+    <article class="idea" id="idea-5">
+      <div class="idea-top"><span class="rank">5</span><h3>Selective deeper search on evaluator disagreement</h3></div>
+      <dl>
+        <dt>Description</dt><dd>Explore a gate that invokes longer or terminal evaluation only when cheap signals materially disagree, especially at decisions with large potential target-cost impact.</dd>
+        <dt>Axis</dt><dd>Compute allocation.</dd>
+        <dt>Basis</dt><dd><b>Direct + external:</b> global route expansion cost 5.14×, while value-of-computation methods formalize spending search only where it can change the decision.</dd>
+        <dt>Rationale</dt><dd>The evidence argues against deeper search everywhere but for more care at a small set of ambiguous, high-leverage states.</dd>
+        <dt>Downsides</dt><dd>The trigger needs regression-gated validation; missing an ambiguous state is more dangerous than spending extra compute unnecessarily.</dd>
+      </dl>
+      <div class="badges"><span class="badge">Confidence 82%</span><span class="badge">Complexity Medium</span></div>
+    </article>
+
+    <article class="idea" id="idea-6">
+      <div class="idea-top"><span class="rank">6</span><h3>Outcome-equivalent afterstate classes</h3></div>
+      <dl>
+        <dt>Description</dt><dd>Treat a candidate as successful when it reaches an afterstate with near-owner takeover cost, even if its chain differs from the owner’s.</dd>
+        <dt>Axis</dt><dd>Training target.</dd>
+        <dt>Basis</dt><dd><b>Direct:</b> route-diverse search found a non-owner path with a known continuation finishing in 16, so exact imitation excludes potentially useful alternatives.</dd>
+        <dt>Rationale</dt><dd>The demonstration proves an outcome is possible; it does not prove the owner’s path is uniquely correct.</dd>
+        <dt>Downsides</dt><dd>Requires a defensible equivalence tolerance and enough exact continuation evidence; broad generation was previously expensive.</dd>
+      </dl>
+      <div class="badges"><span class="badge">Confidence 80%</span><span class="badge">Complexity Medium</span></div>
+    </article>
+  </section>
+
+  <section id="rejection-summary">
+    <h2>Rejection Summary</h2>
+    <table>
+      <thead><tr><th>Idea cut</th><th>Why it is not next</th></tr></thead>
+      <tbody>
+        <tr><td>Change the horizon to 4 or 5</td><td>The four reversals correct at different times; changing one fixed horizon fits the panel without identifying a mechanism.</td></tr>
+        <tr><td>Add a fixed reservoir coefficient</td><td>Mathematically contradicted by moves 6 and 8: the required weight intervals do not overlap.</td></tr>
+        <tr><td>Promote continuation density</td><td>RESULT-0057 produced 24 champion-win regressions and materially worse target cost.</td></tr>
+        <tr><td>Copy the harvest oracle into the champion</td><td>RESULT-0047 retained two regressions on baseline-winning cases.</td></tr>
+        <tr><td>Imitate the exact human chain</td><td>A non-owner route can be competitive; exact imitation narrows the target unnecessarily.</td></tr>
+        <tr><td>Build a new branching/fragility metric now</td><td>These remain hypotheses. The matched causal contrast should determine which property deserves measurement.</td></tr>
+        <tr><td>Run more seeds on a failed rule</td><td>That would estimate a known bad rule more precisely without explaining its failure.</td></tr>
+        <tr><td>Sequence-level promotion gate</td><td>Gate design follows mechanism discovery; doing it now would freeze an uncertain abstraction.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="bottom-line">
+    <h2>Bottom line</h2>
+    <div class="callout"><b>The sharpest next investigation is move 6 versus move 8.</b> Show exactly how each reservoir forms, survives, and converts; then change one structural feature at a time and replay. If that reveals a stable mechanism, the next abstraction should be a short build/preserve/harvest option—not another global one-move bonus.</div>
+  </section>
+
+  <section id="sources">
+    <h2>Sources &amp; References</h2>
+    <ul class="refs">
+      <li><a href="../learning-cycles/LC-0003-four-miss-diagnostic.md">LC-0003 four-miss diagnostic</a> and <a href="../learning-cycles/LC-0003-four-miss-diagnostic-raw.json">raw replay evidence</a>.</li>
+      <li><a href="../learning-cycles/LC-0003-three-step-target-progress-result.md">LC-0003 three-step target-progress result</a> and <a href="../learning-cycles/LC-0003-three-step-target-progress-raw.json">raw panel</a>.</li>
+      <li><a href="../learning-cycles/LC-0002-built-reservoir-proxy-result.md">LC-0002 built-reservoir proxy result</a>.</li>
+      <li><a href="https://www.sciencedirect.com/science/article/pii/S0004370299000521">Sutton, Precup, Singh (1999): Options framework for temporal abstraction</a>.</li>
+      <li><a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa09/readings/NgHaradaRussell-shaping-ICML1999.pdf">Ng, Harada, Russell (1999): Policy invariance under reward transformations</a>.</li>
+      <li><a href="https://arxiv.org/abs/1711.06892">Callaway et al. (2018): Learning to Select Computations</a>.</li>
+    </ul>
+  </section>
+
+  <footer class="composition-signal">Composed 2026-09-28T18:06:45Z by ce-ideate from the current Level 51/54 learning-cycle evidence and the user’s reflection prompt.</footer>
+</main>
+</body>
+</html>
