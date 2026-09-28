@@ -4,7 +4,7 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
-## Current decision frontier — 2026-09-16
+## Current decision frontier — 2026-09-28
 
 The latest trustworthy sequence is now visible in the ledger:
 
@@ -142,4 +142,4 @@ node solver/human-replay.js --from .orch/runs/2026-08-29-human-replay-explorator
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
-Last reviewed: 2026-09-16
+Last reviewed: 2026-09-28
