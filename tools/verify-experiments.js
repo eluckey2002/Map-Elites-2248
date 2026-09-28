@@ -829,6 +829,11 @@ function assessLedgerCitations(text, {
         if (/^\/(private\/)?tmp\//.test(rel)) continue; // scratch output of a command, not a citation
         if (rel.startsWith('/')) { if (!KNOWN_CITATION_GAPS.has(`${id} ${rel}`)) problems.push(`${id}: cited path ${rel} is absolute`); continue; }
         const clean = rel.replace(/^\.\//, '');
+        const relativeToRoot = path.relative(ROOT, path.resolve(ROOT, clean));
+        if (relativeToRoot === '..' || relativeToRoot.startsWith(`..${path.sep}`) || path.isAbsolute(relativeToRoot)) {
+          problems.push(`${id}: cited path ${rel} escapes the repository`);
+          continue;
+        }
         const named = /^(RESULT-\d{4})\//.test(clean) ? [`experiments/${clean}`] : [];
         if (clean.startsWith('-')) continue; // suffix shorthand for the previous path
         const local = clean.includes('/') ? [] : [`experiments/${id}`, ...dirs].map((d) => `${d}/${clean}`);

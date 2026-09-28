@@ -37,7 +37,7 @@ function reverifyPlan(text) {
     // cannot be reproduced automatically. For example, "run the verifier with
     // `--flags`" is not complete even when an earlier command was extracted.
     const partialProseCommand = /\brun\s+(?!`(?:node|python3|git)\s)[^`\n.;]*\bwith\s+`--[^`]+`/i.test(reverify);
-    const manual = partialProseCommand || commands.some((c) => /<[a-z][\w -]*>| \| /.test(c.command));
+    const manual = partialProseCommand || commands.some((c) => /<[a-z][\w -]*>|\|/.test(c.command));
     for (const c of commands) plan.push({ id, ...c, manual });
     // A prose-only reverify still needs a human; list it rather than drop it.
     if (!commands.length) plan.push({ id, cwd: '.', command: `(no runnable command) ${reverify.trim().replace(/\s+/g, ' ').slice(0, 80)}`, manual: true });

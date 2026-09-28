@@ -757,6 +757,13 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
       assert.notDeepEqual(assessLedgerCitations(real + rec(field, value)), []);
     });
   }
+  test('citation check rejects parent traversal even when the external path exists', () => {
+    const problems = assessLedgerCitations(real + rec('evidence', '`../outside.md`'), {
+      exists: () => true,
+      isCommit: () => true,
+    });
+    assert.ok(problems.some((problem) => problem.includes('escapes the repository')), problems.join('\n'));
+  });
 }
 
 // Append-only history and supersede links (BL-0016 F11).
@@ -988,6 +995,10 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
   test('reverify plan keeps a complete runnable command automatic', () => {
     const text = '### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Run `node recompute.js corpus.json`; expect PASS.\n- **updated:** 2026-09-27\n';
     assert.equal(reverifyPlan(text)[0].manual, false);
+  });
+  test('reverify plan reports a pipeline as manual regardless of pipe spacing', () => {
+    const text = '### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Run `node verify.js|git --version`; expect PASS.\n- **updated:** 2026-09-27\n';
+    assert.equal(reverifyPlan(text)[0].manual, true);
   });
   test('LIVE: RESULT-0049 mixed reverify instructions are reported as manual', () => {
     const root = path.join(__dirname, '..', '..');
