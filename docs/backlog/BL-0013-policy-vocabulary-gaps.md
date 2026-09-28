@@ -95,3 +95,8 @@ the whole space. Not one term at a time.
 - 2026-09-05 — captured at the owner's direction, after agreeing that
   enumerating the missing vocabulary should precede any further parameter
   search.
+- 2026-09-28 — `LC-0002` tested one untuned static proxy for immediately
+  harvestable built material against the known Level 54 helpful/harmful
+  decisions. It failed the strict qualification and stopped before fresh
+  evidence: current maximum harvest detects preservation at one decision but
+  cannot represent setup, accumulation, realization, or target timing.

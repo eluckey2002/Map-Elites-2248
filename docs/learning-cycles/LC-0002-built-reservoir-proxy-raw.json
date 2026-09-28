@@ -1,0 +1,1031 @@
+{
+  "schemaVersion": 1,
+  "kind": "built-reservoir-proxy-qualification",
+  "sources": {
+    "recording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "contract": "23fba043366d5b0d4ec1261ca45e85dc31ac0ae6b156c8c11eaa812a30ddc57d",
+    "probe": "a3a11f9ba8db149430b05f6864b2cd70977e207fdc8872f2cf9d221f2b4b7e00",
+    "harness": "bc09c149750d8659d46d6e6592b293d58ecdb45583b5f628e84208c34e5cdfe1"
+  },
+  "manifestIdentity": "fe7c47bf58575281954b9bee5bc9facee8aeed98bf9082f19968debb0bea7167",
+  "controls": [
+    {
+      "id": "positive-topology",
+      "expected": {
+        "positive": 192,
+        "removed": 0
+      },
+      "observed": {
+        "positive": 192,
+        "removed": 0
+      },
+      "pass": true
+    },
+    {
+      "id": "scale-negative",
+      "expected": 192,
+      "observed": 192,
+      "pass": true
+    },
+    {
+      "id": "isolated-mass",
+      "expected": 192,
+      "observed": 192,
+      "pass": true
+    },
+    {
+      "id": "initial-value-boundary",
+      "expected": 0,
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "id": "real-input-integrity",
+      "expected": "clean replay and planted false value rejected",
+      "observed": {
+        "cleanProblems": [],
+        "plantedProblems": [
+          "move 1: tile (0,6) holds 64, recording claims 96",
+          "move 1: illegal chain — value 64 at (1,5) cannot follow 96",
+          "move 1: illegal chain — chain of 17 is not valid at minChain 3"
+        ]
+      },
+      "pass": true
+    }
+  ],
+  "panel": {
+    "finishes": [
+      {
+        "outcome": "win",
+        "moves": 23,
+        "targetCost": 23,
+        "score": 129856
+      },
+      {
+        "outcome": "win",
+        "moves": 24,
+        "targetCost": 24,
+        "score": 129920
+      },
+      {
+        "outcome": "win",
+        "moves": 17,
+        "targetCost": 17,
+        "score": 129536
+      },
+      {
+        "outcome": "win",
+        "moves": 17,
+        "targetCost": 17,
+        "score": 129152
+      },
+      {
+        "outcome": "win",
+        "moves": 19,
+        "targetCost": 19,
+        "score": 129728
+      },
+      {
+        "outcome": "win",
+        "moves": 19,
+        "targetCost": 19,
+        "score": 130176
+      },
+      {
+        "outcome": "win",
+        "moves": 15,
+        "targetCost": 15,
+        "score": 134720
+      },
+      {
+        "outcome": "win",
+        "moves": 15,
+        "targetCost": 15,
+        "score": 134720
+      },
+      {
+        "outcome": "win",
+        "moves": 17,
+        "targetCost": 17,
+        "score": 129408
+      },
+      {
+        "outcome": "win",
+        "moves": 20,
+        "targetCost": 20,
+        "score": 130752
+      },
+      {
+        "outcome": "win",
+        "moves": 18,
+        "targetCost": 18,
+        "score": 146816
+      },
+      {
+        "outcome": "win",
+        "moves": 15,
+        "targetCost": 15,
+        "score": 126144
+      },
+      {
+        "outcome": "win",
+        "moves": 16,
+        "targetCost": 16,
+        "score": 132480
+      },
+      {
+        "outcome": "win",
+        "moves": 15,
+        "targetCost": 15,
+        "score": 126720
+      },
+      {
+        "outcome": "win",
+        "moves": 15,
+        "targetCost": 15,
+        "score": 128320
+      },
+      {
+        "outcome": "win",
+        "moves": 15,
+        "targetCost": 15,
+        "score": 127040
+      }
+    ],
+    "cells": [
+      {
+        "move": 1,
+        "expectedLabel": "harmful",
+        "observedLabel": "harmful",
+        "takeoverGain": -1,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 23,
+          "targetCost": 23,
+          "score": 129856
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 24,
+          "targetCost": 24,
+          "score": 129920
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 17,
+              "sum": 2048,
+              "points": 10240,
+              "survivor": {
+                "x": 0,
+                "y": 3
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 1,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 15,
+              "sum": 1856,
+              "points": 9280,
+              "survivor": {
+                "x": 1,
+                "y": 7
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 1,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 2,
+        "expectedLabel": "helpful",
+        "observedLabel": "helpful",
+        "takeoverGain": 7,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 24,
+          "targetCost": 24,
+          "score": 129920
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 17,
+          "targetCost": 17,
+          "score": 129536
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 15,
+              "sum": 1024,
+              "points": 5120,
+              "survivor": {
+                "x": 0,
+                "y": 7
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 2,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 16,
+              "sum": 1024,
+              "points": 5120,
+              "survivor": {
+                "x": 2,
+                "y": 0
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 2,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 3,
+        "expectedLabel": "neutral",
+        "observedLabel": "neutral",
+        "takeoverGain": 0,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 17,
+          "targetCost": 17,
+          "score": 129536
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 17,
+          "targetCost": 17,
+          "score": 129152
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 10,
+              "sum": 1024,
+              "points": 5120,
+              "survivor": {
+                "x": 0,
+                "y": 3
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 3,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 15,
+              "sum": 2368,
+              "points": 11840,
+              "survivor": {
+                "x": 1,
+                "y": 2
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 3,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 4,
+        "expectedLabel": "harmful",
+        "observedLabel": "harmful",
+        "takeoverGain": -2,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 17,
+          "targetCost": 17,
+          "score": 129152
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 19,
+          "targetCost": 19,
+          "score": 129728
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 8,
+              "sum": 1024,
+              "points": 3072,
+              "survivor": {
+                "x": 1,
+                "y": 6
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 192,
+              "rawPoints": 6144,
+              "chainLength": 3,
+              "builtTileCount": 4,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 8,
+              "sum": 1024,
+              "points": 3072,
+              "survivor": {
+                "x": 1,
+                "y": 7
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 192,
+              "rawPoints": 6144,
+              "chainLength": 3,
+              "builtTileCount": 4,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 5,
+        "expectedLabel": "neutral",
+        "observedLabel": "neutral",
+        "takeoverGain": 0,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 19,
+          "targetCost": 19,
+          "score": 129728
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 19,
+          "targetCost": 19,
+          "score": 130176
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 8,
+              "sum": 1024,
+              "points": 3072,
+              "survivor": {
+                "x": 3,
+                "y": 3
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 192,
+              "rawPoints": 6144,
+              "chainLength": 3,
+              "builtTileCount": 5,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 7,
+              "sum": 512,
+              "points": 1536,
+              "survivor": {
+                "x": 2,
+                "y": 1
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 192,
+              "rawPoints": 6144,
+              "chainLength": 3,
+              "builtTileCount": 4,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 6,
+        "expectedLabel": "helpful",
+        "observedLabel": "helpful",
+        "takeoverGain": 4,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 19,
+          "targetCost": 19,
+          "score": 130176
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 134720
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 7,
+              "sum": 1024,
+              "points": 3072,
+              "survivor": {
+                "x": 3,
+                "y": 7
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 192,
+              "rawPoints": 6144,
+              "chainLength": 3,
+              "builtTileCount": 6,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 8,
+              "sum": 512,
+              "points": 1536,
+              "survivor": {
+                "x": 2,
+                "y": 2
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 192,
+              "rawPoints": 6144,
+              "chainLength": 3,
+              "builtTileCount": 5,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 7,
+        "expectedLabel": "neutral",
+        "observedLabel": "neutral",
+        "takeoverGain": 0,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 134720
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 134720
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 14,
+              "sum": 1024,
+              "points": 5120,
+              "survivor": {
+                "x": 1,
+                "y": 5
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 384,
+              "rawPoints": 12288,
+              "chainLength": 5,
+              "builtTileCount": 7,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 14,
+              "sum": 1024,
+              "points": 5120,
+              "survivor": {
+                "x": 1,
+                "y": 5
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 384,
+              "rawPoints": 12288,
+              "chainLength": 5,
+              "builtTileCount": 7,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 8,
+        "expectedLabel": "harmful",
+        "observedLabel": "harmful",
+        "takeoverGain": -2,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 134720
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 17,
+          "targetCost": 17,
+          "score": 129408
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 4,
+              "sum": 512,
+              "points": 768,
+              "survivor": {
+                "x": 1,
+                "y": 4
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 384,
+              "rawPoints": 12288,
+              "chainLength": 5,
+              "builtTileCount": 7,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 8,
+              "sum": 1024,
+              "points": 3072,
+              "survivor": {
+                "x": 1,
+                "y": 4
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 448,
+              "rawPoints": 14336,
+              "chainLength": 6,
+              "builtTileCount": 8,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 9,
+        "expectedLabel": "harmful",
+        "observedLabel": "harmful",
+        "takeoverGain": -3,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 17,
+          "targetCost": 17,
+          "score": 129408
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 20,
+          "targetCost": 20,
+          "score": 130752
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 6,
+              "sum": 1024,
+              "points": 2048,
+              "survivor": {
+                "x": 2,
+                "y": 7
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 864,
+              "rawPoints": 27648,
+              "chainLength": 8,
+              "builtTileCount": 8,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 8,
+              "sum": 1024,
+              "points": 3072,
+              "survivor": {
+                "x": 2,
+                "y": 5
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 768,
+              "rawPoints": 24576,
+              "chainLength": 7,
+              "builtTileCount": 8,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 10,
+        "expectedLabel": "helpful",
+        "observedLabel": "helpful",
+        "takeoverGain": 2,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 20,
+          "targetCost": 20,
+          "score": 130752
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 18,
+          "targetCost": 18,
+          "score": 146816
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 10,
+              "sum": 1024,
+              "points": 5120,
+              "survivor": {
+                "x": 3,
+                "y": 5
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 1600,
+              "rawPoints": 51200,
+              "chainLength": 9,
+              "builtTileCount": 9,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 7,
+              "sum": 8192,
+              "points": 24576,
+              "survivor": {
+                "x": 0,
+                "y": 6
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 2,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 11,
+        "expectedLabel": "helpful",
+        "observedLabel": "helpful",
+        "takeoverGain": 3,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 18,
+          "targetCost": 18,
+          "score": 146816
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 126144
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 9,
+              "sum": 1024,
+              "points": 5120,
+              "survivor": {
+                "x": 0,
+                "y": 3
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 1600,
+              "rawPoints": 51200,
+              "chainLength": 9,
+              "builtTileCount": 10,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 12,
+              "sum": 1600,
+              "points": 8000,
+              "survivor": {
+                "x": 3,
+                "y": 0
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 1600,
+              "rawPoints": 51200,
+              "chainLength": 9,
+              "builtTileCount": 10,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 12,
+        "expectedLabel": "harmful",
+        "observedLabel": "harmful",
+        "takeoverGain": -1,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 126144
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 16,
+          "targetCost": 16,
+          "score": 132480
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 3,
+              "sum": 512,
+              "points": 768,
+              "survivor": {
+                "x": 3,
+                "y": 4
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 1600,
+              "rawPoints": 51200,
+              "chainLength": 9,
+              "builtTileCount": 10,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 10,
+              "sum": 2752,
+              "points": 13760,
+              "survivor": {
+                "x": 0,
+                "y": 3
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 1600,
+              "rawPoints": 51200,
+              "chainLength": 9,
+              "builtTileCount": 10,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 13,
+        "expectedLabel": "helpful",
+        "observedLabel": "helpful",
+        "takeoverGain": 1,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 16,
+          "targetCost": 16,
+          "score": 132480
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 126720
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 20,
+              "sum": 12160,
+              "points": 60800,
+              "survivor": {
+                "x": 0,
+                "y": 6
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 2,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 17,
+              "sum": 11712,
+              "points": 58560,
+              "survivor": {
+                "x": 0,
+                "y": 6
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 2,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 14,
+        "expectedLabel": "neutral",
+        "observedLabel": "neutral",
+        "takeoverGain": 0,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 126720
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 128320
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 18,
+              "sum": 2432,
+              "points": 12160,
+              "survivor": {
+                "x": 1,
+                "y": 2
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 3,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 15,
+              "sum": 2240,
+              "points": 11200,
+              "survivor": {
+                "x": 1,
+                "y": 2
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 3,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      },
+      {
+        "move": 15,
+        "expectedLabel": "neutral",
+        "observedLabel": "neutral",
+        "takeoverGain": 0,
+        "takeoverBefore": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 128320
+        },
+        "takeoverAfter": {
+          "outcome": "win",
+          "moves": 15,
+          "targetCost": 15,
+          "score": 127040
+        },
+        "arms": {
+          "owner": {
+            "choice": {
+              "length": 12,
+              "sum": 1088,
+              "points": 5440,
+              "survivor": {
+                "x": 3,
+                "y": 3
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 4,
+              "maxBuiltTiles": 12
+            }
+          },
+          "champion": {
+            "choice": {
+              "length": 10,
+              "sum": 1344,
+              "points": 6720,
+              "survivor": {
+                "x": 1,
+                "y": 1
+              }
+            },
+            "proxy": {
+              "status": "MEASURED",
+              "normalizedPoints": 0,
+              "rawPoints": 0,
+              "chainLength": 0,
+              "builtTileCount": 4,
+              "maxBuiltTiles": 12
+            }
+          }
+        }
+      }
+    ]
+  },
+  "artifactIdentity": "741a7f76afc9fdb819f61bfb7ed4c1dce416a6b651730bb4c2c7e9da556a53f8"
+}
