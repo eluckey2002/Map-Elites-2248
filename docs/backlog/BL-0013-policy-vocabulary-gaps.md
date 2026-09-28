@@ -87,9 +87,10 @@ is the reason to define the vocabulary as a set rather than as four patches.
 
 ## Next action
 
-Do not implement another term yet. Trace the exact mixed-tier bridge and
-survivor placement that made `M8-CONNECT` immediately harvestable, then find an
-already-existing superficially similar bridge that fails. Only after that
+Do not implement another term yet. `RESULT-0058` traced the exact mixed-tier
+bridge and showed that repairing one fork let the unchanged champion harvest
+all ten built tiles. Now find an already-existing superficially similar bridge
+where maximizing built-tile coverage is harmful or impossible. Only after that
 counterexample test should this direction become a named candidate measure.
 
 ## History
@@ -119,3 +120,10 @@ counterexample test should this direction become a named candidate measure.
   connecting move 6 enlarged the built-only reservoir and still cost one move.
   Spatial arrangement matters in these exact cases; reservoir amount and
   component size still do not supply a general rule.
+- 2026-09-28 — `RESULT-0058` repaired the exact `M8-CONNECT` reservoir fork
+  with one frozen tile-multiset-preserving swap. The unchanged champion then
+  selected a legal 16-tile small-to-large chain containing all ten built tiles
+  and scored 63,360 immediately instead of 42,880, while both arms still won
+  on move 14. This validates the complete-harvest interpretation only for the
+  named state; an already-existing counterexample remains required before a
+  measure is designed.

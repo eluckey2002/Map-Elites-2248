@@ -1158,6 +1158,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-28, branch `codex/game51-learning-cycle-2026-09-27`
 - **notes:** Provisional only pending an independent checker for ledger acceptance. The complete experiment and verified falsified outcome do not depend on that editorial sign-off. The production champion, levels, targets, receipts, recordings, and authoring system were not modified.
 
+### RESULT-0058 — One exact path repair makes every built tile harvestable in the Level 54 move-8 state
+
+- **type:** result
+- **status:** provisional
+- **scope:** the single frozen LC-0004 `M8-CONNECT` after-state on Level 54 seed 1313839221, state identity `416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6`; unchanged champion and rules; one preregistered coordinate swap `(3,7)=32` with `(2,7)=8`; no fresh seeds or population claim
+- **statement:** The baseline state's built reservoir is connected but forked: an exhaustive legal path starting at the ladder's first built tile can consume at most seven of its ten built tiles, and the champion's selected 13-tile chain does exactly that, leaving normalized `(0,6)=64`, `(0,7)=32`, and `(1,7)=32`. The frozen one-swap repair converts the fork into one legal 16-tile `4,4,4,8,8,16,32×9,64` path. The unchanged champion selects that exact chain, consuming all ten built tiles and scoring 63,360 immediately instead of 42,880. Both arms still reach the target on move 14; the repair raises final score from 127,616 to 134,976 but does not save a move. This is an exact counterfactual result for one state, not a general policy rule.
+- **evidence:** frozen [LC-0005 contract](docs/learning-cycles/LC-0005-complete-harvest-chain-contract.md); [qualification receipt](docs/learning-cycles/LC-0005-complete-harvest-qualification.json); retained [raw artifact](docs/learning-cycles/LC-0005-complete-harvest-raw.json), file SHA-256 `f46c1584e8bb221d453dff439e9626bd4ba96704471884f96bd10b25c97afcb6`, internal artifact identity `3fddd00955778f2d77c1b77b0f30dbedd170f3d989ece05ed3a556b656207aeb`; [result explanation](docs/learning-cycles/LC-0005-complete-harvest-chain-result.md); externally anchored [closure](docs/learning-cycles/LC-0005-complete-harvest-closure.json); byte-matched [primary recomputation](docs/learning-cycles/LC-0005-complete-harvest-recomputed.json), SHA-256 `6c798ad234874080ff0a6840139f4afc5ff1c9d43ed9f0e09521993b637583e8`; closeout-contract SHA-256 `470e005b9e5cfbe72860d6f9e99657c4f6ff4a0429272523d21c2d46c7b4a219`
+- **proof_class:** `exact_result`, `direct_source` — exact reconstruction, graph traversal, one frozen intervention, and executable closure on one named state; no claim beyond that state
+- **as_of:** 2026-09-28
+- **reverify:** Run `python3 tools/vendor/close-experiment/verify_closure.py docs/learning-cycles/LC-0005-complete-harvest-closeout-contract.json docs/learning-cycles/LC-0005-complete-harvest-closure.json --run-recomputation --require-closed --expected-contract-sha256 470e005b9e5cfbe72860d6f9e99657c4f6ff4a0429272523d21c2d46c7b4a219`; expect `verdict: PASS`, `closure_status: CLOSED`, `recomputation: PASS`, and primary outcome `COMPLETE_HARVEST_SELECTED` in the closure.
+- **updated:** 2026-09-28
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-28, branch `codex/game51-learning-cycle-2026-09-27`
+- **notes:** Provisional pending an independent checker. The production champion, levels, targets, receipts, recordings, and authoring system were not modified. The next honest test is an already-existing counterexample; do not turn this one-state success into an “always use every built tile” rule.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

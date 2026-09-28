@@ -1,0 +1,2799 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0005-complete-harvest-raw",
+  "status": "COMPLETE",
+  "manifestIdentity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+  "bounds": {
+    "exactStates": 1,
+    "interventions": [
+      "M8-PATH-REPAIR"
+    ],
+    "freshSeeds": 0
+  },
+  "controls": [
+    {
+      "id": "C1-deterministic-source-and-replay",
+      "pass": true,
+      "observed": {
+        "replayProblems": [],
+        "retainedState": "416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6",
+        "reconstructedState": "416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6"
+      }
+    },
+    {
+      "id": "C2-reference-policy-aa",
+      "pass": true,
+      "observed": {
+        "equalChoice": true,
+        "equalFinish": true,
+        "targetCost": 14
+      }
+    },
+    {
+      "id": "C3-chain-legality-known-kill",
+      "pass": true,
+      "observed": {
+        "positive": {
+          "legal": true,
+          "reason": "legal",
+          "route": [
+            {
+              "x": 0,
+              "y": 0,
+              "value": 4
+            },
+            {
+              "x": 1,
+              "y": 0,
+              "value": 4
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 8
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 16
+            },
+            {
+              "x": 4,
+              "y": 0,
+              "value": 32
+            },
+            {
+              "x": 5,
+              "y": 0,
+              "value": 64
+            }
+          ]
+        },
+        "negative": {
+          "legal": false,
+          "reason": "non-adjacent step 2,0->3,2"
+        }
+      }
+    },
+    {
+      "id": "C4-planted-coverage-mutation",
+      "pass": true,
+      "observed": {
+        "mutantPresent": true,
+        "mutantReachedRealPredicate": true,
+        "mutationKilled": true,
+        "mutationMessage": "claimed built coverage mismatch: expected 0,3|0,4|0,5|1,6|2,5|3,6|3,7, observed 0,3|0,4|0,5|0,6|1,6|2,5|3,6|3,7"
+      }
+    },
+    {
+      "id": "C6-restoration-and-persistence",
+      "pass": true,
+      "observed": {
+        "predicateIdentityBefore": "144229a5001ce68c9b34916fc37230d8e7958487ba2834b1080e82fa6599b045",
+        "predicateIdentityAfter": "144229a5001ce68c9b34916fc37230d8e7958487ba2834b1080e82fa6599b045",
+        "persistence": {
+          "threw": true,
+          "retained": {
+            "complete": true,
+            "arms": [
+              "baseline",
+              "repair"
+            ]
+          },
+          "pass": true
+        }
+      }
+    }
+  ],
+  "arms": [
+    {
+      "id": "M8-CONNECT-BASELINE",
+      "intervention": null,
+      "before": {
+        "stateIdentity": "416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6",
+        "score": 48896,
+        "moves": 11,
+        "targetScore": 126000,
+        "maxMoves": 24,
+        "tileMultiset": [
+          {
+            "value": 0,
+            "blocker": "stone",
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 0,
+            "blocker": "stone",
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 2048,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 512,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 512,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          }
+        ],
+        "rngCalls": 131
+      },
+      "after": {
+        "stateIdentity": "416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6",
+        "score": 48896,
+        "moves": 11,
+        "targetScore": 126000,
+        "maxMoves": 24,
+        "tileMultiset": [
+          {
+            "value": 0,
+            "blocker": "stone",
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 0,
+            "blocker": "stone",
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 2048,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 512,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 512,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          }
+        ],
+        "rngCalls": 131
+      },
+      "invariants": {
+        "scorePreserved": true,
+        "movesPreserved": true,
+        "targetPreserved": true,
+        "maxMovesPreserved": true,
+        "tileMultisetPreserved": true,
+        "rngPositionPreserved": true,
+        "placementChangedAsDeclared": true
+      },
+      "built": [
+        {
+          "x": 0,
+          "y": 3,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 0,
+          "y": 6,
+          "value": 2048,
+          "normalizedValue": 64
+        },
+        {
+          "x": 1,
+          "y": 6,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 3,
+          "y": 6,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 0,
+          "y": 7,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 1,
+          "y": 7,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 3,
+          "y": 7,
+          "value": 1024,
+          "normalizedValue": 32
+        }
+      ],
+      "maxBuiltPath": [
+        {
+          "x": 0,
+          "y": 3,
+          "value": 1024
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "value": 1024
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "value": 1024
+        },
+        {
+          "x": 1,
+          "y": 6,
+          "value": 1024
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "value": 1024
+        },
+        {
+          "x": 3,
+          "y": 6,
+          "value": 1024
+        },
+        {
+          "x": 3,
+          "y": 7,
+          "value": 1024
+        }
+      ],
+      "maxBuiltPathCoverage": {
+        "builtCount": 10,
+        "coveredCount": 7,
+        "complete": false,
+        "covered": [
+          {
+            "x": 0,
+            "y": 3,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 3,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          }
+        ],
+        "excluded": [
+          {
+            "x": 0,
+            "y": 6,
+            "value": 2048,
+            "normalizedValue": 64
+          },
+          {
+            "x": 0,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 1,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          }
+        ]
+      },
+      "selected": {
+        "reason": "normal-weighted-ranking",
+        "chainLength": 13,
+        "chainSum": 8576,
+        "immediatePoints": 42880,
+        "twoMovePoints": 71360,
+        "raw": {
+          "immediate": 42880,
+          "rollout": 28480,
+          "placement": 0,
+          "turnover": 384,
+          "harvest": 0
+        },
+        "chain": [
+          {
+            "x": 2,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "value": 128
+          },
+          {
+            "x": 3,
+            "y": 2,
+            "value": 256
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "value": 256
+          },
+          {
+            "x": 1,
+            "y": 2,
+            "value": 512
+          },
+          {
+            "x": 0,
+            "y": 3,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 1024
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024
+          },
+          {
+            "x": 3,
+            "y": 7,
+            "value": 1024
+          }
+        ]
+      },
+      "selectedCoverage": {
+        "builtCount": 10,
+        "coveredCount": 7,
+        "complete": false,
+        "covered": [
+          {
+            "x": 0,
+            "y": 3,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 3,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          }
+        ],
+        "excluded": [
+          {
+            "x": 0,
+            "y": 6,
+            "value": 2048,
+            "normalizedValue": 64
+          },
+          {
+            "x": 0,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 1,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          }
+        ]
+      },
+      "predictedRoute": null,
+      "predictedCoverage": null,
+      "terminal": {
+        "status": "win",
+        "reason": "target",
+        "targetCost": 14,
+        "continuationMoves": 3,
+        "scoreGain": 78720,
+        "finalScore": 127616,
+        "trace": [
+          {
+            "absoluteMove": 12,
+            "selected": {
+              "reason": "normal-weighted-ranking",
+              "chainLength": 13,
+              "chainSum": 8576,
+              "immediatePoints": 42880,
+              "twoMovePoints": 71360,
+              "raw": {
+                "immediate": 42880,
+                "rollout": 28480,
+                "placement": 0,
+                "turnover": 384,
+                "harvest": 0
+              },
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                }
+              ]
+            },
+            "points": 42880,
+            "length": 13,
+            "sum": 8576,
+            "chain": [
+              {
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              }
+            ],
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 7,
+              "value": 8576
+            },
+            "scoreAfter": 91776
+          },
+          {
+            "absoluteMove": 13,
+            "selected": {
+              "reason": "normal-weighted-ranking",
+              "chainLength": 14,
+              "chainSum": 1024,
+              "immediatePoints": 5120,
+              "twoMovePoints": 39360,
+              "raw": {
+                "immediate": 5120,
+                "rollout": 34240,
+                "placement": 0,
+                "turnover": 416,
+                "harvest": 691.2
+              },
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                }
+              ]
+            },
+            "points": 5120,
+            "length": 14,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 128
+              }
+            ],
+            "survivorAfterGravity": {
+              "x": 3,
+              "y": 3,
+              "value": 1024
+            },
+            "scoreAfter": 96896
+          },
+          {
+            "absoluteMove": 14,
+            "selected": {
+              "reason": "immediate-target-win",
+              "chainLength": 12,
+              "chainSum": 6144,
+              "immediatePoints": 30720,
+              "twoMovePoints": 37440,
+              "raw": {
+                "immediate": 30720,
+                "rollout": 6720,
+                "placement": 0,
+                "turnover": 352,
+                "harvest": 0
+              },
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ]
+            },
+            "points": 30720,
+            "length": 12,
+            "sum": 6144,
+            "chain": [
+              {
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              }
+            ],
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 7,
+              "value": 6144
+            },
+            "scoreAfter": 127616
+          }
+        ]
+      }
+    },
+    {
+      "id": "M8-PATH-REPAIR",
+      "intervention": {
+        "id": "M8-PATH-REPAIR",
+        "a": {
+          "x": 3,
+          "y": 7,
+          "value": 32,
+          "observed": 32
+        },
+        "b": {
+          "x": 2,
+          "y": 7,
+          "value": 8,
+          "observed": 8
+        }
+      },
+      "before": {
+        "stateIdentity": "416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6",
+        "score": 48896,
+        "moves": 11,
+        "targetScore": 126000,
+        "maxMoves": 24,
+        "tileMultiset": [
+          {
+            "value": 0,
+            "blocker": "stone",
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 0,
+            "blocker": "stone",
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 2048,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 512,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 512,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          }
+        ],
+        "rngCalls": 131
+      },
+      "after": {
+        "stateIdentity": "bad49052f6b2c560626c0d4f035d9d41705a90286971f1778474aa6de978d64c",
+        "score": 48896,
+        "moves": 11,
+        "targetScore": 126000,
+        "maxMoves": 24,
+        "tileMultiset": [
+          {
+            "value": 0,
+            "blocker": "stone",
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 0,
+            "blocker": "stone",
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 1024,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 128,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 2048,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 256,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 512,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 512,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          },
+          {
+            "value": 64,
+            "blocker": null,
+            "blockerDuration": 0,
+            "bombTimer": 0
+          }
+        ],
+        "rngCalls": 131
+      },
+      "invariants": {
+        "scorePreserved": true,
+        "movesPreserved": true,
+        "targetPreserved": true,
+        "maxMovesPreserved": true,
+        "tileMultisetPreserved": true,
+        "rngPositionPreserved": true,
+        "placementChangedAsDeclared": true
+      },
+      "built": [
+        {
+          "x": 0,
+          "y": 3,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 0,
+          "y": 6,
+          "value": 2048,
+          "normalizedValue": 64
+        },
+        {
+          "x": 1,
+          "y": 6,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 3,
+          "y": 6,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 0,
+          "y": 7,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 1,
+          "y": 7,
+          "value": 1024,
+          "normalizedValue": 32
+        },
+        {
+          "x": 2,
+          "y": 7,
+          "value": 1024,
+          "normalizedValue": 32
+        }
+      ],
+      "maxBuiltPath": [
+        {
+          "x": 0,
+          "y": 3,
+          "value": 1024
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "value": 1024
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "value": 1024
+        },
+        {
+          "x": 1,
+          "y": 6,
+          "value": 1024
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "value": 1024
+        },
+        {
+          "x": 3,
+          "y": 6,
+          "value": 1024
+        },
+        {
+          "x": 2,
+          "y": 7,
+          "value": 1024
+        },
+        {
+          "x": 1,
+          "y": 7,
+          "value": 1024
+        },
+        {
+          "x": 0,
+          "y": 7,
+          "value": 1024
+        },
+        {
+          "x": 0,
+          "y": 6,
+          "value": 2048
+        }
+      ],
+      "maxBuiltPathCoverage": {
+        "builtCount": 10,
+        "coveredCount": 10,
+        "complete": true,
+        "covered": [
+          {
+            "x": 0,
+            "y": 3,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "value": 2048,
+            "normalizedValue": 64
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 1,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 2,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          }
+        ],
+        "excluded": []
+      },
+      "selected": {
+        "reason": "normal-weighted-ranking",
+        "chainLength": 16,
+        "chainSum": 12672,
+        "immediatePoints": 63360,
+        "twoMovePoints": 73600,
+        "raw": {
+          "immediate": 63360,
+          "rollout": 10240,
+          "placement": 0,
+          "turnover": 480,
+          "harvest": 0
+        },
+        "chain": [
+          {
+            "x": 2,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "value": 128
+          },
+          {
+            "x": 3,
+            "y": 2,
+            "value": 256
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "value": 256
+          },
+          {
+            "x": 1,
+            "y": 2,
+            "value": 512
+          },
+          {
+            "x": 0,
+            "y": 3,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 1024
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024
+          },
+          {
+            "x": 2,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 1,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "value": 2048
+          }
+        ]
+      },
+      "selectedCoverage": {
+        "builtCount": 10,
+        "coveredCount": 10,
+        "complete": true,
+        "covered": [
+          {
+            "x": 0,
+            "y": 3,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "value": 2048,
+            "normalizedValue": 64
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 1,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 2,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          }
+        ],
+        "excluded": []
+      },
+      "predictedRoute": {
+        "legal": true,
+        "reason": "legal",
+        "route": [
+          {
+            "x": 2,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "value": 128
+          },
+          {
+            "x": 3,
+            "y": 2,
+            "value": 256
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "value": 256
+          },
+          {
+            "x": 1,
+            "y": 2,
+            "value": 512
+          },
+          {
+            "x": 0,
+            "y": 3,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 1024
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024
+          },
+          {
+            "x": 2,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 1,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "value": 2048
+          }
+        ]
+      },
+      "predictedCoverage": {
+        "builtCount": 10,
+        "coveredCount": 10,
+        "complete": true,
+        "covered": [
+          {
+            "x": 0,
+            "y": 3,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 4,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "value": 2048,
+            "normalizedValue": 64
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 0,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 1,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          },
+          {
+            "x": 2,
+            "y": 7,
+            "value": 1024,
+            "normalizedValue": 32
+          }
+        ],
+        "excluded": []
+      },
+      "terminal": {
+        "status": "win",
+        "reason": "target",
+        "targetCost": 14,
+        "continuationMoves": 3,
+        "scoreGain": 86080,
+        "finalScore": 134976,
+        "trace": [
+          {
+            "absoluteMove": 12,
+            "selected": {
+              "reason": "normal-weighted-ranking",
+              "chainLength": 16,
+              "chainSum": 12672,
+              "immediatePoints": 63360,
+              "twoMovePoints": 73600,
+              "raw": {
+                "immediate": 63360,
+                "rollout": 10240,
+                "placement": 0,
+                "turnover": 480,
+                "harvest": 0
+              },
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ]
+            },
+            "points": 63360,
+            "length": 16,
+            "sum": 12672,
+            "chain": [
+              {
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              }
+            ],
+            "survivorAfterGravity": {
+              "x": 0,
+              "y": 7,
+              "value": 12672
+            },
+            "scoreAfter": 112256
+          },
+          {
+            "absoluteMove": 13,
+            "selected": {
+              "reason": "normal-weighted-ranking",
+              "chainLength": 9,
+              "chainSum": 1024,
+              "immediatePoints": 5120,
+              "twoMovePoints": 20160,
+              "raw": {
+                "immediate": 5120,
+                "rollout": 15040,
+                "placement": 0,
+                "turnover": 256,
+                "harvest": 358.4
+              },
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 256
+                }
+              ]
+            },
+            "points": 5120,
+            "length": 9,
+            "sum": 1024,
+            "chain": [
+              {
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 256
+              }
+            ],
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 7,
+              "value": 1024
+            },
+            "scoreAfter": 117376
+          },
+          {
+            "absoluteMove": 14,
+            "selected": {
+              "reason": "immediate-target-win",
+              "chainLength": 18,
+              "chainSum": 3520,
+              "immediatePoints": 17600,
+              "twoMovePoints": 24320,
+              "raw": {
+                "immediate": 17600,
+                "rollout": 6720,
+                "placement": 0,
+                "turnover": 544,
+                "harvest": 0
+              },
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 512
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                }
+              ]
+            },
+            "points": 17600,
+            "length": 18,
+            "sum": 3520,
+            "chain": [
+              {
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 512
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              }
+            ],
+            "survivorAfterGravity": {
+              "x": 2,
+              "y": 7,
+              "value": 3520
+            },
+            "scoreAfter": 134976
+          }
+        ]
+      }
+    }
+  ],
+  "artifactIdentity": "3fddd00955778f2d77c1b77b0f30dbedd170f3d989ece05ed3a556b656207aeb"
+}

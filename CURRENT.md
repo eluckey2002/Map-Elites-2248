@@ -86,6 +86,16 @@ monotonic rule. Keep `executable bridge compatibility` as a replay-grounded
 hypothesis only; inspect its chain mechanics and a counterexample before
 formalizing another measure.
 
+[RESULT-0058](EVIDENCE_LEDGER.md#result-0058--one-exact-path-repair-makes-every-built-tile-harvestable-in-the-level-54-move-8-state)
+now resolves the chain-mechanics half on that exact state. The connected
+reservoir was forked, so a legal path could use at most seven of ten built
+tiles. Moving one `32` into the bottom-center gap turned it into one legal
+small-to-large path; the unchanged champion selected all ten built tiles and
+scored 63,360 immediately instead of 42,880. Both arms still reached the
+target on move 14. Keep the result exact and provisional: the remaining next
+step is an already-existing superficially similar state where maximizing
+built-tile coverage is harmful or impossible, before any metric is named.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.

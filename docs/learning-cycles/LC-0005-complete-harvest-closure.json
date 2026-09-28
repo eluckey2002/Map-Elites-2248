@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "LC-0005-complete-harvest-closeout-contract.json",
+    "sha256": "470e005b9e5cfbe72860d6f9e99657c4f6ff4a0429272523d21c2d46c7b4a219"
+  },
+  "run_id": "LC-0005-retained-1",
+  "final_subject_identity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1-deterministic-source-and-replay",
+      "status": "PASS",
+      "evidence_subject_identity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+      "reason": "The frozen recording replayed cleanly and independently reconstructed state identity 416f6b90b1cde7d6761cf9f0177d0f8b17b42a27cd69223eceab07333e65fbe6."
+    },
+    {
+      "id": "C2-reference-policy-aa",
+      "status": "PASS",
+      "evidence_subject_identity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+      "reason": "Two baseline reconstructions produced byte-identical choices and finishes and reproduced target cost 14."
+    },
+    {
+      "id": "C3-chain-legality-known-kill",
+      "status": "PASS",
+      "evidence_subject_identity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+      "reason": "The real legality predicate accepted the known legal ladder and rejected the planted non-adjacent ladder for the intended reason."
+    },
+    {
+      "id": "C4-planted-coverage-mutation",
+      "status": "PASS",
+      "evidence_subject_identity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+      "reason": "The real coverage predicate rejected a claimed set containing one excluded built coordinate."
+    },
+    {
+      "id": "C5-objective-and-intervention-equivalence",
+      "status": "PASS",
+      "evidence_subject_identity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+      "reason": "Score, moves, target, move budget, tile multiset, RNG position, chooser, and continuation rules were preserved; only the frozen coordinate pair changed."
+    },
+    {
+      "id": "C6-restoration-and-persistence",
+      "status": "PASS",
+      "evidence_subject_identity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+      "reason": "The clean coverage predicate identity was restored and the disposable raw artifact survived a planted interpretation failure."
+    },
+    {
+      "id": "O1-complete-harvest-disposition",
+      "status": "PASS",
+      "evidence_subject_identity": "230fb2f3d601915f38d966b8398fb957c82a54e5f73305b21da74f9eae5b14a5",
+      "reason": "The frozen repair exposed a legal 16-tile ladder containing all ten built tiles, and the unchanged champion selected that exact chain."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw",
+      "path": "LC-0005-complete-harvest-raw.json",
+      "sha256": "f46c1584e8bb221d453dff439e9626bd4ba96704471884f96bd10b25c97afcb6"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "LC-0005-complete-harvest-recomputed.json",
+      "sha256": "6c798ad234874080ff0a6840139f4afc5ff1c9d43ed9f0e09521993b637583e8"
+    }
+  ],
+  "primary_outcome": "COMPLETE_HARVEST_SELECTED",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "LC-0005-retained-1",
+      "exit_code": 0,
+      "artifact_ids": [
+        "raw",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}
