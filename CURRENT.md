@@ -74,6 +74,18 @@ all four misses, and converted it one or two moves later. This is a post-hoc
 design clue, not a validated feature; do not fit another horizon to those
 opened cases.
 
+The bounded
+[LC-0004 causal contrast](docs/learning-cycles/LC-0004-move6-move8-causal-contrast-result.md)
+then changed only tile placement on the exact move-6 and move-8 owner cutoff
+states. Disconnecting either reservoir cost three moves. Connecting move 8
+saved three moves and exposed a 42,880-point mixed-tier bridge chain without
+increasing the built-only reservoir measure, while connecting move 6 increased
+that measure and still cost one move. Placement is causally consequential in
+those four edits, but neither reservoir amount nor component size is a
+monotonic rule. Keep `executable bridge compatibility` as a replay-grounded
+hypothesis only; inspect its chain mechanics and a counterexample before
+formalizing another measure.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.

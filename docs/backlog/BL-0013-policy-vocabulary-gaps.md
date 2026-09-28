@@ -87,8 +87,10 @@ is the reason to define the vocabulary as a set rather than as four patches.
 
 ## Next action
 
-Implement the three terms as inert-by-default parameters, then one search over
-the whole space. Not one term at a time.
+Do not implement another term yet. Trace the exact mixed-tier bridge and
+survivor placement that made `M8-CONNECT` immediately harvestable, then find an
+already-existing superficially similar bridge that fails. Only after that
+counterexample test should this direction become a named candidate measure.
 
 ## History
 
@@ -110,3 +112,10 @@ the whole space. Not one term at a time.
   reservoir at the cutoff in all four misses and converted it one or two moves
   later. Raw built mass did not distinguish all four. This is a post-hoc clue
   for a separately validated convertible-value construct, not an adopted term.
+- 2026-09-28 — `LC-0004` made four frozen tile-placement interventions on the
+  exact move-6 and move-8 cutoff states while preserving score, tile multiset,
+  RNG position, and champion. Both disconnects cost three moves. Connecting
+  move 8 saved three moves by unlocking a 42,880-point mixed-tier chain, but
+  connecting move 6 enlarged the built-only reservoir and still cost one move.
+  Spatial arrangement matters in these exact cases; reservoir amount and
+  component size still do not supply a general rule.
