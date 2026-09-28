@@ -1,5 +1,8 @@
 # Certification results — Slice A (Levels 1-50, DECISION-0003, RESULT-0008)
 
+> **Snapshot note:** written against `origin/main` at `ce0930a`, before PR #53 merged `DECISION-0007` and `DECISION-0009` into the ledger. Statements here that those records are absent from `main` were true then and are not true now; see `../levels-2026-09-28.md` for the current state.
+
+
 Snapshot: `origin/main` at `ce0930a9865433254d6b16e9f42628bb4299e486` (verified via clean `git archive` extraction into a scratchpad dir; no writes made to the working repo).
 
 | Subject | Check | Verdict | Note |

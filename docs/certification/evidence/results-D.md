@@ -1,5 +1,8 @@
 # Slice D results — Level 53 and Levels 55-58 (PARTIAL custody)
 
+> **Snapshot note:** written against `origin/main` at `ce0930a`, before PR #53 merged `DECISION-0007` and `DECISION-0009` into the ledger. Statements here that those records are absent from `main` were true then and are not true now; see `../levels-2026-09-28.md` for the current state.
+
+
 Snapshot: `origin/main` at `e3b89c0d277946254d230d26fcd99fa0689d7ef2` (fetched and confirmed this session).
 
 | Subject | Check | Verdict | Note |

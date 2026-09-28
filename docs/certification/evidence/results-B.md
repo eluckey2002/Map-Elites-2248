@@ -1,5 +1,8 @@
 # Certification results — Slice B (RESULT-0011, RESULT-0027, target-era comparability)
 
+> **Snapshot note:** written against `origin/main` at `ce0930a`, before PR #53 merged `DECISION-0007` and `DECISION-0009` into the ledger. Statements here that those records are absent from `main` were true then and are not true now; see `../levels-2026-09-28.md` for the current state.
+
+
 Snapshot: origin/main @ ce0930a. PR #46 (origin/eluckey2002/Map-Elites-QA, unmerged) consulted for CORRECTION-0017.
 
 | Subject | Check | Verdict | Note |

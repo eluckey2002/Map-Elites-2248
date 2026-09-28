@@ -1,5 +1,8 @@
 # Level target chain-of-custody — 2248-challenge
 
+> **Snapshot note:** written against `origin/main` at `ce0930a`, before PR #53 merged `DECISION-0007` and `DECISION-0009` into the ledger. Statements here that those records are absent from `main` were true then and are not true now; see `../levels-2026-09-28.md` for the current state.
+
+
 Snapshot: `origin/main` at commit `ce0930a9865433254d6b16e9f42628bb4299e486` (verified via `git fetch -q origin` + `git rev-parse`).
 
 Confirmed: `src/game.js` (`LEVELS` array, lines 33-159) has exactly **58** entries. `solver/tests/gameLevels.test.js` pins `LEVELS.length === 58` with the comment "58 since levels 54-58 shipped on 2026-09-05."
