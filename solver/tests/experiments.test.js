@@ -974,6 +974,28 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     assert.ok(commands.includes('node tools/one.js') && commands.includes('node tools/two.js'), commands.join(' / '));
     assert.ok(reverifyPlan(text).every((e) => e.manual), 'a placeholder setup step keeps the record manual');
   });
+  test('reverify plan reports a runnable command followed by prose-only flags as manual', () => {
+    const text = [
+      '### RESULT-9002 — t', '- **status:** accepted',
+      '- **reverify:** Run `node recompute.js corpus.json`. Then run the close-experiment verifier with `--run-recomputation --require-closed`; expect PASS.',
+      '- **updated:** 2026-09-27', '',
+    ].join('\n');
+    const plan = reverifyPlan(text);
+    assert.equal(plan.length, 1);
+    assert.equal(plan[0].command, 'node recompute.js corpus.json');
+    assert.equal(plan[0].manual, true);
+  });
+  test('reverify plan keeps a complete runnable command automatic', () => {
+    const text = '### RESULT-9002 — t\n- **status:** accepted\n- **reverify:** Run `node recompute.js corpus.json`; expect PASS.\n- **updated:** 2026-09-27\n';
+    assert.equal(reverifyPlan(text)[0].manual, false);
+  });
+  test('LIVE: RESULT-0049 mixed reverify instructions are reported as manual', () => {
+    const root = path.join(__dirname, '..', '..');
+    const ledger = require('node:fs').readFileSync(path.join(root, 'EVIDENCE_LEDGER.md'), 'utf8');
+    const entries = reverifyPlan(ledger).filter((entry) => entry.id === 'RESULT-0049');
+    assert.ok(entries.length > 0, 'RESULT-0049 must remain visible to the reverify planner');
+    assert.ok(entries.every((entry) => entry.manual), 'a partial closure command must prevent automatic PASS');
+  });
 }
 
 // RESULT-0031's blind recompute normalizes caps as its producer does
