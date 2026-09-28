@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0005-complete-harvest-manifest",
+  "paths": {
+    "contract": "docs/learning-cycles/LC-0005-complete-harvest-chain-contract.md",
+    "lc0004Raw": "docs/learning-cycles/LC-0004-move6-move8-causal-contrast-raw.json",
+    "lc0004Harness": "tools/diagnose-lc0004-move6-move8.js",
+    "recording": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+    "bot": "solver/bot.js",
+    "engine": "solver/engine.js",
+    "game": "src/game.js",
+    "harness": "tools/diagnose-lc0005-complete-harvest.js",
+    "test": "solver/tests/lc0005CompleteHarvest.test.js"
+  },
+  "identities": {
+    "contract": "7662160032fec9bacd907a52c64f419ea149fdff24745b3124094c014e8d0016",
+    "lc0004Raw": "5afba90eada26b0d3a5b6e5d0f6d92578a4db606c0adaadf93250d746f4d8d90",
+    "lc0004Harness": "ad8b53311d129fe4eafb856637758d7d9e223680f5bef2cf840bb977f10d09e6",
+    "recording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "game": "3d405595707621ce28ab2ff4a8f509b8e3099462d42e8e0b304d3459907936c1",
+    "harness": "6f849470618ba49a6112034db72e16a6609296e9fc57fa11513a2fb25af106ff",
+    "test": "6b577b69ea307393e34023f66b6aed058eeada065c4aad8a61a5f567b8fdc959"
+  },
+  "artifactIdentity": "b0133d7ae71cbc25426e1af648eadbdbd0c52db0a654099e71a276df7e21ae20"
+}
