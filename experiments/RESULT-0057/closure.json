@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "dae081391227bb8cdab04a6fcc7f7f4a2870fbe1bf75e22486578ddad649fb36"
+  },
+  "run_id": "RESULT-0057-confirmation-46000000-46000019",
+  "final_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "Fixed-count topology manipulation moved continuation density from exactly 1 to exactly 6."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "Uniform 64x tile-value scaling left the compact fixture density exactly 6."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "Adding an unrelated isolated tile left the compact fixture density exactly 6."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "Real-seam A/A was identical and inconclusive, while the excluded motivating decision exposed the treatment without a training-case identifier."
+    },
+    {
+      "id": "C5",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "The validator rejected missing and substituted inputs and accepted all 1,160 ordered reportable pairs with equal objective budgets."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "The planted one-move challenger regression was present and selected FALSIFIED for the intended safety reason."
+    },
+    {
+      "id": "C7",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "The harness supported two-level benefit at 1.5x and returned inconclusive for one-level benefit or 2.001x compute."
+    },
+    {
+      "id": "C8",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "External identity, persistence, frozen-hash restoration, preregistration, and exact synthetic closeout controls passed."
+    },
+    {
+      "id": "P1",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "The safety check ran to a definitive FAIL: 24 champion-only wins and 881 slower challenger mutual wins."
+    },
+    {
+      "id": "P2",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "The signal check ran to a definitive FAIL: mean paired target-cost reduction was -2.784482758620689 despite beneficial cells on 52 levels."
+    },
+    {
+      "id": "P3",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "The compute check passed with an aggregate challenger/champion runtime ratio of 1.8475048506336067."
+    },
+    {
+      "id": "P4",
+      "status": "PASS",
+      "evidence_subject_identity": "5693094f23d5e2fbd3c10f13c195ea95184d3870ed4d2b676d3232bf3610a4b0",
+      "reason": "The frozen routing rule applied P1 failure and selected the preregistered domain outcome FALSIFIED."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "b09d88fe0be3dff47792494daf855e3e71de3bf0ef517e5dbda7e279246d23e1"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "645b483a6f5459aad853e30c5a72f1089aa10680c07edc6548367f19dbfa50d2"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "fbdd00e750369662dc93b4fe0352aaad9beec51acd56cfb5ac6b0cf0bda0452e"
+    },
+    {
+      "id": "qualification",
+      "path": "qualification.json",
+      "sha256": "30875d9c1d556950dabedbfe210a1f7ca3ff9e81fb46872c34052bdfd0f91174"
+    }
+  ],
+  "primary_outcome": "FALSIFIED",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "qualification-and-synthetic-closeout",
+      "exit_code": 0,
+      "artifact_ids": ["qualification"]
+    },
+    {
+      "id": "RESULT-0057-confirmation-46000000-46000019",
+      "exit_code": 0,
+      "artifact_ids": ["corpus"]
+    },
+    {
+      "id": "independent-recomputation-and-report",
+      "exit_code": 0,
+      "artifact_ids": ["primary-recomputation", "report"]
+    }
+  ]
+}

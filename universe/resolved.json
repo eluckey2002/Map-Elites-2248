@@ -7,10 +7,10 @@
     "generatedViews": "projections only"
   },
   "sourceIdentities": {
-    "contractSha256": "372ac90f35f69d38c96ee37be4fddf6f19e322bd5ecaf732df2e142fe5828ac1",
-    "ledgerSha256": "298ff7d535809ae26cceaaa6d72cd1e572901d7567b03578c827afed89b3b447",
-    "currentNavigationSha256": "4ee7fde389950e391d14b8904d8700967c53324907ea7c8ef76f37cd5a6ba4a0",
-    "shippedGameSha256": "541baa1c05cb0dc4b74391f5bb621900e75620ddd97ebb93d148e854c252d3ee",
+    "contractSha256": "6a083b0e83a621925dd8eddc056b7a292e2f3ffa1bd2cb2ab01ff47763164849",
+    "ledgerSha256": "cd2407ccf62b89b0f9ce6c7122ea1e81f2b327c87adfad05a3c5f6b2ea351cd5",
+    "currentNavigationSha256": "57a9cc88cce61d3c6ef0008f8dd6116886b6c1841372000abc72bd09933dd9d8",
+    "shippedGameSha256": "3d405595707621ce28ab2ff4a8f509b8e3099462d42e8e0b304d3459907936c1",
     "latestArtifactSha256": "ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22",
     "latestArtifactVerificationSha256": "701d0c5f365ce615e1556a0497442ca79fd11babff96b0e8e87534c589911790",
     "artifactVerifierCommit": "8508c3b4aa2bac9eceaac0bcaf91e3838e303a53"
@@ -54,7 +54,7 @@
     }
   },
   "evaluationUniverse": {
-    "shippedLevelCount": 53,
+    "shippedLevelCount": 58,
     "selection": {
       "levels": [
         1,
@@ -67,7 +67,7 @@
       "levelCount": 6,
       "seedCount": 12,
       "gameCount": 72,
-      "shippedLevelCoverage": 0.11320754716981132
+      "shippedLevelCoverage": 0.10344827586206896
     },
     "holdout": {
       "levels": [
@@ -93,7 +93,7 @@
     "admitted": {
       "recordId": "RESULT-0017",
       "title": "A bounded MAP-Elites run finds 20 distinct behavior cells without changing the champion",
-      "status": "accepted",
+      "status": "narrowed",
       "proofClass": "`heuristic_observation` for the bounded archive and policy results; `direct_source` for the artifact identities, replay equality, disjoint seeds, and unchanged protected hashes. No optimality, human-strength, or complete behavior-space claim follows.",
       "asOf": "2026-08-22",
       "occupiedCells": 20,
@@ -131,7 +131,7 @@
     "acceptedRecord": "RESULT-0017",
     "latestArtifact": "not-admitted",
     "currentNavigation": "current",
-    "currentNavigationLastReviewed": "2026-09-02"
+    "currentNavigationLastReviewed": "2026-09-28"
   },
   "currentFrontier": [
     {

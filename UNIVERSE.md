@@ -15,14 +15,14 @@
 
 ## Evaluation universe
 
-- **Selection universe:** 6 levels × 12 seeds = 72 games (11.3% of 53 shipped levels).
+- **Selection universe:** 6 levels × 12 seeds = 72 games (10.3% of 58 shipped levels).
 - Levels: 1, 10, 20, 30, 40, 52.
 - **Representative holdout:** 12 levels × 24 seeds = 288 games.
 - Levels: 1, 5, 10, 15, 20, 26, 30, 35, 40, 45, 50, 52.
 
 ## Observed performance
 
-- **Ledger-admitted: RESULT-0017** (accepted, `heuristic_observation` for the bounded archive and policy results; `direct_source` for the artifact identities, replay equality, disjoint seeds, and unchanged protected hashes. No optimality, human-strength, or complete behavior-space claim follows.) — 20/25 occupied behavior cells.
+- **Ledger-admitted: RESULT-0017** (narrowed, `heuristic_observation` for the bounded archive and policy results; `direct_source` for the artifact identities, replay equality, disjoint seeds, and unchanged protected hashes. No optimality, human-strength, or complete behavior-space claim follows.) — 20/25 occupied behavior cells.
 - **Verified artifact, not ledger-admitted** — 23/25 occupied behavior cells.
 - **Generalization:** 0 of 3 representatives beat the champion on holdout.
   - `e7349b8a477a` in `4,1`: -1.48% holdout fitness
@@ -33,7 +33,7 @@
 
 - Accepted standing: RESULT-0017 in EVIDENCE_LEDGER.md.
 - Latest artifact: not-admitted.
-- CURRENT.md navigation: current; last reviewed 2026-09-02.
+- CURRENT.md navigation: current; last reviewed 2026-09-28.
 
 ## Current frontier
 
