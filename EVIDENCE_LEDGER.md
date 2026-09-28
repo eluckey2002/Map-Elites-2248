@@ -18,13 +18,12 @@ reduced human misses from 7 to 3, but it was slower on two baseline-winning
 puzzles, which the registered stopping rule makes sufficient to falsify strict
 dominance.
 
-As of 2026-09-22, `RESULT-0044` (corrected identity for this branch's former
-`RESULT-0040`) is `blocked` pending owner play. The original 2026-09-16 event
-is retained as history: on shipped Level 56 / seed 41,000,000, the owner won in
-10 moves and the oracle witness in 11; on shipped Level 58 / seed 41,000,001,
-both won in 14. That run's closure was defective, so no panel conclusion is
-admitted; `experiments/RESULT-0044/protocol.md` sets out the owner's two
-closure paths.
+As of 2026-09-28, `RESULT-0044` is `superseded` by `RESULT-0056`, which
+records its fresh run under protocol option 1 on Level 56 / seed 42,000,000 and
+Level 58 / seed 42,000,001. The registered outcome is `INCONCLUSIVE`. Before the
+oracle ran, the owner ruled the board-2 human attempt invalid because bombs had
+no art. The rows stand as fixed-case observations with no panel conclusion. The
+2026-09-16 historical rows stay in `RESULT-0044`.
 
 As of 2026-09-16, `RESULT-0045` records verified oracle witnesses for all 20
 exact puzzles grouped from the 25 captured sessions. On the 19 puzzles with a
@@ -993,18 +992,19 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 ### RESULT-0044 — Fresh-board owner-vs-oracle comparison (corrected identity, blocked pending owner play)
 
 - **type:** result
-- **status:** blocked
+- **status:** superseded
 - **scope:** two preregistered exact shipped puzzles: Level 56 / seed 41,000,000 and Level 58 / seed 41,000,001; one owner attempt followed by one 30-second oracle attempt per board; fixed-case evidence only
 - **statement:** This is the corrected identity for a record originally registered 2026-09-16 as `RESULT-0040` on `experiment/harvest-policy-corpus`, which collided with an unrelated, independently-registered `RESULT-0040` on `main`. Unlike `RESULT-0047` (this branch's other colliding record, a pure computation that was genuinely re-executed), this design requires the repository owner to actually play two boards before the oracle runs. An agent cannot supply that step without fabricating human-play evidence. The original 2026-09-16 event's real data is preserved: on Board 1 the owner reached the target in 10 moves and the oracle witness in 11; on Board 2 both reached it in 14 moves; a manual reduction applied the registered rule as `FALSIFIED`, but that run's own closure was independently defective (self-identity convention rejected by the repository gate, post-registration hashes absent from the original freeze) and left the registered panel conclusion `UNVERIFIED`. `experiments/RESULT-0044/protocol.md` lays out the two legitimate ways to close this record — a fresh owner playthrough under this identity, or recording the original event as a `direct_source` observation under its true original date rather than a registered confirmation — and leaves the choice to the owner.
 - **evidence:** protocol `experiments/RESULT-0044/protocol.md` (registered 2026-09-22, this identity only); the original 2026-09-16 event's rows, replay checks, and receipt defects remain described there for reference, citing the now-removed `RESULT-0040` directory's preserved content
 - **proof_class:** `direct_source` for the retained historical row values and receipt defects described in the protocol; `UNKNOWN` for any panel conclusion under this identity, since no run has occurred under it
 - **as_of:** 2026-09-22
 - **reverify:** No closure exists yet under this identity; `experiments/RESULT-0044/protocol.md` is the current state.
-- **updated:** 2026-09-22
-- **written_by:** agent session(s) on branch `experiment/harvest-policy-corpus`, commits authored as eluckey2002, 2026-09-16..22
+- **updated:** 2026-09-28
+- **written_by:** agent session(s) on branch `experiment/harvest-policy-corpus`, commits authored as eluckey2002, 2026-09-16..22; the 2026-09-28 change (status, updated, superseded_by, appended note) by Claude Opus 5.5 subagent, session 01YCJfqhCdwXmesG5LarxQsX, branch `experiment/result-0044-fresh-run`
+- **checked_by:** fresh independent Claude Opus 5.5 checker subagent spawned from session 01YCJfqhCdwXmesG5LarxQsX (not the writer), 2026-09-28, at commit `676c9cd`. From `C:\OOO\wt-oracle-5205535` (HEAD `5205535`, clean) it ran `replayRecording` on all three captures: board-1 valid win in 9 (128,960); board-2 valid loss on move 7, bomb (52,224); board-2 replay valid win in 11 (173,568). It ran `verifyWitness` on both oracle witnesses: valid wins in 10 and 12. Four `git merge-base --is-ancestor` checks confirmed `66793f3` before `2df765f` and `d8f8770`, and `b0dc980` and `ba42ccf` before `d1d6875`. Under the registered rule and the `ba42ccf` ruling, it confirmed the panel is `INCONCLUSIVE`
 - **supersedes:** []
-- **superseded_by:** []
-- **notes:** Do not attempt to complete this record by fabricating owner play. The two-board design and its real historical outcome are preserved in the protocol for whichever closure path the owner chooses.
+- **superseded_by:** [RESULT-0056]
+- **notes:** Do not attempt to complete this record by fabricating owner play. The two-board design and its real historical outcome are preserved in the protocol for whichever closure path the owner chooses. 2026-09-28: the owner chose option 1 (fresh run under this identity); its outcome is recorded in `RESULT-0056`, which supersedes this record. The statement above is kept unchanged as history.
 
 ### RESULT-0045 — Oracle witnesses meet every frozen captured-puzzle move comparator
 
@@ -1124,6 +1124,23 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
 - **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level
 - **notes:** Renamed from `RESULT-0051` to `RESULT-0052` on 2026-09-27 as part of the PR #46 collision repair after merged PR #49 claimed `RESULT-0049`; the original PR #46 branch and commit `754a716004e95c84978e5000df139097cd522808` retain the prior label. This direct-source command observation has no experiment directory or frozen artifact identity to rewrite. Found while sourcing two uncited numbers (BL-0016 F7): AGENTS.md said "71-100%" wins, which matched no record, and CURRENT.md said lockouts reach about 5%, from `RESULT-0008`. Both now cite this record. Measured under CPU contention from a parallel run; timing does not affect the printed rates.
+
+### RESULT-0056 — Fresh-board owner-vs-oracle run for RESULT-0044: board-2 human attempt invalid, INCONCLUSIVE
+
+- **type:** result
+- **status:** accepted
+- **scope:** the two boards committed in `experiments/RESULT-0044/fresh-boards.json` before any play: board-1 Level 56 / seed 42,000,000 and board-2 Level 58 / seed 42,000,001; one counted owner attempt per board; one 30-second oracle attempt per board at implementation `5205535`; two fixed cases, no population claim
+- **statement:** This closes `RESULT-0044`'s protocol option 1, a fresh run under that identity. The registered panel outcome is **`INCONCLUSIVE`**. On board 2, the owner's first terminal capture loses on move 7 to a bomb. Before the oracle ran, the owner ruled that attempt invalid because the Keeper visual layer draws a bomb only as its timer number, with no art. The same committed ruling (`ba42ccf`) applied `fresh-boards.json`'s rule that invalid evidence makes the result `INCONCLUSIVE`. That reading was fixed before any oracle output existed, so the result is not re-read after seeing the oracle's numbers. The per-board rows are fixed-case observations with no panel conclusion. On board 1, the owner's first capture wins in 9 moves and the oracle wins in 10. On board 2, the oracle wins in 12. Both human captures replay valid, and both oracle witnesses verify. Labelled observation, not an outcome input: capture `play-sessions/e1a806a861cd693f57a63c7351abd1d6b0554471a4df16567672f88008430afc.json` (commit `b0dc980`, before the oracle commit `d1d6875`) is an owner win on board 2 in 11 moves, 173,568 points, next to the oracle's 12. It was a second attempt on a board whose opening and first 7 moves' spawns the owner had already seen. It is not a blind comparison and cannot enter the outcome rule.
+- **evidence:** boards `experiments/RESULT-0044/fresh-boards.json` (commit `66793f3`, before both captures); owner captures `play-sessions/b1a0c4c76835db2a0745aa54875ab8b3c1f75d2adc05c15546bd5b038f7fa8c2.json` (commit `2df765f`) and `play-sessions/a84100a4db7ab04b4740cc4fb2b04f99f8387e0595251ca83ecd6e80631c97ce.json` (commit `d8f8770`); board-2 replay observation `play-sessions/e1a806a861cd693f57a63c7351abd1d6b0554471a4df16567672f88008430afc.json` (commit `b0dc980`); owner ruling `experiments/RESULT-0044/owner-decision-board-2.md` (commit `ba42ccf`, before the oracle commit); bomb rendering `src/keeper-motion-prototype.js:403`; oracle run `experiments/RESULT-0044/oracle-run.json` produced by `experiments/RESULT-0044/run-oracle.js` (commit `d1d6875`) from a worktree at `5205535`; `solver/oracle/verify.js:verifyWitness`; `solver/benchmark-replay.js:replayRecording`; report `experiments/RESULT-0044/report.md`
+- **proof_class:** `direct_source` for each per-board row (capture replays, witness verification, move counts) and for applying the registered rule, which gives an inconclusive panel outcome; `owner_decision` for the board-2 invalidity ruling; no population claim (two fixed cases)
+- **as_of:** 2026-09-28
+- **reverify:** In a worktree at `5205535`, replay both captures with `replayRecording` against the shipped level rules. Expect a board-1 win in 9 and a board-2 loss on move 7. The board-2 replay capture should replay as a win in 11 with 173,568 points. Then run `verifyWitness` on each oracle witness in `oracle-run.json`. Expect valid wins in 10 and 12.
+- **updated:** 2026-09-28
+- **written_by:** Claude Opus 5.5 subagent, session 01YCJfqhCdwXmesG5LarxQsX, branch `experiment/result-0044-fresh-run`
+- **checked_by:** fresh independent Claude Opus 5.5 checker subagent spawned from session 01YCJfqhCdwXmesG5LarxQsX (not the writer), 2026-09-28, at commit `676c9cd`. From `C:\OOO\wt-oracle-5205535` (HEAD `5205535`, clean) it ran `replayRecording` on all three captures: board-1 valid win in 9 (128,960); board-2 valid loss on move 7, bomb (52,224); board-2 replay valid win in 11 (173,568). It ran `verifyWitness` on both oracle witnesses: valid wins in 10 and 12. Four `git merge-base --is-ancestor` checks confirmed `66793f3` before `2df765f` and `d8f8770`, and `b0dc980` and `ba42ccf` before `d1d6875`. Under the registered rule and the `ba42ccf` ruling, it confirmed the panel is `INCONCLUSIVE`
+- **supersedes:** [RESULT-0044]
+- **superseded_by:** []
+- **notes:** Provenance gap: `run-oracle.js` hard-coded `implementationCommit` as `5205535`. It did not record the worktree's HEAD or check that the tree was clean at run time. The worktree `C:\OOO\wt-oracle-5205535` was created with `git worktree add --detach ... 5205535` immediately before the run and was found at `5205535` and clean afterwards. The one-attempt oracle cannot be re-run. Follow-up: future runners must record HEAD and check the tree is clean before emitting an artifact. Other notes: the owner opened board 1 once and made no moves before the counted attempt (noted in `2df765f`). Bombs need readable art before more owner play counts as evidence. `search.js` and `cli.js` differ on today's main, so the run used a pinned worktree.
 
 ## Decision registry
 
