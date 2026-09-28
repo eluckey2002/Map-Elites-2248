@@ -9,7 +9,7 @@ Snapshot: `origin/main` at `ce0930a9865433254d6b16e9f42628bb4299e486` (verified 
 | --- | --- | --- | --- |
 | RESULT-0008 | CK-01 Reverify reproduces outcome | UNKNOWN | `verify-loop.js` run did not finish in time-box under CPU contention |
 | RESULT-0008 | CK-02 Frozen artifact identity | N/A | No hashed artifact identity published for this record |
-| RESULT-0008 | CK-03 Protocol before data | PASS | Explicitly grandfathered (pre-2026-08-31 gate) |
+| RESULT-0008 | CK-03 Protocol before data | N/A | Explicitly grandfathered (pre-2026-08-31 gate): no protocol was required, so none can be checked. Originally recorded here as PASS; corrected to N/A under the strict-ancestry rule in `../checklist.md`. |
 | RESULT-0008 | CK-04 Seeds fresh/logged | UNKNOWN | `experiments/SEEDS.md` does not exist in this snapshot |
 | RESULT-0008 | CK-05 Same-board/seed comparisons | PASS | Uniform 100-seed/level scope, no seed-mixing found |
 | RESULT-0008 | CK-06 Code identity vs. bug window | **PASS (known-answer match)** | `8e1e232` (2026-08-12) is an ancestor of, and predates, `4ded51c` (2026-08-20 bug-window start) |
@@ -23,7 +23,7 @@ Snapshot: `origin/main` at `ce0930a9865433254d6b16e9f42628bb4299e486` (verified 
 
 ## Summary
 
-- 9 PASS, 3 UNKNOWN, 1 N/A, 0 FAIL.
+- 8 PASS, 3 UNKNOWN, 2 N/A, 0 FAIL (CK-03 for RESULT-0008 corrected from PASS to N/A).
 - **Known-answer check (CK-06) confirms the supplied answer**: RESULT-0008's measurement commit `8e1e232` (2026-08-12) predates the `bot.js rolloutValue` weakest-settings bug window (`4ded51c`, 2026-08-20, to `a2bf18d`, 2026-09-04) — PASS, code identity clean, no re-measurement needed.
 - The 3 UNKNOWNs (CK-01, CK-04, CK-12) are honest incompletions, not failures: CK-04 is a structural absence (no `SEEDS.md` in this snapshot to check against, pre-dates any seed ledger); CK-01 and CK-12 both require executing `solver/verify-loop.js` / `solver/game-tester.js`, and both runs failed to terminate within the session's time-box while a concurrent verification process (a parallel slice-B agent) was consuming CPU on the same machine — recommend re-running both in isolation.
 - No FAILs found in slice A.
