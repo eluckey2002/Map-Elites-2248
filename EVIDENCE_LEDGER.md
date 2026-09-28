@@ -1240,7 +1240,7 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **type:** decision
 - **status:** provisional
 - **scope:** branch `feat/family-board-map-elites-20260919` and its port only
-- **statement:** Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the paused port is preserved on the GitHub branch `port/family-board-map-elites`, outside `main`'s history. Scope: this branch only.
+- **statement:** Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the owner's intent is that the paused port work be kept on the GitHub branch `port/family-board-map-elites` until porting resumes; this record does not certify that branch's contents or continued existence. Scope: this branch only.
 - **evidence:** owner choice "A" in session 2026-09-27 among options A (pause + `BL-0023`), B (merge history, keep folders), C (cite off-main), D (rerun); `BL-0023` criterion 7 and its evidence section (merged in PR #50, `f4eea85`).
 - **proof_class:** `owner_decision`
 - **as_of:** 2026-09-27
