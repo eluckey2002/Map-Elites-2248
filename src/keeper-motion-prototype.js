@@ -400,7 +400,18 @@
         ctx.shadowBlur = 5;
         if (tile.blocker === BLOCKER_TYPES.STONE) ctx.fillText('STONE', center.x, center.y);
         if (tile.blocker === BLOCKER_TYPES.ICE) ctx.fillText(`ICE ${tile.blockerDuration}`, center.x, center.y - game.tileSize * 0.27);
-        if (tile.blocker === BLOCKER_TYPES.BOMB) ctx.fillText(`${tile.bombTimer}`, center.x, center.y - game.tileSize * 0.27);
+        if (tile.blocker === BLOCKER_TYPES.BOMB) {
+            // Bombs have no Keeper art yet; without a marker a bomb reads as an ordinary tile.
+            ctx.strokeStyle = '#ff3b30';
+            ctx.lineWidth = Math.max(3, game.tileSize * 0.06);
+            ctx.shadowBlur = 0;
+            ctx.beginPath();
+            ctx.arc(center.x, center.y, game.tileSize * 0.44, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.fillStyle = '#ff3b30';
+            ctx.font = `800 ${Math.round(game.tileSize * 0.2)}px ui-sans-serif, system-ui, sans-serif`;
+            ctx.fillText(`BOMB ${tile.bombTimer}`, center.x, center.y - game.tileSize * 0.27);
+        }
         ctx.restore();
     };
 
