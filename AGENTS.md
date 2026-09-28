@@ -108,6 +108,24 @@ Before a session's work lands, in this order:
 
 Do not append to `HANDOFF.md`. It is a historical session journal; what it used to carry now goes in the ledger, `CURRENT.md`, and backlog history.
 
+## Worktrees
+
+Several agents work in this repository at once. On 2026-09-26 twenty worktrees had
+piled up across three directories, and an agent edited the main checkout while
+another agent was reconciling it.
+
+1. **Never edit in the main checkout**: the first entry in `git worktree list`
+   (on the owner's machine, `C:\OOO\Map-Elites-2248`). Reading it is fine. Make
+   changes in a worktree.
+2. **One task, one branch, one worktree, one agent.** Never share a worktree
+   between two running agents.
+3. **Put it in one place:** `git fetch` then
+   `git worktree add -b <branch> ../wt/<branch-name> origin/main`. Without an
+   `origin` remote, use `main` as the base.
+4. **Remove it when its pull request merges** (`git worktree remove`). A leftover
+   worktree is part of the pull request not yet being finished. Check
+   `git status` first. If it holds unmerged work, don't delete it; say so.
+
 ## Landing changes on `main`
 
 `main` is protected. Every change reaches it through a pull request whose
