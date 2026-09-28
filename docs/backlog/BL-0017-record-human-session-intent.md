@@ -65,10 +65,14 @@ target-stop objective, as the measurement standard already requires.
    `race` and prints how many it excluded and why.
 4. A test fails if an untagged or `explore` session enters the speed
    comparison.
-5. A test asserts that no hash-pinned recording file changed: it re-derives
-   the SHA-256 of `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`
-   (and any other recording a verification record cites by hash) and fails if
-   it no longer matches the filename/verdict.
+5. A test asserts that no hash-pinned recording changed: it parses
+   `recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json`
+   (and any other recording a verification record cites by hash), calls
+   `recordingIdentity` from `solver/authoring-server.js` on the parsed JSON,
+   and fails if the result no longer matches the filename/verdict. It must
+   NOT hash the raw file bytes: those give a different digest (`ed367f1e...`
+   for this file) and would report the valid baseline as corrupt. The test
+   is first run against the unchanged recordings and must pass.
 6. Both capture paths that write a recording without any intent field today
    — `tools/play-server.js:116-132` (`POST /api/play-sessions`, which stamps
    `capturedAt`/`source` but never `intent`) and
@@ -112,3 +116,4 @@ Decide the field names and allowed values; then tag the six sessions above.
   paths to write the sidecar intent entry at capture time or reject an
   intent-less capture, and criterion 7, a test per endpoint.
 - 2026-09-27: Addressed Codex review on b774c96 (sidecar location; foreign-host leases).
+- 2026-09-27: Criterion 5 now checks `recordingIdentity` of the parsed recording, not raw bytes (Codex review on 5174e82; confirmed raw bytes hash to `ed367f1e...` vs identity `8ac6c9d4...`).
