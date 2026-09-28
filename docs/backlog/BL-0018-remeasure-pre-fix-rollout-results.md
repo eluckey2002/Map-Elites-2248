@@ -64,7 +64,13 @@ is needed.
    on the SAME fresh, freshly-drawn seed set (paired, not two separate seed
    samples), so the pre/post comparison is internally controlled; the old
    record's historical figures are cited as context only, never mixed into
-   the new protocol's own comparison.
+   the new protocol's own comparison. The superseding protocol must retest
+   the original claim, not just the bot: it runs BOTH rollout versions of
+   EVERY original arm (for RESULT-0026, the handmade policy and the
+   reference; for RESULT-0018/0020, the target-aware challenger and the base
+   chooser; for earlier results, each tie-break, weight or path-width arm)
+   on the same fresh seeds, with all other inputs frozen, so it can show
+   whether the original treatment effect survives the fix.
 3. Each remaining listed result gets a new superseding re-measurement — same
    rule: fresh protocol registered first, paired PRE-fix/POST-fix bot runs on
    identical fresh seeds, historical figures as context only, never a re-run
@@ -104,3 +110,4 @@ re-measurement.
   the frozen PRE-fix (`4ded51c`) and POST-fix (`a2bf18d`+) `rolloutValue`
   implementations on the SAME fresh seed set, with historical figures cited
   as context only.
+- 2026-09-27: Addressed Codex review on bb3bbd8: superseding protocols rerun every original arm under both rollout versions.
