@@ -16,6 +16,7 @@ file and the repository before declaring a range fresh.
 | 1–40 and 10,001–10,060 | board-search per-board variant fitting and holdout ranges | 2026-08-20 | `solver/board-search-01.json` (`receipt.fitting.variantRange`, `receipt.holdout.variantRange`) |
 | 100,000–100,299 | candidate verification holdout | 2026-08 | `solver/level-author.js` |
 | 200,000–200,039 | shape profiling, 40 seeds | 2026-08 | `solver/profile-shapes.js`, `solver/README.md`, `HANDOFF.md` |
+| 200,000–200,119 | Levels 54–58 check at their shipped targets (derived for 55–58; Level 54 at its owner-set 126,000, DECISION-0007), 120 seeds per level; **reuses** 200,000–200,039 from shape profiling above | 2026-09-05 | commit `3bcb5a6`, `src/game.js` Levels 54–58 comments |
 | 500,000–500,023 | generator screen | 2026-08-20 | `solver/generate-levels.js` |
 | 1,000,000–1,000,249 | policy-search holdout, 250 seeds (`--holdout-seeds` default) | 2026-08 | `solver/policy-search.js`, `.orch/policy-search-02.cells.json` |
 | 2,000,000–2,000,299 | width ablation, third disjoint set; 2,000,000–2,000,011 also the MAP-Elites transition-round screen (RESULT-0017) | 2026-08-20, 2026-08-22 | `solver/policy-ablation.js`, `.orch/policy-ablation-01.json`, `solver/map-elites-output/archive.json` |
