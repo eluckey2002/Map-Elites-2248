@@ -1221,7 +1221,7 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 ### DECISION-0007 — Level 54's 126,000 target is a deliberate owner exception to the demand rule
 
 - **type:** decision
-- **status:** provisional
+- **status:** accepted
 - **scope:** Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) only; no change to `DECISION-0003` for other levels
 - **statement:** The owner set Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) at 126,000 from human evidence rather than bot measurement; the demand rule would have given 89,800. Scope: Level 54 only; no change to `DECISION-0003` for other levels.
 - **evidence:** shipping commit `3bcb5a6` (2026-09-05) — quote "Level 54 is a deliberate exception to the demand rule" and "It is the one level whose difficulty comes from human evidence rather than bot measurement." Owner reaffirmation 2026-09-28 in session: "I thought I had already kept this as a deliberate choice." `RESULT-0028` (owner replay 140,544 in 20 moves on seed 424242). Same-seed shipped bot 136,832 in 19 (`node solver/human-benchmark.js`, recording `c50b34f8`).
@@ -1232,30 +1232,30 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **supersedes:** []
 - **superseded_by:** []
 - **written_by:** claude-sonnet owner-decisions 2026-09-28
-- **checked_by:** pending
+- **checked_by:** owner, 2026-09-28: the decision is the owner's own, stated in session as "I thought I had already kept this as a deliberate choice" (2026-09-28) and quoted in evidence; the owner gave standing approval to merge this record ("You have my standing approval", 2026-09-28)
 - **notes:** The commit's supporting comparison of the owner's game with a calib-1 median over other seeds (105,664) and its "bot wins 23.3%" figure are not valid comparisons under `docs/MEASUREMENT-AND-ANALYSIS-STANDARDS.md` and must not be cited as evidence for the target; `BL-0020` (re-examination) was dropped on this basis (PR #51).
 
 ### DECISION-0008 — Pause porting the family-board MAP-Elites work until frozen renumbering is defined
 
 - **type:** decision
-- **status:** provisional
+- **status:** accepted
 - **scope:** branch `feat/family-board-map-elites-20260919` and its port only
 - **statement:** Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the owner's intent is that the paused port work be kept on the GitHub branch `port/family-board-map-elites` until porting resumes; this record does not certify that branch's contents or continued existence. Scope: this branch only.
 - **evidence:** owner choice "A" in session 2026-09-27 among options A (pause + `BL-0023`), B (merge history, keep folders), C (cite off-main), D (rerun); `BL-0023` criterion 7 and its evidence section (merged in PR #50, `f4eea85`).
 - **proof_class:** `owner_decision`
 - **as_of:** 2026-09-27
 - **reverify:** `docs/backlog/BL-0023-reserve-ledger-ids-across-branches.md` criterion 7 and History for the 2026-09-27 pause entry; confirm PR #50 merged as `f4eea85`.
-- **updated:** 2026-09-27
+- **updated:** 2026-09-28
 - **supersedes:** []
 - **superseded_by:** []
 - **written_by:** claude-sonnet owner-decisions 2026-09-28
-- **checked_by:** pending
+- **checked_by:** owner, 2026-09-28: the decision is the owner's own, stated in session as "A" (2026-09-27) and quoted in evidence; the owner gave standing approval to merge this record ("You have my standing approval", 2026-09-28)
 - **notes:** This pauses porting only; it does not resolve `BL-0023`, does not merge or delete `feat/family-board-map-elites-20260919`, and does not admit or disposition the RESULT-0044..0047 findings themselves.
 
 ### DECISION-0009 — Keep Level 53 as shipped at 101,000
 
 - **type:** decision
-- **status:** provisional
+- **status:** accepted
 - **scope:** Level 53 (`gen-0014-wide-sprint`) as it stands in `src/game.js`; no change to any other level or to `DECISION-0003`
 - **statement:** The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. The target is not re-derived against the frozen `calib-1` evaluator (which gives 102,000); like Level 52 (`RESULT-0012`), it is held at the value it was admitted and playtested with. This records the ship decision that `CURRENT.md` listed as open adjudication after the level entered `src/game.js` in `530deb3`.
 - **evidence:** owner reply "keep it" in session 2026-09-28, answering whether to keep Level 53 as shipped or re-examine it; `src/game.js` Level 53 entry (6x5, 16 moves, minChain 3, target 101,000) and its comment's record of three owner wins, replay verified; `RESULT-0027` context stating the frozen evaluator derives 102,000 "while the shipped 101,000 Level 53 board remains unchanged"; `RESULT-0012` hold precedent; commit `530deb3`.
@@ -1266,7 +1266,7 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **supersedes:** []
 - **superseded_by:** []
 - **written_by:** claude-opus orchestrator 2026-09-28
-- **checked_by:** pending
+- **checked_by:** owner, 2026-09-28: the decision is the owner's own, stated in session as "keep it" (2026-09-28) and quoted in evidence; the owner gave standing approval to merge this record ("You have my standing approval", 2026-09-28)
 - **notes:** The measurement figures in Level 53's `src/game.js` comment (median 107,200, 300-seed holdout 191 wins) come from archived receipt `043ca53f`, which `solver/candidates-archive/README.md` records as failing current verification (`calibration stamp mismatch`, 2026-09-03) and not to be quoted; this decision does not rely on them, and that comment's claim that the receipt "verifies against the current bot" is stale. Why Level 53 was earlier rejected as a candidate was not re-examined; the owner chose to keep it as played. The 1,000-point difference from the frozen evaluator is explained by the evaluator change, not by an error.
 
 ## Hypothesis registry
