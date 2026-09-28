@@ -246,6 +246,12 @@ function disposition(artifact) {
 
 function summaryFromArtifact(artifact) {
   if (!verifyArtifactIdentity(artifact)) throw new Error('raw artifact identity mismatch');
+  if (artifact.status !== 'COMPLETE') {
+    return {
+      artifactIdentity: artifact.artifactIdentity,
+      status: artifact.status,
+    };
+  }
   return {
     artifactIdentity: artifact.artifactIdentity,
     status: artifact.status,
@@ -262,6 +268,86 @@ function summaryFromArtifact(artifact) {
       targetCostDelta: artifact.comparison.targetCostDelta,
     },
   };
+}
+
+function exerciseCloseout({
+  contractPath,
+  expectedContractIdentity,
+  manifestIdentity,
+  reportableOut,
+  recomputedOut,
+}) {
+  if (sha256File(contractPath) !== expectedContractIdentity) {
+    throw new Error('closeout contract external identity mismatch');
+  }
+  if (fs.existsSync(reportableOut) || fs.existsSync(recomputedOut)) {
+    throw new Error('closeout qualification requires absent reportable paths');
+  }
+  const contract = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+  if (contract.final_subject_identity !== manifestIdentity) {
+    throw new Error('closeout final subject does not match manifest identity');
+  }
+  const contractDirectory = path.dirname(contractPath);
+  const resolvedCwd = path.resolve(contractDirectory, contract.recomputation.cwd);
+  const resolvedArgvFiles = contract.recomputation.argv
+    .filter((value) => value.includes('/'))
+    .map((value) => path.resolve(resolvedCwd, value));
+  const receiptPath = path.join(contractDirectory, 'LC-0006-disposable-qualification-closure.json');
+  const synthetic = artifactWithIdentity({
+    schemaVersion: 1,
+    kind: 'lc0006-complete-harvest-counterexample-raw',
+    status: 'SYNTHETIC_QUALIFICATION',
+  });
+  try {
+    writeJsonOnce(reportableOut, synthetic);
+    const [program, ...argv] = contract.recomputation.argv;
+    const output = execFileSync(program, argv, { cwd: resolvedCwd });
+    fs.writeFileSync(recomputedOut, output, { flag: 'wx' });
+    const receipt = {
+      schema_version: 1,
+      contract: { path: path.basename(contractPath), sha256: expectedContractIdentity },
+      run_id: 'LC-0006-SYNTHETIC-QUALIFICATION',
+      final_subject_identity: manifestIdentity,
+      closure_status: 'CLOSED',
+      claims: contract.required_claims.map((id) => ({
+        id,
+        status: 'PASS',
+        evidence_subject_identity: manifestIdentity,
+        reason: 'synthetic closeout-path qualification',
+      })),
+      artifacts: [
+        { id: 'raw', path: path.basename(reportableOut), sha256: sha256File(reportableOut) },
+        { id: 'primary-recomputation', path: path.basename(recomputedOut), sha256: sha256File(recomputedOut) },
+      ],
+      primary_outcome: 'SYNTHETIC_CLOSEOUT_PASS',
+      deviations: [],
+      attempts: [{ id: 'qualification-1', exit_code: 0, artifact_ids: ['raw', 'primary-recomputation'] }],
+    };
+    writeJsonOnce(receiptPath, receipt);
+    const verifier = '/Users/eluckey/.codex/skills/close-experiment/scripts/verify_closure.py';
+    const verifierOutput = execFileSync('python3', [
+      verifier,
+      contractPath,
+      receiptPath,
+      '--run-recomputation',
+      '--require-closed',
+      '--expected-contract-sha256',
+      expectedContractIdentity,
+    ], { cwd: ROOT, encoding: 'utf8' });
+    const verdict = JSON.parse(verifierOutput);
+    return {
+      pass: verdict.verdict === 'PASS' && verdict.recomputation === 'PASS',
+      verifier,
+      resolvedCwd,
+      resolvedArgvFiles,
+      resolvedArgvFilesExist: resolvedArgvFiles.every(fs.existsSync),
+      verdict,
+    };
+  } finally {
+    for (const file of [receiptPath, recomputedOut, reportableOut]) {
+      if (fs.existsSync(file)) fs.unlinkSync(file);
+    }
+  }
 }
 
 function createManifest({ contractPath }) {
@@ -371,7 +457,14 @@ function committedFileMatches(file) {
   return committed.equals(fs.readFileSync(file));
 }
 
-function qualifyHarness({ manifestPath, expectedManifestIdentity, reportableOut }) {
+function qualifyHarness({
+  manifestPath,
+  expectedManifestIdentity,
+  closeoutContract,
+  expectedCloseoutIdentity,
+  reportableOut,
+  recomputedOut,
+}) {
   if (fs.existsSync(reportableOut)) throw new Error('reportable raw output must be absent before qualification');
   const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   const paths = validateManifest(manifest, expectedManifestIdentity);
@@ -405,9 +498,20 @@ function qualifyHarness({ manifestPath, expectedManifestIdentity, reportableOut 
   } catch (error) {
     coherentSubstitutionRejected = /expected manifest identity mismatch/.test(error.message);
   }
+  const admission = exerciseCloseout({
+    contractPath: closeoutContract,
+    expectedContractIdentity: expectedCloseoutIdentity,
+    manifestIdentity: manifest.artifactIdentity,
+    reportableOut,
+    recomputedOut,
+  });
   const pass = Object.values(committed).every(Boolean)
     && controls.every((control) => control.pass)
-    && coherentSubstitutionRejected;
+    && coherentSubstitutionRejected
+    && admission.pass
+    && admission.resolvedArgvFilesExist
+    && !fs.existsSync(reportableOut)
+    && !fs.existsSync(recomputedOut);
   return artifactWithIdentity({
     schemaVersion: 1,
     kind: 'lc0006-harness-qualification',
@@ -418,6 +522,7 @@ function qualifyHarness({ manifestPath, expectedManifestIdentity, reportableOut 
     attempt: 1,
     committed,
     coherentSubstitutionRejected,
+    preOutcomeAdmission: admission,
     controls,
     uncertainties: [],
   });
@@ -452,7 +557,10 @@ function main() {
     const receipt = qualifyHarness({
       manifestPath: path.resolve(arg('manifest')),
       expectedManifestIdentity: arg('expected-manifest-identity'),
+      closeoutContract: path.resolve(arg('closeout-contract')),
+      expectedCloseoutIdentity: arg('expected-closeout-identity'),
       reportableOut: path.resolve(arg('reportable-out')),
+      recomputedOut: path.resolve(arg('recomputed-out')),
     });
     writeJsonOnce(path.resolve(qualificationOut), receipt);
     process.stdout.write(`${JSON.stringify(receipt, null, 2)}\n`);
@@ -485,6 +593,7 @@ module.exports = {
   disposition,
   entryEdges,
   enumerateBuiltPaths,
+  exerciseCloseout,
   qualifyHarness,
   stateFromNormalizedGrid,
   summaryFromArtifact,
