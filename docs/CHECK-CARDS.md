@@ -999,6 +999,68 @@ that passed while inspecting nothing.
   `solver/tests/failedRunLedger.test.js`.
 - **Shipped:** 2026-09-22 on the isolated failed-run-ledger branch.
 
+### protocol-sample-size-and-margin · HARD
+
+- **Protects:** a protocol registered on or after 2026-09-27 cannot enter the
+  experiment corpus without stating its fixed denominator, quantitative
+  margin, and downstream-use boundary. The check accepts either the current
+  `## Sample size and margin` form or the already-frozen companion-protocol
+  form used by RESULT-0049.
+- **Where:** `tools/verify-experiments.js`, `assessSampleSizeSections` and
+  `assessStructuredSampleSizeCompanion`; exercised by
+  `solver/tests/experiments.test.js`.
+- **Level:** H2 section and labelled clause within one protocol file. Facts
+  split across unrecognised headings, external prose, or comments slip between
+  those levels.
+- **Kind:** shape and value. It requires filled text plus numeric markers; the
+  experiment author and independent review own whether the denominator,
+  uncertainty method, and decision boundary are scientifically appropriate.
+- **Scope:** every `experiments/*/protocol.md` with a parseable `registered`
+  date on or after 2026-09-27. The primary form requires exact labelled bullets
+  `Per verdict`, `Margin`, and `Downstream quantity`. The companion form must
+  freeze the exact adjacent `registered-protocol.md` path and requires exact
+  H2s `Units, assignment, panel, and completeness`, `Objective and
+  termination`, and `Adoption boundary`; within them it requires a numeric
+  `Matrix:` line naming paired cells, games, or units, both `95% interval` and
+  `1.96`, and at least 40 non-placeholder characters in the adoption boundary.
+  Older protocols are excluded.
+- **Reads own output?:** yes—the check reads author-written protocol files, not
+  independent outcome data. That is safe only for the declared completeness
+  invariant; version-freeze and provenance checks separately pin the companion
+  bytes and registration history.
+- **Sampling memory:** exhaustive over protocol directories present in the
+  checkout. Silence about an absent, uncommitted, or differently located
+  protocol means never inspected.
+- **Does NOT catch:**
+  1. False, cherry-picked, or statistically unsuitable numbers in a correctly
+     shaped section.
+  2. A protocol author who saw reportable outcomes before registration.
+  3. A margin expressed with different but valid terminology in the companion
+     form; that form intentionally fails closed and must use the primary form
+     or receive a reviewed parser change.
+  4. Whether the downstream decision is actually followed after closure.
+  5. An incorrect frozen hash value or rewritten companion bytes by itself;
+     the separate version-freeze and artifact-provenance checks own those
+     identities. This check does reject a companion absent from the freeze.
+- **Crafted-bypass test:** `solver/tests/experiments.test.js`, cases `a frozen
+  companion protocol with explicit denominator, margin, and adoption boundary
+  passes` and `the frozen companion form fails when its quantitative margin is
+  removed`. The latter asserts the mutation changed the real RESULT-0049 text
+  before requiring the exact `quantitative margin` failure; `an unfrozen
+  companion cannot satisfy the sample-size check` rejects a disconnected copy.
+  The first two tests were red before companion parsing existed.
+- **Retires:** NO—this widens the existing BL-0016 F6 check rather than adding a
+  new gate. No prior clause could recognize a separately frozen full protocol.
+- **Enforcement:** HARD inside the existing experiment gate; missing or
+  placeholder fields block admission.
+- **Decay:** `node --test solver/tests/experiments.test.js` reruns the primary
+  fixtures, the real-corpus assertion, the frozen-companion positive case, and
+  the crafted margin removal; `node tools/verify-experiments.js` scans the live
+  corpus.
+- **Shipped:** 2026-09-27 during the PR #46/PR #49 reconciliation; the live
+  integrated gate first failed on RESULT-0049 before this compatibility path
+  was added.
+
 ---
 
 ### stranded-cell-pressure-real-state-seam · HARD

@@ -855,6 +855,43 @@ test('LIVE: every protocol in experiments/ matches its registration commit apart
     write('RESULT-9101', '2026-09-28T00:00:00Z', FILLED);
     assert.deepEqual(assessSampleSizeSections(dir), []);
   });
+  const REAL_COMPANION = fs.readFileSync(
+    path.join(ROOT, 'experiments', 'RESULT-0049', 'registered-protocol.md'),
+    'utf8',
+  );
+  const writeCompanion = (prefix, { frozen = true, body = REAL_COMPANION } = {}) => {
+    const d = fs.mkdtempSync(path.join(os.tmpdir(), prefix));
+    const experiment = path.join(d, 'RESULT-0049');
+    fs.mkdirSync(experiment);
+    fs.writeFileSync(path.join(experiment, 'protocol.md'), [
+      '---',
+      'result: RESULT-0049',
+      'registered: 2026-09-27T14:33:46Z',
+      ...(frozen ? [
+        'version_freeze:',
+        '  experiments/RESULT-0049/registered-protocol.md: 4dc2419b7e586fdc',
+      ] : []),
+      '---',
+      '',
+      '# Pre-registration',
+    ].join('\n'));
+    fs.writeFileSync(path.join(experiment, 'registered-protocol.md'), body);
+    return d;
+  };
+  test('a frozen companion protocol with explicit denominator, margin, and adoption boundary passes', () => {
+    assert.deepEqual(assessSampleSizeSections(writeCompanion('f6-companion-')), []);
+  });
+  test('the frozen companion form fails when its quantitative margin is removed', () => {
+    const bad = REAL_COMPANION.replace(
+      /Uncertainty is the larger[\s\S]*?This estimate is descriptive;/,
+      'Uncertainty is reported descriptively. This estimate is descriptive;',
+    );
+    assert.notEqual(bad, REAL_COMPANION, 'the crafted bad input must remove the real margin rule');
+    assert.match(assessSampleSizeSections(writeCompanion('f6-companion-bad-', { body: bad })).join('\n'), /quantitative margin/);
+  });
+  test('an unfrozen companion cannot satisfy the sample-size check', () => {
+    assert.match(assessSampleSizeSections(writeCompanion('f6-companion-unfrozen-', { frozen: false })).join('\n'), /not frozen/);
+  });
   for (const [name, date] of [['new, no section', '2026-09-28T00:00:00Z'], ['quoted date', '"2026-09-28"'], ['blank date', ''], ['missing date', null]]) {
     test(`sample-size check rejects: ${name}`, () => {
       const d = fs.mkdtempSync(path.join(os.tmpdir(), 'f6x-'));

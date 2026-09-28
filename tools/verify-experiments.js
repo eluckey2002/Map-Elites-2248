@@ -958,6 +958,29 @@ function baseFileText(rel) {
 // registered date that is missing or not YYYY-MM-DD is itself a problem, so a
 // quoted or blank date cannot slip past the cutoff.
 const SAMPLE_SIZE_ITEMS = ['Per verdict', 'Margin', 'Downstream quantity'];
+function markdownH2(text, heading) {
+  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = new RegExp(`^## ${escaped}\\b[^\\n]*\\n([\\s\\S]*?)(?=^## |(?![\\s\\S]))`, 'm').exec(text);
+  return match ? match[1].trim() : '';
+}
+
+function assessStructuredSampleSizeCompanion(text) {
+  const problems = [];
+  const units = markdownH2(text, 'Units, assignment, panel, and completeness');
+  if (!/^- Matrix:[^\n]*\d[^\n]*(?:paired cells|games|units)/m.test(units)) {
+    problems.push('has no explicit numeric matrix in "## Units, assignment, panel, and completeness"');
+  }
+  const objective = markdownH2(text, 'Objective and termination');
+  if (!/\b95% interval\b/.test(objective) || !/\b1\.96\b/.test(objective)) {
+    problems.push('has no quantitative margin in "## Objective and termination"');
+  }
+  const adoption = markdownH2(text, 'Adoption boundary');
+  if (adoption.length < 40 || /<[^>]+>/.test(adoption)) {
+    problems.push('has no filled "## Adoption boundary" for downstream use');
+  }
+  return problems;
+}
+
 function assessSampleSizeSections(dir = EXPERIMENTS) {
   const problems = [];
   if (!fs.existsSync(dir)) return problems;
@@ -965,12 +988,29 @@ function assessSampleSizeSections(dir = EXPERIMENTS) {
     const file = path.join(dir, name, 'protocol.md');
     if (!fs.existsSync(file)) continue;
     const text = fs.readFileSync(file, 'utf8');
-    const raw = String((parseFrontmatter(text) || {}).registered || '').replace(/^['"]|['"]$/g, '');
+    const front = parseFrontmatter(text) || {};
+    const raw = String(front.registered || '').replace(/^['"]|['"]$/g, '');
     const date = /^\d{4}-\d{2}-\d{2}/.exec(raw);
     if (!date) { problems.push(`${name}: protocol registered date "${raw}" is missing or not YYYY-MM-DD`); continue; }
     if (date[0] < '2026-09-27') continue;
     const section = /^## Sample size and margin\b[^\n]*\n([\s\S]*?)(?=^## |(?![\s\S]))/m.exec(text);
-    if (!section) { problems.push(`${name}: protocol registered ${date[0]} has no "## Sample size and margin" section`); continue; }
+    if (!section) {
+      const companion = path.join(dir, name, 'registered-protocol.md');
+      const companionRel = `experiments/${name}/registered-protocol.md`;
+      if (!fs.existsSync(companion)) {
+        problems.push(`${name}: protocol registered ${date[0]} has no "## Sample size and margin" section`);
+        continue;
+      }
+      if (!front.version_freeze || !Object.prototype.hasOwnProperty.call(front.version_freeze, companionRel)) {
+        problems.push(`${name}: registered-protocol.md supplies sample-size fields but is not frozen as ${companionRel}`);
+        continue;
+      }
+      const companionProblems = assessStructuredSampleSizeCompanion(fs.readFileSync(companion, 'utf8'));
+      if (companionProblems.length) {
+        for (const problem of companionProblems) problems.push(`${name}: registered-protocol.md ${problem}`);
+      }
+      continue;
+    }
     // Every item the template asks for must be present and filled in, not left
     // blank or as the template's <placeholder>.
     for (const item of SAMPLE_SIZE_ITEMS) {
