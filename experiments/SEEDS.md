@@ -59,7 +59,6 @@ file and the repository before declaring a range fresh.
 | 33,900,000–33,900,007 | RESULT-0042 calibrated-watchdog exact greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0042/protocol.md` |
 | 34,000,000–34,000,007 | RESULT-0043 executable-closeout exact greed-ratio replication across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0043/protocol.md` |
 | 41,000,000–41,000,001 | RESULT-0044 fresh-board owner-versus-oracle challenge (registered, not run): Level 56 uses 41,000,000; Level 58 uses 41,000,001 | 2026-09-22 | `experiments/RESULT-0044/protocol.md` |
-| 42,000,002 | RESULT-0044 follow-up: one fresh Level 58 board for the owner-vs-oracle rerun with bombs marked, committed before owner play | 2026-09-28 | `experiments/RESULT-0044/board-2-rerun.json` |
 | 43,999,999; 44,000,000–44,004,095 | RESULT-0048 family-island qualification fixture and paired island/refill confirmation panel | 2026-09-19 | `experiments/RESULT-0048/registered-protocol.md` |
 | 44,999,999; 45,000,000–45,000,299 | RESULT-0049 excluded harness qualification and fresh paired current-champion confirmation across all 58 shipped levels | 2026-09-27 | `experiments/RESULT-0049/registered-protocol.md` |
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
