@@ -21,7 +21,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 2,
@@ -45,7 +46,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 3,
@@ -69,7 +71,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 4,
@@ -93,7 +96,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 5,
@@ -117,7 +121,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 6,
@@ -141,7 +146,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 7,
@@ -165,7 +171,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 8,
@@ -189,7 +196,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 9,
@@ -213,7 +221,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 10,
@@ -237,7 +246,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 11,
@@ -261,7 +271,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 12,
@@ -285,7 +296,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 13,
@@ -309,7 +321,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 14,
@@ -333,7 +346,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 15,
@@ -345,7 +359,11 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 3
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -359,7 +377,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 16,
@@ -371,7 +390,11 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -385,7 +408,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 17,
@@ -397,7 +421,11 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 3,
+        "y": 2
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -411,7 +439,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 18,
@@ -423,8 +452,16 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone",
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 4
+      },
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 5
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -438,7 +475,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 19,
@@ -450,8 +488,16 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone",
-      "stone"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 3
+      },
+      {
+        "type": "stone",
+        "x": 3,
+        "y": 5
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -465,7 +511,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 20,
@@ -477,8 +524,16 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone",
-      "stone"
+      {
+        "type": "stone",
+        "x": 0,
+        "y": 4
+      },
+      {
+        "type": "stone",
+        "x": 4,
+        "y": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -492,7 +547,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 21,
@@ -504,7 +560,11 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 2
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -518,7 +578,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 22,
@@ -530,7 +591,11 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 3
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -544,7 +609,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 23,
@@ -556,7 +622,11 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -570,7 +640,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 24,
@@ -582,8 +653,16 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone",
-      "stone"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 2
+      },
+      {
+        "type": "stone",
+        "x": 3,
+        "y": 5
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -597,7 +676,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 25,
@@ -609,7 +689,12 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "ice"
+      {
+        "type": "ice",
+        "x": 2,
+        "y": 3,
+        "duration": 3
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -623,7 +708,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 26,
@@ -647,7 +733,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 27,
@@ -671,7 +758,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 28,
@@ -683,7 +771,11 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -697,7 +789,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 29,
@@ -709,7 +802,11 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 3
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -723,7 +820,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 30,
@@ -735,8 +833,17 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone",
-      "ice"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 3
+      },
+      {
+        "type": "ice",
+        "x": 2,
+        "y": 5,
+        "duration": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -750,7 +857,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 31,
@@ -774,7 +882,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 32,
@@ -786,7 +895,11 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 3
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -800,7 +913,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 33,
@@ -812,7 +926,11 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 2
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -826,7 +944,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 34,
@@ -838,8 +957,17 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "ice"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 4
+      },
+      {
+        "type": "ice",
+        "x": 3,
+        "y": 2,
+        "duration": 3
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -853,7 +981,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 35,
@@ -865,8 +994,16 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "stone"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 3
+      },
+      {
+        "type": "stone",
+        "x": 3,
+        "y": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -880,7 +1017,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 36,
@@ -892,8 +1030,17 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "ice"
+      {
+        "type": "stone",
+        "x": 0,
+        "y": 3
+      },
+      {
+        "type": "ice",
+        "x": 4,
+        "y": 3,
+        "duration": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -907,7 +1054,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 37,
@@ -919,8 +1067,16 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 2
+      },
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -934,7 +1090,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 38,
@@ -946,8 +1103,17 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "ice"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 3
+      },
+      {
+        "type": "ice",
+        "x": 3,
+        "y": 3,
+        "duration": 3
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -961,7 +1127,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 39,
@@ -973,8 +1140,16 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 3
+      },
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 5
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -988,7 +1163,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 40,
@@ -1000,7 +1176,12 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "bomb"
+      {
+        "type": "bomb",
+        "x": 2,
+        "y": 3,
+        "timer": 8
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1014,7 +1195,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 41,
@@ -1026,8 +1208,17 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "bomb"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 2
+      },
+      {
+        "type": "bomb",
+        "x": 3,
+        "y": 4,
+        "timer": 7
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1041,7 +1232,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 42,
@@ -1053,7 +1245,12 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "bomb"
+      {
+        "type": "bomb",
+        "x": 2,
+        "y": 3,
+        "timer": 8
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1067,7 +1264,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 43,
@@ -1079,8 +1277,17 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "bomb"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 2
+      },
+      {
+        "type": "bomb",
+        "x": 2,
+        "y": 5,
+        "timer": 7
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1094,7 +1301,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 44,
@@ -1106,8 +1314,18 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "ice",
-      "bomb"
+      {
+        "type": "ice",
+        "x": 1,
+        "y": 3,
+        "duration": 3
+      },
+      {
+        "type": "bomb",
+        "x": 3,
+        "y": 3,
+        "timer": 6
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1121,7 +1339,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 45,
@@ -1133,9 +1352,22 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "stone",
-      "bomb"
+      {
+        "type": "stone",
+        "x": 0,
+        "y": 3
+      },
+      {
+        "type": "stone",
+        "x": 4,
+        "y": 3
+      },
+      {
+        "type": "bomb",
+        "x": 2,
+        "y": 4,
+        "timer": 8
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1149,7 +1381,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 46,
@@ -1161,8 +1394,17 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "ice"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 2
+      },
+      {
+        "type": "ice",
+        "x": 2,
+        "y": 5,
+        "duration": 4
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1176,7 +1418,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 47,
@@ -1188,8 +1431,17 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "bomb"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 3
+      },
+      {
+        "type": "bomb",
+        "x": 3,
+        "y": 4,
+        "timer": 6
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1203,7 +1455,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 48,
@@ -1215,9 +1468,22 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "stone",
-      "ice"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 3
+      },
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 4
+      },
+      {
+        "type": "ice",
+        "x": 1,
+        "y": 5,
+        "duration": 3
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1231,7 +1497,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 49,
@@ -1243,9 +1510,22 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "stone",
-      "bomb"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 2
+      },
+      {
+        "type": "stone",
+        "x": 3,
+        "y": 5
+      },
+      {
+        "type": "bomb",
+        "x": 2,
+        "y": 3,
+        "timer": 7
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1259,7 +1539,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 50,
@@ -1271,10 +1552,28 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "stone",
-      "bomb",
-      "bomb"
+      {
+        "type": "stone",
+        "x": 0,
+        "y": 3
+      },
+      {
+        "type": "stone",
+        "x": 4,
+        "y": 3
+      },
+      {
+        "type": "bomb",
+        "x": 2,
+        "y": 2,
+        "timer": 6
+      },
+      {
+        "type": "bomb",
+        "x": 2,
+        "y": 5,
+        "timer": 8
+      }
     ],
     "origin": "DECISION-0003 demand-rule retune (measured share of achievable score), executed as RESULT-0008",
     "last_changed_commit": "8e1e232",
@@ -1288,7 +1587,8 @@
     "code_identity": "Reference bot solver/bot.js pre-RESULT-0011/RESULT-0018 lineage (sawtoothDemand/powers2 policy in solver/game-tester.js); no calib-1 (calib-1 postdates this by RESULT-0027, 2026-09-03)",
     "custody_verdict": "TRACED",
     "notes": "Ledger cites method (sawtoothDemand demand curve, CHAPTERS, powers2 policy) and inputs (game-tester.js, applied values in src/game.js). Origin record exists at DECISION-0003/RESULT-0008 level, not itemized per level 1-50.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 51,
@@ -1311,7 +1611,8 @@
     "code_identity": "Pre-RESULT-0011 reference bot (RESULT-0011 notes Level 51 bot median moves-to-target improved 17->16 after that later change)",
     "custody_verdict": "TRACED",
     "notes": "First level whose target was never hand-picked (BL-0004 milestone). Ledger entry cites ticket, replay-verification audit, and worklog.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 52,
@@ -1323,7 +1624,11 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone"
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 3
+      }
     ],
     "origin": "RESULT-0012 -- level-author pipeline, target = 70% of measured achievable score, held at pre-RESULT-0011 bot value (owner decision not to re-derive)",
     "last_changed_commit": "0a73bf5",
@@ -1337,7 +1642,8 @@
     "code_identity": "Pre-RESULT-0011 bot (explicit -- decision was to NOT re-derive against RESULT-0011's stronger bot)",
     "custody_verdict": "TRACED",
     "notes": "Receipt files solver/candidate-levels-52.json and solver/candidate-levels-52.receipt.json cited by SHA-256 in ledger (citation-repair 2026-08-31 repointed path, same content).",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 53,
@@ -1362,7 +1668,8 @@
     "code_identity": "Comment cites receipt 043ca53f234d4092202677b3e48a1855c0194c208742bba94a2c75ebd2227f16 (solver/candidates-archive/candidate-levels-gen0014-wide-sprint-043ca53f.json/.receipt.json); RESULT-0027 confirms this identity is preserved but does not adopt it as Level 53's shipping justification.",
     "custody_verdict": "PARTIAL",
     "notes": "Matches the task's known answer: no ledger record for the shipping decision; CURRENT.md explicitly flags this as open. Downgraded from UNTRACED to PARTIAL only because the shipped code comment (game.js:113-127) cites a real, hash-identified receipt file -- but no accepted DECISION/RESULT sanctions using that receipt's numbers (102,000 fitted, per RESULT-0027) or the shipped 101,000 value for Level 53.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 54,
@@ -1374,8 +1681,16 @@
     "gridW": 4,
     "gridH": 8,
     "blockers": [
-      "stone",
-      "stone"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 3
+      },
+      {
+        "type": "stone",
+        "x": 2,
+        "y": 3
+      }
     ],
     "origin": "Owner decision / deliberate exception to the demand rule, based on human evidence (HUMAN-PILOT-0002 / RESULT-0028) rather than bot measurement. Formalized as DECISION-0007, but that decision record lives on branch docs/owner-decisions-0007-0008, NOT on main.",
     "last_changed_commit": "3bcb5a6",
@@ -1389,7 +1704,8 @@
     "code_identity": "calib-1 bot median cited in commit message (105,664) but DECISION-0007's own notes say that comparison and the '23.3% win rate' figure are NOT valid under docs/MEASUREMENT-AND-ANALYSIS-STANDARDS.md and must not be cited as evidence.",
     "custody_verdict": "PARTIAL",
     "notes": "Matches the task's known answer exactly: on main, the exception is stated only in the commit message (3bcb5a6); DECISION-0007 is drafted but not merged to main as of the read snapshot ce0930a. DECISION-0007 itself is status 'provisional', not 'accepted'.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 55,
@@ -1401,8 +1717,17 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "stone",
-      "bomb"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 2
+      },
+      {
+        "type": "bomb",
+        "x": 3,
+        "y": 4,
+        "timer": 8
+      }
     ],
     "origin": "Level-authoring pipeline's own rule (roundTarget(measured median achievable x demand)) under the frozen calib-1 evaluator (mechanism traced to RESULT-0027), applied directly without generating an authoring receipt for these specific levels.",
     "last_changed_commit": "3bcb5a6",
@@ -1417,7 +1742,8 @@
     "code_identity": "Frozen calib-1 evaluator per RESULT-0027 (calibration solver identity c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed); commit message names the evaluator as calib-1 explicitly.",
     "custody_verdict": "PARTIAL",
     "notes": "Matches the task's known answer: commit 3bcb5a6 explicitly states these five levels 'carry no authoring receipt'. The general mechanism (calib-1, demand rule) is TRACED via RESULT-0027, but the specific per-level derivation for 55-58 is asserted only in the commit message and in-code comments, never captured in an accepted ledger record.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 56,
@@ -1442,7 +1768,8 @@
     "code_identity": "Frozen calib-1 evaluator per RESULT-0027 (calibration solver identity c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed); commit message names the evaluator as calib-1 explicitly.",
     "custody_verdict": "PARTIAL",
     "notes": "Matches the task's known answer: commit 3bcb5a6 explicitly states these five levels 'carry no authoring receipt'. The general mechanism (calib-1, demand rule) is TRACED via RESULT-0027, but the specific per-level derivation for 55-58 is asserted only in the commit message and in-code comments, never captured in an accepted ledger record.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 57,
@@ -1454,9 +1781,22 @@
     "gridW": 5,
     "gridH": 8,
     "blockers": [
-      "stone",
-      "stone",
-      "ice"
+      {
+        "type": "stone",
+        "x": 1,
+        "y": 4
+      },
+      {
+        "type": "stone",
+        "x": 3,
+        "y": 4
+      },
+      {
+        "type": "ice",
+        "x": 2,
+        "y": 2,
+        "duration": 4
+      }
     ],
     "origin": "Level-authoring pipeline's own rule (roundTarget(measured median achievable x demand)) under the frozen calib-1 evaluator (mechanism traced to RESULT-0027), applied directly without generating an authoring receipt for these specific levels.",
     "last_changed_commit": "3bcb5a6",
@@ -1471,7 +1811,8 @@
     "code_identity": "Frozen calib-1 evaluator per RESULT-0027 (calibration solver identity c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed); commit message names the evaluator as calib-1 explicitly.",
     "custody_verdict": "PARTIAL",
     "notes": "Matches the task's known answer: commit 3bcb5a6 explicitly states these five levels 'carry no authoring receipt'. The general mechanism (calib-1, demand rule) is TRACED via RESULT-0027, but the specific per-level derivation for 55-58 is asserted only in the commit message and in-code comments, never captured in an accepted ledger record.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   },
   {
     "level": 58,
@@ -1483,8 +1824,18 @@
     "gridW": 5,
     "gridH": 7,
     "blockers": [
-      "bomb",
-      "bomb"
+      {
+        "type": "bomb",
+        "x": 1,
+        "y": 2,
+        "timer": 7
+      },
+      {
+        "type": "bomb",
+        "x": 3,
+        "y": 5,
+        "timer": 9
+      }
     ],
     "origin": "Level-authoring pipeline's own rule (roundTarget(measured median achievable x demand)) under the frozen calib-1 evaluator (mechanism traced to RESULT-0027), applied directly without generating an authoring receipt for these specific levels.",
     "last_changed_commit": "3bcb5a6",
@@ -1499,6 +1850,7 @@
     "code_identity": "Frozen calib-1 evaluator per RESULT-0027 (calibration solver identity c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed); commit message names the evaluator as calib-1 explicitly.",
     "custody_verdict": "PARTIAL",
     "notes": "Matches the task's known answer: commit 3bcb5a6 explicitly states these five levels 'carry no authoring receipt'. The general mechanism (calib-1, demand rule) is TRACED via RESULT-0027, but the specific per-level derivation for 55-58 is asserted only in the commit message and in-code comments, never captured in an accepted ledger record.",
-    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486"
+    "snapshot_commit": "ce0930a9865433254d6b16e9f42628bb4299e486",
+    "blockersSource": "src/game.js LEVELS (full objects)"
   }
 ]
