@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "kind": "three-step-target-progress-manifest",
+  "paths": {
+    "recording": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+    "contract": "docs/learning-cycles/LC-0003-three-step-target-progress-contract.md"
+  },
+  "identities": {
+    "recording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+    "contract": "edfb10a25fdf8fb89c68c698da353acbe534ae16b2acd6c76c92ad3f726bfcf9",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "game": "3d405595707621ce28ab2ff4a8f509b8e3099462d42e8e0b304d3459907936c1",
+    "builtProbe": "a3a11f9ba8db149430b05f6864b2cd70977e207fdc8872f2cf9d221f2b4b7e00",
+    "sequenceProbe": "3521efc47424a7a445256f21470d9b19eb5d90676406c89d494b5292d446182e",
+    "harness": "d07ed37b0c90ffbbbafdee654173cc033e968a8a5d5e959ad574636f9144dfd0"
+  },
+  "artifactIdentity": "f1a001094916ac3e6220a030b2cf3e9b83be116f3cd89e48071bc54f86812a7a"
+}
