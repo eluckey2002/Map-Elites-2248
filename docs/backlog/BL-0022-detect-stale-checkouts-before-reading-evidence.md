@@ -124,7 +124,7 @@ filesystem by hand.
    behind `main` fails the freshness check; an up-to-date checkout passes
    (the baseline); a checkout behind only on non-evidence files passes; a
    merged-and-clean worktree with a live lease is NOT removed and is
-   reported; a merged-and-clean worktree with a stale (or absent) lease AND a
+   reported; a merged-and-clean worktree with a stale lease held on this host AND a
    dead pid IS removed; a merged-and-clean worktree with NO lease → reported, not removed; a stale lease from another host → reported, not
    removed; and, until the lease mechanism exists, the sweep removes nothing
    and only reports candidates (report-only mode).
@@ -179,3 +179,4 @@ wiring, the merged-worktree sweep, and their tests in a fresh worktree off
   accordingly.
 - 2026-09-27: Addressed Codex review on b774c96 (sidecar location; foreign-host leases).
 - 2026-09-27: Addressed Codex review on bb3bbd8: absent leases are report-only; lease-before-sweep ordering and a serialized sweep.
+- 2026-09-27: Removed the leftover "or absent" from the deletion test case; only an existing stale local-host lease with a dead pid qualifies (Codex review on 07007de).
