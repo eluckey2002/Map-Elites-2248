@@ -1,10 +1,10 @@
 ---
 id: BL-0020
 title: Re-examine Level 54's shipped target with same-seed comparisons
-status: proposed
+status: dropped
 milestone: level-difficulty-calibration
 depends_on: [BL-0017]
-updated: 2026-09-27
+updated: 2026-09-28
 ---
 
 # BL-0020 — Re-examine the Level 54 target
@@ -54,8 +54,23 @@ rules.
 
 ## Next action
 
-Register a protocol (seed range, both bots, keep/retune/re-author thresholds)
-before measuring either bot at 126,000.
+None: dropped. See Disposition.
+
+## Disposition
+
+Dropped 2026-09-28 by owner disposition. When shown this record in session on
+2026-09-28, the owner replied: "I thought I had already kept this as a
+deliberate choice." That reaffirms the decision recorded in the shipping commit
+`3bcb5a6` (2026-09-05): "Level 54 is a deliberate exception to the demand
+rule ... the one level whose difficulty comes from human evidence rather than
+bot measurement." This record had been opened on 2026-09-27 from an audit that
+treated one supporting sentence in that commit (the owner's game compared with a
+bot median over other seeds, which is not a valid comparison) as the target's
+only basis. That sentence should not be cited as a comparison; the decision
+stands. The valid same-seed comparison, from the RESULT-0028 replay (seed
+424242: owner 140,544 in 20 moves) and the shipped target-stopping bot on that seed
+(136,832 in 19; `node solver/human-benchmark.js`, recording `c50b34f8`), is
+consistent with it.
 
 ## History
 
@@ -66,3 +81,5 @@ before measuring either bot at 126,000.
   keep/retune/re-author thresholds) committed before either bot is measured,
   renumbered the prior criteria, and updated Next action to match.
 - 2026-09-27: Corrected the excluded seed range to the full prior Level 54 panel 200000-200119 (Codex review on b625881).
+- 2026-09-28: Dropped: the target is an owner decision already recorded in `3bcb5a6`; see Disposition.
+- 2026-09-28: Disposition now quotes the owner's 2026-09-28 reaffirmation; removed an unreproducible exploratory note (Codex review on PR #51).
