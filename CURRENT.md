@@ -6,7 +6,7 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 ## Evidence-capture hardening — 2026-09-26
 
-[BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. The lost 2026-08-28 MAP-Elites archives are now [RESULT-0049](EVIDENCE_LEDGER.md) and [RESULT-0050](EVIDENCE_LEDGER.md), neither replacing the `52f500c` champion. CORRECTION-0010 to CORRECTION-0017 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still awaits RESULT-0016's confirmation run; two solver bugs found by it are listed in BL-0016.
+[BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. [RESULT-0049](EVIDENCE_LEDGER.md) is the preregistered confirmation supporting the current target-aware champion. The lost 2026-08-28 MAP-Elites archives are [RESULT-0050](EVIDENCE_LEDGER.md) and [RESULT-0051](EVIDENCE_LEDGER.md), neither replacing the then-champion `52f500c`; they were renumbered from PR #46's original RESULT-0049/0050 labels when PR #49 landed first. CORRECTION-0010 to CORRECTION-0017 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still awaits RESULT-0016's confirmation run; two solver bugs found by it are listed in BL-0016.
 
 ## Current decision frontier — 2026-09-16
 
@@ -125,7 +125,7 @@ The Level 26 exact-proof track, by [DECISION-0002](EVIDENCE_LEDGER.md#decision-0
 
 - **Roughly 15 levels have a target lower than the level before.** The remaining lever is the move budget, and spending it would make a level's pacing a side effect of target cosmetics. Revisit from playtest feel, not from a monotonicity rule.
 - **The reference bot is a weak proxy for a skilled player.** Every recorded win rate is a floor on human success, not an estimate. The margin is still unquantified in general, but it is no longer unmeasured: on Level 51 the owner reached the target in 12 moves where the bot's median is 16 across 120 seeds, and the bot matches that 12-move pace on 8 of 120 boards. The gap narrowed with `RESULT-0011` and did not close.
-- **Lockouts measured 0% on sampled levels as of 2026-09-26 (`RESULT-0051`); earlier measurements reached about 5% (`RESULT-0008`, stale).** A lockout is a dead board, not a fair loss. Bounded by `solver/verify-loop.js`.
+- **Lockouts measured 0% on sampled levels as of 2026-09-26 (`RESULT-0052`); earlier measurements reached about 5% (`RESULT-0008`, stale).** A lockout is a dead board, not a fair loss. Bounded by `solver/verify-loop.js`.
 
 ## Priced and rejected — do not re-propose without new evidence
 

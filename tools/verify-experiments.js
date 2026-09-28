@@ -20,6 +20,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
+const { assessFailedRunLedger } = require('./failed-run-ledger');
 
 const ROOT = path.join(__dirname, '..');
 const LEDGER = path.join(ROOT, 'EVIDENCE_LEDGER.md');
@@ -67,10 +68,26 @@ function declaredChecks(text) {
   return [...text.matchAll(/^### ([CP]\d+)(?:['′])?\s*[—-]/gm)].map((m) => m[1]);
 }
 
-// Paths a ledger record cites as evidence. Only artifacts we can open are
-// checked; prose citations are the ordering check's job, not this one.
+// Paths a ledger record cites as evidence. Code-span citations are reportable
+// run artifacts and therefore require registration stamps. Markdown links can
+// also name supporting receipts (qualification and closure files), so they
+// participate in existence and identity checks without acquiring that
+// requirement merely because the ledger rendered them as links.
+function artifactCitations(body) {
+  const citations = new Map();
+  for (const match of body.matchAll(/`([A-Za-z0-9._/\-]+\.json)`/g)) {
+    citations.set(match[1], { rel: match[1], requiresRegistration: true });
+  }
+  for (const match of body.matchAll(/\[[^\]]*\]\(([A-Za-z0-9._/\-]+\.json)\)/g)) {
+    if (!citations.has(match[1])) {
+      citations.set(match[1], { rel: match[1], requiresRegistration: false });
+    }
+  }
+  return [...citations.values()];
+}
+
 function citedArtifacts(body) {
-  return [...body.matchAll(/`([A-Za-z0-9._/\-]+\.json)`/g)].map((m) => m[1]);
+  return artifactCitations(body).map(({ rel }) => rel);
 }
 
 // An --exploratory run is allowed to exist; it is not allowed to be the
@@ -79,14 +96,16 @@ function citedArtifacts(body) {
 function assessArtifactStamps(result, exempt) {
   const problems = [];
   if (exempt.has(result.id)) return problems;
-  for (const rel of citedArtifacts(result.body)) {
+  for (const { rel, requiresRegistration } of artifactCitations(result.body)) {
     const abs = path.join(ROOT, rel);
     if (!fs.existsSync(abs)) continue;
     let artifact;
     try { artifact = JSON.parse(fs.readFileSync(abs, 'utf8')); } catch { continue; }
     const stamp = artifact.registration;
     if (!stamp) {
-      problems.push(`${result.id}: ${rel} carries no registration stamp; it cannot back a ${REQUIRES_PROTOCOL} claim`);
+      if (requiresRegistration) {
+        problems.push(`${result.id}: ${rel} carries no registration stamp; it cannot back a ${REQUIRES_PROTOCOL} claim`);
+      }
     } else if (stamp.exploratory) {
       problems.push(`${result.id}: ${rel} was produced by an --exploratory run and cannot back a ${REQUIRES_PROTOCOL} claim. Register a protocol and re-run.`);
     } else if (stamp.protocol && stamp.protocol !== result.id) {
@@ -136,6 +155,16 @@ function canonicalJson(value) {
   return JSON.stringify(value);
 }
 
+function sha256(file) {
+  return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+
+function resolveInside(root, rel) {
+  if (typeof rel !== 'string' || path.isAbsolute(rel)) return null;
+  const resolved = path.resolve(root, rel);
+  return resolved === root || resolved.startsWith(`${root}${path.sep}`) ? resolved : null;
+}
+
 // Reachable from HEAD, not merely present in the object store: an amended-away
 // commit still resolves locally and would not exist in a fresh clone.
 function reachableFromHead(sha) {
@@ -164,7 +193,8 @@ function pathExistsAtCommit(sha, relPath) {
 function showAtCommit(sha, relPath, cwd = ROOT, { raw = false } = {}) {
   try {
     const out = execFileSync('git', ['show', `${sha}:${gitObjectPath(relPath)}`], {
-      cwd, stdio: ['ignore', 'pipe', 'ignore'], ...(raw ? {} : { encoding: 'utf8' }),
+      cwd, stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 128 * 1024 * 1024,
+      ...(raw ? {} : { encoding: 'utf8' }),
     });
     return out;
   } catch { return null; }
@@ -274,18 +304,22 @@ function freezeProblem(freeze) {
 // One read per cited artifact, shared by every artifact-level assertion below,
 // because the holdouts are 6.5 MB each.
 function openCitedArtifacts(result) {
-  return citedArtifacts(result.body).map((rel) => {
+  return artifactCitations(result.body).map(({ rel, requiresRegistration }) => {
     const abs = path.join(ROOT, rel);
     const exists = fs.existsSync(abs);
+    let bytes = null;
     let artifact = null;
     let parseError = null;
     if (exists) {
-      try { artifact = JSON.parse(fs.readFileSync(abs, 'utf8')); } catch (error) { parseError = error.message; }
+      try {
+        bytes = fs.readFileSync(abs);
+        artifact = JSON.parse(bytes.toString('utf8'));
+      } catch (error) { parseError = error.message; }
     }
     // A citation with no slash is a filename named in prose, not a path into
     // the repo. Four such exist in the ledger today ("-52.receipt.json"), and
     // reading them as paths would make this gate red on English.
-    return { rel, abs, looksLikePath: rel.includes('/'), exists, artifact, parseError };
+    return { rel, abs, bytes, looksLikePath: rel.includes('/'), exists, artifact, parseError, requiresRegistration };
   });
 }
 
@@ -312,8 +346,13 @@ function assessCitationsResolve(result, opened) {
 // one, so any cell could be edited and every gate stayed green.
 function assessArtifactIdentity(result, opened) {
   const problems = [];
-  for (const { rel, artifact } of opened) {
+  for (const { rel, artifact, requiresRegistration } of opened) {
     if (!artifact || typeof artifact.artifactIdentity !== 'string') continue;
+    // A Markdown-linked recomputation receipt may repeat the source corpus's
+    // identity without claiming that the receipt hashes to that value. A
+    // registered artifact, or one explicitly cited as a run artifact with a
+    // code-span path, does make the gate's historical self-identity claim.
+    if (!requiresRegistration && !artifact.registration) continue;
     const { artifactIdentity, registration, ...body } = artifact;
     const actual = crypto.createHash('sha256').update(canonicalJson(body)).digest('hex');
     if (actual !== artifactIdentity) {
@@ -321,6 +360,178 @@ function assessArtifactIdentity(result, opened) {
         `${result.id}: ${rel} does not hash to its own artifactIdentity `
         + `(recomputed ${actual.slice(0, 16)}…, recorded ${artifactIdentity.slice(0, 16)}…)`,
       );
+    }
+  }
+  return problems;
+}
+
+function primaryOutcome(recomputation) {
+  if (!recomputation || typeof recomputation !== 'object') return null;
+  for (const key of ['primaryOutcome', 'primary_outcome', 'disposition', 'outcome', 'verdict']) {
+    if (typeof recomputation[key] === 'string') return recomputation[key];
+  }
+  return null;
+}
+
+// Modern executable closures pin their contract before reportable outcomes.
+// Once the closure lands, later evidence edits must supersede the result rather
+// than silently rewrite it. The commit adding closure.json is the independent,
+// immutable comparison point and still allows qualification work before close.
+function assessClosedEvidenceImmutability(result, protocol, opened, overrides = new Map()) {
+  const problems = [];
+  const resultDir = path.join(EXPERIMENTS, result.id);
+  const closureEntry = opened.find(({ rel, artifact }) => path.basename(rel) === 'closure.json' && artifact);
+  if (!closureEntry) return problems;
+
+  const contractRel = closureEntry.artifact.contract && closureEntry.artifact.contract.path;
+  const contractPath = resolveInside(resultDir, contractRel);
+  if (!contractPath || !fs.existsSync(contractPath)) return problems;
+  const contractHash = sha256(contractPath);
+  const externallyPinned = protocol.includes(contractRel)
+    && (protocol.includes(contractHash) || protocol.includes(contractHash.slice(0, 16)));
+  if (!externallyPinned) return problems;
+  const closureCommit = addedIn(closureEntry.rel);
+  if (!closureCommit) {
+    problems.push(`${result.id}: cited closure ${closureEntry.rel} has no readable closing commit`);
+    return problems;
+  }
+
+  const entries = opened
+    .filter((entry) => entry.exists && entry.bytes)
+    .map(({ rel, bytes }) => ({ rel, bytes }));
+  const reportRel = `experiments/${result.id}/report.md`;
+  const reportPath = path.join(ROOT, reportRel);
+  if (result.body.includes(reportRel) && fs.existsSync(reportPath)) {
+    entries.push({ rel: reportRel, bytes: fs.readFileSync(reportPath) });
+  }
+
+  for (const entry of entries) {
+    const current = overrides.has(entry.rel) ? overrides.get(entry.rel) : entry.bytes;
+    const closed = showAtCommit(closureCommit, entry.rel, ROOT, { raw: true });
+    if (!closed) {
+      problems.push(`${result.id}: cited closed evidence ${entry.rel} is absent from closing commit ${closureCommit.slice(0, 8)}`);
+    } else if (!Buffer.isBuffer(current) || !current.equals(closed)) {
+      problems.push(
+        `${result.id}: cited closed evidence ${entry.rel} differs from closing commit ${closureCommit.slice(0, 8)}; `
+        + 'supersede the result instead of rewriting retained evidence',
+      );
+    }
+  }
+  return problems;
+}
+
+// A closure receipt is not self-authenticating: changing its verdict and then
+// saving the file again must not leave a green gate. Bind it back to the
+// closeout contract (including its protocol pin when one was registered),
+// the artifact bytes it names, and a fresh execution of its recomputation.
+function assessClosureReceipt(result, protocol, opened) {
+  const problems = [];
+  const resultDir = path.join(EXPERIMENTS, result.id);
+  const closureEntries = opened.filter(({ rel }) => path.basename(rel) === 'closure.json');
+
+  for (const entry of closureEntries) {
+    const closure = entry.artifact;
+    if (!closure) continue;
+    const label = `${result.id}: ${entry.rel}`;
+    const declaredClosed = result.body.includes('`CLOSED`');
+    if (declaredClosed && closure.closure_status !== 'CLOSED') {
+      problems.push(`${label} is ${JSON.stringify(closure.closure_status)}, but the ledger cites it as CLOSED`);
+    }
+
+    const contractRel = closure.contract && closure.contract.path;
+    const contractPath = resolveInside(resultDir, contractRel);
+    if (!contractPath || !fs.existsSync(contractPath)) {
+      problems.push(`${label} names a missing or escaping closeout contract (${JSON.stringify(contractRel)})`);
+      continue;
+    }
+    let contract;
+    try { contract = JSON.parse(fs.readFileSync(contractPath, 'utf8')); } catch (error) {
+      problems.push(`${label} closeout contract is not parseable JSON (${error.message})`);
+      continue;
+    }
+    const contractHash = sha256(contractPath);
+    if (!closure.contract || closure.contract.sha256 !== contractHash) {
+      problems.push(`${label} closeout contract hash does not match ${contractRel}`);
+    }
+    const protocolNamesContract = protocol.includes(contractRel);
+    if (protocolNamesContract && !protocol.includes(contractHash) && !protocol.includes(contractHash.slice(0, 16))) {
+      problems.push(`${label} closeout contract hash is not pinned in protocol.md`);
+    }
+
+    const contractProtocolRel = contract.protocol && contract.protocol.path;
+    const contractProtocolPath = resolveInside(resultDir, contractProtocolRel);
+    if (!contractProtocolPath || !fs.existsSync(contractProtocolPath)) {
+      problems.push(`${label} contract names a missing or escaping registered protocol (${JSON.stringify(contractProtocolRel)})`);
+    } else if (contract.protocol.sha256 !== sha256(contractProtocolPath)) {
+      problems.push(`${label} registered protocol hash does not match ${contractProtocolRel}`);
+    }
+
+    const artifacts = Array.isArray(closure.artifacts) ? closure.artifacts : [];
+    const artifactsById = new Map(artifacts.map((artifact) => [artifact.id, artifact]));
+    for (const id of contract.required_artifacts || []) {
+      if (!artifactsById.has(id)) problems.push(`${label} is missing required artifact ${id}`);
+    }
+    for (const artifact of artifacts) {
+      const artifactPath = resolveInside(resultDir, artifact.path);
+      if (!artifactPath || !fs.existsSync(artifactPath)) {
+        problems.push(`${label} artifact ${artifact.id} is missing or escapes the result directory`);
+      } else if (artifact.sha256 !== sha256(artifactPath)) {
+        problems.push(`${label} artifact ${artifact.id} hash does not match ${artifact.path}`);
+      }
+    }
+
+    if (closure.closure_status !== 'CLOSED') continue;
+    if (closure.final_subject_identity !== contract.final_subject_identity) {
+      problems.push(`${label} final subject identity does not match the closeout contract`);
+    }
+    const claims = Array.isArray(closure.claims) ? closure.claims : [];
+    const claimsById = new Map(claims.map((claim) => [claim.id, claim]));
+    for (const id of contract.required_claims || []) {
+      const claim = claimsById.get(id);
+      if (!claim) problems.push(`${label} is missing required claim ${id}`);
+      else if (claim.status !== 'PASS') problems.push(`${label} required claim ${id} is ${JSON.stringify(claim.status)}, not PASS`);
+      else if (claim.evidence_subject_identity !== contract.final_subject_identity) {
+        problems.push(`${label} required claim ${id} is bound to the wrong subject identity`);
+      }
+    }
+
+    const recomputation = contract.recomputation;
+    const argv = recomputation && recomputation.argv;
+    const recomputationCwdCandidate = path.resolve(resultDir, (recomputation && recomputation.cwd) || '.');
+    const recomputationCwd = (
+      recomputationCwdCandidate === ROOT || recomputationCwdCandidate.startsWith(`${ROOT}${path.sep}`)
+    ) ? recomputationCwdCandidate : null;
+    if (!Array.isArray(argv) || argv.length < 2 || argv[0] !== 'node' || !recomputationCwd) {
+      problems.push(`${label} has no safe executable Node recomputation command`);
+      continue;
+    }
+    let fresh;
+    try {
+      fresh = JSON.parse(execFileSync(argv[0], argv.slice(1), {
+        cwd: recomputationCwd,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+        maxBuffer: 64 * 1024 * 1024,
+      }));
+    } catch (error) {
+      problems.push(`${label} recomputation command failed (${error.message})`);
+      continue;
+    }
+    const outputArtifact = artifactsById.get(recomputation.output_artifact_id);
+    const outputPath = outputArtifact && resolveInside(resultDir, outputArtifact.path);
+    let retained = null;
+    if (outputPath && fs.existsSync(outputPath)) {
+      try { retained = JSON.parse(fs.readFileSync(outputPath, 'utf8')); } catch { retained = null; }
+    }
+    if (!retained || canonicalJson(fresh) !== canonicalJson(retained)) {
+      problems.push(`${label} fresh recomputation does not match ${outputArtifact ? outputArtifact.path : 'the required output artifact'}`);
+      continue;
+    }
+    const outcome = primaryOutcome(fresh);
+    if (contract.requires_primary_outcome && !outcome) {
+      problems.push(`${label} recomputation produced no primary outcome`);
+    } else if (outcome && closure.primary_outcome !== outcome) {
+      problems.push(`${label} primary outcome ${JSON.stringify(closure.primary_outcome)} contradicts recomputation ${JSON.stringify(outcome)}`);
     }
   }
   return problems;
@@ -830,6 +1041,7 @@ function assessExperiments() {
   const problems = [];
   if (!fs.existsSync(LEDGER)) return ['EVIDENCE_LEDGER.md is missing'];
   const ledgerText = fs.readFileSync(LEDGER, 'utf8');
+  problems.push(...assessFailedRunLedger(ROOT));
   problems.push(...assessLedgerStructure(ledgerText));
   problems.push(...assessLedgerCitations(ledgerText));
   problems.push(...assessSampleSizeSections());
@@ -870,6 +1082,8 @@ function assessExperiments() {
     const protocol = fs.readFileSync(protocolPath, 'utf8');
     const front = parseFrontmatter(protocol);
     if (!front) { problems.push(`${result.id}: protocol.md has no frontmatter`); continue; }
+    problems.push(...assessClosedEvidenceImmutability(result, protocol, opened));
+    problems.push(...assessClosureReceipt(result, protocol, opened));
     if (front.result !== result.id) {
       problems.push(`${result.id}: protocol declares result ${front.result}`);
     }
@@ -936,7 +1150,8 @@ module.exports = {
   REQUIRES_PROTOCOL, addedIn, assessArtifactStamps, assessCloseOut, assessLedgerCitations, assessLedgerHistory, assessRunOutcomes, assessSampleSizeSections, assessLedgerLinks, assessLedgerStructure, assessExperiments, citedArtifacts,
   declaredChecks, isStrictAncestor,
   parseFrontmatter, readLedgerResults, sha16,
-  assessArtifactIdentity, assessCitationsResolve, assessReportAnswers, assessStampProvenance,
+  assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
+  assessClosureReceipt, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
   committedVersions, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };

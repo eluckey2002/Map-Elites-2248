@@ -125,6 +125,16 @@ playtest candidates. This is a deterministic screening-policy observation,
 not evidence about human strategy, fun, difficulty, or a production spawn
 rule.
 
+As of 2026-09-27, `RESULT-0049` supplied a clean post-adoption confirmation of
+the current target-aware champion against its preserved base chooser. Across
+17,400 fresh paired cells on all 58 shipped levels, there were zero base-only
+wins and zero slower champion wins; the champion converted 17 losses to wins
+and finished 10,466 mutual wins earlier. The frozen outcome is
+`SUPPORTS_CURRENT_CHAMPION`, with a mean 1.184 target-cost moves saved and a
+conservative 95% interval of 1.050–1.319. This validates the current policy in
+the registered shipped-level scope; it is not a new promotion, a future-level
+guarantee, or evidence about human play.
+
 As of 2026-08-11, the frozen Level 26 seed-0 proof remains numerically unresolved: the best accepted score is a replayed lower bound of **12,336**, the proven **326,390** upper bound is non-decisive, and both 13,000 reachability and the exact 32-move maximum are unknown. The frozen input identity is `edc6889cbd4b20f62a2ca11b72246cc520ee45073f91ee037c17b9d05c8fb880`. (`solver/tests/exact-score.test.js:77-85`; `.orch/runs/level26-certified-score-2026-08-10/worklog.md:60-69,111-120`)
 
 The exact move-one maximum is **430**, but this does not identify the first move that maximizes the 32-move total. Threshold checks above 12,336 returned `UNKNOWN`; they rule out no score. (`.orch/tickets/level26-move1-envelope-2026-08-11.md:57-69,105-111`; `solver/hinted-cp-sat/frozen-run.json:1-35,2375-2412`)
@@ -486,7 +496,7 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **supersedes:** []
 - **superseded_by:** []
 - **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7): this change only (status, superseded_by, and any appended notes); the earlier text predates the authorship rule
-- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: stale per RESULT-0051; ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level, not this record's 37% floor and about 5% lockouts
+- **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: stale per RESULT-0052; ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level, not this record's 37% floor and about 5% lockouts
 - **notes:** Policy-dependent and no bound follows. The reference bot understates a skilled player by an unquantified margin, so these win rates are floors on human success rather than estimates of it. `RESULT-0005`'s finding that the back half was unbeatable is superseded in practice by this retune but is retained as the measurement that motivated it.
 
 ### RESULT-0009 — Level 51 shipped: the first level admitted through the authoring tracer
@@ -1047,7 +1057,24 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node tools/verify-frozen-experiment.js RESULT-0048` (CORRECTION-0013's reverify): exit 0, PASS and a FROZEN TREE line
 - **notes:** The three-vertical-island template supplied 594 of the 1,305 blue-only sustained candidates and is the strongest first source for manual play. Candidate trace goals remain unadopted until human play validates them.
 
-### RESULT-0049 — A 120-mutation MAP-Elites archive on re-calibrated axes occupies 24 of 25 cells without replacing the `52f500c` champion
+### RESULT-0049 — Fresh paired confirmation supports the current target-aware champion
+
+- **type:** result
+- **status:** accepted
+- **scope:** current `chooseMove` target-aware champion versus preserved `chooseBaseMove`; all 58 shipped levels; fresh seeds 45,000,000–45,000,299; 17,400 level-seed pairs and 34,800 games; identical target-stop objective, transitions, spawn stream, and lookahead construction; current frozen ruleset and policy identities only
+- **statement:** The preregistered one-shot confirmation closed with primary outcome **`SUPPORTS_CURRENT_CHAMPION`**. All 17,400 pairs were complete. The base policy won no cell that the champion lost, and the champion was slower in no mutual win. The champion converted **17** base losses into wins and reached the target earlier in **10,466** mutual wins; 6,863 mutual wins tied on moves. Mean paired target-cost reduction was **1.184425 moves** in favor of the champion, with conservative two-axis standard error **0.068599** and registered 95% interval **[1.049972, 1.318879]**. The 5,638 same-speed crossing-score differences are final-move overshoot diagnostics, not regressions under the shared race-to-target objective. This supports retaining the current engineering champion within the registered shipped-level scope; it does not newly promote the policy, prove safety on unseen future levels, compare human play, or optimize terminal score.
+- **evidence:** immutable protocol `experiments/RESULT-0049/registered-protocol.md`, registration commit `24c38d8b5fe5b1ae90aaa0cdb3872453bc728840`; [qualification receipt](experiments/RESULT-0049/qualification.json); retained [corpus](experiments/RESULT-0049/corpus.json), file SHA-256 `fcd7b85690c8afdc0108385ff9fd827b9672726d9e42addae0df941bcc6c97f4` and internal artifact identity `43b50ee34bf8c850172adbb8debce27e2e6d9b5d2672392581505524a9dd5062`; exact counts, thresholds, and limitations in [report](experiments/RESULT-0049/report.md); externally anchored executable contract, `CLOSED` [closure receipt](experiments/RESULT-0049/closure.json), and byte-matched [primary recomputation](experiments/RESULT-0049/primary-recomputation.json).
+- **proof_class:** `direct_source` for frozen identities, complete pairing, artifact integrity, and executable closure; `heuristic_observation` for policy performance over the registered fresh seeded panel.
+- **as_of:** 2026-09-27
+- **reverify:** From `experiments/RESULT-0049`, run `node recompute.js corpus.json`; expect artifact identity `43b50ee3…`, 17,400 pairs, zero `baseOnlyWin`, zero `baseFaster`, and `SUPPORTS_CURRENT_CHAMPION`. Then run the close-experiment verifier with `--run-recomputation --require-closed --expected-contract-sha256 c2fc316ae65bb1b120f2c53f17de167c99568aecd669b0796a71c5cc9e17642f`; expect `CLOSED`, recomputation PASS, and verifier PASS.
+- **updated:** 2026-09-27
+- **written_by:** Codex session on branch `codex/champion-confirmation-2026-09-27`
+- **checked_by:** script run, 2026-09-27: the close-experiment verifier recomputed `primary-recomputation.json`, byte-matched SHA-256 `14a627d69ca513da0d9a9109a4bac5946e51bafdf9c9adefad583650b570481c`, checked all nine claims and three artifacts, and returned `CLOSED`, recomputation `PASS`, verdict `PASS`, exit 0
+- **supersedes:** []
+- **superseded_by:** []
+- **notes:** `DECISION-0004` already made this policy the champion. This result validates that standing under a current, preregistered comparison; adoption or rollback remains a separate owner decision.
+
+### RESULT-0050 — A 120-mutation MAP-Elites archive on re-calibrated axes occupies 24 of 25 cells without replacing the `52f500c` champion
 
 - **type:** result
 - **status:** accepted
@@ -1057,14 +1084,14 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **proof_class:** `direct_source` — the counts, identities, and recorded lifts are what the archive file literally contains; the promotion rule is quoted from the run's measurement file cited in the statement. No generalizing claim is made; there was no preregistered protocol.
 - **as_of:** 2026-08-28
 - **reverify:** Run `node -e "const f=require('fs'),h=b=>require('crypto').createHash('sha256').update(b).digest('hex'),p='.orch/runs/2026-08-28-map-elites-transition/evidence/archive.json',b=f.readFileSync(p),a=JSON.parse(b);if(h(b)!=='3905956c2fc0f32e078058938dd2128a47e862f6fd56fc184137cb1b26e63ffa'||a.archive.length!==24||!a.representatives.every(r=>r.holdout.lift<0))process.exit(1);console.log('PASS 24 cells, no positive holdout lift')"`; expect exit 0 and `PASS 24 cells, no positive holdout lift`.
-- **updated:** 2026-09-26
+- **updated:** 2026-09-27
 - **supersedes:** []
 - **superseded_by:** []
 - **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
 - **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran the recorded reverify: exit 0, `PASS 24 cells, no positive holdout lift`
-- **notes:** Not claimed: that the larger search expanded `RESULT-0017`'s behavior coverage (axes moved; see `RESULT-0050` for the shared-axis round); that any elite is weaker or stronger than the champion in general; the clustered t-statistic (`t=-1.392` per the worklog) was not recomputed for this record. `solver/verify-map-elites.js` passed on 2026-08-28 per the worklog but **fails today** on its protected-hash check because `solver/bot.js` has since changed, so it is not used as the reverify. Byte identity of recordings was never frozen and stays unverified per the worklog.
+- **notes:** Renamed from `RESULT-0049` to `RESULT-0050` on 2026-09-27 after merged PR #49 claimed `RESULT-0049`; the original PR #46 branch and commit `754a716004e95c84978e5000df139097cd522808` retain the prior label, and the cited primary artifacts remain byte-identical. This is a direct-source ledger record with no `experiments/RESULT-0049/` protocol or frozen experiment directory to move or rewrite. Not claimed: that the larger search expanded `RESULT-0017`'s behavior coverage (axes moved; see `RESULT-0051` for the shared-axis round); that any elite is weaker or stronger than the champion in general; the clustered t-statistic (`t=-1.392` per the worklog) was not recomputed for this record. `solver/verify-map-elites.js` passed on 2026-08-28 per the worklog but **fails today** on its protected-hash check because `solver/bot.js` has since changed, so it is not used as the reverify. Byte identity of recordings was never frozen and stays unverified per the worklog.
 
-### RESULT-0050 — On `RESULT-0017`'s exact axes with fresh seeds, a 120-mutation MAP-Elites archive occupies 23 of 25 cells without replacing the `52f500c` champion
+### RESULT-0051 — On `RESULT-0017`'s exact axes with fresh seeds, a 120-mutation MAP-Elites archive occupies 23 of 25 cells without replacing the `52f500c` champion
 
 - **type:** result
 - **status:** accepted
@@ -1074,14 +1101,14 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **proof_class:** `direct_source` — axes equality, seed disjointness, cell counts, and recorded lifts are read directly from the two archive files; the promotion rule is quoted from the run's measurement file cited in the statement. No generalizing claim is made; there was no preregistered protocol.
 - **as_of:** 2026-08-28
 - **reverify:** Run `node -e "const f=require('fs'),h=b=>require('crypto').createHash('sha256').update(b).digest('hex'),p='.orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json',b=f.readFileSync(p),a=JSON.parse(b),o=JSON.parse(f.readFileSync('solver/map-elites-output/archive.json')),S=JSON.stringify;if(h(b)!=='ab8ed417a7cf2f1f8adf95268b2ca2c3a7c96ed699ef95d74eb13874ad65fc22'||a.archive.length!==23||S(a.axes.chainStyle)!==S(o.axes.chainStyle)||S(a.axes.patience)!==S(o.axes.patience)||!a.representatives.every(r=>r.holdout.lift<0))process.exit(1);console.log('PASS 23/25 on original axes, no positive holdout lift')"`; expect exit 0 and `PASS 23/25 on original axes, no positive holdout lift`.
-- **updated:** 2026-09-26
+- **updated:** 2026-09-27
 - **supersedes:** []
 - **superseded_by:** []
 - **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
 - **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran the recorded reverify: exit 0, `PASS 23/25 on original axes, no positive holdout lift`
-- **notes:** Not claimed: that MAP-Elites reliably fills more cells with more iterations (one run per configuration); that the new cells reflect new policy structure; any policy strength ordering. The `pilot` sub-object of `axes` differs between archives by design; only the two bin axes are shared. The first run of this round failed on a wrongly frozen prior-map hash, not on the experiment; the verification run admitted the same bytes without rerun. Clustered t-values (`t=-1.3563` for `e7349b8a477a`) are taken from `measurement.md` and were not recomputed here. `solver/verify-map-elites.js` now fails on the changed `solver/bot.js` protected hash and is not used as the reverify.
+- **notes:** Renamed from `RESULT-0050` to `RESULT-0051` on 2026-09-27 as part of the PR #46 collision repair after merged PR #49 claimed `RESULT-0049`; the original PR #46 branch and commit `754a716004e95c84978e5000df139097cd522808` retain the prior label, and the cited primary artifacts remain byte-identical. This is a direct-source ledger record with no preregistered experiment directory to move or rewrite. Not claimed: that MAP-Elites reliably fills more cells with more iterations (one run per configuration); that the new cells reflect new policy structure; any policy strength ordering. The `pilot` sub-object of `axes` differs between archives by design; only the two bin axes are shared. The first run of this round failed on a wrongly frozen prior-map hash, not on the experiment; the verification run admitted the same bytes without rerun. Clustered t-values (`t=-1.3563` for `e7349b8a477a`) are taken from `measurement.md` and were not recomputed here. `solver/verify-map-elites.js` now fails on the changed `solver/bot.js` protected hash and is not used as the reverify.
 
-### RESULT-0051 — On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels
+### RESULT-0052 — On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels
 
 - **type:** result
 - **status:** accepted
@@ -1091,12 +1118,12 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **proof_class:** `direct_source` for what the named command printed at the named commit
 - **as_of:** 2026-09-26
 - **reverify:** Run `node solver/verify-loop.js`; expect `RESULT: PASS`, level 50 win near 97% and 0% lockouts on sampled levels. The bot may move after this date; then mark this record stale and add a new measurement.
-- **updated:** 2026-09-26
+- **updated:** 2026-09-27
 - **supersedes:** []
 - **superseded_by:** []
 - **written_by:** claude-opus-5.5 (1M context), PR #46 original session (commits 91cae87..9c442d7)
 - **checked_by:** claude-opus-5.5, PR #46 successor session_01YCJfqhCdwXmesG5LarxQsX, 2026-09-26: ran `node solver/verify-loop.js`: `RESULT: PASS`, level 50 win 97%, 0% lockouts, 100% on every other sampled level
-- **notes:** Found while sourcing two uncited numbers (BL-0016 F7): AGENTS.md said "71-100%" wins, which matched no record, and CURRENT.md said lockouts reach about 5%, from `RESULT-0008`. Both now cite this record. Measured under CPU contention from a parallel run; timing does not affect the printed rates.
+- **notes:** Renamed from `RESULT-0051` to `RESULT-0052` on 2026-09-27 as part of the PR #46 collision repair after merged PR #49 claimed `RESULT-0049`; the original PR #46 branch and commit `754a716004e95c84978e5000df139097cd522808` retain the prior label. This direct-source command observation has no experiment directory or frozen artifact identity to rewrite. Found while sourcing two uncited numbers (BL-0016 F7): AGENTS.md said "71-100%" wins, which matched no record, and CURRENT.md said lockouts reach about 5%, from `RESULT-0008`. Both now cite this record. Measured under CPU contention from a parallel run; timing does not affect the printed rates.
 
 ## Decision registry
 

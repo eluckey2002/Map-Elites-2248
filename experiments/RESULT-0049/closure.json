@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "c2fc316ae65bb1b120f2c53f17de167c99568aecd669b0796a71c5cc9e17642f"
+  },
+  "run_id": "RESULT-0049-confirmation-1",
+  "final_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "The real A/A production-seam control was identical and deterministic."
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "The excluded Level 51 seed 1 fixture exposed a real public-arm trace difference."
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "The validator rejected a missing-pair mutation and accepted all 17,400 ordered reportable pairs."
+    },
+    {
+      "id": "C4",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "Every reportable pair shared level, seed, budget, objective, transitions, and terminal predicates."
+    },
+    {
+      "id": "C5",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "The planted one-move regression was killed for the intended baseFaster reason."
+    },
+    {
+      "id": "C6",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "External identity, persistence, restoration, preregistration, and exact closeout controls passed."
+    },
+    {
+      "id": "P1",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "Observed zero base-only wins and zero slower champion mutual wins."
+    },
+    {
+      "id": "P2",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "Observed 17 champion-only wins and 10,466 faster champion mutual wins."
+    },
+    {
+      "id": "P3",
+      "status": "PASS",
+      "evidence_subject_identity": "41d758a294aa491fd0a257209fc502dcc47a0c77730daf7d81251fa52ba84144",
+      "reason": "P1 and P2 passed, selecting SUPPORTS_CURRENT_CHAMPION under the frozen rule."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "corpus",
+      "path": "corpus.json",
+      "sha256": "fcd7b85690c8afdc0108385ff9fd827b9672726d9e42addae0df941bcc6c97f4"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "f52839864d246585bc2ec04dedde0682e5a3e14ffcc4363f9c1fd0bea073f17f"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "14a627d69ca513da0d9a9109a4bac5946e51bafdf9c9adefad583650b570481c"
+    }
+  ],
+  "primary_outcome": "SUPPORTS_CURRENT_CHAMPION",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "RESULT-0049-confirmation-1",
+      "exit_code": 0,
+      "artifact_ids": ["corpus", "report", "primary-recomputation"]
+    }
+  ]
+}

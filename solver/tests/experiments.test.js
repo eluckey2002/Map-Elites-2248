@@ -1,5 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 const path = require('node:path');
 const {
@@ -135,6 +136,11 @@ test('the registration stamp rides outside the hashed body, so old artifacts sti
 test('an exploratory artifact cannot back a generalizing claim', () => {
   const { assessArtifactStamps, citedArtifacts } = require('../../tools/verify-experiments.js');
   assert.deepEqual(citedArtifacts('cited `a/b.json` and `c.json` but not `d.md`'), ['a/b.json', 'c.json']);
+  assert.deepEqual(
+    citedArtifacts('retained [corpus](experiments/RESULT-0049/corpus.json) and `experiments/RESULT-0049/corpus.json`'),
+    ['experiments/RESULT-0049/corpus.json'],
+    'Markdown-linked JSON evidence must be visible to the gate without duplicate reads',
+  );
   // grandfathered results predate stamping and are skipped
   assert.deepEqual(
     assessArtifactStamps({ id: 'RESULT-0005', body: 'sees `.orch/policy-search-01.json`' }, new Set(['RESULT-0005'])),
@@ -156,8 +162,9 @@ test('an exploratory artifact cannot back a generalizing claim', () => {
 // ---------------------------------------------------------------------------
 
 const {
-  assessArtifactIdentity, assessCitationsResolve, assessReportAnswers,
-  assessStampProvenance, assessVersionFreeze, openCitedArtifacts, reachableFromHead, sha16,
+  assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
+  assessClosureReceipt, assessReportAnswers,
+  assessStampProvenance, assessVersionFreeze, canonicalJson, openCitedArtifacts, reachableFromHead, sha16,
 } = require('../../tools/verify-experiments.js');
 
 const ROOT = path.join(__dirname, '..', '..');
@@ -186,6 +193,119 @@ test('LIVE: tampering with one cell of the real holdout breaks its identity', ()
   const problems = assessArtifactIdentity(result, opened);
   assert.equal(problems.length, 1, 'one tampered cell must produce exactly one failure');
   assert.match(problems[0], /does not hash to its own artifactIdentity/);
+});
+
+test('LIVE: RESULT-0049 Markdown-linked evidence cannot disappear or change silently', () => {
+  const result = liveResult('RESULT-0049');
+  const opened = openCitedArtifacts(result);
+  assert.deepEqual(assessCitationsResolve(result, opened), [], 'the real citations must resolve before mutation');
+  assert.deepEqual(assessArtifactIdentity(result, opened), [], 'the real artifacts must verify before mutation');
+
+  const corpus = opened.find((entry) => entry.rel === 'experiments/RESULT-0049/corpus.json');
+  assert.ok(corpus && corpus.exists && corpus.artifact, 'the Markdown-linked corpus must be opened by the live gate');
+  assert.equal(corpus.artifact.cells.length, 17400, 'the check must inspect all 17,400 paired cells');
+
+  const missing = opened.map((entry) => (
+    entry.rel === corpus.rel ? { ...entry, exists: false, artifact: null } : entry
+  ));
+  assert.match(
+    assessCitationsResolve(result, missing).find((problem) => problem.includes(corpus.rel)),
+    /does not exist/,
+    'removing the primary corpus must make citation validation fail',
+  );
+
+  corpus.artifact.cells[0].champion.movesToTarget += 1;
+  assert.match(
+    assessArtifactIdentity(result, opened).find((problem) => problem.includes(corpus.rel)),
+    /does not hash to its own artifactIdentity/,
+    'changing one real paired cell must make identity validation fail',
+  );
+});
+
+test('LIVE: RESULT-0049 closure must agree with its pinned contract and fresh recomputation', () => {
+  const result = liveResult('RESULT-0049');
+  const opened = openCitedArtifacts(result);
+  const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0049', 'protocol.md'), 'utf8');
+  assert.deepEqual(assessClosureReceipt(result, protocol, opened), [], 'the real executable closure must verify');
+
+  const closureEntry = opened.find((entry) => entry.rel === 'experiments/RESULT-0049/closure.json');
+  assert.ok(closureEntry && closureEntry.artifact, 'the live gate must open the cited closure receipt');
+  closureEntry.artifact.primary_outcome = 'DOES_NOT_SUPPORT_CURRENT_CHAMPION';
+  closureEntry.artifact.claims = [];
+
+  const problems = assessClosureReceipt(result, protocol, opened);
+  assert.ok(problems.some((problem) => /missing required claim C1/.test(problem)));
+  assert.ok(problems.some((problem) => /contradicts recomputation "SUPPORTS_CURRENT_CHAMPION"/.test(problem)));
+});
+
+test('LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit', () => {
+  const result = liveResult('RESULT-0049');
+  const opened = openCitedArtifacts(result);
+  const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0049', 'protocol.md'), 'utf8');
+  assert.deepEqual(
+    assessClosedEvidenceImmutability(result, protocol, opened),
+    [],
+    'the real qualification, report, and cited receipts must match their closing-commit bytes',
+  );
+
+  const qualificationRel = 'experiments/RESULT-0049/qualification.json';
+  const qualification = structuredClone(opened.find((entry) => entry.rel === qualificationRel).artifact);
+  qualification.qualification = 'FAIL';
+  qualification.controls[0].status = 'FAIL';
+  qualification.registration = structuredClone(
+    opened.find((entry) => entry.rel === 'experiments/RESULT-0049/corpus.json').artifact.registration,
+  );
+  const { registration: forgedRegistration, ...qualificationBody } = qualification;
+  assert.ok(forgedRegistration, 'the forged receipt must carry a plausible registration');
+  qualification.artifactIdentity = crypto.createHash('sha256')
+    .update(canonicalJson(qualificationBody))
+    .digest('hex');
+  const qualificationBytes = Buffer.from(JSON.stringify(qualification));
+  const attackedOpened = opened.map((entry) => (
+    entry.rel === qualificationRel
+      ? { ...entry, artifact: qualification, bytes: qualificationBytes }
+      : entry
+  ));
+  const reportRel = 'experiments/RESULT-0049/report.md';
+  const report = fsx.readFileSync(path.join(ROOT, reportRel), 'utf8')
+    .replace('| Champion-only wins | 17 |', '| Champion-only wins | 999999 |');
+  const overrides = new Map([
+    [reportRel, Buffer.from(report)],
+  ]);
+
+  const problems = assessClosedEvidenceImmutability(result, protocol, attackedOpened, overrides);
+  assert.equal(
+    assessArtifactIdentity(result, attackedOpened)
+      .some((problem) => problem.includes(qualificationRel)),
+    false,
+    'the forged qualification has a valid self-identity; closing-commit immutability must still own it',
+  );
+  assert.ok(problems.some((problem) => problem.includes(`${qualificationRel} differs from closing commit`)));
+  assert.ok(problems.some((problem) => problem.includes(`${reportRel} differs from closing commit`)));
+});
+
+test('LIVE: every RESULT-0049 cited JSON artifact is closing-commit bound', () => {
+  const result = liveResult('RESULT-0049');
+  const opened = openCitedArtifacts(result);
+  const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0049', 'protocol.md'), 'utf8');
+  const reportRel = 'experiments/RESULT-0049/report.md';
+  const evidence = [
+    ...opened.filter(({ exists, bytes, looksLikePath }) => exists && bytes && looksLikePath),
+    { rel: reportRel, bytes: fsx.readFileSync(path.join(ROOT, reportRel)) },
+  ];
+
+  for (const { rel, bytes } of evidence) {
+    const problems = assessClosedEvidenceImmutability(
+      result,
+      protocol,
+      opened,
+      new Map([[rel, Buffer.concat([bytes, Buffer.from('\n')])]]),
+    );
+    assert.ok(
+      problems.some((problem) => problem.includes(`${rel} differs from closing commit`)),
+      `${rel} must not be able to leave the closing-commit trust boundary`,
+    );
+  }
 });
 
 test('LIVE: a citation that resolves to nothing fails; a filename in prose does not', () => {

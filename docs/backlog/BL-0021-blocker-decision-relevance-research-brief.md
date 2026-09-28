@@ -1,13 +1,13 @@
 ---
-id: BL-0014
+id: BL-0021
 title: Find out what makes a blocker change a decision before designing any new blocker
 status: proposed
 milestone: blocker-mechanics
 depends_on: [BL-0011]
-updated: 2026-09-16
+updated: 2026-09-27
 ---
 
-# BL-0014 — Research brief: blocker decision-relevance
+# BL-0021 — Research brief: blocker decision-relevance
 
 ## Authority
 
@@ -186,3 +186,4 @@ record yet — the baseline number is the first deliverable.
 - 2026-09-16 — captured from an owner conversation on why the existing
   blockers produce no gameplay change and what research must precede any new
   one. Code facts verified against `main` at `9d125e8`.
+- 2026-09-27: Renumbered from BL-0014 to BL-0021 because BL-0014 was already taken by `BL-0014-transparent-beat-the-bot-challenge.md` (added 2026-09-14, two days earlier). No file linked to the old path. Content unchanged.

@@ -43,7 +43,7 @@ Each line here is a fact you can check in a minute. Check it rather than trust i
 - **The Universe Map is a 2026-08-28 snapshot, and its staleness failure is true.** It still names champion `52f500c` and selects only `RESULT-0017`; `DECISION-0004` promoted `b82a9b6` and explicitly did not rewrite the map. Do not clear the failure by bumping `universe/contract.json`'s `asOf` and rebuilding: that restamps the old champion and frontier as current. Refreshing it means re-curating the contract's selected records against the ledger first.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still matches `RESULT-0028` in the ledger — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
-- **Shipped-level win rate cannot rank two policies.** The bot wins nearly every shipped level (`RESULT-0051`), so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
+- **Shipped-level win rate cannot rank two policies.** The bot wins nearly every shipped level (`RESULT-0052`), so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
 - **Recorded human play and the shipped bot already share the target-stop objective.** Both games end on the move that crosses the target. Compare reliability first and moves-to-target among mutual wins. Crossing score is only final-move overshoot. The benchmark's uncapped bot continues alone to the move budget and has no recorded human comparator; never present that arm as a human comparison.
 - **Never compare one seed against a median over other seeds.** That measures the seed. Pair on identical seeds instead.
 - **`node solver/board-trace.js`** renders a recorded game as text boards with both players' chains drawn on the same position. Chain-value strings hide where the tiles are, which is the thing this game is about.
@@ -87,6 +87,14 @@ copy `experiments/TEMPLATE.md` to start one. The gate is
 
 Commit the protocol before the experiment runs. A protocol committed after its
 evidence is a reconstruction, not a preregistration.
+
+Every retained experiment closure marked `INVALID` or `UNVERIFIED` is a failed
+run and must have one row in `FAILED-RUN-LEDGER.CSV`. Pinpoint the stage,
+location, observed failure, and root cause; link the closure receipt; and land
+an implemented prevention artifact with a negative test. A `CLOSED`
+`FALSIFIED` or `INCONCLUSIVE` result is not a failed run. For one-shot paired
+comparisons, use `tools/persist-before-verdict.js` so the complete raw pairs are
+written before any fail-fast verdict.
 
 ## Closing a session
 
