@@ -10,7 +10,7 @@ Read directly from `solver/game-tester.js` at commit `8e1e232` (`/private/tmp/cl
 - **Policy**: `powers2` — tile scale is fixed per power-of-two chapter (1/2/4/8/16 across levels 1-10/11-20/21-30/31-40/41-50); demand "sawtooths" linearly within each chapter between two anchor values, resetting down at each chapter break.
 - **Chapters** (scale, demand range): `1-10: 1, [0.09,0.80]`; `11-20: 2, [0.55,0.85]`; `21-30: 4, [0.58,0.90]`; `31-40: 8, [0.62,0.96]`; `41-50: 16, [0.66,1.06]`.
 - **Play**: live bot (`solver/bot.js` `chooseMove`) plays each level with `solver/engine.js`, 150 seeds (0-149), lookahead RNG seeded from `987654321 + move index` (must match `solver/sweep.js`).
-- **Median**: 150 final scores sorted, `quantile(0.5)` (index `floor(150*0.5)=75`, i.e. the 76th-lowest score — a "lower-median" convention, not an average of the two middle values).
+- **Median**: 150 final scores sorted, `quantile(0.5)` (index `floor(150*0.5)=75`, i.e. the 76th-lowest score — the upper of the two middle values (upper-median convention), not their average).
 - **Target**: `roundTarget(median * demand)` — rounds down to a step of 10/50/100/1000 depending on magnitude, floor at one step.
 - This is identical in every particular (chapters, seeds, RNG base, rounding, quantile convention) to the recompute script the prior agent ran against today's bot (`job3.js`), confirming the two runs are apples-to-apples except for which bot/engine code executed the moves.
 
