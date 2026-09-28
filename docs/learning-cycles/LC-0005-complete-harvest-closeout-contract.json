@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "LC-0005-complete-harvest-chain-contract.md",
+    "sha256": "7662160032fec9bacd907a52c64f419ea149fdff24745b3124094c014e8d0016"
+  },
+  "final_subject_identity": "b0133d7ae71cbc25426e1af648eadbdbd0c52db0a654099e71a276df7e21ae20",
+  "required_claims": [
+    "C1-deterministic-source-and-replay",
+    "C2-reference-policy-aa",
+    "C3-chain-legality-known-kill",
+    "C4-planted-coverage-mutation",
+    "C5-objective-and-intervention-equivalence",
+    "C6-restoration-and-persistence",
+    "O1-complete-harvest-disposition"
+  ],
+  "required_artifacts": [
+    "raw",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "tools/diagnose-lc0005-complete-harvest.js",
+      "--recompute",
+      "docs/learning-cycles/LC-0005-complete-harvest-raw.json"
+    ],
+    "cwd": "../..",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}
