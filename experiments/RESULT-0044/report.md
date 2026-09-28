@@ -18,15 +18,23 @@ This page reports the run. It is not evidence by itself; the cited files are.
 
 | Board | Owner (first capture) | Oracle | Comparison |
 | --- | --- | --- | --- |
-| board-1 | win, 9 | win, 10 | owner faster |
+| board-1 | win, 9 | win, 10 | fixed-case row only |
 | board-2 | loss, 7 (invalid) | win, 12 | no valid human row |
 
 Both captures replay valid. Both oracle witnesses verify as wins.
 
-## Outcome: FALSIFIED
+## Outcome: INCONCLUSIVE
 
-The rule falsifies when the oracle is slower than any human win. On board 1 it
-is slower (10 > 9). `SUPPORTED` would need a valid comparison on both boards.
-The board-2 invalidity therefore rules out `SUPPORTED` but cannot overturn a
-falsification that board 1 alone already establishes. No population inference
-follows from two fixed cases.
+The registered rule gives `INCONCLUSIVE` for invalid evidence. The owner ruled
+the board-2 human attempt invalid, and applied that rule, in `ba42ccf`, before
+the oracle ran. The panel is therefore `INCONCLUSIVE`. Reading it as
+`FALSIFIED` after seeing board 1's numbers would be a post-hoc re-reading. The
+rows stand as fixed-case observations. No population inference follows.
+
+## Provenance gap
+
+`run-oracle.js` hard-coded `implementationCommit` as `5205535` without
+recording the worktree's HEAD or checking it was clean. The worktree was created
+detached at `5205535` just before the run and was found at `5205535` and clean
+afterwards. The one-attempt oracle cannot be re-run. Future runners must record
+and check HEAD.
