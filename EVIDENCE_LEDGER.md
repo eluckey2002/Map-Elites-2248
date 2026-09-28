@@ -1136,7 +1136,7 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **evidence:** owner choice "A" in session 2026-09-27 among options A (pause + `BL-0023`), B (merge history, keep folders), C (cite off-main), D (rerun); `BL-0023` criterion 7 and its evidence section (merged in PR #50, `f4eea85`); port commit `1fa518f` message.
 - **proof_class:** `owner_decision`
 - **as_of:** 2026-09-27
-- **reverify:** `git cat-file -e 1fa518f` and read its commit message; `docs/backlog/BL-0023-reserve-ledger-ids-across-branches.md` criterion 7 and History for the 2026-09-27 pause entry; confirm PR #50 merged as `f4eea85`.
+- **reverify:** `git fetch origin port/family-board-map-elites` (the commit is the tip of that pushed GitHub branch, not of `main`), then `git cat-file -e 1fa518f` and read its commit message; `docs/backlog/BL-0023-reserve-ledger-ids-across-branches.md` criterion 7 and History for the 2026-09-27 pause entry; confirm PR #50 merged as `f4eea85`.
 - **updated:** 2026-09-27
 - **supersedes:** []
 - **superseded_by:** []
