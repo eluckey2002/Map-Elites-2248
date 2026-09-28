@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 84 (40 accepted, 1 blocked, 24 narrowed, 3 open, 3 provisional, 4 stale, 9 superseded).
+Records: 84 (37 accepted, 1 blocked, 24 narrowed, 3 open, 6 provisional, 4 stale, 9 superseded).
 
 ## Current records
 
@@ -23,9 +23,9 @@ Records: 84 (40 accepted, 1 blocked, 24 narrowed, 3 open, 3 provisional, 4 stale
 | DECISION-0004 | Promote the target-aware policy as the current engineering champion | narrowed | owner_decision | **Corrected by CORRECTION-0012 (DECISION-0004's evidence commit was on no branch); the wording below may no longer hold.** The owner promotes the target-aware immediate-finish policy in `solver/bot.js` as the current engineering champion. | 1174 |
 | DECISION-0005 | Route the qualified owner pilot to variant/repair | accepted | owner_decision | The owner disposes the played candidate as `variant/repair`. | 1191 |
 | DECISION-0006 | Do not promote the two puzzle-instance descriptors from RESULT-0029 | accepted | owner_decision, exact_result | Reject promotion of both `budget tightness` and `chain-length dependence` for the scoped exact micro-puzzle map because `RESULT-0029` did not clear its frozen four-region occupancy and starting-board-diversity requireme… | 1206 |
-| DECISION-0007 | Level 54's 126,000 target is a deliberate owner exception to the demand rule | accepted | owner_decision | The owner set Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) at 126,000 from human evidence rather than bot measurement; the demand rule would have given 89,800. | 1221 |
-| DECISION-0008 | Pause porting the family-board MAP-Elites work until frozen renumbering is defined | accepted | owner_decision | Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the owner's intent… | 1238 |
-| DECISION-0009 | Keep Level 53 as shipped at 101,000 | accepted | owner_decision | The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. | 1255 |
+| DECISION-0007 | Level 54's 126,000 target is a deliberate owner exception to the demand rule | provisional | owner_decision | The owner set Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) at 126,000 from human evidence rather than bot measurement; the demand rule would have given 89,800. | 1221 |
+| DECISION-0008 | Pause porting the family-board MAP-Elites work until frozen renumbering is defined | provisional | owner_decision | Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the owner's intent… | 1238 |
+| DECISION-0009 | Keep Level 53 as shipped at 101,000 | provisional | owner_decision | The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. | 1255 |
 | RESULT-0001 | Accepted 12,336 score | narrowed | replayed_lower_bound | **Corrected by CORRECTION-0010 (RESULT-0001 and RESULT-0004 verifiers were deleted from the tree); the wording below may no longer hold.** A 32-move witness replays to 12,336 at spawn cursor 520. | 374 |
 | RESULT-0002 | Mass/cursor upper bound | accepted | proven_upper_bound | Complete enumeration of the mass/cursor relaxation proves a 326,390 upper bound. | 390 |
 | RESULT-0003 | Exact move-one envelope | accepted | exact_result | Complete position-aware enumeration finds 1,868,975 physical first moves and an exact move-one maximum of 430. | 404 |
