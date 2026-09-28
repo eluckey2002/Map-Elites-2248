@@ -32,11 +32,11 @@ tool (file:line) or none** | **planted-fault evidence** | **effort**
 
 ### CK-03 — Protocol registered before data (commit order)
 - Standard: "Register the protocol and **commit it before the experiment runs**. A protocol committed after its evidence is not a preregistration; it is a reconstruction." — `experiments/README.md` ("Writing one").
-- Applies to: claim (any `heuristic_observation` record: RESULT-0008, RESULT-0027).
+- Applies to: every claim whose current `proof_class` includes `heuristic_observation`, derived from `EVIDENCE_LEDGER.md` at the audited commit. In this audit: RESULT-0008, RESULT-0009, RESULT-0011, RESULT-0012 (all listed in `experiments/GRANDFATHERED.md`, so N/A). RESULT-0027 is now `exact_result`/`direct_source` and is out of scope.
 - Decide: find the commit that first added `experiments/<RESULT-ID>/protocol.md` (or registered-protocol.md) and the first commit that added the experiment's data or report. PASS only if the protocol commit is a strict ancestor of the first evidence commit (`git merge-base --is-ancestor <protocol> <evidence>` succeeds and they are different commits); FAIL if they are the same commit or the evidence commit comes first; N/A if the record is explicitly grandfathered (no protocol required); UNKNOWN if either commit cannot be identified. Use Git ancestry, never commit timestamps.
-- Scripted/judgment: scripted (git commit-time comparison), with a judgment call on pre-gate grandfathering.
-- Existing tool: `tools/verify-experiments.js` item 4 (version-freeze hash check while `status: registered`) checks file integrity, not commit order; no tool directly checks commit timestamp ordering of protocol vs. report.
-- Planted-fault evidence: no evidence found for a commit-order check specifically (the freeze-hash check is exercised by `solver/tests/experiments.test.js`, but that is a different property).
+- Scripted/judgment: scripted (Git ancestry between the protocol commit and the first evidence commit), with a judgment call on grandfathering.
+- Existing tool: `tools/verify-experiments.js` item 4 (version-freeze hash check while `status: registered`) checks file integrity, not ancestry; no existing tool checks that a protocol commit is an ancestor of its evidence commit.
+- Planted-fault evidence: none for an ancestry check (the freeze-hash check is exercised by `solver/tests/experiments.test.js`, a different property).
 - Effort: **M** (needs `git log` traversal per experiment dir).
 
 ### CK-04 — Seeds fresh and logged, no reuse
