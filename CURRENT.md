@@ -167,6 +167,14 @@ missing input is the action-specific post-move board and refill value. Next
 trace survivor landing and decisive-chain ancestry in the named helpful-wait
 and helpful-cash cases before defining any timing metric or policy change.
 
+[RESULT-0066](EVIDENCE_LEDGER.md#result-0066--both-named-faster-actions-land-a-reusable-survivor-in-the-same-harvest-path-cell)
+performs that exact landing-and-ancestry comparison. In both named cases the
+faster action places its new survivor on the later harvest path and directly
+reuses it to connect more prepared board value, while route preservation and
+refill count reverse direction. Next ask the same prospective landing-and-path
+question across the remaining frozen LC-0012 pairs before defining a metric or
+changing the policy.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.

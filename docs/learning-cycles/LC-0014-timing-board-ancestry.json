@@ -1,0 +1,5501 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0014-timing-board-ancestry",
+  "source": {
+    "path": "docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json",
+    "sha256": "707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f",
+    "artifactIdentity": "dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff"
+  },
+  "question": "What exact survivor landing, refill consumption, and decisive-chain ancestry distinguish the named helpful-wait case from the helpful-cash counterexample?",
+  "cases": [
+    {
+      "role": "wait-helpful",
+      "recordingId": "ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf",
+      "recordingPath": "play-sessions/ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf.json",
+      "recordingIdentity": "ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf",
+      "level": 54,
+      "seed": 2832419099,
+      "selectedKey": "7:8:8e5d3d0d43953258286c087a9012821e704a974673dc1dedede94a4b36e0bea9",
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "pairedEffectCashMinusWait": 4,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "start": {
+            "stateIdentity": "734554f059d00d13efbb96a9a0ea1ef0848909f72808bd1e61e649c542222ead",
+            "score": 33792,
+            "moves": 6,
+            "maxMoves": 24,
+            "targetScore": 126000
+          },
+          "movesToTarget": 8,
+          "replayMatchesRetainedTrace": true,
+          "commonBoard": {
+            "stateIdentity": "734554f059d00d13efbb96a9a0ea1ef0848909f72808bd1e61e649c542222ead",
+            "readyRouteRootIds": [
+              "C0028",
+              "C0023",
+              "C0020",
+              "C0024",
+              "C0027"
+            ],
+            "tiles": [
+              {
+                "nodeId": "C0001",
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0002",
+                "x": 1,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0003",
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0004",
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0005",
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0006",
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0007",
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0008",
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0009",
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0010",
+                "x": 1,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0011",
+                "x": 2,
+                "y": 2,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0012",
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0013",
+                "x": 0,
+                "y": 3,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0014",
+                "x": 1,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0015",
+                "x": 2,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0016",
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "nodeId": "C0017",
+                "x": 0,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "nodeId": "C0018",
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0019",
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0020",
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "nodeId": "C0021",
+                "x": 0,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "nodeId": "C0022",
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "nodeId": "C0023",
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "nodeId": "C0024",
+                "x": 3,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "nodeId": "C0025",
+                "x": 0,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0026",
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0027",
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0028",
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "nodeId": "C0029",
+                "x": 0,
+                "y": 7,
+                "value": 128
+              },
+              {
+                "nodeId": "C0030",
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0031",
+                "x": 2,
+                "y": 7,
+                "value": 2048
+              },
+              {
+                "nodeId": "C0032",
+                "x": 3,
+                "y": 7,
+                "value": 256
+              }
+            ]
+          },
+          "postFirstAction": {
+            "source": "recorded-wait",
+            "points": 5120,
+            "merge": {
+              "id": "M0001",
+              "relativeMove": 1,
+              "source": "recorded-wait",
+              "inputNodeIds": [
+                "C0009",
+                "C0005",
+                "C0001",
+                "C0006",
+                "C0010",
+                "C0007",
+                "C0004",
+                "C0008",
+                "C0012",
+                "C0016",
+                "C0019",
+                "C0018",
+                "C0017",
+                "C0022"
+              ],
+              "chain": [
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                }
+              ],
+              "chainSum": 1024,
+              "points": 5120,
+              "survivorStart": {
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              "survivorLanding": {
+                "x": 1,
+                "y": 5,
+                "value": 1024
+              },
+              "output": {
+                "nodeId": "M0001",
+                "x": 1,
+                "y": 5,
+                "value": 1024
+              }
+            },
+            "inputNodeIds": [
+              "C0009",
+              "C0005",
+              "C0001",
+              "C0006",
+              "C0010",
+              "C0007",
+              "C0004",
+              "C0008",
+              "C0012",
+              "C0016",
+              "C0019",
+              "C0018",
+              "C0017",
+              "C0022"
+            ],
+            "inputRootIds": [
+              "C0001",
+              "C0004",
+              "C0005",
+              "C0006",
+              "C0007",
+              "C0008",
+              "C0009",
+              "C0010",
+              "C0012",
+              "C0016",
+              "C0017",
+              "C0018",
+              "C0019",
+              "C0022"
+            ],
+            "survivorLanding": {
+              "nodeId": "M0001",
+              "x": 1,
+              "y": 5,
+              "value": 1024
+            },
+            "refills": [
+              {
+                "id": "F0001",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0002",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "id": "F0003",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "F0004",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0005",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "F0006",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "F0007",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "F0008",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "F0009",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "F0010",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 3,
+                "value": 256
+              },
+              {
+                "id": "F0011",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "id": "F0012",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "id": "F0013",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              }
+            ],
+            "stateIdentity": "ffbf87652c35533dfe839e608abc83465df11edd88903925c7f36e0bbd1ea502",
+            "board": [
+              {
+                "nodeId": "F0001",
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "F0002",
+                "x": 1,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "nodeId": "F0003",
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "F0004",
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "F0005",
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "F0006",
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "nodeId": "C0003",
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "nodeId": "F0007",
+                "x": 3,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "nodeId": "F0008",
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0002",
+                "x": 1,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0011",
+                "x": 2,
+                "y": 2,
+                "value": 1024
+              },
+              {
+                "nodeId": "F0009",
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "F0010",
+                "x": 0,
+                "y": 3,
+                "value": 256
+              },
+              {
+                "nodeId": "C0014",
+                "x": 1,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0015",
+                "x": 2,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "F0011",
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "nodeId": "C0013",
+                "x": 0,
+                "y": 4,
+                "value": 1024
+              },
+              {
+                "nodeId": "F0012",
+                "x": 1,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "nodeId": "F0013",
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0020",
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "nodeId": "C0021",
+                "x": 0,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "nodeId": "M0001",
+                "x": 1,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0023",
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "nodeId": "C0024",
+                "x": 3,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "nodeId": "C0025",
+                "x": 0,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0026",
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0027",
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0028",
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "nodeId": "C0029",
+                "x": 0,
+                "y": 7,
+                "value": 128
+              },
+              {
+                "nodeId": "C0030",
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0031",
+                "x": 2,
+                "y": 7,
+                "value": 2048
+              },
+              {
+                "nodeId": "C0032",
+                "x": 3,
+                "y": 7,
+                "value": 256
+              }
+            ],
+            "readyRouteRootCount": 5,
+            "readyRouteRootsStillLive": [
+              "C0028",
+              "C0023",
+              "C0020",
+              "C0024",
+              "C0027"
+            ],
+            "readyRouteLivePositions": [
+              {
+                "nodeId": "C0028",
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "nodeId": "C0023",
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "nodeId": "C0020",
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "nodeId": "C0024",
+                "x": 3,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "nodeId": "C0027",
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              }
+            ]
+          },
+          "decisiveChain": {
+            "relativeMove": 6,
+            "source": "champion",
+            "points": 62400,
+            "chainSum": 12480,
+            "chainLength": 16,
+            "chain": [
+              {
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 512
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 2048
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 2048
+              }
+            ],
+            "directInputNodeIds": [
+              "S0024",
+              "S0023",
+              "S0022",
+              "S0021",
+              "S0014",
+              "S0015",
+              "M0005",
+              "C0011",
+              "M0004",
+              "M0003",
+              "C0013",
+              "M0001",
+              "C0026",
+              "C0030",
+              "M0002",
+              "C0031"
+            ],
+            "roots": [
+              {
+                "id": "C0001",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "C0002",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "C0003",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "C0004",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "C0005",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "C0006",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "C0007",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "C0008",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "C0009",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "C0010",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "C0011",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 2,
+                "value": 1024
+              },
+              {
+                "id": "C0012",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "C0013",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 3,
+                "value": 1024
+              },
+              {
+                "id": "C0016",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "id": "C0017",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "C0018",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "C0019",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "C0020",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "id": "C0022",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "C0023",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "C0024",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "id": "C0026",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "C0027",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "C0028",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "id": "C0030",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "C0031",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 7,
+                "value": 2048
+              },
+              {
+                "id": "F0002",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "id": "F0003",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "F0004",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0005",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "F0006",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "F0008",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "F0010",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 3,
+                "value": 256
+              },
+              {
+                "id": "F0013",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S0001",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0002",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S0003",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S0004",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S0005",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0006",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S0007",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S0008",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "S0009",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "S0010",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S0014",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 4,
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S0015",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 4,
+                "x": 1,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "id": "S0016",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 4,
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S0018",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 4,
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S0019",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 4,
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S0020",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 4,
+                "x": 3,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "S0021",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 5,
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S0022",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 5,
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0023",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 5,
+                "x": 2,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0024",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 5,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              }
+            ],
+            "merges": [
+              {
+                "id": "M0001",
+                "relativeMove": 1,
+                "source": "recorded-wait",
+                "inputNodeIds": [
+                  "C0009",
+                  "C0005",
+                  "C0001",
+                  "C0006",
+                  "C0010",
+                  "C0007",
+                  "C0004",
+                  "C0008",
+                  "C0012",
+                  "C0016",
+                  "C0019",
+                  "C0018",
+                  "C0017",
+                  "C0022"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 5120,
+                "survivorStart": {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                "survivorLanding": {
+                  "x": 1,
+                  "y": 5,
+                  "value": 1024
+                },
+                "output": {
+                  "nodeId": "M0001",
+                  "x": 1,
+                  "y": 5,
+                  "value": 1024
+                }
+              },
+              {
+                "id": "M0002",
+                "relativeMove": 2,
+                "source": "recorded-cashout",
+                "inputNodeIds": [
+                  "C0028",
+                  "C0023",
+                  "C0020",
+                  "C0024",
+                  "C0027"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 1024
+                  }
+                ],
+                "chainSum": 2048,
+                "points": 4096,
+                "survivorStart": {
+                  "x": 2,
+                  "y": 6,
+                  "value": 1024
+                },
+                "survivorLanding": {
+                  "x": 2,
+                  "y": 6,
+                  "value": 2048
+                },
+                "output": {
+                  "nodeId": "M0002",
+                  "x": 2,
+                  "y": 6,
+                  "value": 2048
+                }
+              },
+              {
+                "id": "M0003",
+                "relativeMove": 3,
+                "source": "champion",
+                "inputNodeIds": [
+                  "F0013",
+                  "S0004",
+                  "F0004",
+                  "S0003",
+                  "S0002",
+                  "S0001",
+                  "C0003",
+                  "F0006",
+                  "C0002",
+                  "F0010"
+                ],
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 3,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 5120,
+                "survivorStart": {
+                  "x": 0,
+                  "y": 3,
+                  "value": 256
+                },
+                "survivorLanding": {
+                  "x": 0,
+                  "y": 3,
+                  "value": 1024
+                },
+                "output": {
+                  "nodeId": "M0003",
+                  "x": 0,
+                  "y": 3,
+                  "value": 1024
+                }
+              },
+              {
+                "id": "M0004",
+                "relativeMove": 4,
+                "source": "champion",
+                "inputNodeIds": [
+                  "F0005",
+                  "F0008",
+                  "S0008",
+                  "S0006",
+                  "S0007",
+                  "S0009",
+                  "F0003",
+                  "F0002"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 3072,
+                "survivorStart": {
+                  "x": 1,
+                  "y": 2,
+                  "value": 256
+                },
+                "survivorLanding": {
+                  "x": 1,
+                  "y": 2,
+                  "value": 1024
+                },
+                "output": {
+                  "nodeId": "M0004",
+                  "x": 1,
+                  "y": 2,
+                  "value": 1024
+                }
+              },
+              {
+                "id": "M0005",
+                "relativeMove": 5,
+                "source": "champion",
+                "inputNodeIds": [
+                  "S0018",
+                  "S0005",
+                  "S0019",
+                  "S0010",
+                  "S0020",
+                  "S0016"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 512,
+                "points": 1024,
+                "survivorStart": {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                "survivorLanding": {
+                  "x": 2,
+                  "y": 1,
+                  "value": 512
+                },
+                "output": {
+                  "nodeId": "M0005",
+                  "x": 2,
+                  "y": 1,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M0006",
+                "relativeMove": 6,
+                "source": "champion",
+                "inputNodeIds": [
+                  "S0024",
+                  "S0023",
+                  "S0022",
+                  "S0021",
+                  "S0014",
+                  "S0015",
+                  "M0005",
+                  "C0011",
+                  "M0004",
+                  "M0003",
+                  "C0013",
+                  "M0001",
+                  "C0026",
+                  "C0030",
+                  "M0002",
+                  "C0031"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 512
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 3,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 2048
+                  },
+                  {
+                    "x": 2,
+                    "y": 7,
+                    "value": 2048
+                  }
+                ],
+                "chainSum": 12480,
+                "points": 62400,
+                "survivorStart": {
+                  "x": 2,
+                  "y": 7,
+                  "value": 2048
+                },
+                "survivorLanding": {
+                  "x": 2,
+                  "y": 7,
+                  "value": 12480
+                },
+                "output": {
+                  "nodeId": "M0006",
+                  "x": 2,
+                  "y": 7,
+                  "value": 12480
+                }
+              }
+            ],
+            "rootValueSum": 12480,
+            "originBreakdown": [
+              {
+                "origin": "common-board",
+                "count": 26,
+                "value": 9472
+              },
+              {
+                "origin": "first-action-refill",
+                "count": 8,
+                "value": 1024
+              },
+              {
+                "origin": "later-refill",
+                "count": 20,
+                "value": 1984
+              }
+            ],
+            "firstActionSurvivorContributes": true,
+            "firstActionSurvivorIsDirectInput": true,
+            "firstActionInputRootsReused": [
+              "C0001",
+              "C0004",
+              "C0005",
+              "C0006",
+              "C0007",
+              "C0008",
+              "C0009",
+              "C0010",
+              "C0012",
+              "C0016",
+              "C0017",
+              "C0018",
+              "C0019",
+              "C0022"
+            ],
+            "graphValid": true
+          }
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "start": {
+            "stateIdentity": "734554f059d00d13efbb96a9a0ea1ef0848909f72808bd1e61e649c542222ead",
+            "score": 33792,
+            "moves": 6,
+            "maxMoves": 24,
+            "targetScore": 126000
+          },
+          "movesToTarget": 12,
+          "replayMatchesRetainedTrace": true,
+          "commonBoard": {
+            "stateIdentity": "734554f059d00d13efbb96a9a0ea1ef0848909f72808bd1e61e649c542222ead",
+            "readyRouteRootIds": [
+              "C0028",
+              "C0023",
+              "C0020",
+              "C0024",
+              "C0027"
+            ],
+            "tiles": [
+              {
+                "nodeId": "C0001",
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0002",
+                "x": 1,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0003",
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0004",
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0005",
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0006",
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0007",
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0008",
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0009",
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0010",
+                "x": 1,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0011",
+                "x": 2,
+                "y": 2,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0012",
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0013",
+                "x": 0,
+                "y": 3,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0014",
+                "x": 1,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0015",
+                "x": 2,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0016",
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "nodeId": "C0017",
+                "x": 0,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "nodeId": "C0018",
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0019",
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0020",
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "nodeId": "C0021",
+                "x": 0,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "nodeId": "C0022",
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "nodeId": "C0023",
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "nodeId": "C0024",
+                "x": 3,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "nodeId": "C0025",
+                "x": 0,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0026",
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0027",
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0028",
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "nodeId": "C0029",
+                "x": 0,
+                "y": 7,
+                "value": 128
+              },
+              {
+                "nodeId": "C0030",
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0031",
+                "x": 2,
+                "y": 7,
+                "value": 2048
+              },
+              {
+                "nodeId": "C0032",
+                "x": 3,
+                "y": 7,
+                "value": 256
+              }
+            ]
+          },
+          "postFirstAction": {
+            "source": "frozen-ready-route",
+            "points": 4096,
+            "merge": {
+              "id": "M0001",
+              "relativeMove": 1,
+              "source": "frozen-ready-route",
+              "inputNodeIds": [
+                "C0028",
+                "C0023",
+                "C0020",
+                "C0024",
+                "C0027"
+              ],
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 512
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 1024
+                }
+              ],
+              "chainSum": 2048,
+              "points": 4096,
+              "survivorStart": {
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              },
+              "survivorLanding": {
+                "x": 2,
+                "y": 6,
+                "value": 2048
+              },
+              "output": {
+                "nodeId": "M0001",
+                "x": 2,
+                "y": 6,
+                "value": 2048
+              }
+            },
+            "inputNodeIds": [
+              "C0028",
+              "C0023",
+              "C0020",
+              "C0024",
+              "C0027"
+            ],
+            "inputRootIds": [
+              "C0020",
+              "C0023",
+              "C0024",
+              "C0027",
+              "C0028"
+            ],
+            "survivorLanding": {
+              "nodeId": "M0001",
+              "x": 2,
+              "y": 6,
+              "value": 2048
+            },
+            "refills": [
+              {
+                "id": "F0001",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0002",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "F0003",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "id": "F0004",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              }
+            ],
+            "stateIdentity": "25b2f1b704226b2cc2f0fabdf7ef935669326a3664618b90dab232daf9651975",
+            "board": [
+              {
+                "nodeId": "C0001",
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0002",
+                "x": 1,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0003",
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "F0001",
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0005",
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0006",
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0007",
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "F0002",
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0009",
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0010",
+                "x": 1,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0011",
+                "x": 2,
+                "y": 2,
+                "value": 1024
+              },
+              {
+                "nodeId": "F0003",
+                "x": 3,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "nodeId": "C0013",
+                "x": 0,
+                "y": 3,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0014",
+                "x": 1,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0015",
+                "x": 2,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0004",
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "nodeId": "C0017",
+                "x": 0,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "nodeId": "C0018",
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "F0004",
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0008",
+                "x": 3,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0021",
+                "x": 0,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "nodeId": "C0022",
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "nodeId": "C0019",
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0012",
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0025",
+                "x": 0,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0026",
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "M0001",
+                "x": 2,
+                "y": 6,
+                "value": 2048
+              },
+              {
+                "nodeId": "C0016",
+                "x": 3,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0029",
+                "x": 0,
+                "y": 7,
+                "value": 128
+              },
+              {
+                "nodeId": "C0030",
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0031",
+                "x": 2,
+                "y": 7,
+                "value": 2048
+              },
+              {
+                "nodeId": "C0032",
+                "x": 3,
+                "y": 7,
+                "value": 256
+              }
+            ],
+            "readyRouteRootCount": 5,
+            "readyRouteRootsStillLive": [],
+            "readyRouteLivePositions": []
+          },
+          "decisiveChain": {
+            "relativeMove": 8,
+            "source": "champion",
+            "points": 38080,
+            "chainSum": 7616,
+            "chainLength": 12,
+            "chain": [
+              {
+                "x": 3,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 2048
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 2048
+              }
+            ],
+            "directInputNodeIds": [
+              "C0008",
+              "C0012",
+              "C0016",
+              "S0030",
+              "S0029",
+              "S0034",
+              "C0021",
+              "M0006",
+              "C0026",
+              "C0030",
+              "M0001",
+              "C0031"
+            ],
+            "roots": [
+              {
+                "id": "C0004",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "C0008",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "C0012",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "C0016",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "id": "C0017",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "C0018",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "C0019",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "C0020",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "id": "C0021",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "id": "C0022",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "C0023",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "C0024",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "id": "C0026",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "C0027",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "C0028",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "id": "C0030",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "C0031",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 7,
+                "value": 2048
+              },
+              {
+                "id": "F0004",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S0029",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 6,
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S0030",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 6,
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "S0034",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 7,
+                "x": 1,
+                "y": 4,
+                "value": 256
+              }
+            ],
+            "merges": [
+              {
+                "id": "M0001",
+                "relativeMove": 1,
+                "source": "frozen-ready-route",
+                "inputNodeIds": [
+                  "C0028",
+                  "C0023",
+                  "C0020",
+                  "C0024",
+                  "C0027"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 1024
+                  }
+                ],
+                "chainSum": 2048,
+                "points": 4096,
+                "survivorStart": {
+                  "x": 2,
+                  "y": 6,
+                  "value": 1024
+                },
+                "survivorLanding": {
+                  "x": 2,
+                  "y": 6,
+                  "value": 2048
+                },
+                "output": {
+                  "nodeId": "M0001",
+                  "x": 2,
+                  "y": 6,
+                  "value": 2048
+                }
+              },
+              {
+                "id": "M0006",
+                "relativeMove": 6,
+                "source": "champion",
+                "inputNodeIds": [
+                  "C0004",
+                  "F0004",
+                  "C0019",
+                  "C0018",
+                  "C0017",
+                  "C0022"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 512,
+                "points": 1024,
+                "survivorStart": {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                "survivorLanding": {
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                },
+                "output": {
+                  "nodeId": "M0006",
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M0008",
+                "relativeMove": 8,
+                "source": "champion",
+                "inputNodeIds": [
+                  "C0008",
+                  "C0012",
+                  "C0016",
+                  "S0030",
+                  "S0029",
+                  "S0034",
+                  "C0021",
+                  "M0006",
+                  "C0026",
+                  "C0030",
+                  "M0001",
+                  "C0031"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 2048
+                  },
+                  {
+                    "x": 2,
+                    "y": 7,
+                    "value": 2048
+                  }
+                ],
+                "chainSum": 7616,
+                "points": 38080,
+                "survivorStart": {
+                  "x": 2,
+                  "y": 7,
+                  "value": 2048
+                },
+                "survivorLanding": {
+                  "x": 2,
+                  "y": 7,
+                  "value": 7616
+                },
+                "output": {
+                  "nodeId": "M0008",
+                  "x": 2,
+                  "y": 7,
+                  "value": 7616
+                }
+              }
+            ],
+            "rootValueSum": 7616,
+            "originBreakdown": [
+              {
+                "origin": "common-board",
+                "count": 17,
+                "value": 7040
+              },
+              {
+                "origin": "first-action-refill",
+                "count": 1,
+                "value": 64
+              },
+              {
+                "origin": "later-refill",
+                "count": 3,
+                "value": 512
+              }
+            ],
+            "firstActionSurvivorContributes": true,
+            "firstActionSurvivorIsDirectInput": true,
+            "firstActionInputRootsReused": [
+              "C0020",
+              "C0023",
+              "C0024",
+              "C0027",
+              "C0028"
+            ],
+            "graphValid": true
+          }
+        }
+      }
+    },
+    {
+      "role": "cash-helpful-counterexample",
+      "recordingId": "9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0",
+      "recordingPath": "play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json",
+      "recordingIdentity": "9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0",
+      "level": 54,
+      "seed": 1044860360,
+      "selectedKey": "7:8:5ca4220a1e27d80df098c3af8452eb74a85e6ff28560309e9ad804f6e14c5b68",
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -2,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "start": {
+            "stateIdentity": "fa35779917bc0f7ee8d9bbdb12f02e8e99e86a8d6dd04c33737c3139ea9597c3",
+            "score": 28672,
+            "moves": 6,
+            "maxMoves": 24,
+            "targetScore": 126000
+          },
+          "movesToTarget": 12,
+          "replayMatchesRetainedTrace": true,
+          "commonBoard": {
+            "stateIdentity": "fa35779917bc0f7ee8d9bbdb12f02e8e99e86a8d6dd04c33737c3139ea9597c3",
+            "readyRouteRootIds": [
+              "C0024",
+              "C0023",
+              "C0018",
+              "C0022"
+            ],
+            "tiles": [
+              {
+                "nodeId": "C0001",
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0002",
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0003",
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0004",
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0005",
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0006",
+                "x": 1,
+                "y": 1,
+                "value": 512
+              },
+              {
+                "nodeId": "C0007",
+                "x": 2,
+                "y": 1,
+                "value": 256
+              },
+              {
+                "nodeId": "C0008",
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0009",
+                "x": 0,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0010",
+                "x": 1,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0011",
+                "x": 2,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0012",
+                "x": 3,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0013",
+                "x": 0,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "nodeId": "C0014",
+                "x": 1,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0015",
+                "x": 2,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0016",
+                "x": 3,
+                "y": 3,
+                "value": 256
+              },
+              {
+                "nodeId": "C0017",
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0018",
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "nodeId": "C0019",
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0020",
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "nodeId": "C0021",
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0022",
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "nodeId": "C0023",
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0024",
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0025",
+                "x": 0,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "nodeId": "C0026",
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0027",
+                "x": 2,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0028",
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "nodeId": "C0029",
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0030",
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0031",
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0032",
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              }
+            ]
+          },
+          "postFirstAction": {
+            "source": "recorded-wait",
+            "points": 3072,
+            "merge": {
+              "id": "M0001",
+              "relativeMove": 1,
+              "source": "recorded-wait",
+              "inputNodeIds": [
+                "C0002",
+                "C0005",
+                "C0009",
+                "C0010",
+                "C0011",
+                "C0016",
+                "C0020"
+              ],
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 256
+                }
+              ],
+              "chainSum": 1024,
+              "points": 3072,
+              "survivorStart": {
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              "survivorLanding": {
+                "x": 3,
+                "y": 4,
+                "value": 1024
+              },
+              "output": {
+                "nodeId": "M0001",
+                "x": 3,
+                "y": 4,
+                "value": 1024
+              }
+            },
+            "inputNodeIds": [
+              "C0002",
+              "C0005",
+              "C0009",
+              "C0010",
+              "C0011",
+              "C0016",
+              "C0020"
+            ],
+            "inputRootIds": [
+              "C0002",
+              "C0005",
+              "C0009",
+              "C0010",
+              "C0011",
+              "C0016",
+              "C0020"
+            ],
+            "survivorLanding": {
+              "nodeId": "M0001",
+              "x": 3,
+              "y": 4,
+              "value": 1024
+            },
+            "refills": [
+              {
+                "id": "F0001",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0002",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0003",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "F0004",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0005",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "F0006",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 1,
+                "value": 64
+              }
+            ],
+            "stateIdentity": "c0111656eb1a6661ad668221e1e323e5fed2ea0bfe4b9ee9d066306616823df9",
+            "board": [
+              {
+                "nodeId": "F0001",
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "F0002",
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "F0003",
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "F0004",
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "F0005",
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "F0006",
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0003",
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "nodeId": "C0004",
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0001",
+                "x": 0,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0006",
+                "x": 1,
+                "y": 2,
+                "value": 512
+              },
+              {
+                "nodeId": "C0007",
+                "x": 2,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "nodeId": "C0008",
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0013",
+                "x": 0,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "nodeId": "C0014",
+                "x": 1,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0015",
+                "x": 2,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0012",
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "nodeId": "C0017",
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0018",
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "nodeId": "C0019",
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "M0001",
+                "x": 3,
+                "y": 4,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0021",
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0022",
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "nodeId": "C0023",
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0024",
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0025",
+                "x": 0,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "nodeId": "C0026",
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0027",
+                "x": 2,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0028",
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "nodeId": "C0029",
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0030",
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0031",
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0032",
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              }
+            ],
+            "readyRouteRootCount": 4,
+            "readyRouteRootsStillLive": [
+              "C0024",
+              "C0023",
+              "C0018",
+              "C0022"
+            ],
+            "readyRouteLivePositions": [
+              {
+                "nodeId": "C0024",
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0023",
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0018",
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "nodeId": "C0022",
+                "x": 1,
+                "y": 5,
+                "value": 256
+              }
+            ]
+          },
+          "decisiveChain": {
+            "relativeMove": 5,
+            "source": "champion",
+            "points": 38400,
+            "chainSum": 7680,
+            "chainLength": 9,
+            "chain": [
+              {
+                "x": 3,
+                "y": 4,
+                "value": 512
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              }
+            ],
+            "directInputNodeIds": [
+              "M0004",
+              "M0003",
+              "M0002",
+              "C0021",
+              "C0026",
+              "C0029",
+              "C0030",
+              "C0031",
+              "C0032"
+            ],
+            "roots": [
+              {
+                "id": "C0004",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "C0008",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "C0012",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "id": "C0013",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "id": "C0018",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "C0019",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "C0021",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "id": "C0022",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "id": "C0023",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "C0024",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "C0026",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "C0029",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "C0030",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "C0031",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "C0032",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "F0004",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0001",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0002",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S0003",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S0004",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0005",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S0006",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S0007",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "id": "S0008",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 4,
+                "value": 64
+              }
+            ],
+            "merges": [
+              {
+                "id": "M0002",
+                "relativeMove": 2,
+                "source": "recorded-cashout",
+                "inputNodeIds": [
+                  "C0024",
+                  "C0023",
+                  "C0018",
+                  "C0022"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 512,
+                "points": 768,
+                "survivorStart": {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                },
+                "survivorLanding": {
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                },
+                "output": {
+                  "nodeId": "M0002",
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M0003",
+                "relativeMove": 3,
+                "source": "champion",
+                "inputNodeIds": [
+                  "S0001",
+                  "F0004",
+                  "C0004",
+                  "C0008",
+                  "C0012",
+                  "S0003"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 512,
+                "points": 1024,
+                "survivorStart": {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                "survivorLanding": {
+                  "x": 2,
+                  "y": 4,
+                  "value": 512
+                },
+                "output": {
+                  "nodeId": "M0003",
+                  "x": 2,
+                  "y": 4,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M0004",
+                "relativeMove": 4,
+                "source": "champion",
+                "inputNodeIds": [
+                  "C0013",
+                  "S0002",
+                  "C0019",
+                  "S0008",
+                  "S0007",
+                  "S0006",
+                  "S0005",
+                  "S0004"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  }
+                ],
+                "chainSum": 512,
+                "points": 1536,
+                "survivorStart": {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                "survivorLanding": {
+                  "x": 3,
+                  "y": 4,
+                  "value": 512
+                },
+                "output": {
+                  "nodeId": "M0004",
+                  "x": 3,
+                  "y": 4,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M0005",
+                "relativeMove": 5,
+                "source": "champion",
+                "inputNodeIds": [
+                  "M0004",
+                  "M0003",
+                  "M0002",
+                  "C0021",
+                  "C0026",
+                  "C0029",
+                  "C0030",
+                  "C0031",
+                  "C0032"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 512
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 3,
+                    "y": 7,
+                    "value": 1024
+                  }
+                ],
+                "chainSum": 7680,
+                "points": 38400,
+                "survivorStart": {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                "survivorLanding": {
+                  "x": 3,
+                  "y": 7,
+                  "value": 7680
+                },
+                "output": {
+                  "nodeId": "M0005",
+                  "x": 3,
+                  "y": 7,
+                  "value": 7680
+                }
+              }
+            ],
+            "rootValueSum": 7680,
+            "originBreakdown": [
+              {
+                "origin": "common-board",
+                "count": 15,
+                "value": 7040
+              },
+              {
+                "origin": "first-action-refill",
+                "count": 1,
+                "value": 64
+              },
+              {
+                "origin": "later-refill",
+                "count": 8,
+                "value": 576
+              }
+            ],
+            "firstActionSurvivorContributes": false,
+            "firstActionSurvivorIsDirectInput": false,
+            "firstActionInputRootsReused": [],
+            "graphValid": true
+          }
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "start": {
+            "stateIdentity": "fa35779917bc0f7ee8d9bbdb12f02e8e99e86a8d6dd04c33737c3139ea9597c3",
+            "score": 28672,
+            "moves": 6,
+            "maxMoves": 24,
+            "targetScore": 126000
+          },
+          "movesToTarget": 10,
+          "replayMatchesRetainedTrace": true,
+          "commonBoard": {
+            "stateIdentity": "fa35779917bc0f7ee8d9bbdb12f02e8e99e86a8d6dd04c33737c3139ea9597c3",
+            "readyRouteRootIds": [
+              "C0024",
+              "C0023",
+              "C0018",
+              "C0022"
+            ],
+            "tiles": [
+              {
+                "nodeId": "C0001",
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0002",
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0003",
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0004",
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0005",
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0006",
+                "x": 1,
+                "y": 1,
+                "value": 512
+              },
+              {
+                "nodeId": "C0007",
+                "x": 2,
+                "y": 1,
+                "value": 256
+              },
+              {
+                "nodeId": "C0008",
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0009",
+                "x": 0,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0010",
+                "x": 1,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0011",
+                "x": 2,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0012",
+                "x": 3,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0013",
+                "x": 0,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "nodeId": "C0014",
+                "x": 1,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0015",
+                "x": 2,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0016",
+                "x": 3,
+                "y": 3,
+                "value": 256
+              },
+              {
+                "nodeId": "C0017",
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0018",
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "nodeId": "C0019",
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0020",
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "nodeId": "C0021",
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0022",
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "nodeId": "C0023",
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0024",
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0025",
+                "x": 0,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "nodeId": "C0026",
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0027",
+                "x": 2,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0028",
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "nodeId": "C0029",
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0030",
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0031",
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0032",
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              }
+            ]
+          },
+          "postFirstAction": {
+            "source": "frozen-ready-route",
+            "points": 768,
+            "merge": {
+              "id": "M0001",
+              "relativeMove": 1,
+              "source": "frozen-ready-route",
+              "inputNodeIds": [
+                "C0024",
+                "C0023",
+                "C0018",
+                "C0022"
+              ],
+              "chain": [
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                }
+              ],
+              "chainSum": 512,
+              "points": 768,
+              "survivorStart": {
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              "survivorLanding": {
+                "x": 1,
+                "y": 5,
+                "value": 512
+              },
+              "output": {
+                "nodeId": "M0001",
+                "x": 1,
+                "y": 5,
+                "value": 512
+              }
+            },
+            "inputNodeIds": [
+              "C0024",
+              "C0023",
+              "C0018",
+              "C0022"
+            ],
+            "inputRootIds": [
+              "C0018",
+              "C0022",
+              "C0023",
+              "C0024"
+            ],
+            "survivorLanding": {
+              "nodeId": "M0001",
+              "x": 1,
+              "y": 5,
+              "value": 512
+            },
+            "refills": [
+              {
+                "id": "F0001",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0002",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "F0003",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              }
+            ],
+            "stateIdentity": "8c5fb7ffd4a53dcf6225cc51cbde7233f98b2a8ce046645f52ebfbbd72d20393",
+            "board": [
+              {
+                "nodeId": "C0001",
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "C0002",
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0003",
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "nodeId": "F0001",
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "nodeId": "C0005",
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0006",
+                "x": 1,
+                "y": 1,
+                "value": 512
+              },
+              {
+                "nodeId": "C0007",
+                "x": 2,
+                "y": 1,
+                "value": 256
+              },
+              {
+                "nodeId": "C0004",
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "nodeId": "C0009",
+                "x": 0,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0010",
+                "x": 1,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0011",
+                "x": 2,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "nodeId": "C0008",
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "nodeId": "C0013",
+                "x": 0,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "nodeId": "C0014",
+                "x": 1,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0015",
+                "x": 2,
+                "y": 3,
+                "value": 0
+              },
+              {
+                "nodeId": "C0012",
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "nodeId": "C0017",
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "F0002",
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "F0003",
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "nodeId": "C0016",
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "nodeId": "C0021",
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "nodeId": "M0001",
+                "x": 1,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "nodeId": "C0019",
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "nodeId": "C0020",
+                "x": 3,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "nodeId": "C0025",
+                "x": 0,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "nodeId": "C0026",
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0027",
+                "x": 2,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "nodeId": "C0028",
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "nodeId": "C0029",
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0030",
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0031",
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "nodeId": "C0032",
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              }
+            ],
+            "readyRouteRootCount": 4,
+            "readyRouteRootsStillLive": [],
+            "readyRouteLivePositions": []
+          },
+          "decisiveChain": {
+            "relativeMove": 5,
+            "source": "champion",
+            "points": 49280,
+            "chainSum": 9856,
+            "chainLength": 14,
+            "chain": [
+              {
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 512
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              }
+            ],
+            "directInputNodeIds": [
+              "S0008",
+              "S0016",
+              "S0002",
+              "S0017",
+              "M0004",
+              "M0001",
+              "M0003",
+              "C0021",
+              "C0026",
+              "C0029",
+              "C0030",
+              "C0031",
+              "M0002",
+              "C0032"
+            ],
+            "roots": [
+              {
+                "id": "C0002",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "C0004",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "C0005",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "C0008",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "C0009",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "id": "C0011",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "id": "C0012",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "id": "C0013",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "id": "C0016",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 3,
+                "value": 256
+              },
+              {
+                "id": "C0017",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "C0018",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "C0019",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "C0020",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "id": "C0021",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "id": "C0022",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "id": "C0023",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "C0024",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "C0026",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "C0027",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "id": "C0028",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "id": "C0029",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "C0030",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "C0031",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "C0032",
+                "origin": "common-board",
+                "spawnedAtRelativeMove": 0,
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "F0001",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "F0002",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "F0003",
+                "origin": "first-action-refill",
+                "spawnedAtRelativeMove": 1,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S0001",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 2,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0002",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S0003",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S0004",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 2,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S0006",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0007",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 2,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S0008",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S0009",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S0010",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S0011",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S0012",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S0013",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 3,
+                "value": 64
+              },
+              {
+                "id": "S0015",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S0016",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S0017",
+                "origin": "later-refill",
+                "spawnedAtRelativeMove": 3,
+                "x": 2,
+                "y": 5,
+                "value": 256
+              }
+            ],
+            "merges": [
+              {
+                "id": "M0001",
+                "relativeMove": 1,
+                "source": "frozen-ready-route",
+                "inputNodeIds": [
+                  "C0024",
+                  "C0023",
+                  "C0018",
+                  "C0022"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 512,
+                "points": 768,
+                "survivorStart": {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                },
+                "survivorLanding": {
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                },
+                "output": {
+                  "nodeId": "M0001",
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M0002",
+                "relativeMove": 2,
+                "source": "champion",
+                "inputNodeIds": [
+                  "C0011",
+                  "C0012",
+                  "C0016",
+                  "C0020",
+                  "C0028"
+                ],
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 2048,
+                "survivorStart": {
+                  "x": 3,
+                  "y": 6,
+                  "value": 256
+                },
+                "survivorLanding": {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                "output": {
+                  "nodeId": "M0002",
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                }
+              },
+              {
+                "id": "M0003",
+                "relativeMove": 3,
+                "source": "champion",
+                "inputNodeIds": [
+                  "C0005",
+                  "C0002",
+                  "S0001",
+                  "S0003",
+                  "S0004",
+                  "F0001",
+                  "C0004",
+                  "F0003",
+                  "C0008",
+                  "C0027",
+                  "C0019",
+                  "F0002",
+                  "C0017",
+                  "C0013",
+                  "C0009"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 5120,
+                "survivorStart": {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                "survivorLanding": {
+                  "x": 0,
+                  "y": 4,
+                  "value": 1024
+                },
+                "output": {
+                  "nodeId": "M0003",
+                  "x": 0,
+                  "y": 4,
+                  "value": 1024
+                }
+              },
+              {
+                "id": "M0004",
+                "relativeMove": 4,
+                "source": "champion",
+                "inputNodeIds": [
+                  "S0011",
+                  "S0009",
+                  "S0006",
+                  "S0007",
+                  "S0010",
+                  "S0012",
+                  "S0013",
+                  "S0015"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  }
+                ],
+                "chainSum": 512,
+                "points": 1536,
+                "survivorStart": {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                "survivorLanding": {
+                  "x": 2,
+                  "y": 4,
+                  "value": 512
+                },
+                "output": {
+                  "nodeId": "M0004",
+                  "x": 2,
+                  "y": 4,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M0005",
+                "relativeMove": 5,
+                "source": "champion",
+                "inputNodeIds": [
+                  "S0008",
+                  "S0016",
+                  "S0002",
+                  "S0017",
+                  "M0004",
+                  "M0001",
+                  "M0003",
+                  "C0021",
+                  "C0026",
+                  "C0029",
+                  "C0030",
+                  "C0031",
+                  "M0002",
+                  "C0032"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 512
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 3,
+                    "y": 7,
+                    "value": 1024
+                  }
+                ],
+                "chainSum": 9856,
+                "points": 49280,
+                "survivorStart": {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                "survivorLanding": {
+                  "x": 3,
+                  "y": 7,
+                  "value": 9856
+                },
+                "output": {
+                  "nodeId": "M0005",
+                  "x": 3,
+                  "y": 7,
+                  "value": 9856
+                }
+              }
+            ],
+            "rootValueSum": 9856,
+            "originBreakdown": [
+              {
+                "origin": "common-board",
+                "count": 24,
+                "value": 8320
+              },
+              {
+                "origin": "first-action-refill",
+                "count": 3,
+                "value": 192
+              },
+              {
+                "origin": "later-refill",
+                "count": 15,
+                "value": 1344
+              }
+            ],
+            "firstActionSurvivorContributes": true,
+            "firstActionSurvivorIsDirectInput": true,
+            "firstActionInputRootsReused": [
+              "C0018",
+              "C0022",
+              "C0023",
+              "C0024"
+            ],
+            "graphValid": true
+          }
+        }
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "role": "wait-helpful",
+      "winnerArm": "OBSERVED_WAIT",
+      "loserArm": "CASH_NOW",
+      "winnerSurvivorLanding": {
+        "nodeId": "M0001",
+        "x": 1,
+        "y": 5,
+        "value": 1024
+      },
+      "loserSurvivorLanding": {
+        "nodeId": "M0001",
+        "x": 2,
+        "y": 6,
+        "value": 2048
+      },
+      "winnerSurvivorDirectlyReused": true,
+      "loserSurvivorDirectlyReused": true,
+      "winnerReadyRouteRootsStillLive": 5,
+      "loserReadyRouteRootsStillLive": 0,
+      "winnerFirstActionRefills": 13,
+      "loserFirstActionRefills": 4,
+      "winnerDecisiveChain": {
+        "relativeMove": 6,
+        "length": 16,
+        "sum": 12480,
+        "points": 62400,
+        "commonBoardRootCount": 26,
+        "commonBoardRootValue": 9472
+      },
+      "loserDecisiveChain": {
+        "relativeMove": 8,
+        "length": 12,
+        "sum": 7616,
+        "points": 38080,
+        "commonBoardRootCount": 17,
+        "commonBoardRootValue": 7040
+      }
+    },
+    {
+      "role": "cash-helpful-counterexample",
+      "winnerArm": "CASH_NOW",
+      "loserArm": "OBSERVED_WAIT",
+      "winnerSurvivorLanding": {
+        "nodeId": "M0001",
+        "x": 1,
+        "y": 5,
+        "value": 512
+      },
+      "loserSurvivorLanding": {
+        "nodeId": "M0001",
+        "x": 3,
+        "y": 4,
+        "value": 1024
+      },
+      "winnerSurvivorDirectlyReused": true,
+      "loserSurvivorDirectlyReused": false,
+      "winnerReadyRouteRootsStillLive": 0,
+      "loserReadyRouteRootsStillLive": 4,
+      "winnerFirstActionRefills": 3,
+      "loserFirstActionRefills": 6,
+      "winnerDecisiveChain": {
+        "relativeMove": 5,
+        "length": 14,
+        "sum": 9856,
+        "points": 49280,
+        "commonBoardRootCount": 24,
+        "commonBoardRootValue": 8320
+      },
+      "loserDecisiveChain": {
+        "relativeMove": 5,
+        "length": 9,
+        "sum": 7680,
+        "points": 38400,
+        "commonBoardRootCount": 15,
+        "commonBoardRootValue": 7040
+      }
+    }
+  ],
+  "sharedWinnerPattern": {
+    "landingCell": {
+      "x": 1,
+      "y": 5
+    },
+    "survivorDirectlyReused": true,
+    "decisiveChainUsesMoreCommonBoardRootsAndValue": true,
+    "routePreservationDirectionReverses": true,
+    "firstActionRefillCountDirectionReverses": true
+  },
+  "finding": "WINNING_ACTION_LANDS_AND_REUSES_COMPATIBLE_SURVIVOR",
+  "interpretation": "In both named cases, the faster action lands its first survivor at Level 54 cell (1,5), directly reuses that survivor in the decisive later chain, and links more common-board roots and value into that chain than the slower arm. Ready-route preservation and refill count reverse direction across the two cases, so neither alone explains the outcome. This is exact hindsight evidence, not a prospective metric.",
+  "nonClaims": [
+    "This artifact does not generalize beyond the two named LC-0012 pairs.",
+    "This artifact does not define or validate a timing metric.",
+    "This artifact does not authorize a policy or champion change."
+  ],
+  "artifactIdentity": "eb8fff92d7977934905eb443e7852b3f2f5e4e00afb3ac2e886daaefd2d2381d"
+}
