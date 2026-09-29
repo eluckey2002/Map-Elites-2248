@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "LC-0008-reversal-ancestry-contract.md",
+    "sha256": "33831b27fc62473440f71bf0efd1475906c9ee9d8d69ea95121d1b07bb0b6421"
+  },
+  "final_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+  "required_claims": [
+    "C1-frozen-replay-and-panel-identity",
+    "C2-objective-and-continuation-equivalence",
+    "C3-merge-union-known-good",
+    "C4-unrelated-root-known-negative",
+    "C5-planted-false-origin",
+    "C6-conservation-mutation",
+    "C7-restoration-and-persistence",
+    "move-4-ancestry",
+    "move-6-ancestry",
+    "move-9-ancestry",
+    "move-11-ancestry"
+  ],
+  "required_artifacts": [
+    "raw",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "tools/diagnose-lc0008-reversal-ancestry.js",
+      "--summarize",
+      "docs/learning-cycles/LC-0008-reversal-ancestry-raw.json"
+    ],
+    "cwd": "../..",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}

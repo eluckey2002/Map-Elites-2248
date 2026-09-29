@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0008-reversal-ancestry-manifest",
+  "paths": {
+    "contract": "docs/learning-cycles/LC-0008-reversal-ancestry-contract.md",
+    "priorRaw": "docs/learning-cycles/LC-0003-four-miss-diagnostic-raw.json",
+    "lc0007Contract": "docs/learning-cycles/LC-0007-decision-lineage-contract.md",
+    "lc0007Manifest": "docs/learning-cycles/LC-0007-decision-lineage-manifest.json",
+    "lc0007Qualification": "docs/learning-cycles/LC-0007-decision-lineage-qualification.json",
+    "lc0007Raw": "docs/learning-cycles/LC-0007-decision-lineage-raw.json",
+    "priorHarness": "tools/diagnose-lc0007-decision-lineage.js",
+    "recording": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+    "engine": "solver/engine.js",
+    "bot": "solver/bot.js",
+    "harness": "tools/diagnose-lc0008-reversal-ancestry.js",
+    "test": "solver/tests/lc0008ReversalAncestry.test.js"
+  },
+  "identities": {
+    "contract": "33831b27fc62473440f71bf0efd1475906c9ee9d8d69ea95121d1b07bb0b6421",
+    "priorRaw": "58a6458367295823d56b29f5e4589077161648b0e3619c6e5d6d6cca8eb3c284",
+    "lc0007Contract": "f4b7b577e8fef08406b0e24dcd2d40b752e7a124d4e09addad0a2f9fb7de1a3d",
+    "lc0007Manifest": "f960ef1e4eb77377e967bfff41a80c42d627369befdd595fb7c02676c5355c1b",
+    "lc0007Qualification": "b7e86156e8d1817e89ade2413567e15ce595996aeafef86e041f24f28b427bf8",
+    "lc0007Raw": "546582c6010eca867582505241e262ddff2888fe22057c2580dbe99c51da3fea",
+    "priorHarness": "d5c68a094bbbff716954cbfd21243ba77e83819beed6a26dc848ce4b57bedf37",
+    "recording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "harness": "f1b780435d77592104c4d1190935f60d49d96bff1613e6a7653bd07551e7ff58",
+    "test": "a47c1819e180b46d79909709750a8ee7e2356843bee0ebfebd55e05af2c41d83"
+  },
+  "artifactIdentity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28"
+}
