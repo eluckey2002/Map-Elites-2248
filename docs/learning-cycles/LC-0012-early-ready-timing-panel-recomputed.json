@@ -1,0 +1,291 @@
+{
+  "artifactIdentity": "dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff",
+  "status": "COMPLETE",
+  "disposition": "MIXED_TARGET_EFFECT",
+  "sourceCount": 24,
+  "selectedCount": 14,
+  "selectedLevelCount": 9,
+  "pairClasses": {
+    "OBSERVED_WAIT_ONLY_WIN": 0,
+    "CASH_NOW_ONLY_WIN": 0,
+    "OBSERVED_WAIT_FASTER": 3,
+    "CASH_NOW_FASTER": 10,
+    "TARGET_COST_TIE": 1,
+    "NEITHER_WINS": 0
+  },
+  "mutualWinEffect": {
+    "count": 14,
+    "meanCashMinusWait": -1.5714285714285714,
+    "medianCashMinusWait": -2,
+    "conditionalUncertainty": 0,
+    "populationInference": false
+  },
+  "pairs": [
+    {
+      "recordingPath": "play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json",
+      "level": 58,
+      "seed": 41000001,
+      "readyMove": 7,
+      "cashoutMove": 8,
+      "pairClass": "TARGET_COST_TIE",
+      "pairedEffectCashMinusWait": 0,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 11,
+        "finalScore": 164672
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 11,
+        "finalScore": 165760
+      }
+    },
+    {
+      "recordingPath": "play-sessions/10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90.json",
+      "level": 55,
+      "seed": 2600645753,
+      "readyMove": 5,
+      "cashoutMove": 8,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -5,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 14,
+        "finalScore": 124608
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 9,
+        "finalScore": 124672
+      }
+    },
+    {
+      "recordingPath": "play-sessions/267a43735c9d22717f987a6be7eee6ef6338c3adb12055e701e05957a833ecd1.json",
+      "level": 4,
+      "seed": 1051679287,
+      "readyMove": 1,
+      "cashoutMove": 2,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -3,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 11,
+        "finalScore": 1976
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 8,
+        "finalScore": 2154
+      }
+    },
+    {
+      "recordingPath": "play-sessions/8dc8e825bb1f630dd270dfd9057fb4f30d57f3963624dc3682a55b098b0851cb.json",
+      "level": 30,
+      "seed": 3600822812,
+      "readyMove": 5,
+      "cashoutMove": 7,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -6,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 24,
+        "finalScore": 22912
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 18,
+        "finalScore": 22848
+      }
+    },
+    {
+      "recordingPath": "play-sessions/8f9e12071955d59aa7d0118ad7ba65b893c2b460ff2f7c65869838950c16c2de.json",
+      "level": 2,
+      "seed": 3460073833,
+      "readyMove": 1,
+      "cashoutMove": 6,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -3,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 7,
+        "finalScore": 996
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 4,
+        "finalScore": 1494
+      }
+    },
+    {
+      "recordingPath": "play-sessions/959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a.json",
+      "level": 58,
+      "seed": 4010386357,
+      "readyMove": 7,
+      "cashoutMove": 8,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -1,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 11,
+        "finalScore": 173760
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 10,
+        "finalScore": 165504
+      }
+    },
+    {
+      "recordingPath": "play-sessions/98c224c7368089896eb3fe52699e43859a2b9fdb7868cc310673333c565f34f8.json",
+      "level": 52,
+      "seed": 3882071371,
+      "readyMove": 1,
+      "cashoutMove": 2,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -1,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 14,
+        "finalScore": 120960
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 13,
+        "finalScore": 112064
+      }
+    },
+    {
+      "recordingPath": "play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json",
+      "level": 54,
+      "seed": 1044860360,
+      "readyMove": 7,
+      "cashoutMove": 8,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -2,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 12,
+        "finalScore": 132160
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 10,
+        "finalScore": 138240
+      }
+    },
+    {
+      "recordingPath": "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json",
+      "level": 57,
+      "seed": 2389915636,
+      "readyMove": 5,
+      "cashoutMove": 6,
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "pairedEffectCashMinusWait": 1,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 11,
+        "finalScore": 134720
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 12,
+        "finalScore": 131200
+      }
+    },
+    {
+      "recordingPath": "play-sessions/b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28.json",
+      "level": 54,
+      "seed": 3310936729,
+      "readyMove": 6,
+      "cashoutMove": 7,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -2,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 14,
+        "finalScore": 126656
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 12,
+        "finalScore": 132992
+      }
+    },
+    {
+      "recordingPath": "play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json",
+      "level": 52,
+      "seed": 2173441018,
+      "readyMove": 6,
+      "cashoutMove": 7,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -2,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 6,
+        "finalScore": 105280
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 4,
+        "finalScore": 102720
+      }
+    },
+    {
+      "recordingPath": "play-sessions/e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4.json",
+      "level": 3,
+      "seed": 1080239914,
+      "readyMove": 4,
+      "cashoutMove": 9,
+      "pairClass": "CASH_NOW_FASTER",
+      "pairedEffectCashMinusWait": -3,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 8,
+        "finalScore": 1472
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 5,
+        "finalScore": 1458
+      }
+    },
+    {
+      "recordingPath": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+      "level": 54,
+      "seed": 1313839221,
+      "readyMove": 5,
+      "cashoutMove": 6,
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "pairedEffectCashMinusWait": 1,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 11,
+        "finalScore": 134720
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 12,
+        "finalScore": 127552
+      }
+    },
+    {
+      "recordingPath": "play-sessions/ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf.json",
+      "level": 54,
+      "seed": 2832419099,
+      "readyMove": 7,
+      "cashoutMove": 8,
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "pairedEffectCashMinusWait": 4,
+      "observedWait": {
+        "outcome": "win",
+        "movesToTarget": 8,
+        "finalScore": 128384
+      },
+      "cashNow": {
+        "outcome": "win",
+        "movesToTarget": 12,
+        "finalScore": 126848
+      }
+    }
+  ]
+}

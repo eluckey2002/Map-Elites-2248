@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "LC-0012-early-ready-timing-panel-closeout-contract.json",
+    "sha256": "bf932e05dfc785714c0863bd83006960b3218686c42a43b1d3176197dc26f9c9"
+  },
+  "run_id": "LC-0012-REPORTABLE-1",
+  "final_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1-frozen-corpus-ruleset-and-exact-replay",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "All 24 hash-pinned recordings replayed exactly under the frozen shipped rules; the outcome-blind selector found 14 eligible recordings across 9 levels."
+    },
+    {
+      "id": "C2-exact-state-early-ready-positive-control",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "The external LC-0011 control reconstructed common state d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff with nine 1,024 inputs, one 2,048 input, and a legal 56,320-point route."
+    },
+    {
+      "id": "C3-planted-missing-route-input",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "Removing a required route input reached the validator and was rejected as non-executable."
+    },
+    {
+      "id": "C4-versioned-control-and-deterministic-aa",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "The retained LC-0011 reference byte-matched a fresh reconstruction, and duplicate OBSERVED_WAIT executions for the first selected corpus unit byte-matched."
+    },
+    {
+      "id": "C5-assignment-integrity-and-planted-arm-swap",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "A relabeled first action reached the public validator and was rejected for CASH_NOW first-action/arm mismatch."
+    },
+    {
+      "id": "C6-objective-equivalence-and-target-stop-ordering",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "Both arms used the same frozen start, target, remaining-move budget, RNG prefix, post-intervention champion, and target-stop classifier; a planted post-target continuation was rejected."
+    },
+    {
+      "id": "C7-one-unit-per-recording",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "The selector retained at most one opportunity per recording using the preregistered earliest-ready, earliest-cashout, lexical-route ordering, including the synthetic ordering control."
+    },
+    {
+      "id": "C8-restoration-and-persistence-before-verdict",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "Qualification retained its disposable raw evidence through a planted interpretation failure and restored the harness identity; the reportable raw matrix was persisted before its disposition was evaluated."
+    },
+    {
+      "id": "C9-executable-closeout-admission",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "The exact committed closeout contract and vendored verifier passed the pre-outcome disposable admission path."
+    },
+    {
+      "id": "complete-24-recording-eligibility-ledger",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "The immutable raw artifact contains one exact-replay eligibility row for every one of the 24 frozen recordings: 14 selected and 10 with zero qualifying candidates."
+    },
+    {
+      "id": "complete-selected-pair-matrix",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "The raw artifact contains both target-stopped arms for all 14 selected recordings: 10 CASH_NOW_FASTER, 3 OBSERVED_WAIT_FASTER, and 1 TARGET_COST_TIE, with no missing cells."
+    },
+    {
+      "id": "registered-panel-outcome",
+      "status": "PASS",
+      "evidence_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+      "reason": "Every pair reached the target, but the panel contains both helpful and harmful immediate-cash effects, so the preregistered outcome is MIXED_TARGET_EFFECT; cash-now minus wait averaged -1.5714285714285714 moves with median -2 on this fixed panel and no population inference."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw",
+      "path": "LC-0012-early-ready-timing-panel-raw.json",
+      "sha256": "707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "LC-0012-early-ready-timing-panel-recomputed.json",
+      "sha256": "d5e33bf4f79d5f47363c3e5a498485e6ebfdfcb3be7c5359c61239da3b07d9d7"
+    }
+  ],
+  "primary_outcome": "MIXED_TARGET_EFFECT",
+  "deviations": [
+    "The first committed protocol incorrectly described the LC-0011 exact-state positive control as an observed early-ready interval inside its source recording. Mechanical source inspection caught the mismatch before harness construction, qualification, selector execution, or any CASH_NOW corpus outcome. The immutable v2 successor protocol replaced only that control source, binding the retained LC-0011 reconstructed state externally to the 24-recording selection universe before the final subject manifest was frozen."
+  ],
+  "attempts": [
+    {
+      "id": "LC-0012-REPORTABLE-1",
+      "exit_code": 0,
+      "artifact_ids": [
+        "raw",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}

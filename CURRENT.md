@@ -152,6 +152,13 @@ cash-now rule nor a general waiting rule, and the champion remains unchanged.
 A broader timing study, if pursued, must first freeze a multi-state panel and
 choose whether it is optimizing target speed or score beyond the target.
 
+[RESULT-0064](EVIDENCE_LEDGER.md#result-0064--immediate-cashing-is-usually-faster-in-the-fixed-panel-but-three-reversals-reject-an-unconditional-rule)
+closes that broader frozen timing panel as `MIXED_TARGET_EFFECT`: immediate
+cashing is a promising default, not a general rule, and the champion remains
+unchanged. The next diagnostic should compare the wait-faster reversals with
+similar cash-faster cases to identify what the intervening move preserves,
+creates, or positions before proposing a timing metric or policy change.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.
