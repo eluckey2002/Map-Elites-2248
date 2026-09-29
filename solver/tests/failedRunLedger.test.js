@@ -62,10 +62,20 @@ test('LIVE: scanner reads the real retained failed closures', () => {
   assert.deepEqual(failures.map(({ resultId }) => resultId), [
     'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042',
   ]);
-  assert.deepEqual(scanLegacyFailures(ROOT), [{
-    failureId: 'FR-0005',
-    evidencePath: 'docs/failed-runs/FR-0005.md',
-  }]);
+  assert.deepEqual(scanLegacyFailures(ROOT), [
+    {
+      failureId: 'FR-0005',
+      evidencePath: 'docs/failed-runs/FR-0005.md',
+    },
+    {
+      failureId: 'FR-0006',
+      evidencePath: 'docs/failed-runs/FR-0006.md',
+    },
+    {
+      failureId: 'FR-0007',
+      evidencePath: 'docs/failed-runs/FR-0007.md',
+    },
+  ]);
 });
 
 test('a real UNVERIFIED closure fails when its ledger row is absent', () => {

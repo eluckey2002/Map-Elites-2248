@@ -1,0 +1,5698 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0010-route-readiness-raw",
+  "status": "COMPLETE",
+  "finalSubjectIdentity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+  "sources": {
+    "lc0008ManifestIdentity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+    "lc0008QualificationIdentity": "09ce87ea6a4087f2948c5aced2f99858a7e4515cce617b3eb3c9bfe200905df9",
+    "lc0008RawIdentity": "2f9558a9c81adf2459b9762e4fbe1ee1515c3358a7edb34d01afe4f093b9fea8",
+    "lc0007RawIdentity": "6074b33ac0d68aba78c0ddd68c94041dc2e871392f9c50d573c00e1fd218dc19",
+    "lc0009InvalidRawIdentity": "324062952f3fa8ca1e39017ab1b99b463f5bf03d342fb4e6611ba13b1e761e82",
+    "recordingIdentity": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78"
+  },
+  "controls": {
+    "exactPanelReproduced": true,
+    "objectiveEquivalent": true,
+    "unchangedContinuation": true
+  },
+  "cells": [
+    {
+      "move": 4,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "correctionContinuation": 4,
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "correctionContinuation": 4,
+          "firstReadyContinuation": 4,
+          "readyOnlyAtCorrection": true,
+          "timeline": [
+            {
+              "continuationMoves": 1,
+              "readiness": {
+                "stateIdentity": "cf11fc9bd8c6ed1453939d095ef04d86b712d4ed9b0ce8416695d8a3eb2375dc",
+                "orderedInputIds": [
+                  "S020",
+                  "S008",
+                  "S014",
+                  "S015",
+                  "S016",
+                  "P020",
+                  "P024",
+                  "P019",
+                  "S022"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 5,
+                    "id": "P020",
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 6,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 7,
+                    "id": "P019",
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S008",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S014",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S015",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "S022",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 1536,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "fefb5dde84fc17386fc6cf71e20d49147a69b6a12bbbf5bc1e067a27ee0d4c28"
+            },
+            {
+              "continuationMoves": 2,
+              "readiness": {
+                "stateIdentity": "fefb5dde84fc17386fc6cf71e20d49147a69b6a12bbbf5bc1e067a27ee0d4c28",
+                "orderedInputIds": [
+                  "S020",
+                  "S008",
+                  "S014",
+                  "S015",
+                  "S016",
+                  "P020",
+                  "P024",
+                  "P019",
+                  "S022"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 5,
+                    "id": "P020",
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 6,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 7,
+                    "id": "P019",
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S008",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S014",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S015",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "S022",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 512
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                }
+              ],
+              "selectedPoints": 10240,
+              "createdContributingRootIds": [
+                "S008",
+                "S014",
+                "S015",
+                "S016"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "d05c77ab51c1485b8c60a2385ee90dea8141d55c7c67884fe9c5c7a6ca757e03"
+            },
+            {
+              "continuationMoves": 3,
+              "readiness": {
+                "stateIdentity": "d05c77ab51c1485b8c60a2385ee90dea8141d55c7c67884fe9c5c7a6ca757e03",
+                "orderedInputIds": [
+                  "S020",
+                  "S008",
+                  "S014",
+                  "S015",
+                  "S016",
+                  "P020",
+                  "P024",
+                  "P019",
+                  "S022"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 1,
+                    "id": "S008",
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S014",
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "S015",
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "index": 4,
+                    "id": "S016",
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "index": 5,
+                    "id": "P020",
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 6,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 7,
+                    "id": "P019",
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "S022",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [
+                  {
+                    "leftId": "S008",
+                    "rightId": "S014",
+                    "left": {
+                      "x": 1,
+                      "y": 0,
+                      "value": 64
+                    },
+                    "right": {
+                      "x": 2,
+                      "y": 2,
+                      "value": 64
+                    }
+                  }
+                ],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 3264,
+              "createdContributingRootIds": [
+                "S020",
+                "S022"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [
+                {
+                  "id": "S008",
+                  "before": {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  }
+                }
+              ],
+              "postStateIdentity": "e6b0df612841c12a3d7891dc752383db4f3bfe782361ff1beeddd50800ce051f"
+            },
+            {
+              "continuationMoves": 4,
+              "readiness": {
+                "stateIdentity": "e6b0df612841c12a3d7891dc752383db4f3bfe782361ff1beeddd50800ce051f",
+                "orderedInputIds": [
+                  "S020",
+                  "S008",
+                  "S014",
+                  "S015",
+                  "S016",
+                  "P020",
+                  "P024",
+                  "P019",
+                  "S022"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "S008",
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S014",
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "S015",
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "index": 4,
+                    "id": "S016",
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "index": 5,
+                    "id": "P020",
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 6,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 7,
+                    "id": "P019",
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 8,
+                    "id": "S022",
+                    "x": 1,
+                    "y": 4,
+                    "value": 256
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M004"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "74c20a7a0399c9ad38d7000a96268fa86cb95311f6a22dea4610cab70e0af569"
+            }
+          ]
+        },
+        "champion": {
+          "arm": "champion",
+          "correctionContinuation": 4,
+          "firstReadyContinuation": 4,
+          "readyOnlyAtCorrection": true,
+          "timeline": [
+            {
+              "continuationMoves": 1,
+              "readiness": {
+                "stateIdentity": "64545cc2e8a678aa33d525176360a90a77b48757274c388d7e0b986edd38becc",
+                "orderedInputIds": [
+                  "S001",
+                  "P006",
+                  "P001",
+                  "P005",
+                  "S016",
+                  "S018",
+                  "M003",
+                  "M001",
+                  "P030",
+                  "P029",
+                  "P025"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 1,
+                    "id": "P006",
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "P001",
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P005",
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "index": 8,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 10,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S001",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 1,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S018",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 512,
+                    "createdAt": 3
+                  },
+                  {
+                    "index": 7,
+                    "id": "M001",
+                    "kind": "merge",
+                    "value": 1024,
+                    "createdAt": 1
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [
+                "S001",
+                "S004",
+                "S005",
+                "S006",
+                "S007",
+                "S008"
+              ],
+              "createdContributingMergeNodeIds": [
+                "M001"
+              ],
+              "movedDirectInputs": [
+                {
+                  "id": "P001",
+                  "before": {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  }
+                },
+                {
+                  "id": "P005",
+                  "before": {
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  },
+                  "after": {
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  }
+                }
+              ],
+              "postStateIdentity": "f9961f127fa2f20725a638e53fd9cbb8df6e1b014167df921691027b6d01c266"
+            },
+            {
+              "continuationMoves": 2,
+              "readiness": {
+                "stateIdentity": "f9961f127fa2f20725a638e53fd9cbb8df6e1b014167df921691027b6d01c266",
+                "orderedInputIds": [
+                  "S001",
+                  "P006",
+                  "P001",
+                  "P005",
+                  "S016",
+                  "S018",
+                  "M003",
+                  "M001",
+                  "P030",
+                  "P029",
+                  "P025"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S001",
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "P006",
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "P001",
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P005",
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "index": 7,
+                    "id": "M001",
+                    "x": 2,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 8,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 10,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 4,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S018",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 512,
+                    "createdAt": 3
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                }
+              ],
+              "selectedPoints": 3648,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "45c330ae37938c59fe8dd73937d20f787e3da68f286c6850c885b12f1ca68ad3"
+            },
+            {
+              "continuationMoves": 3,
+              "readiness": {
+                "stateIdentity": "45c330ae37938c59fe8dd73937d20f787e3da68f286c6850c885b12f1ca68ad3",
+                "orderedInputIds": [
+                  "S001",
+                  "P006",
+                  "P001",
+                  "P005",
+                  "S016",
+                  "S018",
+                  "M003",
+                  "M001",
+                  "P030",
+                  "P029",
+                  "P025"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S001",
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "P006",
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "P001",
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P005",
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "index": 7,
+                    "id": "M001",
+                    "x": 2,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 8,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 10,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 4,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S018",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 512,
+                    "createdAt": 3
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 1024,
+              "createdContributingRootIds": [
+                "S016",
+                "S018"
+              ],
+              "createdContributingMergeNodeIds": [
+                "M003"
+              ],
+              "movedDirectInputs": [
+                {
+                  "id": "S001",
+                  "before": {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  }
+                },
+                {
+                  "id": "P001",
+                  "before": {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 0,
+                    "y": 2,
+                    "value": 64
+                  }
+                },
+                {
+                  "id": "P005",
+                  "before": {
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  },
+                  "after": {
+                    "x": 0,
+                    "y": 3,
+                    "value": 128
+                  }
+                }
+              ],
+              "postStateIdentity": "748f83424a3c8df168de524e6dea9b977a1fdc5022e3eca426e8643360481e5a"
+            },
+            {
+              "continuationMoves": 4,
+              "readiness": {
+                "stateIdentity": "748f83424a3c8df168de524e6dea9b977a1fdc5022e3eca426e8643360481e5a",
+                "orderedInputIds": [
+                  "S001",
+                  "P006",
+                  "P001",
+                  "P005",
+                  "S016",
+                  "S018",
+                  "M003",
+                  "M001",
+                  "P030",
+                  "P029",
+                  "P025"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S001",
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "P006",
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "P001",
+                    "x": 0,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P005",
+                    "x": 0,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "S016",
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 5,
+                    "id": "S018",
+                    "x": 1,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "index": 6,
+                    "id": "M003",
+                    "x": 1,
+                    "y": 6,
+                    "value": 512
+                  },
+                  {
+                    "index": 7,
+                    "id": "M001",
+                    "x": 2,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 8,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 10,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "selectedPoints": 31680,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M004"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "d7e46f52119aff37348235c42f2a6e75687ec8a797679c40faf06d42f80b3469"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "move": 6,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "correctionContinuation": 5,
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "correctionContinuation": 5,
+          "firstReadyContinuation": 5,
+          "readyOnlyAtCorrection": true,
+          "timeline": [
+            {
+              "continuationMoves": 1,
+              "readiness": {
+                "stateIdentity": "9dd1f37d8532c4ee2600df9960f50e7ace15f6e5a0a94d76ccb3b6e0e215f286",
+                "orderedInputIds": [
+                  "S020",
+                  "P018",
+                  "S013",
+                  "P012",
+                  "P004",
+                  "S004",
+                  "S026",
+                  "P010",
+                  "M004"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 1,
+                    "id": "P018",
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P004",
+                    "x": 3,
+                    "y": 0,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S013",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 1,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S004",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 1,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S026",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "M004",
+                    "kind": "merge",
+                    "value": 1024,
+                    "createdAt": 4
+                  }
+                ],
+                "missingAdjacencyLinks": [
+                  {
+                    "leftId": "P012",
+                    "rightId": "P004",
+                    "left": {
+                      "x": 3,
+                      "y": 2,
+                      "value": 128
+                    },
+                    "right": {
+                      "x": 3,
+                      "y": 0,
+                      "value": 256
+                    }
+                  }
+                ],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [
+                "S001",
+                "S004",
+                "S005",
+                "S013"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [
+                {
+                  "id": "P018",
+                  "before": {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  }
+                },
+                {
+                  "id": "P012",
+                  "before": {
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  }
+                },
+                {
+                  "id": "P004",
+                  "before": {
+                    "x": 3,
+                    "y": 0,
+                    "value": 256
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  }
+                }
+              ],
+              "postStateIdentity": "3c3caa939162e98704d7adcbf5e03d2dac98e41d8d5f044d07d9404e96dbea70"
+            },
+            {
+              "continuationMoves": 2,
+              "readiness": {
+                "stateIdentity": "3c3caa939162e98704d7adcbf5e03d2dac98e41d8d5f044d07d9404e96dbea70",
+                "orderedInputIds": [
+                  "S020",
+                  "P018",
+                  "S013",
+                  "P012",
+                  "P004",
+                  "S004",
+                  "S026",
+                  "P010",
+                  "M004"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 1,
+                    "id": "P018",
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S013",
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P004",
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "S004",
+                    "x": 3,
+                    "y": 0,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S026",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "M004",
+                    "kind": "merge",
+                    "value": 1024,
+                    "createdAt": 4
+                  }
+                ],
+                "missingAdjacencyLinks": [
+                  {
+                    "leftId": "P004",
+                    "rightId": "S004",
+                    "left": {
+                      "x": 3,
+                      "y": 4,
+                      "value": 256
+                    },
+                    "right": {
+                      "x": 3,
+                      "y": 0,
+                      "value": 256
+                    }
+                  }
+                ],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 3072,
+              "createdContributingRootIds": [
+                "S020"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [
+                {
+                  "id": "S004",
+                  "before": {
+                    "x": 3,
+                    "y": 0,
+                    "value": 256
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 3,
+                    "value": 256
+                  }
+                }
+              ],
+              "postStateIdentity": "8ea0a95362d3694be3a007ddbd827756a0b2c2fb0237bbd61ff627a2fd1402f3"
+            },
+            {
+              "continuationMoves": 3,
+              "readiness": {
+                "stateIdentity": "8ea0a95362d3694be3a007ddbd827756a0b2c2fb0237bbd61ff627a2fd1402f3",
+                "orderedInputIds": [
+                  "S020",
+                  "P018",
+                  "S013",
+                  "P012",
+                  "P004",
+                  "S004",
+                  "S026",
+                  "P010",
+                  "M004"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "P018",
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S013",
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P004",
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "S004",
+                    "x": 3,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 6,
+                    "id": "S026",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "M004",
+                    "kind": "merge",
+                    "value": 1024,
+                    "createdAt": 4
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 1536,
+              "createdContributingRootIds": [
+                "S021",
+                "S022",
+                "S023",
+                "S024",
+                "S025",
+                "S026"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "7f7d09bf06795905847478ae5561784da242f38fabda9b68f91f2593e9533962"
+            },
+            {
+              "continuationMoves": 4,
+              "readiness": {
+                "stateIdentity": "7f7d09bf06795905847478ae5561784da242f38fabda9b68f91f2593e9533962",
+                "orderedInputIds": [
+                  "S020",
+                  "P018",
+                  "S013",
+                  "P012",
+                  "P004",
+                  "S004",
+                  "S026",
+                  "P010",
+                  "M004"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "P018",
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S013",
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P004",
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "S004",
+                    "x": 3,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "index": 6,
+                    "id": "S026",
+                    "x": 2,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 8,
+                    "id": "M004",
+                    "kind": "merge",
+                    "value": 1024,
+                    "createdAt": 4
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M004"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "8da2d73aeb030d98ecf6affa0f55dd79972ac97b62664aff6c5fefbc527aa742"
+            },
+            {
+              "continuationMoves": 5,
+              "readiness": {
+                "stateIdentity": "8da2d73aeb030d98ecf6affa0f55dd79972ac97b62664aff6c5fefbc527aa742",
+                "orderedInputIds": [
+                  "S020",
+                  "P018",
+                  "S013",
+                  "P012",
+                  "P004",
+                  "S004",
+                  "S026",
+                  "P010",
+                  "M004"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "P018",
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S013",
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P004",
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "S004",
+                    "x": 3,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "index": 6,
+                    "id": "S026",
+                    "x": 2,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  },
+                  {
+                    "index": 8,
+                    "id": "M004",
+                    "x": 0,
+                    "y": 2,
+                    "value": 1024
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 1024
+                }
+              ],
+              "selectedPoints": 13120,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M005"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "a9616589e2d56773dcdbbdbb686cf7cec46197dea12873f662eaaf9019c3541a"
+            }
+          ]
+        },
+        "champion": {
+          "arm": "champion",
+          "correctionContinuation": 5,
+          "firstReadyContinuation": 5,
+          "readyOnlyAtCorrection": true,
+          "timeline": [
+            {
+              "continuationMoves": 1,
+              "readiness": {
+                "stateIdentity": "73a33c394b4d6f64df201ea77e636bebbefe093d65284774c4adfbf4e21af82b",
+                "orderedInputIds": [
+                  "S024",
+                  "S026",
+                  "P026",
+                  "S028",
+                  "P028",
+                  "S027"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 2,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 256
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S024",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S026",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S028",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S027",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 1024
+                }
+              ],
+              "selectedPoints": 15680,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "f14a0281f74cc433aa23d225e45643fa06f791c756573f4c874e40042dd02a6a"
+            },
+            {
+              "continuationMoves": 2,
+              "readiness": {
+                "stateIdentity": "f14a0281f74cc433aa23d225e45643fa06f791c756573f4c874e40042dd02a6a",
+                "orderedInputIds": [
+                  "S024",
+                  "S026",
+                  "P026",
+                  "S028",
+                  "P028",
+                  "S027"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 2,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 256
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S024",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S026",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S028",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S027",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 3072,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "690d6f1e3d86eef4d42d6ba424443d84ec5d40fb81aa76de300c5a7fee7a65d1"
+            },
+            {
+              "continuationMoves": 3,
+              "readiness": {
+                "stateIdentity": "690d6f1e3d86eef4d42d6ba424443d84ec5d40fb81aa76de300c5a7fee7a65d1",
+                "orderedInputIds": [
+                  "S024",
+                  "S026",
+                  "P026",
+                  "S028",
+                  "P028",
+                  "S027"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 2,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 256
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S024",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S026",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S028",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S027",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                }
+              ],
+              "selectedPoints": 1536,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "6f979b63df3a5b64b3b7d8a1fbbca75371b4a1cf06f8e14497aa8d7a1b9d4260"
+            },
+            {
+              "continuationMoves": 4,
+              "readiness": {
+                "stateIdentity": "6f979b63df3a5b64b3b7d8a1fbbca75371b4a1cf06f8e14497aa8d7a1b9d4260",
+                "orderedInputIds": [
+                  "S024",
+                  "S026",
+                  "P026",
+                  "S028",
+                  "P028",
+                  "S027"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 2,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 256
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S024",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S026",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S028",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S027",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 4,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 1024,
+              "createdContributingRootIds": [
+                "S024",
+                "S026",
+                "S027",
+                "S028"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "b5dccbd833babf44c3038175f6920491ae2bc8fca3ec630a8e82429a93090fb3"
+            },
+            {
+              "continuationMoves": 5,
+              "readiness": {
+                "stateIdentity": "b5dccbd833babf44c3038175f6920491ae2bc8fca3ec630a8e82429a93090fb3",
+                "orderedInputIds": [
+                  "S024",
+                  "S026",
+                  "P026",
+                  "S028",
+                  "P028",
+                  "S027"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S024",
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 1,
+                    "id": "S026",
+                    "x": 2,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 2,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "index": 3,
+                    "id": "S028",
+                    "x": 2,
+                    "y": 7,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "S027",
+                    "x": 2,
+                    "y": 6,
+                    "value": 256
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 2048,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M005"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "9f6c4dd1fb2a8f8728bae932c99b59a942fffbd62cca5f11bca7226beb82b00d"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "move": 9,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "correctionContinuation": 4,
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "correctionContinuation": 4,
+          "firstReadyContinuation": 4,
+          "readyOnlyAtCorrection": true,
+          "timeline": [
+            {
+              "continuationMoves": 1,
+              "readiness": {
+                "stateIdentity": "bada8872a439f7c22e0f74de09aac22a3a615fe740ce541e2de27c5aa02d43d0",
+                "orderedInputIds": [
+                  "S019",
+                  "S020",
+                  "S008",
+                  "S018",
+                  "S017",
+                  "S016",
+                  "S015",
+                  "S007",
+                  "M003",
+                  "P010"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 9,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S019",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S008",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S018",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S017",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S015",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 7,
+                    "id": "S007",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 512,
+                    "createdAt": 3
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "selectedPoints": 24576,
+              "createdContributingRootIds": [
+                "S002"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "d950a0fb842e33d2c58c9c817a833a96b4432475dbdc22dd84b6ff889756113b"
+            },
+            {
+              "continuationMoves": 2,
+              "readiness": {
+                "stateIdentity": "d950a0fb842e33d2c58c9c817a833a96b4432475dbdc22dd84b6ff889756113b",
+                "orderedInputIds": [
+                  "S019",
+                  "S020",
+                  "S008",
+                  "S018",
+                  "S017",
+                  "S016",
+                  "S015",
+                  "S007",
+                  "M003",
+                  "P010"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 9,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S019",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S008",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S018",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S017",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S015",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 7,
+                    "id": "S007",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 512,
+                    "createdAt": 3
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [
+                "S007",
+                "S008",
+                "S009"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "25d5d8816eb1e87644400177c520ec653aa5606cb664193be57af8a23e3b177c"
+            },
+            {
+              "continuationMoves": 3,
+              "readiness": {
+                "stateIdentity": "25d5d8816eb1e87644400177c520ec653aa5606cb664193be57af8a23e3b177c",
+                "orderedInputIds": [
+                  "S019",
+                  "S020",
+                  "S008",
+                  "S018",
+                  "S017",
+                  "S016",
+                  "S015",
+                  "S007",
+                  "M003",
+                  "P010"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 2,
+                    "id": "S008",
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "index": 7,
+                    "id": "S007",
+                    "x": 0,
+                    "y": 0,
+                    "value": 256
+                  },
+                  {
+                    "index": 9,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S019",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S018",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S017",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S015",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 512,
+                    "createdAt": 3
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 1536,
+              "createdContributingRootIds": [
+                "S015",
+                "S016",
+                "S017",
+                "S018",
+                "S019",
+                "S020"
+              ],
+              "createdContributingMergeNodeIds": [
+                "M003"
+              ],
+              "movedDirectInputs": [
+                {
+                  "id": "S008",
+                  "before": {
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  }
+                }
+              ],
+              "postStateIdentity": "05ae93cb128c3bda737b1af4358223ae53c611e4bc21f6772a9c8904ac3194ea"
+            },
+            {
+              "continuationMoves": 4,
+              "readiness": {
+                "stateIdentity": "05ae93cb128c3bda737b1af4358223ae53c611e4bc21f6772a9c8904ac3194ea",
+                "orderedInputIds": [
+                  "S019",
+                  "S020",
+                  "S008",
+                  "S018",
+                  "S017",
+                  "S016",
+                  "S015",
+                  "S007",
+                  "M003",
+                  "P010"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S019",
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "S020",
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S008",
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "S018",
+                    "x": 2,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "S017",
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "index": 5,
+                    "id": "S016",
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "index": 6,
+                    "id": "S015",
+                    "x": 1,
+                    "y": 0,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "S007",
+                    "x": 0,
+                    "y": 0,
+                    "value": 256
+                  },
+                  {
+                    "index": 8,
+                    "id": "M003",
+                    "x": 1,
+                    "y": 1,
+                    "value": 512
+                  },
+                  {
+                    "index": 9,
+                    "id": "P010",
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 512
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                }
+              ],
+              "selectedPoints": 10560,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M004"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "582434aa123cc7d0135152bec9de9a51c25c44948236bcf78b4124e13d9de618"
+            }
+          ]
+        },
+        "champion": {
+          "arm": "champion",
+          "correctionContinuation": 4,
+          "firstReadyContinuation": 4,
+          "readyOnlyAtCorrection": true,
+          "timeline": [
+            {
+              "continuationMoves": 1,
+              "readiness": {
+                "stateIdentity": "68cf27fcab93ba1919b9381870804abafca74d180a05da96188960f8957a2c40",
+                "orderedInputIds": [
+                  "S020",
+                  "S019",
+                  "S017",
+                  "P024",
+                  "P031",
+                  "P027",
+                  "S016",
+                  "P022",
+                  "P029",
+                  "P030",
+                  "P025",
+                  "M003"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 3,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P031",
+                    "x": 2,
+                    "y": 7,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "P027",
+                    "x": 2,
+                    "y": 6,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P022",
+                    "x": 1,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "index": 8,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 10,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S019",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S017",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 11,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 4096,
+                    "createdAt": 3
+                  }
+                ],
+                "missingAdjacencyLinks": [
+                  {
+                    "leftId": "P024",
+                    "rightId": "P031",
+                    "left": {
+                      "x": 3,
+                      "y": 5,
+                      "value": 128
+                    },
+                    "right": {
+                      "x": 2,
+                      "y": 7,
+                      "value": 256
+                    }
+                  },
+                  {
+                    "leftId": "P022",
+                    "rightId": "P029",
+                    "left": {
+                      "x": 1,
+                      "y": 5,
+                      "value": 512
+                    },
+                    "right": {
+                      "x": 0,
+                      "y": 7,
+                      "value": 1024
+                    }
+                  }
+                ],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "ca89a7dcc6131f5068582fed03a35a461b8beded2566d60ea169b08da156a08f"
+            },
+            {
+              "continuationMoves": 2,
+              "readiness": {
+                "stateIdentity": "ca89a7dcc6131f5068582fed03a35a461b8beded2566d60ea169b08da156a08f",
+                "orderedInputIds": [
+                  "S020",
+                  "S019",
+                  "S017",
+                  "P024",
+                  "P031",
+                  "P027",
+                  "S016",
+                  "P022",
+                  "P029",
+                  "P030",
+                  "P025",
+                  "M003"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 3,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P031",
+                    "x": 2,
+                    "y": 7,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "P027",
+                    "x": 2,
+                    "y": 6,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P022",
+                    "x": 1,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "index": 8,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 10,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S019",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S017",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S016",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 11,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 4096,
+                    "createdAt": 3
+                  }
+                ],
+                "missingAdjacencyLinks": [
+                  {
+                    "leftId": "P024",
+                    "rightId": "P031",
+                    "left": {
+                      "x": 3,
+                      "y": 5,
+                      "value": 128
+                    },
+                    "right": {
+                      "x": 2,
+                      "y": 7,
+                      "value": 256
+                    }
+                  },
+                  {
+                    "leftId": "P022",
+                    "rightId": "P029",
+                    "left": {
+                      "x": 1,
+                      "y": 5,
+                      "value": 512
+                    },
+                    "right": {
+                      "x": 0,
+                      "y": 7,
+                      "value": 1024
+                    }
+                  }
+                ],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [
+                "S016",
+                "S017"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "b066338137c18c5441937aad7e6387d818eba980b4a2d14d81f44b5ed9dd044b"
+            },
+            {
+              "continuationMoves": 3,
+              "readiness": {
+                "stateIdentity": "b066338137c18c5441937aad7e6387d818eba980b4a2d14d81f44b5ed9dd044b",
+                "orderedInputIds": [
+                  "S020",
+                  "S019",
+                  "S017",
+                  "P024",
+                  "P031",
+                  "P027",
+                  "S016",
+                  "P022",
+                  "P029",
+                  "P030",
+                  "P025",
+                  "M003"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 2,
+                    "id": "S017",
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P031",
+                    "x": 2,
+                    "y": 7,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "P027",
+                    "x": 2,
+                    "y": 6,
+                    "value": 256
+                  },
+                  {
+                    "index": 6,
+                    "id": "S016",
+                    "x": 1,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P022",
+                    "x": 1,
+                    "y": 5,
+                    "value": 512
+                  },
+                  {
+                    "index": 8,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 10,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 1,
+                    "id": "S019",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 11,
+                    "id": "M003",
+                    "kind": "merge",
+                    "value": 4096,
+                    "createdAt": 3
+                  }
+                ],
+                "missingAdjacencyLinks": [
+                  {
+                    "leftId": "P024",
+                    "rightId": "P031",
+                    "left": {
+                      "x": 3,
+                      "y": 5,
+                      "value": 128
+                    },
+                    "right": {
+                      "x": 2,
+                      "y": 7,
+                      "value": 256
+                    }
+                  },
+                  {
+                    "leftId": "P027",
+                    "rightId": "S016",
+                    "left": {
+                      "x": 2,
+                      "y": 6,
+                      "value": 256
+                    },
+                    "right": {
+                      "x": 1,
+                      "y": 4,
+                      "value": 256
+                    }
+                  },
+                  {
+                    "leftId": "P022",
+                    "rightId": "P029",
+                    "left": {
+                      "x": 1,
+                      "y": 5,
+                      "value": 512
+                    },
+                    "right": {
+                      "x": 0,
+                      "y": 7,
+                      "value": 1024
+                    }
+                  }
+                ],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                }
+              ],
+              "selectedPoints": 6144,
+              "createdContributingRootIds": [
+                "S019",
+                "S020"
+              ],
+              "createdContributingMergeNodeIds": [
+                "M003"
+              ],
+              "movedDirectInputs": [
+                {
+                  "id": "S017",
+                  "before": {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  }
+                },
+                {
+                  "id": "P024",
+                  "before": {
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 6,
+                    "value": 128
+                  }
+                },
+                {
+                  "id": "S016",
+                  "before": {
+                    "x": 1,
+                    "y": 4,
+                    "value": 256
+                  },
+                  "after": {
+                    "x": 1,
+                    "y": 5,
+                    "value": 256
+                  }
+                },
+                {
+                  "id": "P022",
+                  "before": {
+                    "x": 1,
+                    "y": 5,
+                    "value": 512
+                  },
+                  "after": {
+                    "x": 1,
+                    "y": 6,
+                    "value": 512
+                  }
+                }
+              ],
+              "postStateIdentity": "41ab91b374c67d87bbfb25f2a72dd2e36f9268b6e58acc04830a8b1c8b75a07a"
+            },
+            {
+              "continuationMoves": 4,
+              "readiness": {
+                "stateIdentity": "41ab91b374c67d87bbfb25f2a72dd2e36f9268b6e58acc04830a8b1c8b75a07a",
+                "orderedInputIds": [
+                  "S020",
+                  "S019",
+                  "S017",
+                  "P024",
+                  "P031",
+                  "P027",
+                  "S016",
+                  "P022",
+                  "P029",
+                  "P030",
+                  "P025",
+                  "M003"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "S020",
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "S019",
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S017",
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "P031",
+                    "x": 2,
+                    "y": 7,
+                    "value": 256
+                  },
+                  {
+                    "index": 5,
+                    "id": "P027",
+                    "x": 2,
+                    "y": 6,
+                    "value": 256
+                  },
+                  {
+                    "index": 6,
+                    "id": "S016",
+                    "x": 1,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "index": 7,
+                    "id": "P022",
+                    "x": 1,
+                    "y": 6,
+                    "value": 512
+                  },
+                  {
+                    "index": 8,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 10,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  },
+                  {
+                    "index": 11,
+                    "id": "M003",
+                    "x": 0,
+                    "y": 5,
+                    "value": 4096
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 4096
+                }
+              ],
+              "selectedPoints": 48960,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M004"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "bc2a79e4c4ca65270dbede62d7a8bf5c583753435e64e1080ada4b049e43e062"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "move": 11,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "correctionContinuation": 4,
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "correctionContinuation": 4,
+          "firstReadyContinuation": 3,
+          "readyOnlyAtCorrection": false,
+          "timeline": [
+            {
+              "continuationMoves": 1,
+              "readiness": {
+                "stateIdentity": "0cd93caff934dee876e633df22dc3d82f09ad641270b1ac1b085ec82197a45d6",
+                "orderedInputIds": [
+                  "M002",
+                  "P024",
+                  "P028",
+                  "P032",
+                  "P031",
+                  "P030",
+                  "P029",
+                  "P026",
+                  "P021",
+                  "P025"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 1,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "index": 2,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 3,
+                    "id": "P032",
+                    "x": 3,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 4,
+                    "id": "P031",
+                    "x": 2,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 5,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 6,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 7,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 8,
+                    "id": "P021",
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "M002",
+                    "kind": "merge",
+                    "value": 1024,
+                    "createdAt": 2
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 256
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 1024
+                }
+              ],
+              "selectedPoints": 13760,
+              "createdContributingRootIds": [
+                "S001",
+                "S004",
+                "S005",
+                "S007",
+                "S008",
+                "S009"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "3fcd71785d2d121277a1d4fb129e52f371408010d2c5347da09ae669fe951040"
+            },
+            {
+              "continuationMoves": 2,
+              "readiness": {
+                "stateIdentity": "3fcd71785d2d121277a1d4fb129e52f371408010d2c5347da09ae669fe951040",
+                "orderedInputIds": [
+                  "M002",
+                  "P024",
+                  "P028",
+                  "P032",
+                  "P031",
+                  "P030",
+                  "P029",
+                  "P026",
+                  "P021",
+                  "P025"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 1,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "index": 2,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 3,
+                    "id": "P032",
+                    "x": 3,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 4,
+                    "id": "P031",
+                    "x": 2,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 5,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 6,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 7,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 8,
+                    "id": "P021",
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 0,
+                    "id": "M002",
+                    "kind": "merge",
+                    "value": 1024,
+                    "createdAt": 2
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M002"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff"
+            },
+            {
+              "continuationMoves": 3,
+              "readiness": {
+                "stateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+                "orderedInputIds": [
+                  "M002",
+                  "P024",
+                  "P028",
+                  "P032",
+                  "P031",
+                  "P030",
+                  "P029",
+                  "P026",
+                  "P021",
+                  "P025"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "M002",
+                    "x": 2,
+                    "y": 4,
+                    "value": 1024
+                  },
+                  {
+                    "index": 1,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "index": 2,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 3,
+                    "id": "P032",
+                    "x": 3,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 4,
+                    "id": "P031",
+                    "x": 2,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 5,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 6,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 7,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 8,
+                    "id": "P021",
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 3072,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520"
+            },
+            {
+              "continuationMoves": 4,
+              "readiness": {
+                "stateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520",
+                "orderedInputIds": [
+                  "M002",
+                  "P024",
+                  "P028",
+                  "P032",
+                  "P031",
+                  "P030",
+                  "P029",
+                  "P026",
+                  "P021",
+                  "P025"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "M002",
+                    "x": 2,
+                    "y": 4,
+                    "value": 1024
+                  },
+                  {
+                    "index": 1,
+                    "id": "P024",
+                    "x": 3,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "index": 2,
+                    "id": "P028",
+                    "x": 3,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 3,
+                    "id": "P032",
+                    "x": 3,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 4,
+                    "id": "P031",
+                    "x": 2,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 5,
+                    "id": "P030",
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 6,
+                    "id": "P029",
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "index": 7,
+                    "id": "P026",
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "index": 8,
+                    "id": "P021",
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "index": 9,
+                    "id": "P025",
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "selectedPoints": 56320,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M004"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "d7e7b3c853ff50eb0d09295ed84580c943a7da77eea230973590ee8e54c63470"
+            }
+          ]
+        },
+        "champion": {
+          "arm": "champion",
+          "correctionContinuation": 4,
+          "firstReadyContinuation": 4,
+          "readyOnlyAtCorrection": true,
+          "timeline": [
+            {
+              "continuationMoves": 1,
+              "readiness": {
+                "stateIdentity": "f29c3cf69630395a9b7759f5dabd1bacb00aea6f4bfab07d548f035f90e4ff98",
+                "orderedInputIds": [
+                  "P012",
+                  "S027",
+                  "S018",
+                  "S014",
+                  "S023",
+                  "S025",
+                  "S024",
+                  "S004",
+                  "S011",
+                  "S009"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 1,
+                    "id": "S027",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S018",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S014",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S023",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S025",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S024",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 7,
+                    "id": "S004",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 1,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "S011",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 9,
+                    "id": "S009",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 3,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 4,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 1536,
+              "createdContributingRootIds": [
+                "S004"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [],
+              "postStateIdentity": "508e31498ec99f6387141df7dc8d87775ce7378f62f89e8f7224a74149796af8"
+            },
+            {
+              "continuationMoves": 2,
+              "readiness": {
+                "stateIdentity": "508e31498ec99f6387141df7dc8d87775ce7378f62f89e8f7224a74149796af8",
+                "orderedInputIds": [
+                  "P012",
+                  "S027",
+                  "S018",
+                  "S014",
+                  "S023",
+                  "S025",
+                  "S024",
+                  "S004",
+                  "S011",
+                  "S009"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "index": 7,
+                    "id": "S004",
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 1,
+                    "id": "S027",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 2,
+                    "id": "S018",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 3,
+                    "id": "S014",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S023",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S025",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S024",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 8,
+                    "id": "S011",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 9,
+                    "id": "S009",
+                    "kind": "root",
+                    "value": 256,
+                    "createdAt": 2,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 3,
+                  "value": 256
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 512
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 512
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 1024
+                }
+              ],
+              "selectedPoints": 48960,
+              "createdContributingRootIds": [
+                "S009",
+                "S011",
+                "S014",
+                "S018"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [
+                {
+                  "id": "P012",
+                  "before": {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 4,
+                    "value": 64
+                  }
+                },
+                {
+                  "id": "S004",
+                  "before": {
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  }
+                }
+              ],
+              "postStateIdentity": "4b3d049977691bd08fd21b6a41a6daf44f100fe8b7b715fbd2ea0d79014f171c"
+            },
+            {
+              "continuationMoves": 3,
+              "readiness": {
+                "stateIdentity": "4b3d049977691bd08fd21b6a41a6daf44f100fe8b7b715fbd2ea0d79014f171c",
+                "orderedInputIds": [
+                  "P012",
+                  "S027",
+                  "S018",
+                  "S014",
+                  "S023",
+                  "S025",
+                  "S024",
+                  "S004",
+                  "S011",
+                  "S009"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S018",
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "S014",
+                    "x": 0,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 7,
+                    "id": "S004",
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "index": 8,
+                    "id": "S011",
+                    "x": 3,
+                    "y": 1,
+                    "value": 256
+                  },
+                  {
+                    "index": 9,
+                    "id": "S009",
+                    "x": 3,
+                    "y": 0,
+                    "value": 256
+                  }
+                ],
+                "missingDirectInputs": [
+                  {
+                    "index": 1,
+                    "id": "S027",
+                    "kind": "root",
+                    "value": 64,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 4,
+                    "id": "S023",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 5,
+                    "id": "S025",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  },
+                  {
+                    "index": 6,
+                    "id": "S024",
+                    "kind": "root",
+                    "value": 128,
+                    "createdAt": 3,
+                    "origin": "continuation-spawn"
+                  }
+                ],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": false,
+                "distinct": false,
+                "engineValid": false,
+                "routeExecutable": false
+              },
+              "selectedChain": [
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 128
+                }
+              ],
+              "selectedPoints": 5120,
+              "createdContributingRootIds": [
+                "S023",
+                "S024",
+                "S025",
+                "S027"
+              ],
+              "createdContributingMergeNodeIds": [],
+              "movedDirectInputs": [
+                {
+                  "id": "P012",
+                  "before": {
+                    "x": 3,
+                    "y": 4,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 5,
+                    "value": 64
+                  }
+                },
+                {
+                  "id": "S018",
+                  "before": {
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  "after": {
+                    "x": 1,
+                    "y": 6,
+                    "value": 64
+                  }
+                },
+                {
+                  "id": "S014",
+                  "before": {
+                    "x": 0,
+                    "y": 4,
+                    "value": 128
+                  },
+                  "after": {
+                    "x": 0,
+                    "y": 5,
+                    "value": 128
+                  }
+                },
+                {
+                  "id": "S004",
+                  "before": {
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  }
+                },
+                {
+                  "id": "S011",
+                  "before": {
+                    "x": 3,
+                    "y": 1,
+                    "value": 256
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 2,
+                    "value": 256
+                  }
+                },
+                {
+                  "id": "S009",
+                  "before": {
+                    "x": 3,
+                    "y": 0,
+                    "value": 256
+                  },
+                  "after": {
+                    "x": 3,
+                    "y": 1,
+                    "value": 256
+                  }
+                }
+              ],
+              "postStateIdentity": "365f1658eb06206ea5a013e573e5b8ce52cd038dedb7fdf3332f9551ca30b6d5"
+            },
+            {
+              "continuationMoves": 4,
+              "readiness": {
+                "stateIdentity": "365f1658eb06206ea5a013e573e5b8ce52cd038dedb7fdf3332f9551ca30b6d5",
+                "orderedInputIds": [
+                  "P012",
+                  "S027",
+                  "S018",
+                  "S014",
+                  "S023",
+                  "S025",
+                  "S024",
+                  "S004",
+                  "S011",
+                  "S009"
+                ],
+                "presentInputs": [
+                  {
+                    "index": 0,
+                    "id": "P012",
+                    "x": 3,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "index": 1,
+                    "id": "S027",
+                    "x": 2,
+                    "y": 6,
+                    "value": 64
+                  },
+                  {
+                    "index": 2,
+                    "id": "S018",
+                    "x": 1,
+                    "y": 6,
+                    "value": 64
+                  },
+                  {
+                    "index": 3,
+                    "id": "S014",
+                    "x": 0,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 4,
+                    "id": "S023",
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 5,
+                    "id": "S025",
+                    "x": 1,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "index": 6,
+                    "id": "S024",
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "index": 7,
+                    "id": "S004",
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "index": 8,
+                    "id": "S011",
+                    "x": 3,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "index": 9,
+                    "id": "S009",
+                    "x": 3,
+                    "y": 1,
+                    "value": 256
+                  }
+                ],
+                "missingDirectInputs": [],
+                "missingAdjacencyLinks": [],
+                "missingValueLinks": [],
+                "allPresent": true,
+                "distinct": true,
+                "engineValid": true,
+                "routeExecutable": true
+              },
+              "selectedChain": [
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 64
+                },
+                {
+                  "x": 2,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 5,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 3,
+                  "value": 128
+                },
+                {
+                  "x": 3,
+                  "y": 2,
+                  "value": 256
+                },
+                {
+                  "x": 3,
+                  "y": 1,
+                  "value": 256
+                }
+              ],
+              "selectedPoints": 6720,
+              "createdContributingRootIds": [],
+              "createdContributingMergeNodeIds": [
+                "M004"
+              ],
+              "movedDirectInputs": [],
+              "postStateIdentity": "b24e9f6ba22eb0460e4b1f1b4fdd58bbb7f9c486331470442ee736b4ce2653a4"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "disposition": "REPAIRED_TIMELINE_CONFIRMED",
+  "artifactIdentity": "452ba78783b6254110b25b23fdfa180e47062b324973010de18b987e45408a95"
+}

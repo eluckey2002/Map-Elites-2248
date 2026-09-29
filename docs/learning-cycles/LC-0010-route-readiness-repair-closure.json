@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "LC-0010-route-readiness-repair-closeout-contract.json",
+    "sha256": "81d5d1aa3de3414d6c4e5066530b5efa0a2be2e86c24e94a788038931b4b5cde"
+  },
+  "run_id": "LC-0010-REPORTABLE-1",
+  "final_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1-frozen-ancestry-and-replay-identity",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "All frozen sources matched; the four cells, eight arm trajectories, correction graphs, objectives, and continuation policy replayed exactly."
+    },
+    {
+      "id": "C2-invalid-predecessor-retained",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "The original analyzer, raw artifact, and INVALID closure remained hash-bound; qualification reproduced all three false predecessor links."
+    },
+    {
+      "id": "C3-ready-route-known-good",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "The repaired public assessor accepted the legal 8-8-8-8-16 route through the real engine validity seam."
+    },
+    {
+      "id": "C4-missing-node-known-negative",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "Removing one direct input kept readiness false and named the exact missing node."
+    },
+    {
+      "id": "C5-broken-adjacency-known-negative",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "Separating one correctly valued pair kept readiness false and named the exact broken adjacency."
+    },
+    {
+      "id": "C6-partial-prefix-valid-double",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "The retained failed assessor falsely rejected the later 8-to-16 pair after the first input was removed, while the repaired assessor preserved it as valid at its frozen route index."
+    },
+    {
+      "id": "C7-planted-false-ready",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "The public validator rejected the planted ready claim that retained real missing-input evidence."
+    },
+    {
+      "id": "C8-restoration-and-persistence",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "The repaired assessor identity was restored and disposable raw evidence survived a planted interpretation failure."
+    },
+    {
+      "id": "move-4-readiness",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "Both move-4 routes first became executable at correction continuation 4 with exact earlier missing-node and adjacency evidence."
+    },
+    {
+      "id": "move-6-readiness",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "Both move-6 routes first became executable at correction continuation 5 with exact earlier missing-node and adjacency evidence."
+    },
+    {
+      "id": "move-9-readiness",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "Both move-9 routes first became executable at correction continuation 4, and the three false predecessor missing-value links disappeared."
+    },
+    {
+      "id": "move-11-readiness",
+      "status": "PASS",
+      "evidence_subject_identity": "555093c0bb3f62829abbde1e38a4d953c61aee3dd3969e94e12e33d46f8f2894",
+      "reason": "The champion route first became ready at correction continuation 4; the winning owner route was ready at continuation 3, remained intact through a different 3,072-point move, and was cashed for 56,320 points at continuation 4."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw",
+      "path": "LC-0010-route-readiness-repair-raw.json",
+      "sha256": "65d842dc417b76064e2b623a9d7a4be0bfbac9875580b8fa51848dcb65f1b5db"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "LC-0010-route-readiness-repair-recomputed.json",
+      "sha256": "2f8fd42079cef99a98d5ba08956ea1cb233d41c82714029103a47fc5b972427c"
+    }
+  ],
+  "primary_outcome": "REPAIRED_TIMELINE_CONFIRMED",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "LC-0010-REPORTABLE-1",
+      "exit_code": 0,
+      "artifact_ids": [
+        "raw",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}

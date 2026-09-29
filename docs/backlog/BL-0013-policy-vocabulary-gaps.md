@@ -87,15 +87,14 @@ is the reason to define the vocabulary as a set rather than as four patches.
 
 ## Next action
 
-Do not implement another term yet. `RESULT-0061` traces every correction chain
-back to the post-decision board. Each eventual winner preserves a larger
-higher-value reservoir, manufactures at least one missing rung, and cashes out
-a compatible small-to-large route. The move-9 loser shows why a bridge alone
-is insufficient: it manufactures only a `512` rung without the larger prepared
-reservoir behind it. Next build a replay-time readiness timeline for the same
-eight arms: show the exact missing rung or adjacency before each continuation
-and when the full route first becomes executable. Keep that diagnostic; do not
-name a metric yet.
+Do not implement another term yet. `RESULT-0062` shows that seven of the eight
+frozen correction routes become executable only at cash-out, but the winning
+move-11 owner route is already legal one move earlier. The unchanged champion
+takes a separate 3,072-point chain without moving or consuming any route input,
+then cashes the preserved route for 56,320. Next run one exact two-arm
+counterfactual from that pre-continuation-3 state: cash now versus the observed
+one-move wait, with RNG, remaining moves, target-stop objective, and subsequent
+champion frozen. This tests timing directly without naming a general metric.
 
 ## History
 
@@ -152,3 +151,14 @@ name a metric yet.
   counterexample to bridge-building alone. The next diagnostic is when each
   route becomes executable and which rung or adjacency is missing beforehand;
   no metric is yet authorized.
+- 2026-09-28 — LC-0009 attempted that readiness timeline but was closed
+  `INVALID`: filtering absent inputs out of the prefix made three valid later
+  doubles appear invalid. `FR-0007` records the defect and LC-0010 proves the
+  old assessor fails the missing-earlier-input regression while the repaired
+  assessor passes it.
+- 2026-09-28 — `RESULT-0062` then confirmed the corrected eight-arm timeline.
+  Seven routes first become executable at cash-out. The move-11 winning owner
+  route is ready one move early, survives a separate 3,072-point move intact,
+  and is cashed for 56,320 next. Route readiness and urgency are distinct in
+  this exact state; whether waiting is better remains the next counterfactual,
+  not an adopted policy term.

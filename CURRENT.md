@@ -128,6 +128,19 @@ prospective policy signal. Next show when each route becomes executable during
 the replay and what exact rung or adjacency was missing beforehand; still do
 not define a metric.
 
+[RESULT-0062](EVIDENCE_LEDGER.md#result-0062--one-winning-prepared-route-is-held-intact-for-a-move-after-it-becomes-executable)
+closes that readiness diagnostic after rejecting and recording one defective
+run. Seven routes first become legal only at cash-out. The move-11 winning
+owner route is the exception: it is fully executable before continuation 3,
+the champion instead takes a separate 3,072-point chain without moving or
+consuming any route input, and then cashes the preserved route for 56,320 on
+continuation 4. This exact case separates route readiness from urgency, but
+does not prove that waiting was optimal. The next bounded step is a two-arm
+counterfactual at that exact pre-continuation-3 state: cash now versus the
+observed one-move wait, under identical RNG, remaining moves, target-stop
+objective, and subsequent champion. Do not define a metric or modify the
+champion.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.
