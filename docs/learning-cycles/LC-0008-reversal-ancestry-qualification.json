@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0008-harness-qualification",
+  "status": "PASS",
+  "oracle": "docs/learning-cycles/LC-0008-reversal-ancestry-contract.md",
+  "manifestIdentity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+  "harnessIdentity": "f1b780435d77592104c4d1190935f60d49d96bff1613e6a7653bd07551e7ff58",
+  "attempt": 1,
+  "committed": {
+    "contract": true,
+    "priorRaw": true,
+    "lc0007Contract": true,
+    "lc0007Manifest": true,
+    "lc0007Qualification": true,
+    "lc0007Raw": true,
+    "priorHarness": true,
+    "recording": true,
+    "engine": true,
+    "bot": true,
+    "harness": true,
+    "test": true
+  },
+  "coherentSubstitutionRejected": true,
+  "trackerIdentityBefore": "e99b8441269b59d0f9ffb779bc15f146fc2c8de18d36dff5c18c03307c0be2b3",
+  "trackerIdentityAfter": "e99b8441269b59d0f9ffb779bc15f146fc2c8de18d36dff5c18c03307c0be2b3",
+  "preOutcomeAdmission": {
+    "pass": true,
+    "verifier": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/tools/vendor/close-experiment/verify_closure.py",
+    "resolvedCwd": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27",
+    "resolvedArgvFiles": [
+      "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/tools/diagnose-lc0008-reversal-ancestry.js",
+      "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/docs/learning-cycles/LC-0008-reversal-ancestry-raw.json"
+    ],
+    "resolvedArgvFilesExist": true,
+    "verdict": {
+      "checked_artifacts": [
+        "primary-recomputation",
+        "raw"
+      ],
+      "checked_claims": [
+        "C1-frozen-replay-and-panel-identity",
+        "C2-objective-and-continuation-equivalence",
+        "C3-merge-union-known-good",
+        "C4-unrelated-root-known-negative",
+        "C5-planted-false-origin",
+        "C6-conservation-mutation",
+        "C7-restoration-and-persistence",
+        "move-11-ancestry",
+        "move-4-ancestry",
+        "move-6-ancestry",
+        "move-9-ancestry"
+      ],
+      "closure_status": "CLOSED",
+      "contract_sha256": "3624dfd14ed2c9be44a162a668e38342ce9498d4eb7b5b823f0ed98abadd0331",
+      "errors": [],
+      "expected_contract_sha256": "3624dfd14ed2c9be44a162a668e38342ce9498d4eb7b5b823f0ed98abadd0331",
+      "recomputation": "PASS",
+      "recomputed_output_sha256": "8c9c738e83aa93dd8c0dd90577a059d0b7a39cc7475c7cd1fd0f9c41a31da998",
+      "verdict": "PASS"
+    }
+  },
+  "controls": [
+    {
+      "id": "C1-frozen-replay-and-panel-identity",
+      "pass": true,
+      "observed": {
+        "priorArtifactIdentity": "10a05405746480e7232690115a877c6a0a431cdc7bc182f1147178444d4b23fd",
+        "lc0007RawIdentity": "6074b33ac0d68aba78c0ddd68c94041dc2e871392f9c50d573c00e1fd218dc19",
+        "corrections": [
+          {
+            "move": 4,
+            "continuationMoves": 4
+          },
+          {
+            "move": 6,
+            "continuationMoves": 5
+          },
+          {
+            "move": 9,
+            "continuationMoves": 4
+          },
+          {
+            "move": 11,
+            "continuationMoves": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": "C2-objective-and-continuation-equivalence",
+      "pass": true,
+      "observed": [
+        {
+          "move": 4,
+          "sharedDecisionState": "64b7efe06b0b8b16af0eaaa6d6bbb6db8d170ae238f7e00b37c196e9ac992867"
+        },
+        {
+          "move": 6,
+          "sharedDecisionState": "dbf8b552f217936251a94c544bf90735fc950f711628f271c7d6627f4068ac1e"
+        },
+        {
+          "move": 9,
+          "sharedDecisionState": "243480414fbe094562a9ec1c0a286ce1b3172285326bb317b55555a6cf59e08f"
+        },
+        {
+          "move": 11,
+          "sharedDecisionState": "e04e5ef11ccdb83f572a58330601f3f130c791731790019660ba0ad1fc8b6671"
+        }
+      ]
+    },
+    {
+      "id": "C3-merge-union-known-good",
+      "pass": true,
+      "observed": {
+        "mergeIds": [
+          "M001",
+          "M002"
+        ],
+        "rootCount": 7,
+        "rootValueSum": 48
+      }
+    },
+    {
+      "id": "C4-unrelated-root-known-negative",
+      "pass": true,
+      "observed": {
+        "excludedNode": "P004",
+        "absentFromGraph": true,
+        "liveNodeUnchanged": true
+      }
+    },
+    {
+      "id": "C5-planted-false-origin",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "mutationMessage": "root-origin mismatch for P001"
+      }
+    },
+    {
+      "id": "C6-conservation-mutation",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "mutationMessage": "graph reachability missing node P001"
+      }
+    },
+    {
+      "id": "C7-restoration-and-persistence",
+      "pass": true,
+      "observed": {
+        "plantedFailureObserved": true,
+        "rawRetained": true
+      }
+    }
+  ],
+  "uncertainties": [],
+  "artifactIdentity": "09ce87ea6a4087f2948c5aced2f99858a7e4515cce617b3eb3c9bfe200905df9"
+}
