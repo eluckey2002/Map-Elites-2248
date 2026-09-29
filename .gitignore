@@ -16,3 +16,8 @@ solver/.moves-scores.json
 
 # Regenerable recorded sessions for solver/record-session.js
 solver/.session-*.json
+*.log
+/.blackboard
+/.playwright-mcp
+.blackboard/static/app.js
+/.blackboard
