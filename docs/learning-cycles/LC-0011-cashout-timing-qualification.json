@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0011-harness-qualification",
+  "status": "PASS",
+  "oracle": "docs/learning-cycles/LC-0011-cashout-timing-contract.md",
+  "manifestIdentity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+  "harnessIdentity": "0915f6e7f5d657dc557a9cb355ee950b93bd5f3ce7ab727761d2c87d508dbab0",
+  "attempt": 1,
+  "committed": {
+    "contract": true,
+    "lc0010Contract": true,
+    "lc0010Manifest": true,
+    "lc0010Qualification": true,
+    "lc0010Raw": true,
+    "lc0010Result": true,
+    "lc0010Closure": true,
+    "lc0010Harness": true,
+    "lc0010RepairTest": true,
+    "lc0010ResultTest": true,
+    "lc0007Raw": true,
+    "recording": true,
+    "engine": true,
+    "bot": true,
+    "harness": true,
+    "test": true
+  },
+  "coherentSubstitutionRejected": true,
+  "cashNowExecuted": false,
+  "controls": [
+    {
+      "id": "C1-frozen-source-and-common-state-replay",
+      "pass": true,
+      "observed": {
+        "stateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+        "score": 66752,
+        "moves": 13,
+        "route": [
+          {
+            "x": 2,
+            "y": 4,
+            "value": 1024
+          },
+          {
+            "x": 3,
+            "y": 5,
+            "value": 1024
+          },
+          {
+            "x": 3,
+            "y": 6,
+            "value": 1024
+          },
+          {
+            "x": 3,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 2,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 1,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 7,
+            "value": 1024
+          },
+          {
+            "x": 1,
+            "y": 6,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 5,
+            "value": 1024
+          },
+          {
+            "x": 0,
+            "y": 6,
+            "value": 2048
+          }
+        ]
+      }
+    },
+    {
+      "id": "C2-versioned-reference-and-synthetic-aa",
+      "pass": true,
+      "observed": {
+        "traceA": {
+          "arm": "WAIT_ONE",
+          "start": {
+            "stateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+            "score": 66752,
+            "moves": 13,
+            "maxMoves": 24,
+            "targetScore": 126000
+          },
+          "firstActionIdentity": "a2bef0bab40498650530c1242d620569d7b3e03826cd0b116596867312f3a181",
+          "trace": [
+            {
+              "source": "champion",
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 256
+                }
+              ],
+              "points": 3072,
+              "score": 69824,
+              "moves": 14,
+              "preStateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+              "postStateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520",
+              "refillRngCalls": 7,
+              "terminal": null
+            },
+            {
+              "source": "champion",
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "points": 56320,
+              "score": 126144,
+              "moves": 15,
+              "preStateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520",
+              "postStateIdentity": "d7e7b3c853ff50eb0d09295ed84580c943a7da77eea230973590ee8e54c63470",
+              "refillRngCalls": 9,
+              "terminal": {
+                "outcome": "win",
+                "reason": "target reached",
+                "firstCrossing": 15
+              }
+            }
+          ],
+          "terminal": {
+            "outcome": "win",
+            "reason": "target reached",
+            "firstCrossing": 15
+          },
+          "reachedTarget": true,
+          "firstTargetCrossing": 15,
+          "movesToTarget": 2
+        },
+        "traceB": {
+          "arm": "WAIT_ONE",
+          "start": {
+            "stateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+            "score": 66752,
+            "moves": 13,
+            "maxMoves": 24,
+            "targetScore": 126000
+          },
+          "firstActionIdentity": "a2bef0bab40498650530c1242d620569d7b3e03826cd0b116596867312f3a181",
+          "trace": [
+            {
+              "source": "champion",
+              "chain": [
+                {
+                  "x": 1,
+                  "y": 0,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 1,
+                  "value": 64
+                },
+                {
+                  "x": 0,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 0,
+                  "value": 128
+                },
+                {
+                  "x": 2,
+                  "y": 1,
+                  "value": 128
+                },
+                {
+                  "x": 1,
+                  "y": 2,
+                  "value": 128
+                },
+                {
+                  "x": 0,
+                  "y": 2,
+                  "value": 256
+                }
+              ],
+              "points": 3072,
+              "score": 69824,
+              "moves": 14,
+              "preStateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+              "postStateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520",
+              "refillRngCalls": 7,
+              "terminal": null
+            },
+            {
+              "source": "champion",
+              "chain": [
+                {
+                  "x": 2,
+                  "y": 4,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 3,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 7,
+                  "value": 1024
+                },
+                {
+                  "x": 1,
+                  "y": 6,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 5,
+                  "value": 1024
+                },
+                {
+                  "x": 0,
+                  "y": 6,
+                  "value": 2048
+                }
+              ],
+              "points": 56320,
+              "score": 126144,
+              "moves": 15,
+              "preStateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520",
+              "postStateIdentity": "d7e7b3c853ff50eb0d09295ed84580c943a7da77eea230973590ee8e54c63470",
+              "refillRngCalls": 9,
+              "terminal": {
+                "outcome": "win",
+                "reason": "target reached",
+                "firstCrossing": 15
+              }
+            }
+          ],
+          "terminal": {
+            "outcome": "win",
+            "reason": "target reached",
+            "firstCrossing": 15
+          },
+          "reachedTarget": true,
+          "firstTargetCrossing": 15,
+          "movesToTarget": 2
+        },
+        "pairedDifference": 0
+      }
+    },
+    {
+      "id": "C3-arm-assignment-and-planted-swap",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "message": "CASH_NOW first-action/arm mismatch"
+      }
+    },
+    {
+      "id": "C4-objective-equivalence",
+      "pass": true,
+      "observed": {
+        "targetScore": 126000,
+        "maxMoves": 24,
+        "champion": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65"
+      }
+    },
+    {
+      "id": "C5-known-target-stop-reference",
+      "pass": true,
+      "observed": {
+        "outcome": "win",
+        "reason": "target reached",
+        "firstCrossing": 15
+      }
+    },
+    {
+      "id": "C6-planted-post-target-continuation",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "message": "WAIT_ONE continued after target or terminal"
+      }
+    },
+    {
+      "id": "C7-restoration-and-raw-persistence",
+      "pass": true,
+      "observed": {
+        "plantedFailureObserved": true,
+        "rawRetained": true
+      }
+    },
+    {
+      "id": "C8-executable-closeout-admission",
+      "pass": true,
+      "observed": {
+        "pass": true,
+        "verifier": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/tools/vendor/close-experiment/verify_closure.py",
+        "resolvedCwd": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27",
+        "verdict": {
+          "checked_artifacts": [
+            "primary-recomputation",
+            "raw"
+          ],
+          "checked_claims": [
+            "C1-frozen-source-and-common-state-replay",
+            "C2-versioned-reference-and-synthetic-aa",
+            "C3-arm-assignment-and-planted-swap",
+            "C4-objective-equivalence",
+            "C5-known-target-stop-reference",
+            "C6-planted-post-target-continuation",
+            "C7-restoration-and-raw-persistence",
+            "C8-executable-closeout-admission",
+            "CASH_NOW-terminal-outcome",
+            "WAIT_ONE-terminal-outcome",
+            "exact-paired-target-cost-comparison"
+          ],
+          "closure_status": "CLOSED",
+          "contract_sha256": "4f1668b249d78af44d5e11b42789b3a208b15447378cdfd139b293c8300b06da",
+          "errors": [],
+          "expected_contract_sha256": "4f1668b249d78af44d5e11b42789b3a208b15447378cdfd139b293c8300b06da",
+          "recomputation": "PASS",
+          "recomputed_output_sha256": "26faaf65a11daf74fe3e449386b74ac27de9b419c1521b42a98ce5ed7e163ce2",
+          "verdict": "PASS"
+        }
+      }
+    }
+  ],
+  "uncertainties": [],
+  "artifactIdentity": "3138e92989091126a97f6572082ee6143fc5d0bcf8b94033aeab18634ea15939"
+}
