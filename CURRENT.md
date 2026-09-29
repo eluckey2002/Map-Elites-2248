@@ -116,6 +116,18 @@ persistence is therefore broader than one tile: the next diagnostic should
 trace the full reversal chain back to the post-decision board and expose the
 persistent entry, connectors, and reservoir. Do not define a metric yet.
 
+[RESULT-0061](EVIDENCE_LEDGER.md#result-0061--every-delayed-winner-cashes-out-a-larger-prepared-route)
+completes that ancestry trace. In all four pairs, the eventual winner's
+correction chain draws on more roots and more value already present after the
+decision, and every winner manufactures at least one missing rung before the
+cash-out. The move-9 loser also manufactures a rung but lacks the higher-value
+reservoir behind it, so a bridge alone is not enough. The exact retained pattern
+is now: preserve the reservoir, build the missing entry or connector, then use
+the compatible small-to-large route. This is hindsight ancestry, not yet a
+prospective policy signal. Next show when each route becomes executable during
+the replay and what exact rung or adjacency was missing beforehand; still do
+not define a metric.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.

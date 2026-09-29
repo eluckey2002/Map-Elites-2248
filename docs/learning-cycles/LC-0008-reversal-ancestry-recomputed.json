@@ -1,0 +1,237 @@
+{
+  "artifactIdentity": "2f9558a9c81adf2459b9762e4fbe1ee1515c3358a7edb34d01afe4f093b9fea8",
+  "status": "COMPLETE",
+  "disposition": "FULL_ANCESTRY_TRACED",
+  "cells": [
+    {
+      "move": 4,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "correctionContinuation": 4,
+      "owner": {
+        "decisionSurvivorContributes": false,
+        "postDecisionRootsUsed": 3,
+        "postDecisionRootsUnused": 29,
+        "continuationSpawnRootsUsed": 6,
+        "intermediateMergeCount": 0,
+        "rootValueSum": 1024,
+        "correctionChainSum": 1024,
+        "correctionPoints": 5120,
+        "originBreakdown": [
+          {
+            "origin": "decision-refill",
+            "count": 1,
+            "value": 128
+          },
+          {
+            "origin": "carried-board",
+            "count": 2,
+            "value": 256
+          },
+          {
+            "origin": "continuation-spawn",
+            "count": 6,
+            "value": 640
+          }
+        ]
+      },
+      "champion": {
+        "decisionSurvivorContributes": true,
+        "postDecisionRootsUsed": 16,
+        "postDecisionRootsUnused": 16,
+        "continuationSpawnRootsUsed": 8,
+        "intermediateMergeCount": 2,
+        "rootValueSum": 6336,
+        "correctionChainSum": 6336,
+        "correctionPoints": 31680,
+        "originBreakdown": [
+          {
+            "origin": "decision-survivor",
+            "count": 1,
+            "value": 1024
+          },
+          {
+            "origin": "decision-refill",
+            "count": 5,
+            "value": 576
+          },
+          {
+            "origin": "carried-board",
+            "count": 10,
+            "value": 3904
+          },
+          {
+            "origin": "continuation-spawn",
+            "count": 8,
+            "value": 832
+          }
+        ]
+      }
+    },
+    {
+      "move": 6,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "correctionContinuation": 5,
+      "owner": {
+        "decisionSurvivorContributes": false,
+        "postDecisionRootsUsed": 6,
+        "postDecisionRootsUnused": 26,
+        "continuationSpawnRootsUsed": 11,
+        "intermediateMergeCount": 1,
+        "rootValueSum": 2624,
+        "correctionChainSum": 2624,
+        "correctionPoints": 13120,
+        "originBreakdown": [
+          {
+            "origin": "decision-refill",
+            "count": 3,
+            "value": 448
+          },
+          {
+            "origin": "carried-board",
+            "count": 3,
+            "value": 768
+          },
+          {
+            "origin": "continuation-spawn",
+            "count": 11,
+            "value": 1408
+          }
+        ]
+      },
+      "champion": {
+        "decisionSurvivorContributes": false,
+        "postDecisionRootsUsed": 2,
+        "postDecisionRootsUnused": 30,
+        "continuationSpawnRootsUsed": 4,
+        "intermediateMergeCount": 0,
+        "rootValueSum": 1024,
+        "correctionChainSum": 1024,
+        "correctionPoints": 2048,
+        "originBreakdown": [
+          {
+            "origin": "carried-board",
+            "count": 2,
+            "value": 384
+          },
+          {
+            "origin": "continuation-spawn",
+            "count": 4,
+            "value": 640
+          }
+        ]
+      }
+    },
+    {
+      "move": 9,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "correctionContinuation": 4,
+      "owner": {
+        "decisionSurvivorContributes": false,
+        "postDecisionRootsUsed": 6,
+        "postDecisionRootsUnused": 26,
+        "continuationSpawnRootsUsed": 10,
+        "intermediateMergeCount": 1,
+        "rootValueSum": 2112,
+        "correctionChainSum": 2112,
+        "correctionPoints": 10560,
+        "originBreakdown": [
+          {
+            "origin": "carried-board",
+            "count": 6,
+            "value": 896
+          },
+          {
+            "origin": "continuation-spawn",
+            "count": 10,
+            "value": 1216
+          }
+        ]
+      },
+      "champion": {
+        "decisionSurvivorContributes": true,
+        "postDecisionRootsUsed": 11,
+        "postDecisionRootsUnused": 21,
+        "continuationSpawnRootsUsed": 4,
+        "intermediateMergeCount": 1,
+        "rootValueSum": 9792,
+        "correctionChainSum": 9792,
+        "correctionPoints": 48960,
+        "originBreakdown": [
+          {
+            "origin": "decision-survivor",
+            "count": 1,
+            "value": 1024
+          },
+          {
+            "origin": "carried-board",
+            "count": 10,
+            "value": 8320
+          },
+          {
+            "origin": "continuation-spawn",
+            "count": 4,
+            "value": 448
+          }
+        ]
+      }
+    },
+    {
+      "move": 11,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "correctionContinuation": 4,
+      "owner": {
+        "decisionSurvivorContributes": false,
+        "postDecisionRootsUsed": 13,
+        "postDecisionRootsUnused": 19,
+        "continuationSpawnRootsUsed": 6,
+        "intermediateMergeCount": 1,
+        "rootValueSum": 11264,
+        "correctionChainSum": 11264,
+        "correctionPoints": 56320,
+        "originBreakdown": [
+          {
+            "origin": "decision-refill",
+            "count": 2,
+            "value": 192
+          },
+          {
+            "origin": "carried-board",
+            "count": 11,
+            "value": 10496
+          },
+          {
+            "origin": "continuation-spawn",
+            "count": 6,
+            "value": 576
+          }
+        ]
+      },
+      "champion": {
+        "decisionSurvivorContributes": false,
+        "postDecisionRootsUsed": 1,
+        "postDecisionRootsUnused": 31,
+        "continuationSpawnRootsUsed": 9,
+        "intermediateMergeCount": 0,
+        "rootValueSum": 1344,
+        "correctionChainSum": 1344,
+        "correctionPoints": 6720,
+        "originBreakdown": [
+          {
+            "origin": "carried-board",
+            "count": 1,
+            "value": 64
+          },
+          {
+            "origin": "continuation-spawn",
+            "count": 9,
+            "value": 1280
+          }
+        ]
+      }
+    }
+  ]
+}

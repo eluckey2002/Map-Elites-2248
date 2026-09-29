@@ -87,14 +87,15 @@ is the reason to define the vocabulary as a set rather than as four patches.
 
 ## Next action
 
-Do not implement another term yet. `RESULT-0058` and `RESULT-0059` establish
-the positive and negative exact topology cases. `RESULT-0060` then shows that
-literal persistence of the newly created tile explains only moves 4 and 9:
-the helpful move-6 winner preserves its anchor beyond the reversal, and the
-helpful move-11 winner uses it in an earlier setup rather than the reversal
-chain. Next trace each full reversal chain backward to the post-decision board
-to reveal the persistent entry, connectors, reservoir, and spawned additions.
-Keep that diagnostic; do not name a metric yet.
+Do not implement another term yet. `RESULT-0061` traces every correction chain
+back to the post-decision board. Each eventual winner preserves a larger
+higher-value reservoir, manufactures at least one missing rung, and cashes out
+a compatible small-to-large route. The move-9 loser shows why a bridge alone
+is insufficient: it manufactures only a `512` rung without the larger prepared
+reservoir behind it. Next build a replay-time readiness timeline for the same
+eight arms: show the exact missing rung or adjacency before each continuation
+and when the full route first becomes executable. Keep that diagnostic; do not
+name a metric yet.
 
 ## History
 
@@ -143,3 +144,11 @@ Keep that diagnostic; do not name a metric yet.
   used its anchor in an earlier setup and reversed with other tiles. “Stay the
   course” is therefore a board-plan claim, not a one-tile claim. Trace the full
   reversal-chain ancestry next; do not define a metric yet.
+- 2026-09-28 — `RESULT-0061` completed the full ancestry graph for all eight
+  retained correction chains. Every eventual winner used more post-decision
+  roots and value than its loser and manufactured at least one missing rung
+  before cashing out. The move-9 loser also made an intermediate merge but had
+  no comparable high-value reservoir behind it, establishing the exact-state
+  counterexample to bridge-building alone. The next diagnostic is when each
+  route becomes executable and which rung or adjacency is missing beforehand;
+  no metric is yet authorized.

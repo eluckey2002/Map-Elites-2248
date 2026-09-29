@@ -1,0 +1,5030 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0008-reversal-ancestry-raw",
+  "status": "COMPLETE",
+  "finalSubjectIdentity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+  "sources": {
+    "priorArtifactIdentity": "10a05405746480e7232690115a877c6a0a431cdc7bc182f1147178444d4b23fd",
+    "lc0007ManifestIdentity": "f2f5b5bd82b13eb665bf20251a904fd3f57716e5c58af0dce23b0e45cbfe4f01",
+    "lc0007QualificationIdentity": "592ad88a1804095baee2fbd01381bb6e0c41ab533eb8f4d32716aeecb0d1a4ac",
+    "lc0007RawIdentity": "6074b33ac0d68aba78c0ddd68c94041dc2e871392f9c50d573c00e1fd218dc19",
+    "recordingIdentity": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78"
+  },
+  "controls": {
+    "exactPanelReproduced": true,
+    "objectiveEquivalent": true,
+    "unchangedContinuation": true,
+    "ancestryGraphsValid": true
+  },
+  "cells": [
+    {
+      "move": 4,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "correctionContinuation": 4,
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "postDecisionStateIdentity": "cf11fc9bd8c6ed1453939d095ef04d86b712d4ed9b0ce8416695d8a3eb2375dc",
+          "decisionSurvivorRootId": "P030",
+          "postDecisionRoots": [
+            {
+              "id": "P001",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P002",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P003",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P004",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "id": "P005",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P006",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P007",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P008",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P009",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "id": "P010",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P011",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 2,
+              "value": 256
+            },
+            {
+              "id": "P012",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P013",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "id": "P014",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P015",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P016",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 3,
+              "value": 256
+            },
+            {
+              "id": "P017",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P018",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P019",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P020",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P021",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P022",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "id": "P023",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 5,
+              "value": 256
+            },
+            {
+              "id": "P024",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 5,
+              "value": 128
+            },
+            {
+              "id": "P025",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            },
+            {
+              "id": "P026",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 6,
+              "value": 128
+            },
+            {
+              "id": "P027",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "id": "P028",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 6,
+              "value": 256
+            },
+            {
+              "id": "P029",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P030",
+              "origin": "decision-survivor",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P031",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "id": "P032",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 7,
+              "value": 256
+            }
+          ],
+          "correctionContinuation": 4,
+          "graph": {
+            "correctionNodeId": "M004",
+            "correctionChain": [
+              {
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 256
+              }
+            ],
+            "correctionChainSum": 1024,
+            "correctionPoints": 5120,
+            "roots": [
+              {
+                "id": "P019",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "P020",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "P024",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "S008",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S014",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S015",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S016",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "id": "S020",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S022",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 1,
+                "y": 4,
+                "value": 256
+              }
+            ],
+            "merges": [
+              {
+                "id": "M004",
+                "continuationMoves": 4,
+                "inputNodeIds": [
+                  "S020",
+                  "S008",
+                  "S014",
+                  "S015",
+                  "S016",
+                  "P020",
+                  "P024",
+                  "P019",
+                  "S022"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 5120,
+                "output": {
+                  "x": 1,
+                  "y": 4,
+                  "value": 1024
+                }
+              }
+            ],
+            "postDecisionRootsUsed": [
+              "P019",
+              "P020",
+              "P024"
+            ],
+            "postDecisionRootsUnused": [
+              "P001",
+              "P002",
+              "P003",
+              "P004",
+              "P005",
+              "P006",
+              "P007",
+              "P008",
+              "P009",
+              "P010",
+              "P011",
+              "P012",
+              "P013",
+              "P014",
+              "P015",
+              "P016",
+              "P017",
+              "P018",
+              "P021",
+              "P022",
+              "P023",
+              "P025",
+              "P026",
+              "P027",
+              "P028",
+              "P029",
+              "P030",
+              "P031",
+              "P032"
+            ],
+            "continuationSpawnRootsUsed": [
+              "S008",
+              "S014",
+              "S015",
+              "S016",
+              "S020",
+              "S022"
+            ],
+            "decisionSurvivorContributes": false,
+            "intermediateMergeCount": 0,
+            "originBreakdown": [
+              {
+                "origin": "decision-refill",
+                "count": 1,
+                "value": 128
+              },
+              {
+                "origin": "carried-board",
+                "count": 2,
+                "value": 256
+              },
+              {
+                "origin": "continuation-spawn",
+                "count": 6,
+                "value": 640
+              }
+            ],
+            "rootValueSum": 1024
+          },
+          "graphValid": true
+        },
+        "champion": {
+          "arm": "champion",
+          "postDecisionStateIdentity": "64545cc2e8a678aa33d525176360a90a77b48757274c388d7e0b986edd38becc",
+          "decisionSurvivorRootId": "P030",
+          "postDecisionRoots": [
+            {
+              "id": "P001",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P002",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P003",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P004",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "id": "P005",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P006",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P007",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P008",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P009",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P010",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P011",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 2,
+              "value": 256
+            },
+            {
+              "id": "P012",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P013",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "id": "P014",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P015",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P016",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 3,
+              "value": 256
+            },
+            {
+              "id": "P017",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P018",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P019",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P020",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P021",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P022",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "id": "P023",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 5,
+              "value": 128
+            },
+            {
+              "id": "P024",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 5,
+              "value": 128
+            },
+            {
+              "id": "P025",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            },
+            {
+              "id": "P026",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 6,
+              "value": 128
+            },
+            {
+              "id": "P027",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 6,
+              "value": 256
+            },
+            {
+              "id": "P028",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 6,
+              "value": 256
+            },
+            {
+              "id": "P029",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P030",
+              "origin": "decision-survivor",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P031",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "id": "P032",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 7,
+              "value": 256
+            }
+          ],
+          "correctionContinuation": 4,
+          "graph": {
+            "correctionNodeId": "M004",
+            "correctionChain": [
+              {
+                "x": 0,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 512
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              }
+            ],
+            "correctionChainSum": 6336,
+            "correctionPoints": 31680,
+            "roots": [
+              {
+                "id": "P001",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "P005",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "P006",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "P013",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "id": "P017",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "P018",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "P019",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "P020",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "P022",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "P023",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "P024",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "P025",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              },
+              {
+                "id": "P026",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "id": "P027",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "id": "P029",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "P030",
+                "origin": "decision-survivor",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "S001",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 0,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S004",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S005",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S006",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 1,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "S007",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "S008",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 1,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "id": "S016",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S018",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 1,
+                "y": 5,
+                "value": 256
+              }
+            ],
+            "merges": [
+              {
+                "id": "M001",
+                "continuationMoves": 1,
+                "inputNodeIds": [
+                  "P017",
+                  "P018",
+                  "P022",
+                  "P019",
+                  "P020",
+                  "P024",
+                  "P023",
+                  "P026",
+                  "P027"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 5120,
+                "output": {
+                  "x": 2,
+                  "y": 6,
+                  "value": 1024
+                }
+              },
+              {
+                "id": "M003",
+                "continuationMoves": 3,
+                "inputNodeIds": [
+                  "S005",
+                  "S007",
+                  "S008",
+                  "S006",
+                  "P013",
+                  "S004"
+                ],
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 512,
+                "points": 1024,
+                "output": {
+                  "x": 1,
+                  "y": 6,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M004",
+                "continuationMoves": 4,
+                "inputNodeIds": [
+                  "S001",
+                  "P006",
+                  "P001",
+                  "P005",
+                  "S016",
+                  "S018",
+                  "M003",
+                  "M001",
+                  "P030",
+                  "P029",
+                  "P025"
+                ],
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 512
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "chainSum": 6336,
+                "points": 31680,
+                "output": {
+                  "x": 0,
+                  "y": 7,
+                  "value": 6336
+                }
+              }
+            ],
+            "postDecisionRootsUsed": [
+              "P001",
+              "P005",
+              "P006",
+              "P013",
+              "P017",
+              "P018",
+              "P019",
+              "P020",
+              "P022",
+              "P023",
+              "P024",
+              "P025",
+              "P026",
+              "P027",
+              "P029",
+              "P030"
+            ],
+            "postDecisionRootsUnused": [
+              "P002",
+              "P003",
+              "P004",
+              "P007",
+              "P008",
+              "P009",
+              "P010",
+              "P011",
+              "P012",
+              "P014",
+              "P015",
+              "P016",
+              "P021",
+              "P028",
+              "P031",
+              "P032"
+            ],
+            "continuationSpawnRootsUsed": [
+              "S001",
+              "S004",
+              "S005",
+              "S006",
+              "S007",
+              "S008",
+              "S016",
+              "S018"
+            ],
+            "decisionSurvivorContributes": true,
+            "intermediateMergeCount": 2,
+            "originBreakdown": [
+              {
+                "origin": "decision-survivor",
+                "count": 1,
+                "value": 1024
+              },
+              {
+                "origin": "decision-refill",
+                "count": 5,
+                "value": 576
+              },
+              {
+                "origin": "carried-board",
+                "count": 10,
+                "value": 3904
+              },
+              {
+                "origin": "continuation-spawn",
+                "count": 8,
+                "value": 832
+              }
+            ],
+            "rootValueSum": 6336
+          },
+          "graphValid": true
+        }
+      }
+    },
+    {
+      "move": 6,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "correctionContinuation": 5,
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "postDecisionStateIdentity": "9dd1f37d8532c4ee2600df9960f50e7ace15f6e5a0a94d76ccb3b6e0e215f286",
+          "decisionSurvivorRootId": "P032",
+          "postDecisionRoots": [
+            {
+              "id": "P001",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P002",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P003",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P004",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 0,
+              "value": 256
+            },
+            {
+              "id": "P005",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P006",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P007",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P008",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P009",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "id": "P010",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P011",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P012",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "id": "P013",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "id": "P014",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P015",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P016",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "id": "P017",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P018",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P019",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 4,
+              "value": 256
+            },
+            {
+              "id": "P020",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P021",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P022",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 5,
+              "value": 128
+            },
+            {
+              "id": "P023",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 5,
+              "value": 256
+            },
+            {
+              "id": "P024",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "id": "P025",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            },
+            {
+              "id": "P026",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 6,
+              "value": 128
+            },
+            {
+              "id": "P027",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "id": "P028",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P029",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P030",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P031",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "id": "P032",
+              "origin": "decision-survivor",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            }
+          ],
+          "correctionContinuation": 5,
+          "graph": {
+            "correctionNodeId": "M005",
+            "correctionChain": [
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 1024
+              }
+            ],
+            "correctionChainSum": 2624,
+            "correctionPoints": 13120,
+            "roots": [
+              {
+                "id": "P004",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "id": "P005",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "P009",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "id": "P010",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 2,
+                "value": 512
+              },
+              {
+                "id": "P012",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "id": "P018",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S001",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 0,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S004",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 3,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "id": "S005",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "S013",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "S020",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S021",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 1,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S022",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S023",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S024",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S025",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S026",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 2,
+                "value": 256
+              }
+            ],
+            "merges": [
+              {
+                "id": "M004",
+                "continuationMoves": 4,
+                "inputNodeIds": [
+                  "S024",
+                  "S025",
+                  "S023",
+                  "S022",
+                  "S021",
+                  "S005",
+                  "S001",
+                  "P005",
+                  "P009"
+                ],
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 5120,
+                "output": {
+                  "x": 0,
+                  "y": 2,
+                  "value": 1024
+                }
+              },
+              {
+                "id": "M005",
+                "continuationMoves": 5,
+                "inputNodeIds": [
+                  "S020",
+                  "P018",
+                  "S013",
+                  "P012",
+                  "P004",
+                  "S004",
+                  "S026",
+                  "P010",
+                  "M004"
+                ],
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 1024
+                  }
+                ],
+                "chainSum": 2624,
+                "points": 13120,
+                "output": {
+                  "x": 0,
+                  "y": 2,
+                  "value": 2624
+                }
+              }
+            ],
+            "postDecisionRootsUsed": [
+              "P004",
+              "P005",
+              "P009",
+              "P010",
+              "P012",
+              "P018"
+            ],
+            "postDecisionRootsUnused": [
+              "P001",
+              "P002",
+              "P003",
+              "P006",
+              "P007",
+              "P008",
+              "P011",
+              "P013",
+              "P014",
+              "P015",
+              "P016",
+              "P017",
+              "P019",
+              "P020",
+              "P021",
+              "P022",
+              "P023",
+              "P024",
+              "P025",
+              "P026",
+              "P027",
+              "P028",
+              "P029",
+              "P030",
+              "P031",
+              "P032"
+            ],
+            "continuationSpawnRootsUsed": [
+              "S001",
+              "S004",
+              "S005",
+              "S013",
+              "S020",
+              "S021",
+              "S022",
+              "S023",
+              "S024",
+              "S025",
+              "S026"
+            ],
+            "decisionSurvivorContributes": false,
+            "intermediateMergeCount": 1,
+            "originBreakdown": [
+              {
+                "origin": "decision-refill",
+                "count": 3,
+                "value": 448
+              },
+              {
+                "origin": "carried-board",
+                "count": 3,
+                "value": 768
+              },
+              {
+                "origin": "continuation-spawn",
+                "count": 11,
+                "value": 1408
+              }
+            ],
+            "rootValueSum": 2624
+          },
+          "graphValid": true
+        },
+        "champion": {
+          "arm": "champion",
+          "postDecisionStateIdentity": "73a33c394b4d6f64df201ea77e636bebbefe093d65284774c4adfbf4e21af82b",
+          "decisionSurvivorRootId": "P011",
+          "postDecisionRoots": [
+            {
+              "id": "P001",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P002",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "id": "P003",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 0,
+              "value": 256
+            },
+            {
+              "id": "P004",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P005",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P006",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P007",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 1,
+              "value": 256
+            },
+            {
+              "id": "P008",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P009",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "id": "P010",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P011",
+              "origin": "decision-survivor",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P012",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "id": "P013",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "id": "P014",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P015",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P016",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 3,
+              "value": 1024
+            },
+            {
+              "id": "P017",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P018",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P019",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P020",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P021",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P022",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "id": "P023",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 5,
+              "value": 256
+            },
+            {
+              "id": "P024",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 5,
+              "value": 128
+            },
+            {
+              "id": "P025",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            },
+            {
+              "id": "P026",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 6,
+              "value": 128
+            },
+            {
+              "id": "P027",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "id": "P028",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 6,
+              "value": 256
+            },
+            {
+              "id": "P029",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P030",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P031",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 7,
+              "value": 64
+            },
+            {
+              "id": "P032",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 7,
+              "value": 256
+            }
+          ],
+          "correctionContinuation": 5,
+          "graph": {
+            "correctionNodeId": "M005",
+            "correctionChain": [
+              {
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 256
+              }
+            ],
+            "correctionChainSum": 1024,
+            "correctionPoints": 2048,
+            "roots": [
+              {
+                "id": "P026",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "id": "P028",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "id": "S024",
+                "origin": "continuation-spawn",
+                "spawnedAt": 4,
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S026",
+                "origin": "continuation-spawn",
+                "spawnedAt": 4,
+                "x": 2,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "S027",
+                "origin": "continuation-spawn",
+                "spawnedAt": 4,
+                "x": 2,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "id": "S028",
+                "origin": "continuation-spawn",
+                "spawnedAt": 4,
+                "x": 2,
+                "y": 7,
+                "value": 128
+              }
+            ],
+            "merges": [
+              {
+                "id": "M005",
+                "continuationMoves": 5,
+                "inputNodeIds": [
+                  "S024",
+                  "S026",
+                  "P026",
+                  "S028",
+                  "P028",
+                  "S027"
+                ],
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 7,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 2048,
+                "output": {
+                  "x": 2,
+                  "y": 7,
+                  "value": 1024
+                }
+              }
+            ],
+            "postDecisionRootsUsed": [
+              "P026",
+              "P028"
+            ],
+            "postDecisionRootsUnused": [
+              "P001",
+              "P002",
+              "P003",
+              "P004",
+              "P005",
+              "P006",
+              "P007",
+              "P008",
+              "P009",
+              "P010",
+              "P011",
+              "P012",
+              "P013",
+              "P014",
+              "P015",
+              "P016",
+              "P017",
+              "P018",
+              "P019",
+              "P020",
+              "P021",
+              "P022",
+              "P023",
+              "P024",
+              "P025",
+              "P027",
+              "P029",
+              "P030",
+              "P031",
+              "P032"
+            ],
+            "continuationSpawnRootsUsed": [
+              "S024",
+              "S026",
+              "S027",
+              "S028"
+            ],
+            "decisionSurvivorContributes": false,
+            "intermediateMergeCount": 0,
+            "originBreakdown": [
+              {
+                "origin": "carried-board",
+                "count": 2,
+                "value": 384
+              },
+              {
+                "origin": "continuation-spawn",
+                "count": 4,
+                "value": 640
+              }
+            ],
+            "rootValueSum": 1024
+          },
+          "graphValid": true
+        }
+      }
+    },
+    {
+      "move": 9,
+      "expectedLabel": "harmful",
+      "winner": "champion",
+      "correctionContinuation": 4,
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "postDecisionStateIdentity": "bada8872a439f7c22e0f74de09aac22a3a615fe740ce541e2de27c5aa02d43d0",
+          "decisionSurvivorRootId": "P031",
+          "postDecisionRoots": [
+            {
+              "id": "P001",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P002",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P003",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P004",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "id": "P005",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P006",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P007",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P008",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 1,
+              "value": 256
+            },
+            {
+              "id": "P009",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "id": "P010",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P011",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P012",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P013",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "id": "P014",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P015",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P016",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "id": "P017",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P018",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P019",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P020",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P021",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P022",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 5,
+              "value": 512
+            },
+            {
+              "id": "P023",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "id": "P024",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 5,
+              "value": 256
+            },
+            {
+              "id": "P025",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            },
+            {
+              "id": "P026",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P027",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "id": "P028",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P029",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P030",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P031",
+              "origin": "decision-survivor",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P032",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            }
+          ],
+          "correctionContinuation": 4,
+          "graph": {
+            "correctionNodeId": "M004",
+            "correctionChain": [
+              {
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 512
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 512
+              }
+            ],
+            "correctionChainSum": 2112,
+            "correctionPoints": 10560,
+            "roots": [
+              {
+                "id": "P002",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "P003",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "P006",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "P007",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "P010",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 2,
+                "value": 512
+              },
+              {
+                "id": "P011",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S002",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S007",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 0,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "id": "S008",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 3,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S009",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S015",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 1,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "id": "S016",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S017",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S018",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "S019",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 3,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S020",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 2,
+                "value": 64
+              }
+            ],
+            "merges": [
+              {
+                "id": "M003",
+                "continuationMoves": 3,
+                "inputNodeIds": [
+                  "P002",
+                  "P003",
+                  "S009",
+                  "S002",
+                  "P007",
+                  "P011",
+                  "P006"
+                ],
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 512,
+                "points": 1536,
+                "output": {
+                  "x": 1,
+                  "y": 1,
+                  "value": 512
+                }
+              },
+              {
+                "id": "M004",
+                "continuationMoves": 4,
+                "inputNodeIds": [
+                  "S019",
+                  "S020",
+                  "S008",
+                  "S018",
+                  "S017",
+                  "S016",
+                  "S015",
+                  "S007",
+                  "M003",
+                  "P010"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 256
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 512
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 512
+                  }
+                ],
+                "chainSum": 2112,
+                "points": 10560,
+                "output": {
+                  "x": 1,
+                  "y": 2,
+                  "value": 2112
+                }
+              }
+            ],
+            "postDecisionRootsUsed": [
+              "P002",
+              "P003",
+              "P006",
+              "P007",
+              "P010",
+              "P011"
+            ],
+            "postDecisionRootsUnused": [
+              "P001",
+              "P004",
+              "P005",
+              "P008",
+              "P009",
+              "P012",
+              "P013",
+              "P014",
+              "P015",
+              "P016",
+              "P017",
+              "P018",
+              "P019",
+              "P020",
+              "P021",
+              "P022",
+              "P023",
+              "P024",
+              "P025",
+              "P026",
+              "P027",
+              "P028",
+              "P029",
+              "P030",
+              "P031",
+              "P032"
+            ],
+            "continuationSpawnRootsUsed": [
+              "S002",
+              "S007",
+              "S008",
+              "S009",
+              "S015",
+              "S016",
+              "S017",
+              "S018",
+              "S019",
+              "S020"
+            ],
+            "decisionSurvivorContributes": false,
+            "intermediateMergeCount": 1,
+            "originBreakdown": [
+              {
+                "origin": "carried-board",
+                "count": 6,
+                "value": 896
+              },
+              {
+                "origin": "continuation-spawn",
+                "count": 10,
+                "value": 1216
+              }
+            ],
+            "rootValueSum": 2112
+          },
+          "graphValid": true
+        },
+        "champion": {
+          "arm": "champion",
+          "postDecisionStateIdentity": "68cf27fcab93ba1919b9381870804abafca74d180a05da96188960f8957a2c40",
+          "decisionSurvivorRootId": "P023",
+          "postDecisionRoots": [
+            {
+              "id": "P001",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P002",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P003",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P004",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P005",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P006",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P007",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P008",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P009",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "id": "P010",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P011",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P012",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "id": "P013",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "id": "P014",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P015",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P016",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "id": "P017",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P018",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P019",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P020",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 4,
+              "value": 256
+            },
+            {
+              "id": "P021",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P022",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 5,
+              "value": 512
+            },
+            {
+              "id": "P023",
+              "origin": "decision-survivor",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P024",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 5,
+              "value": 128
+            },
+            {
+              "id": "P025",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            },
+            {
+              "id": "P026",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P027",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 6,
+              "value": 256
+            },
+            {
+              "id": "P028",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P029",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P030",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P031",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 7,
+              "value": 256
+            },
+            {
+              "id": "P032",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            }
+          ],
+          "correctionContinuation": 4,
+          "graph": {
+            "correctionNodeId": "M004",
+            "correctionChain": [
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 256
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 256
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 512
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 4096
+              }
+            ],
+            "correctionChainSum": 9792,
+            "correctionPoints": 48960,
+            "roots": [
+              {
+                "id": "P021",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "id": "P022",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 5,
+                "value": 512
+              },
+              {
+                "id": "P023",
+                "origin": "decision-survivor",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "id": "P024",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "P025",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              },
+              {
+                "id": "P026",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "P027",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 6,
+                "value": 256
+              },
+              {
+                "id": "P028",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "P029",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "P030",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "P031",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 7,
+                "value": 256
+              },
+              {
+                "id": "S016",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 1,
+                "y": 4,
+                "value": 256
+              },
+              {
+                "id": "S017",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S019",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 1,
+                "y": 4,
+                "value": 64
+              },
+              {
+                "id": "S020",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 4,
+                "value": 64
+              }
+            ],
+            "merges": [
+              {
+                "id": "M003",
+                "continuationMoves": 3,
+                "inputNodeIds": [
+                  "P028",
+                  "P023",
+                  "P026",
+                  "P021"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  }
+                ],
+                "chainSum": 4096,
+                "points": 6144,
+                "output": {
+                  "x": 0,
+                  "y": 5,
+                  "value": 4096
+                }
+              },
+              {
+                "id": "M004",
+                "continuationMoves": 4,
+                "inputNodeIds": [
+                  "S020",
+                  "S019",
+                  "S017",
+                  "P024",
+                  "P031",
+                  "P027",
+                  "S016",
+                  "P022",
+                  "P029",
+                  "P030",
+                  "P025",
+                  "M003"
+                ],
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 7,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 512
+                  },
+                  {
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 4096
+                  }
+                ],
+                "chainSum": 9792,
+                "points": 48960,
+                "output": {
+                  "x": 0,
+                  "y": 7,
+                  "value": 9792
+                }
+              }
+            ],
+            "postDecisionRootsUsed": [
+              "P021",
+              "P022",
+              "P023",
+              "P024",
+              "P025",
+              "P026",
+              "P027",
+              "P028",
+              "P029",
+              "P030",
+              "P031"
+            ],
+            "postDecisionRootsUnused": [
+              "P001",
+              "P002",
+              "P003",
+              "P004",
+              "P005",
+              "P006",
+              "P007",
+              "P008",
+              "P009",
+              "P010",
+              "P011",
+              "P012",
+              "P013",
+              "P014",
+              "P015",
+              "P016",
+              "P017",
+              "P018",
+              "P019",
+              "P020",
+              "P032"
+            ],
+            "continuationSpawnRootsUsed": [
+              "S016",
+              "S017",
+              "S019",
+              "S020"
+            ],
+            "decisionSurvivorContributes": true,
+            "intermediateMergeCount": 1,
+            "originBreakdown": [
+              {
+                "origin": "decision-survivor",
+                "count": 1,
+                "value": 1024
+              },
+              {
+                "origin": "carried-board",
+                "count": 10,
+                "value": 8320
+              },
+              {
+                "origin": "continuation-spawn",
+                "count": 4,
+                "value": 448
+              }
+            ],
+            "rootValueSum": 9792
+          },
+          "graphValid": true
+        }
+      }
+    },
+    {
+      "move": 11,
+      "expectedLabel": "helpful",
+      "winner": "owner",
+      "correctionContinuation": 4,
+      "arms": {
+        "owner": {
+          "arm": "owner",
+          "postDecisionStateIdentity": "0cd93caff934dee876e633df22dc3d82f09ad641270b1ac1b085ec82197a45d6",
+          "decisionSurvivorRootId": "P013",
+          "postDecisionRoots": [
+            {
+              "id": "P001",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 0,
+              "value": 256
+            },
+            {
+              "id": "P002",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P003",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P004",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "id": "P005",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P006",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P007",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 1,
+              "value": 256
+            },
+            {
+              "id": "P008",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P009",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P010",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P011",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 2,
+              "value": 256
+            },
+            {
+              "id": "P012",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 2,
+              "value": 256
+            },
+            {
+              "id": "P013",
+              "origin": "decision-survivor",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 3,
+              "value": 1024
+            },
+            {
+              "id": "P014",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P015",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P016",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "id": "P017",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P018",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P019",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P020",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 4,
+              "value": 256
+            },
+            {
+              "id": "P021",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P022",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 5,
+              "value": 512
+            },
+            {
+              "id": "P023",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 5,
+              "value": 64
+            },
+            {
+              "id": "P024",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P025",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            },
+            {
+              "id": "P026",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P027",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "id": "P028",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P029",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P030",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P031",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P032",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            }
+          ],
+          "correctionContinuation": 4,
+          "graph": {
+            "correctionNodeId": "M004",
+            "correctionChain": [
+              {
+                "x": 2,
+                "y": 4,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              }
+            ],
+            "correctionChainSum": 11264,
+            "correctionPoints": 56320,
+            "roots": [
+              {
+                "id": "P005",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "P009",
+                "origin": "decision-refill",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "P016",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "id": "P019",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "P021",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "id": "P024",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 5,
+                "value": 1024
+              },
+              {
+                "id": "P025",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 6,
+                "value": 2048
+              },
+              {
+                "id": "P026",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "P028",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 6,
+                "value": 1024
+              },
+              {
+                "id": "P029",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 0,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "P030",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 1,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "P031",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 2,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "P032",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 7,
+                "value": 1024
+              },
+              {
+                "id": "S001",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 1,
+                "y": 0,
+                "value": 64
+              },
+              {
+                "id": "S004",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 1,
+                "y": 1,
+                "value": 128
+              },
+              {
+                "id": "S005",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 2,
+                "y": 1,
+                "value": 64
+              },
+              {
+                "id": "S007",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 1,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S008",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 2,
+                "y": 2,
+                "value": 128
+              },
+              {
+                "id": "S009",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 3,
+                "y": 2,
+                "value": 128
+              }
+            ],
+            "merges": [
+              {
+                "id": "M002",
+                "continuationMoves": 2,
+                "inputNodeIds": [
+                  "S001",
+                  "S005",
+                  "S007",
+                  "P009",
+                  "P005",
+                  "S004",
+                  "S008",
+                  "S009",
+                  "P016",
+                  "P019"
+                ],
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  }
+                ],
+                "chainSum": 1024,
+                "points": 5120,
+                "output": {
+                  "x": 2,
+                  "y": 4,
+                  "value": 1024
+                }
+              },
+              {
+                "id": "M004",
+                "continuationMoves": 4,
+                "inputNodeIds": [
+                  "M002",
+                  "P024",
+                  "P028",
+                  "P032",
+                  "P031",
+                  "P030",
+                  "P029",
+                  "P026",
+                  "P021",
+                  "P025"
+                ],
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 1024
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 3,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 7,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 6,
+                    "value": 2048
+                  }
+                ],
+                "chainSum": 11264,
+                "points": 56320,
+                "output": {
+                  "x": 0,
+                  "y": 7,
+                  "value": 11264
+                }
+              }
+            ],
+            "postDecisionRootsUsed": [
+              "P005",
+              "P009",
+              "P016",
+              "P019",
+              "P021",
+              "P024",
+              "P025",
+              "P026",
+              "P028",
+              "P029",
+              "P030",
+              "P031",
+              "P032"
+            ],
+            "postDecisionRootsUnused": [
+              "P001",
+              "P002",
+              "P003",
+              "P004",
+              "P006",
+              "P007",
+              "P008",
+              "P010",
+              "P011",
+              "P012",
+              "P013",
+              "P014",
+              "P015",
+              "P017",
+              "P018",
+              "P020",
+              "P022",
+              "P023",
+              "P027"
+            ],
+            "continuationSpawnRootsUsed": [
+              "S001",
+              "S004",
+              "S005",
+              "S007",
+              "S008",
+              "S009"
+            ],
+            "decisionSurvivorContributes": false,
+            "intermediateMergeCount": 1,
+            "originBreakdown": [
+              {
+                "origin": "decision-refill",
+                "count": 2,
+                "value": 192
+              },
+              {
+                "origin": "carried-board",
+                "count": 11,
+                "value": 10496
+              },
+              {
+                "origin": "continuation-spawn",
+                "count": 6,
+                "value": 576
+              }
+            ],
+            "rootValueSum": 11264
+          },
+          "graphValid": true
+        },
+        "champion": {
+          "arm": "champion",
+          "postDecisionStateIdentity": "f29c3cf69630395a9b7759f5dabd1bacb00aea6f4bfab07d548f035f90e4ff98",
+          "decisionSurvivorRootId": "P008",
+          "postDecisionRoots": [
+            {
+              "id": "P001",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 0,
+              "value": 256
+            },
+            {
+              "id": "P002",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 0,
+              "value": 256
+            },
+            {
+              "id": "P003",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "id": "P004",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "id": "P005",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "id": "P006",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P007",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "id": "P008",
+              "origin": "decision-survivor",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 1,
+              "value": 1600
+            },
+            {
+              "id": "P009",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P010",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 2,
+              "value": 512
+            },
+            {
+              "id": "P011",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P012",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 2,
+              "value": 64
+            },
+            {
+              "id": "P013",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 3,
+              "value": 64
+            },
+            {
+              "id": "P014",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P015",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 3,
+              "value": 0
+            },
+            {
+              "id": "P016",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "id": "P017",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 4,
+              "value": 64
+            },
+            {
+              "id": "P018",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P019",
+              "origin": "decision-refill",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 4,
+              "value": 128
+            },
+            {
+              "id": "P020",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 4,
+              "value": 256
+            },
+            {
+              "id": "P021",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P022",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 5,
+              "value": 512
+            },
+            {
+              "id": "P023",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 5,
+              "value": 128
+            },
+            {
+              "id": "P024",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "id": "P025",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            },
+            {
+              "id": "P026",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P027",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 6,
+              "value": 64
+            },
+            {
+              "id": "P028",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "id": "P029",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P030",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P031",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 2,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "id": "P032",
+              "origin": "carried-board",
+              "spawnedAt": 0,
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            }
+          ],
+          "correctionContinuation": 4,
+          "graph": {
+            "correctionNodeId": "M004",
+            "correctionChain": [
+              {
+                "x": 3,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 64
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 128
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 256
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "value": 256
+              }
+            ],
+            "correctionChainSum": 1344,
+            "correctionPoints": 6720,
+            "roots": [
+              {
+                "id": "P012",
+                "origin": "carried-board",
+                "spawnedAt": 0,
+                "x": 3,
+                "y": 2,
+                "value": 64
+              },
+              {
+                "id": "S004",
+                "origin": "continuation-spawn",
+                "spawnedAt": 1,
+                "x": 3,
+                "y": 0,
+                "value": 128
+              },
+              {
+                "id": "S009",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 3,
+                "y": 0,
+                "value": 256
+              },
+              {
+                "id": "S011",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 3,
+                "y": 1,
+                "value": 256
+              },
+              {
+                "id": "S014",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 0,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S018",
+                "origin": "continuation-spawn",
+                "spawnedAt": 2,
+                "x": 1,
+                "y": 5,
+                "value": 64
+              },
+              {
+                "id": "S023",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 1,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S024",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 4,
+                "value": 128
+              },
+              {
+                "id": "S025",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 1,
+                "y": 5,
+                "value": 128
+              },
+              {
+                "id": "S027",
+                "origin": "continuation-spawn",
+                "spawnedAt": 3,
+                "x": 2,
+                "y": 6,
+                "value": 64
+              }
+            ],
+            "merges": [
+              {
+                "id": "M004",
+                "continuationMoves": 4,
+                "inputNodeIds": [
+                  "P012",
+                  "S027",
+                  "S018",
+                  "S014",
+                  "S023",
+                  "S025",
+                  "S024",
+                  "S004",
+                  "S011",
+                  "S009"
+                ],
+                "chain": [
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 256
+                  }
+                ],
+                "chainSum": 1344,
+                "points": 6720,
+                "output": {
+                  "x": 3,
+                  "y": 4,
+                  "value": 1344
+                }
+              }
+            ],
+            "postDecisionRootsUsed": [
+              "P012"
+            ],
+            "postDecisionRootsUnused": [
+              "P001",
+              "P002",
+              "P003",
+              "P004",
+              "P005",
+              "P006",
+              "P007",
+              "P008",
+              "P009",
+              "P010",
+              "P011",
+              "P013",
+              "P014",
+              "P015",
+              "P016",
+              "P017",
+              "P018",
+              "P019",
+              "P020",
+              "P021",
+              "P022",
+              "P023",
+              "P024",
+              "P025",
+              "P026",
+              "P027",
+              "P028",
+              "P029",
+              "P030",
+              "P031",
+              "P032"
+            ],
+            "continuationSpawnRootsUsed": [
+              "S004",
+              "S009",
+              "S011",
+              "S014",
+              "S018",
+              "S023",
+              "S024",
+              "S025",
+              "S027"
+            ],
+            "decisionSurvivorContributes": false,
+            "intermediateMergeCount": 0,
+            "originBreakdown": [
+              {
+                "origin": "carried-board",
+                "count": 1,
+                "value": 64
+              },
+              {
+                "origin": "continuation-spawn",
+                "count": 9,
+                "value": 1280
+              }
+            ],
+            "rootValueSum": 1344
+          },
+          "graphValid": true
+        }
+      }
+    }
+  ],
+  "disposition": "FULL_ANCESTRY_TRACED",
+  "artifactIdentity": "2f9558a9c81adf2459b9762e4fbe1ee1515c3358a7edb34d01afe4f093b9fea8"
+}

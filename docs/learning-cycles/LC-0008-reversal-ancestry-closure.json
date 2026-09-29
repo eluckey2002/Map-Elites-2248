@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "LC-0008-reversal-ancestry-closeout-contract.json",
+    "sha256": "3624dfd14ed2c9be44a162a668e38342ce9498d4eb7b5b823f0ed98abadd0331"
+  },
+  "run_id": "LC-0008-REPORTABLE-1",
+  "final_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1-frozen-replay-and-panel-identity",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "All frozen sources matched and the four correction points and eight retained arm trajectories reproduced exactly."
+    },
+    {
+      "id": "C2-objective-and-continuation-equivalence",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "Each owner/champion pair used the same decision state, target, move budget, RNG prefix, continuation policy, and target-stop objective."
+    },
+    {
+      "id": "C3-merge-union-known-good",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "The qualified two-stage real-engine fixture reached each contributing root once and conserved all 48 value."
+    },
+    {
+      "id": "C4-unrelated-root-known-negative",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "The qualified unrelated live root stayed unchanged and outside the correction graph."
+    },
+    {
+      "id": "C5-planted-false-origin",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "The qualified public validator rejected a planted false root origin for the intended mismatch."
+    },
+    {
+      "id": "C6-conservation-mutation",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "The qualified public validator rejected a removed contributing root for missing reachability."
+    },
+    {
+      "id": "C7-restoration-and-persistence",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "The tracker identity was restored and disposable raw evidence survived a planted interpretation failure."
+    },
+    {
+      "id": "move-4-ancestry",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "Both move-4 arm graphs are complete, reachable, origin-valid, and mass-conserving at correction continuation 4."
+    },
+    {
+      "id": "move-6-ancestry",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "Both move-6 arm graphs are complete, reachable, origin-valid, and mass-conserving at correction continuation 5."
+    },
+    {
+      "id": "move-9-ancestry",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "Both move-9 arm graphs are complete, reachable, origin-valid, and mass-conserving at correction continuation 4."
+    },
+    {
+      "id": "move-11-ancestry",
+      "status": "PASS",
+      "evidence_subject_identity": "2c202a7a11dc7ac3164692145fc962d4aa2dd7d28017c417efd09bad11ed9c28",
+      "reason": "Both move-11 arm graphs are complete, reachable, origin-valid, and mass-conserving at correction continuation 4."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw",
+      "path": "LC-0008-reversal-ancestry-raw.json",
+      "sha256": "62b5da0a13698fd34cb27dd9ced8f2924b8880b9cba08433499af23fac68d900"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "LC-0008-reversal-ancestry-recomputed.json",
+      "sha256": "11a9267f8a4b5a97ce79bd686a6e4632f7f4b2b1326ae1459431395018b4cb44"
+    }
+  ],
+  "primary_outcome": "FULL_ANCESTRY_TRACED",
+  "deviations": [],
+  "attempts": [
+    {
+      "id": "LC-0008-REPORTABLE-1",
+      "exit_code": 0,
+      "artifact_ids": [
+        "raw",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}

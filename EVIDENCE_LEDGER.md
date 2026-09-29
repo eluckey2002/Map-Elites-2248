@@ -1206,6 +1206,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-28, branch `codex/game51-learning-cycle-2026-09-27`
 - **notes:** Provisional pending an independent checker. No protected gameplay or content file changed and no fresh outcome was generated. The next bounded diagnostic is to trace the full reversal chain backward to the post-decision board, rather than force course persistence into one tile.
 
+### RESULT-0061 — Every delayed winner cashes out a larger prepared route
+
+- **type:** result
+- **status:** provisional
+- **scope:** the eight already-retained owner/champion arms at Level 54 owner moves 4, 6, 9, and 11 on seed 1313839221; exact correction-chain ancestry from each post-decision board through the unchanged champion continuation to the frozen first-gap-order correction; no alternative move, fresh seed, metric, policy change, or population claim
+- **statement:** In all four paired states, the eventual winner's correction chain uses both more post-decision roots and more post-decision value than the loser's: winner versus loser prepared-root counts are 16:3, 6:2, 11:6, and 13:1, while prepared values are 5,504:384, 1,216:384, 9,344:896, and 10,688:64 at owner moves 4, 6, 9, and 11 respectively. Every winner makes at least one intermediate merge that becomes a rung in its final nondecreasing correction chain. The move-9 loser is the counterexample to treating an intermediate merge alone as sufficient: it also makes one, but only reaches a 512 rung with 896 prepared value behind the correction route, versus the champion winner's 4,096 rung and 9,344 prepared value. In these exact states, “stay the course” means preserve the higher-value reservoir while manufacturing the missing entry or connector, then cash out the compatible small-to-large route; it does not require the decision-created tile itself. This hindsight ancestry is not a prospective metric and does not establish behavior beyond the four paired states.
+- **evidence:** frozen [LC-0008 contract](docs/learning-cycles/LC-0008-reversal-ancestry-contract.md); [qualification and pre-outcome admission](docs/learning-cycles/LC-0008-reversal-ancestry-qualification.json); retained [raw ancestry artifact](docs/learning-cycles/LC-0008-reversal-ancestry-raw.json), file SHA-256 `62b5da0a13698fd34cb27dd9ced8f2924b8880b9cba08433499af23fac68d900`, internal artifact identity `2f9558a9c81adf2459b9762e4fbe1ee1515c3358a7edb34d01afe4f093b9fea8`; [result explanation](docs/learning-cycles/LC-0008-reversal-ancestry-result.md), file SHA-256 `984da56c53ccf4cf8cf237795978c4536728802ca4eaa327c1042bbf125d3e5a`; externally anchored [closure](docs/learning-cycles/LC-0008-reversal-ancestry-closure.json), file SHA-256 `9962427010c1e05f6af2566423df2fff56a28e44d9f8289d575a3d1f34f1579c`; byte-matched [primary recomputation](docs/learning-cycles/LC-0008-reversal-ancestry-recomputed.json), SHA-256 `11a9267f8a4b5a97ce79bd686a6e4632f7f4b2b1326ae1459431395018b4cb44`; closeout-contract SHA-256 `3624dfd14ed2c9be44a162a668e38342ce9498d4eb7b5b823f0ed98abadd0331`
+- **proof_class:** `exact_result`, `direct_source` — exact object ancestry and deterministic replay on the eight named arms; no claim beyond those arms
+- **as_of:** 2026-09-28
+- **reverify:** Run `python3 tools/vendor/close-experiment/verify_closure.py docs/learning-cycles/LC-0008-reversal-ancestry-closeout-contract.json docs/learning-cycles/LC-0008-reversal-ancestry-closure.json --run-recomputation --require-closed --expected-contract-sha256 3624dfd14ed2c9be44a162a668e38342ce9498d4eb7b5b823f0ed98abadd0331`; expect `verdict: PASS`, `closure_status: CLOSED`, `recomputation: PASS`, and primary outcome `FULL_ANCESTRY_TRACED` in the closure.
+- **updated:** 2026-09-28
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-28, branch `codex/game51-learning-cycle-2026-09-27`
+- **notes:** Provisional pending an independent checker. No protected gameplay or content file changed and no fresh outcome was generated. The next bounded diagnostic is a replay-time readiness timeline: identify the exact missing rung or adjacency before each continuation and the moment the full route becomes executable, without defining a metric.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
