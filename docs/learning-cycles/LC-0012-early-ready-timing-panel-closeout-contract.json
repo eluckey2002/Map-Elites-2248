@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "LC-0012-early-ready-timing-panel-contract-v2.md",
+    "sha256": "6714b0848b9a49837656dcd61b1c6895dbf54dc69a1503f3b8331a297891d073"
+  },
+  "final_subject_identity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+  "required_claims": [
+    "C1-frozen-corpus-ruleset-and-exact-replay",
+    "C2-exact-state-early-ready-positive-control",
+    "C3-planted-missing-route-input",
+    "C4-versioned-control-and-deterministic-aa",
+    "C5-assignment-integrity-and-planted-arm-swap",
+    "C6-objective-equivalence-and-target-stop-ordering",
+    "C7-one-unit-per-recording",
+    "C8-restoration-and-persistence-before-verdict",
+    "C9-executable-closeout-admission",
+    "complete-24-recording-eligibility-ledger",
+    "complete-selected-pair-matrix",
+    "registered-panel-outcome"
+  ],
+  "required_artifacts": [
+    "raw",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "tools/diagnose-lc0012-early-ready-timing-panel.js",
+      "--summarize",
+      "docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json"
+    ],
+    "cwd": "../..",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}
