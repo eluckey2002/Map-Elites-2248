@@ -1,0 +1,2194 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0012-harness-qualification",
+  "status": "PASS",
+  "oracle": "docs/learning-cycles/LC-0012-early-ready-timing-panel-contract-v2.md",
+  "predecessorOracle": "docs/learning-cycles/LC-0012-early-ready-timing-panel-contract.md",
+  "manifestIdentity": "ec976136241f56eb6488c3dec95b0f99e2a78a5f7ec7dcf5a9458fd45787e654",
+  "harnessIdentity": "2f0d253e9fea4ef24f9b9c6ead04a31159e87ad447c1dc279bef37e5e02be4ad",
+  "attempt": 1,
+  "committed": {
+    "contract": true,
+    "contractV1": true,
+    "sourceManifest": true,
+    "sourceExtension": true,
+    "harness": true,
+    "test": true,
+    "recording:play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json": true,
+    "recording:play-sessions/10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90.json": true,
+    "recording:play-sessions/267a43735c9d22717f987a6be7eee6ef6338c3adb12055e701e05957a833ecd1.json": true,
+    "recording:play-sessions/31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232.json": true,
+    "recording:play-sessions/3391ec8ea6304e62cf489d8231cc9fffd1c90b60caab9ca9586f941a6a96a678.json": true,
+    "recording:play-sessions/4721079fcf730a90afad82c031d9827f2518f953fcb010ff53474c55f6a97b0e.json": true,
+    "recording:play-sessions/640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6.json": true,
+    "recording:play-sessions/8dc8e825bb1f630dd270dfd9057fb4f30d57f3963624dc3682a55b098b0851cb.json": true,
+    "recording:play-sessions/8f9e12071955d59aa7d0118ad7ba65b893c2b460ff2f7c65869838950c16c2de.json": true,
+    "recording:play-sessions/959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a.json": true,
+    "recording:play-sessions/98c224c7368089896eb3fe52699e43859a2b9fdb7868cc310673333c565f34f8.json": true,
+    "recording:play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json": true,
+    "recording:play-sessions/a84100a4db7ab04b4740cc4fb2b04f99f8387e0595251ca83ecd6e80631c97ce.json": true,
+    "recording:play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json": true,
+    "recording:play-sessions/b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28.json": true,
+    "recording:play-sessions/b1a0c4c76835db2a0745aa54875ab8b3c1f75d2adc05c15546bd5b038f7fa8c2.json": true,
+    "recording:play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json": true,
+    "recording:play-sessions/bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json": true,
+    "recording:play-sessions/ddc4bce3d15be5501bd22856c23ede5ab4393bd7bde3b8029cb1aad021a54d4b.json": true,
+    "recording:play-sessions/de1be9125b0aeb1008f0eef6ae966db847187d03b1073d2a0b1d3ebe6df50d23.json": true,
+    "recording:play-sessions/e1a806a861cd693f57a63c7351abd1d6b0554471a4df16567672f88008430afc.json": true,
+    "recording:play-sessions/e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4.json": true,
+    "recording:play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json": true,
+    "recording:play-sessions/ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf.json": true,
+    "production:solver/engine.js": true,
+    "production:solver/bot.js": true,
+    "production:solver/benchmark-replay.js": true,
+    "production:solver/recording-replay.js": true,
+    "production:solver/human-benchmark.js": true,
+    "production:src/game.js": true,
+    "antecedent:docs/learning-cycles/LC-0011-cashout-timing-result.md": true,
+    "antecedent:docs/learning-cycles/LC-0011-cashout-timing-closure.json": true,
+    "positive:docs/learning-cycles/LC-0011-cashout-timing-contract.md": true,
+    "positive:docs/learning-cycles/LC-0011-cashout-timing-manifest.json": true,
+    "positive:docs/learning-cycles/LC-0011-cashout-timing-qualification.json": true,
+    "positive:docs/learning-cycles/LC-0011-cashout-timing-raw.json": true,
+    "positive:tools/diagnose-lc0011-cashout-timing.js": true
+  },
+  "coherentSubstitutionRejected": true,
+  "cashNowCorpusExecuted": false,
+  "eligibilityKeys": [
+    {
+      "recordingPath": "play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json",
+      "selectedKey": "7:8:70f79f24a13bf0be4a8a2a5d604f1ced663637e385d131a3f850a8f114ac2c5f"
+    },
+    {
+      "recordingPath": "play-sessions/10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90.json",
+      "selectedKey": "5:8:aac3d638aeaab862acbb5493a8d629602219d553b888ad2de1948f53858f6459"
+    },
+    {
+      "recordingPath": "play-sessions/267a43735c9d22717f987a6be7eee6ef6338c3adb12055e701e05957a833ecd1.json",
+      "selectedKey": "1:2:e3d32b6eedcd9044b3791a30592bbf3f83eb36f4d0c9222c7ff5b3216523aa19"
+    },
+    {
+      "recordingPath": "play-sessions/31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/3391ec8ea6304e62cf489d8231cc9fffd1c90b60caab9ca9586f941a6a96a678.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/4721079fcf730a90afad82c031d9827f2518f953fcb010ff53474c55f6a97b0e.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/8dc8e825bb1f630dd270dfd9057fb4f30d57f3963624dc3682a55b098b0851cb.json",
+      "selectedKey": "5:7:5359cf28db1228200792d33246ad31f647f9b8baed6a110ffad3b0f08fb79b89"
+    },
+    {
+      "recordingPath": "play-sessions/8f9e12071955d59aa7d0118ad7ba65b893c2b460ff2f7c65869838950c16c2de.json",
+      "selectedKey": "1:6:84ba7cae1b4df3618470280f7cbaf0bbb215d7bbaf1eabfb826f54cb2a16de12"
+    },
+    {
+      "recordingPath": "play-sessions/959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a.json",
+      "selectedKey": "7:8:cbf90699a13c0a12935b8f1f37384980bb2b8a2eabffd59e38bbbd77cfa36810"
+    },
+    {
+      "recordingPath": "play-sessions/98c224c7368089896eb3fe52699e43859a2b9fdb7868cc310673333c565f34f8.json",
+      "selectedKey": "1:2:41e80683e7001ab6f85d44a60607012ae2d10119cf735f2b68af29e9bc10095d"
+    },
+    {
+      "recordingPath": "play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json",
+      "selectedKey": "7:8:5ca4220a1e27d80df098c3af8452eb74a85e6ff28560309e9ad804f6e14c5b68"
+    },
+    {
+      "recordingPath": "play-sessions/a84100a4db7ab04b4740cc4fb2b04f99f8387e0595251ca83ecd6e80631c97ce.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json",
+      "selectedKey": "5:6:f6db5bd0d5c95309a6ad19e257acc9358fde8f0c86d3416c9799d6b70fd2dd89"
+    },
+    {
+      "recordingPath": "play-sessions/b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28.json",
+      "selectedKey": "6:7:257656c3a401d2a940313deee21fc0aed35b02c4929640ddbe814866ea9e821f"
+    },
+    {
+      "recordingPath": "play-sessions/b1a0c4c76835db2a0745aa54875ab8b3c1f75d2adc05c15546bd5b038f7fa8c2.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json",
+      "selectedKey": "6:7:ea483e598f538520787a97caac7f0a51e6d6092879ed38baf0281fc930704205"
+    },
+    {
+      "recordingPath": "play-sessions/bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/ddc4bce3d15be5501bd22856c23ede5ab4393bd7bde3b8029cb1aad021a54d4b.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/de1be9125b0aeb1008f0eef6ae966db847187d03b1073d2a0b1d3ebe6df50d23.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/e1a806a861cd693f57a63c7351abd1d6b0554471a4df16567672f88008430afc.json",
+      "selectedKey": null
+    },
+    {
+      "recordingPath": "play-sessions/e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4.json",
+      "selectedKey": "4:9:c1538313cec3147b31bd33b14384c200fa40fa5400b794bcecd1d7865cd704c8"
+    },
+    {
+      "recordingPath": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+      "selectedKey": "5:6:3ace6de89f7e732e6e39869d5ee701c037efffd7db952d27d459823d417f73d9"
+    },
+    {
+      "recordingPath": "play-sessions/ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf.json",
+      "selectedKey": "7:8:8e5d3d0d43953258286c087a9012821e704a974673dc1dedede94a4b36e0bea9"
+    }
+  ],
+  "controls": [
+    {
+      "id": "C1-frozen-corpus-ruleset-and-exact-replay",
+      "pass": true,
+      "observed": {
+        "sourceCount": 24,
+        "selectedCount": 14,
+        "selectedLevelCount": 9,
+        "rows": [
+          {
+            "recordingPath": "play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json",
+            "level": 58,
+            "seed": 41000001,
+            "replayStatus": "PASS",
+            "candidateCount": 2,
+            "selectedKey": "7:8:70f79f24a13bf0be4a8a2a5d604f1ced663637e385d131a3f850a8f114ac2c5f"
+          },
+          {
+            "recordingPath": "play-sessions/10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90.json",
+            "level": 55,
+            "seed": 2600645753,
+            "replayStatus": "PASS",
+            "candidateCount": 3,
+            "selectedKey": "5:8:aac3d638aeaab862acbb5493a8d629602219d553b888ad2de1948f53858f6459"
+          },
+          {
+            "recordingPath": "play-sessions/267a43735c9d22717f987a6be7eee6ef6338c3adb12055e701e05957a833ecd1.json",
+            "level": 4,
+            "seed": 1051679287,
+            "replayStatus": "PASS",
+            "candidateCount": 14,
+            "selectedKey": "1:2:e3d32b6eedcd9044b3791a30592bbf3f83eb36f4d0c9222c7ff5b3216523aa19"
+          },
+          {
+            "recordingPath": "play-sessions/31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232.json",
+            "level": 56,
+            "seed": 3504920448,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/3391ec8ea6304e62cf489d8231cc9fffd1c90b60caab9ca9586f941a6a96a678.json",
+            "level": 54,
+            "seed": 3310936729,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/4721079fcf730a90afad82c031d9827f2518f953fcb010ff53474c55f6a97b0e.json",
+            "level": 1,
+            "seed": 4106259769,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6.json",
+            "level": 58,
+            "seed": 4255346895,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/8dc8e825bb1f630dd270dfd9057fb4f30d57f3963624dc3682a55b098b0851cb.json",
+            "level": 30,
+            "seed": 3600822812,
+            "replayStatus": "PASS",
+            "candidateCount": 3,
+            "selectedKey": "5:7:5359cf28db1228200792d33246ad31f647f9b8baed6a110ffad3b0f08fb79b89"
+          },
+          {
+            "recordingPath": "play-sessions/8f9e12071955d59aa7d0118ad7ba65b893c2b460ff2f7c65869838950c16c2de.json",
+            "level": 2,
+            "seed": 3460073833,
+            "replayStatus": "PASS",
+            "candidateCount": 6,
+            "selectedKey": "1:6:84ba7cae1b4df3618470280f7cbaf0bbb215d7bbaf1eabfb826f54cb2a16de12"
+          },
+          {
+            "recordingPath": "play-sessions/959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a.json",
+            "level": 58,
+            "seed": 4010386357,
+            "replayStatus": "PASS",
+            "candidateCount": 1,
+            "selectedKey": "7:8:cbf90699a13c0a12935b8f1f37384980bb2b8a2eabffd59e38bbbd77cfa36810"
+          },
+          {
+            "recordingPath": "play-sessions/98c224c7368089896eb3fe52699e43859a2b9fdb7868cc310673333c565f34f8.json",
+            "level": 52,
+            "seed": 3882071371,
+            "replayStatus": "PASS",
+            "candidateCount": 2,
+            "selectedKey": "1:2:41e80683e7001ab6f85d44a60607012ae2d10119cf735f2b68af29e9bc10095d"
+          },
+          {
+            "recordingPath": "play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json",
+            "level": 54,
+            "seed": 1044860360,
+            "replayStatus": "PASS",
+            "candidateCount": 1,
+            "selectedKey": "7:8:5ca4220a1e27d80df098c3af8452eb74a85e6ff28560309e9ad804f6e14c5b68"
+          },
+          {
+            "recordingPath": "play-sessions/a84100a4db7ab04b4740cc4fb2b04f99f8387e0595251ca83ecd6e80631c97ce.json",
+            "level": 58,
+            "seed": 42000001,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json",
+            "level": 57,
+            "seed": 2389915636,
+            "replayStatus": "PASS",
+            "candidateCount": 1,
+            "selectedKey": "5:6:f6db5bd0d5c95309a6ad19e257acc9358fde8f0c86d3416c9799d6b70fd2dd89"
+          },
+          {
+            "recordingPath": "play-sessions/b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28.json",
+            "level": 54,
+            "seed": 3310936729,
+            "replayStatus": "PASS",
+            "candidateCount": 6,
+            "selectedKey": "6:7:257656c3a401d2a940313deee21fc0aed35b02c4929640ddbe814866ea9e821f"
+          },
+          {
+            "recordingPath": "play-sessions/b1a0c4c76835db2a0745aa54875ab8b3c1f75d2adc05c15546bd5b038f7fa8c2.json",
+            "level": 56,
+            "seed": 42000000,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json",
+            "level": 52,
+            "seed": 2173441018,
+            "replayStatus": "PASS",
+            "candidateCount": 1,
+            "selectedKey": "6:7:ea483e598f538520787a97caac7f0a51e6d6092879ed38baf0281fc930704205"
+          },
+          {
+            "recordingPath": "play-sessions/bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json",
+            "level": 54,
+            "seed": 3310936729,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/ddc4bce3d15be5501bd22856c23ede5ab4393bd7bde3b8029cb1aad021a54d4b.json",
+            "level": 56,
+            "seed": 41000000,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/de1be9125b0aeb1008f0eef6ae966db847187d03b1073d2a0b1d3ebe6df50d23.json",
+            "level": 56,
+            "seed": 1761047823,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/e1a806a861cd693f57a63c7351abd1d6b0554471a4df16567672f88008430afc.json",
+            "level": 58,
+            "seed": 42000001,
+            "replayStatus": "PASS",
+            "candidateCount": 0,
+            "selectedKey": null
+          },
+          {
+            "recordingPath": "play-sessions/e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4.json",
+            "level": 3,
+            "seed": 1080239914,
+            "replayStatus": "PASS",
+            "candidateCount": 8,
+            "selectedKey": "4:9:c1538313cec3147b31bd33b14384c200fa40fa5400b794bcecd1d7865cd704c8"
+          },
+          {
+            "recordingPath": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+            "level": 54,
+            "seed": 1313839221,
+            "replayStatus": "PASS",
+            "candidateCount": 2,
+            "selectedKey": "5:6:3ace6de89f7e732e6e39869d5ee701c037efffd7db952d27d459823d417f73d9"
+          },
+          {
+            "recordingPath": "play-sessions/ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf.json",
+            "level": 54,
+            "seed": 2832419099,
+            "replayStatus": "PASS",
+            "candidateCount": 3,
+            "selectedKey": "7:8:8e5d3d0d43953258286c087a9012821e704a974673dc1dedede94a4b36e0bea9"
+          }
+        ]
+      }
+    },
+    {
+      "id": "C2-exact-state-early-ready-positive-control",
+      "pass": true,
+      "observed": {
+        "commonStateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+        "values": [
+          1024,
+          1024,
+          1024,
+          1024,
+          1024,
+          1024,
+          1024,
+          1024,
+          1024,
+          2048
+        ],
+        "points": 56320
+      }
+    },
+    {
+      "id": "C3-planted-missing-route-input",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "assessment": {
+          "routeExecutable": false,
+          "missingRouteNodeIds": [
+            "A3"
+          ],
+          "duplicateIds": false,
+          "duplicateCoordinates": false,
+          "blocked": [],
+          "adjacencyProblems": [],
+          "valueProblems": [],
+          "engineValid": false,
+          "chain": [
+            {
+              "x": 2,
+              "y": 4,
+              "value": 1024
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            }
+          ],
+          "points": null
+        }
+      }
+    },
+    {
+      "id": "C4-versioned-control-and-deterministic-aa",
+      "pass": true,
+      "observed": {
+        "lc0011ByteMatched": true,
+        "selectedCorpusUnit": {
+          "recordingPath": "play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json",
+          "left": {
+            "arm": "OBSERVED_WAIT",
+            "start": {
+              "stateIdentity": "5839ae6645bc96c4736f07a083e76392f36c1cf6b31c8d89634c64767f4ca59c",
+              "score": 35840,
+              "moves": 6,
+              "maxMoves": 28,
+              "targetScore": 162000
+            },
+            "firstActionIdentity": "b21609cf8465d3b2e16f0f8056c41f26caf1132ec2a16395204ba2af2e015a7b",
+            "trace": [
+              {
+                "source": "recorded-wait",
+                "chain": [
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 256
+                  }
+                ],
+                "points": 10240,
+                "score": 46080,
+                "moves": 7,
+                "preStateIdentity": "5839ae6645bc96c4736f07a083e76392f36c1cf6b31c8d89634c64767f4ca59c",
+                "postStateIdentity": "1014bb4438c8304250f57397b448842c535c8dcb4a4381777b56219fb539435d",
+                "refillRngCalls": 18,
+                "terminal": null
+              },
+              {
+                "source": "recorded-cashout",
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  }
+                ],
+                "points": 6144,
+                "score": 52224,
+                "moves": 8,
+                "preStateIdentity": "1014bb4438c8304250f57397b448842c535c8dcb4a4381777b56219fb539435d",
+                "postStateIdentity": "b2b7a2049538c70a93c30329cc3f66c5376262e40484c9365e10475b94ede981",
+                "refillRngCalls": 3,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 4,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "x": 4,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 4,
+                    "y": 5,
+                    "value": 256
+                  }
+                ],
+                "points": 10240,
+                "score": 62464,
+                "moves": 9,
+                "preStateIdentity": "b2b7a2049538c70a93c30329cc3f66c5376262e40484c9365e10475b94ede981",
+                "postStateIdentity": "4ec42cdea365c7fe5a143f1a33f95827acb76d451619661a7a67adafe1f381bb",
+                "refillRngCalls": 14,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  }
+                ],
+                "points": 5120,
+                "score": 67584,
+                "moves": 10,
+                "preStateIdentity": "4ec42cdea365c7fe5a143f1a33f95827acb76d451619661a7a67adafe1f381bb",
+                "postStateIdentity": "257abfe341f21f315c12684e3c633f3f07ab3a59a23cda6d156741cd7cee526e",
+                "refillRngCalls": 13,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 3,
+                    "value": 128
+                  }
+                ],
+                "points": 5120,
+                "score": 72704,
+                "moves": 11,
+                "preStateIdentity": "257abfe341f21f315c12684e3c633f3f07ab3a59a23cda6d156741cd7cee526e",
+                "postStateIdentity": "572f125ba64ce5b7257b0238eb25fec38e870bc5f50d52d47c7fe7cd7f5ecc25",
+                "refillRngCalls": 14,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 256
+                  }
+                ],
+                "points": 2048,
+                "score": 74752,
+                "moves": 12,
+                "preStateIdentity": "572f125ba64ce5b7257b0238eb25fec38e870bc5f50d52d47c7fe7cd7f5ecc25",
+                "postStateIdentity": "182ffeea9ae8634b8bccd0c1de9b6b35d0bc03e6f52a89b59c68f55060d54e81",
+                "refillRngCalls": 4,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  }
+                ],
+                "points": 5120,
+                "score": 79872,
+                "moves": 13,
+                "preStateIdentity": "182ffeea9ae8634b8bccd0c1de9b6b35d0bc03e6f52a89b59c68f55060d54e81",
+                "postStateIdentity": "1205e15ca30ae1f6e93a732a1d509fa2cc5ea9b23130d39b5c5c906f3f609c22",
+                "refillRngCalls": 13,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 256
+                  }
+                ],
+                "points": 5120,
+                "score": 84992,
+                "moves": 14,
+                "preStateIdentity": "1205e15ca30ae1f6e93a732a1d509fa2cc5ea9b23130d39b5c5c906f3f609c22",
+                "postStateIdentity": "e88527097cf3a9658f16cfb604d325e1b64d5054b871e4816c1dc7e62c3f46ac",
+                "refillRngCalls": 9,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 512
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 2048
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 2048
+                  },
+                  {
+                    "x": 0,
+                    "y": 6,
+                    "value": 4096
+                  }
+                ],
+                "points": 63680,
+                "score": 148672,
+                "moves": 15,
+                "preStateIdentity": "e88527097cf3a9658f16cfb604d325e1b64d5054b871e4816c1dc7e62c3f46ac",
+                "postStateIdentity": "5ee43b60846b18082281bd2651a77b64d18e61cbbc172c648c39d3fbd90a998e",
+                "refillRngCalls": 13,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 256
+                  }
+                ],
+                "points": 5120,
+                "score": 153792,
+                "moves": 16,
+                "preStateIdentity": "5ee43b60846b18082281bd2651a77b64d18e61cbbc172c648c39d3fbd90a998e",
+                "postStateIdentity": "50e181befb84b67c9eebfb952654f43101ae2ec8f48936e1f2c0c185fa280421",
+                "refillRngCalls": 9,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 256
+                  }
+                ],
+                "points": 10880,
+                "score": 164672,
+                "moves": 17,
+                "preStateIdentity": "50e181befb84b67c9eebfb952654f43101ae2ec8f48936e1f2c0c185fa280421",
+                "postStateIdentity": "4bcdf7017e34c81df45ea5e3282d49f849c55affc78e34183993102645963f78",
+                "refillRngCalls": 13,
+                "terminal": {
+                  "outcome": "win",
+                  "reason": "target reached",
+                  "firstCrossing": 17
+                }
+              }
+            ],
+            "terminal": {
+              "outcome": "win",
+              "reason": "target reached",
+              "firstCrossing": 17
+            },
+            "reachedTarget": true,
+            "firstTargetCrossing": 17,
+            "movesToTarget": 11
+          },
+          "right": {
+            "arm": "OBSERVED_WAIT",
+            "start": {
+              "stateIdentity": "5839ae6645bc96c4736f07a083e76392f36c1cf6b31c8d89634c64767f4ca59c",
+              "score": 35840,
+              "moves": 6,
+              "maxMoves": 28,
+              "targetScore": 162000
+            },
+            "firstActionIdentity": "b21609cf8465d3b2e16f0f8056c41f26caf1132ec2a16395204ba2af2e015a7b",
+            "trace": [
+              {
+                "source": "recorded-wait",
+                "chain": [
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 256
+                  }
+                ],
+                "points": 10240,
+                "score": 46080,
+                "moves": 7,
+                "preStateIdentity": "5839ae6645bc96c4736f07a083e76392f36c1cf6b31c8d89634c64767f4ca59c",
+                "postStateIdentity": "1014bb4438c8304250f57397b448842c535c8dcb4a4381777b56219fb539435d",
+                "refillRngCalls": 18,
+                "terminal": null
+              },
+              {
+                "source": "recorded-cashout",
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 1024
+                  }
+                ],
+                "points": 6144,
+                "score": 52224,
+                "moves": 8,
+                "preStateIdentity": "1014bb4438c8304250f57397b448842c535c8dcb4a4381777b56219fb539435d",
+                "postStateIdentity": "b2b7a2049538c70a93c30329cc3f66c5376262e40484c9365e10475b94ede981",
+                "refillRngCalls": 3,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 4,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "x": 4,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 4,
+                    "y": 5,
+                    "value": 256
+                  }
+                ],
+                "points": 10240,
+                "score": 62464,
+                "moves": 9,
+                "preStateIdentity": "b2b7a2049538c70a93c30329cc3f66c5376262e40484c9365e10475b94ede981",
+                "postStateIdentity": "4ec42cdea365c7fe5a143f1a33f95827acb76d451619661a7a67adafe1f381bb",
+                "refillRngCalls": 14,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  }
+                ],
+                "points": 5120,
+                "score": 67584,
+                "moves": 10,
+                "preStateIdentity": "4ec42cdea365c7fe5a143f1a33f95827acb76d451619661a7a67adafe1f381bb",
+                "postStateIdentity": "257abfe341f21f315c12684e3c633f3f07ab3a59a23cda6d156741cd7cee526e",
+                "refillRngCalls": 13,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 3,
+                    "value": 128
+                  }
+                ],
+                "points": 5120,
+                "score": 72704,
+                "moves": 11,
+                "preStateIdentity": "257abfe341f21f315c12684e3c633f3f07ab3a59a23cda6d156741cd7cee526e",
+                "postStateIdentity": "572f125ba64ce5b7257b0238eb25fec38e870bc5f50d52d47c7fe7cd7f5ecc25",
+                "refillRngCalls": 14,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 256
+                  }
+                ],
+                "points": 2048,
+                "score": 74752,
+                "moves": 12,
+                "preStateIdentity": "572f125ba64ce5b7257b0238eb25fec38e870bc5f50d52d47c7fe7cd7f5ecc25",
+                "postStateIdentity": "182ffeea9ae8634b8bccd0c1de9b6b35d0bc03e6f52a89b59c68f55060d54e81",
+                "refillRngCalls": 4,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 5,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  }
+                ],
+                "points": 5120,
+                "score": 79872,
+                "moves": 13,
+                "preStateIdentity": "182ffeea9ae8634b8bccd0c1de9b6b35d0bc03e6f52a89b59c68f55060d54e81",
+                "postStateIdentity": "1205e15ca30ae1f6e93a732a1d509fa2cc5ea9b23130d39b5c5c906f3f609c22",
+                "refillRngCalls": 13,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 4,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 4,
+                    "value": 256
+                  }
+                ],
+                "points": 5120,
+                "score": 84992,
+                "moves": 14,
+                "preStateIdentity": "1205e15ca30ae1f6e93a732a1d509fa2cc5ea9b23130d39b5c5c906f3f609c22",
+                "postStateIdentity": "e88527097cf3a9658f16cfb604d325e1b64d5054b871e4816c1dc7e62c3f46ac",
+                "refillRngCalls": 9,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 3,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 4,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 5,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 6,
+                    "value": 512
+                  },
+                  {
+                    "x": 2,
+                    "y": 6,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 5,
+                    "value": 1024
+                  },
+                  {
+                    "x": 2,
+                    "y": 4,
+                    "value": 1024
+                  },
+                  {
+                    "x": 1,
+                    "y": 5,
+                    "value": 2048
+                  },
+                  {
+                    "x": 1,
+                    "y": 6,
+                    "value": 2048
+                  },
+                  {
+                    "x": 0,
+                    "y": 6,
+                    "value": 4096
+                  }
+                ],
+                "points": 63680,
+                "score": 148672,
+                "moves": 15,
+                "preStateIdentity": "e88527097cf3a9658f16cfb604d325e1b64d5054b871e4816c1dc7e62c3f46ac",
+                "postStateIdentity": "5ee43b60846b18082281bd2651a77b64d18e61cbbc172c648c39d3fbd90a998e",
+                "refillRngCalls": 13,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 3,
+                    "value": 256
+                  }
+                ],
+                "points": 5120,
+                "score": 153792,
+                "moves": 16,
+                "preStateIdentity": "5ee43b60846b18082281bd2651a77b64d18e61cbbc172c648c39d3fbd90a998e",
+                "postStateIdentity": "50e181befb84b67c9eebfb952654f43101ae2ec8f48936e1f2c0c185fa280421",
+                "refillRngCalls": 9,
+                "terminal": null
+              },
+              {
+                "source": "champion",
+                "chain": [
+                  {
+                    "x": 0,
+                    "y": 0,
+                    "value": 64
+                  },
+                  {
+                    "x": 1,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 2,
+                    "value": 64
+                  },
+                  {
+                    "x": 2,
+                    "y": 1,
+                    "value": 64
+                  },
+                  {
+                    "x": 3,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 4,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 3,
+                    "y": 1,
+                    "value": 128
+                  },
+                  {
+                    "x": 2,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 1,
+                    "y": 0,
+                    "value": 128
+                  },
+                  {
+                    "x": 0,
+                    "y": 1,
+                    "value": 256
+                  },
+                  {
+                    "x": 1,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "x": 2,
+                    "y": 3,
+                    "value": 256
+                  },
+                  {
+                    "x": 3,
+                    "y": 2,
+                    "value": 256
+                  },
+                  {
+                    "x": 4,
+                    "y": 2,
+                    "value": 256
+                  }
+                ],
+                "points": 10880,
+                "score": 164672,
+                "moves": 17,
+                "preStateIdentity": "50e181befb84b67c9eebfb952654f43101ae2ec8f48936e1f2c0c185fa280421",
+                "postStateIdentity": "4bcdf7017e34c81df45ea5e3282d49f849c55affc78e34183993102645963f78",
+                "refillRngCalls": 13,
+                "terminal": {
+                  "outcome": "win",
+                  "reason": "target reached",
+                  "firstCrossing": 17
+                }
+              }
+            ],
+            "terminal": {
+              "outcome": "win",
+              "reason": "target reached",
+              "firstCrossing": 17
+            },
+            "reachedTarget": true,
+            "firstTargetCrossing": 17,
+            "movesToTarget": 11
+          }
+        }
+      }
+    },
+    {
+      "id": "C5-assignment-integrity-and-planted-arm-swap",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "message": "CASH_NOW first-action/arm mismatch"
+      }
+    },
+    {
+      "id": "C6-objective-equivalence-and-target-stop-ordering",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "message": "OBSERVED_WAIT continued after target or terminal"
+      }
+    },
+    {
+      "id": "C7-one-unit-per-recording",
+      "pass": true,
+      "observed": {
+        "candidateKeys": [
+          "later",
+          "longer",
+          "winner",
+          "lexical"
+        ],
+        "selectedKey": "winner"
+      }
+    },
+    {
+      "id": "C8-restoration-and-persistence-before-verdict",
+      "pass": true,
+      "observed": {
+        "plantedFailureObserved": true,
+        "rawRetained": true,
+        "harnessIdentityBefore": "2f0d253e9fea4ef24f9b9c6ead04a31159e87ad447c1dc279bef37e5e02be4ad",
+        "harnessIdentityAfter": "2f0d253e9fea4ef24f9b9c6ead04a31159e87ad447c1dc279bef37e5e02be4ad"
+      }
+    },
+    {
+      "id": "C9-executable-closeout-admission",
+      "pass": true,
+      "observed": {
+        "pass": true,
+        "verifier": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/tools/vendor/close-experiment/verify_closure.py",
+        "resolvedCwd": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27",
+        "verdict": {
+          "checked_artifacts": [
+            "primary-recomputation",
+            "raw"
+          ],
+          "checked_claims": [
+            "C1-frozen-corpus-ruleset-and-exact-replay",
+            "C2-exact-state-early-ready-positive-control",
+            "C3-planted-missing-route-input",
+            "C4-versioned-control-and-deterministic-aa",
+            "C5-assignment-integrity-and-planted-arm-swap",
+            "C6-objective-equivalence-and-target-stop-ordering",
+            "C7-one-unit-per-recording",
+            "C8-restoration-and-persistence-before-verdict",
+            "C9-executable-closeout-admission",
+            "complete-24-recording-eligibility-ledger",
+            "complete-selected-pair-matrix",
+            "registered-panel-outcome"
+          ],
+          "closure_status": "CLOSED",
+          "contract_sha256": "bf932e05dfc785714c0863bd83006960b3218686c42a43b1d3176197dc26f9c9",
+          "errors": [],
+          "expected_contract_sha256": "bf932e05dfc785714c0863bd83006960b3218686c42a43b1d3176197dc26f9c9",
+          "recomputation": "PASS",
+          "recomputed_output_sha256": "4724d462c6fc3889988568090731eb415398a601742174af3cbc8fa2dce0135f",
+          "verdict": "PASS"
+        }
+      }
+    }
+  ],
+  "uncertainties": [],
+  "artifactIdentity": "7be3b054163cb83ecad5a0063029a0dc5a5f6be7af5213f11ee56933ec0840ab"
+}
