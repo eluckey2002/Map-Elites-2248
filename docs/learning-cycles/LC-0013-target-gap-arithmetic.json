@@ -1,0 +1,908 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0013-target-gap-arithmetic",
+  "source": {
+    "path": "docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json",
+    "sha256": "707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f",
+    "artifactIdentity": "dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff"
+  },
+  "question": "Do current score, target gap, ready-route score, preserving-move score, and moves remaining determine cash-now versus wait target cost on the closed LC-0012 panel?",
+  "rows": [
+    {
+      "recordingPath": "play-sessions/0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb.json",
+      "recordingId": "0ab2da13ea6fe1841a5b7c0c75b2f4899bea41d0eb8da25ebb71a67d56b960fb",
+      "level": 58,
+      "seed": 41000001,
+      "selectedKey": "7:8:70f79f24a13bf0be4a8a2a5d604f1ced663637e385d131a3f850a8f114ac2c5f",
+      "pairClass": "TARGET_COST_TIE",
+      "currentScore": 35840,
+      "targetScore": 162000,
+      "scoreNeeded": 126160,
+      "movesUsed": 6,
+      "movesRemaining": 22,
+      "readyRoute": {
+        "values": [
+          1024,
+          1024,
+          1024,
+          1024
+        ],
+        "length": 4,
+        "baseSum": 4096,
+        "multiplier": 1.5,
+        "points": 6144,
+        "closesTarget": false,
+        "scoreGapAfterCash": 120016
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 10240,
+        "pointsThroughCash": 16384,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 109776
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 10240,
+        "CASH_NOW": 6144
+      },
+      "initialScoreLeader": "OBSERVED_WAIT",
+      "targetCostLeader": "TIE",
+      "initialScoreLeaderAgreesWithTargetCost": false,
+      "targetCost": {
+        "observedWaitMoves": 11,
+        "cashNowMoves": 11,
+        "cashNowMinusWait": 0
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "1014bb4438c8304250f57397b448842c535c8dcb4a4381777b56219fb539435d",
+        "cashNowStateIdentity": "9c87641c054b0d6e44f9ebe4e4bada0c75e7e42e63ac7f790f88c418857909e9",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 9,
+          "points": 63680
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 4,
+          "points": 54720
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90.json",
+      "recordingId": "10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90",
+      "level": 55,
+      "seed": 2600645753,
+      "selectedKey": "5:8:aac3d638aeaab862acbb5493a8d629602219d553b888ad2de1948f53858f6459",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 30720,
+      "targetScore": 122000,
+      "scoreNeeded": 91280,
+      "movesUsed": 4,
+      "movesRemaining": 22,
+      "readyRoute": {
+        "values": [
+          64,
+          64,
+          64,
+          64,
+          128,
+          128,
+          256,
+          256
+        ],
+        "length": 8,
+        "baseSum": 1024,
+        "multiplier": 3,
+        "points": 3072,
+        "closesTarget": false,
+        "scoreGapAfterCash": 88208
+      },
+      "observedWait": {
+        "movesBeforeCash": 3,
+        "pointsBeforeCash": 15360,
+        "pointsThroughCash": 18432,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 72848
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 5120,
+        "CASH_NOW": 3072
+      },
+      "initialScoreLeader": "OBSERVED_WAIT",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": false,
+      "targetCost": {
+        "observedWaitMoves": 14,
+        "cashNowMoves": 9,
+        "cashNowMinusWait": -5
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "a0c3fd052b41a0285ddb247830578849fa5d7135782b1b5ecd2652ba6cdba2d9",
+        "cashNowStateIdentity": "a7dac34943b8c91295e864e8e3737aa856865d34f501e2d1db887839659507ac",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 6,
+          "points": 32320
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 9,
+          "points": 41920
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/267a43735c9d22717f987a6be7eee6ef6338c3adb12055e701e05957a833ecd1.json",
+      "recordingId": "267a43735c9d22717f987a6be7eee6ef6338c3adb12055e701e05957a833ecd1",
+      "level": 4,
+      "seed": 1051679287,
+      "selectedKey": "1:2:e3d32b6eedcd9044b3791a30592bbf3f83eb36f4d0c9222c7ff5b3216523aa19",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 0,
+      "targetScore": 1850,
+      "scoreNeeded": 1850,
+      "movesUsed": 0,
+      "movesRemaining": 25,
+      "readyRoute": {
+        "values": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "length": 7,
+        "baseSum": 14,
+        "multiplier": 3,
+        "points": 42,
+        "closesTarget": false,
+        "scoreGapAfterCash": 1808
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 24,
+        "pointsThroughCash": 66,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 1784
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 24,
+        "CASH_NOW": 42
+      },
+      "initialScoreLeader": "CASH_NOW",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": true,
+      "targetCost": {
+        "observedWaitMoves": 11,
+        "cashNowMoves": 8,
+        "cashNowMinusWait": -3
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "8656409ade2ba01df3675d5f39ac7886d01d6d4c58874dbe0563af998361514f",
+        "cashNowStateIdentity": "1be7cc71015b8d306a3f6a1e82bb7ae7e411b5c4052fa2c99c9985ef02e519fb",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 4,
+          "points": 320
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 8,
+          "points": 512
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/8dc8e825bb1f630dd270dfd9057fb4f30d57f3963624dc3682a55b098b0851cb.json",
+      "recordingId": "8dc8e825bb1f630dd270dfd9057fb4f30d57f3963624dc3682a55b098b0851cb",
+      "level": 30,
+      "seed": 3600822812,
+      "selectedKey": "5:7:5359cf28db1228200792d33246ad31f647f9b8baed6a110ffad3b0f08fb79b89",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 3040,
+      "targetScore": 22300,
+      "scoreNeeded": 19260,
+      "movesUsed": 4,
+      "movesRemaining": 26,
+      "readyRoute": {
+        "values": [
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8,
+          8
+        ],
+        "length": 8,
+        "baseSum": 64,
+        "multiplier": 3,
+        "points": 192,
+        "closesTarget": false,
+        "scoreGapAfterCash": 19068
+      },
+      "observedWait": {
+        "movesBeforeCash": 2,
+        "pointsBeforeCash": 320,
+        "pointsThroughCash": 512,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 18748
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 128,
+        "CASH_NOW": 192
+      },
+      "initialScoreLeader": "CASH_NOW",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": true,
+      "targetCost": {
+        "observedWaitMoves": 24,
+        "cashNowMoves": 18,
+        "cashNowMinusWait": -6
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "2e1edbe2e45cc3704b7398b29929c9ebda97ebc7be5736e10c8a79c17e7d87a3",
+        "cashNowStateIdentity": "77687195893c4a453ec06f238f0c6a3c179d0e894b619d1cd179304ff67e203a",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 21,
+          "points": 5120
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 10,
+          "points": 4600
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/8f9e12071955d59aa7d0118ad7ba65b893c2b460ff2f7c65869838950c16c2de.json",
+      "recordingId": "8f9e12071955d59aa7d0118ad7ba65b893c2b460ff2f7c65869838950c16c2de",
+      "level": 2,
+      "seed": 3460073833,
+      "selectedKey": "1:6:84ba7cae1b4df3618470280f7cbaf0bbb215d7bbaf1eabfb826f54cb2a16de12",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 0,
+      "targetScore": 970,
+      "scoreNeeded": 970,
+      "movesUsed": 0,
+      "movesRemaining": 25,
+      "readyRoute": {
+        "values": [
+          2,
+          2
+        ],
+        "length": 2,
+        "baseSum": 4,
+        "multiplier": 1,
+        "points": 4,
+        "closesTarget": false,
+        "scoreGapAfterCash": 966
+      },
+      "observedWait": {
+        "movesBeforeCash": 5,
+        "pointsBeforeCash": 672,
+        "pointsThroughCash": 676,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 294
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 72,
+        "CASH_NOW": 4
+      },
+      "initialScoreLeader": "OBSERVED_WAIT",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": false,
+      "targetCost": {
+        "observedWaitMoves": 7,
+        "cashNowMoves": 4,
+        "cashNowMinusWait": -3
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "ee59fc8b8f9ad47eb352a6cf9e2ed3668dccb1b27bb9dcb36d2ab874af9bc010",
+        "cashNowStateIdentity": "8cbefb31d8dfaa375fb97240a3128416d12c026c80065e5b097573d710df0751",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 7,
+          "points": 320
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 4,
+          "points": 1010
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a.json",
+      "recordingId": "959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a",
+      "level": 58,
+      "seed": 4010386357,
+      "selectedKey": "7:8:cbf90699a13c0a12935b8f1f37384980bb2b8a2eabffd59e38bbbd77cfa36810",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 50560,
+      "targetScore": 162000,
+      "scoreNeeded": 111440,
+      "movesUsed": 6,
+      "movesRemaining": 22,
+      "readyRoute": {
+        "values": [
+          64,
+          64,
+          128,
+          256
+        ],
+        "length": 4,
+        "baseSum": 512,
+        "multiplier": 1.5,
+        "points": 768,
+        "closesTarget": false,
+        "scoreGapAfterCash": 110672
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 5120,
+        "pointsThroughCash": 5888,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 105552
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 5120,
+        "CASH_NOW": 768
+      },
+      "initialScoreLeader": "OBSERVED_WAIT",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": false,
+      "targetCost": {
+        "observedWaitMoves": 11,
+        "cashNowMoves": 10,
+        "cashNowMinusWait": -1
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "638cdf854b54d8c61ff89b6e41f34778f76c1d160a1b241d1d7440c64dd5bb5a",
+        "cashNowStateIdentity": "016eae92ccaa9986419aa66b3fa7fafce505626946d11f8a4f7c702202300877",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 7,
+          "points": 48640
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 7,
+          "points": 57280
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/98c224c7368089896eb3fe52699e43859a2b9fdb7868cc310673333c565f34f8.json",
+      "recordingId": "98c224c7368089896eb3fe52699e43859a2b9fdb7868cc310673333c565f34f8",
+      "level": 52,
+      "seed": 3882071371,
+      "selectedKey": "1:2:41e80683e7001ab6f85d44a60607012ae2d10119cf735f2b68af29e9bc10095d",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 0,
+      "targetScore": 102000,
+      "scoreNeeded": 102000,
+      "movesUsed": 0,
+      "movesRemaining": 24,
+      "readyRoute": {
+        "values": [
+          128,
+          128,
+          128,
+          128,
+          128,
+          128,
+          256
+        ],
+        "length": 7,
+        "baseSum": 1024,
+        "multiplier": 3,
+        "points": 3072,
+        "closesTarget": false,
+        "scoreGapAfterCash": 98928
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 1536,
+        "pointsThroughCash": 4608,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 97392
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 1536,
+        "CASH_NOW": 3072
+      },
+      "initialScoreLeader": "CASH_NOW",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": true,
+      "targetCost": {
+        "observedWaitMoves": 14,
+        "cashNowMoves": 13,
+        "cashNowMinusWait": -1
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "207198ab396ad00626a637bb6e4d7aafe1bb12f7ae97d6c8c9b094e9825580f9",
+        "cashNowStateIdentity": "c93d18a8b198553573d7801a2d2c784ef4c1c67edb281cc8902ac10b17b36cd6",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 14,
+          "points": 39040
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 9,
+          "points": 30400
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json",
+      "recordingId": "9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0",
+      "level": 54,
+      "seed": 1044860360,
+      "selectedKey": "7:8:5ca4220a1e27d80df098c3af8452eb74a85e6ff28560309e9ad804f6e14c5b68",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 28672,
+      "targetScore": 126000,
+      "scoreNeeded": 97328,
+      "movesUsed": 6,
+      "movesRemaining": 18,
+      "readyRoute": {
+        "values": [
+          64,
+          64,
+          128,
+          256
+        ],
+        "length": 4,
+        "baseSum": 512,
+        "multiplier": 1.5,
+        "points": 768,
+        "closesTarget": false,
+        "scoreGapAfterCash": 96560
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 3072,
+        "pointsThroughCash": 3840,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 93488
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 3072,
+        "CASH_NOW": 768
+      },
+      "initialScoreLeader": "OBSERVED_WAIT",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": false,
+      "targetCost": {
+        "observedWaitMoves": 12,
+        "cashNowMoves": 10,
+        "cashNowMinusWait": -2
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "c0111656eb1a6661ad668221e1e323e5fed2ea0bfe4b9ee9d066306616823df9",
+        "cashNowStateIdentity": "8c5fb7ffd4a53dcf6225cc51cbde7233f98b2a8ce046645f52ebfbbd72d20393",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 5,
+          "points": 38400
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 5,
+          "points": 49280
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json",
+      "recordingId": "b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab",
+      "level": 57,
+      "seed": 2389915636,
+      "selectedKey": "5:6:f6db5bd0d5c95309a6ad19e257acc9358fde8f0c86d3416c9799d6b70fd2dd89",
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "currentScore": 27136,
+      "targetScore": 129000,
+      "scoreNeeded": 101864,
+      "movesUsed": 4,
+      "movesRemaining": 22,
+      "readyRoute": {
+        "values": [
+          64,
+          64,
+          128,
+          128,
+          128
+        ],
+        "length": 5,
+        "baseSum": 512,
+        "multiplier": 2,
+        "points": 1024,
+        "closesTarget": false,
+        "scoreGapAfterCash": 100840
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 5120,
+        "pointsThroughCash": 6144,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 95720
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 5120,
+        "CASH_NOW": 1024
+      },
+      "initialScoreLeader": "OBSERVED_WAIT",
+      "targetCostLeader": "OBSERVED_WAIT",
+      "initialScoreLeaderAgreesWithTargetCost": true,
+      "targetCost": {
+        "observedWaitMoves": 11,
+        "cashNowMoves": 12,
+        "cashNowMinusWait": 1
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "b24e22ed5742ac4ece52047b8600337b3ffea74e3568b20bb0b3e2eee073c45f",
+        "cashNowStateIdentity": "46dfc334e26b8d111c16307389df19a0dfb4ba232af91ba3f35007bdcec965c8",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 5,
+          "points": 36160
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 12,
+          "points": 47040
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28.json",
+      "recordingId": "b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28",
+      "level": 54,
+      "seed": 3310936729,
+      "selectedKey": "6:7:257656c3a401d2a940313deee21fc0aed35b02c4929640ddbe814866ea9e821f",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 23552,
+      "targetScore": 126000,
+      "scoreNeeded": 102448,
+      "movesUsed": 5,
+      "movesRemaining": 19,
+      "readyRoute": {
+        "values": [
+          64,
+          64,
+          128,
+          256,
+          256,
+          256
+        ],
+        "length": 6,
+        "baseSum": 1024,
+        "multiplier": 2,
+        "points": 2048,
+        "closesTarget": false,
+        "scoreGapAfterCash": 100400
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 1024,
+        "pointsThroughCash": 3072,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 99376
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 1024,
+        "CASH_NOW": 2048
+      },
+      "initialScoreLeader": "CASH_NOW",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": true,
+      "targetCost": {
+        "observedWaitMoves": 14,
+        "cashNowMoves": 12,
+        "cashNowMinusWait": -2
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "18a69144d238cecb027df019ffd6345efa2bf6afc44565ae0ae3ce46e26c7bff",
+        "cashNowStateIdentity": "5bb955dd2e6b62e2b804687d23345ecca1564c5d57a4f00dafe48d161a71db94",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 4,
+          "points": 37120
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 6,
+          "points": 43200
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json",
+      "recordingId": "b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8",
+      "level": 52,
+      "seed": 2173441018,
+      "selectedKey": "6:7:ea483e598f538520787a97caac7f0a51e6d6092879ed38baf0281fc930704205",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 35840,
+      "targetScore": 102000,
+      "scoreNeeded": 66160,
+      "movesUsed": 5,
+      "movesRemaining": 19,
+      "readyRoute": {
+        "values": [
+          64,
+          64,
+          64,
+          64,
+          64,
+          64,
+          128,
+          128,
+          128,
+          256
+        ],
+        "length": 10,
+        "baseSum": 1024,
+        "multiplier": 5,
+        "points": 5120,
+        "closesTarget": false,
+        "scoreGapAfterCash": 61040
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 2048,
+        "pointsThroughCash": 7168,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 58992
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 2048,
+        "CASH_NOW": 5120
+      },
+      "initialScoreLeader": "CASH_NOW",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": true,
+      "targetCost": {
+        "observedWaitMoves": 6,
+        "cashNowMoves": 4,
+        "cashNowMinusWait": -2
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "60d6bd1f0575b56e5dfabb99f4c99b629f0b51f34f871428c713cad92879836e",
+        "cashNowStateIdentity": "4b046f20644766a494a4e673cfc1a2812c564b9021e3433dd22645a8406d7f86",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 4,
+          "points": 41920
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 2,
+          "points": 41920
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4.json",
+      "recordingId": "e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4",
+      "level": 3,
+      "seed": 1080239914,
+      "selectedKey": "4:9:c1538313cec3147b31bd33b14384c200fa40fa5400b794bcecd1d7865cd704c8",
+      "pairClass": "CASH_NOW_FASTER",
+      "currentScore": 304,
+      "targetScore": 1400,
+      "scoreNeeded": 1096,
+      "movesUsed": 3,
+      "movesRemaining": 22,
+      "readyRoute": {
+        "values": [
+          32,
+          32
+        ],
+        "length": 2,
+        "baseSum": 64,
+        "multiplier": 1,
+        "points": 64,
+        "closesTarget": false,
+        "scoreGapAfterCash": 1032
+      },
+      "observedWait": {
+        "movesBeforeCash": 5,
+        "pointsBeforeCash": 432,
+        "pointsThroughCash": 496,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 600
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 64,
+        "CASH_NOW": 64
+      },
+      "initialScoreLeader": "TIE",
+      "targetCostLeader": "CASH_NOW",
+      "initialScoreLeaderAgreesWithTargetCost": false,
+      "targetCost": {
+        "observedWaitMoves": 8,
+        "cashNowMoves": 5,
+        "cashNowMinusWait": -3
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "194904822e8f19040f471f9dafd6e77df3f61f147d7a5b87e1461f785e265f33",
+        "cashNowStateIdentity": "6d6f557a6c4eb12f71668ade4bf5ee5afebc721921e3c880141437cea5382ec8",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 8,
+          "points": 512
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 2,
+          "points": 320
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+      "recordingId": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+      "level": 54,
+      "seed": 1313839221,
+      "selectedKey": "5:6:3ace6de89f7e732e6e39869d5ee701c037efffd7db952d27d459823d417f73d9",
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "currentScore": 23552,
+      "targetScore": 126000,
+      "scoreNeeded": 102448,
+      "movesUsed": 4,
+      "movesRemaining": 20,
+      "readyRoute": {
+        "values": [
+          64,
+          64,
+          128,
+          128,
+          128,
+          256,
+          256
+        ],
+        "length": 7,
+        "baseSum": 1024,
+        "multiplier": 3,
+        "points": 3072,
+        "closesTarget": false,
+        "scoreGapAfterCash": 99376
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 3072,
+        "pointsThroughCash": 6144,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 96304
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 3072,
+        "CASH_NOW": 3072
+      },
+      "initialScoreLeader": "TIE",
+      "targetCostLeader": "OBSERVED_WAIT",
+      "initialScoreLeaderAgreesWithTargetCost": false,
+      "targetCost": {
+        "observedWaitMoves": 11,
+        "cashNowMoves": 12,
+        "cashNowMinusWait": 1
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "dbf8b552f217936251a94c544bf90735fc950f711628f271c7d6627f4068ac1e",
+        "cashNowStateIdentity": "e226302d0a075ed8f3e3396e9093c37d79da56e66b319f0ce43f3fb44f21a136",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 10,
+          "points": 57920
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 4,
+          "points": 32320
+        }
+      }
+    },
+    {
+      "recordingPath": "play-sessions/ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf.json",
+      "recordingId": "ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf",
+      "level": 54,
+      "seed": 2832419099,
+      "selectedKey": "7:8:8e5d3d0d43953258286c087a9012821e704a974673dc1dedede94a4b36e0bea9",
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "currentScore": 33792,
+      "targetScore": 126000,
+      "scoreNeeded": 92208,
+      "movesUsed": 6,
+      "movesRemaining": 18,
+      "readyRoute": {
+        "values": [
+          128,
+          128,
+          256,
+          512,
+          1024
+        ],
+        "length": 5,
+        "baseSum": 2048,
+        "multiplier": 2,
+        "points": 4096,
+        "closesTarget": false,
+        "scoreGapAfterCash": 88112
+      },
+      "observedWait": {
+        "movesBeforeCash": 1,
+        "pointsBeforeCash": 5120,
+        "pointsThroughCash": 9216,
+        "closesTargetThroughCash": false,
+        "scoreGapAfterCash": 82992
+      },
+      "simpleArithmeticState": "FUTURE_BOARD_REQUIRED",
+      "firstActionPoints": {
+        "OBSERVED_WAIT": 5120,
+        "CASH_NOW": 4096
+      },
+      "initialScoreLeader": "OBSERVED_WAIT",
+      "targetCostLeader": "OBSERVED_WAIT",
+      "initialScoreLeaderAgreesWithTargetCost": true,
+      "targetCost": {
+        "observedWaitMoves": 8,
+        "cashNowMoves": 12,
+        "cashNowMinusWait": 4
+      },
+      "postFirstMove": {
+        "observedWaitStateIdentity": "ffbf87652c35533dfe839e608abc83465df11edd88903925c7f36e0bbd1ea502",
+        "cashNowStateIdentity": "25b2f1b704226b2cc2f0fabdf7ef935669326a3664618b90dab232daf9651975",
+        "statesDiffer": true,
+        "observedWaitLargestLaterChain": {
+          "relativeMove": 6,
+          "points": 62400
+        },
+        "cashNowLargestLaterChain": {
+          "relativeMove": 8,
+          "points": 38080
+        }
+      }
+    }
+  ],
+  "summary": {
+    "rowCount": 14,
+    "pairClasses": {
+      "CASH_NOW_FASTER": 10,
+      "OBSERVED_WAIT_FASTER": 3,
+      "TARGET_COST_TIE": 1
+    },
+    "arithmeticStates": {
+      "CASH_NOW_REACHES_TARGET": 0,
+      "OBSERVED_PACKAGE_REACHES_TARGET": 0,
+      "FUTURE_BOARD_REQUIRED": 14
+    },
+    "initialScoreLeaderAgreesWithTargetCost": 7,
+    "initialScoreLeaderDisagreesWithTargetCost": 7,
+    "postFirstMoveStatesDiffer": 14
+  },
+  "replayEvidence": {
+    "waitHelpful": "ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf",
+    "cashHelpfulCounterexample": "9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0",
+    "sameReadyRoutePointsOppositeOutcomes": [
+      "98c224c7368089896eb3fe52699e43859a2b9fdb7868cc310673333c565f34f8",
+      "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78"
+    ]
+  },
+  "finding": "COMMON_STATE_ARITHMETIC_INSUFFICIENT",
+  "missingTerm": "POST_ACTION_BOARD_AND_REFILL_VALUE",
+  "interpretation": "The proposed arithmetic is decisive when a ready route reaches the target, but no retained route or observed wait-through-cash package does so. Every pair therefore depends on the scoring opportunities created by the action-specific post-move board and refill path.",
+  "nonClaims": [
+    "This artifact does not define a prospective metric or decision threshold.",
+    "This artifact does not claim population generalization beyond the 14 retained LC-0012 pairs.",
+    "This artifact does not authorize a policy or champion change."
+  ],
+  "artifactIdentity": "f32b5738c2e1c2843e53193c5667521159f1740dfaa2751440ea7881b09477d4"
+}
