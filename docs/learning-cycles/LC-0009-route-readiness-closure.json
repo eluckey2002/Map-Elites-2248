@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "LC-0009-route-readiness-closeout-contract.json",
+    "sha256": "f33304d113a8c7ddb6bde39e7d176c7ffbed871336952417d7d02693064b41df"
+  },
+  "run_id": "LC-0009-REPORTABLE-1",
+  "final_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+  "closure_status": "INVALID",
+  "claims": [
+    {
+      "id": "C1-frozen-ancestry-and-replay-identity",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "All frozen sources matched and the four cells, eight arm timelines, correction routes, and replay states reproduced."
+    },
+    {
+      "id": "C2-objective-and-continuation-equivalence",
+      "status": "PASS",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "Each pair retained the same decision state, target, move budget, RNG prefix, continuation policy, and target-stop objective."
+    },
+    {
+      "id": "C3-ready-route-known-good",
+      "status": "PASS",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The positive control passed, but it did not exercise a later valid double while an earlier direct input was absent."
+    },
+    {
+      "id": "C4-missing-node-known-negative",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The missing input was named, but the control did not test whether other simultaneously present value links were classified by their frozen route positions."
+    },
+    {
+      "id": "C5-broken-adjacency-known-negative",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The separated pair was named, but the control did not expose the partial-prefix value-order defect."
+    },
+    {
+      "id": "C6-planted-false-ready",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The validator rejected the planted claim, but that mutation did not exercise incorrect missing-value evidence."
+    },
+    {
+      "id": "C7-restoration-and-persistence",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The assessor identity was restored and disposable raw evidence survived a planted interpretation failure."
+    },
+    {
+      "id": "move-4-readiness",
+      "status": "PASS",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The timelines were retained, but the assessor defect prevents calling every pre-ready diagnostic exact."
+    },
+    {
+      "id": "move-6-readiness",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The timelines were retained, but the assessor defect prevents calling every pre-ready diagnostic exact."
+    },
+    {
+      "id": "move-9-readiness",
+      "status": "FAIL",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The move-9 champion timeline falsely marked valid 128-to-256 and 64-to-128 links as value-order violations while earlier route inputs were absent."
+    },
+    {
+      "id": "move-11-readiness",
+      "status": "UNVERIFIED",
+      "evidence_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+      "reason": "The first-ready timing is likely unaffected, but this invalid run cannot entitle any panel outcome."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw",
+      "path": "LC-0009-route-readiness-raw.json",
+      "sha256": "ce91a98dfd011b35de693dd8f047874c0a0a279e928562fc3e0fbc0de92c6d63"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "LC-0009-route-readiness-recomputed.json",
+      "sha256": "c28a43eabff8ab64fdeea158d72e82b97c86a44835bf001aa4d21dc93d766221"
+    }
+  ],
+  "primary_outcome": null,
+  "deviations": [
+    "The assessor checked later value links with a prefix filtered to currently live nodes. When an earlier frozen input was absent, the shortened prefix made a valid double look like the second tile, which incorrectly requires equality. The raw move-9 champion timeline contains three such false missing-value links, violating the frozen exact-diagnostic requirement."
+  ],
+  "attempts": [
+    {
+      "id": "LC-0009-REPORTABLE-1",
+      "exit_code": 0,
+      "artifact_ids": [
+        "raw",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}
