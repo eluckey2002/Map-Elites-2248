@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0009-harness-qualification",
+  "status": "PASS",
+  "oracle": "docs/learning-cycles/LC-0009-route-readiness-contract.md",
+  "manifestIdentity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+  "harnessIdentity": "c4c717cd722f62aedf621733bc740713762804c2352673368379cdbced26a060",
+  "attempt": 1,
+  "committed": {
+    "contract": true,
+    "lc0008Contract": true,
+    "lc0008Manifest": true,
+    "lc0008Qualification": true,
+    "lc0008Raw": true,
+    "lc0008Result": true,
+    "priorHarness": true,
+    "lc0007Raw": true,
+    "recording": true,
+    "engine": true,
+    "bot": true,
+    "harness": true,
+    "test": true
+  },
+  "coherentSubstitutionRejected": true,
+  "assessorIdentityBefore": "fbec2ec89556dd83732e443158a01bb2134cce4a07dfec9c0fea9291372d7453",
+  "assessorIdentityAfter": "fbec2ec89556dd83732e443158a01bb2134cce4a07dfec9c0fea9291372d7453",
+  "preOutcomeAdmission": {
+    "pass": true,
+    "verifier": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/tools/vendor/close-experiment/verify_closure.py",
+    "resolvedCwd": "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27",
+    "resolvedArgvFiles": [
+      "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/tools/diagnose-lc0009-route-readiness.js",
+      "/Users/eluckey/Documents/Codex/2026-08-30/yes-it-is-created-verified-and/work/game51-learning-cycle-2026-09-27/docs/learning-cycles/LC-0009-route-readiness-raw.json"
+    ],
+    "resolvedArgvFilesExist": true,
+    "verdict": {
+      "checked_artifacts": [
+        "primary-recomputation",
+        "raw"
+      ],
+      "checked_claims": [
+        "C1-frozen-ancestry-and-replay-identity",
+        "C2-objective-and-continuation-equivalence",
+        "C3-ready-route-known-good",
+        "C4-missing-node-known-negative",
+        "C5-broken-adjacency-known-negative",
+        "C6-planted-false-ready",
+        "C7-restoration-and-persistence",
+        "move-11-readiness",
+        "move-4-readiness",
+        "move-6-readiness",
+        "move-9-readiness"
+      ],
+      "closure_status": "CLOSED",
+      "contract_sha256": "f33304d113a8c7ddb6bde39e7d176c7ffbed871336952417d7d02693064b41df",
+      "errors": [],
+      "expected_contract_sha256": "f33304d113a8c7ddb6bde39e7d176c7ffbed871336952417d7d02693064b41df",
+      "recomputation": "PASS",
+      "recomputed_output_sha256": "16bbb0e715677753636ae258a77397d4e44f97a10b19c9b1faa40943279d1060",
+      "verdict": "PASS"
+    }
+  },
+  "controls": [
+    {
+      "id": "C1-frozen-ancestry-and-replay-identity",
+      "pass": true,
+      "observed": {
+        "lc0008RawIdentity": "2f9558a9c81adf2459b9762e4fbe1ee1515c3358a7edb34d01afe4f093b9fea8",
+        "moves": [
+          4,
+          6,
+          9,
+          11
+        ]
+      }
+    },
+    {
+      "id": "C2-objective-and-continuation-equivalence",
+      "pass": true,
+      "observed": {
+        "exactPanelReproduced": true,
+        "objectiveEquivalent": true,
+        "unchangedContinuation": true,
+        "ancestryGraphsValid": true
+      }
+    },
+    {
+      "id": "C3-ready-route-known-good",
+      "pass": true,
+      "observed": {
+        "stateIdentity": "33c7ef47eb8b8264a59b5043089fb2198263ba208619e9ef7e5bb65c5f27b6bb",
+        "orderedInputIds": [
+          "P001",
+          "P002",
+          "P003",
+          "P004",
+          "P005"
+        ],
+        "presentInputs": [
+          {
+            "index": 0,
+            "id": "P001",
+            "x": 0,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 1,
+            "id": "P002",
+            "x": 1,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 2,
+            "id": "P003",
+            "x": 2,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 3,
+            "id": "P004",
+            "x": 3,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 4,
+            "id": "P005",
+            "x": 4,
+            "y": 0,
+            "value": 16
+          }
+        ],
+        "missingDirectInputs": [],
+        "missingAdjacencyLinks": [],
+        "missingValueLinks": [],
+        "allPresent": true,
+        "distinct": true,
+        "engineValid": true,
+        "routeExecutable": true
+      }
+    },
+    {
+      "id": "C4-missing-node-known-negative",
+      "pass": true,
+      "observed": {
+        "stateIdentity": "15d8c00d37aba5f0b9076a00ca7ba69fd6f2ad6baabc1e66240be3e7f7aaf6e6",
+        "orderedInputIds": [
+          "P001",
+          "P002",
+          "P003",
+          "P004",
+          "P005"
+        ],
+        "presentInputs": [
+          {
+            "index": 0,
+            "id": "P001",
+            "x": 0,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 1,
+            "id": "P002",
+            "x": 1,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 3,
+            "id": "P004",
+            "x": 3,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 4,
+            "id": "P005",
+            "x": 4,
+            "y": 0,
+            "value": 16
+          }
+        ],
+        "missingDirectInputs": [
+          {
+            "index": 2,
+            "id": "P003",
+            "kind": "root",
+            "value": 8,
+            "createdAt": 0,
+            "origin": "carried-board"
+          }
+        ],
+        "missingAdjacencyLinks": [],
+        "missingValueLinks": [],
+        "allPresent": false,
+        "distinct": false,
+        "engineValid": false,
+        "routeExecutable": false
+      }
+    },
+    {
+      "id": "C5-broken-adjacency-known-negative",
+      "pass": true,
+      "observed": {
+        "stateIdentity": "139a39c63907d730a119d6a622418d0abfa09e9c69677c12e6c4598b5581b55e",
+        "orderedInputIds": [
+          "P001",
+          "P002",
+          "P003",
+          "P004",
+          "P005"
+        ],
+        "presentInputs": [
+          {
+            "index": 0,
+            "id": "P001",
+            "x": 0,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 1,
+            "id": "P002",
+            "x": 1,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 2,
+            "id": "P003",
+            "x": 2,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 3,
+            "id": "P004",
+            "x": 4,
+            "y": 0,
+            "value": 8
+          },
+          {
+            "index": 4,
+            "id": "P005",
+            "x": 5,
+            "y": 0,
+            "value": 16
+          }
+        ],
+        "missingDirectInputs": [],
+        "missingAdjacencyLinks": [
+          {
+            "leftId": "P003",
+            "rightId": "P004",
+            "left": {
+              "x": 2,
+              "y": 0,
+              "value": 8
+            },
+            "right": {
+              "x": 4,
+              "y": 0,
+              "value": 8
+            }
+          }
+        ],
+        "missingValueLinks": [],
+        "allPresent": true,
+        "distinct": true,
+        "engineValid": true,
+        "routeExecutable": false
+      }
+    },
+    {
+      "id": "C6-planted-false-ready",
+      "pass": true,
+      "observed": {
+        "mutationPresent": true,
+        "reachedValidator": true,
+        "mutationKilled": true,
+        "mutationMessage": "readiness/evidence contradiction: observed false, claimed true"
+      }
+    },
+    {
+      "id": "C7-restoration-and-persistence",
+      "pass": true,
+      "observed": {
+        "plantedFailureObserved": true,
+        "rawRetained": true
+      }
+    }
+  ],
+  "uncertainties": [],
+  "artifactIdentity": "5e8f9b5882a42fb4aa755b348a3e6a94853b44e7872b937b6c93fc180bdbb097"
+}
