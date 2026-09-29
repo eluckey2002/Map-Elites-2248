@@ -141,6 +141,17 @@ observed one-move wait, under identical RNG, remaining moves, target-stop
 objective, and subsequent champion. Do not define a metric or modify the
 champion.
 
+[RESULT-0063](EVIDENCE_LEDGER.md#result-0063--cashing-now-and-waiting-one-move-tie-on-target-cost-in-the-one-early-ready-state)
+closes that exact counterfactual. Both alternatives reach the target on move
+15, two moves after the common state: waiting scores 3,072 then 56,320, while
+cashing now scores 56,320 then 10,240. The registered outcome is
+`TARGET_COST_TIE`. Cash-now carries 7,168 more overshoot score at the shared
+stopping move, but overshoot was not the frozen objective. The wait was safe
+and did not buy speed in this state; this one tie supports neither a general
+cash-now rule nor a general waiting rule, and the champion remains unchanged.
+A broader timing study, if pursued, must first freeze a multi-state panel and
+choose whether it is optimizing target speed or score beyond the target.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.

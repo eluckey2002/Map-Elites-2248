@@ -1,0 +1,36 @@
+{
+  "artifactIdentity": "e50f53500b527c20af6d0d670e7f827b23b4b7ed3a9caac63f068bb052381f3c",
+  "status": "COMPLETE",
+  "disposition": "TARGET_COST_TIE",
+  "exactEffectCashMinusWaitMoves": 0,
+  "conditionalUncertainty": 0,
+  "populationInference": false,
+  "arms": {
+    "WAIT_ONE": {
+      "reachedTarget": true,
+      "movesToTarget": 2,
+      "firstTargetCrossing": 15,
+      "finalScore": 126144,
+      "terminal": {
+        "outcome": "win",
+        "reason": "target reached",
+        "firstCrossing": 15
+      },
+      "firstActionPoints": 3072,
+      "traceLength": 2
+    },
+    "CASH_NOW": {
+      "reachedTarget": true,
+      "movesToTarget": 2,
+      "firstTargetCrossing": 15,
+      "finalScore": 133312,
+      "terminal": {
+        "outcome": "win",
+        "reason": "target reached",
+        "firstCrossing": 15
+      },
+      "firstActionPoints": 56320,
+      "traceLength": 2
+    }
+  }
+}

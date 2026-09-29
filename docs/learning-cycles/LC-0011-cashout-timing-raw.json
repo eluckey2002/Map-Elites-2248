@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0011-cashout-timing-raw",
+  "status": "COMPLETE",
+  "finalSubjectIdentity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+  "controls": {
+    "commonStateMatched": true,
+    "sameObjective": true,
+    "unchangedSubsequentChampion": true
+  },
+  "arms": {
+    "WAIT_ONE": {
+      "arm": "WAIT_ONE",
+      "start": {
+        "stateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+        "score": 66752,
+        "moves": 13,
+        "maxMoves": 24,
+        "targetScore": 126000
+      },
+      "firstActionIdentity": "a2bef0bab40498650530c1242d620569d7b3e03826cd0b116596867312f3a181",
+      "trace": [
+        {
+          "source": "champion",
+          "chain": [
+            {
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 256
+            }
+          ],
+          "points": 3072,
+          "score": 69824,
+          "moves": 14,
+          "preStateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+          "postStateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520",
+          "refillRngCalls": 7,
+          "terminal": null
+        },
+        {
+          "source": "champion",
+          "chain": [
+            {
+              "x": 2,
+              "y": 4,
+              "value": 1024
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            }
+          ],
+          "points": 56320,
+          "score": 126144,
+          "moves": 15,
+          "preStateIdentity": "687884d863cc19872ad553d821f46a0210a15697f402e683d77146d98aed3520",
+          "postStateIdentity": "d7e7b3c853ff50eb0d09295ed84580c943a7da77eea230973590ee8e54c63470",
+          "refillRngCalls": 9,
+          "terminal": {
+            "outcome": "win",
+            "reason": "target reached",
+            "firstCrossing": 15
+          }
+        }
+      ],
+      "terminal": {
+        "outcome": "win",
+        "reason": "target reached",
+        "firstCrossing": 15
+      },
+      "reachedTarget": true,
+      "firstTargetCrossing": 15,
+      "movesToTarget": 2
+    },
+    "CASH_NOW": {
+      "arm": "CASH_NOW",
+      "start": {
+        "stateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+        "score": 66752,
+        "moves": 13,
+        "maxMoves": 24,
+        "targetScore": 126000
+      },
+      "firstActionIdentity": "62fe5d540bb2d10ba69ffb27600a399b836ae91fe52168d71670af4553bea9f1",
+      "trace": [
+        {
+          "source": "frozen-ready-route",
+          "chain": [
+            {
+              "x": 2,
+              "y": 4,
+              "value": 1024
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "x": 3,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 2,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 1,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 7,
+              "value": 1024
+            },
+            {
+              "x": 1,
+              "y": 6,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 5,
+              "value": 1024
+            },
+            {
+              "x": 0,
+              "y": 6,
+              "value": 2048
+            }
+          ],
+          "points": 56320,
+          "score": 123072,
+          "moves": 14,
+          "preStateIdentity": "d6bf03cee41bd1539b167c8de37ea7b87e269f4fef473c3bf3144e74fc416dff",
+          "postStateIdentity": "6dc5f586bee7fccabbc478bf634fc4082700f0f742a972e760e689f14900b544",
+          "refillRngCalls": 9,
+          "terminal": null
+        },
+        {
+          "source": "champion",
+          "chain": [
+            {
+              "x": 1,
+              "y": 0,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 1,
+              "value": 64
+            },
+            {
+              "x": 0,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "x": 1,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 0,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 1,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 2,
+              "value": 128
+            },
+            {
+              "x": 3,
+              "y": 3,
+              "value": 128
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "value": 256
+            },
+            {
+              "x": 1,
+              "y": 5,
+              "value": 256
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "value": 256
+            }
+          ],
+          "points": 10240,
+          "score": 133312,
+          "moves": 15,
+          "preStateIdentity": "6dc5f586bee7fccabbc478bf634fc4082700f0f742a972e760e689f14900b544",
+          "postStateIdentity": "d3a3e519f33beb34d0bbae19914ad95b61c749e185024ca6780f79d70a3ddaa7",
+          "refillRngCalls": 13,
+          "terminal": {
+            "outcome": "win",
+            "reason": "target reached",
+            "firstCrossing": 15
+          }
+        }
+      ],
+      "terminal": {
+        "outcome": "win",
+        "reason": "target reached",
+        "firstCrossing": 15
+      },
+      "reachedTarget": true,
+      "firstTargetCrossing": 15,
+      "movesToTarget": 2
+    }
+  },
+  "disposition": "TARGET_COST_TIE",
+  "artifactIdentity": "e50f53500b527c20af6d0d670e7f827b23b4b7ed3a9caac63f068bb052381f3c"
+}

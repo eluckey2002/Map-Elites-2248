@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "contract": {
+    "path": "LC-0011-cashout-timing-closeout-contract.json",
+    "sha256": "4f1668b249d78af44d5e11b42789b3a208b15447378cdfd139b293c8300b06da"
+  },
+  "run_id": "LC-0011-REPORTABLE-1",
+  "final_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+  "closure_status": "CLOSED",
+  "claims": [
+    {
+      "id": "C1-frozen-source-and-common-state-replay",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "Both arms independently reconstructed the exact frozen state identity at score 66,752 after 13 moves, with the ten-node route live and legal."
+    },
+    {
+      "id": "C2-versioned-reference-and-synthetic-aa",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "Two disposable WAIT_ONE replays byte-matched and reproduced the known 3,072 then 56,320 sequence with target crossing on move 15."
+    },
+    {
+      "id": "C3-arm-assignment-and-planted-swap",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "The public validator rejected a WAIT_ONE action relabeled CASH_NOW specifically for first-action/arm mismatch."
+    },
+    {
+      "id": "C4-objective-equivalence",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "Both arms started with target 126,000, move 13 of 24, identical state and RNG prefix, and used the same target-stop classifier and unchanged champion after the first action."
+    },
+    {
+      "id": "C5-known-target-stop-reference",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "WAIT_ONE stopped at its first target crossing on move 15 after exactly two actions."
+    },
+    {
+      "id": "C6-planted-post-target-continuation",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "The public trace validator rejected an appended move after the known target crossing."
+    },
+    {
+      "id": "C7-restoration-and-raw-persistence",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "Qualification retained a complete disposable artifact across a planted interpretation failure, and the reportable pair was persisted before disposition evaluation."
+    },
+    {
+      "id": "C8-executable-closeout-admission",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "The vendored closeout verifier passed the disposable admission path and the reportable recomputation byte-matches the retained raw artifact."
+    },
+    {
+      "id": "WAIT_ONE-terminal-outcome",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "WAIT_ONE scored 3,072 then 56,320 and first crossed the target on move 15, two moves after the common state, at score 126,144."
+    },
+    {
+      "id": "CASH_NOW-terminal-outcome",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "CASH_NOW scored 56,320 then the unchanged champion scored 10,240 and first crossed the target on move 15, two moves after the common state, at score 133,312."
+    },
+    {
+      "id": "exact-paired-target-cost-comparison",
+      "status": "PASS",
+      "evidence_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+      "reason": "Both arms won in two moves from the common state, so cash-now minus wait-one target cost is exactly zero and the registered disposition is TARGET_COST_TIE."
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw",
+      "path": "LC-0011-cashout-timing-raw.json",
+      "sha256": "59a4a2693bdea78c60df2ebec650ca98afdd44006d3fa16796764d56e3a0e867"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "LC-0011-cashout-timing-recomputed.json",
+      "sha256": "8f22b5b1ce813df5413c77bccb053df0c435be0529116da6f7b37d4594fe9fe7"
+    }
+  ],
+  "primary_outcome": "TARGET_COST_TIE",
+  "deviations": [
+    "Before the successful qualification receipt, one qualification invocation stopped at the external closeout-identity check because the caller supplied an incorrect SHA-256. It produced no qualification, raw, or recomputation artifact, did not execute CASH_NOW, and consumed the first of the two allowed qualification attempts. The second invocation used the measured committed-file hash and passed."
+  ],
+  "attempts": [
+    {
+      "id": "LC-0011-REPORTABLE-1",
+      "exit_code": 0,
+      "artifact_ids": [
+        "raw",
+        "primary-recomputation"
+      ]
+    }
+  ]
+}
