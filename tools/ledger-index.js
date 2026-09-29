@@ -13,7 +13,7 @@ const ROOT = path.join(__dirname, '..');
 const LEDGER = path.join(ROOT, 'EVIDENCE_LEDGER.md');
 const INDEX = path.join(ROOT, 'LEDGER-INDEX.md');
 
-const CURRENT = ['accepted', 'narrowed', 'provisional', 'open', 'stale'];
+const CURRENT = ['accepted', 'narrowed', 'provisional', 'open', 'blocked', 'stale'];
 const TYPE_ORDER = ['FACT', 'DECISION', 'RESULT', 'CORRECTION', 'HYPOTHESIS', 'QUESTION'];
 const CLAIM_LIMIT = 220;
 
@@ -55,8 +55,16 @@ function proofClasses(value = '') {
 
 function cell(text) { return String(text).replace(/\|/g, '\\|'); }
 
-function row(r) {
-  const claim = firstSentence(r.fields.statement || r.fields.question || r.title);
+// A live record with a correction (a `narrowed` one) may no longer hold as
+// worded, so its row leads with what corrected it (BL-0016 F3).
+function correctionNote(r, titles) {
+  const ids = [...new Set((r.fields.superseded_by || '').match(/[A-Z]+-\d{4}/g) || [])];
+  if (!ids.length) return '';
+  return `**Corrected by ${ids.map((id) => `${id} (${titles.get(id) || 'missing'})`).join('; ')}; the wording below may no longer hold.** `;
+}
+
+function row(r, titles = new Map()) {
+  const claim = correctionNote(r, titles) + firstSentence(r.fields.statement || r.fields.question || r.title);
   return `| ${r.id} | ${cell(r.title)} | ${r.fields.status || '—'} | ${cell(proofClasses(r.fields.proof_class))} | ${cell(claim)} | ${r.line} |`;
 }
 
@@ -67,6 +75,7 @@ function byType(a, b) {
 function renderIndex(records) {
   const current = records.filter((r) => CURRENT.includes(r.fields.status)).sort(byType);
   const retired = records.filter((r) => !CURRENT.includes(r.fields.status)).sort(byType);
+  const titles = new Map(records.map((r) => [r.id, r.title]));
   const counts = {};
   for (const r of records) counts[r.fields.status] = (counts[r.fields.status] || 0) + 1;
   const header = '| Record | Title | Status | Proof class | Claim (first sentence) | Ledger line |\n| --- | --- | --- | --- | --- | --- |';
@@ -78,14 +87,14 @@ function renderIndex(records) {
     'Read this before the full ledger. It lists every record\'s standing in one line.',
     'It is navigation only: before relying on a claim, open its record in',
     '[EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.',
-    'A `narrowed` record must be read together with the correction that narrowed it.',
+    'A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.',
     '',
     `Records: ${records.length} (${Object.entries(counts).sort().map(([k, v]) => `${v} ${k}`).join(', ')}).`,
     '',
     '## Current records',
     '',
     header,
-    ...current.map(row),
+    ...current.map((r) => row(r, titles)),
     '',
     '## Superseded or rejected records',
     '',

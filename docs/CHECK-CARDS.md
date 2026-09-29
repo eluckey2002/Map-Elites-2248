@@ -617,13 +617,15 @@ that passed while inspecting nothing.
 - **Protects:** the rot `experiments/README.md` names as motivating the gate —
   "two ledger citations rotted to paths that never resolved".
 - **Where:** `assessCitationsResolve`, over `openCitedArtifacts`.
-- **Level:** citation. Every backticked `*.json` token in a ledger record that
-  **contains a slash** must exist on disk and parse as JSON.
+- **Level:** citation. Every backticked or Markdown-linked `*.json` path in a
+  ledger record that **contains a slash** must exist on disk and parse as JSON.
 - **Kind:** existence plus parseability. Not contents — `artifact-identity-verifies`
   owns that.
-- **Scope:** all 19 ledger records **including grandfathered ones** —
-  grandfathering waives the protocol requirement, never the requirement that a
-  receipt be a real file. 13 path-shaped citations today, all resolving.
+- **Scope:** every `### RESULT-NNNN` ledger record **including grandfathered
+  ones**; code-span and Markdown-link JSON paths containing `/`; UTF-8 JSON
+  parsing. Grandfathering waives protocol registration, never citation
+  resolution. Bare filenames, non-JSON links, decisions, and hypotheses are
+  excluded.
 - **Reads own output?:** no.
 - **Does NOT catch:**
   1. **A filename named in prose.** Four live citations have no slash
@@ -632,11 +634,81 @@ that passed while inspecting nothing.
      written without a directory is invisible here.
   2. **A path that resolves to the *wrong* file.** Existence only.
   3. **Non-JSON evidence.** `citedArtifacts` only matches `.json`; a cited `.md`,
-     `.html`, or commit-scoped path is not checked by anything.
+     `.html`, or commit-scoped path is not checked here. Modern closed
+     experiment reports are separately covered by
+     `closed-evidence-closing-commit-integrity` below.
   4. **A citation inside a decision or hypothesis record.** `readLedgerResults`
      only parses `### RESULT-NNNN` blocks, so `DECISION-0004`'s citations are
      unchecked.
-- **Rung:** blocking. **Decay:** live test plants a nonexistent path each run.
+- **Rung:** blocking. **Decay:** live tests plant a nonexistent path and remove
+  a real RESULT-0049 Markdown-linked receipt.
+
+### closed-evidence-closing-commit-integrity · HARD
+
+- **Protects:** a modern, executable closed experiment cannot keep an accepted
+  ledger record while its qualification, report, closure, corpus, or cited
+  receipts are rewritten after the commit that first closes the experiment.
+  Qualification work may evolve before close; corrections after close must
+  supersede the result instead of changing retained evidence in place.
+- **Where:** `tools/verify-experiments.js#assessClosedEvidenceImmutability`,
+  called by `assessExperiments`; exercised live by
+  `solver/tests/experiments.test.js`.
+- **Level:** whole file and result record. It detects any byte change but does
+  not identify which field or claim changed.
+- **Kind:** value. It compares current bytes with `git show` at the commit that
+  first added `closure.json`. Scientific truth at that closing commit remains owned by
+  the executable recomputation, result-local controls, and review.
+- **Scope:** ledger `RESULT` records whose cited `closure.json` names a closeout
+  contract whose full or 16-character SHA-256 is pinned in `protocol.md`; every
+  existing cited JSON path from that record, including self-identifying
+  corpora; and its cited `experiments/<RESULT-ID>/report.md`. No field added to
+  a current artifact can exempt it from the immutable comparison. Artifact
+  identities and executable closure recomputation remain independent checks.
+  Legacy closures without a protocol-pinned contract, uncited files,
+  non-result ledger records, and evidence outside git history are excluded.
+- **Reads own output?:** yes. The experiment workflow commits the evidence that
+  this gate later reads. The comparison source is each file's blob at the
+  immutable closing commit, not a hash stored in a mutable receipt; this makes
+  later rewriting visible but cannot prove the closing blob was correct.
+- **Sampling memory:** n/a — exhaustive over every in-scope cited file on every
+  experiment-gate run. Silence for a legacy unpinned closure means outside
+  scope, never authenticated.
+- **Does NOT catch:**
+  1. Evidence that was already wrong, contradictory, or fabricated when the
+     closure first committed it.
+  2. A coordinated history rewrite that replaces the closing commit; branch
+     protection, not this check, owns protected-history mutation.
+  3. An evidence file that the ledger never cites, or a report whose ledger
+     record does not link its canonical `report.md` path.
+  4. Whether unchanged report prose accurately explains every recomputed field;
+     `assessClosureReceipt` owns outcome and artifact agreement, while review
+     owns explanatory meaning.
+  5. Legacy executable closures whose protocols never pinned their contracts;
+     enforcing a new historical promise would reject accepted evidence that
+     predates the promise.
+  6. Whether the unchanged evidence was generated by correct code; protocol
+     freezes, artifact identities, and closure recomputation own that class.
+- **Crafted-bypass test:** `solver/tests/experiments.test.js`, case `LIVE:
+  RESULT-0049 evidence cannot be rewritten after its closing commit`.
+  It first proves the real cited evidence matches git, then changes the live
+  qualification to `FAIL`, changes a real failed control, adds a freshly valid
+  self-identity and plausible registration, and changes the report's
+  champion-only count to `999999`; both files must fail this check even though
+  the separate artifact-identity check accepts the forged self-identity.
+- **Retires:** NO — this widens the existing experiment gate. Artifact
+  self-identities do not cover qualification/report files, and executable
+  closure recomputation does not detect a coordinated report-plus-closure hash
+  rewrite, so no existing check can be removed.
+- **Enforcement:** HARD inside the existing required experiment gate. The live
+  corpus was clean before promotion; the crafted qualification and report
+  rewrites both failed before this card was marked shippable.
+- **Decay:** `node --test solver/tests/experiments.test.js` reruns the clean
+  corpus assertion, the forged-identity/report attack, and a mutation matrix
+  that independently changes every cited RESULT-0049 JSON artifact plus its
+  report; `node tools/verify-experiments.js` scans the real ledger and evidence
+  on every required CI run.
+- **Shipped:** PR #49 review fix for `Authenticate the remaining RESULT-0049
+  evidence`.
 
 ### artifact-identity-verifies · HARD
 
@@ -865,6 +937,129 @@ that passed while inspecting nothing.
   three-state negative test and the live ledger gate execute together.
 - **Shipped:** 2026-09-02 · fix run
   `2026-09-02-experiment-lifecycle-completion-fix`.
+
+### failed-run-ledger-coverage · HARD
+
+- **Protects:** a retained experiment cannot close `INVALID` or `UNVERIFIED`
+  and then disappear into prose without a pinpointed cause and a concrete
+  prevention mechanism. The durable index is `FAILED-RUN-LEDGER.CSV`; the
+  source facts remain the experiment's `closure.json` and cited evidence.
+- **Granularity:** one retained result and closure receipt per ledger row,
+  identified by `result_id`, `run_id`, and `evidence_path`. A `run_id` must also
+  be unique across all retained failed closures, so a copied template cannot
+  collapse two failures into one CSV row.
+  Individual failed attempts inside an otherwise `CLOSED` run are deliberately
+  below this check's granularity because qualification mutants and planted
+  negative controls are expected to exit nonzero.
+- **Shape, value, or meaning:** shape and value. It checks the exact CSV schema,
+  enums, unique identities, repository-relative paths, existence of evidence,
+  and one-to-one coverage of real non-closed closures. Human review owns whether
+  the written root-cause explanation is true and whether the chosen prevention
+  is sufficient.
+- **Garbage test:** `solver/tests/failedRunLedger.test.js` copies a real
+  `UNVERIFIED` closure into a temporary repository, omits its CSV row, and
+  requires the check to fail with that exact run id. Separate cases plant a
+  missing prevention artifact, give two failed result closures the same run id
+  with only one ledger row, and prove that a `CLOSED` run with an intentional
+  nonzero qualification attempt is not misclassified.
+- **Scope inventory:** `experiments/RESULT-*/closure.json` files with exact
+  `closure_status` values `INVALID` or `UNVERIFIED`, plus discoverable legacy
+  incident files at `docs/failed-runs/FR-*.md` whose rows are marked
+  `source_kind=legacy`. CSV is RFC-4180-style
+  UTF-8 with one header and one physical row per failure; quoted commas and
+  doubled quotes are supported, embedded newlines are refused.
+- **Supply chain:** the experiment workflow writes closure receipts; this gate
+  reads those receipts independently and cross-checks a separately maintained
+  CSV. The ledger does not generate, edit, or rewrite closure receipts.
+- **Sampling memory:** exhaustive over committed closure receipts. Silence about
+  an arbitrary shell failure or an abandoned run with no closure receipt means
+  "not visible to this check," never "no failure occurred."
+- **Enforcement rung:** HARD inside the existing experiment gate. This widens
+  the current required status check; it does not add another CI job.
+- **Decay:** the live test asserts the exact set of repository failures found by
+  scanning real closure receipts, and the temporary-repository negative tests
+  run with every experiment-gate test pass. The duplicate-run fixture proves
+  both that discovery rejects the repeated identity and that coverage requires
+  the second result's own exact row.
+- **Retires:** NO. The experiment gate already owns retained experiment
+  lifecycle integrity, but none of its existing clauses inspect non-`CLOSED`
+  closure receipts or require failure learning. Widening that gate is the
+  smallest placement that fires at the existing admission boundary.
+- **Does NOT catch:**
+  1. A process crash, discarded branch, or uncommitted run that never leaves a
+     closure receipt or manually retained legacy row.
+  2. A plausible but false root-cause narrative; the gate validates presence
+     and references, not semantic truth.
+  3. A prevention artifact that exists and has a test but is never invoked by a
+     different future workflow.
+  4. A valid falsified hypothesis or inconclusive domain result whose run still
+     closed correctly; those are scientific outcomes, not failed runs.
+- **Paths:** implementation `tools/failed-run-ledger.js`; live integration
+  `tools/verify-experiments.js`; negative test
+  `solver/tests/failedRunLedger.test.js`.
+- **Shipped:** 2026-09-22 on the isolated failed-run-ledger branch.
+
+### protocol-sample-size-and-margin · HARD
+
+- **Protects:** a protocol registered on or after 2026-09-27 cannot enter the
+  experiment corpus without stating its fixed denominator, quantitative
+  margin, and downstream-use boundary. The check accepts either the current
+  `## Sample size and margin` form or the already-frozen companion-protocol
+  form used by RESULT-0049.
+- **Where:** `tools/verify-experiments.js`, `assessSampleSizeSections` and
+  `assessStructuredSampleSizeCompanion`; exercised by
+  `solver/tests/experiments.test.js`.
+- **Level:** H2 section and labelled clause within one protocol file. Facts
+  split across unrecognised headings, external prose, or comments slip between
+  those levels.
+- **Kind:** shape and value. It requires filled text plus numeric markers; the
+  experiment author and independent review own whether the denominator,
+  uncertainty method, and decision boundary are scientifically appropriate.
+- **Scope:** every `experiments/*/protocol.md` with a parseable `registered`
+  date on or after 2026-09-27. The primary form requires exact labelled bullets
+  `Per verdict`, `Margin`, and `Downstream quantity`. The companion form must
+  freeze the exact adjacent `registered-protocol.md` path and requires exact
+  H2s `Units, assignment, panel, and completeness`, `Objective and
+  termination`, and `Adoption boundary`; within them it requires a numeric
+  `Matrix:` line naming paired cells, games, or units, both `95% interval` and
+  `1.96`, and at least 40 non-placeholder characters in the adoption boundary.
+  Older protocols are excluded.
+- **Reads own output?:** yes—the check reads author-written protocol files, not
+  independent outcome data. That is safe only for the declared completeness
+  invariant; version-freeze and provenance checks separately pin the companion
+  bytes and registration history.
+- **Sampling memory:** exhaustive over protocol directories present in the
+  checkout. Silence about an absent, uncommitted, or differently located
+  protocol means never inspected.
+- **Does NOT catch:**
+  1. False, cherry-picked, or statistically unsuitable numbers in a correctly
+     shaped section.
+  2. A protocol author who saw reportable outcomes before registration.
+  3. A margin expressed with different but valid terminology in the companion
+     form; that form intentionally fails closed and must use the primary form
+     or receive a reviewed parser change.
+  4. Whether the downstream decision is actually followed after closure.
+  5. An incorrect frozen hash value or rewritten companion bytes by itself;
+     the separate version-freeze and artifact-provenance checks own those
+     identities. This check does reject a companion absent from the freeze.
+- **Crafted-bypass test:** `solver/tests/experiments.test.js`, cases `a frozen
+  companion protocol with explicit denominator, margin, and adoption boundary
+  passes` and `the frozen companion form fails when its quantitative margin is
+  removed`. The latter asserts the mutation changed the real RESULT-0049 text
+  before requiring the exact `quantitative margin` failure; `an unfrozen
+  companion cannot satisfy the sample-size check` rejects a disconnected copy.
+  The first two tests were red before companion parsing existed.
+- **Retires:** NO—this widens the existing BL-0016 F6 check rather than adding a
+  new gate. No prior clause could recognize a separately frozen full protocol.
+- **Enforcement:** HARD inside the existing experiment gate; missing or
+  placeholder fields block admission.
+- **Decay:** `node --test solver/tests/experiments.test.js` reruns the primary
+  fixtures, the real-corpus assertion, the frozen-companion positive case, and
+  the crafted margin removal; `node tools/verify-experiments.js` scans the live
+  corpus.
+- **Shipped:** 2026-09-27 during the PR #46/PR #49 reconciliation; the live
+  integrated gate first failed on RESULT-0049 before this compatibility path
+  was added.
 
 ---
 

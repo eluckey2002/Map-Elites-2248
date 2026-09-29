@@ -4,9 +4,18 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
-## Current decision frontier — 2026-09-16
+## Evidence-capture hardening — 2026-09-26
+
+[BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. [RESULT-0049](EVIDENCE_LEDGER.md) is the preregistered confirmation supporting the current target-aware champion. The lost 2026-08-28 MAP-Elites archives are [RESULT-0050](EVIDENCE_LEDGER.md) and [RESULT-0051](EVIDENCE_LEDGER.md), neither replacing the then-champion `52f500c`; they were renumbered from PR #46's original RESULT-0049/0050 labels when PR #49 landed first. CORRECTION-0010 to CORRECTION-0017 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still awaits RESULT-0016's confirmation run; two solver bugs found by it are listed in BL-0016.
+
+## Current decision frontier — 2026-09-28
 
 The latest trustworthy sequence is now visible in the ledger:
+
+- [DECISION-0007](EVIDENCE_LEDGER.md#decision-0007--level-54s-126000-target-is-a-deliberate-owner-exception-to-the-demand-rule) records, provisionally, that Level 54's 126,000 target is a deliberate owner exception to the demand rule, not a measurement error; `BL-0020` was dropped on this basis. [DECISION-0008](EVIDENCE_LEDGER.md#decision-0008--pause-porting-the-family-board-map-elites-work-until-frozen-renumbering-is-defined) records, provisionally, that porting the family-board MAP-Elites work is paused until `BL-0023` criterion 7 defines frozen renumbering.
+- [DECISION-0009](EVIDENCE_LEDGER.md#decision-0009--keep-level-53-as-shipped-at-101000) records, provisionally, that the owner keeps Level 53 as shipped at 101,000 with its 0.95 demand; this closes the open adjudication of how it entered the game.
+
+- [RESULT-0056](EVIDENCE_LEDGER.md#result-0056--fresh-board-owner-vs-oracle-run-for-result-0044-board-2-human-attempt-invalid-inconclusive) closes `RESULT-0044` by its fresh-run option, and `RESULT-0044` is now superseded. The outcome is `INCONCLUSIVE`: before the oracle ran, the owner ruled one of the two owner attempts invalid because bombs had no readable art. Open: give bombs readable art before more owner play counts as evidence, and make oracle runners record and check HEAD.
 
 - [RESULT-0045](EVIDENCE_LEDGER.md#result-0045--oracle-witnesses-meet-every-frozen-captured-puzzle-move-comparator) closes the captured-corpus oracle milestone: all 20 exact puzzles have verified wins within the 30-second search allowance; 17 beat the best recorded human win, 2 tie, and the loss-only puzzle is also won. [Run, verify and inspect it](docs/oracle/README.md). This gives authoring an achieved move-count reference on these puzzles; it does not establish optimality, future-board superiority, or human difficulty, and does not replace `calib-1` or the live bot.
 
@@ -55,7 +64,7 @@ Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`,
 
 Author new levels. The curve is fixed, so new levels can be born calibrated rather than hand-guessed. [BL-0004](docs/backlog/BL-0004-build-level-authoring-tracer.md)'s tracer is complete and its one candidate is shipped: Level 51, the first level whose target was never hand-picked (measured demand, `DECISION-0003`) and the first with direct human playtest evidence, not just a bot win rate (`RESULT-0009`). The historical design remains at [the level-authoring loop spec](docs/superpowers/specs/2026-08-08-level-authoring-loop-design.md); measurement is grounded in `solver/game-tester.js`.
 
-**Read [HANDOFF.md](HANDOFF.md) before touching this milestone further** — a 2026-08-17 session conflated the pipeline built so far (measures and validates a *human-picked* shape) with a level generator (invents shapes on its own). That distinction still matters, but the generator is no longer hypothetical: `solver/generate-levels.js` (added 2026-08-20, `355dc5a`) proposes level shapes and screens them cheaply before spending the full 450-game authoring pipeline on the survivors. That handoff also lists three more candidates from that session, and their standing has since moved. **Levels 51-58 all ship** as of 2026-09-05 — `src/game.js` carries 58 levels and `solver/tests/gameLevels.test.js` pins that count. Level 54 now ships as `central-choke`, the `HUMAN-PILOT-0002` geometry, at a 126,000 target set from the owner's replayed 140,544 rather than from bot measurement (the authoring rule would have set 89,800). Note it does **not** ship as `candidate-levels-54.json`'s `tighter-pace` board, which shares only the level number and whose receipt remains stale and non-exempt. Level 53's move from rejected to shipped carries no ledger record; it entered `src/game.js` in `530deb3`, a commit about MAP-Elites evidence. Adjudicating that is open.
+**Read [HANDOFF.md](HANDOFF.md) before touching this milestone further** — a 2026-08-17 session conflated the pipeline built so far (measures and validates a *human-picked* shape) with a level generator (invents shapes on its own). That distinction still matters, but the generator is no longer hypothetical: `solver/generate-levels.js` (added 2026-08-20, `355dc5a`) proposes level shapes and screens them cheaply before spending the full 450-game authoring pipeline on the survivors. That handoff also lists three more candidates from that session, and their standing has since moved. **Levels 51-58 all ship** as of 2026-09-05 — `src/game.js` carries 58 levels and `solver/tests/gameLevels.test.js` pins that count. Level 54 now ships as `central-choke`, the `HUMAN-PILOT-0002` geometry, at a 126,000 target set from the owner's replayed score (`RESULT-0028`) rather than from bot measurement (the authoring rule would have set 89,800). Note it does **not** ship as `candidate-levels-54.json`'s `tighter-pace` board, which shares only the level number and whose receipt remains stale and non-exempt. Level 53's move from rejected to shipped carries no ledger record; it entered `src/game.js` in `530deb3`, a commit about MAP-Elites evidence. The owner has since kept it as shipped (`DECISION-0009`, provisional).
 
 The milestone itself isn't closed, but the open choice has moved. The generator exists, so what is left is not whether to build it: it is whether to run it at scale, and against what acceptance bar.
 
@@ -121,7 +130,7 @@ The Level 26 exact-proof track, by [DECISION-0002](EVIDENCE_LEDGER.md#decision-0
 
 - **Roughly 15 levels have a target lower than the level before.** The remaining lever is the move budget, and spending it would make a level's pacing a side effect of target cosmetics. Revisit from playtest feel, not from a monotonicity rule.
 - **The reference bot is a weak proxy for a skilled player.** Every recorded win rate is a floor on human success, not an estimate. The margin is still unquantified in general, but it is no longer unmeasured: on Level 51 the owner reached the target in 12 moves where the bot's median is 16 across 120 seeds, and the bot matches that 12-move pace on 8 of 120 boards. The gap narrowed with `RESULT-0011` and did not close.
-- **Lockouts persist at up to ~5% on the late levels.** A lockout is a dead board, not a fair loss. Bounded by `solver/verify-loop.js`.
+- **Lockouts measured 0% on sampled levels as of 2026-09-26 (`RESULT-0052`); earlier measurements reached about 5% (`RESULT-0008`, stale).** A lockout is a dead board, not a fair loss. Bounded by `solver/verify-loop.js`.
 
 ## Priced and rejected — do not re-propose without new evidence
 
@@ -140,4 +149,4 @@ node solver/human-replay.js --from .orch/runs/2026-08-29-human-replay-explorator
 node solver/routing-ablation.js                         # what that is worth in play
 ```
 
-Last reviewed: 2026-09-16
+Last reviewed: 2026-09-28

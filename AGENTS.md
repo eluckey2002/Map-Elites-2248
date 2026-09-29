@@ -39,11 +39,11 @@ promote a scientific claim or replace the experiment gates below.
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
-- **`node --test solver/tests/*.test.js` reports 463 tests: 459 pass, three fail deliberately, and one is skipped.** The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
+- **`node --test solver/tests/*.test.js` passes except for three deliberate failures and one skip.** CI's `full test suite` job prints the current totals. This line carries no count on purpose: every pull request that added a test used to edit it, and open pull requests collided on it. The three failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting.
 - **The Universe Map is a 2026-08-28 snapshot, and its staleness failure is true.** It still names champion `52f500c` and selects only `RESULT-0017`; `DECISION-0004` promoted `b82a9b6` and explicitly did not rewrite the map. Do not clear the failure by bumping `universe/contract.json`'s `asOf` and rebuilding: that restamps the old champion and frontier as current. Refreshing it means re-curating the contract's selected records against the ledger first.
-- **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still reads PASS, 140,544 points in 20 moves — only the two identity fields should change.
+- **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still matches `RESULT-0028` in the ledger — only the two identity fields should change.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
-- **Shipped-level win rate cannot rank two policies.** The bot wins 71-100% of every shipped level, so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
+- **Shipped-level win rate cannot rank two policies.** The bot wins nearly every shipped level (`RESULT-0052`), so both arms sit at the ceiling. Use `node solver/human-benchmark.js`, which pairs the bot against recorded human sessions on identical boards and seeds.
 - **Recorded human play and the shipped bot already share the target-stop objective.** Both games end on the move that crosses the target. Compare reliability first and moves-to-target among mutual wins. Crossing score is only final-move overshoot. The benchmark's uncapped bot continues alone to the move budget and has no recorded human comparator; never present that arm as a human comparison.
 - **Never compare one seed against a median over other seeds.** That measures the seed. Pair on identical seeds instead.
 - **`node solver/board-trace.js`** renders a recorded game as text boards with both players' chains drawn on the same position. Chain-value strings hide where the tiles are, which is the thing this game is about.
@@ -54,6 +54,10 @@ Read [LEDGER-INDEX.md](LEDGER-INDEX.md) before substantive reasoning about game 
 You may write a ledger record; you may not accept your own. Every new record names `written_by` (your agent or session). A record reaches `accepted` or `narrowed` only when `checked_by` names a different agent, a script run, or the owner who actually checked it. Until then it stays `provisional`. The gate is `tools/verify-ledger-authorship.js`.
 
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
+
+Every run under `.orch/runs/` started from 2026-09-27 ends with a line `ledger: <RECORD-ID>` or `ledger: not reportable — <reason>` as the final line of its `worklog.md` or `stop-record.md`; the experiment gate enforces it, so a finished result cannot go unrecorded.
+
+Outside the ledger, cite a record ID instead of restating its numbers; a restated number drifts when the record is corrected.
 
 Append source-pinned updates using the ledger's record schema. Preserve each proof class exactly: a replayed lower bound, exact result, proven upper bound, heuristic observation, `UNKNOWN`, or unresolved question must not be promoted into another class.
 
@@ -84,6 +88,44 @@ copy `experiments/TEMPLATE.md` to start one. The gate is
 Commit the protocol before the experiment runs. A protocol committed after its
 evidence is a reconstruction, not a preregistration.
 
+Every retained experiment closure marked `INVALID` or `UNVERIFIED` is a failed
+run and must have one row in `FAILED-RUN-LEDGER.CSV`. Pinpoint the stage,
+location, observed failure, and root cause; link the closure receipt; and land
+an implemented prevention artifact with a negative test. A `CLOSED`
+`FALSIFIED` or `INCONCLUSIVE` result is not a failed run. For one-shot paired
+comparisons, use `tools/persist-before-verdict.js` so the complete raw pairs are
+written before any fail-fast verdict.
+
+## Closing a session
+
+Before a session's work lands, in this order:
+
+1. Every run you started ends with its `ledger:` line (see above), and any new result or correction is in `EVIDENCE_LEDGER.md`.
+2. Run `node tools/ledger-index.js` and commit `LEDGER-INDEX.md` with the ledger.
+3. Update [CURRENT.md](CURRENT.md) so the next session sees what changed and what is open, citing record IDs rather than restating numbers. The gate fails a change that adds a ledger record without touching `CURRENT.md`.
+4. Append a dated line to the History of each backlog record you worked on.
+5. Run `node tools/verify-experiments.js`; it must pass before you open the pull request.
+
+Do not append to `HANDOFF.md`. It is a historical session journal; what it used to carry now goes in the ledger, `CURRENT.md`, and backlog history.
+
+## Worktrees
+
+Several agents work in this repository at once. On 2026-09-26 twenty worktrees had
+piled up across three directories, and an agent edited the main checkout while
+another agent was reconciling it.
+
+1. **Never edit in the main checkout**: the first entry in `git worktree list`
+   (on the owner's machine, `C:\OOO\Map-Elites-2248`). Reading it is fine. Make
+   changes in a worktree.
+2. **One task, one branch, one worktree, one agent.** Never share a worktree
+   between two running agents.
+3. **Put it in one place:** `git fetch` then
+   `git worktree add -b <branch> ../wt/<branch-name> origin/main`. Without an
+   `origin` remote, use `main` as the base.
+4. **Remove it when its pull request merges** (`git worktree remove`). A leftover
+   worktree is part of the pull request not yet being finished. Check
+   `git status` first. If it holds unmerged work, don't delete it; say so.
+
 ## Landing changes on `main`
 
 `main` is protected. Every change reaches it through a pull request whose
@@ -92,18 +134,25 @@ evidence is a reconstruction, not a preregistration.
 it has been installed (`node tools/hooks/install.js`, once per clone; clones
 installed before 2026-09-25 hold a stale copy and must run it once more) it
 refuses to push a red gate to `main` before the push leaves the machine, and
-it lets a green push through. Two more rules no mechanism enforces:
+it lets a green push through. CI also refuses committed merge-conflict markers.
+Three more rules no mechanism enforces:
 
 1. **Do not merge until the Codex review has completed.** Codex reviews every
    pull request when it opens and either leaves inline findings or reacts 👍.
    Wait for one or the other. On 2026-09-03 PR #3 was merged thirty seconds
    before its review landed; the finding was correct and `main` carried a
    mislabelled record until PR #4.
+   Codex does not re-review later pushes on its own: after pushing fixes,
+   comment `@codex review` on the pull request and wait for its new verdict.
 2. **The agent that opened the pull request owns it to the end.** Address every
    inline finding with a fix commit or a written rebuttal on the thread,
    resolve the thread, then merge. Do not ask Codex to push fixes into a pull
    request another agent opened: two writers on one branch is the concurrent
    writer problem again.
+3. **Check open pull requests before starting.** Run `gh pr list` and read the
+   titles of anything touching the same files. On 2026-09-26, PR #41 and PR #46
+   each built a separate generator for `LEDGER-INDEX.md`. Extend or coordinate
+   with the open work instead of duplicating it.
 
 A red gate is fixed in the ledger or the protocol, never by editing the gate,
 grandfathering the record, or `--no-verify`.

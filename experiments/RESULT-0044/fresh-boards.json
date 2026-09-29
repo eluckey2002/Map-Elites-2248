@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0044",
+  "closurePath": "protocol.md option 1: fresh run under this identity",
+  "committedBeforePlay": true,
+  "title": "Fresh-board owner versus oracle challenge, fresh seeds",
+  "boards": [
+    { "id": "board-1", "level": 56, "seed": 42000000 },
+    { "id": "board-2", "level": 58, "seed": 42000001 }
+  ],
+  "humanArm": {
+    "attemptsPerBoard": 1,
+    "selection": "first terminal capture received for the exact level and seed",
+    "capture": "tools/play-server.js, index.html?level=<level>&seed=<seed>",
+    "oracleWithheldUntil": "both human terminal captures exist"
+  },
+  "oracleArm": {
+    "implementationCommit": "5205535",
+    "budgetMsPerBoard": 30000,
+    "attemptsPerBoard": 1,
+    "inputs": ["shipped level rules", "seed", "budget"],
+    "forbiddenInputs": ["human chains", "human intermediate boards", "human outcome", "human move count"],
+    "harness": "RESULT-0040's qualified harness at cf30eb8^ (experiments/RESULT-0040/*), ported with only the result ID, board seeds and file paths changed"
+  },
+  "objective": "stop at the first target-crossing move",
+  "comparison": "win beats loss; among mutual wins fewer moves wins; equal moves tie",
+  "outcomeRule": "protocol.md 'Design as originally specified': SUPPORTED if the oracle wins both and is never slower than a human win; FALSIFIED if it is slower than any human win, loses where the human wins, or fails to win a board the human loses; INCONCLUSIVE for missing, contaminated, invalid or unreplayable evidence"
+}
