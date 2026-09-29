@@ -1,0 +1,6 @@
+current bot: {"wins":300,"lockouts":0,"bombs":0,"outOfMoves":0,"total":300}
+calib-1 frozen: {"wins":296,"lockouts":0,"bombs":0,"outOfMoves":4,"total":300}
+recorded (RESULT-0012, commit 0a73bf5, inside bug window): wins 290/300, lockouts 0
+real 7173.98
+user 209.05
+sys 0.81
