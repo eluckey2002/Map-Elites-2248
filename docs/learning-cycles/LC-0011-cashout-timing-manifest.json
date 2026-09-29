@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0011-cashout-timing-manifest",
+  "paths": {
+    "contract": "docs/learning-cycles/LC-0011-cashout-timing-contract.md",
+    "lc0010Contract": "docs/learning-cycles/LC-0010-route-readiness-repair-contract.md",
+    "lc0010Manifest": "docs/learning-cycles/LC-0010-route-readiness-repair-manifest.json",
+    "lc0010Qualification": "docs/learning-cycles/LC-0010-route-readiness-repair-qualification.json",
+    "lc0010Raw": "docs/learning-cycles/LC-0010-route-readiness-repair-raw.json",
+    "lc0010Result": "docs/learning-cycles/LC-0010-route-readiness-repair-result.md",
+    "lc0010Closure": "docs/learning-cycles/LC-0010-route-readiness-repair-closure.json",
+    "lc0010Harness": "tools/diagnose-lc0010-route-readiness-repair.js",
+    "lc0010RepairTest": "solver/tests/lc0010RouteReadinessRepair.test.js",
+    "lc0010ResultTest": "solver/tests/lc0010Result.test.js",
+    "lc0007Raw": "docs/learning-cycles/LC-0007-decision-lineage-raw.json",
+    "recording": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+    "engine": "solver/engine.js",
+    "bot": "solver/bot.js",
+    "harness": "tools/diagnose-lc0011-cashout-timing.js",
+    "test": "solver/tests/lc0011CashoutTiming.test.js"
+  },
+  "identities": {
+    "contract": "4bf91eb10dcfc94a56ce37eb6189790879cc2a5be794feadbd93a85adcd6af2a",
+    "lc0010Contract": "4bc0403313d3675821e9183fd33dd4988d2ef7e05d3249fc1caf1b09fcb9840d",
+    "lc0010Manifest": "c65e2829d93d0dbc7ca3a62cee8a6ad287837cd61ecbc25d0dad03c72dfc3c39",
+    "lc0010Qualification": "3e95292925673aee42e5a9e9c2476010394c6bb05eb5d6d1549e9bf24a9399dd",
+    "lc0010Raw": "65d842dc417b76064e2b623a9d7a4be0bfbac9875580b8fa51848dcb65f1b5db",
+    "lc0010Result": "1849e64ae2c7f2bfb5da63a8946065627a088265ed07506808f953d4373eb9e7",
+    "lc0010Closure": "fb06cac5df9428f833b3d5d6d1e23d0be784d200c9d5ff3211cb0110a9edc01c",
+    "lc0010Harness": "56bccabbb57ae609e3649a88af4d14d3b9dfe77507827c6c0874ba6dcfa643e7",
+    "lc0010RepairTest": "0f365fc5e3529024b4b299874c37a64d6bb28a7f81eaaaebcbd33ef5e3891c35",
+    "lc0010ResultTest": "af4e57566bdf2774680e4f9b9237c697b5d7f348c323cde50b3f9d46ba2ff175",
+    "lc0007Raw": "546582c6010eca867582505241e262ddff2888fe22057c2580dbe99c51da3fea",
+    "recording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "harness": "0915f6e7f5d657dc557a9cb355ee950b93bd5f3ce7ab727761d2c87d508dbab0",
+    "test": "25dd6e91d42e39d84c6028fcb00d65c76aeab3c4dc1240b6fed1126ceb03c7f4"
+  },
+  "artifactIdentity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba"
+}

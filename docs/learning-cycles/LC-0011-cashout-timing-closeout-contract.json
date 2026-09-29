@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "LC-0011-cashout-timing-contract.md",
+    "sha256": "4bf91eb10dcfc94a56ce37eb6189790879cc2a5be794feadbd93a85adcd6af2a"
+  },
+  "final_subject_identity": "8c35b54fa0a924eb8f32027c3ae2db6f70e3b466537afb60670e2764f30c88ba",
+  "required_claims": [
+    "C1-frozen-source-and-common-state-replay",
+    "C2-versioned-reference-and-synthetic-aa",
+    "C3-arm-assignment-and-planted-swap",
+    "C4-objective-equivalence",
+    "C5-known-target-stop-reference",
+    "C6-planted-post-target-continuation",
+    "C7-restoration-and-raw-persistence",
+    "C8-executable-closeout-admission",
+    "WAIT_ONE-terminal-outcome",
+    "CASH_NOW-terminal-outcome",
+    "exact-paired-target-cost-comparison"
+  ],
+  "required_artifacts": [
+    "raw",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "tools/diagnose-lc0011-cashout-timing.js",
+      "--summarize",
+      "docs/learning-cycles/LC-0011-cashout-timing-raw.json"
+    ],
+    "cwd": "../..",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}
