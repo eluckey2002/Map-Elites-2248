@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0012-timing-panel-source-extension",
+  "baseManifest": {
+    "path": "docs/learning-cycles/LC-0012-timing-panel-source-manifest.json",
+    "sha256": "adbd7ff672af65e0b9980d28327c8c6d8bcf42374c063299132a0bf0e1f64e55"
+  },
+  "positiveControl": {
+    "docs/learning-cycles/LC-0011-cashout-timing-contract.md": "4bf91eb10dcfc94a56ce37eb6189790879cc2a5be794feadbd93a85adcd6af2a",
+    "docs/learning-cycles/LC-0011-cashout-timing-manifest.json": "92a208a9f29e98edcd765872fdd61296bd692fa8837aa5f74b66a9c2fdc7ea4c",
+    "docs/learning-cycles/LC-0011-cashout-timing-qualification.json": "3731fa4594922a409d9383e1cfeb6412cffe18da073ad9baf1f46c59fb100a68",
+    "docs/learning-cycles/LC-0011-cashout-timing-raw.json": "59a4a2693bdea78c60df2ebec650ca98afdd44006d3fa16796764d56e3a0e867",
+    "tools/diagnose-lc0011-cashout-timing.js": "0915f6e7f5d657dc557a9cb355ee950b93bd5f3ce7ab727761d2c87d508dbab0"
+  }
+}
