@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "LC-0009-route-readiness-contract.md",
+    "sha256": "c247d8918afffb877eb3737aa9f4694076102f7484861bbddaac73e10c4c1204"
+  },
+  "final_subject_identity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035",
+  "required_claims": [
+    "C1-frozen-ancestry-and-replay-identity",
+    "C2-objective-and-continuation-equivalence",
+    "C3-ready-route-known-good",
+    "C4-missing-node-known-negative",
+    "C5-broken-adjacency-known-negative",
+    "C6-planted-false-ready",
+    "C7-restoration-and-persistence",
+    "move-4-readiness",
+    "move-6-readiness",
+    "move-9-readiness",
+    "move-11-readiness"
+  ],
+  "required_artifacts": [
+    "raw",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "tools/diagnose-lc0009-route-readiness.js",
+      "--summarize",
+      "docs/learning-cycles/LC-0009-route-readiness-raw.json"
+    ],
+    "cwd": "../..",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}

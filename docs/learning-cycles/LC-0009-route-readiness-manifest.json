@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0009-route-readiness-manifest",
+  "paths": {
+    "contract": "docs/learning-cycles/LC-0009-route-readiness-contract.md",
+    "lc0008Contract": "docs/learning-cycles/LC-0008-reversal-ancestry-contract.md",
+    "lc0008Manifest": "docs/learning-cycles/LC-0008-reversal-ancestry-manifest.json",
+    "lc0008Qualification": "docs/learning-cycles/LC-0008-reversal-ancestry-qualification.json",
+    "lc0008Raw": "docs/learning-cycles/LC-0008-reversal-ancestry-raw.json",
+    "lc0008Result": "docs/learning-cycles/LC-0008-reversal-ancestry-result.md",
+    "priorHarness": "tools/diagnose-lc0008-reversal-ancestry.js",
+    "lc0007Raw": "docs/learning-cycles/LC-0007-decision-lineage-raw.json",
+    "recording": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+    "engine": "solver/engine.js",
+    "bot": "solver/bot.js",
+    "harness": "tools/diagnose-lc0009-route-readiness.js",
+    "test": "solver/tests/lc0009RouteReadiness.test.js"
+  },
+  "identities": {
+    "contract": "c247d8918afffb877eb3737aa9f4694076102f7484861bbddaac73e10c4c1204",
+    "lc0008Contract": "33831b27fc62473440f71bf0efd1475906c9ee9d8d69ea95121d1b07bb0b6421",
+    "lc0008Manifest": "defcf7ff98140c0cd0a2246d669a7c906350e5a1b53a81436f2037665d9624e9",
+    "lc0008Qualification": "26ffb1bd5d9c88b496d47d33f540ddf8970e7ec5de004972760b25a32c51d76f",
+    "lc0008Raw": "62b5da0a13698fd34cb27dd9ced8f2924b8880b9cba08433499af23fac68d900",
+    "lc0008Result": "984da56c53ccf4cf8cf237795978c4536728802ca4eaa327c1042bbf125d3e5a",
+    "priorHarness": "f1b780435d77592104c4d1190935f60d49d96bff1613e6a7653bd07551e7ff58",
+    "lc0007Raw": "546582c6010eca867582505241e262ddff2888fe22057c2580dbe99c51da3fea",
+    "recording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+    "bot": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "harness": "c4c717cd722f62aedf621733bc740713762804c2352673368379cdbced26a060",
+    "test": "3b06197e9f21332c7a39dbc34e5f63320b896230237d5531275a2d7cb7caf49c"
+  },
+  "artifactIdentity": "2eb1c1f99b77e620c82cf40a8aab07254598fbc93cc11f429818763fe984e035"
+}
