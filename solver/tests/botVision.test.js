@@ -199,3 +199,29 @@ test('Bot Vision server branches only from a legal chain on the exact replay sta
   assert.equal(rejected.status, 400);
   assert.match((await rejected.json()).error, /cannot reuse a tile/);
 });
+
+test('Bot Vision server replays a multi-turn owner takeover deterministically', async (t) => {
+  const server = createBotVisionServer();
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => new Promise((resolve) => server.close(resolve)));
+  const origin = `http://127.0.0.1:${server.address().port}`;
+  const session = recordSession(LEVELS.find(({ level }) => level === 52), 2);
+  const body = {
+    levelNumber: 52,
+    seed: 2,
+    moveIndex: 2,
+    chains: session.moves.slice(2).map(({ chain }) => chain.map(({ x, y }) => ({ x, y }))),
+  };
+  const accepted = await fetch(`${origin}/api/takeover`, {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+  });
+  assert.equal(accepted.status, 200);
+  assert.deepEqual((await accepted.json()).outcome, session.outcome);
+
+  body.chains[0] = [body.chains[0][0], body.chains[0][0], ...body.chains[0].slice(2)];
+  const rejected = await fetch(`${origin}/api/takeover`, {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+  });
+  assert.equal(rejected.status, 400);
+  assert.match((await rejected.json()).error, /cannot reuse a tile/);
+});

@@ -234,6 +234,7 @@ th:nth-child(2), td:nth-child(2), .contribution-table th:first-child, .contribut
 .manual-chain { min-height: 34px; margin: 8px 0; padding: 8px; border: 1px solid #594b7c; border-radius: 5px; color: #dccdff; background: #181427; font-size: 12px; }
 .branch-button { min-height: 36px; border: 1px solid var(--cyan); border-radius: 5px; background: #0b313b; color: var(--cyan); padding: 7px 10px; font-weight: 650; }
 .branch-button:disabled { cursor: default; opacity: .45; }
+.branch-actions { display: flex; align-items: center; gap: 8px; }
 .branch-result { min-height: 18px; margin-bottom: 0; color: #d6f5ef !important; }
 .branch-board { display: none; grid-template-columns: repeat(var(--branch-grid-w), minmax(0, 1fr)); gap: 3px; margin-top: 10px; padding: 8px; border: 1px solid #594b7c; border-radius: 5px; background: #0e1020; }
 .branch-board.visible { display: grid; }

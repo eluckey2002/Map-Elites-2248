@@ -3,7 +3,7 @@
 
   const ui = Object.fromEntries([
     'sessionForm', 'levelInput', 'seedInput', 'notice', 'recordedView', 'previewView',
-    'branchMode', 'clearBranch', 'manualChain', 'runBranch', 'branchResult', 'branchHint', 'branchBoard',
+    'branchMode', 'clearBranch', 'startTakeover', 'manualChain', 'runBranch', 'branchResult', 'branchHint', 'branchBoard',
     'boardShell', 'board', 'chainPath', 'previousMove', 'playPause', 'nextMove',
     'moveLabel', 'timeline', 'scoreValue', 'targetValue', 'outcomeValue', 'gridValue',
     'minChainValue', 'sessionIdentity', 'topCount', 'sortMode', 'candidateRows',
@@ -23,6 +23,7 @@
     branchMode: false,
     manualChain: [],
     branchResult: null,
+    takeover: null,
   };
 
   const number = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
@@ -98,7 +99,8 @@
   }
 
   function manualTile(x, y) {
-    return currentMove().boardBefore[y] && currentMove().boardBefore[y][x];
+    const board = model.takeover ? model.takeover.board : currentMove().boardBefore;
+    return board[y] && board[y][x];
   }
 
   function canExtendManual(x, y) {
@@ -122,8 +124,10 @@
       setNotice('That tile does not continue a legal small-to-large chain.', true);
       return;
     }
-    model.branchResult = null;
-    model.branchEvidence = null;
+    if (!model.takeover) {
+      model.branchResult = null;
+      model.branchEvidence = null;
+    }
     render();
   }
 
@@ -156,12 +160,13 @@
 
   function renderBoard(move) {
     const chosen = model.view === 'preview' ? inspectedCandidate(move) : recordedCandidate(move);
-    const chain = model.branchMode ? manualChainSnapshots() : chosen ? chosen.chain : [];
+    const chain = model.branchMode ? manualChainSnapshots() : model.takeover ? [] : chosen ? chosen.chain : [];
     const order = new Map(chain.map((tile, index) => [`${tile.x},${tile.y}`, index + 1]));
     ui.board.style.setProperty('--grid-w', model.session.gridW);
     ui.board.replaceChildren();
 
-    move.boardBefore.forEach((row, y) => row.forEach((tile, x) => {
+    const board = model.takeover ? model.takeover.board : move.boardBefore;
+    board.forEach((row, y) => row.forEach((tile, x) => {
       const cell = document.createElement('div');
       cell.className = tile ? 'tile' : 'tile empty';
       cell.dataset.x = x;
@@ -317,8 +322,10 @@
   }
 
   function renderFacts(move) {
-    ui.moveLabel.textContent = `Move ${model.moveIndex + 1} / ${model.session.moves.length}`;
-    ui.scoreValue.textContent = number.format(move.scoreBefore);
+    ui.moveLabel.textContent = model.takeover
+      ? `Takeover · move ${model.takeover.movesUsed} / ${model.session.maxMoves}`
+      : `Move ${model.moveIndex + 1} / ${model.session.moves.length}`;
+    ui.scoreValue.textContent = number.format(model.takeover ? model.takeover.score : move.scoreBefore);
     ui.targetValue.textContent = `of ${number.format(model.session.targetScore)}`;
     ui.outcomeValue.textContent = `${model.session.outcome.result.toUpperCase()} · ${number.format(model.session.outcome.finalScore)}`;
     ui.gridValue.textContent = `${model.session.gridW} × ${model.session.gridH}`;
@@ -337,14 +344,23 @@
 
   function renderReview() {
     const selected = manualChainSnapshots();
+    const takeover = model.takeover;
     ui.manualChain.textContent = selected.length
       ? `${selected.length} tile${selected.length === 1 ? '' : 's'} · ${chainText(selected)}`
       : 'No route selected';
-    ui.runBranch.disabled = selected.length < model.session.minChain;
-    ui.branchHint.textContent = model.branchMode
+    ui.runBranch.disabled = selected.length < model.session.minChain || Boolean(takeover?.outcome);
+    ui.runBranch.textContent = takeover ? 'Play this turn' : 'Play this route forward';
+    ui.startTakeover.textContent = takeover ? 'Restart takeover' : 'Take over from this move';
+    ui.branchHint.textContent = takeover?.outcome
+      ? 'Takeover complete. Its terminal result is tied to this exact move and route transcript.'
+      : takeover
+        ? `You are playing from recorded move ${takeover.startMoveIndex + 1}. Build the next legal chain on this refill board.`
+        : model.branchMode
       ? `Click touching tiles in order. You need ${model.session.minChain} or more tiles; click the last tile to undo.`
       : 'Choose “Build my route,” then select touching tiles in order.';
-    ui.branchResult.textContent = model.branchResult || '';
+    ui.branchResult.textContent = takeover
+      ? model.branchResult || `Takeover active · ${takeover.turns.length} turn${takeover.turns.length === 1 ? '' : 's'} played · ${takeover.movesRemaining} moves remaining.`
+      : model.branchResult || '';
     renderBranchBoard();
     const saved = JSON.parse(localStorage.getItem(observationKey()) || 'null');
     if (document.activeElement !== ui.observationText) ui.observationText.value = saved?.comment || '';
@@ -352,7 +368,7 @@
   }
 
   function renderBranchBoard() {
-    const branch = model.branchEvidence;
+    const branch = model.takeover ? null : model.branchEvidence;
     ui.branchBoard.replaceChildren();
     ui.branchBoard.classList.toggle('visible', Boolean(branch));
     if (!branch) return;
@@ -395,6 +411,7 @@
     model.manualChain = [];
     model.branchResult = null;
     model.branchEvidence = null;
+    model.takeover = null;
     render();
   }
 
@@ -432,6 +449,7 @@
       model.moveIndex = 0;
       model.inspectedId = body.moves[0] && body.moves[0].decision.selectedId;
       model.view = 'recorded';
+      model.takeover = null;
       model.weights = {
         wRoll: body.policy.params.wRoll,
         wPlace: body.policy.params.wPlace,
@@ -468,6 +486,7 @@
   }
 
   async function runBranch() {
+    if (model.takeover) return runTakeoverTurn();
     const chain = manualChainSnapshots().map(({ x, y }) => ({ x, y }));
     if (chain.length < model.session.minChain) return;
     ui.runBranch.disabled = true;
@@ -502,6 +521,66 @@
     render();
   }
 
+  function beginTakeover() {
+    const move = currentMove();
+    model.takeover = {
+      startMoveIndex: model.moveIndex,
+      board: move.boardBefore,
+      score: move.scoreBefore,
+      movesUsed: move.index,
+      movesRemaining: model.session.maxMoves - move.index,
+      turns: [],
+      chains: [],
+      outcome: null,
+    };
+    model.branchMode = true;
+    model.manualChain = [];
+    model.branchEvidence = null;
+    model.branchResult = `Takeover starts before recorded move ${model.moveIndex + 1}. Your first route now replaces that bot choice.`;
+    render();
+  }
+
+  async function runTakeoverTurn() {
+    const chain = manualChainSnapshots().map(({ x, y }) => ({ x, y }));
+    if (chain.length < model.session.minChain || model.takeover.outcome) return;
+    const chains = [...model.takeover.chains, chain];
+    ui.runBranch.disabled = true;
+    model.branchResult = 'Applying your turn with the fixed refill sequence…';
+    renderReview();
+    try {
+      const response = await fetch('/api/takeover', {
+        method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          levelNumber: model.session.level,
+          seed: model.session.seed,
+          moveIndex: model.takeover.startMoveIndex,
+          chains,
+        }),
+      });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || 'Could not play takeover turn');
+      model.takeover = { ...body, chains };
+      model.manualChain = [];
+      const latest = body.turns.at(-1);
+      if (body.outcome) {
+        const botOutcome = model.session.outcome;
+        const delta = body.outcome.movesUsed - botOutcome.movesUsed;
+        const comparison = body.outcome.result !== botOutcome.result
+          ? `Your takeover ${body.outcome.result}; recorded bot ${botOutcome.result}.`
+          : delta === 0 ? 'It finishes in the same number of moves as the recorded bot.'
+            : delta < 0 ? `It finishes ${Math.abs(delta)} move${Math.abs(delta) === 1 ? '' : 's'} sooner than the recorded bot.`
+              : `It finishes ${delta} move${delta === 1 ? '' : 's'} later than the recorded bot.`;
+        model.branchResult = `${number.format(latest.points)} points this turn · ${comparison}`;
+        model.branchMode = false;
+      } else {
+        model.branchResult = `${number.format(latest.points)} points this turn · ${body.movesRemaining} moves remaining. Build your next route.`;
+      }
+    } catch (error) {
+      model.branchResult = error.message;
+    }
+    render();
+  }
+
   function saveObservation() {
     const key = observationKey();
     const record = {
@@ -513,6 +592,7 @@
       botChain: recordedCandidate().chain,
       manualChain: manualChainSnapshots(),
       branch: model.branchEvidence || null,
+      takeover: model.takeover ? { ...model.takeover, chains: model.takeover.chains } : null,
       comment: ui.observationText.value.trim(),
       savedAt: new Date().toISOString(),
     };
@@ -547,11 +627,13 @@
   ui.recordedView.addEventListener('click', () => {
     model.view = 'recorded';
     model.branchMode = false;
+    model.takeover = null;
     render();
   });
   ui.previewView.addEventListener('click', () => {
     model.view = 'preview';
     model.branchMode = false;
+    model.takeover = null;
     render();
   });
   ui.branchMode.addEventListener('click', () => {
@@ -563,10 +645,13 @@
   });
   ui.clearBranch.addEventListener('click', () => {
     model.manualChain = [];
-    model.branchResult = null;
-    model.branchEvidence = null;
+    if (!model.takeover) {
+      model.branchResult = null;
+      model.branchEvidence = null;
+    }
     render();
   });
+  ui.startTakeover.addEventListener('click', beginTakeover);
   ui.runBranch.addEventListener('click', runBranch);
   ui.saveObservation.addEventListener('click', saveObservation);
   ui.exportObservation.addEventListener('click', exportObservation);

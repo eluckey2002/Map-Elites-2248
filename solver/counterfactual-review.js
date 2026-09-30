@@ -76,6 +76,58 @@ function continueChampion(state, rng) {
   };
 }
 
+function terminalOutcome(state) {
+  if (state.score >= state.targetScore) {
+    return { result: 'win', movesUsed: state.moves, finalScore: state.score };
+  }
+  if (checkBombs(state) || state.moves >= state.maxMoves) {
+    return {
+      result: 'lose',
+      reason: checkBombs(state) ? 'bomb exploded' : 'no target finish',
+      movesUsed: state.moves,
+      finalScore: state.score,
+    };
+  }
+  return null;
+}
+
+function takeoverReplay({ levelNumber, seed, moveIndex, chains }) {
+  const level = LEVELS.find(({ level: number }) => number === levelNumber);
+  if (!level) throw new Error(`level ${levelNumber} is unavailable`);
+  if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('seed is invalid');
+  if (!Number.isInteger(moveIndex) || moveIndex < 0 || moveIndex >= level.moves) throw new Error('move index is invalid');
+  if (!Array.isArray(chains)) throw new Error('takeover chains must be an array');
+
+  const { state, rng } = stateBeforeMove(level, seed, moveIndex);
+  const turns = [];
+  for (const coordinates of chains) {
+    if (terminalOutcome(state)) throw new Error('takeover is already complete');
+    const chain = coordinateChain(state, coordinates);
+    const boardBefore = snapshotBoard(state);
+    const points = advance(state, rng, chain);
+    turns.push({
+      boardBefore,
+      boardAfter: snapshotBoard(state),
+      chain: chain.map(({ x, y, value }) => ({ x, y, value })),
+      points,
+      scoreAfter: state.score,
+      movesUsed: state.moves,
+    });
+  }
+
+  return {
+    level: levelNumber,
+    seed,
+    startMoveIndex: moveIndex,
+    board: snapshotBoard(state),
+    score: state.score,
+    movesUsed: state.moves,
+    movesRemaining: Math.max(0, state.maxMoves - state.moves),
+    turns,
+    outcome: terminalOutcome(state),
+  };
+}
+
 function branchCounterfactual({ levelNumber, seed, moveIndex, chain: coordinates }) {
   const level = LEVELS.find(({ level: number }) => number === levelNumber);
   if (!level) throw new Error(`level ${levelNumber} is unavailable`);
@@ -101,4 +153,4 @@ function branchCounterfactual({ levelNumber, seed, moveIndex, chain: coordinates
   };
 }
 
-module.exports = { branchCounterfactual, coordinateChain, stateBeforeMove };
+module.exports = { branchCounterfactual, coordinateChain, stateBeforeMove, takeoverReplay };

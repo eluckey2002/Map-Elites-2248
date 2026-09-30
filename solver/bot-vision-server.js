@@ -4,7 +4,7 @@ const http = require('node:http');
 const path = require('node:path');
 
 const { recordSession } = require('./record-session');
-const { branchCounterfactual } = require('./counterfactual-review');
+const { branchCounterfactual, takeoverReplay } = require('./counterfactual-review');
 const { LEVELS } = require('../src/game');
 
 const ROOT = path.join(__dirname, '..');
@@ -120,6 +120,14 @@ function createBotVisionServer() {
     if (request.method === 'POST' && url.pathname === '/api/counterfactual') {
       readJsonBody(request)
         .then((body) => branchCounterfactual(body))
+        .then((result) => jsonResponse(response, 200, result))
+        .catch((error) => jsonResponse(response, 400, { error: error.message }));
+      return;
+    }
+
+    if (request.method === 'POST' && url.pathname === '/api/takeover') {
+      readJsonBody(request)
+        .then((body) => takeoverReplay(body))
         .then((result) => jsonResponse(response, 200, result))
         .catch((error) => jsonResponse(response, 400, { error: error.message }));
       return;
