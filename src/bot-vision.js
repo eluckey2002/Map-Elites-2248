@@ -214,9 +214,16 @@
       }
       if (model.branchMode && tile.blocker !== 'stone') {
         cell.classList.add('branchable');
+        const isLastSelected = position === model.manualChain.length;
+        const isLegalNext = !position && canExtendManual(x, y);
+        cell.classList.toggle('legal-next', isLegalNext || isLastSelected);
+        cell.classList.toggle('route-locked', !position && !isLegalNext);
         cell.tabIndex = 0;
         cell.setAttribute('role', 'button');
-        cell.setAttribute('aria-label', `Route tile ${number.format(tile.value)} at column ${x + 1}, row ${y + 1}`);
+        const state = isLastSelected ? ', last selected: click to undo'
+          : isLegalNext ? ', legal next tile'
+            : ', cannot continue this route';
+        cell.setAttribute('aria-label', `Route tile ${number.format(tile.value)} at column ${x + 1}, row ${y + 1}${state}`);
         cell.addEventListener('click', () => toggleManualTile(x, y));
         cell.addEventListener('keydown', (event) => {
           if (event.key !== 'Enter' && event.key !== ' ') return;
@@ -376,9 +383,9 @@
     ui.branchHint.textContent = takeover?.outcome
       ? 'Takeover complete. Its terminal result is tied to this exact move and route transcript.'
       : takeover
-        ? `You are playing from recorded move ${takeover.startMoveIndex + 1}. Build the next legal chain on this refill board.`
+        ? `You are playing from recorded move ${takeover.startMoveIndex + 1}. Bright tiles can continue your route; click the last selected tile to undo.`
         : model.branchMode
-      ? `Click touching tiles in order. You need ${model.session.minChain} or more tiles; click the last tile to undo.`
+      ? `Click touching tiles in order. Bright tiles can continue your route; you need ${model.session.minChain} or more tiles.`
       : 'Choose “Build my route,” then select touching tiles in order.';
     ui.branchResult.textContent = takeover
       ? model.branchResult || `Takeover active · ${takeover.turns.length} turn${takeover.turns.length === 1 ? '' : 's'} played · ${takeover.movesRemaining} moves remaining.`

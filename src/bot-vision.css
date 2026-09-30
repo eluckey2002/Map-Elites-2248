@@ -149,6 +149,9 @@ h3 { font-size: 14px; }
 .tile.selected-branch { box-shadow: inset 0 0 0 3px #b795ff; }
 .tile.branchable { cursor: crosshair; }
 .tile.branchable:hover { filter: brightness(1.18); }
+.tile.branchable.legal-next { box-shadow: inset 0 0 0 3px #78e5d3, 0 0 0 1px #78e5d355; }
+.tile.branchable.route-locked { opacity: .48; }
+.tile.branchable.route-locked:hover { filter: brightness(.9); }
 .tile .order {
   position: absolute;
   top: -6px;
@@ -233,6 +236,7 @@ th:nth-child(2), td:nth-child(2), .contribution-table th:first-child, .contribut
 .branch-review p { color: var(--muted); font-size: 12px; line-height: 1.45; }
 .manual-chain { min-height: 34px; margin: 8px 0; padding: 8px; border: 1px solid #594b7c; border-radius: 5px; color: #dccdff; background: #181427; font-size: 12px; }
 .route-projection { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0 0 10px; border: 1px solid #3c4264; border-radius: 5px; overflow: hidden; background: #3c4264; }
+.board-route-projection { width: min(100%, 510px); margin: 0 auto 14px; }
 .route-projection div { min-width: 0; padding: 7px 8px; background: #111522; }
 .route-projection dt { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .route-projection dd { margin: 3px 0 0; color: #f0edff; font-size: 13px; font-weight: 700; }
