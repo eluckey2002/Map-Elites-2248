@@ -175,6 +175,16 @@ refill count reverse direction. Next ask the same prospective landing-and-path
 question across the remaining frozen LC-0012 pairs before defining a metric or
 changing the policy.
 
+[RESULT-0067](EVIDENCE_LEDGER.md#result-0067--immediate-survivor-path-value-does-not-distinguish-the-fixed-timing-panel)
+applies that prospective question to all 14 frozen pairs. Immediate legal-path
+value agrees with only 6 of 13 non-tied target-cost outcomes, reverses 4, and
+ties 3. The named cash-helpful case from RESULT-0066 has no complete legal
+survivor path in either arm immediately after the first action, even though its
+cash survivor later enters the decisive chain. The missing property is how the
+path forms through later merges, gravity, and refills. Next identify the exact
+first path-completing event in the seven non-tied misses before defining a
+metric or changing the policy.
+
 **The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.
