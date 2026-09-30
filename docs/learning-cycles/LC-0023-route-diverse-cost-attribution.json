@@ -1,0 +1,407 @@
+{
+  "schemaVersion": 1,
+  "kind": "route-diverse-cost-attribution",
+  "scope": "one initial decision state from each frozen captured puzzle at the sole route-recovering lower width, 384; diagnostic only, not an outcome experiment",
+  "corpus": {
+    "path": "docs/oracle/corpus.json",
+    "identity": "59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308",
+    "puzzles": 20
+  },
+  "diversity": {
+    "searchWidth": 384,
+    "supplementLimit": 128
+  },
+  "sources": {
+    "tool": "b4b91e79fb612ed17fbfa873e136f5c6b75e29de96c679d4ac6f98cee2f80f4f",
+    "challenger": "59c57bd274e8b00d2ac4fac0e823c1c008feee76c287de2d7ba63aa5d7104cc8",
+    "champion": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873"
+  },
+  "qualification": {
+    "puzzles": 19,
+    "stageTotals": {
+      "championAnalysisNs": 1275612794,
+      "supplementGenerationNs": 715420252,
+      "supplementScoringNs": 3649907043,
+      "winnerSelectionNs": 376998
+    },
+    "dominantStage": "supplementScoringNs",
+    "dominantShareOfChallengerOnlyTime": 0.8360408305373055,
+    "totalScoredSupplementCandidates": 1889,
+    "totalImmediatePointEligibleCandidates": 1058
+  },
+  "trainingScoreGate": {
+    "championImmediatePoints": 5120,
+    "ownerImmediatePoints": 5120,
+    "ownerSurvivesImmediatePointGate": true
+  },
+  "recommendation": {
+    "mechanism": "immediate-point eligibility gate before afterstate scoring",
+    "change": "Keep the full generated supplement, but invoke expensive afterstate scoring only for supplemental routes whose immediate points are at least the champion-selected route’s immediate points.",
+    "prediction": "The scored supplemental-candidate count should fall materially while the frozen human route remains scoreable because its immediate points equal the champion route’s.",
+    "requiredQualification": "Prove the frozen human route is still generated and scoreable, exact champion fallback is retained, the gate has an explicit counterexample test for a lower-immediate-point future-value winner, and the 128-route generation cap plus the 2× corpus boundary hold."
+  },
+  "rows": [
+    {
+      "puzzleIdentity": "1726f3e5190fa65fa5e337639c1e142589ecb86abf728b764ebccafc26ea7a92",
+      "level": 53,
+      "seed": 424242,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 122,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 122,
+      "timings": {
+        "championAnalysisNs": 48899167,
+        "supplementGenerationNs": 36754417,
+        "supplementScoringNs": 108257292,
+        "winnerSelectionNs": 80250
+      },
+      "immediatePointEligibleCandidates": 82
+    },
+    {
+      "puzzleIdentity": "24a49a4c8fa2c0cb71131d61d8419c81a301b6d2eff5e4224e73e3dcfc2ad5ed",
+      "level": 58,
+      "seed": 4010386357,
+      "training": false,
+      "reason": "bomb-priority",
+      "supplementCandidates": 0,
+      "championImmediatePoints": 2880,
+      "generatedSupplementCandidates": 0,
+      "scoredSupplementCandidates": 0,
+      "timings": {
+        "championAnalysisNs": 1616958,
+        "supplementGenerationNs": 0,
+        "supplementScoringNs": 0,
+        "winnerSelectionNs": 0
+      },
+      "immediatePointEligibleCandidates": 0
+    },
+    {
+      "puzzleIdentity": "2bb321b435751a652f9a76dfba255b720fd810fd2470842389d5cab73ca03823",
+      "level": 53,
+      "seed": 2,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 127,
+      "championImmediatePoints": 10240,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 127,
+      "timings": {
+        "championAnalysisNs": 95007166,
+        "supplementGenerationNs": 47870667,
+        "supplementScoringNs": 208334875,
+        "winnerSelectionNs": 28625
+      },
+      "immediatePointEligibleCandidates": 102
+    },
+    {
+      "puzzleIdentity": "3214dbd437170b396b9f1b6c4d63cbe11bebe4d93ae8e3e1476b3e7f64300537",
+      "level": 54,
+      "seed": 1,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 128,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 128,
+      "timings": {
+        "championAnalysisNs": 135745625,
+        "supplementGenerationNs": 97847625,
+        "supplementScoringNs": 402725667,
+        "winnerSelectionNs": 15291
+      },
+      "immediatePointEligibleCandidates": 120
+    },
+    {
+      "puzzleIdentity": "342fa0366822801eef10348ce98b188e39f4d9072eac4601331b874b382488f1",
+      "level": 52,
+      "seed": 2173441018,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 121,
+      "championImmediatePoints": 15040,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 121,
+      "timings": {
+        "championAnalysisNs": 61021292,
+        "supplementGenerationNs": 30621000,
+        "supplementScoringNs": 221609500,
+        "winnerSelectionNs": 45333
+      },
+      "immediatePointEligibleCandidates": 0
+    },
+    {
+      "puzzleIdentity": "3808ee8892e6eb828388ecd37095633d9fe3c89950e2337a4d2bcf1ba18fa386",
+      "level": 54,
+      "seed": 2832419099,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 125,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 125,
+      "timings": {
+        "championAnalysisNs": 66884792,
+        "supplementGenerationNs": 23708583,
+        "supplementScoringNs": 320201750,
+        "winnerSelectionNs": 24875
+      },
+      "immediatePointEligibleCandidates": 69
+    },
+    {
+      "puzzleIdentity": "3e0d1c86d58ceee50a3a22c45e446d0e2f7afec77232dc0c41638c7e7031c058",
+      "level": 54,
+      "seed": 424242,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 127,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 127,
+      "timings": {
+        "championAnalysisNs": 42567584,
+        "supplementGenerationNs": 30400875,
+        "supplementScoringNs": 100282750,
+        "winnerSelectionNs": 26042
+      },
+      "immediatePointEligibleCandidates": 108
+    },
+    {
+      "puzzleIdentity": "6b0d3ffdb44b7ef9a67a479d2214a82b1ed5d9abb6bb16e1d20a2bde26090e24",
+      "level": 57,
+      "seed": 2389915636,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 124,
+      "championImmediatePoints": 10560,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 124,
+      "timings": {
+        "championAnalysisNs": 71666084,
+        "supplementGenerationNs": 27065667,
+        "supplementScoringNs": 258818333,
+        "winnerSelectionNs": 11875
+      },
+      "immediatePointEligibleCandidates": 0
+    },
+    {
+      "puzzleIdentity": "742e23f0305a8fc7cf4fcf4ba244d22d0d12dbe299e4793a0aab5c4736e5399e",
+      "level": 52,
+      "seed": 777,
+      "training": false,
+      "reason": "bomb-priority",
+      "supplementCandidates": 0,
+      "championImmediatePoints": 3200,
+      "generatedSupplementCandidates": 0,
+      "scoredSupplementCandidates": 0,
+      "timings": {
+        "championAnalysisNs": 5923833,
+        "supplementGenerationNs": 0,
+        "supplementScoringNs": 0,
+        "winnerSelectionNs": 0
+      },
+      "immediatePointEligibleCandidates": 0
+    },
+    {
+      "puzzleIdentity": "783ac318ddeea191cc2d62bfa78318d023e5e3c64dd9fc9fb877f672d4d8343e",
+      "level": 54,
+      "seed": 1044860360,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 127,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 127,
+      "timings": {
+        "championAnalysisNs": 75092000,
+        "supplementGenerationNs": 65650750,
+        "supplementScoringNs": 145789542,
+        "winnerSelectionNs": 10083
+      },
+      "immediatePointEligibleCandidates": 109
+    },
+    {
+      "puzzleIdentity": "7ab85e63f0b2ce34d3c0bde2971b2a3560da11d053461d60f027079c422181e8",
+      "level": 54,
+      "seed": 3310936729,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 128,
+      "championImmediatePoints": 6080,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 128,
+      "timings": {
+        "championAnalysisNs": 61945167,
+        "supplementGenerationNs": 28037875,
+        "supplementScoringNs": 172168750,
+        "winnerSelectionNs": 22208
+      },
+      "immediatePointEligibleCandidates": 0
+    },
+    {
+      "puzzleIdentity": "81d2beb28b6cf96cbfb9ffb4a89fb3cd612b95f8724563284820f387c89c5c08",
+      "level": 53,
+      "seed": 10,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 127,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 127,
+      "timings": {
+        "championAnalysisNs": 99936917,
+        "supplementGenerationNs": 31514959,
+        "supplementScoringNs": 292018667,
+        "winnerSelectionNs": 36791
+      },
+      "immediatePointEligibleCandidates": 108
+    },
+    {
+      "puzzleIdentity": "8de7adce947dfcaa3d14aa051176c7051ac034c1b6737a0532f467cce3e27911",
+      "level": 56,
+      "seed": 1761047823,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 128,
+      "championImmediatePoints": 11840,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 128,
+      "timings": {
+        "championAnalysisNs": 89567541,
+        "supplementGenerationNs": 46741542,
+        "supplementScoringNs": 301100666,
+        "winnerSelectionNs": 16500
+      },
+      "immediatePointEligibleCandidates": 0
+    },
+    {
+      "puzzleIdentity": "8fe7db24e4ac6b36a0999ecd8d61b2594637b1a17ec02978e0f3b5aede38e104",
+      "level": 58,
+      "seed": 4255346895,
+      "training": false,
+      "reason": "bomb-priority",
+      "supplementCandidates": 0,
+      "championImmediatePoints": 4800,
+      "generatedSupplementCandidates": 0,
+      "scoredSupplementCandidates": 0,
+      "timings": {
+        "championAnalysisNs": 54571459,
+        "supplementGenerationNs": 0,
+        "supplementScoringNs": 0,
+        "winnerSelectionNs": 0
+      },
+      "immediatePointEligibleCandidates": 0
+    },
+    {
+      "puzzleIdentity": "a2577c1f104d3391578caf4039b2b4fec4d83290d76c70abe8a952ab8e2be8ea",
+      "level": 51,
+      "seed": 1,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 128,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 128,
+      "timings": {
+        "championAnalysisNs": 135525583,
+        "supplementGenerationNs": 92202625,
+        "supplementScoringNs": 401005792,
+        "winnerSelectionNs": 10209
+      },
+      "immediatePointEligibleCandidates": 120
+    },
+    {
+      "puzzleIdentity": "aa9efa2f04ce7c87b0352f9478222a0bf723b16eeb6c558fa87ce32067328ec9",
+      "level": 56,
+      "seed": 3504920448,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 128,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 128,
+      "timings": {
+        "championAnalysisNs": 84325333,
+        "supplementGenerationNs": 71004708,
+        "supplementScoringNs": 295197750,
+        "winnerSelectionNs": 18458
+      },
+      "immediatePointEligibleCandidates": 122
+    },
+    {
+      "puzzleIdentity": "abcba5172111e30b205ead70b9f01d6648aee32434126f847fdd01174c7b3a2c",
+      "level": 55,
+      "seed": 2600645753,
+      "training": false,
+      "reason": "bomb-priority",
+      "supplementCandidates": 0,
+      "championImmediatePoints": 768,
+      "generatedSupplementCandidates": 0,
+      "scoredSupplementCandidates": 0,
+      "timings": {
+        "championAnalysisNs": 4491959,
+        "supplementGenerationNs": 0,
+        "supplementScoringNs": 0,
+        "winnerSelectionNs": 0
+      },
+      "immediatePointEligibleCandidates": 0
+    },
+    {
+      "puzzleIdentity": "bd5bda0e646de4636021ba5498f0aea723a235072dd2b391910409ff547e16a5",
+      "level": 52,
+      "seed": 1,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 128,
+      "championImmediatePoints": 5120,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 128,
+      "timings": {
+        "championAnalysisNs": 94062792,
+        "supplementGenerationNs": 75170292,
+        "supplementScoringNs": 255762792,
+        "winnerSelectionNs": 18708
+      },
+      "immediatePointEligibleCandidates": 118
+    },
+    {
+      "puzzleIdentity": "c1bd39cbead6dd2fe0da32839269b37b04e78b45eee61beaeb205a3957dc8406",
+      "level": 54,
+      "seed": 1313839221,
+      "training": true,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 127,
+      "championImmediatePoints": 9280,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 127,
+      "timings": {
+        "championAnalysisNs": 25639500,
+        "supplementGenerationNs": 20174042,
+        "supplementScoringNs": 105442250,
+        "winnerSelectionNs": 12375
+      },
+      "immediatePointEligibleCandidates": 4
+    },
+    {
+      "puzzleIdentity": "ebe52ad45659503a3523cfba7f96a6a3d6d49f2d2bcfff67a6bdf80d20e8c373",
+      "level": 52,
+      "seed": 777,
+      "training": false,
+      "reason": "normal-weighted-ranking",
+      "supplementCandidates": 121,
+      "championImmediatePoints": 8000,
+      "generatedSupplementCandidates": 128,
+      "scoredSupplementCandidates": 121,
+      "timings": {
+        "championAnalysisNs": 46761542,
+        "supplementGenerationNs": 10828667,
+        "supplementScoringNs": 166632917,
+        "winnerSelectionNs": 11750
+      },
+      "immediatePointEligibleCandidates": 0
+    }
+  ],
+  "artifactIdentity": "ab6fd5c0a927277560682ceaa74a893d5d936e42647cd66959f83eb88ef19b62"
+}

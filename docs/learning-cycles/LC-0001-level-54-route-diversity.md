@@ -183,6 +183,16 @@ cost reduction. A future repair needs a separately specified generator redesign
 rather than another beam-width trial; it must rerun the existing training and
 boundedness qualifications before registration is reconsidered.
 
+The subsequent frozen-corpus attribution in
+`LC-0023-route-diverse-cost-attribution.json` locates 83.6% of challenger-only
+time in full afterstate scoring, not generation. A one-endpoint-representative
+shortcut is rejected by a direct counterexample: it drops the human route.
+The narrowly viable next candidate is instead an immediate-point eligibility
+gate before expensive scoring. It keeps the full generated supplement and keeps
+the human route scoreable because both it and the champion score 5,120
+immediate points. This remains a candidate redesign only: it needs an explicit
+lower-immediate-point/future-value counterexample before implementation.
+
 ## Small promotion experiment — draft, not registered
 
 Registration must occur only after the challenger and its evaluator exist,

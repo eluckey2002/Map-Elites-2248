@@ -1430,6 +1430,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. The ladder's selection rule requires all conditions, so the correct result is `NO_CONFIGURATION_QUALIFIED`, not a selection of the fastest failing width. No protected gameplay or content file changed.
 
+### RESULT-0075 — Supplement afterstate scoring is the route-diverse cost driver
+
+- **type:** result
+- **status:** provisional
+- **scope:** one initial decision state from each frozen captured puzzle at width 384; real route-diverse challenger seam instrumented without changing the selected route; machine-local stage timing and candidate counts only; no fresh seed, win/loss outcome, policy change, or population claim
+- **statement:** Across the 19 non-training states, full supplemental afterstate scoring consumed 3,649,907,043 ns, 83.6% of challenger-only measured work, versus 715,420,252 ns in supplement generation. The challenger scored 1,889 supplemental routes. A one-per-endpoint score budget is rejected because the frozen human route is ranked 15th of 18 at its endpoint. The narrower immediate-point eligibility candidate retains that route—both it and the champion score 5,120 points immediately—and would have sent 1,058 of the 1,889 routes to expensive scoring. This is a route-preserving redesign candidate, not a demonstrated speed or gameplay improvement.
+- **evidence:** identity-bound [LC-0023 attribution artifact](docs/learning-cycles/LC-0023-route-diverse-cost-attribution.json), internal identity `ab6fd5c0a927277560682ceaa74a893d5d936e42647cd66959f83eb88ef19b62`; [result explanation](docs/learning-cycles/LC-0023-route-diverse-cost-attribution-result.md); external attribution tool `tools/attribute-route-diverse-cost.js`; regression test `solver/tests/routeDiverseAttribution.test.js`; frozen corpus `docs/oracle/corpus.json`, identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`
+- **proof_class:** `exact_result`, `direct_source` — real policy seam and captured inputs, with machine-local timing; no claim beyond this configuration and panel
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/routeDiverseAttribution.test.js solver/tests/routeDiverseChallenger.test.js`; expect nine passing tests including a real-seam identity check and planted accounting-defect rejection. Run `node tools/attribute-route-diverse-cost.js --out /private/tmp/lc0023-route-diverse-cost-attribution.json` to collect a fresh timing sample without overwriting the retained artifact.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. The immediate-point candidate is not implemented: a lower-immediate-point future-value counterexample is still required before it can be adopted or tested as a challenger. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
