@@ -1318,6 +1318,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. "Prepared value" is limited to value already live at the common decision state: untouched common tiles contribute their value, the first-action survivor contributes its merged inputs, and first-action refills contribute zero. The smallest next diagnostic is to identify the exact event that first completes a survivor-containing legal chain in the seven non-tied misses; do not define a metric or change the champion yet. No protected gameplay or content file changed.
 
+### RESULT-0068 — Survivor re-entry timing does not distinguish the seven immediate-path disagreements
+
+- **type:** result
+- **status:** provisional
+- **scope:** exact deterministic replay of both retained continuations in the seven non-tied LC-0015 immediate-path disagreements; first-action survivor lineage through every later retained merge, the first later chain input that carries that lineage, and already-retained target-cost outcomes only; no alternative continuation search, new outcome run, fitted threshold, metric, policy rule, champion change, or population claim
+- **statement:** The first-action survivor's later re-entry is observable but does not distinguish the seven disagreements. In cash-faster `10e4dff8050d…` and `9cd33937c5c0…`, the cash survivor re-enters earlier than wait (moves 3 versus 6 and 5 versus 10); in wait-faster `ecc4053a8c93…`, wait re-enters at move 10 while cash never re-enters before target. But wait-faster `b068afb04eb9…` reverses the timing, with cash re-entering at move 2 and wait at 5; cash-faster `b42b2e0e4d40…` and `e81f8323ede9…` reach target without reusing their cash survivors while their slower wait counterparts do reuse theirs; and cash-faster `267a43735c9d…` reuses neither. Survivor reuse therefore remains a descriptive lineage fact, not a sufficient timing rule. The next narrow question is which other retained board resource reaches target in the two cash-faster, no-cash-reentry cases.
+- **evidence:** immutable [LC-0012 raw matrix](docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json), SHA-256 `707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f`, internal identity `dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff`; antecedent [RESULT-0067 artifact](docs/learning-cycles/LC-0015-landing-path-panel.json), file SHA-256 `0abb6e924d16e2c28829c18df4714d3d0cd4b6ad56e1d6cb5f5c954d7d4d213d`, internal identity `d86bdb8123384a6d65e29c88dbd91128ff99c72a5ced27b6702b59037a4aea0d`; identity-bound [LC-0016 artifact](docs/learning-cycles/LC-0016-first-carrier-reentry.json), file SHA-256 `44d0572e248cd8a2dc79ce0b178779b5cd6524647535161bd3762c918ca13809`, internal identity `549ad815b40a12cdc5c2f4669b761eb6a51791bc08365b5aab1e7b20862ed58d`; [result explanation](docs/learning-cycles/LC-0016-first-carrier-reentry-result.md), SHA-256 `b8a442d2d8e8e508ebd466a64a2de8662a5e47689eb3414a3cb7a57e8d0c1cb1`; derivation tool `tools/diagnose-lc0016-first-carrier-path.js`, SHA-256 `026448c46bf9fff8287641349125230ea0c8fe3e07d09f99c99032063e800ea8`; regression test `solver/tests/lc0016FirstCarrierPath.test.js`, SHA-256 `d6166c2bc30146187800bbbfac99d79c6c514f2ff3342cc75d7e67af472e6af3`
+- **proof_class:** `exact_result`, `direct_source` — exact deterministic replay of the 14 retained arms in the seven selected pairs; no claim beyond those arms
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/lc0016FirstCarrierPath.test.js`; expect two passing tests, exact retained recomputation, and first re-entry positions including cash move 5 in `9cd33937c5c0…`.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. Re-entry is defined only as a later retained chain input carrying the first survivor's lineage; it does not assert that the exact chain first became available at that moment, nor that its timing caused the target outcome. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

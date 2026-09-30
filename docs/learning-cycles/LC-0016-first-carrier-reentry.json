@@ -1,0 +1,1001 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0016-first-carrier-path",
+  "source": {
+    "path": "docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json",
+    "sha256": "707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f",
+    "artifactIdentity": "dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff",
+    "landingPanel": {
+      "path": "docs/learning-cycles/LC-0015-landing-path-panel.json",
+      "artifactIdentity": "d86bdb8123384a6d65e29c88dbd91128ff99c72a5ced27b6702b59037a4aea0d"
+    }
+  },
+  "caseSelection": "The seven non-tied LC-0015 comparisons where immediate prepared survivor-path value did not point to the faster arm.",
+  "question": "In each immediate-path disagreement, at which later retained action does the first-action survivor or its live descendant first re-enter a completed legal chain?",
+  "retrospectiveBoundary": "Each arm follows its retained recorded continuation exactly. Re-entry means the tracked survivor descendant is an input to a later retained legal chain; no alternative action search, ranking, or policy metric is performed.",
+  "cases": [
+    {
+      "recordingId": "10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90",
+      "recordingPath": "play-sessions/10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90.json",
+      "level": 55,
+      "seed": 2600645753,
+      "pairClass": "CASH_NOW_FASTER",
+      "fasterArm": "CASH_NOW",
+      "immediatePathDirection": "OBSERVED_WAIT",
+      "immediatePathDisagreement": true,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "movesToTarget": 14,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 6,
+            "source": "champion",
+            "actionPoints": 32320,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "d142743082367bdb00d79aea1ee6eddcba5151c8046c58b0c5a271eddedbe9b3",
+            "chain": [
+              {
+                "x": 3,
+                "y": 0,
+                "value": 64,
+                "nodeId": "F0036",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "value": 64,
+                "nodeId": "F0037",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "value": 64,
+                "nodeId": "F0038",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "value": 128,
+                "nodeId": "F0039",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "value": 256,
+                "nodeId": "F0040",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "value": 256,
+                "nodeId": "F0021",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "value": 512,
+                "nodeId": "M0005",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "value": 1024,
+                "nodeId": "M0003",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "value": 1024,
+                "nodeId": "M0002",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 2048,
+                "nodeId": "C0028",
+                "containsFirstActionSurvivor": false
+              }
+            ]
+          }
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "movesToTarget": 9,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 3,
+            "source": "champion",
+            "actionPoints": 25920,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "a77397d5138a6ef7763aacfb61518ee1a4518b1c4e04b0fdaa095c6931b393f8",
+            "chain": [
+              {
+                "x": 3,
+                "y": 1,
+                "value": 64,
+                "nodeId": "F0012",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "value": 64,
+                "nodeId": "F0009",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "value": 64,
+                "nodeId": "F0008",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "value": 128,
+                "nodeId": "F0003",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "value": 256,
+                "nodeId": "F0001",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 512,
+                "nodeId": "M0002",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "value": 1024,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 1024,
+                "nodeId": "C0013",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "value": 2048,
+                "nodeId": "C0018",
+                "containsFirstActionSurvivor": false
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "recordingId": "267a43735c9d22717f987a6be7eee6ef6338c3adb12055e701e05957a833ecd1",
+      "recordingPath": "play-sessions/267a43735c9d22717f987a6be7eee6ef6338c3adb12055e701e05957a833ecd1.json",
+      "level": 4,
+      "seed": 1051679287,
+      "pairClass": "CASH_NOW_FASTER",
+      "fasterArm": "CASH_NOW",
+      "immediatePathDirection": "TIE",
+      "immediatePathDisagreement": true,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "movesToTarget": 11,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": null
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "movesToTarget": 8,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": null
+        }
+      }
+    },
+    {
+      "recordingId": "9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0",
+      "recordingPath": "play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json",
+      "level": 54,
+      "seed": 1044860360,
+      "pairClass": "CASH_NOW_FASTER",
+      "fasterArm": "CASH_NOW",
+      "immediatePathDirection": "TIE",
+      "immediatePathDisagreement": true,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "movesToTarget": 12,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 10,
+            "source": "champion",
+            "actionPoints": 21440,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "687f9a27d6458edc5fca5a74380b3755667ac365f0ad5d7d5af4d18ecc35ecf7",
+            "chain": [
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64,
+                "nodeId": "F0049",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 64,
+                "nodeId": "F0048",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 64,
+                "nodeId": "F0041",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 128,
+                "nodeId": "F0030",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 128,
+                "nodeId": "F0050",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 256,
+                "nodeId": "F0015",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 512,
+                "nodeId": "M0007",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "M0006",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 1024,
+                "nodeId": "M0008",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 1024,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              }
+            ]
+          }
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "movesToTarget": 10,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 5,
+            "source": "champion",
+            "actionPoints": 49280,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "0d536a609b6feb4101d88ad168dbf6ac5314b7b3a15146a8f03737205db59f49",
+            "chain": [
+              {
+                "x": 3,
+                "y": 3,
+                "value": 128,
+                "nodeId": "F0011",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 128,
+                "nodeId": "F0019",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 128,
+                "nodeId": "F0005",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 256,
+                "nodeId": "F0020",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 512,
+                "nodeId": "M0004",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 512,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 1024,
+                "nodeId": "M0003",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 1024,
+                "nodeId": "C0021",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024,
+                "nodeId": "C0026",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "C0029",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "C0030",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "C0031",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024,
+                "nodeId": "M0002",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "C0032",
+                "containsFirstActionSurvivor": false
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "recordingId": "b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab",
+      "recordingPath": "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json",
+      "level": 57,
+      "seed": 2389915636,
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "fasterArm": "OBSERVED_WAIT",
+      "immediatePathDirection": "CASH_NOW",
+      "immediatePathDisagreement": true,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "movesToTarget": 11,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 5,
+            "source": "champion",
+            "actionPoints": 36160,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "7c99546536e47578eda82100305a7757e5c20b2cf8bfb4ff06194d696c009794",
+            "chain": [
+              {
+                "x": 0,
+                "y": 3,
+                "value": 64,
+                "nodeId": "F0022",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 64,
+                "nodeId": "F0009",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 64,
+                "nodeId": "F0012",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 128,
+                "nodeId": "F0030",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 256,
+                "nodeId": "F0013",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 512,
+                "nodeId": "C0037",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 1024,
+                "nodeId": "C0027",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 1024,
+                "nodeId": "M0004",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024,
+                "nodeId": "M0003",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "value": 2048,
+                "nodeId": "C0025",
+                "containsFirstActionSurvivor": false
+              }
+            ]
+          }
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "movesToTarget": 12,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 2,
+            "source": "champion",
+            "actionPoints": 10240,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "46dfc334e26b8d111c16307389df19a0dfb4ba232af91ba3f35007bdcec965c8",
+            "chain": [
+              {
+                "x": 2,
+                "y": 0,
+                "value": 64,
+                "nodeId": "F0001",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "value": 64,
+                "nodeId": "C0002",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "value": 64,
+                "nodeId": "C0001",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "value": 64,
+                "nodeId": "C0006",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "value": 64,
+                "nodeId": "C0011",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "value": 64,
+                "nodeId": "C0016",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "value": 64,
+                "nodeId": "C0012",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "value": 64,
+                "nodeId": "C0007",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "value": 64,
+                "nodeId": "C0008",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "value": 64,
+                "nodeId": "C0013",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 64,
+                "nodeId": "C0019",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "value": 64,
+                "nodeId": "C0020",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 64,
+                "nodeId": "F0003",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64,
+                "nodeId": "C0018",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 128,
+                "nodeId": "C0023",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 256,
+                "nodeId": "C0033",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 256,
+                "nodeId": "C0039",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 4,
+                "y": 7,
+                "value": 512,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "recordingId": "b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8",
+      "recordingPath": "play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json",
+      "level": 52,
+      "seed": 2173441018,
+      "pairClass": "CASH_NOW_FASTER",
+      "fasterArm": "CASH_NOW",
+      "immediatePathDirection": "OBSERVED_WAIT",
+      "immediatePathDisagreement": true,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "movesToTarget": 6,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 4,
+            "source": "champion",
+            "actionPoints": 41920,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "830124f9e37738dd9fdef3ba36fb1ebc33660d87cc926666c087754a9ecd97be",
+            "chain": [
+              {
+                "x": 4,
+                "y": 4,
+                "value": 64,
+                "nodeId": "C0015",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 64,
+                "nodeId": "C0004",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 64,
+                "nodeId": "F0013",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "value": 128,
+                "nodeId": "C0007",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "value": 128,
+                "nodeId": "C0011",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "value": 256,
+                "nodeId": "C0026",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "value": 512,
+                "nodeId": "C0032",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "value": 1024,
+                "nodeId": "C0027",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 1024,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 1024,
+                "nodeId": "C0028",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 2048,
+                "nodeId": "C0033",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 2048,
+                "nodeId": "C0034",
+                "containsFirstActionSurvivor": false
+              }
+            ]
+          }
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "movesToTarget": 4,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": null
+        }
+      }
+    },
+    {
+      "recordingId": "e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4",
+      "recordingPath": "play-sessions/e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4.json",
+      "level": 3,
+      "seed": 1080239914,
+      "pairClass": "CASH_NOW_FASTER",
+      "fasterArm": "CASH_NOW",
+      "immediatePathDirection": "OBSERVED_WAIT",
+      "immediatePathDisagreement": true,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "movesToTarget": 8,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 8,
+            "source": "champion",
+            "actionPoints": 512,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "c78adfb5b1218d24541b3df17f1326c6d1fa2b6ef7717913f27e8eda73a9acdd",
+            "chain": [
+              {
+                "x": 4,
+                "y": 5,
+                "value": 32,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 32,
+                "nodeId": "M0007",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 32,
+                "nodeId": "M0003",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 32,
+                "nodeId": "C0033",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 64,
+                "nodeId": "M0005",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 64,
+                "nodeId": "M0006",
+                "containsFirstActionSurvivor": false
+              }
+            ]
+          }
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "movesToTarget": 5,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": null
+        }
+      }
+    },
+    {
+      "recordingId": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78",
+      "recordingPath": "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json",
+      "level": 54,
+      "seed": 1313839221,
+      "pairClass": "OBSERVED_WAIT_FASTER",
+      "fasterArm": "OBSERVED_WAIT",
+      "immediatePathDirection": "TIE",
+      "immediatePathDisagreement": true,
+      "arms": {
+        "OBSERVED_WAIT": {
+          "arm": "OBSERVED_WAIT",
+          "movesToTarget": 11,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": {
+            "relativeMove": 10,
+            "source": "champion",
+            "actionPoints": 57920,
+            "carrierNodeId": "M0001",
+            "preStateIdentity": "fc33113edbb9c4770802eb0e1e6d82ed9a885650a02de14a8e719beb8ee302ad",
+            "chain": [
+              {
+                "x": 3,
+                "y": 2,
+                "value": 64,
+                "nodeId": "F0051",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "value": 64,
+                "nodeId": "F0052",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "value": 64,
+                "nodeId": "F0043",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "value": 128,
+                "nodeId": "F0063",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "value": 128,
+                "nodeId": "F0062",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "value": 128,
+                "nodeId": "F0054",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "value": 256,
+                "nodeId": "F0012",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "value": 512,
+                "nodeId": "M0005",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "value": 1024,
+                "nodeId": "M0001",
+                "containsFirstActionSurvivor": true
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "M0002",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "M0009",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "value": 1024,
+                "nodeId": "C0030",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "value": 2048,
+                "nodeId": "C0025",
+                "containsFirstActionSurvivor": false
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "value": 4096,
+                "nodeId": "M0008",
+                "containsFirstActionSurvivor": false
+              }
+            ]
+          }
+        },
+        "CASH_NOW": {
+          "arm": "CASH_NOW",
+          "movesToTarget": 12,
+          "replayMatchesRetainedTrace": true,
+          "firstCarrierReentry": null
+        }
+      }
+    }
+  ],
+  "finding": "SURVIVOR_REENTRY_IS_OBSERVABLE_AFTER_THE_FIRST_LANDING",
+  "interpretation": "This is replay evidence about when a first-action survivor is actually reused along each retained continuation. It does not establish that earlier or later re-entry causes the outcome, and it does not define a new metric.",
+  "nonClaims": [
+    "This artifact does not generalize beyond the seven retained disagreement pairs.",
+    "This artifact does not search counterfactual continuations or rank actions.",
+    "This artifact does not authorize a policy or champion change."
+  ],
+  "artifactIdentity": "549ad815b40a12cdc5c2f4669b761eb6a51791bc08365b5aab1e7b20862ed58d"
+}

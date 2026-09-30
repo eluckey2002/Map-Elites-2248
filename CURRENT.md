@@ -12,6 +12,8 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 The latest trustworthy sequence is now visible in the ledger:
 
+- [RESULT-0068](EVIDENCE_LEDGER.md#result-0068--survivor-re-entry-timing-does-not-distinguish-the-seven-immediate-path-disagreements) shows why merely following the first survivor is still insufficient. Across the seven LC-0015 disagreements, faster arms sometimes re-enter earlier, sometimes later, and sometimes reach target without re-entry; the next bounded question is which other retained resource reaches target in the two cash-faster no-re-entry cases. No metric or champion change is authorized.
+
 - [DECISION-0007](EVIDENCE_LEDGER.md#decision-0007--level-54s-126000-target-is-a-deliberate-owner-exception-to-the-demand-rule) records, provisionally, that Level 54's 126,000 target is a deliberate owner exception to the demand rule, not a measurement error; `BL-0020` was dropped on this basis. [DECISION-0008](EVIDENCE_LEDGER.md#decision-0008--pause-porting-the-family-board-map-elites-work-until-frozen-renumbering-is-defined) records, provisionally, that porting the family-board MAP-Elites work is paused until `BL-0023` criterion 7 defines frozen renumbering.
 - [DECISION-0009](EVIDENCE_LEDGER.md#decision-0009--keep-level-53-as-shipped-at-101000) records, provisionally, that the owner keeps Level 53 as shipped at 101,000 with its 0.95 demand; this closes the open adjudication of how it entered the game.
 
