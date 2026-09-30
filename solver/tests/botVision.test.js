@@ -174,3 +174,28 @@ test('Bot Vision server returns the exact session and rejects malformed identiti
     assert.ok([200, 204].includes(loaded.status), asset);
   }
 });
+
+test('Bot Vision server branches only from a legal chain on the exact replay state', async (t) => {
+  const server = createBotVisionServer();
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => new Promise((resolve) => server.close(resolve)));
+  const origin = `http://127.0.0.1:${server.address().port}`;
+  const session = recordSession(LEVELS.find(({ level }) => level === 52), 2);
+  const chain = session.moves[0].chain.map(({ x, y }) => ({ x, y }));
+
+  const accepted = await fetch(`${origin}/api/counterfactual`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ levelNumber: 52, seed: 2, moveIndex: 0, chain }),
+  });
+  assert.equal(accepted.status, 200);
+  assert.deepEqual((await accepted.json()).outcome, session.outcome);
+
+  const rejected = await fetch(`${origin}/api/counterfactual`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ levelNumber: 52, seed: 2, moveIndex: 0, chain: [chain[0], chain[0], ...chain.slice(2)] }),
+  });
+  assert.equal(rejected.status, 400);
+  assert.match((await rejected.json()).error, /cannot reuse a tile/);
+});

@@ -4,6 +4,7 @@ const http = require('node:http');
 const path = require('node:path');
 
 const { recordSession } = require('./record-session');
+const { branchCounterfactual } = require('./counterfactual-review');
 const { LEVELS } = require('../src/game');
 
 const ROOT = path.join(__dirname, '..');
@@ -31,6 +32,22 @@ function boundedInteger(raw, name, min, max) {
     throw new Error(`${name} must be between ${min} and ${max}`);
   }
   return value;
+}
+
+function readJsonBody(request, limit = 64 * 1024) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let size = 0;
+    request.on('data', (chunk) => {
+      size += chunk.length;
+      if (size > limit) { reject(new Error('request body is too large')); request.destroy(); return; }
+      chunks.push(chunk);
+    });
+    request.on('end', () => {
+      try { resolve(JSON.parse(Buffer.concat(chunks).toString('utf8'))); } catch { reject(new Error('request body must be JSON')); }
+    });
+    request.on('error', reject);
+  });
 }
 
 function createBotVisionServer() {
@@ -100,6 +117,14 @@ function createBotVisionServer() {
       return;
     }
 
+    if (request.method === 'POST' && url.pathname === '/api/counterfactual') {
+      readJsonBody(request)
+        .then((body) => branchCounterfactual(body))
+        .then((result) => jsonResponse(response, 200, result))
+        .catch((error) => jsonResponse(response, 400, { error: error.message }));
+      return;
+    }
+
     jsonResponse(response, 404, { error: 'not found' });
   });
 }
@@ -114,4 +139,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { boundedInteger, createBotVisionServer };
+module.exports = { boundedInteger, createBotVisionServer, readJsonBody };

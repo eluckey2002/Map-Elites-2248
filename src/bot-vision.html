@@ -30,6 +30,7 @@
           <div class="view-switch" role="group" aria-label="Board chain">
             <button id="recordedView" class="view-button active" type="button"><span class="legend-swatch recorded"></span>Recorded choice</button>
             <button id="previewView" class="view-button" type="button"><span class="legend-swatch preview"></span>Preview candidate</button>
+            <button id="branchMode" class="view-button" type="button"><span class="legend-swatch branch"></span>Build my route</button>
           </div>
         </div>
         <div class="score-summary">
@@ -99,6 +100,14 @@
             <span>Actual next move</span><strong id="actualNext">—</strong>
           </div>
           <div id="rerankCallout" class="rerank-callout">Hypothetical rerank — recorded move unchanged.</div>
+          <section class="branch-review" aria-labelledby="branchHeading">
+            <div class="subheading-row"><h3 id="branchHeading">Your counterfactual</h3><button id="clearBranch" class="text-button" type="button">Clear</button></div>
+            <p id="branchHint">Choose “Build my route,” then select touching tiles in order.</p>
+            <div id="manualChain" class="manual-chain">No route selected</div>
+            <button id="runBranch" class="branch-button" type="button" disabled>Play this route forward</button>
+            <p id="branchResult" class="branch-result" aria-live="polite"></p>
+            <div id="branchBoard" class="branch-board" aria-label="Board after your route"></div>
+          </section>
         </div>
 
         <div class="contribution-column">
@@ -122,6 +131,14 @@
           </div>
           <h3 class="structural-title">Structural parameters <small>read-only</small></h3>
           <dl id="structuralParams" class="structural-params"></dl>
+          <section class="observation-review" aria-labelledby="observationHeading">
+            <div class="subheading-row"><h3 id="observationHeading">Observation</h3><span id="observationState">Local draft</span></div>
+            <textarea id="observationText" rows="5" placeholder="What do you notice about this move or route?"></textarea>
+            <div class="observation-actions">
+              <button id="saveObservation" class="branch-button" type="button">Save observation</button>
+              <button id="exportObservation" class="text-button" type="button">Export evidence</button>
+            </div>
+          </section>
         </aside>
       </section>
     </div>

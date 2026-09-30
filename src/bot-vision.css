@@ -105,6 +105,7 @@ h3 { font-size: 14px; }
 .legend-swatch { width: 12px; height: 12px; display: inline-block; margin-right: 7px; vertical-align: -1px; border-radius: 2px; }
 .legend-swatch.recorded { background: var(--cyan); }
 .legend-swatch.preview { background: var(--amber); }
+.legend-swatch.branch { background: #aa7fff; }
 .score-summary { display: grid; justify-items: end; }
 .score-summary span, .score-summary small { color: var(--muted); font-size: 11px; }
 .score-summary strong { font-size: 21px; }
@@ -145,6 +146,9 @@ h3 { font-size: 14px; }
 .tile.bomb { border: 2px solid #ff7b72; }
 .tile.selected-recorded { box-shadow: inset 0 0 0 3px var(--cyan); }
 .tile.selected-preview { box-shadow: inset 0 0 0 3px var(--amber); }
+.tile.selected-branch { box-shadow: inset 0 0 0 3px #b795ff; }
+.tile.branchable { cursor: crosshair; }
+.tile.branchable:hover { filter: brightness(1.18); }
 .tile .order {
   position: absolute;
   top: -6px;
@@ -161,10 +165,12 @@ h3 { font-size: 14px; }
   z-index: 4;
 }
 .tile.selected-preview .order { background: #493818; border-color: var(--amber); }
+.tile.selected-branch .order { background: #2b2046; border-color: #b795ff; }
 .tile .blocker-mark { position: absolute; right: 4px; bottom: 3px; font-size: 9px; color: #fff; opacity: .9; }
 .chain-path { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; overflow: visible; }
 .chain-path polyline { fill: none; stroke: var(--cyan); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; opacity: .85; }
 .chain-path.preview polyline { stroke: var(--amber); }
+.chain-path.branch polyline { stroke: #b795ff; }
 
 .playback-controls { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 9px; }
 .secondary-button, .text-button {
@@ -223,6 +229,16 @@ th:nth-child(2), td:nth-child(2), .contribution-table th:first-child, .contribut
 .decision-grid span { color: var(--muted); }
 .decision-grid strong { overflow-wrap: anywhere; font-weight: 600; }
 .rerank-callout { margin-top: 18px; padding: 10px; border: 1px solid var(--amber); border-radius: 5px; color: var(--amber); background: #18160e; font-size: 12px; line-height: 1.45; }
+.branch-review { margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
+.branch-review p { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.manual-chain { min-height: 34px; margin: 8px 0; padding: 8px; border: 1px solid #594b7c; border-radius: 5px; color: #dccdff; background: #181427; font-size: 12px; }
+.branch-button { min-height: 36px; border: 1px solid var(--cyan); border-radius: 5px; background: #0b313b; color: var(--cyan); padding: 7px 10px; font-weight: 650; }
+.branch-button:disabled { cursor: default; opacity: .45; }
+.branch-result { min-height: 18px; margin-bottom: 0; color: #d6f5ef !important; }
+.branch-board { display: none; grid-template-columns: repeat(var(--branch-grid-w), minmax(0, 1fr)); gap: 3px; margin-top: 10px; padding: 8px; border: 1px solid #594b7c; border-radius: 5px; background: #0e1020; }
+.branch-board.visible { display: grid; }
+.branch-board .tile { min-height: 25px; border-radius: 3px; font-size: 11px; }
+.branch-board .tile .blocker-mark { display: none; }
 .subheading-row { min-height: 27px; display: flex; justify-content: space-between; align-items: start; gap: 10px; }
 .subheading-row small { color: var(--muted); }
 .contribution-table th, .contribution-table td { padding: 8px 7px; }
@@ -236,6 +252,10 @@ th:nth-child(2), td:nth-child(2), .contribution-table th:first-child, .contribut
 .structural-params div { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; }
 .structural-params dt { color: var(--muted); }
 .structural-params dd { margin: 0; }
+.observation-review { margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--line-soft); }
+.observation-review .subheading-row span { color: var(--muted); font-size: 11px; }
+#observationText { width: 100%; margin-top: 10px; resize: vertical; color: var(--text); line-height: 1.45; }
+.observation-actions { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
 
 @media (max-width: 1120px) {
   .topbar { align-items: flex-start; }

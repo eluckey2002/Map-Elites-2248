@@ -3,12 +3,14 @@
 
   const ui = Object.fromEntries([
     'sessionForm', 'levelInput', 'seedInput', 'notice', 'recordedView', 'previewView',
+    'branchMode', 'clearBranch', 'manualChain', 'runBranch', 'branchResult', 'branchHint', 'branchBoard',
     'boardShell', 'board', 'chainPath', 'previousMove', 'playPause', 'nextMove',
     'moveLabel', 'timeline', 'scoreValue', 'targetValue', 'outcomeValue', 'gridValue',
     'minChainValue', 'sessionIdentity', 'topCount', 'sortMode', 'candidateRows',
     'decisionReason', 'recordedChain', 'inspectedChain', 'survivorValue',
     'predictedNext', 'actualNext', 'rerankCallout', 'contributionRows',
-    'weightControls', 'resetWeights', 'structuralParams',
+    'weightControls', 'resetWeights', 'structuralParams', 'observationText',
+    'saveObservation', 'exportObservation', 'observationState',
   ].map((id) => [id, document.getElementById(id)]));
 
   const model = {
@@ -18,6 +20,9 @@
     view: 'recorded',
     weights: null,
     playing: null,
+    branchMode: false,
+    manualChain: [],
+    branchResult: null,
   };
 
   const number = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
@@ -88,6 +93,44 @@
       || recordedCandidate(move);
   }
 
+  function observationKey() {
+    return model.session ? `bot-vision-observation:${model.session.sessionIdentity}:${model.moveIndex}` : null;
+  }
+
+  function manualTile(x, y) {
+    return currentMove().boardBefore[y] && currentMove().boardBefore[y][x];
+  }
+
+  function canExtendManual(x, y) {
+    const tile = manualTile(x, y);
+    if (!tile || tile.blocker === 'stone' || model.manualChain.some((entry) => entry.x === x && entry.y === y)) return false;
+    const previous = model.manualChain.at(-1);
+    if (!previous) return true;
+    const prior = manualTile(previous.x, previous.y);
+    const adjacent = Math.max(Math.abs(previous.x - x), Math.abs(previous.y - y)) === 1;
+    if (!adjacent) return false;
+    return model.manualChain.length === 1
+      ? tile.value === prior.value
+      : tile.value === prior.value || tile.value === prior.value * 2;
+  }
+
+  function toggleManualTile(x, y) {
+    const last = model.manualChain.at(-1);
+    if (last && last.x === x && last.y === y) model.manualChain.pop();
+    else if (canExtendManual(x, y)) model.manualChain.push({ x, y });
+    else {
+      setNotice('That tile does not continue a legal small-to-large chain.', true);
+      return;
+    }
+    model.branchResult = null;
+    model.branchEvidence = null;
+    render();
+  }
+
+  function manualChainSnapshots() {
+    return model.manualChain.map(({ x, y }) => ({ x, y, ...manualTile(x, y) }));
+  }
+
   function tileColor(value) {
     if (!value) return '#43505a';
     const exponent = Math.max(1, Math.log2(value));
@@ -108,11 +151,12 @@
     svg.setAttribute('viewBox', `0 0 ${shellRect.width} ${shellRect.height}`);
     polyline.setAttribute('points', points.join(' '));
     svg.classList.toggle('preview', model.view === 'preview');
+    svg.classList.toggle('branch', model.branchMode);
   }
 
   function renderBoard(move) {
     const chosen = model.view === 'preview' ? inspectedCandidate(move) : recordedCandidate(move);
-    const chain = chosen ? chosen.chain : [];
+    const chain = model.branchMode ? manualChainSnapshots() : chosen ? chosen.chain : [];
     const order = new Map(chain.map((tile, index) => [`${tile.x},${tile.y}`, index + 1]));
     ui.board.style.setProperty('--grid-w', model.session.gridW);
     ui.board.replaceChildren();
@@ -130,7 +174,7 @@
       if (tile.blocker) cell.classList.add(tile.blocker);
       const position = order.get(`${x},${y}`);
       if (position) {
-        cell.classList.add(model.view === 'preview' ? 'selected-preview' : 'selected-recorded');
+        cell.classList.add(model.branchMode ? 'selected-branch' : model.view === 'preview' ? 'selected-preview' : 'selected-recorded');
         const badge = document.createElement('span');
         badge.className = 'order';
         badge.textContent = position;
@@ -146,6 +190,18 @@
           ? `B${tile.bombTimer}`
           : tile.blocker === 'ice' ? `I${tile.blockerDuration}` : tile.blocker.toUpperCase();
         cell.append(mark);
+      }
+      if (model.branchMode && tile.blocker !== 'stone') {
+        cell.classList.add('branchable');
+        cell.tabIndex = 0;
+        cell.setAttribute('role', 'button');
+        cell.setAttribute('aria-label', `Route tile ${number.format(tile.value)} at column ${x + 1}, row ${y + 1}`);
+        cell.addEventListener('click', () => toggleManualTile(x, y));
+        cell.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          toggleManualTile(x, y);
+        });
       }
       ui.board.append(cell);
     }));
@@ -274,8 +330,43 @@
   }
 
   function renderViewSwitch() {
-    ui.recordedView.classList.toggle('active', model.view === 'recorded');
-    ui.previewView.classList.toggle('active', model.view === 'preview');
+    ui.recordedView.classList.toggle('active', model.view === 'recorded' && !model.branchMode);
+    ui.previewView.classList.toggle('active', model.view === 'preview' && !model.branchMode);
+    ui.branchMode.classList.toggle('active', model.branchMode);
+  }
+
+  function renderReview() {
+    const selected = manualChainSnapshots();
+    ui.manualChain.textContent = selected.length
+      ? `${selected.length} tile${selected.length === 1 ? '' : 's'} · ${chainText(selected)}`
+      : 'No route selected';
+    ui.runBranch.disabled = selected.length < model.session.minChain;
+    ui.branchHint.textContent = model.branchMode
+      ? `Click touching tiles in order. You need ${model.session.minChain} or more tiles; click the last tile to undo.`
+      : 'Choose “Build my route,” then select touching tiles in order.';
+    ui.branchResult.textContent = model.branchResult || '';
+    renderBranchBoard();
+    const saved = JSON.parse(localStorage.getItem(observationKey()) || 'null');
+    if (document.activeElement !== ui.observationText) ui.observationText.value = saved?.comment || '';
+    ui.observationState.textContent = saved ? 'Saved locally' : 'Local draft';
+  }
+
+  function renderBranchBoard() {
+    const branch = model.branchEvidence;
+    ui.branchBoard.replaceChildren();
+    ui.branchBoard.classList.toggle('visible', Boolean(branch));
+    if (!branch) return;
+    ui.branchBoard.style.setProperty('--branch-grid-w', model.session.gridW);
+    branch.boardAfter.forEach((row) => row.forEach((tile) => {
+      const cell = document.createElement('div');
+      cell.className = tile ? 'tile' : 'tile empty';
+      if (tile) {
+        cell.style.setProperty('--tile-color', tileColor(tile.value));
+        if (tile.blocker) cell.classList.add(tile.blocker);
+        cell.textContent = tile.blocker === 'stone' ? '◆' : number.format(tile.value);
+      }
+      ui.branchBoard.append(cell);
+    }));
   }
 
   function render() {
@@ -287,6 +378,7 @@
     renderCandidateRows(move);
     renderInspector(move);
     renderFacts(move);
+    renderReview();
   }
 
   function stopPlayback() {
@@ -299,6 +391,10 @@
     model.moveIndex = Math.max(0, Math.min(index, model.session.moves.length - 1));
     model.inspectedId = model.session.moves[model.moveIndex].decision.selectedId;
     model.view = 'recorded';
+    model.branchMode = false;
+    model.manualChain = [];
+    model.branchResult = null;
+    model.branchEvidence = null;
     render();
   }
 
@@ -371,6 +467,71 @@
     }
   }
 
+  async function runBranch() {
+    const chain = manualChainSnapshots().map(({ x, y }) => ({ x, y }));
+    if (chain.length < model.session.minChain) return;
+    ui.runBranch.disabled = true;
+    model.branchResult = 'Playing your route forward under the same refill sequence…';
+    renderReview();
+    try {
+      const response = await fetch('/api/counterfactual', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          levelNumber: model.session.level,
+          seed: model.session.seed,
+          moveIndex: model.moveIndex,
+          chain,
+        }),
+      });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || 'Could not play the branch');
+      const botOutcome = model.session.outcome;
+      const delta = body.outcome.movesUsed - botOutcome.movesUsed;
+      const comparison = body.outcome.result !== botOutcome.result
+        ? `Your branch ${body.outcome.result}; recorded bot ${botOutcome.result}.`
+        : delta === 0 ? 'It finishes in the same number of moves as the recorded bot.'
+          : delta < 0 ? `It finishes ${Math.abs(delta)} move${Math.abs(delta) === 1 ? '' : 's'} sooner than the recorded bot.`
+            : `It finishes ${delta} move${delta === 1 ? '' : 's'} later than the recorded bot.`;
+      model.branchResult = `${number.format(body.points)} points now · ${comparison}`;
+      model.branchEvidence = body;
+    } catch (error) {
+      model.branchResult = error.message;
+      model.branchEvidence = null;
+    }
+    render();
+  }
+
+  function saveObservation() {
+    const key = observationKey();
+    const record = {
+      schemaVersion: 1,
+      sessionIdentity: model.session.sessionIdentity,
+      level: model.session.level,
+      seed: model.session.seed,
+      moveIndex: model.moveIndex,
+      botChain: recordedCandidate().chain,
+      manualChain: manualChainSnapshots(),
+      branch: model.branchEvidence || null,
+      comment: ui.observationText.value.trim(),
+      savedAt: new Date().toISOString(),
+    };
+    localStorage.setItem(key, JSON.stringify(record));
+    ui.observationState.textContent = 'Saved locally';
+    setNotice(`Saved observation for move ${model.moveIndex + 1}. Export it when you want to turn it into evidence.`);
+  }
+
+  function exportObservation() {
+    saveObservation();
+    const record = localStorage.getItem(observationKey());
+    const blob = new Blob([`${JSON.stringify(JSON.parse(record), null, 2)}\n`], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `bot-observation-level${model.session.level}-seed${model.session.seed}-move${model.moveIndex + 1}.json`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
   ui.sessionForm.addEventListener('submit', (event) => { event.preventDefault(); runSession(); });
   ui.previousMove.addEventListener('click', () => setMove(model.moveIndex - 1));
   ui.nextMove.addEventListener('click', () => setMove(model.moveIndex + 1));
@@ -383,8 +544,32 @@
       setMove(model.moveIndex + 1);
     }, 1200);
   });
-  ui.recordedView.addEventListener('click', () => { model.view = 'recorded'; render(); });
-  ui.previewView.addEventListener('click', () => { model.view = 'preview'; render(); });
+  ui.recordedView.addEventListener('click', () => {
+    model.view = 'recorded';
+    model.branchMode = false;
+    render();
+  });
+  ui.previewView.addEventListener('click', () => {
+    model.view = 'preview';
+    model.branchMode = false;
+    render();
+  });
+  ui.branchMode.addEventListener('click', () => {
+    model.branchMode = !model.branchMode;
+    model.manualChain = [];
+    model.branchResult = null;
+    model.branchEvidence = null;
+    render();
+  });
+  ui.clearBranch.addEventListener('click', () => {
+    model.manualChain = [];
+    model.branchResult = null;
+    model.branchEvidence = null;
+    render();
+  });
+  ui.runBranch.addEventListener('click', runBranch);
+  ui.saveObservation.addEventListener('click', saveObservation);
+  ui.exportObservation.addEventListener('click', exportObservation);
   ui.topCount.addEventListener('change', render);
   ui.sortMode.addEventListener('change', render);
   ui.weightControls.addEventListener('input', (event) => {
