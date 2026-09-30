@@ -16,3 +16,7 @@ solver/.moves-scores.json
 
 # Regenerable recorded sessions for solver/record-session.js
 solver/.session-*.json
+*.log
+/.playwright-mcp
+# Local brainstorm plugin event log (machine-local, regenerated)
+.brainstorm-last-events.jsonl
