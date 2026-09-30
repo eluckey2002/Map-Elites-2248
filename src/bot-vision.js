@@ -10,7 +10,7 @@
     'decisionReason', 'recordedChain', 'inspectedChain', 'survivorValue',
     'predictedNext', 'actualNext', 'rerankCallout', 'contributionRows',
     'weightControls', 'resetWeights', 'structuralParams', 'observationText',
-    'saveObservation', 'exportObservation', 'observationState',
+    'saveObservation', 'exportObservation', 'importObservation', 'observationState',
   ].map((id) => [id, document.getElementById(id)]));
 
   const model = {
@@ -98,22 +98,30 @@
     return model.session ? `bot-vision-observation:${model.session.sessionIdentity}:${model.moveIndex}` : null;
   }
 
+  function canExtendChain(board, selected, x, y) {
+    const tile = board[y] && board[y][x];
+    if (!tile || tile.blocker === 'stone' || selected.some((entry) => entry.x === x && entry.y === y)) return false;
+    const previous = selected.at(-1);
+    if (!previous) return true;
+    const prior = board[previous.y] && board[previous.y][previous.x];
+    const adjacent = Math.max(Math.abs(previous.x - x), Math.abs(previous.y - y)) === 1;
+    if (!adjacent) return false;
+    return selected.length === 1
+      ? tile.value === prior.value
+      : tile.value === prior.value || tile.value === prior.value * 2;
+  }
+
+  function manualBoard() {
+    return model.takeover ? model.takeover.board : currentMove().boardBefore;
+  }
+
   function manualTile(x, y) {
-    const board = model.takeover ? model.takeover.board : currentMove().boardBefore;
+    const board = manualBoard();
     return board[y] && board[y][x];
   }
 
   function canExtendManual(x, y) {
-    const tile = manualTile(x, y);
-    if (!tile || tile.blocker === 'stone' || model.manualChain.some((entry) => entry.x === x && entry.y === y)) return false;
-    const previous = model.manualChain.at(-1);
-    if (!previous) return true;
-    const prior = manualTile(previous.x, previous.y);
-    const adjacent = Math.max(Math.abs(previous.x - x), Math.abs(previous.y - y)) === 1;
-    if (!adjacent) return false;
-    return model.manualChain.length === 1
-      ? tile.value === prior.value
-      : tile.value === prior.value || tile.value === prior.value * 2;
+    return canExtendChain(manualBoard(), model.manualChain, x, y);
   }
 
   function toggleManualTile(x, y) {
@@ -464,6 +472,34 @@
     });
   }
 
+  async function fetchSession(level, seed) {
+    const response = await fetch(`/api/session?level=${encodeURIComponent(level)}&seed=${encodeURIComponent(seed)}`);
+    const body = await response.json();
+    if (!response.ok) throw new Error(body.error || `Request failed (${response.status})`);
+    return body;
+  }
+
+  function applySession(session, moveIndex = 0) {
+    if (!session.moves[moveIndex]) throw new Error('This evidence file points to a move that is not in its recording');
+    model.session = session;
+    model.moveIndex = moveIndex;
+    model.inspectedId = session.moves[moveIndex].decision.selectedId;
+    model.view = 'recorded';
+    model.branchMode = false;
+    model.manualChain = [];
+    model.branchResult = null;
+    model.branchEvidence = null;
+    model.takeover = null;
+    model.weights = {
+      wRoll: session.policy.params.wRoll,
+      wPlace: session.policy.params.wPlace,
+      turnover: session.policy.params.turnover,
+      wHarvest: session.policy.params.wHarvest,
+    };
+    setWeightInputs();
+    renderStructuralParams(session.policy.params);
+  }
+
   async function runSession() {
     stopPlayback();
     const level = ui.levelInput.value;
@@ -471,26 +507,58 @@
     setNotice(`Generating Level ${level}, seed ${seed} through the real bot…`);
     document.querySelector('.workbench').setAttribute('aria-busy', 'true');
     try {
-      const response = await fetch(`/api/session?level=${encodeURIComponent(level)}&seed=${encodeURIComponent(seed)}`);
-      const body = await response.json();
-      if (!response.ok) throw new Error(body.error || `Request failed (${response.status})`);
-      model.session = body;
-      model.moveIndex = 0;
-      model.inspectedId = body.moves[0] && body.moves[0].decision.selectedId;
-      model.view = 'recorded';
-      model.takeover = null;
-      model.weights = {
-        wRoll: body.policy.params.wRoll,
-        wPlace: body.policy.params.wPlace,
-        turnover: body.policy.params.turnover,
-        wHarvest: body.policy.params.wHarvest,
-      };
-      setWeightInputs();
-      renderStructuralParams(body.policy.params);
+      const body = await fetchSession(level, seed);
+      applySession(body);
       render();
       setNotice(`Exact recording ready · ${body.moves.length} moves · ${body.outcome.result} at ${number.format(body.outcome.finalScore)}.`);
     } catch (error) {
       setNotice(error.message, true);
+    } finally {
+      document.querySelector('.workbench').setAttribute('aria-busy', 'false');
+    }
+  }
+
+  async function restoreEvidence(record) {
+    const plan = window.BotVisionEvidence.restorePlan(record);
+    setNotice(`Restoring Level ${plan.level}, seed ${plan.seed} from evidence…`);
+    document.querySelector('.workbench').setAttribute('aria-busy', 'true');
+    try {
+      const session = await fetchSession(plan.level, plan.seed);
+      if (session.sessionIdentity !== plan.sessionIdentity) {
+        throw new Error('This export was made from a different recording and cannot be safely restored');
+      }
+      let takeover = null;
+      if (plan.takeoverRequest) {
+        const response = await fetch('/api/takeover', {
+          method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(plan.takeoverRequest),
+        });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || 'Could not replay the exported takeover');
+        takeover = { ...body, chains: plan.takeoverRequest.chains };
+      }
+      const board = takeover ? takeover.board : session.moves[plan.moveIndex].boardBefore;
+      const restoredChain = [];
+      for (const tile of plan.manualChain) {
+        if (!canExtendChain(board, restoredChain, tile.x, tile.y)) {
+          throw new Error('The saved unfinished route is not legal on its replayed board');
+        }
+        restoredChain.push(tile);
+      }
+
+      stopPlayback();
+      applySession(session, plan.moveIndex);
+      model.takeover = takeover;
+      model.branchMode = Boolean(takeover || restoredChain.length);
+      model.manualChain = restoredChain;
+      model.branchResult = takeover
+        ? `Restored takeover · ${takeover.turns.length} turn${takeover.turns.length === 1 ? '' : 's'} played · ${takeover.movesRemaining} moves remaining.`
+        : null;
+      ui.levelInput.value = String(plan.level);
+      ui.seedInput.value = String(plan.seed);
+      render();
+      ui.observationText.value = plan.comment;
+      saveObservation(false);
+      setNotice(takeover ? 'Exact takeover restored. Continue building your next route.' : 'Evidence restored.');
     } finally {
       document.querySelector('.workbench').setAttribute('aria-busy', 'false');
     }
@@ -610,7 +678,7 @@
     render();
   }
 
-  function saveObservation() {
+  function saveObservation(announce = true) {
     const key = observationKey();
     const record = {
       schemaVersion: 1,
@@ -627,7 +695,8 @@
     };
     localStorage.setItem(key, JSON.stringify(record));
     ui.observationState.textContent = 'Saved locally';
-    setNotice(`Saved observation for move ${model.moveIndex + 1}. Export it when you want to turn it into evidence.`);
+    if (announce) setNotice(`Saved observation for move ${model.moveIndex + 1}. Export it when you want to turn it into evidence.`);
+    return record;
   }
 
   function exportObservation() {
@@ -684,6 +753,16 @@
   ui.runBranch.addEventListener('click', runBranch);
   ui.saveObservation.addEventListener('click', saveObservation);
   ui.exportObservation.addEventListener('click', exportObservation);
+  ui.importObservation.addEventListener('change', async () => {
+    const [file] = ui.importObservation.files;
+    ui.importObservation.value = '';
+    if (!file) return;
+    try {
+      await restoreEvidence(JSON.parse(await file.text()));
+    } catch (error) {
+      setNotice(error.message || 'Could not restore that evidence file', true);
+    }
+  });
   ui.topCount.addEventListener('change', render);
   ui.sortMode.addEventListener('change', render);
   ui.weightControls.addEventListener('input', (event) => {

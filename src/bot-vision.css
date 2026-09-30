@@ -252,6 +252,8 @@ th:nth-child(2), td:nth-child(2), .contribution-table th:first-child, .contribut
 .subheading-row small { color: var(--muted); }
 .contribution-table th, .contribution-table td { padding: 8px 7px; }
 .text-button { padding: 2px 7px; color: var(--muted); font-size: 11px; }
+.import-button { display: inline-flex; align-items: center; cursor: pointer; }
+.import-button input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .weight-controls { display: grid; gap: 9px; }
 .weight-controls label { display: grid; grid-template-columns: 1fr 76px; gap: 8px; align-items: center; color: var(--muted); font-size: 12px; }
 .weight-controls input { width: 100%; min-height: 34px; }

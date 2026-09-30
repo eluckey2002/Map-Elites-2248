@@ -8,6 +8,15 @@ const {
 const { analyzeMove, chooseMove, DEFAULT_PARAMS } = require('../bot');
 const { recordSession, snapshotBoard } = require('../record-session');
 const { createBotVisionServer } = require('../bot-vision-server');
+const { takeoverReplay } = require('../counterfactual-review');
+
+let restorePlan;
+let evidenceModuleError;
+try {
+  ({ restorePlan } = require('../../src/bot-vision-evidence'));
+} catch (error) {
+  evidenceModuleError = error;
+}
 
 const LOOKAHEAD_BASE = 987654321;
 const chainKey = (chain) => chain && chain.map(({ x, y }) => `${x},${y}`).join('|');
@@ -145,6 +154,45 @@ test('the arithmetic assertion rejects a controlled broken contribution twin', (
   assert.equal(contributionMatches(candidate, session.policy.params), false);
 });
 
+test('an exported active takeover restores its exact replay state', () => {
+  assert.ifError(evidenceModuleError);
+  const session = recordSession(LEVELS.find(({ level }) => level === 52), 2);
+  const chains = session.moves.slice(2, 4).map(({ chain }) => chain.map(({ x, y }) => ({ x, y })));
+  const record = {
+    schemaVersion: 1,
+    sessionIdentity: session.sessionIdentity,
+    level: 52,
+    seed: 2,
+    moveIndex: 2,
+    manualChain: [],
+    comment: 'Continue this route after reload.',
+    takeover: {
+      startMoveIndex: 2,
+      chains,
+      board: [[{ value: 999999 }]],
+      score: 999999,
+    },
+  };
+
+  const plan = restorePlan(record);
+  assert.equal(plan.level, 52);
+  assert.equal(plan.seed, 2);
+  assert.equal(plan.comment, 'Continue this route after reload.');
+  assert.deepEqual(plan.manualChain, []);
+  assert.deepEqual(plan.takeoverRequest, {
+    levelNumber: 52,
+    seed: 2,
+    moveIndex: 2,
+    chains,
+  });
+
+  const restored = takeoverReplay(plan.takeoverRequest);
+  const expected = takeoverReplay(plan.takeoverRequest);
+  assert.deepEqual(restored.board, expected.board);
+  assert.equal(restored.score, expected.score);
+  assert.equal(restored.movesRemaining, expected.movesRemaining);
+});
+
 test('Bot Vision server returns the exact session and rejects malformed identities', async (t) => {
   const server = createBotVisionServer();
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
@@ -169,7 +217,7 @@ test('Bot Vision server returns the exact session and rejects malformed identiti
   const page = await fetch(`${origin}/`);
   assert.equal(page.status, 200);
   assert.match(await page.text(), /Bot candidate pool/);
-  for (const asset of ['/bot-vision.css', '/bot-vision.js', '/favicon.ico']) {
+  for (const asset of ['/bot-vision.css', '/bot-vision-evidence.js', '/bot-vision.js', '/favicon.ico']) {
     const loaded = await fetch(`${origin}${asset}`);
     assert.ok([200, 204].includes(loaded.status), asset);
   }

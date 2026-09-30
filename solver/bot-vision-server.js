@@ -12,6 +12,7 @@ const STATIC_FILES = new Map([
   ['/', ['src/bot-vision.html', 'text/html; charset=utf-8']],
   ['/bot-vision.html', ['src/bot-vision.html', 'text/html; charset=utf-8']],
   ['/bot-vision.css', ['src/bot-vision.css', 'text/css; charset=utf-8']],
+  ['/bot-vision-evidence.js', ['src/bot-vision-evidence.js', 'text/javascript; charset=utf-8']],
   ['/bot-vision.js', ['src/bot-vision.js', 'text/javascript; charset=utf-8']],
 ]);
 
