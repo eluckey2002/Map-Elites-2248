@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0019-ordered-path-substitution",
+  "source": {
+    "path": "docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json",
+    "sha256": "707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f",
+    "artifactIdentity": "dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff",
+    "targetChain": {
+      "path": "docs/learning-cycles/LC-0017-no-reentry-target-chain.json",
+      "artifactIdentity": "c02356d0f6ee603f0794c31e69d92c2cbc74fd4a93e07e1cbfb53456cb6b3b59"
+    },
+    "refillContrast": {
+      "path": "docs/learning-cycles/LC-0018-later-refill-contrast.json",
+      "artifactIdentity": "2e0bb47647204ec8c9f31dc585697ddb837254f55e73a54fd2df95181082b297"
+    }
+  },
+  "caseSelection": "The Level 3 adjacent equal-birth counterexample (S0026/S0022) and the Level 52 equal-birth 256 counterexample (S0024/S0020) from LC-0018.",
+  "question": "Can the observed same-birth, same-value non-entering root occupy the included root’s exact ordered slot in the retained cash target chain?",
+  "interventionBoundary": "This is a static substitution in the already-retained pre-target chain coordinate list. It checks that exact slot only; it does not execute the substitution, search a reordered chain, or claim the excluded root could never be useful.",
+  "cases": [
+    {
+      "recordingId": "e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4",
+      "level": 3,
+      "minChain": 2,
+      "targetRelativeMove": 5,
+      "originalChainLegality": [],
+      "enteringRoot": {
+        "id": "S0026",
+        "value": 2,
+        "preTargetPosition": {
+          "x": 1,
+          "y": 3
+        }
+      },
+      "matchedRoot": {
+        "id": "S0022",
+        "value": 2,
+        "preTargetPosition": {
+          "x": 2,
+          "y": 3
+        },
+        "spawnedAtRelativeMove": 3
+      },
+      "targetChainSlot": {
+        "index": 1,
+        "previous": {
+          "x": 2,
+          "y": 4,
+          "value": 2
+        },
+        "entering": {
+          "x": 1,
+          "y": 3,
+          "value": 2
+        },
+        "next": {
+          "x": 0,
+          "y": 2,
+          "value": 2
+        }
+      },
+      "substitutedSlot": {
+        "x": 2,
+        "y": 3,
+        "value": 2
+      },
+      "substitutionLegality": [
+        "jumps (2,3) -> (0,2), not adjacent"
+      ]
+    },
+    {
+      "recordingId": "b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8",
+      "level": 52,
+      "minChain": 4,
+      "targetRelativeMove": 4,
+      "originalChainLegality": [],
+      "enteringRoot": {
+        "id": "S0024",
+        "value": 256,
+        "preTargetPosition": {
+          "x": 4,
+          "y": 2
+        }
+      },
+      "matchedRoot": {
+        "id": "S0020",
+        "value": 256,
+        "preTargetPosition": {
+          "x": 0,
+          "y": 1
+        },
+        "spawnedAtRelativeMove": 3
+      },
+      "targetChainSlot": {
+        "index": 18,
+        "previous": {
+          "x": 4,
+          "y": 1,
+          "value": 128
+        },
+        "entering": {
+          "x": 4,
+          "y": 2,
+          "value": 256
+        },
+        "next": {
+          "x": 4,
+          "y": 3,
+          "value": 256
+        }
+      },
+      "substitutedSlot": {
+        "x": 0,
+        "y": 1,
+        "value": 256
+      },
+      "substitutionLegality": [
+        "jumps (4,1) -> (0,1), not adjacent",
+        "jumps (0,1) -> (4,3), not adjacent"
+      ]
+    }
+  ],
+  "finding": "SAME_BIRTH_ROOTS_CANNOT_REPLACE_THEIR_EXACT_ORDERED_TARGET_SLOT",
+  "interpretation": "The two substitutions fail because they break required adjacency in the already-retained ordered path. This is a local path-membership explanation only, not a general rule about a root’s usefulness or a prospective metric.",
+  "nonClaims": [
+    "This artifact does not prove that the excluded root has no legal alternative chain.",
+    "This artifact does not search replacements or reorder the retained path.",
+    "This artifact does not authorize a policy or champion change."
+  ],
+  "artifactIdentity": "9a58829bec15677136cb4816150f8246937296fd9e1b4e18d07f29a7e684e6d4"
+}

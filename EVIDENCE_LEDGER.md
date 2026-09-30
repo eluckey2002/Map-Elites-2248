@@ -1366,6 +1366,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. A match is an observed same-birth, same-value live root selected by the frozen minimum-distance rule; it is not a replacement experiment and does not establish that distance is explanatory. No protected gameplay or content file changed.
 
+### RESULT-0071 — Equal refill roots cannot fill the same ordered target-path slot
+
+- **type:** result
+- **status:** provisional
+- **scope:** static coordinate substitution into the retained cash target chains for the Level 3 S0026/S0022 and Level 52 S0024/S0020 LC-0018 pairs; original and substituted chain legality only; no executed counterfactual, reordered-chain search, new outcome run, metric, policy rule, champion change, or population claim
+- **statement:** The equal-birth, equal-value excluded root cannot occupy the included root’s exact slot in either retained cash target chain because it breaks required adjacency. On Level 3 `e81f8323ede9…`, the retained `2` segment `(2,4) → (1,3) → (0,2)` becomes invalid at `(2,3) → (0,2)` when adjacent equal root `S0022` replaces `S0026`. On Level 52 `b42b2e0e4d40…`, replacing `S0024` at `(4,2)` in `(4,1)=128 → (4,2)=256 → (4,3)=256` with equal `S0020` at `(0,1)` breaks both neighboring edges. This establishes exact ordered-slot dependence only; it does not establish that either excluded root cannot belong to some other legal chain.
+- **evidence:** immutable [LC-0012 raw matrix](docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json), SHA-256 `707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f`, internal identity `dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff`; antecedent identity-bound [LC-0017 artifact](docs/learning-cycles/LC-0017-no-reentry-target-chain.json), internal identity `c02356d0f6ee603f0794c31e69d92c2cbc74fd4a93e07e1cbfb53456cb6b3b59`; antecedent identity-bound [LC-0018 artifact](docs/learning-cycles/LC-0018-later-refill-contrast.json), internal identity `2e0bb47647204ec8c9f31dc585697ddb837254f55e73a54fd2df95181082b297`; identity-bound [LC-0019 artifact](docs/learning-cycles/LC-0019-ordered-path-substitution.json), SHA-256 `9e90b3b10b3d762fbebd7e23a9c0bcbf1361643bd6c2a2da0aea627da741e6dd`, internal identity `9a58829bec15677136cb4816150f8246937296fd9e1b4e18d07f29a7e684e6d4`; [result explanation](docs/learning-cycles/LC-0019-ordered-path-substitution-result.md), SHA-256 `1425964441d26c014b4c3799ea599b4ecc8d45e6a0e483cc351baf328da99f2a`; derivation tool `tools/diagnose-lc0019-ordered-path-substitution.js`, SHA-256 `0fd6e2b176cf9a1ea66f4949b0078ff7b7ed75d5f2dafacf6f8bcd7967f53984`; regression test `solver/tests/lc0019OrderedPathSubstitution.test.js`, SHA-256 `cc820312e03f795304a1f20755ed6fce18e4e3c482c9a461f236251fd05500d3`
+- **proof_class:** `exact_result`, `direct_source` — exact static legality of two retained target paths and their specified substitutions; no claim beyond those paths
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/lc0019OrderedPathSubstitution.test.js`; expect three passing tests, exact artifact recomputation, and rejection of a re-identified altered substitution edge.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. The static substitution deliberately does not execute a move or enumerate reordering; it only makes the exact “cannot fill this slot” claim. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
