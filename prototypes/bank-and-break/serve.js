@@ -22,7 +22,7 @@ function createEntries(basePort = BASE_PORT) {
       candidate.name,
       VALIDATION_ROUND,
       `${challenge.role}-seed-${challenge.seed}`,
-    );
+    ).split(path.sep).join('/');
     const candidateIdentity = identity(candidate);
     const server = createAuthoringServer({
       store: { schemaVersion: 1, candidates: [candidate] },
