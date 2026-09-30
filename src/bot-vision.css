@@ -70,6 +70,7 @@ select:focus, input:focus, button:focus-visible { border-color: var(--cyan); box
   padding: 9px 18px;
 }
 .primary-button:hover, .play-button:hover { background: #103541; }
+.play-button:disabled { cursor: not-allowed; opacity: .45; }
 
 .notice {
   min-height: 22px;
@@ -202,6 +203,7 @@ h3 { font-size: 14px; }
 .timeline button::after { content: ""; display: block; width: 8px; height: 8px; margin: auto; border-radius: 50%; background: #718493; }
 .timeline button.done::after { background: var(--cyan); }
 .timeline button.current::after { width: 17px; height: 17px; background: var(--cyan); border: 3px solid #d9fbff; }
+.timeline button:disabled { cursor: not-allowed; }
 .session-facts { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line-soft); display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .session-facts div { min-width: 0; }
 .session-facts dt { color: var(--muted); font-size: 10px; text-transform: uppercase; }

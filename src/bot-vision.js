@@ -248,12 +248,14 @@
 
   function renderTimeline() {
     ui.timeline.replaceChildren();
+    const takeoverLocked = Boolean(model.takeover && !model.takeover.outcome);
     model.session.moves.forEach((_, index) => {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = index < model.moveIndex ? 'done' : index === model.moveIndex ? 'current' : '';
       button.title = `Move ${index + 1}`;
       button.setAttribute('aria-label', `Show move ${index + 1}`);
+      button.disabled = takeoverLocked;
       button.addEventListener('click', () => setMove(index));
       ui.timeline.append(button);
     });
@@ -355,6 +357,7 @@
   }
 
   function renderFacts(move) {
+    const takeoverLocked = Boolean(model.takeover && !model.takeover.outcome);
     ui.moveLabel.textContent = model.takeover
       ? `Takeover · move ${model.takeover.movesUsed} / ${model.session.maxMoves}`
       : `Move ${model.moveIndex + 1} / ${model.session.moves.length}`;
@@ -365,8 +368,12 @@
     ui.minChainValue.textContent = model.session.minChain;
     ui.sessionIdentity.textContent = shortIdentity(model.session.sessionIdentity);
     ui.sessionIdentity.title = model.session.sessionIdentity;
-    ui.previousMove.disabled = model.moveIndex === 0;
-    ui.nextMove.disabled = model.moveIndex === model.session.moves.length - 1;
+    ui.previousMove.disabled = takeoverLocked || model.moveIndex === 0;
+    ui.nextMove.disabled = takeoverLocked || model.moveIndex === model.session.moves.length - 1;
+    ui.playPause.disabled = takeoverLocked;
+    ui.playPause.textContent = takeoverLocked
+      ? 'Recorded replay locked'
+      : model.playing ? 'Ⅱ Pause recording' : '▶ Recorded replay';
   }
 
   function renderViewSwitch() {
@@ -441,10 +448,11 @@
   function stopPlayback() {
     if (model.playing) window.clearInterval(model.playing);
     model.playing = null;
-    ui.playPause.textContent = '▶ Play';
+    if (!model.takeover) ui.playPause.textContent = '▶ Recorded replay';
   }
 
   function setMove(index) {
+    if (model.takeover) return;
     model.moveIndex = Math.max(0, Math.min(index, model.session.moves.length - 1));
     model.inspectedId = model.session.moves[model.moveIndex].decision.selectedId;
     model.view = 'recorded';
@@ -805,9 +813,10 @@
   ui.previousMove.addEventListener('click', () => setMove(model.moveIndex - 1));
   ui.nextMove.addEventListener('click', () => setMove(model.moveIndex + 1));
   ui.playPause.addEventListener('click', () => {
+    if (model.takeover) return;
     if (model.playing) { stopPlayback(); return; }
     if (model.moveIndex === model.session.moves.length - 1) setMove(0);
-    ui.playPause.textContent = 'Ⅱ Pause';
+    ui.playPause.textContent = 'Ⅱ Pause recording';
     model.playing = window.setInterval(() => {
       if (model.moveIndex >= model.session.moves.length - 1) { stopPlayback(); return; }
       setMove(model.moveIndex + 1);
