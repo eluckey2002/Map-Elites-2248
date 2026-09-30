@@ -1350,6 +1350,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. “Later refill” is an origin label for a root spawned after the first post-readiness action, not a claim that spawn alone caused the outcome. The target-crossing graph may include roots merged at earlier retained moves, but each root is counted once and conservation is checked at every included merge. No protected gameplay or content file changed.
 
+### RESULT-0070 — Equal-birth refill roots can diverge at the final legal path
+
+- **type:** result
+- **status:** provisional
+- **scope:** exact deterministic replay of the two retained LC-0017 cash continuations; roots directly entering their final target-crossing chains and same-value, same-refill roots still live immediately before that move only; no replacement action, alternative continuation search, new outcome run, fitted threshold, metric, policy rule, champion change, or population claim
+- **statement:** In the two retained cash wins, a later-refill root's birth time and value do not decide its membership in the final target-crossing chain. On Level 52 `b42b2e0e4d40…`, all six `64` roots born on relative move 2 enter the 4th-move target chain, leaving no like-for-like non-entering root, while the move-3 `256` root at pre-target `(4,2)` enters and equal move-3 `256` root at `(0,1)` does not. On Level 3 `e81f8323ede9…`, all 15 entering later-refill roots have an equal-value root born in the same refill that remains live and does not enter; notably, `S0026` and `S0022` are both move-3 `2` roots at adjacent pre-target cells `(1,3)` and `(2,3)`, but only `S0026` is a direct input to the cash target chain. The exact observation supports no age-, value-, or local-proximity-only rule; it leaves whole-path membership as the bounded next question.
+- **evidence:** immutable [LC-0012 raw matrix](docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json), SHA-256 `707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f`, internal identity `dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff`; antecedent identity-bound [LC-0017 artifact](docs/learning-cycles/LC-0017-no-reentry-target-chain.json), internal identity `c02356d0f6ee603f0794c31e69d92c2cbc74fd4a93e07e1cbfb53456cb6b3b59`; identity-bound [LC-0018 artifact](docs/learning-cycles/LC-0018-later-refill-contrast.json), SHA-256 `cc78fad71ca242cd105033f6966951b71186cac293144d83106b787b4f30e9d8`, internal identity `2e0bb47647204ec8c9f31dc585697ddb837254f55e73a54fd2df95181082b297`; [result explanation](docs/learning-cycles/LC-0018-later-refill-contrast-result.md), SHA-256 `d2bca3c7011e76059d6308bacd2303dc5306b8a72233d5819bc65cf720e7e27f`; derivation tool `tools/diagnose-lc0018-later-refill-contrast.js`, SHA-256 `b29d729b96f74c224d10295e354ae3bbd8f19ae40c27e13f3b471a892c89f5eb`; regression test `solver/tests/lc0018LaterRefillContrast.test.js`, SHA-256 `26eed31506b3d038d424aaaa36bacc55a0468f852123a830103c6db558db7649`
+- **proof_class:** `exact_result`, `direct_source` — exact retained replay of two cash arms and their pre-target live roots; no causal claim beyond those replays
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/lc0018LaterRefillContrast.test.js`; expect three passing tests, exact artifact recomputation, and rejection of a re-identified altered match.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. A match is an observed same-birth, same-value live root selected by the frozen minimum-distance rule; it is not a replacement experiment and does not establish that distance is explanatory. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

@@ -1,0 +1,926 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0018-later-refill-contrast",
+  "source": {
+    "path": "docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json",
+    "sha256": "707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f",
+    "artifactIdentity": "dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff",
+    "targetChain": {
+      "path": "docs/learning-cycles/LC-0017-no-reentry-target-chain.json",
+      "artifactIdentity": "c02356d0f6ee603f0794c31e69d92c2cbc74fd4a93e07e1cbfb53456cb6b3b59"
+    }
+  },
+  "question": "For each later-refill root directly entering the two retained cash target-crossing chains, what equal-value root born in the same refill does not enter, and how do their pre-target positions differ?",
+  "matchingRule": "A match must be a later-refill root still live immediately before cash crosses target, born on the same relative move with the same value, and absent from the target-chain roots. Select minimum Manhattan distance from the entering root at that pre-target state; break ties by root ID. A missing match remains missing.",
+  "retrospectiveBoundary": "This replays only the two retained cash continuations and compares observed live roots immediately before their retained target-crossing moves. It does not search alternatives, score a root, define a metric, or change policy.",
+  "cases": [
+    {
+      "recordingId": "b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8",
+      "recordingPath": "play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json",
+      "level": 52,
+      "seed": 2173441018,
+      "pairClass": "CASH_NOW_FASTER",
+      "cashMovesToTarget": 4,
+      "replayMatchesRetainedTrace": true,
+      "targetRelativeMove": 4,
+      "enteringRoots": [
+        {
+          "id": "S0004",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 0,
+            "y": 1
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 0,
+            "y": 3
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": null
+        },
+        {
+          "id": "S0005",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 1,
+            "y": 1
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 2
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": null
+        },
+        {
+          "id": "S0008",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 1,
+            "y": 2
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 3
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": null
+        },
+        {
+          "id": "S0010",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 1,
+            "y": 3
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 4
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": null
+        },
+        {
+          "id": "S0012",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 2,
+            "y": 4
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 2,
+            "y": 5
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": null
+        },
+        {
+          "id": "S0013",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 1,
+            "y": 5
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 5
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": null
+        },
+        {
+          "id": "S0018",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 3,
+            "y": 0
+          },
+          "value": 128,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 0
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0016",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 0,
+              "y": 0
+            },
+            "value": 128,
+            "preTargetPosition": {
+              "x": 0,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0019",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 4,
+            "y": 0
+          },
+          "value": 128,
+          "preTargetPosition": {
+            "x": 4,
+            "y": 0
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0016",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 0,
+              "y": 0
+            },
+            "value": 128,
+            "preTargetPosition": {
+              "x": 0,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 4
+          }
+        },
+        {
+          "id": "S0021",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 3,
+            "y": 1
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 1
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0017",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "value": 64,
+            "preTargetPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0022",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 4,
+            "y": 1
+          },
+          "value": 128,
+          "preTargetPosition": {
+            "x": 4,
+            "y": 1
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0029",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 4,
+              "y": 4
+            },
+            "value": 128,
+            "preTargetPosition": {
+              "x": 4,
+              "y": 4
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0023",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 3,
+            "y": 2
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 2
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0017",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "value": 64,
+            "preTargetPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 4
+          }
+        },
+        {
+          "id": "S0024",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 4,
+            "y": 2
+          },
+          "value": 256,
+          "preTargetPosition": {
+            "x": 4,
+            "y": 2
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0020",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 0,
+              "y": 1
+            },
+            "value": 256,
+            "preTargetPosition": {
+              "x": 0,
+              "y": 1
+            },
+            "manhattanDistanceFromEnteringRoot": 5
+          }
+        },
+        {
+          "id": "S0025",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 3,
+            "y": 3
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 3
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0017",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "value": 64,
+            "preTargetPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 5
+          }
+        },
+        {
+          "id": "S0026",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 4,
+            "y": 3
+          },
+          "value": 256,
+          "preTargetPosition": {
+            "x": 4,
+            "y": 3
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0020",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 0,
+              "y": 1
+            },
+            "value": 256,
+            "preTargetPosition": {
+              "x": 0,
+              "y": 1
+            },
+            "manhattanDistanceFromEnteringRoot": 6
+          }
+        },
+        {
+          "id": "S0027",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 2,
+            "y": 4
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 2,
+            "y": 4
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0017",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "value": 64,
+            "preTargetPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 5
+          }
+        },
+        {
+          "id": "S0028",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 3,
+            "y": 4
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 4
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0017",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "value": 64,
+            "preTargetPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 6
+          }
+        },
+        {
+          "id": "S0030",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 3,
+            "y": 5
+          },
+          "value": 64,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 5
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0017",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "value": 64,
+            "preTargetPosition": {
+              "x": 1,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 7
+          }
+        }
+      ]
+    },
+    {
+      "recordingId": "e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4",
+      "recordingPath": "play-sessions/e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4.json",
+      "level": 3,
+      "seed": 1080239914,
+      "pairClass": "CASH_NOW_FASTER",
+      "cashMovesToTarget": 5,
+      "replayMatchesRetainedTrace": true,
+      "targetRelativeMove": 5,
+      "enteringRoots": [
+        {
+          "id": "S0003",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 2,
+            "y": 0
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 2,
+            "y": 5
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0010",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 2,
+            "spawnPosition": {
+              "x": 4,
+              "y": 1
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 4,
+              "y": 7
+            },
+            "manhattanDistanceFromEnteringRoot": 4
+          }
+        },
+        {
+          "id": "S0004",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 3,
+            "y": 0
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 4
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0010",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 2,
+            "spawnPosition": {
+              "x": 4,
+              "y": 1
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 4,
+              "y": 7
+            },
+            "manhattanDistanceFromEnteringRoot": 4
+          }
+        },
+        {
+          "id": "S0009",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 2,
+          "spawnPosition": {
+            "x": 3,
+            "y": 1
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 5
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0010",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 2,
+            "spawnPosition": {
+              "x": 4,
+              "y": 1
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 4,
+              "y": 7
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0021",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 1,
+            "y": 0
+          },
+          "value": 2,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 2
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0022",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 2,
+              "y": 0
+            },
+            "value": 2,
+            "preTargetPosition": {
+              "x": 2,
+              "y": 3
+            },
+            "manhattanDistanceFromEnteringRoot": 2
+          }
+        },
+        {
+          "id": "S0023",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 3,
+            "y": 0
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 3,
+            "y": 3
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0032",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 0,
+              "y": 3
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 0,
+              "y": 3
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0026",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 1,
+            "y": 1
+          },
+          "value": 2,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 3
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0022",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 2,
+              "y": 0
+            },
+            "value": 2,
+            "preTargetPosition": {
+              "x": 2,
+              "y": 3
+            },
+            "manhattanDistanceFromEnteringRoot": 1
+          }
+        },
+        {
+          "id": "S0027",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 2,
+            "y": 1
+          },
+          "value": 2,
+          "preTargetPosition": {
+            "x": 2,
+            "y": 4
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0022",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 2,
+              "y": 0
+            },
+            "value": 2,
+            "preTargetPosition": {
+              "x": 2,
+              "y": 3
+            },
+            "manhattanDistanceFromEnteringRoot": 1
+          }
+        },
+        {
+          "id": "S0028",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 4,
+            "y": 1
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 4,
+            "y": 4
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0032",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 0,
+              "y": 3
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 0,
+              "y": 3
+            },
+            "manhattanDistanceFromEnteringRoot": 5
+          }
+        },
+        {
+          "id": "S0029",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 0,
+            "y": 2
+          },
+          "value": 2,
+          "preTargetPosition": {
+            "x": 0,
+            "y": 2
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0022",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 2,
+              "y": 0
+            },
+            "value": 2,
+            "preTargetPosition": {
+              "x": 2,
+              "y": 3
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0030",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 1,
+            "y": 2
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 4
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0032",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 0,
+              "y": 3
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 0,
+              "y": 3
+            },
+            "manhattanDistanceFromEnteringRoot": 2
+          }
+        },
+        {
+          "id": "S0033",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 3,
+          "spawnPosition": {
+            "x": 1,
+            "y": 3
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 5
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0032",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 3,
+            "spawnPosition": {
+              "x": 0,
+              "y": 3
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 0,
+              "y": 3
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0035",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 4,
+          "spawnPosition": {
+            "x": 2,
+            "y": 0
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 2,
+            "y": 0
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0044",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 4,
+            "spawnPosition": {
+              "x": 4,
+              "y": 2
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 4,
+              "y": 2
+            },
+            "manhattanDistanceFromEnteringRoot": 4
+          }
+        },
+        {
+          "id": "S0038",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 4,
+          "spawnPosition": {
+            "x": 1,
+            "y": 1
+          },
+          "value": 2,
+          "preTargetPosition": {
+            "x": 1,
+            "y": 1
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0036",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 4,
+            "spawnPosition": {
+              "x": 3,
+              "y": 0
+            },
+            "value": 2,
+            "preTargetPosition": {
+              "x": 3,
+              "y": 0
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0039",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 4,
+          "spawnPosition": {
+            "x": 2,
+            "y": 1
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 2,
+            "y": 1
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0044",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 4,
+            "spawnPosition": {
+              "x": 4,
+              "y": 2
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 4,
+              "y": 2
+            },
+            "manhattanDistanceFromEnteringRoot": 3
+          }
+        },
+        {
+          "id": "S0042",
+          "origin": "later-refill",
+          "spawnedAtRelativeMove": 4,
+          "spawnPosition": {
+            "x": 2,
+            "y": 2
+          },
+          "value": 4,
+          "preTargetPosition": {
+            "x": 2,
+            "y": 2
+          },
+          "isDirectTargetInput": true,
+          "matchedNonEnteringRoot": {
+            "id": "S0044",
+            "origin": "later-refill",
+            "spawnedAtRelativeMove": 4,
+            "spawnPosition": {
+              "x": 4,
+              "y": 2
+            },
+            "value": 4,
+            "preTargetPosition": {
+              "x": 4,
+              "y": 2
+            },
+            "manhattanDistanceFromEnteringRoot": 2
+          }
+        }
+      ]
+    }
+  ],
+  "finding": "ENTERING_LATER_REFILL_ROOTS_HAVE_REPLAYABLE_SAME_BIRTH_COUNTERPARTS_WHEN_AVAILABLE",
+  "interpretation": "The artifact is a concrete replay inventory, not a claim that position, age, value, or distance causes a root to be selected into a winning chain.",
+  "nonClaims": [
+    "This artifact does not establish a prospective board-resource metric.",
+    "This artifact does not generalize beyond two retained cash continuations.",
+    "This artifact does not authorize a policy or champion change."
+  ],
+  "artifactIdentity": "2e0bb47647204ec8c9f31dc585697ddb837254f55e73a54fd2df95181082b297"
+}
