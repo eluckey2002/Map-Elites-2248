@@ -18,6 +18,8 @@ document](../DESIGN.md) remains a historical product description.
 | Where do planning and meaningful decisions come from? | [Strategy and board geometry](mechanics/strategy-and-board-geometry.md) |
 | What kinds of levels can we make? | [Archetypes and objectives](levels/archetypes-and-objectives.md) |
 | Which knobs change difficulty, pacing, or fairness? | [Difficulty and progression](levels/difficulty-and-progression.md) |
+| What have experienced players observed about high-level play? | [Player strategy observations](player-strategy-observations.md) |
+| What should we capture from a notable human play? | [Play observation template](play-observation-template.md) |
 | How does a designer create one level? | [Authoring loop](pipeline/authoring-loop.md) |
 | How do we use bots without mistaking them for players? | [Simulation and fairness](pipeline/simulation-and-fairness.md) |
 | What tools make level production scalable? | [Editor and telemetry](pipeline/editor-and-telemetry.md) |
@@ -55,4 +57,3 @@ Keep each topic file focused enough to read in roughly five minutes. When a
 file starts answering two independent questions, split it and add both routes
 to the table above. Prefer adding a concrete example to the owning file over
 creating a second explanation elsewhere.
-

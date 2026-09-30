@@ -1389,6 +1389,7 @@ async function startBrowserGame() {
     const fixedSeed = custom ? null : seedFromQuery(window.location.search);
     if (jump !== null && (jump !== game.currentLevel || fixedSeed !== null)) {
         game.unlockedLevel = Math.max(game.unlockedLevel, jump);
+        localStorage.setItem('unlockedLevel', game.unlockedLevel);
         const options = fixedSeed === null ? {} : { seed: fixedSeed };
         game.loadLevel(jump, options);
     }

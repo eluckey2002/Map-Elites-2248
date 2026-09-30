@@ -372,7 +372,6 @@ body::before {
 }
 
 .chain-indicator {
-    bottom: 7px;
     z-index: 8;
     border: 1px solid rgba(111, 185, 188, 0.36);
     background: rgba(12, 13, 12, 0.9);
