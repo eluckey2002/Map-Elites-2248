@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "description": "Loadable shipped-level games where the recorded human reached the target sooner than the current-default bot in the paired benchmark snapshot.",
+  "rows": [
+    { "level": 54, "seed": 1313839221, "humanMoves": 15, "botMoves": 23 },
+    { "level": 58, "seed": 42000001, "humanMoves": 11, "botMoves": 19 },
+    { "level": 58, "seed": 41000001, "humanMoves": 14, "botMoves": 17 },
+    { "level": 58, "seed": 4255346895, "humanMoves": 16, "botMoves": 19 },
+    { "level": 56, "seed": 1761047823, "humanMoves": 10, "botMoves": 12 },
+    { "level": 58, "seed": 4010386357, "humanMoves": 15, "botMoves": 17 },
+    { "level": 56, "seed": 42000000, "humanMoves": 9, "botMoves": 11 },
+    { "level": 52, "seed": 2173441018, "humanMoves": 11, "botMoves": 12 },
+    { "level": 56, "seed": 41000000, "humanMoves": 10, "botMoves": 11 },
+    { "level": 56, "seed": 3504920448, "humanMoves": 11, "botMoves": 12 }
+  ]
+}

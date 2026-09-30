@@ -2,7 +2,7 @@
   'use strict';
 
   const ui = Object.fromEntries([
-    'sessionForm', 'levelInput', 'seedInput', 'notice', 'recordedView', 'previewView',
+    'sessionForm', 'levelInput', 'seedInput', 'notice', 'openGamePicker', 'gamePicker', 'closeGamePicker', 'gamePickerStatus', 'gameRows', 'recordedView', 'previewView',
     'branchMode', 'clearBranch', 'startTakeover', 'manualChain', 'routeProjection', 'runBranch', 'branchResult', 'branchHint', 'branchBoard',
     'boardShell', 'board', 'chainPath', 'previousMove', 'playPause', 'nextMove',
     'moveLabel', 'timeline', 'scoreValue', 'targetValue', 'outcomeValue', 'gridValue',
@@ -477,6 +477,56 @@
     });
   }
 
+  function renderRecordedGames(rows) {
+    ui.gameRows.replaceChildren();
+    rows.forEach((row) => {
+      const result = `${row.botMoves - row.humanMoves} faster`;
+      const tr = document.createElement('tr');
+      [row.level, number.format(row.seed), `${row.humanMoves} moves`, `${row.botMoves} moves`].forEach((value) => {
+        const td = document.createElement('td');
+        td.textContent = value;
+        tr.append(td);
+      });
+      const resultCell = document.createElement('td');
+      resultCell.className = 'game-result faster';
+      resultCell.textContent = result;
+      tr.append(resultCell);
+      const actionCell = document.createElement('td');
+      const load = document.createElement('button');
+      load.className = 'load-game-button';
+      load.type = 'button';
+      load.dataset.level = row.level;
+      load.dataset.seed = row.seed;
+      load.textContent = 'Load';
+      actionCell.append(load);
+      tr.append(actionCell);
+      ui.gameRows.append(tr);
+    });
+  }
+
+  async function openRecordedGames() {
+    ui.gamePicker.showModal();
+    ui.gamePickerStatus.textContent = 'Loading your paired human-versus-bot games…';
+    ui.gameRows.replaceChildren();
+    try {
+      const response = await fetch('/api/human-benchmark');
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || 'Could not load recorded games');
+      renderRecordedGames(body.rows);
+      ui.gamePickerStatus.textContent = 'Your fastest wins are first. Load one to inspect or take it over.';
+    } catch (error) {
+      ui.gamePickerStatus.textContent = error.message;
+    }
+  }
+
+  async function loadRecordedGame(level, seed) {
+    clearActiveTakeover();
+    ui.levelInput.value = String(level);
+    ui.seedInput.value = String(seed);
+    ui.gamePicker.close();
+    await runSession();
+  }
+
   async function fetchSession(level, seed) {
     const response = await fetch(`/api/session?level=${encodeURIComponent(level)}&seed=${encodeURIComponent(seed)}`);
     const body = await response.json();
@@ -746,6 +796,12 @@
   }
 
   ui.sessionForm.addEventListener('submit', (event) => { event.preventDefault(); clearActiveTakeover(); runSession(); });
+  ui.openGamePicker.addEventListener('click', openRecordedGames);
+  ui.closeGamePicker.addEventListener('click', () => ui.gamePicker.close());
+  ui.gameRows.addEventListener('click', (event) => {
+    const button = event.target.closest('.load-game-button');
+    if (button) loadRecordedGame(Number(button.dataset.level), Number(button.dataset.seed));
+  });
   ui.previousMove.addEventListener('click', () => setMove(model.moveIndex - 1));
   ui.nextMove.addEventListener('click', () => setMove(model.moveIndex + 1));
   ui.playPause.addEventListener('click', () => {

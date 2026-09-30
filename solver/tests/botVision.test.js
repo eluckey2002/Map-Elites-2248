@@ -221,6 +221,12 @@ test('Bot Vision server returns the exact session and rejects malformed identiti
     const loaded = await fetch(`${origin}${asset}`);
     assert.ok([200, 204].includes(loaded.status), asset);
   }
+
+  const benchmark = await fetch(`${origin}/api/human-benchmark`);
+  assert.equal(benchmark.status, 200);
+  const benchmarkBody = await benchmark.json();
+  assert.equal(benchmarkBody.rows.length, 10);
+  assert.deepEqual(benchmarkBody.rows[0], { level: 54, seed: 1313839221, humanMoves: 15, botMoves: 23 });
 });
 
 test('Bot Vision server branches only from a legal chain on the exact replay state', async (t) => {

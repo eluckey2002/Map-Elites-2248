@@ -94,6 +94,16 @@ function createBotVisionServer() {
       return;
     }
 
+    if (request.method === 'GET' && url.pathname === '/api/human-benchmark') {
+      try {
+        const picker = JSON.parse(fs.readFileSync(path.join(__dirname, 'bot-vision-game-picker.json'), 'utf8'));
+        jsonResponse(response, 200, picker);
+      } catch (error) {
+        jsonResponse(response, 500, { error: `benchmark collection failed: ${error.message}` });
+      }
+      return;
+    }
+
     if (request.method === 'GET' && url.pathname === '/api/session') {
       let levelNumber;
       let seed;

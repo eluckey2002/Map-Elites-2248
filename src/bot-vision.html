@@ -16,6 +16,7 @@
       <label>Level <select id="levelInput" aria-label="Level"></select></label>
       <label>Seed <input id="seedInput" type="number" min="0" max="4294967295" value="2000000"></label>
       <label>Policy <select id="policyInput" disabled><option>Current default</option></select></label>
+      <button id="openGamePicker" class="secondary-button game-picker-button" type="button">Load a recorded game</button>
       <button class="primary-button" type="submit"><span aria-hidden="true">▶</span> Run session</button>
     </form>
   </header>
@@ -152,6 +153,20 @@
       </section>
     </div>
   </main>
+
+  <dialog id="gamePicker" class="game-picker" aria-labelledby="gamePickerHeading">
+    <div class="game-picker-heading">
+      <div><p class="eyebrow">Your paired results</p><h2 id="gamePickerHeading">Choose a recorded game</h2></div>
+      <button id="closeGamePicker" class="text-button" type="button">Close</button>
+    </div>
+    <p id="gamePickerStatus" class="game-picker-status">Loading your recorded games…</p>
+    <div class="table-scroll game-picker-table">
+      <table>
+        <thead><tr><th>Level</th><th>Seed</th><th>You</th><th>Bot</th><th>Result</th><th></th></tr></thead>
+        <tbody id="gameRows"></tbody>
+      </table>
+    </div>
+  </dialog>
 
   <script src="/bot-vision-evidence.js"></script>
   <script src="/bot-vision.js"></script>
