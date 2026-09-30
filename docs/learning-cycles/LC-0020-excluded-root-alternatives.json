@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "kind": "lc0020-excluded-root-alternatives",
+  "source": {
+    "path": "docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json",
+    "sha256": "707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f",
+    "artifactIdentity": "dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff",
+    "refillContrast": {
+      "path": "docs/learning-cycles/LC-0018-later-refill-contrast.json",
+      "artifactIdentity": "2e0bb47647204ec8c9f31dc585697ddb837254f55e73a54fd2df95181082b297"
+    }
+  },
+  "question": "On the unchanged retained pre-target board, can the excluded equal-birth root participate in any other legal chain that alone crosses the target?",
+  "enumerationBoundary": "The pre-target board is reconstructed exactly from the retained cash prefix. Every legal chain is enumerated without a path-state cap; a chain qualifies only when it contains the excluded root and its own immediate points cross the remaining target gap. No continuation is executed.",
+  "cases": [
+    {
+      "recordingId": "e81f8323ede9c2bff87d60b6bfb57c05bf11515e289559cca3951cdb1301a8f4",
+      "level": 3,
+      "excludedRoot": {
+        "id": "S0022",
+        "value": 2,
+        "preTargetPosition": {
+          "x": 2,
+          "y": 3
+        },
+        "spawnedAtRelativeMove": 3
+      },
+      "preTarget": {
+        "score": 1168,
+        "target": 1400,
+        "pointsNeeded": 232
+      },
+      "replayMatchesRetainedPrefix": true,
+      "enumeration": {
+        "complete": true,
+        "visitedPathStates": 208970,
+        "legalActionCount": 208970,
+        "actionsContainingExcludedRoot": 171356
+      },
+      "alternativeTargetCrossingChainCount": 50265,
+      "shortestAlternativeTargetCrossingChain": {
+        "length": 12,
+        "points": 240,
+        "tiles": [
+          {
+            "x": 1,
+            "y": 2,
+            "value": 2
+          },
+          {
+            "x": 2,
+            "y": 3,
+            "value": 2
+          },
+          {
+            "x": 1,
+            "y": 4,
+            "value": 4
+          },
+          {
+            "x": 1,
+            "y": 5,
+            "value": 4
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 4
+          },
+          {
+            "x": 3,
+            "y": 4,
+            "value": 4
+          },
+          {
+            "x": 3,
+            "y": 5,
+            "value": 4
+          },
+          {
+            "x": 4,
+            "y": 4,
+            "value": 4
+          },
+          {
+            "x": 3,
+            "y": 3,
+            "value": 4
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "value": 4
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "value": 4
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "value": 8
+          }
+        ]
+      }
+    },
+    {
+      "recordingId": "b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8",
+      "level": 52,
+      "excludedRoot": {
+        "id": "S0020",
+        "value": 256,
+        "preTargetPosition": {
+          "x": 0,
+          "y": 1
+        },
+        "spawnedAtRelativeMove": 3
+      },
+      "preTarget": {
+        "score": 93120,
+        "target": 102000,
+        "pointsNeeded": 8880
+      },
+      "replayMatchesRetainedPrefix": true,
+      "enumeration": {
+        "complete": true,
+        "visitedPathStates": 63457,
+        "legalActionCount": 63226,
+        "actionsContainingExcludedRoot": 16851
+      },
+      "alternativeTargetCrossingChainCount": 1868,
+      "shortestAlternativeTargetCrossingChain": {
+        "length": 16,
+        "points": 8960,
+        "tiles": [
+          {
+            "x": 0,
+            "y": 3,
+            "value": 64
+          },
+          {
+            "x": 1,
+            "y": 3,
+            "value": 64
+          },
+          {
+            "x": 1,
+            "y": 4,
+            "value": 64
+          },
+          {
+            "x": 1,
+            "y": 5,
+            "value": 64
+          },
+          {
+            "x": 2,
+            "y": 4,
+            "value": 64
+          },
+          {
+            "x": 3,
+            "y": 3,
+            "value": 64
+          },
+          {
+            "x": 3,
+            "y": 2,
+            "value": 64
+          },
+          {
+            "x": 3,
+            "y": 1,
+            "value": 64
+          },
+          {
+            "x": 4,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 4,
+            "y": 1,
+            "value": 128
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "value": 128
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "value": 128
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "value": 256
+          },
+          {
+            "x": 0,
+            "y": 2,
+            "value": 256
+          }
+        ]
+      }
+    }
+  ],
+  "finding": "EXCLUDED_ROOTS_HAVE_MANY_OTHER_TARGET_CROSSING_CHAINS_ON_THE_SAME_BOARD",
+  "interpretation": "The excluded roots are not unavailable or intrinsically harmful. The retained policy selected one target-crossing path among many; explaining that selection requires examining path-level choice, not a root-level availability feature.",
+  "nonClaims": [
+    "This artifact does not claim the alternative chains are equally good after their moves.",
+    "This artifact does not compare the resulting afterstates or continuations.",
+    "This artifact does not authorize a policy or champion change."
+  ],
+  "artifactIdentity": "ec6ccc27d28f241ba02f9d6584dfa7914c44dab409794f08424fef475a8fda0a"
+}

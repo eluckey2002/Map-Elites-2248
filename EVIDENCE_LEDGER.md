@@ -1382,6 +1382,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. The static substitution deliberately does not execute a move or enumerate reordering; it only makes the exact “cannot fill this slot” claim. No protected gameplay or content file changed.
 
+### RESULT-0072 — Excluded equal roots have many other immediate target-crossing paths
+
+- **type:** result
+- **status:** provisional
+- **scope:** exact exhaustive legal-chain enumeration on the two retained cash pre-target boards for the LC-0018 excluded roots S0022 and S0020; one-move target-crossing availability only; no alternative action execution, afterstate comparison, continuation search, metric, policy rule, champion change, or population claim
+- **statement:** Both roots excluded from the recorded cash target path can participate in many other legal chains that immediately cross the target on the unchanged pre-target board. On Level 3 `e81f8323ede9…`, S0022 appears in 171,356 of 208,970 legal actions, including 50,265 chains that score at least the remaining 232 points. On Level 52 `b42b2e0e4d40…`, S0020 appears in 16,851 of 63,226 legal actions, including 1,868 chains that score at least the remaining 8,880 points. The exact ordered-slot failure in RESULT-0071 therefore does not mean either root is unavailable or generally harmful; it only explains why it cannot replace that specific path slot.
+- **evidence:** immutable [LC-0012 raw matrix](docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json), SHA-256 `707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f`, internal identity `dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff`; antecedent identity-bound [LC-0018 artifact](docs/learning-cycles/LC-0018-later-refill-contrast.json), internal identity `2e0bb47647204ec8c9f31dc585697ddb837254f55e73a54fd2df95181082b297`; identity-bound [LC-0020 artifact](docs/learning-cycles/LC-0020-excluded-root-alternatives.json), SHA-256 `93ec36fc07ce83fa9345706cabfb9d617e074f622adbf70bf107473c74116f14`, internal identity `ec6ccc27d28f241ba02f9d6584dfa7914c44dab409794f08424fef475a8fda0a`; [result explanation](docs/learning-cycles/LC-0020-excluded-root-alternatives-result.md), SHA-256 `791ac33d26281b9e925d1a170c93265c46e79b9f0bd8562f7282e1db77e14a2b`; derivation tool `tools/diagnose-lc0020-excluded-root-alternatives.js`, SHA-256 `ece5c486bfa8bd6aca9194762509c51698bc04c0e6951ef7a3ccb705721c200b`; regression test `solver/tests/lc0020ExcludedRootAlternatives.test.js`, SHA-256 `b7b98f03934b680b37ccecf453e9cad2225eb2f119597501a84812e793a72c9e`
+- **proof_class:** `exact_result`, `direct_source` — exact retained-prefix replay plus uncapped enumeration of both frozen pre-target boards; no claim about afterstates or future play
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/lc0020ExcludedRootAlternatives.test.js`; expect three passing tests, exact artifact recomputation, and rejection of a re-identified altered alternative count.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. Every chain is an exact current-board action; the enumerator deduplicates equivalent resulting actions but does not estimate their later consequences. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

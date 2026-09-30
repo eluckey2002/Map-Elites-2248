@@ -12,6 +12,8 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 The latest trustworthy sequence is now visible in the ledger:
 
+- [RESULT-0072](EVIDENCE_LEDGER.md#result-0072--excluded-equal-roots-have-many-other-immediate-target-crossing-paths) corrects the possible over-reading of RESULT-0071: the excluded roots are not dead ends. Each can join many other legal one-move target-crossing chains on the same frozen board. The next bounded comparison is the retained path versus a shortest such alternative at their immediate afterstates—score gain, moves, survivor, and existence of a legal continuation—not a new metric or champion change.
+
 - [RESULT-0071](EVIDENCE_LEDGER.md#result-0071--equal-refill-roots-cannot-fill-the-same-ordered-target-path-slot) pins down why the adjacent Level 3 `2` is not used: substituting it into the exact winning path makes the next edge illegal. A Level 52 equal-`256` contrast breaks both neighboring edges. This shows slot-specific path geometry, not that the excluded tile is useless; next enumerate whether it can join any other target-crossing path on the same frozen board before considering a metric or champion change.
 
 - [RESULT-0070](EVIDENCE_LEDGER.md#result-0070--equal-birth-refill-roots-can-diverge-at-the-final-legal-path) makes the later-refill finding concrete. In the Level 3 cash win, two equal `2` roots born on the same move remain adjacent before the target-crossing chain; one is used and the other is not. Age, value, and local proximity alone are therefore insufficient. The next bounded replay should show the exact ordered-chain edge the excluded tile cannot replace, first on Level 3 and then on one Level 52 counterexample; no metric or champion change is authorized.
