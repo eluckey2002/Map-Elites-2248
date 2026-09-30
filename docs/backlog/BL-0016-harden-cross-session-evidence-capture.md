@@ -189,3 +189,9 @@ closes the most gaps).
   `C4partial: FAIL`. That is corrected: it now reports PASS (partial) with
   unchanged P1/P2. The 2026-09-26 "all four match" entry held for the
   decisions but missed this integrity-check failure. Both fixes are tested.
+- 2026-09-29: Run #36579791639 failed on RESULT-0016's now-required protocol,
+  RESULT-0045's historical source hashes, and CORRECTION-0017's known
+  post-scale-check chapter crash; its routing ablation exceeded the 60-minute
+  cap. The runner now marks only those four exact commands manual with reasons.
+  RESULT-0016's focused tests pass, and the RESULT-0045 report verifies at
+  producing commit `5205535`. A changed ledger command loses the exception.

@@ -19,6 +19,15 @@ const { spawnSync } = require('node:child_process');
 
 const ROOT = path.join(__dirname, '..');
 
+// These historical commands cannot be judged by exit status on today's tree.
+// Match the exact ledger command so a changed recipe is tested again.
+const MANUAL_ONLY = new Map([
+  ['RESULT-0016\0node solver/multipath-ablation.js --confirm', 'confirmation now requires a preregistered protocol; the historical run cannot be registered after the fact'],
+  ['RESULT-0045\0node solver/oracle/cli.js --verify docs/oracle/runs/attempt-05-full-corpus.json', 'saved report is source-bound; verify at producing commit 5205535'],
+  ['CORRECTION-0017\0node solver/game-tester.js --seeds 20', 'only its first 120/120 line supports the claim; the later chapter analysis crashes above level 50'],
+  ['CORRECTION-0017\0node solver/routing-ablation.js', 'full 300-seed comparison takes several hours, beyond the nightly command timeout'],
+]);
+
 function reverifyPlan(text) {
   const plan = [];
   for (const record of text.split(/^### (?=[A-Z]+-\d{4}\b)/m).slice(1)) {
@@ -38,7 +47,10 @@ function reverifyPlan(text) {
     // `--flags`" is not complete even when an earlier command was extracted.
     const partialProseCommand = /\brun\s+(?!`(?:node|python3|git)\s)[^`\n.;]*\bwith\s+`--[^`]+`/i.test(reverify);
     const manual = partialProseCommand || commands.some((c) => /<[a-z][\w -]*>|\|/.test(c.command));
-    for (const c of commands) plan.push({ id, ...c, manual });
+    for (const c of commands) {
+      const manualReason = MANUAL_ONLY.get(`${id}\0${c.command}`);
+      plan.push({ id, ...c, manual: manual || Boolean(manualReason), ...(manualReason ? { manualReason } : {}) });
+    }
     // A prose-only reverify still needs a human; list it rather than drop it.
     if (!commands.length) plan.push({ id, cwd: '.', command: `(no runnable command) ${reverify.trim().replace(/\s+/g, ' ').slice(0, 80)}`, manual: true });
   }
@@ -75,7 +87,7 @@ function main() {
       result = cache.get(key);
     }
     results.push({ ...entry, ...result });
-    console.log(`${result.outcome.padEnd(7)} ${entry.id}  ${entry.command.slice(0, 100)}`);
+    console.log(`${result.outcome.padEnd(7)} ${entry.id}  ${entry.command.slice(0, 100)}${entry.manualReason ? ` (${entry.manualReason})` : ''}`);
   }
 
   // A timeout is reported, not failed: some recorded reproductions take hours

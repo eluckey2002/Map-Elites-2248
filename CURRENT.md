@@ -8,6 +8,8 @@ Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel 
 
 [BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. [RESULT-0049](EVIDENCE_LEDGER.md) is the preregistered confirmation supporting the current target-aware champion. The lost 2026-08-28 MAP-Elites archives are [RESULT-0050](EVIDENCE_LEDGER.md) and [RESULT-0051](EVIDENCE_LEDGER.md), neither replacing the then-champion `52f500c`; they were renumbered from PR #46's original RESULT-0049/0050 labels when PR #49 landed first. CORRECTION-0010 to CORRECTION-0017 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still awaits RESULT-0016's confirmation run; two solver bugs found by it are listed in BL-0016.
 
+The 2026-09-29 nightly run [#36579791639](https://github.com/eluckey2002/Map-Elites-2248/actions/runs/36579791639) exposed four commands that need historical context or more time than the nightly cap. The runner now lists those exact commands as manual with reasons; RESULT-0016's focused tests pass, and RESULT-0045's saved oracle report verifies at its producing commit `5205535`. This changes reporting only; it does not resolve RESULT-0016's unregistered confirmation or the known `game-tester.js` chapter bug.
+
 ## Current decision frontier — 2026-09-28
 
 The latest trustworthy sequence is now visible in the ledger:
