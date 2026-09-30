@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "result": "RESULT-0078",
+  "status": "PASS",
+  "completed_before_reportable_run": true,
+  "registration": {
+    "protocol_commit": "364b09d3499563f5f4e55ff16141c2b299d16110",
+    "registered_protocol_sha256": "3188606e21fde8b168356d95052a82f4cf28196d85100feb1ffcfad6f1ab059a",
+    "closeout_contract_sha256": "e729504934cdf87e32ce1fd678f2797023c23747cc81d995bb7d919e7d1b006a",
+    "final_subject_identity": "bcce8a0a83a163e7cd1839c2c38e6a527bace4fab71ff2c1b31639b120f0d50c"
+  },
+  "profiles": {
+    "ab-comparison": "a6f1c86ab5ce9c942a12888b0b8f9885d4ca53e5530683d382a7666d1a0fade9",
+    "simulation-policy": "63dbce14106578b3973cf6308f1820de8395099558c9b4ae91438aa3b0461f8a",
+    "mutation-qualification": "dc67e21d0c4938b85e853e4e9c4868408f53a9a85e88006e029a500d8f08632f"
+  },
+  "controls": {
+    "C1": "PASS — A/A deterministic through the production evaluator seam.",
+    "C2": "PASS — Level 58 seed 42000001 changes the trace; this seed is excluded from the reportable panel.",
+    "C3": "PASS — a missing paired cell is rejected.",
+    "C4": "PASS — a synthetic one-move slower challenger is classified FALSIFIED through P1.",
+    "C5": "PASS — the committed registration guard accepts the frozen sources and the reportable corpus, report, primary recomputation, and closure artifacts were all absent before admission."
+  },
+  "commands": {
+    "focused_controls": "node --test solver/tests/bombLatticeChallenger.test.js experiments/RESULT-0078/subject.test.js",
+    "admission": "node -e 'const {requireProtocol}=require(\"./solver/experiment-guard\"); console.log(requireProtocol([\"node\",\"run.js\",\"--protocol\",\"RESULT-0078\"]))'",
+    "synthetic_closeout": "/Library/Developer/CommandLineTools/usr/bin/python3 ../../tools/vendor/close-experiment/verify_closure.py closeout-contract.json closure.json --run-recomputation --require-closed --expected-contract-sha256 e729504934cdf87e32ce1fd678f2797023c23747cc81d995bb7d919e7d1b006a"
+  },
+  "synthetic_closeout": {
+    "status": "PASS",
+    "scope": "disposable worktree, synthetic levels 900 and 901 only",
+    "recomputation": "PASS",
+    "verifier": "tools/vendor/close-experiment/verify_closure.py"
+  },
+  "reportable_seed_state": "No artifact in the 47000000–47000019 panel existed when admission passed."
+}
