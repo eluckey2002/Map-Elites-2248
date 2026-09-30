@@ -1462,6 +1462,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. This falsifies only the proposed immediate-point rejection rule. It does not justify changing the champion, removing afterstate scoring, or generalizing outside the frozen candidate pool.
 
+### RESULT-0077 — Exact afterstate reuse preserves route-diverse ordering while lowering frozen-panel scoring cost
+
+- **type:** result
+- **status:** provisional
+- **scope:** all existing route-diverse supplemental candidates at width 384 across 20 frozen corpus initial states plus the frozen Level 54 human move-two state; unchanged per-candidate scorer compared to an exact cache of board-and-survivor-dependent features only; no fresh seed, outcome game, promotion, or population claim
+- **statement:** The frozen 2,143 supplemental routes produced 1,299 distinct complete afterstates, allowing 844 afterstate-feature evaluations (39.4%) to be reused while retaining each route’s immediate-points and turnover terms. Every supplemental policy score and selected route matched the unchanged scorer exactly, and all 186 retained lower-immediate/higher-afterstate reversals remained. Supplemental scoring time on this machine was 2,443,414,665 ns cached versus 3,922,645,000 ns baseline (0.623×). This qualifies an exact score-preserving cache on the stated panel only; it does not establish a total decision-time bound or a gameplay benefit.
+- **evidence:** identity-bound [LC-0025 reuse artifact](docs/learning-cycles/LC-0025-route-diverse-afterstate-reuse.json), SHA-256 `e7614da5066971b0e40a555e53560ba86cf7a7dac8d05c063abbe4b07e1267da`, internal identity in artifact; [result explanation](docs/learning-cycles/LC-0025-route-diverse-afterstate-reuse-result.md); qualification tool `tools/qualify-route-diverse-afterstate-reuse.js`, SHA-256 `07887360b148e3f1ef97a7e6fdeadcd100500ee9c603c58b394f679e32d8a887`; regression test `solver/tests/routeDiverseAfterstateReuse.test.js`, SHA-256 `7847216db1b4de82467044fae19fa8cdc93c111ef847c404a325f19716c6e17b`; frozen route generator `solver/route-diverse-challenger.js`, SHA-256 `59c57bd274e8b00d2ac4fac0e823c1c008feee76c287de2d7ba63aa5d7104cc8`; reuse candidate `solver/route-diverse-afterstate-reuse.js`, SHA-256 `cee978610548f40b6f5f04360ddc9d46d708aa0ac99f18208e7f1397b5cf5fae`; frozen corpus `docs/oracle/corpus.json`, identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`
+- **proof_class:** `exact_result`, `direct_source` — exact comparisons over the named frozen inputs and one machine-local score-time measurement; no claim beyond the fixed panel
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/routeDiverseAfterstateReuse.test.js`; expect one passing test covering all 2,143 candidates, 1,299 exact afterstates, 844 cache reuses, and 186 reversals. Run `node tools/qualify-route-diverse-afterstate-reuse.js --out /private/tmp/lc0025-route-diverse-afterstate-reuse.json` to recompute without overwriting the retained artifact.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. The cache key includes the full post-move grid and survivor state used by rollout, placement, and harvest; candidate-specific immediate points and chain length are recomposed independently. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
