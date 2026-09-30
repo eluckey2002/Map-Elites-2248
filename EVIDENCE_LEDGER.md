@@ -1334,6 +1334,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. Re-entry is defined only as a later retained chain input carrying the first survivor's lineage; it does not assert that the exact chain first became available at that moment, nor that its timing caused the target outcome. No protected gameplay or content file changed.
 
+### RESULT-0069 — No-reentry cash wins reach target chiefly through later refill roots
+
+- **type:** result
+- **status:** provisional
+- **scope:** exact deterministic replay of the two LC-0016 cash-faster pairs in which cash never reuses its first-action survivor while wait does; ancestry of the final retained target-crossing chain in both retained arms only; no alternative continuation search, new outcome run, fitted threshold, metric, policy rule, champion change, or population claim
+- **statement:** In both selected cash-faster pairs, cash reaches the target without carrying either its first-action survivor or a ready-route root into the final target-crossing chain; later-refill roots supply most of that chain. In `b42b2e0e4d40…`, cash reaches target in 4 moves from 17 later-refill roots worth 1,664 plus 3 common-board roots worth 256, while wait needs 6 moves and its final chain has 7 later-refill roots worth 896 plus 11 common-board roots worth 1,536. In `e81f8323ede9…`, cash reaches target in 5 moves from 15 later-refill roots worth 50 plus one common root worth 8, while wait needs 8 and has 13 later-refill roots worth 50, 29 common roots worth 190, and 5 first-action-refill roots worth 16. Later-refill reliance is the shared descriptive fact; common-board contribution reverses, so neither a simple preserved-value rule nor a causal timing rule is supported.
+- **evidence:** immutable [LC-0012 raw matrix](docs/learning-cycles/LC-0012-early-ready-timing-panel-raw.json), SHA-256 `707ff2fcb967d94636ea569515a89240f89133bf7373b78aa9c44ea49dfd934f`, internal identity `dfaec5aaf632f4da54634e54cc4a64a05598c306360ce88208f0831b707c02ff`; antecedent identity-bound [LC-0016 artifact](docs/learning-cycles/LC-0016-first-carrier-reentry.json), internal identity `549ad815b40a12cdc5c2f4669b761eb6a51791bc08365b5aab1e7b20862ed58d`; identity-bound [LC-0017 artifact](docs/learning-cycles/LC-0017-no-reentry-target-chain.json), SHA-256 `356fbd8695f3fe5d0493668f9b6628e0dd81d10147af7c46272dc5216decdad5`, internal identity `c02356d0f6ee603f0794c31e69d92c2cbc74fd4a93e07e1cbfb53456cb6b3b59`; [result explanation](docs/learning-cycles/LC-0017-no-reentry-target-chain-result.md), SHA-256 `c4d6ae0cb8e94132e46a42d9dcc37526cfcd6102cea3a8b356630095714a9a75`; derivation tool `tools/diagnose-lc0017-no-reentry-target-chain.js`, SHA-256 `b9fe9c12996eeac6168612b25882bf70881d5f6c58c8ca5834607cf601656360`; regression test `solver/tests/lc0017NoReentryTargetChain.test.js`, SHA-256 `a8da98910913bb6e1c3d222e6b753c0f47dd5e6a094e3b61f36d75b067364d02`
+- **proof_class:** `exact_result`, `direct_source` — exact retained replay of four arms and target-chain value-conserving ancestry; no claim beyond those arms
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/lc0017NoReentryTargetChain.test.js`; expect three passing tests, exact artifact recomputation, and rejection of a re-identified altered ancestry claim.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. “Later refill” is an origin label for a root spawned after the first post-readiness action, not a claim that spawn alone caused the outcome. The target-crossing graph may include roots merged at earlier retained moves, but each root is counted once and conservation is checked at every included merge. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen
