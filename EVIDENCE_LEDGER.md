@@ -1398,6 +1398,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. Every chain is an exact current-board action; the enumerator deduplicates equivalent resulting actions but does not estimate their later consequences. No protected gameplay or content file changed.
 
+### RESULT-0073 — Route-diverse challenger exceeds its draft compute ceiling
+
+- **type:** result
+- **status:** provisional
+- **scope:** one initial decision state from each of the 20 frozen captured puzzles, with the Level 54 human puzzle treated as training and the other 19 as qualification; current route-diverse challenger configuration only; candidate cap and in-process decision-time measurement only; no fresh seed, win/loss outcome, promotion, or population claim
+- **statement:** The implemented route-diverse challenger stays within its explicit 128-route supplement cap, but its default 512-route configuration measured 5,986,731,333 ns against the champion's 1,268,700,379 ns across the 19 non-training initial states: 4.72×. It selected a supplemental route in 11 of those states, which establishes exposure only. The configuration fails the LC-0001 draft pilot's 2× compute boundary and must not be registered as-is.
+- **evidence:** identity-bound [LC-0021 boundedness artifact](docs/learning-cycles/LC-0021-route-diverse-boundedness.json), internal identity `308c554fefd8b826ee0a76da5d5cb068207bff11349cb632434a5f1e978f9088`; [result explanation](docs/learning-cycles/LC-0021-route-diverse-boundedness-result.md); derivation tool `tools/qualify-route-diverse-boundedness.js`; regression test `solver/tests/routeDiverseBoundedness.test.js`; core contract test `solver/tests/routeDiverseChallenger.test.js`; frozen corpus `docs/oracle/corpus.json`, identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`
+- **proof_class:** `exact_result`, `direct_source` — exact captured-puzzle inputs and cap, plus one machine-local timing observation; it does not establish a gameplay outcome
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/routeDiverseBoundedness.test.js solver/tests/routeDiverseChallenger.test.js`; expect seven passing tests. Run `node tools/qualify-route-diverse-boundedness.js --out /private/tmp/lc0021-route-diverse-boundedness.json` to collect a fresh machine-local timing sample without overwriting the retained artifact.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. The 2× limit is from LC-0001's unregistered draft and is treated here as a no-registration boundary, not a claimed production requirement. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

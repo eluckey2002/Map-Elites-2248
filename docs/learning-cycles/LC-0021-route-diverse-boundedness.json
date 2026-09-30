@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "kind": "route-diverse-boundedness-qualification",
+  "scope": "one initial decision state from each frozen captured puzzle; search-bound measurement only, not an outcome experiment",
+  "corpus": {
+    "path": "docs/oracle/corpus.json",
+    "identity": "59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308",
+    "puzzles": 20
+  },
+  "sources": {
+    "tool": "8aa77a47dd83bcceeddb19aa90032c28820b1f0d10a537f4aad129a216673afe",
+    "challenger": "59c57bd274e8b00d2ac4fac0e823c1c008feee76c287de2d7ba63aa5d7104cc8",
+    "champion": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873"
+  },
+  "supplementLimit": 128,
+  "training": {
+    "puzzles": 1,
+    "decisions": 1,
+    "maxSupplementCandidates": 126,
+    "totalChampionNs": 25378250,
+    "totalChallengerNs": 153958458,
+    "wallClockRatio": 6.066551397357974,
+    "supplementWins": 0
+  },
+  "qualification": {
+    "puzzles": 19,
+    "decisions": 19,
+    "maxSupplementCandidates": 128,
+    "totalChampionNs": 1268700379,
+    "totalChallengerNs": 5986731333,
+    "wallClockRatio": 4.718790529343729,
+    "supplementWins": 11
+  },
+  "rows": [
+    {
+      "puzzleIdentity": "1726f3e5190fa65fa5e337639c1e142589ecb86abf728b764ebccafc26ea7a92",
+      "recordingFiles": [
+        "pilots/HUMAN-PILOT-0001/recordings/3823dfcec50558d84e65510c1e0598a34083089e347c52c400bb962164d49f8b.json"
+      ],
+      "recordingIdentities": [
+        "687dfd7d9bc25a858e50d398830b7b6bb52b697e5364e3b104824047adb3a903"
+      ],
+      "level": 53,
+      "seed": 424242,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 122,
+          "supplementWon": false,
+          "championNs": 47705958,
+          "challengerNs": 197612500
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "24a49a4c8fa2c0cb71131d61d8419c81a301b6d2eff5e4224e73e3dcfc2ad5ed",
+      "recordingFiles": [
+        "play-sessions/959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a.json"
+      ],
+      "recordingIdentities": [
+        "959c4a27e8d8a6d70ec31e20dd9d8118e51144604535aa85fabffe2d0f17936a"
+      ],
+      "level": 58,
+      "seed": 4010386357,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 1,
+          "supplementCandidates": 0,
+          "supplementWon": false,
+          "championNs": 1572709,
+          "challengerNs": 1280834
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "2bb321b435751a652f9a76dfba255b720fd810fd2470842389d5cab73ca03823",
+      "recordingFiles": [
+        "recordings/7061bbf0132f36d071d6aa1367653116bbac064777a13461cda3e5e170f39af0.json"
+      ],
+      "recordingIdentities": [
+        "24ec42431143886b81678f37793621d68ca6904a52a3c6518e598dabb6d2eddf"
+      ],
+      "level": 53,
+      "seed": 2,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 128,
+          "supplementWon": true,
+          "championNs": 95485625,
+          "challengerNs": 345478542
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "3214dbd437170b396b9f1b6c4d63cbe11bebe4d93ae8e3e1476b3e7f64300537",
+      "recordingFiles": [
+        "recordings/3d3ba1f05b08030337e805c61c0584e99d157caade3e7e62298769219806258a.json"
+      ],
+      "recordingIdentities": [
+        "d10f50a26b0eb69cec12dcf54194c13450c960a73e5a8f4574612629067d5c85"
+      ],
+      "level": 54,
+      "seed": 1,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 128,
+          "supplementWon": true,
+          "championNs": 136018000,
+          "challengerNs": 677306292
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "342fa0366822801eef10348ce98b188e39f4d9072eac4601331b874b382488f1",
+      "recordingFiles": [
+        "play-sessions/b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8.json"
+      ],
+      "recordingIdentities": [
+        "b42b2e0e4d40c1d213d22abc9cf144466df617c11e7586e875eba46b317b4be8"
+      ],
+      "level": 52,
+      "seed": 2173441018,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 128,
+          "supplementWon": false,
+          "championNs": 60461167,
+          "challengerNs": 334180458
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "3808ee8892e6eb828388ecd37095633d9fe3c89950e2337a4d2bcf1ba18fa386",
+      "recordingFiles": [
+        "play-sessions/ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf.json"
+      ],
+      "recordingIdentities": [
+        "ed62dd5655e8a568b4f54a956c671fcfc9739d9871c81d1d146b2ebbfba6e9bf"
+      ],
+      "level": 54,
+      "seed": 2832419099,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 125,
+          "supplementWon": true,
+          "championNs": 67313709,
+          "challengerNs": 380506958
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "3e0d1c86d58ceee50a3a22c45e446d0e2f7afec77232dc0c41638c7e7031c058",
+      "recordingFiles": [
+        "pilots/HUMAN-PILOT-0002/recordings/c50b34f85e9ee53762ab3093bc4af0839965dd8c275bdc7893c31e011e0a32f6.json"
+      ],
+      "recordingIdentities": [
+        "846513bc9a0e1e31d5f42b9378ba12a0bad092e9e95b8bc6ebc5c7e9dbfec48a"
+      ],
+      "level": 54,
+      "seed": 424242,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 126,
+          "supplementWon": true,
+          "championNs": 42908417,
+          "challengerNs": 178851042
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "6b0d3ffdb44b7ef9a67a479d2214a82b1ed5d9abb6bb16e1d20a2bde26090e24",
+      "recordingFiles": [
+        "play-sessions/b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab.json"
+      ],
+      "recordingIdentities": [
+        "b068afb04eb954b6525f8bba0d86e149d6efec082528bd7e8b3374a7b09f85ab"
+      ],
+      "level": 57,
+      "seed": 2389915636,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 124,
+          "supplementWon": false,
+          "championNs": 71186417,
+          "challengerNs": 392378708
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "742e23f0305a8fc7cf4fcf4ba244d22d0d12dbe299e4793a0aab5c4736e5399e",
+      "recordingFiles": [
+        "recordings/44d3802d551202d19d8833768f7ee60562797bbdc874fb4d785ee819c54271f2.json"
+      ],
+      "recordingIdentities": [
+        "036a2af07a1d88026022a2ffbc6928062aea59194b0c78f7b883692e910edd23"
+      ],
+      "level": 52,
+      "seed": 777,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 1,
+          "supplementCandidates": 0,
+          "supplementWon": false,
+          "championNs": 6001083,
+          "challengerNs": 4216000
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "783ac318ddeea191cc2d62bfa78318d023e5e3c64dd9fc9fb877f672d4d8343e",
+      "recordingFiles": [
+        "play-sessions/9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0.json"
+      ],
+      "recordingIdentities": [
+        "9cd33937c5c0185968762e270a51ab2fa3ebed2d3cb89851258a25dc69b43bf0"
+      ],
+      "level": 54,
+      "seed": 1044860360,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 126,
+          "supplementWon": false,
+          "championNs": 74744792,
+          "challengerNs": 310971583
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "7ab85e63f0b2ce34d3c0bde2971b2a3560da11d053461d60f027079c422181e8",
+      "recordingFiles": [
+        "play-sessions/3391ec8ea6304e62cf489d8231cc9fffd1c90b60caab9ca9586f941a6a96a678.json",
+        "play-sessions/b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28.json",
+        "play-sessions/bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02.json"
+      ],
+      "recordingIdentities": [
+        "3391ec8ea6304e62cf489d8231cc9fffd1c90b60caab9ca9586f941a6a96a678",
+        "b1164d3ae96a9d62ae2153b4b27b704802c76d2b9d825f24cca1dd4082361e28",
+        "bf12acf631bbfed1603d20b449c00d9df3d11bf2405d4020aaeed1f025716e02"
+      ],
+      "level": 54,
+      "seed": 3310936729,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 128,
+          "supplementWon": true,
+          "championNs": 63027500,
+          "challengerNs": 268028125
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "81d2beb28b6cf96cbfb9ffb4a89fb3cd612b95f8724563284820f387c89c5c08",
+      "recordingFiles": [
+        "recordings/1352aa7a02cdf868c92b47ecb492528c699692699ecfd0da54b990836aef4aea.json",
+        "recordings/7ad0978f96196c4ffe7ac15035340454d8e79ab23ea98003a84443bdcbd01526.json"
+      ],
+      "recordingIdentities": [
+        "7666abeada41cec51a3a87dca1f5cb249d475d102f001488bb1f6149478aff1e",
+        "b0be97d7ce940b4620157b1fef677014d791f3d3756f25add7a2ace650743776"
+      ],
+      "level": 53,
+      "seed": 10,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 128,
+          "supplementWon": true,
+          "championNs": 99759959,
+          "challengerNs": 471651917
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "8de7adce947dfcaa3d14aa051176c7051ac034c1b6737a0532f467cce3e27911",
+      "recordingFiles": [
+        "play-sessions/de1be9125b0aeb1008f0eef6ae966db847187d03b1073d2a0b1d3ebe6df50d23.json"
+      ],
+      "recordingIdentities": [
+        "de1be9125b0aeb1008f0eef6ae966db847187d03b1073d2a0b1d3ebe6df50d23"
+      ],
+      "level": 56,
+      "seed": 1761047823,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 127,
+          "supplementWon": true,
+          "championNs": 89741709,
+          "challengerNs": 529246416
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "8fe7db24e4ac6b36a0999ecd8d61b2594637b1a17ec02978e0f3b5aede38e104",
+      "recordingFiles": [
+        "play-sessions/640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6.json"
+      ],
+      "recordingIdentities": [
+        "640f5c6450f8b8ac9e59ef1a2f452807c40cf3993422e2287fb0005a0ad72fb6"
+      ],
+      "level": 58,
+      "seed": 4255346895,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 1,
+          "supplementCandidates": 0,
+          "supplementWon": false,
+          "championNs": 53496083,
+          "challengerNs": 52382667
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "a2577c1f104d3391578caf4039b2b4fec4d83290d76c70abe8a952ab8e2be8ea",
+      "recordingFiles": [
+        "recordings/1c87356748ee23c9388d27f6c66ae60ed7d448f2f327f27dbe4d36a46ea6a0d0.json",
+        "recordings/78749fc07834f892542e7abd3317e9ed0b124082fe5b9b36876dac5918aa4b40.json",
+        "recordings/8ac6c9d4c533e92769438127be1ba8fccac89bd49b47cc8b7afd8814615315d6.json"
+      ],
+      "recordingIdentities": [
+        "335bdcf43b446fa6ed9f1a35df221f9a9bfcb4eb4a4c440c9cbb06774af78bb9",
+        "ffbf55ae111b4f71fe608c34336585ea3a05e898873d3b5a304d80d4cd0d9de3",
+        "ed367f1e504cd241ecf215a4845a16aa1e18ffd773ad5aa0e02087d95bbb34b5"
+      ],
+      "level": 51,
+      "seed": 1,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 128,
+          "supplementWon": true,
+          "championNs": 135817292,
+          "challengerNs": 657551917
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "aa9efa2f04ce7c87b0352f9478222a0bf723b16eeb6c558fa87ce32067328ec9",
+      "recordingFiles": [
+        "play-sessions/31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232.json"
+      ],
+      "recordingIdentities": [
+        "31a5eae23de9e1091ac92f9ff942aae9ce0e1a55322c2db01c403b1d697c4232"
+      ],
+      "level": 56,
+      "seed": 3504920448,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 127,
+          "supplementWon": true,
+          "championNs": 82221000,
+          "challengerNs": 515360750
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "abcba5172111e30b205ead70b9f01d6648aee32434126f847fdd01174c7b3a2c",
+      "recordingFiles": [
+        "play-sessions/10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90.json"
+      ],
+      "recordingIdentities": [
+        "10e4dff8050d620ca445a70359e5b684be59ea6b8b3ed5e9edd384e2b21dde90"
+      ],
+      "level": 55,
+      "seed": 2600645753,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 1,
+          "supplementCandidates": 0,
+          "supplementWon": false,
+          "championNs": 1861125,
+          "challengerNs": 1680083
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "bd5bda0e646de4636021ba5498f0aea723a235072dd2b391910409ff547e16a5",
+      "recordingFiles": [
+        "recordings/f0ae3e75fe38b75b961d564b767e1937da54e3be5517e5a121a4e8cb45521d61.json"
+      ],
+      "recordingIdentities": [
+        "c776f73b8044e19fe82ff5265b4019f836f7b4212a9630fe2224077bfe139602"
+      ],
+      "level": 52,
+      "seed": 1,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 128,
+          "supplementWon": true,
+          "championNs": 93171667,
+          "challengerNs": 448662541
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "c1bd39cbead6dd2fe0da32839269b37b04e78b45eee61beaeb205a3957dc8406",
+      "recordingFiles": [
+        "play-sessions/ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78.json"
+      ],
+      "recordingIdentities": [
+        "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78"
+      ],
+      "level": 54,
+      "seed": 1313839221,
+      "training": true,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 126,
+          "supplementWon": false,
+          "championNs": 25378250,
+          "challengerNs": 153958458
+        }
+      ]
+    },
+    {
+      "puzzleIdentity": "ebe52ad45659503a3523cfba7f96a6a3d6d49f2d2bcfff67a6bdf80d20e8c373",
+      "recordingFiles": [
+        "recordings/d36e875d08396c3d17bd3137478625f713f8fd3e7c35274f2ccfc5de0273841c.json"
+      ],
+      "recordingIdentities": [
+        "f20246723c0ca89a9eb77782b5cabdc14fb9277f99c1a3819e3fec918eb2833e"
+      ],
+      "level": 52,
+      "seed": 777,
+      "training": false,
+      "decisions": [
+        {
+          "move": 1,
+          "championCandidates": 24,
+          "supplementCandidates": 121,
+          "supplementWon": true,
+          "championNs": 46206167,
+          "challengerNs": 219384000
+        }
+      ]
+    }
+  ],
+  "artifactIdentity": "308c554fefd8b826ee0a76da5d5cb068207bff11349cb632434a5f1e978f9088"
+}

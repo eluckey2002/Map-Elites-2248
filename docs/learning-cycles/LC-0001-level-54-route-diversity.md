@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-27
 
-**Status:** diagnostic complete; challenger and experiment not yet built
+**Status:** challenger implemented and qualification-audited; no outcome experiment registered
 
 **Training case:** shipped Level 54, seed `1313839221`
 
@@ -158,7 +158,26 @@ evidence and may be repeated while implementing the challenger.
    same survivor and cleared-cell pattern must not enter the supplement. Plant
    each defect and watch the check fail.
 6. **Protected surfaces:** `solver/bot.js`, `src/game.js`, targets, recordings,
-   receipts, and authoring files remain byte-identical.
+receipts, and authoring files remain byte-identical.
+
+### Qualification update — 2026-09-30
+
+`solver/route-diverse-challenger.js` and its focused contract checks now exist.
+The exact human move-two afterstate is recovered, the unchanged champion still
+finishes that trajectory on move 17, shared-candidate scores agree with the
+champion scorer, duplicates and non-mergeable routes are excluded, and fallback
+returns the champion's exact chain. These are implementation qualifications,
+not outcome evidence.
+
+The boundedness audit in `LC-0021-route-diverse-boundedness.json` measures one
+initial decision state from each of the 20 frozen captured puzzles (the Level
+54 training puzzle plus 19 qualification puzzles). The supplement stays within
+its explicit 128-route cap, but at the current default search width of 512 its
+aggregate measured decision time is 4.72× the champion time on the 19
+non-training puzzles. This exceeds the draft pilot's 2.0× compute gate.
+Accordingly, do not register the draft pilot with this configuration. A future
+repair must choose and freeze a lower-cost configuration, rerun the existing
+training and boundedness qualifications, and only then reconsider registration.
 
 ## Small promotion experiment — draft, not registered
 
