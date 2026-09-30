@@ -20,4 +20,5 @@ solver/.session-*.json
 /.blackboard
 /.playwright-mcp
 .blackboard/static/app.js
-/.blackboard
+# Local brainstorm plugin event log (machine-local, regenerated)
+.brainstorm-last-events.jsonl
