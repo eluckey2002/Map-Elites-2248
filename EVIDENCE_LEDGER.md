@@ -1444,7 +1444,23 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **supersedes:** []
 - **superseded_by:** []
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
-- **notes:** Provisional pending an independent checker. The immediate-point candidate is not implemented: a lower-immediate-point future-value counterexample is still required before it can be adopted or tested as a challenger. No protected gameplay or content file changed.
+- **notes:** Provisional pending an independent checker. RESULT-0076 subsequently found the required counterexamples and rejects the immediate-point candidate; this cost attribution remains valid. No protected gameplay or content file changed.
+
+### RESULT-0076 — Immediate-point gating discards higher-afterstate routes
+
+- **type:** result
+- **status:** provisional
+- **scope:** every existing route-diverse supplemental candidate at width 384 from 20 frozen corpus initial states plus the frozen Level 54 human move-two state; direct comparison to each state’s champion immediate and existing policy scores; no fresh seed, outcome experiment, or policy change
+- **statement:** The immediate-point eligibility candidate is rejected in this frozen pool. Of 2,143 compared supplemental routes, 186 have fewer immediate points but a higher existing policy score than their champion. On Level 54 / seed `3310936729`, a 5,120-point supplemental route scores 25,920 while its champion route has 6,080 immediate points and policy score 24,000. The gate would discard that route solely because 5,120 is below 6,080.
+- **evidence:** identity-bound [LC-0024 reversal artifact](docs/learning-cycles/LC-0024-lower-immediate-reversals.json), internal identity `83d8cb7b559909a6e3951c9fdad045d5c4627f2e6a6cfaaec7841fa48db782cc`; [result explanation](docs/learning-cycles/LC-0024-lower-immediate-reversals-result.md); diagnostic tool `tools/diagnose-lc0024-lower-immediate-reversals.js`; regression test `solver/tests/lc0024LowerImmediateReversals.test.js`; frozen corpus `docs/oracle/corpus.json`, identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`
+- **proof_class:** `exact_result`, `direct_source` — exhaustive comparison over the named frozen candidate pool; no claim about unseen boards or actual terminal outcomes
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/lc0024LowerImmediateReversals.test.js`; expect three passing tests including planted detection and planted false-evidence rejection. Run `node tools/diagnose-lc0024-lower-immediate-reversals.js --out /private/tmp/lc0024-lower-immediate-reversals.json` to recompute the fixed-pool result without overwriting the retained artifact.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. This falsifies only the proposed immediate-point rejection rule. It does not justify changing the champion, removing afterstate scoring, or generalizing outside the frozen candidate pool.
 
 ## Decision registry
 

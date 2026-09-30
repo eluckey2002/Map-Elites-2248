@@ -187,11 +187,13 @@ The subsequent frozen-corpus attribution in
 `LC-0023-route-diverse-cost-attribution.json` locates 83.6% of challenger-only
 time in full afterstate scoring, not generation. A one-endpoint-representative
 shortcut is rejected by a direct counterexample: it drops the human route.
-The narrowly viable next candidate is instead an immediate-point eligibility
-gate before expensive scoring. It keeps the full generated supplement and keeps
-the human route scoreable because both it and the champion score 5,120
-immediate points. This remains a candidate redesign only: it needs an explicit
-lower-immediate-point/future-value counterexample before implementation.
+The immediate-point eligibility candidate is now rejected by
+`LC-0024-lower-immediate-reversals.json`: 186 routes in the frozen pool score
+fewer immediate points yet beat their champion’s afterstate score. The first
+replayable case is Level 54 / seed `3310936729`, where a 5,120-point supplement
+scores 25,920 against the champion's 6,080 immediate points and 24,000 policy
+score. Do not implement that gate. Any future cost repair must preserve this
+lower-immediate/higher-afterstate class before it is qualified.
 
 ## Small promotion experiment — draft, not registered
 
