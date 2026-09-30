@@ -33,7 +33,7 @@ function timed(fn) {
   return { result, ns: Number(process.hrtime.bigint() - started) };
 }
 
-function measurePuzzle(puzzleIdentity, descriptors) {
+function measurePuzzle(puzzleIdentity, descriptors, diversity = {}) {
   if (!descriptors.length) throw new Error(`missing retained recording for ${puzzleIdentity}`);
   // The frozen corpus deduplicates equal initial puzzles. Every descriptor in
   // this group has the same replayed initial state, so the first descriptor is
@@ -44,7 +44,7 @@ function measurePuzzle(puzzleIdentity, descriptors) {
   const state = createLevelState(descriptor.candidate, rng);
   const lookaheadRngFactory = () => makeRng(LOOKAHEAD_BASE + state.moves);
   const champion = timed(() => analyzeMove(state, { lookaheadRngFactory }));
-  const challenger = timed(() => analyzeRouteDiverseMove(state, { lookaheadRngFactory }));
+  const challenger = timed(() => analyzeRouteDiverseMove(state, { lookaheadRngFactory, diversity }));
   if (challenger.result.supplement.length > SUPPLEMENT_LIMIT) {
     throw new Error(`supplement cap breached for ${descriptor.file} initial state`);
   }
@@ -85,8 +85,7 @@ function summarize(rows) {
   };
 }
 
-function qualify() {
-  const corpus = loadCorpus();
+function qualify(diversity = {}, corpus = loadCorpus()) {
   const rows = corpus.puzzles.map(({ puzzleIdentity, recordings }) => measurePuzzle(puzzleIdentity, recordings));
   const training = rows.filter(({ training: isTraining }) => isTraining);
   const qualification = rows.filter(({ training: isTraining }) => !isTraining);
@@ -109,6 +108,7 @@ function qualify() {
       engine: fileHash(path.join(ROOT, 'solver/engine.js')),
     },
     supplementLimit: SUPPLEMENT_LIMIT,
+    diversity,
     training: summarize(training),
     qualification: summarize(qualification),
     rows,

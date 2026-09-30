@@ -1414,6 +1414,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
 - **notes:** Provisional pending an independent checker. The 2× limit is from LC-0001's unregistered draft and is treated here as a no-registration boundary, not a claimed production requirement. No protected gameplay or content file changed.
 
+### RESULT-0074 — No predeclared lower route-diverse width qualifies
+
+- **type:** result
+- **status:** provisional
+- **scope:** predeclared search widths 384, 256, 128, and 64 with the existing 128-route supplement cap; frozen Level 54 training route and one initial state from each captured corpus puzzle only; no fresh outcome seed, win/loss experiment, champion change, or population claim
+- **statement:** No width met all fixed qualification rules. Width 384 alone recovered the human route, preserved exact champion fallback, and respected the cap, but measured 4.73× champion decision time on the 19 non-training puzzles. Widths 256, 128, and 64 preserved fallback and cap but each lost the human route while measuring 4.66–4.73×. Narrowing this beam is therefore not a sufficient cost repair for this mechanism.
+- **evidence:** identity-bound [LC-0022 fixed-ladder artifact](docs/learning-cycles/LC-0022-route-diverse-cost-ladder.json), internal identity recorded in that artifact; [result explanation](docs/learning-cycles/LC-0022-route-diverse-cost-ladder-result.md); derivation tool `tools/qualify-route-diverse-cost-ladder.js`; boundedness tool `tools/qualify-route-diverse-boundedness.js`; regression test `solver/tests/routeDiverseCostLadder.test.js`; core challenger test `solver/tests/routeDiverseChallenger.test.js`; frozen corpus `docs/oracle/corpus.json`, identity `59daa4e54dceef9b5da7eacb730d3cecb08f43fc389f9721adec6b4c3dc31308`
+- **proof_class:** `exact_result`, `direct_source` — exact known-input qualification and machine-local timing observation; it does not establish a gameplay outcome or reject other generator designs
+- **as_of:** 2026-09-30
+- **reverify:** Run `node --test solver/tests/routeDiverseCostLadder.test.js`; expect two passing tests. Run `node tools/qualify-route-diverse-cost-ladder.js --out /private/tmp/lc0022-route-diverse-cost-ladder.json` to collect a fresh machine-local timing sample without overwriting the retained artifact.
+- **updated:** 2026-09-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex (GPT-5), session 2026-09-30, branch `codex/lc0013-target-gap-arithmetic`
+- **notes:** Provisional pending an independent checker. The ladder's selection rule requires all conditions, so the correct result is `NO_CONFIGURATION_QUALIFIED`, not a selection of the fastest failing width. No protected gameplay or content file changed.
+
 ## Decision registry
 
 ### DECISION-0001 — Keep the feasibility study frozen

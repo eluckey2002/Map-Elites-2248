@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "kind": "route-diverse-cost-ladder-qualification",
+  "scope": "predeclared widths 384, 256, 128, and 64 on frozen training and captured-corpus inputs only; not an outcome experiment",
+  "selectionRule": "select the largest listed width satisfying route recovery, cap, fallback identity, and a qualification wall-clock ratio at or below 2.0",
+  "sources": {
+    "tool": "751ef68e77fcd45aae3b85d2fa42db6ad07440002b02b39613854154e732892a",
+    "boundednessTool": "b5d48463595548a1b3c82bf0b0e121d5aa5f5eaa1a3d276a1362ae818041c887",
+    "challenger": "59c57bd274e8b00d2ac4fac0e823c1c008feee76c287de2d7ba63aa5d7104cc8",
+    "champion": "3efd50ce4b4cc8adda8874361fbc009d04716364d0f34c832515b80d6cbd2e65",
+    "trainingRecording": "ecc4053a8c93200f8ebf4b665df0a9d1f07405cf29d9e8a0d0ae0dcfa1887a78"
+  },
+  "results": [
+    {
+      "diversity": {
+        "searchWidth": 384,
+        "supplementLimit": 128
+      },
+      "recovery": {
+        "recovered": true,
+        "candidates": 128,
+        "capRespected": true
+      },
+      "fallback": {
+        "preserved": true
+      },
+      "qualification": {
+        "puzzles": 19,
+        "decisions": 19,
+        "maxSupplementCandidates": 128,
+        "totalChampionNs": 1277696665,
+        "totalChallengerNs": 6040197038,
+        "wallClockRatio": 4.727410819374723,
+        "supplementWins": 11
+      },
+      "eligible": false
+    },
+    {
+      "diversity": {
+        "searchWidth": 256,
+        "supplementLimit": 128
+      },
+      "recovery": {
+        "recovered": false,
+        "candidates": 128,
+        "capRespected": true
+      },
+      "fallback": {
+        "preserved": true
+      },
+      "qualification": {
+        "puzzles": 19,
+        "decisions": 19,
+        "maxSupplementCandidates": 128,
+        "totalChampionNs": 1349571250,
+        "totalChallengerNs": 6284102459,
+        "wallClockRatio": 4.656369538844281,
+        "supplementWins": 11
+      },
+      "eligible": false
+    },
+    {
+      "diversity": {
+        "searchWidth": 128,
+        "supplementLimit": 128
+      },
+      "recovery": {
+        "recovered": false,
+        "candidates": 128,
+        "capRespected": true
+      },
+      "fallback": {
+        "preserved": true
+      },
+      "qualification": {
+        "puzzles": 19,
+        "decisions": 19,
+        "maxSupplementCandidates": 128,
+        "totalChampionNs": 1327116043,
+        "totalChallengerNs": 6279050581,
+        "wallClockRatio": 4.731350068533533,
+        "supplementWins": 11
+      },
+      "eligible": false
+    },
+    {
+      "diversity": {
+        "searchWidth": 64,
+        "supplementLimit": 128
+      },
+      "recovery": {
+        "recovered": false,
+        "candidates": 128,
+        "capRespected": true
+      },
+      "fallback": {
+        "preserved": true
+      },
+      "qualification": {
+        "puzzles": 19,
+        "decisions": 19,
+        "maxSupplementCandidates": 128,
+        "totalChampionNs": 1334558125,
+        "totalChallengerNs": 6298501127,
+        "wallClockRatio": 4.719540504839383,
+        "supplementWins": 11
+      },
+      "eligible": false
+    }
+  ],
+  "selected": null,
+  "outcome": "NO_CONFIGURATION_QUALIFIED",
+  "artifactIdentity": "7d7b56989012df3a0041a97e7cacb811682224becfe2c40b31911e116abed5e0"
+}

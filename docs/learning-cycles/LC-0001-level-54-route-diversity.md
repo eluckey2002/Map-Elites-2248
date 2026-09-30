@@ -175,9 +175,13 @@ initial decision state from each of the 20 frozen captured puzzles (the Level
 its explicit 128-route cap, but at the current default search width of 512 its
 aggregate measured decision time is 4.72× the champion time on the 19
 non-training puzzles. This exceeds the draft pilot's 2.0× compute gate.
-Accordingly, do not register the draft pilot with this configuration. A future
-repair must choose and freeze a lower-cost configuration, rerun the existing
-training and boundedness qualifications, and only then reconsider registration.
+Accordingly, do not register the draft pilot with this configuration. The
+fixed 384/256/128/64 width ladder in `LC-0022-route-diverse-cost-ladder.json`
+found no qualifying configuration: 384 alone recovered the human route and
+still measured 4.73×, while smaller widths lost that route without a meaningful
+cost reduction. A future repair needs a separately specified generator redesign
+rather than another beam-width trial; it must rerun the existing training and
+boundedness qualifications before registration is reconsidered.
 
 ## Small promotion experiment — draft, not registered
 

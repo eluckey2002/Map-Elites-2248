@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 102 (38 accepted, 24 narrowed, 3 open, 23 provisional, 4 stale, 10 superseded).
+Records: 103 (38 accepted, 24 narrowed, 3 open, 24 provisional, 4 stale, 10 superseded).
 
 ## Current records
 
@@ -18,14 +18,14 @@ Records: 102 (38 accepted, 24 narrowed, 3 open, 23 provisional, 4 stale, 10 supe
 | FACT-0005 | Frozen seed-0 input | accepted | direct_source | The deterministic initial board totals 128: twenty-four 2s, twelve 4s, and four 8s. | 325 |
 | FACT-0006 | The mergeable-sum lattice and what a lockout is | narrowed | direct_source | **Corrected by CORRECTION-0008 (Off-lattice tiles are recoverable, not permanently dead); the wording below may no longer hold.** A merge leaves exactly one tile behind, valued at the chain's sum. | 339 |
 | FACT-0007 | Uniform integer tile scaling is an exact isomorphism | narrowed | exact_result | **Corrected by CORRECTION-0017 (FACT-0007's check count and RESULT-0011's effect size, measured on today's tree); the wording below may no longer hold.** Multiplying every tile value on a level by a positive integer `k` multiplies the final score by exactly `k` and leaves play otherwise identical: same move count, same termination reason. | 354 |
-| DECISION-0002 | Park the exact-proof track; tune levels from measured calibration | accepted | owner_decision | The exact-proof track is parked, not retracted. | 1433 |
-| DECISION-0003 | Targets are a measured share of achievable score; tile scale doubles per chapter | accepted | owner_decision | A level's target is set as *demand* — a chosen share of that level's measured achievable score — rather than as a fixed step. | 1448 |
-| DECISION-0004 | Promote the target-aware policy as the current engineering champion | narrowed | owner_decision | **Corrected by CORRECTION-0012 (DECISION-0004's evidence commit was on no branch); the wording below may no longer hold.** The owner promotes the target-aware immediate-finish policy in `solver/bot.js` as the current engineering champion. | 1463 |
-| DECISION-0005 | Route the qualified owner pilot to variant/repair | accepted | owner_decision | The owner disposes the played candidate as `variant/repair`. | 1480 |
-| DECISION-0006 | Do not promote the two puzzle-instance descriptors from RESULT-0029 | accepted | owner_decision, exact_result | Reject promotion of both `budget tightness` and `chain-length dependence` for the scoped exact micro-puzzle map because `RESULT-0029` did not clear its frozen four-region occupancy and starting-board-diversity requireme… | 1495 |
-| DECISION-0007 | Level 54's 126,000 target is a deliberate owner exception to the demand rule | provisional | owner_decision | The owner set Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) at 126,000 from human evidence rather than bot measurement; the demand rule would have given 89,800. | 1510 |
-| DECISION-0008 | Pause porting the family-board MAP-Elites work until frozen renumbering is defined | provisional | owner_decision | Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the owner's intent… | 1527 |
-| DECISION-0009 | Keep Level 53 as shipped at 101,000 | provisional | owner_decision | The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. | 1544 |
+| DECISION-0002 | Park the exact-proof track; tune levels from measured calibration | accepted | owner_decision | The exact-proof track is parked, not retracted. | 1449 |
+| DECISION-0003 | Targets are a measured share of achievable score; tile scale doubles per chapter | accepted | owner_decision | A level's target is set as *demand* — a chosen share of that level's measured achievable score — rather than as a fixed step. | 1464 |
+| DECISION-0004 | Promote the target-aware policy as the current engineering champion | narrowed | owner_decision | **Corrected by CORRECTION-0012 (DECISION-0004's evidence commit was on no branch); the wording below may no longer hold.** The owner promotes the target-aware immediate-finish policy in `solver/bot.js` as the current engineering champion. | 1479 |
+| DECISION-0005 | Route the qualified owner pilot to variant/repair | accepted | owner_decision | The owner disposes the played candidate as `variant/repair`. | 1496 |
+| DECISION-0006 | Do not promote the two puzzle-instance descriptors from RESULT-0029 | accepted | owner_decision, exact_result | Reject promotion of both `budget tightness` and `chain-length dependence` for the scoped exact micro-puzzle map because `RESULT-0029` did not clear its frozen four-region occupancy and starting-board-diversity requireme… | 1511 |
+| DECISION-0007 | Level 54's 126,000 target is a deliberate owner exception to the demand rule | provisional | owner_decision | The owner set Level 54 (central-choke, the `HUMAN-PILOT-0002` geometry) at 126,000 from human evidence rather than bot measurement; the demand rule would have given 89,800. | 1526 |
+| DECISION-0008 | Pause porting the family-board MAP-Elites work until frozen renumbering is defined | provisional | owner_decision | Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the owner's intent… | 1543 |
+| DECISION-0009 | Keep Level 53 as shipped at 101,000 | provisional | owner_decision | The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. | 1560 |
 | RESULT-0001 | Accepted 12,336 score | narrowed | replayed_lower_bound | **Corrected by CORRECTION-0010 (RESULT-0001 and RESULT-0004 verifiers were deleted from the tree); the wording below may no longer hold.** A 32-move witness replays to 12,336 at spawn cursor 520. | 373 |
 | RESULT-0002 | Mass/cursor upper bound | accepted | proven_upper_bound | Complete enumeration of the mass/cursor relaxation proves a 326,390 upper bound. | 389 |
 | RESULT-0003 | Exact move-one envelope | accepted | exact_result | Complete position-aware enumeration finds 1,868,975 physical first moves and an exact move-one maximum of 430. | 403 |
@@ -83,28 +83,29 @@ Records: 102 (38 accepted, 24 narrowed, 3 open, 23 provisional, 4 stale, 10 supe
 | RESULT-0071 | Equal refill roots cannot fill the same ordered target-path slot | provisional | exact_result, direct_source | The equal-birth, equal-value excluded root cannot occupy the included root’s exact slot in either retained cash target chain because it breaks required adjacency. | 1369 |
 | RESULT-0072 | Excluded equal roots have many other immediate target-crossing paths | provisional | exact_result, direct_source | Both roots excluded from the recorded cash target path can participate in many other legal chains that immediately cross the target on the unchanged pre-target board. | 1385 |
 | RESULT-0073 | Route-diverse challenger exceeds its draft compute ceiling | provisional | exact_result, direct_source | The implemented route-diverse challenger stays within its explicit 128-route supplement cap, but its default 512-route configuration measured 5,986,731,333 ns against the champion's 1,268,700,379 ns across the 19 non-tr… | 1401 |
-| CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1637 |
-| CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1651 |
-| CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1666 |
-| CORRECTION-0004 | RESULT-0015 was invalidated when the beam was made additive | accepted | direct_source, heuristic_observation | Supersedes `RESULT-0015`. | 1683 |
-| CORRECTION-0005 | RESULT-0029 screened 103 distinct starting boards | accepted | exact_result | Supersedes only `RESULT-0029`'s claim that its 104 screened seed observations were 104 distinct starting boards. | 1698 |
-| CORRECTION-0006 | RESULT-0030 exceeded its registered candidate cap | accepted | direct_source, replayed_upper_bound | Supersedes `RESULT-0030` as a protocol-conforming confirmation. | 1713 |
-| CORRECTION-0007 | RESULT-0037 and RESULT-0038 overstate stability and receipt closure | accepted | direct_source, heuristic_observation, unresolved, UNKNOWN | Supersedes the evidence standing of `RESULT-0037` and `RESULT-0038`. | 1728 |
-| CORRECTION-0008 | Off-lattice tiles are recoverable, not permanently dead | accepted | direct_source, unresolved | Narrows `FACT-0006`. | 1743 |
-| CORRECTION-0009 | Recorded human games stop at the target | accepted | exact_result, direct_source | Supersedes the objective interpretation, not the recorded scores. | 1758 |
-| CORRECTION-0010 | RESULT-0001 and RESULT-0004 verifiers were deleted from the tree | accepted | direct_source | Narrows `RESULT-0001` and `RESULT-0004`. | 1773 |
-| CORRECTION-0011 | RESULT-0041's closure verifier lived outside the repository | accepted | direct_source | Narrows `RESULT-0041`. | 1790 |
-| CORRECTION-0012 | DECISION-0004's evidence commit was on no branch | accepted | direct_source | Narrows `DECISION-0004`. | 1807 |
-| CORRECTION-0013 | Seven results' reverify commands check today's source, not the frozen one | accepted | direct_source | Narrows those seven records. | 1824 |
-| CORRECTION-0014 | Five results' reverify commands check today's source, not the tree they were admitted at | accepted | direct_source | Narrows those five records. | 1841 |
-| CORRECTION-0015 | The chain-coverage check needs more memory than Node's default | accepted | direct_source | Narrows `RESULT-0011` and `CORRECTION-0003`. | 1863 |
-| CORRECTION-0016 | Four results' reverify runs the whole test suite, which fails for reasons outside their claims | accepted | direct_source | Narrows those four records. | 1880 |
-| CORRECTION-0017 | FACT-0007's check count and RESULT-0011's effect size, measured on today's tree | accepted | direct_source, heuristic_observation | Narrows `FACT-0007` and `RESULT-0011`. | 1897 |
-| HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1563 |
-| HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1577 |
-| QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1593 |
-| QUESTION-0002 | What is the exact maximum? | open | unresolved | What is the maximum legal score over the full frozen horizon? | 1607 |
-| QUESTION-0003 | Which first move is globally best? | open | unresolved | Which first move maximizes final score rather than immediate score? | 1621 |
+| RESULT-0074 | No predeclared lower route-diverse width qualifies | provisional | exact_result, direct_source | No width met all fixed qualification rules. | 1417 |
+| CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1653 |
+| CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1667 |
+| CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1682 |
+| CORRECTION-0004 | RESULT-0015 was invalidated when the beam was made additive | accepted | direct_source, heuristic_observation | Supersedes `RESULT-0015`. | 1699 |
+| CORRECTION-0005 | RESULT-0029 screened 103 distinct starting boards | accepted | exact_result | Supersedes only `RESULT-0029`'s claim that its 104 screened seed observations were 104 distinct starting boards. | 1714 |
+| CORRECTION-0006 | RESULT-0030 exceeded its registered candidate cap | accepted | direct_source, replayed_upper_bound | Supersedes `RESULT-0030` as a protocol-conforming confirmation. | 1729 |
+| CORRECTION-0007 | RESULT-0037 and RESULT-0038 overstate stability and receipt closure | accepted | direct_source, heuristic_observation, unresolved, UNKNOWN | Supersedes the evidence standing of `RESULT-0037` and `RESULT-0038`. | 1744 |
+| CORRECTION-0008 | Off-lattice tiles are recoverable, not permanently dead | accepted | direct_source, unresolved | Narrows `FACT-0006`. | 1759 |
+| CORRECTION-0009 | Recorded human games stop at the target | accepted | exact_result, direct_source | Supersedes the objective interpretation, not the recorded scores. | 1774 |
+| CORRECTION-0010 | RESULT-0001 and RESULT-0004 verifiers were deleted from the tree | accepted | direct_source | Narrows `RESULT-0001` and `RESULT-0004`. | 1789 |
+| CORRECTION-0011 | RESULT-0041's closure verifier lived outside the repository | accepted | direct_source | Narrows `RESULT-0041`. | 1806 |
+| CORRECTION-0012 | DECISION-0004's evidence commit was on no branch | accepted | direct_source | Narrows `DECISION-0004`. | 1823 |
+| CORRECTION-0013 | Seven results' reverify commands check today's source, not the frozen one | accepted | direct_source | Narrows those seven records. | 1840 |
+| CORRECTION-0014 | Five results' reverify commands check today's source, not the tree they were admitted at | accepted | direct_source | Narrows those five records. | 1857 |
+| CORRECTION-0015 | The chain-coverage check needs more memory than Node's default | accepted | direct_source | Narrows `RESULT-0011` and `CORRECTION-0003`. | 1879 |
+| CORRECTION-0016 | Four results' reverify runs the whole test suite, which fails for reasons outside their claims | accepted | direct_source | Narrows those four records. | 1896 |
+| CORRECTION-0017 | FACT-0007's check count and RESULT-0011's effect size, measured on today's tree | accepted | direct_source, heuristic_observation | Narrows `FACT-0007` and `RESULT-0011`. | 1913 |
+| HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1579 |
+| HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1593 |
+| QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1609 |
+| QUESTION-0002 | What is the exact maximum? | open | unresolved | What is the maximum legal score over the full frozen horizon? | 1623 |
+| QUESTION-0003 | Which first move is globally best? | open | unresolved | Which first move maximizes final score rather than immediate score? | 1637 |
 
 ## Superseded or rejected records
 
@@ -114,7 +115,7 @@ Kept for history. Their claims no longer hold as stated; see the listed replacem
 | --- | --- | --- | --- | --- |
 | FACT-0003 | Gravity, persistence, and spawn order | superseded | [CORRECTION-0001] | 297 |
 | FACT-0004 | Level 26 configuration | superseded | [CORRECTION-0002] | 311 |
-| DECISION-0001 | Keep the feasibility study frozen | superseded | [DECISION-0002] | 1419 |
+| DECISION-0001 | Keep the feasibility study frozen | superseded | [DECISION-0002] | 1435 |
 | RESULT-0015 | Keeping eight low-value chain routes raises score 13.8% and win rate 5.5 points | superseded | [CORRECTION-0004] | 603 |
 | RESULT-0029 | Exact micro-puzzle descriptors do not clear the frozen four-region promotion bar | superseded | [CORRECTION-0005] | 779 |
 | RESULT-0030 | Representative-board descriptor proxies reach every target but miss the stability bar | superseded | [CORRECTION-0006, RESULT-0031] | 794 |
