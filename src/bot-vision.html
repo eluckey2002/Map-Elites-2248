@@ -104,6 +104,10 @@
             <div class="subheading-row"><h3 id="branchHeading">Your counterfactual</h3><button id="clearBranch" class="text-button" type="button">Clear turn</button></div>
             <p id="branchHint">Choose “Build my route,” then select touching tiles in order.</p>
             <div id="manualChain" class="manual-chain">No route selected</div>
+            <dl id="routeProjection" class="route-projection" aria-live="polite">
+              <div><dt>Ending tile</dt><dd>—</dd></div>
+              <div><dt>This turn</dt><dd>—</dd></div>
+            </dl>
             <div class="branch-actions">
               <button id="startTakeover" class="text-button" type="button">Take over from this move</button>
               <button id="runBranch" class="branch-button" type="button" disabled>Play this route forward</button>

@@ -232,6 +232,10 @@ th:nth-child(2), td:nth-child(2), .contribution-table th:first-child, .contribut
 .branch-review { margin-top: 15px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
 .branch-review p { color: var(--muted); font-size: 12px; line-height: 1.45; }
 .manual-chain { min-height: 34px; margin: 8px 0; padding: 8px; border: 1px solid #594b7c; border-radius: 5px; color: #dccdff; background: #181427; font-size: 12px; }
+.route-projection { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin: 0 0 10px; border: 1px solid #3c4264; border-radius: 5px; overflow: hidden; background: #3c4264; }
+.route-projection div { min-width: 0; padding: 7px 8px; background: #111522; }
+.route-projection dt { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.route-projection dd { margin: 3px 0 0; color: #f0edff; font-size: 13px; font-weight: 700; }
 .branch-button { min-height: 36px; border: 1px solid var(--cyan); border-radius: 5px; background: #0b313b; color: var(--cyan); padding: 7px 10px; font-weight: 650; }
 .branch-button:disabled { cursor: default; opacity: .45; }
 .branch-actions { display: flex; align-items: center; gap: 8px; }

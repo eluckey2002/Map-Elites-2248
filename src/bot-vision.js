@@ -3,7 +3,7 @@
 
   const ui = Object.fromEntries([
     'sessionForm', 'levelInput', 'seedInput', 'notice', 'recordedView', 'previewView',
-    'branchMode', 'clearBranch', 'startTakeover', 'manualChain', 'runBranch', 'branchResult', 'branchHint', 'branchBoard',
+    'branchMode', 'clearBranch', 'startTakeover', 'manualChain', 'routeProjection', 'runBranch', 'branchResult', 'branchHint', 'branchBoard',
     'boardShell', 'board', 'chainPath', 'previousMove', 'playPause', 'nextMove',
     'moveLabel', 'timeline', 'scoreValue', 'targetValue', 'outcomeValue', 'gridValue',
     'minChainValue', 'sessionIdentity', 'topCount', 'sortMode', 'candidateRows',
@@ -133,6 +133,22 @@
 
   function manualChainSnapshots() {
     return model.manualChain.map(({ x, y }) => ({ x, y, ...manualTile(x, y) }));
+  }
+
+  function chainMultiplier(length) {
+    if (length >= 9) return 5;
+    if (length >= 7) return 3;
+    if (length >= 5) return 2;
+    if (length >= 3) return 1.5;
+    return 1;
+  }
+
+  function routeProjection(chain) {
+    const total = chain.reduce((sum, tile) => sum + tile.value, 0);
+    return {
+      endingValue: total,
+      points: Math.floor(total * chainMultiplier(chain.length)),
+    };
   }
 
   function tileColor(value) {
@@ -348,6 +364,12 @@
     ui.manualChain.textContent = selected.length
       ? `${selected.length} tile${selected.length === 1 ? '' : 's'} · ${chainText(selected)}`
       : 'No route selected';
+    const projection = routeProjection(selected);
+    const [endingTile, turnPoints] = ui.routeProjection.querySelectorAll('dd');
+    endingTile.textContent = selected.length ? number.format(projection.endingValue) : '—';
+    turnPoints.textContent = selected.length >= model.session.minChain
+      ? `${number.format(projection.points)} points`
+      : '—';
     ui.runBranch.disabled = selected.length < model.session.minChain || Boolean(takeover?.outcome);
     ui.runBranch.textContent = takeover ? 'Play this turn' : 'Play this route forward';
     ui.startTakeover.textContent = takeover ? 'Restart takeover' : 'Take over from this move';
