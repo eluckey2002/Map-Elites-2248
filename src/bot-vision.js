@@ -27,6 +27,7 @@
   };
 
   const number = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
+  const ACTIVE_TAKEOVER_KEY = 'bot-vision-active-takeover-v1';
 
   function setNotice(message, error = false) {
     ui.notice.textContent = message;
@@ -136,6 +137,7 @@
       model.branchResult = null;
       model.branchEvidence = null;
     }
+    saveActiveTakeover();
     render();
   }
 
@@ -391,7 +393,7 @@
     ui.branchHint.textContent = takeover?.outcome
       ? 'Takeover complete. Its terminal result is tied to this exact move and route transcript.'
       : takeover
-        ? `You are playing from recorded move ${takeover.startMoveIndex + 1}. Bright tiles can continue your route; click the last selected tile to undo.`
+        ? `You are playing from recorded move ${takeover.startMoveIndex + 1}. Bright tiles can continue your route; this takeover saves automatically after every choice.`
         : model.branchMode
       ? `Click touching tiles in order. Bright tiles can continue your route; you need ${model.session.minChain} or more tiles.`
       : 'Choose “Build my route,” then select touching tiles in order.';
@@ -401,7 +403,9 @@
     renderBranchBoard();
     const saved = JSON.parse(localStorage.getItem(observationKey()) || 'null');
     if (document.activeElement !== ui.observationText) ui.observationText.value = saved?.comment || '';
-    ui.observationState.textContent = saved ? 'Saved locally' : 'Local draft';
+    ui.observationState.textContent = model.takeover && !model.takeover.outcome
+      ? 'Takeover auto-saved'
+      : saved ? 'Saved locally' : 'Local draft';
   }
 
   function renderBranchBoard() {
@@ -449,6 +453,7 @@
     model.branchResult = null;
     model.branchEvidence = null;
     model.takeover = null;
+    clearActiveTakeover();
     render();
   }
 
@@ -558,6 +563,7 @@
       render();
       ui.observationText.value = plan.comment;
       saveObservation(false);
+      saveActiveTakeover();
       setNotice(takeover ? 'Exact takeover restored. Continue building your next route.' : 'Evidence restored.');
     } finally {
       document.querySelector('.workbench').setAttribute('aria-busy', 'false');
@@ -576,7 +582,18 @@
         if (level.level === 52) option.selected = true;
         ui.levelInput.append(option);
       });
-      await runSession();
+      const savedTakeover = localStorage.getItem(ACTIVE_TAKEOVER_KEY);
+      if (!savedTakeover) {
+        await runSession();
+        return;
+      }
+      try {
+        await restoreEvidence(JSON.parse(savedTakeover));
+      } catch (error) {
+        clearActiveTakeover();
+        await runSession();
+        setNotice(`Could not restore the previous takeover: ${error.message}`, true);
+      }
     } catch (error) {
       setNotice(error.message, true);
     }
@@ -634,6 +651,7 @@
     model.manualChain = [];
     model.branchEvidence = null;
     model.branchResult = `Takeover starts before recorded move ${model.moveIndex + 1}. Your first route now replaces that bot choice.`;
+    saveActiveTakeover();
     render();
   }
 
@@ -672,15 +690,15 @@
       } else {
         model.branchResult = `${number.format(latest.points)} points this turn · ${body.movesRemaining} moves remaining. Build your next route.`;
       }
+      saveActiveTakeover();
     } catch (error) {
       model.branchResult = error.message;
     }
     render();
   }
 
-  function saveObservation(announce = true) {
-    const key = observationKey();
-    const record = {
+  function observationRecord() {
+    return {
       schemaVersion: 1,
       sessionIdentity: model.session.sessionIdentity,
       level: model.session.level,
@@ -693,10 +711,27 @@
       comment: ui.observationText.value.trim(),
       savedAt: new Date().toISOString(),
     };
+  }
+
+  function saveObservation(announce = true) {
+    const key = observationKey();
+    const record = observationRecord();
     localStorage.setItem(key, JSON.stringify(record));
     ui.observationState.textContent = 'Saved locally';
     if (announce) setNotice(`Saved observation for move ${model.moveIndex + 1}. Export it when you want to turn it into evidence.`);
     return record;
+  }
+
+  function saveActiveTakeover() {
+    if (!model.takeover || model.takeover.outcome) {
+      clearActiveTakeover();
+      return;
+    }
+    localStorage.setItem(ACTIVE_TAKEOVER_KEY, JSON.stringify(observationRecord()));
+  }
+
+  function clearActiveTakeover() {
+    localStorage.removeItem(ACTIVE_TAKEOVER_KEY);
   }
 
   function exportObservation() {
@@ -710,7 +745,7 @@
     URL.revokeObjectURL(link.href);
   }
 
-  ui.sessionForm.addEventListener('submit', (event) => { event.preventDefault(); runSession(); });
+  ui.sessionForm.addEventListener('submit', (event) => { event.preventDefault(); clearActiveTakeover(); runSession(); });
   ui.previousMove.addEventListener('click', () => setMove(model.moveIndex - 1));
   ui.nextMove.addEventListener('click', () => setMove(model.moveIndex + 1));
   ui.playPause.addEventListener('click', () => {
@@ -726,12 +761,14 @@
     model.view = 'recorded';
     model.branchMode = false;
     model.takeover = null;
+    clearActiveTakeover();
     render();
   });
   ui.previewView.addEventListener('click', () => {
     model.view = 'preview';
     model.branchMode = false;
     model.takeover = null;
+    clearActiveTakeover();
     render();
   });
   ui.branchMode.addEventListener('click', () => {
@@ -747,6 +784,7 @@
       model.branchResult = null;
       model.branchEvidence = null;
     }
+    saveActiveTakeover();
     render();
   });
   ui.startTakeover.addEventListener('click', beginTakeover);
