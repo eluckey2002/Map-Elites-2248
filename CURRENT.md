@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Active policy work — 2026-10-01
+
+Before following the historical frontier below, read [ACTIVE-POLICY-WORK.md](ACTIVE-POLICY-WORK.md). It names the current champion, the one active policy diagnostic, the parked Ladder prototype, the exact next replay question, and the worktree that contains it. The frontier below remains historical context; it does not by itself identify the newest active policy checkpoint.
+
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
 ## Evidence-capture hardening — 2026-09-26
