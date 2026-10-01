@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Power-of-two policy lab</title>
+  <link rel="stylesheet" href="/policy-lab.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Inspection only · no champion change · no fresh evaluation panel</p>
+    <h1>Power-of-two policy lab</h1>
+    <p class="intro">At each move, the challenger chooses the highest-immediate-points legal chain whose survivor is a power of two. There is no bomb exception or hidden fallback.</p>
+    <form id="load-form"><label>Level <input id="level" type="number" min="1" value="58"></label><label>Already-used seed <input id="seed" type="number" min="0" value="42000001"></label><button>Load replay</button></form>
+    <section class="controls"><button id="previous" disabled>← Previous move</button><strong id="step">Load a replay</strong><button id="next" disabled>Next move →</button></section>
+    <p id="note" role="status"></p>
+    <section id="comparison" class="comparison" aria-live="polite"></section>
+  </main>
+  <script src="/policy-lab.js"></script>
+</body>
+</html>

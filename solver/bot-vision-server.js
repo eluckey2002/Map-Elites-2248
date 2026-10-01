@@ -6,6 +6,7 @@ const path = require('node:path');
 const { recordSession } = require('./record-session');
 const { branchCounterfactual, takeoverReplay } = require('./counterfactual-review');
 const { LEVELS } = require('../src/game');
+const { comparePolicies } = require('./policy-lab');
 
 const ROOT = path.join(__dirname, '..');
 const STATIC_FILES = new Map([
@@ -14,6 +15,9 @@ const STATIC_FILES = new Map([
   ['/bot-vision.css', ['src/bot-vision.css', 'text/css; charset=utf-8']],
   ['/bot-vision-evidence.js', ['src/bot-vision-evidence.js', 'text/javascript; charset=utf-8']],
   ['/bot-vision.js', ['src/bot-vision.js', 'text/javascript; charset=utf-8']],
+  ['/policy-lab.html', ['src/policy-lab.html', 'text/html; charset=utf-8']],
+  ['/policy-lab.css', ['src/policy-lab.css', 'text/css; charset=utf-8']],
+  ['/policy-lab.js', ['src/policy-lab.js', 'text/javascript; charset=utf-8']],
 ]);
 
 function jsonResponse(response, status, value) {
@@ -124,6 +128,17 @@ function createBotVisionServer() {
         jsonResponse(response, 200, recordSession(level, seed));
       } catch (error) {
         jsonResponse(response, 500, { error: `session generation failed: ${error.message}` });
+      }
+      return;
+    }
+
+    if (request.method === 'GET' && url.pathname === '/api/policy-lab') {
+      try {
+        const levelNumber = boundedInteger(url.searchParams.get('level'), 'level', 1, 9999);
+        const seed = boundedInteger(url.searchParams.get('seed'), 'seed', 0, 0xffffffff);
+        jsonResponse(response, 200, comparePolicies(levelNumber, seed));
+      } catch (error) {
+        jsonResponse(response, 400, { error: error.message });
       }
       return;
     }
