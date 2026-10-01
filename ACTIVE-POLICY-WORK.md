@@ -4,7 +4,11 @@ This is the short, human-facing resume page for policy work. It is navigation,
 not evidence. Follow its links before making a policy claim or a promotion
 decision.
 
-**Last updated:** 2026-10-01
+**Last updated:** 2026-09-30 (America/Chicago)
+
+**Priority order:** [POLICY-BACKLOG.md](POLICY-BACKLOG.md) is the single
+Now / Next / Parked queue. Do its one **Now** item before opening a historical
+backlog or another policy branch.
 
 ## Current state
 
