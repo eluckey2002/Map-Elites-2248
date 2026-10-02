@@ -25,7 +25,7 @@ console.log('stage candidates games_per_candidate mean_wall_seconds mean_summed_
 for (const [tag, stage] of Object.entries(stages)) {
   const entries = panels.filter((panel) => panel.tag === tag);
   if (!entries.length) {
-    console.log(stage + ' 0 NOT_RUN NOT_RUN NOT_RUN');
+    console.log(stage + ' 0 UNVERIFIED_NOT_RUN UNVERIFIED_NOT_RUN UNVERIFIED_NOT_RUN');
   } else {
     console.log(stage + ' ' + entries.length + ' ' + entries[0].games
       + ' ' + average(entries.map((panel) => panel.wallSeconds)).toFixed(3)

@@ -69,6 +69,8 @@ captured('node solver/ruler/run.js --protocol RESULT-0058', result + '/run-outpu
 });
 captured('node docs/goals/trustworthy-ruler/print-timing.js ' + result + '/raw-games.json',
   result + '/timing-output.txt');
+captured('node docs/goals/trustworthy-ruler/print-winner-curse.js ' + result + '/raw-games.json',
+  result + '/winner-curse-output.txt');
 console.log('\n6. SYNTHETIC ADMISSION — actual test names');
 captured('node --test solver/tests/ruler.test.js', result + '/admission-output.txt');
 console.log('\n10. INDEPENDENT RECOMPUTE');
