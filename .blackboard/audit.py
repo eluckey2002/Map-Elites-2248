@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sqlite3
 import sys
 from pathlib import Path
@@ -19,9 +20,15 @@ KIND_TEXT = {
 
 def written_after_marker(private: Path) -> bool:
     """Has something written to a private board after it was migrated or set aside?  An older tool on a branch from
-    before boards were shared would, and it leaves the marker alone, so only the file times can tell."""
+    before boards were shared would, and it leaves the marker alone.  The marker records the database's size and
+    modification time as they were when it was written; any difference since means a write, however soon after."""
+    database, marker = private / "board.sqlite", private / locate.MIGRATED_MARKER
     try:
-        return (private / "board.sqlite").stat().st_mtime > (private / locate.MIGRATED_MARKER).stat().st_mtime + 2
+        recorded = re.search(r"^fingerprint: size=(\d+) mtime_ns=(\d+)$", marker.read_text(encoding="utf-8"), re.M)
+        stat = database.stat()
+        if recorded:
+            return (stat.st_size, stat.st_mtime_ns) != (int(recorded.group(1)), int(recorded.group(2)))
+        return stat.st_mtime > marker.stat().st_mtime + 2  # a marker without a fingerprint (hand-made): best effort
     except OSError:
         return False
 
@@ -60,6 +67,9 @@ def where() -> int:
 
 
 def problems() -> list[str]:
+    if locate.location()[0] == "unavailable":
+        # Not "no problems": nothing was looked at.
+        return ["git could not be run here, so the shared board cannot be located and nothing was audited"]
     found: list[str] = []
     state, text = legacy_state()
     if state in ("unmigrated", "diverged"):

@@ -18,7 +18,6 @@ import stat
 import subprocess
 import sys
 import tempfile
-import time
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -345,6 +344,17 @@ def test_leases(rt, base: Path) -> None:
         expect(row("g1")["state"] == "queued", "an unreadable timestamp was not treated as lapsed")
         expect(row("ok1")["state"] == "claimed", "a healthy claim was released")
 
+        # A holder that went quiet past its limit but was NOT replaced may still report: the lease only matters once
+        # someone takes the claim over, and the single write lock orders a renewal and a takeover one way or the other.
+        create("slow", 60)
+        claim("slow", "x")
+        clock.advance(61)
+        rt.progress(ns(id="slow", actor="x", detail="slow but alive"))
+        expect_error(lambda: claim("slow", "y", "try"), "live claim")
+        clock.advance(61)
+        claim("slow", "y", "x went quiet again")
+        expect_error(lambda: rt.progress(ns(id="slow", actor="x", detail="too late")), "only y")
+
 
 def test_schema_upgrade_and_guard(rt, base: Path) -> None:
     import query_liveboard
@@ -439,9 +449,13 @@ def test_migrate(base: Path) -> None:
     claimed = cli(repo, "audit")
     expect("old-claimed" in claimed.stdout and "expired" in claimed.stdout and "UNMIGRATED" not in claimed.stdout,
            f"a migrated legacy claim was not judged by its lease: {claimed.stdout}")
-    # an older tool that resumes writing to a settled private board leaves the marker alone; only file times show it
-    long_ago = time.time() - 100
-    os.utime(private / locate.MIGRATED_MARKER, (long_ago, long_ago))
+    # an older tool that resumes writing to a settled private board leaves the marker alone.  Make the write land only
+    # 0.1s after the marker, by moving the marker's own time: a comparison with a tolerance could never see that.
+    with db(private / "board.sqlite") as connection:
+        connection.execute("INSERT INTO events(at, kind, task_id, actor, detail) VALUES "
+                           "('2026-10-02T00:00:00+00:00', 'progress_reported', 'old-claimed', 'legacy-agent', 'a write after the marker')")
+    written = (private / "board.sqlite").stat().st_mtime
+    os.utime(private / locate.MIGRATED_MARKER, (written - 0.1, written - 0.1))
     diverged = cli(repo, "audit")
     expect(diverged.returncode == 1 and "CHANGED after it was set aside" in diverged.stdout, f"a write after the marker went unnoticed: {diverged.stdout}")
 
@@ -511,6 +525,50 @@ def test_awkward_paths(base: Path) -> None:
     expect(record(repo, "dflt")["task"]["stale_after_seconds"] == 3600, "the default --stale-after is not an hour")
 
 
+def test_migration_races(rt, base: Path) -> None:
+    """Nothing may commit to a board between the moment migrate reads it and the moment it is settled."""
+    import migrate
+
+    path = base / "lock" / "board.sqlite"
+    make_v1_board(path, None)
+    with migrate.writers_paused(path):
+        other = sqlite3.connect(path, timeout=0.2, isolation_level=None)
+        try:
+            try:
+                other.execute("BEGIN IMMEDIATE")
+                raise AssertionError("another writer got in while the board was held")
+            except sqlite3.OperationalError:
+                pass
+        finally:
+            other.close()
+    freed = sqlite3.connect(path, timeout=1, isolation_level=None)  # and the hold is released afterwards
+    freed.execute("BEGIN IMMEDIATE")
+    freed.execute("ROLLBACK")
+    freed.close()
+
+    # another worktree writes the first task into the empty shared board just before it would be set aside
+    repo, (sibling,) = make_repo(base, "swap", ("sib",))
+    made = make_v1_board(repo / ".blackboard" / "runtime" / "board.sqlite", None)
+    expect(cli(sibling, "init").returncode == 0, "the sibling's init failed")
+    shared = repo / ".git" / "blackboard"
+
+    def other_worktree_writes() -> None:
+        with using_board(rt, shared):
+            rt.create(ns(id="first", question="q", specialty="s", scope="b", acceptance="a", dependencies="", reviewer="checker",
+                         stop_condition="d", stale_after=60, actor="sib"))
+
+    with patched(locate, "TOOL_ROOT", repo / ".blackboard"), patched(migrate, "BEFORE_SWAP", other_worktree_writes):
+        expect_error(lambda: migrate.migrate(ns(actor="t", abandon=False)), "another worktree wrote")
+    with db(shared / "board.sqlite") as connection:
+        expect(connection.execute("SELECT COUNT(*) FROM tasks").fetchone()[0] == 1, "the concurrent task was lost")
+    expect(not list((repo / ".git").glob("blackboard.empty-*")), "a board that gained data was set aside")
+    expect(not list((repo / ".git").glob("blackboard.migrating-*")), "a half-built stage was left behind")
+    expect(not (repo / ".blackboard" / "runtime" / locate.MIGRATED_MARKER).exists(), "the private board was marked migrated anyway")
+    with patched(locate, "TOOL_ROOT", repo / ".blackboard"):  # with the shared board now holding data, merging is refused
+        expect_error(lambda: migrate.migrate(ns(actor="t", abandon=False)), "Boards are not merged")
+    expect(made["tasks"] == 3, "fixture changed")
+
+
 def test_odd_database_paths(base: Path) -> None:
     """Characters that mean something in a URI must not change which database is opened."""
     folder = base / "odd #1 %41 dir"
@@ -534,6 +592,8 @@ def test_git_unavailable(base: Path) -> None:
     expect(init.returncode == 1 and "git" in init.stderr, f"init proceeded without git: {init.stdout}{init.stderr}")
     expect(not (repo / ".blackboard" / "runtime" / "board.sqlite").exists(), "a private board was created inside a git checkout")
     expect(cli(repo, "query", "summary", env=bare_path).returncode == 2, "query proceeded without git")
+    audited = cli(repo, "audit", env=bare_path)
+    expect(audited.returncode == 1 and "nothing was audited" in audited.stdout, f"audit reported a clean bill without looking: {audited.stdout}")
     expect(cli(repo, "init").returncode == 0, "with git available init should work")
 
 
@@ -558,6 +618,7 @@ def run(rt) -> None:
             ("schema upgrade is lossless and idempotent; a newer schema is refused", lambda: test_schema_upgrade_and_guard(rt, base)),
             ("migrate copies, rewrites artifact paths, and an unmigrated board is never ignored", lambda: test_migrate(base)),
             ("accented and spaced worktree paths are not mistaken for gone", lambda: test_awkward_paths(base)),
+            ("a migration holds off writers and will not replace a board that gained data", lambda: test_migration_races(rt, base)),
             ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),
             ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),
             ("a worktree's leftover private board shows up in audit", lambda: test_old_worktree_boards_are_visible(base)),

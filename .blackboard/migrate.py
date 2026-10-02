@@ -13,13 +13,18 @@ import shutil
 import sqlite3
 import sys
 import time
+from contextlib import contextmanager
 from pathlib import Path
+from typing import Iterator
 
 import leases
 import locate
 import runtime
 
 SKIP = {"board.sqlite", "board.sqlite-journal", "board.sqlite-wal", "board.sqlite-shm", locate.MIGRATED_MARKER}
+BEFORE_SWAP = None  # tests set a callable here; it runs just before the staged board replaces the shared one
+SLIPPED = ("another worktree wrote to the shared board at {target} while this migration was being prepared; "
+           "nothing was changed. Run migrate again.")
 
 
 def counts(connection: sqlite3.Connection) -> dict[str, int]:
@@ -51,7 +56,30 @@ def recorded_counts(shared_db: Path, legacy: Path) -> dict[str, int] | None:
 
 
 def write_marker(legacy: Path, message: str) -> None:
-    (legacy / locate.MIGRATED_MARKER).write_text(message + "\n", encoding="utf-8")
+    """The marker records the private database's size and modification time as they are NOW, so a later write by an
+    older tool shows up however soon after the marker it happens (a bare time comparison would need a tolerance,
+    and anything inside the tolerance would be invisible for good)."""
+    stat = (legacy / "board.sqlite").stat()
+    (legacy / locate.MIGRATED_MARKER).write_text(
+        f"{message}\nfingerprint: size={stat.st_size} mtime_ns={stat.st_mtime_ns}\n", encoding="utf-8")
+
+
+@contextmanager
+def writers_paused(database: Path) -> Iterator[sqlite3.Connection]:
+    """Hold a database's write lock so nothing else can commit to it meanwhile.  Nothing is written by us: the lock
+    is taken with BEGIN IMMEDIATE and released by rolling back, so the file is never modified."""
+    guard = sqlite3.connect(database, timeout=10, isolation_level=None)
+    guard.row_factory = sqlite3.Row
+    try:
+        guard.execute("BEGIN IMMEDIATE")
+        locate.check_schema_version(guard)
+        yield guard
+    finally:
+        try:
+            guard.execute("ROLLBACK")
+        except sqlite3.Error:
+            pass
+        guard.close()
 
 
 def copy_files(legacy: Path, stage: Path) -> tuple[int, list[str]]:
@@ -100,8 +128,13 @@ def migrate(args: argparse.Namespace) -> None:
         raise ValueError(f"no private board at {source}")
     if (legacy / locate.MIGRATED_MARKER).exists():
         raise ValueError(f"the private board at {legacy} was already migrated or set aside; see {locate.MIGRATED_MARKER} there")
-    with locate.readonly(source) as connection:
-        before = counts(connection)
+    with writers_paused(source) as guard:
+        settle(args, legacy, source, target, guard)
+
+
+def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, guard: sqlite3.Connection) -> None:
+    """Everything after the checks, run while no other writer can commit to the private board."""
+    before = counts(guard)
     shared_db = target / "board.sqlite"
 
     if args.abandon:
@@ -143,6 +176,8 @@ def migrate(args: argparse.Namespace) -> None:
     shutil.rmtree(stage, ignore_errors=True)
     try:
         stage.mkdir(parents=True)
+        # The guard holds the write lock but must not be the backup's source: SQLite cannot back up from the very
+        # connection that holds the lock, and Python's backup() then retries forever.  Readers are not blocked by it.
         source_connection = locate.open_readonly(source)
         copy = sqlite3.connect(stage / "board.sqlite")
         try:
@@ -164,8 +199,18 @@ def migrate(args: argparse.Namespace) -> None:
         expected = {**before, "events": before["events"] + 1}
         if after != expected or not intact:
             raise ValueError(f"the copy does not match the original (expected {expected}, got {after}); nothing was changed")
+        if BEFORE_SWAP is not None:
+            BEFORE_SWAP()  # test seam: lets a test play another worktree writing at the worst moment
         if aside is not None:
+            with writers_paused(shared_db) as shared_guard:  # nothing may be written to a board that is about to be replaced
+                if any(counts(shared_guard).values()):
+                    raise ValueError(SLIPPED.format(target=target))
             target.rename(aside)
+            with locate.readonly(aside / "board.sqlite") as late:
+                slipped = any(counts(late).values())
+            if slipped:
+                aside.rename(target)  # a write landed during the rename itself; put the board back untouched
+                raise ValueError(SLIPPED.format(target=target))
         elif target.exists():
             target.rmdir()
         try:
