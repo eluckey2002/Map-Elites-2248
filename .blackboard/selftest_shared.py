@@ -625,6 +625,30 @@ def test_migration_races(rt, base: Path) -> None:
     expect((shared3 / "board.sqlite").is_file(), "the board file was left stranded outside the active folder")
     expect((shared3 / "snapshots" / "x.json").is_file(), "the racer's file was lost")
 
+    # ...or another worktree runs `init` right then, creating a database under the same name.  Both databases are empty
+    # by construction (the original was checked under its lock), so keeping the racer's loses nothing and the board works.
+    init_race, (sibling4,) = make_repo(base, "swap4", ("sib",))
+    make_v1_board(init_race / ".blackboard" / "runtime" / "board.sqlite", None)
+    expect(cli(sibling4, "init").returncode == 0, "the fourth sibling's init failed")
+    shared4 = init_race / ".git" / "blackboard"
+
+    def racer_runs_init() -> None:
+        with using_board(rt, shared4):
+            rt.init(ns())
+
+    with patched(locate, "TOOL_ROOT", init_race / ".blackboard"), patched(migrate, "HOOKS", {"after_aside": racer_runs_init}):
+        try:
+            migrate.migrate(ns(actor="t", abandon=False))
+            raise AssertionError("migration succeeded although a database was created under it")
+        except OSError:
+            pass
+    with db(shared4 / "board.sqlite") as connection:
+        expect(connection.execute("SELECT COUNT(*) FROM tasks").fetchone()[0] == 0, "the active board is not usable")
+    asides = list((init_race / ".git").glob("blackboard.empty-*"))
+    expect(len(asides) == 1, f"expected the original empty board to be kept aside, found {asides}")
+    with db(asides[0] / "board.sqlite") as connection:
+        expect(connection.execute("SELECT COUNT(*) FROM tasks").fetchone()[0] == 0, "the board that was set aside held data")
+
 
 def test_file_written_after_marker(base: Path) -> None:
     """An artifact or snapshot an older tool saves beside a settled private board changes no row."""
@@ -637,6 +661,30 @@ def test_file_written_after_marker(base: Path) -> None:
     (private / "snapshots" / "late.json").write_text("{}", encoding="utf-8")  # the database is not touched
     flagged = cli(repo, "audit")
     expect("CHANGED after it was set aside" in flagged.stdout, f"a file saved beside a settled board went unnoticed: {flagged.stdout}")
+
+
+def test_wal_checkpoint_is_not_a_write(base: Path) -> None:
+    """Closing a reader can checkpoint the log and change the database file's time although nothing was written; a
+    fingerprint of the file would then report a change for ever.  A fingerprint of the contents does not."""
+    repo, _ = make_repo(base, "walck")
+    private = repo / ".blackboard" / "runtime"
+    make_v1_board(private / "board.sqlite", None)
+    with db(private / "board.sqlite") as connection:
+        connection.execute("PRAGMA journal_mode=WAL")
+    keep = sqlite3.connect(private / "board.sqlite")  # an older process that stays connected
+    try:
+        keep.execute("SELECT COUNT(*) FROM tasks").fetchall()
+        writer = sqlite3.connect(private / "board.sqlite")
+        writer.execute("INSERT INTO events(at, kind, task_id, actor, detail) VALUES "
+                       "('2026-10-02T00:00:00+00:00', 'progress_reported', 'old-claimed', 'legacy-agent', 'committed, not yet checkpointed')")
+        writer.commit()
+        writer.close()  # the commit now lives in the log, because `keep` prevents a checkpoint
+        done = cli(repo, "migrate", "--actor", "t")
+        expect(done.returncode == 0, f"migrating with a live log failed: {done.stdout}{done.stderr}")
+        expect("CHANGED after" not in cli(repo, "audit").stdout, "reported a change right after migrating")
+    finally:
+        keep.close()  # closing the last connection checkpoints the log and changes the file, though nothing was written
+    expect("CHANGED after" not in cli(repo, "audit").stdout, "a checkpoint with no write was reported as a change")
 
 
 def test_wal_commit_is_noticed(base: Path) -> None:
@@ -748,6 +796,7 @@ def run(rt) -> None:
             ("the shared board stays locked until the replacement is installed (non-Windows)", lambda: test_lock_held_through_the_swap(base)),
             ("a file saved beside a settled private board is noticed", lambda: test_file_written_after_marker(base)),
             ("a commit sitting in a write-ahead log is noticed after migration", lambda: test_wal_commit_is_noticed(base)),
+            ("a checkpoint that wrote nothing is not reported as a change", lambda: test_wal_checkpoint_is_not_a_write(base)),
             ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),
             ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),
             ("a worktree's leftover private board shows up in audit", lambda: test_old_worktree_boards_are_visible(base)),

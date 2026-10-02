@@ -175,17 +175,26 @@ def files_digest(files: list[tuple[str, int, int]]) -> str:
 
 
 def db_fingerprint(folder: Path) -> str:
-    """Size and modification time of the board's database and, if there is one, its write-ahead log.  A commit can live
-    in the log while the main file is untouched, so a main-file-only check would miss it."""
-    parts = []
-    for name in ("board.sqlite", "board.sqlite-wal"):
-        path = Path(folder) / name
-        if path.exists():
-            stat = path.stat()
-            if name.endswith("-wal") and stat.st_size == 0:
-                continue  # an empty log holds nothing, and open connections create and remove one on their own
-            parts.append(f"{name}={stat.st_size}:{stat.st_mtime_ns}")
-    return ";".join(parts)
+    """A fingerprint of what the board CONTAINS: a hash of every row of the ledger's tables, read through SQLite.
+
+    Fingerprinting the files instead (size, modification time, the write-ahead log) is fragile both ways: a commit can
+    sit in the log while the main file is untouched, and merely closing a reader can checkpoint the log and change the
+    file's time with nothing written.  What SQLite returns does not depend on either."""
+    path = Path(folder) / "board.sqlite"
+    if not path.is_file():
+        return ""
+    digest = hashlib.sha256()
+    try:
+        connection = sqlite3.connect(readonly_uri(path), uri=True, timeout=2)
+        try:
+            for table in ("tasks", "events", "defects"):
+                for row in connection.execute(f"SELECT * FROM {table} ORDER BY 1"):
+                    digest.update(repr(tuple(row)).encode("utf-8"))
+        finally:
+            connection.close()
+    except sqlite3.Error:
+        return "unreadable"
+    return digest.hexdigest()[:16]
 
 
 def readonly_uri(database: Path | str) -> str:
