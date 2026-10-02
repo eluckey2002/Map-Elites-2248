@@ -156,21 +156,29 @@ def live_worktrees() -> set[str] | None:
 DB_FILES = frozenset({"board.sqlite", "board.sqlite-journal", "board.sqlite-wal", "board.sqlite-shm"})
 
 
-def folder_files(folder: Path) -> list[tuple[str, int, int]]:
-    """Name, size and modification time of every file in a private board's folder except the database and the
+def content_hash(path: Path) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()[:16]
+
+
+def folder_files(folder: Path) -> list[tuple[str, int, str]]:
+    """Name, size and a hash of the CONTENTS of every file in a private board's folder except the database and the
     marker (artifacts, snapshots).  Links are not followed.  The write lock covers the database only, so these are
-    how a write beside it is noticed."""
+    how a write beside it is noticed.  Contents, not modification times: a same-length overwrite that puts the old
+    time back changes nothing a timestamp can see."""
     found = []
     for directory, _subdirs, names in os.walk(folder, followlinks=False):
         for name in names:
             path = Path(directory) / name
             if name not in DB_FILES and name != MIGRATED_MARKER and not path.is_symlink():
-                stat = path.stat()
-                found.append((str(path.relative_to(folder)), stat.st_size, stat.st_mtime_ns))
+                found.append((str(path.relative_to(folder)), path.stat().st_size, content_hash(path)))
     return sorted(found)
 
 
-def files_digest(files: list[tuple[str, int, int]]) -> str:
+def files_digest(files: list[tuple[str, int, str]]) -> str:
     return hashlib.sha256(json.dumps(files).encode("utf-8")).hexdigest()[:16]
 
 

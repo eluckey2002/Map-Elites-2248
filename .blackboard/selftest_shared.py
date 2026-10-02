@@ -671,6 +671,20 @@ def test_file_written_after_marker(base: Path) -> None:
     flagged = cli(repo, "audit")
     expect("CHANGED after it was set aside" in flagged.stdout, f"a file saved beside a settled board went unnoticed: {flagged.stdout}")
 
+    # an older tool overwrites an artifact with different bytes of the same length and puts the old modification time back
+    other, _ = make_repo(base, "overwrite")
+    private2 = other / ".blackboard" / "runtime"
+    make_v1_board(private2 / "board.sqlite", None)
+    note = private2 / "note.md"
+    note.write_text("OLD!", encoding="utf-8")
+    expect(cli(other, "migrate", "--actor", "t").returncode == 0, "migrate failed")
+    before = note.stat()
+    note.write_text("NEW!", encoding="utf-8")
+    os.utime(note, ns=(before.st_atime_ns, before.st_mtime_ns))
+    expect(note.stat().st_size == before.st_size and note.stat().st_mtime_ns == before.st_mtime_ns, "the overwrite changed size or time")
+    quiet = cli(other, "audit")
+    expect("CHANGED after it was set aside" in quiet.stdout, f"a same-size overwrite that kept its mtime went unnoticed: {quiet.stdout}")
+
 
 def test_wal_checkpoint_is_not_a_write(base: Path) -> None:
     """Closing a reader can checkpoint the log and change the database file's time although nothing was written; a
