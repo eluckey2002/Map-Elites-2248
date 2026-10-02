@@ -1,0 +1,11 @@
+✔ holdout rule uses unrounded t just above 3 even when display rounds to 3 (0.8271ms)
+✔ holdout rule refuses t exactly 3 (0.1588ms)
+✔ holdout rule refuses net win regression despite positive lift and t above 3 (0.1423ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.3949

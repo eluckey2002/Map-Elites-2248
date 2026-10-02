@@ -76,6 +76,13 @@ captured('node --test solver/tests/ruler.test.js', result + '/admission-output.t
 console.log('\n10. INDEPENDENT RECOMPUTE');
 captured('node solver/ruler/recompute.js ' + result + '/raw-games.json',
   result + '/recompute-output.txt');
+captured('node solver/ruler/recompute-legacy.js ' + result + '/raw-games.json .orch/policy-search-02.cells.json',
+  result + '/legacy-recompute-output.txt');
+captured('node --test solver/tests/rulerHoldoutBoundary.test.js (expected negative before repair)',
+  result + '/boundary-before-output.txt');
+captured('node --test solver/tests/rulerHoldoutBoundary.test.js (after unrounded-t repair)',
+  result + '/boundary-after-output.txt');
+captured('sealed artifact and frozen-source checks before repair', result + '/seal-output.txt');
 console.log('\nCLOSE-OUT');
 captured('node --test solver/tests/*.test.js (close-out; failure names and totals)',
   'docs/goals/trustworthy-ruler/closeout-tests.txt', testSummary);

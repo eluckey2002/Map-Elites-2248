@@ -10,19 +10,44 @@ const path = require('node:path');
 const {
   makeRng, createLevelState, executeChain, applyGravity, spawnNewTiles, tickBlockers, checkBombs,
 } = require('../engine');
-const { chooseMove, chooseBaseMove } = require('../bot');
+const { chooseMove, chooseBaseMove, DEFAULT_PARAMS } = require('../bot');
 
 const file = process.argv[2] || path.join(__dirname, '..', '..', 'experiments', 'RESULT-0058', 'raw-games.json');
 const raw = JSON.parse(fs.readFileSync(file, 'utf8'));
 const differences = [];
+const fixedLevels = [1, 5, 10, 15, 20, 26, 30, 35, 40, 45, 50, 52];
+const fixedBlocks = {
+  null: [50000000, 100], positive3000: [50100000, 250],
+  bad72: [50300000, 6], bad600: [50301000, 50],
+  curseScreen: [50400000, 6], curseFresh: [50401000, 6],
+  map72: [50500000, 6], map600: [50501000, 50], map3000: [50502000, 250],
+  mapFresh: [50503000, 6], mapHoldout: [50504000, 250],
+};
 const keyed = new Map();
 for (const row of raw.games) {
+  const outcome = row.outcome;
+  if (!outcome || typeof outcome.win !== 'boolean' || !Number.isInteger(outcome.moveBudget)
+    || outcome.moveBudget < 1 || (outcome.win && (!Number.isInteger(outcome.movesToTarget)
+      || outcome.movesToTarget < 1 || outcome.movesToTarget > outcome.moveBudget))
+    || (!outcome.win && outcome.movesToTarget !== null)) {
+    differences.push('malformed target outcome ' + row.stage + ' ' + row.level + ' ' + row.seed);
+  }
   const key = [row.stage, row.arm, row.policyId].join('|');
   if (!keyed.has(key)) keyed.set(key, []);
   keyed.get(key).push(row);
 }
 const panelIndex = new Map();
 for (const panel of raw.panels) {
+  const shortBlock = /^positive72-(\d\d)$/.exec(panel.tag);
+  const block = shortBlock && Number(shortBlock[1]) < 50
+    ? [50200000 + 6 * Number(shortBlock[1]), 6] : fixedBlocks[panel.tag];
+  if (!block) differences.push('undeclared panel tag ' + panel.tag);
+  else {
+    compare(panel.levels, panel.tag === 'null' ? fixedLevels.slice(0, 10) : fixedLevels,
+      'declared levels ' + panel.tag);
+    compare(panel.seeds, Array.from({ length: block[1] }, (_, index) => block[0] + index),
+      'declared seeds ' + panel.tag);
+  }
   const key = [panel.tag, panel.arm, panel.policyId].join('|');
   if (panelIndex.has(key)) differences.push('duplicate panel ' + key);
   panelIndex.set(key, panel);
@@ -45,8 +70,9 @@ if (raw.panels.reduce((sum, panel) => sum + panel.games, 0) !== raw.games.length
 }
 for (const key of keyed.keys()) if (!panelIndex.has(key)) differences.push('orphan raw panel ' + key);
 
-function rows(tag, arm) {
-  const panels = raw.panels.filter((panel) => panel.tag === tag && panel.arm === arm);
+function rows(tag, arm, policyId = null) {
+  const panels = raw.panels.filter((panel) => panel.tag === tag && panel.arm === arm
+    && (policyId === null || panel.policyId === policyId));
   if (panels.length !== 1) throw new Error('expected one ' + tag + ' ' + arm + ' panel, got ' + panels.length);
   const panel = panels[0];
   return { panel, rows: keyed.get([tag, arm, panel.policyId].join('|')) || [] };
@@ -63,8 +89,8 @@ function axisSE(groups) {
   return Math.sqrt(variance / means.length);
 }
 
-function aggregate(tag) {
-  const candidate = rows(tag, 'candidate');
+function aggregate(tag, policyId = null) {
+  const candidate = rows(tag, 'candidate', policyId);
   const reference = rows(tag, 'reference');
   const { levels, seeds } = candidate.panel;
   if (JSON.stringify(levels) !== JSON.stringify(reference.panel.levels)
@@ -147,14 +173,16 @@ function stageThree(summary) {
   return summary.netWins > 0 || (summary.netWins === 0 && summary.meanMovesSaved > 0);
 }
 function stronger(summary) {
-  const t = summary.moveSe === 0
-    ? (summary.meanMovesSaved > 0 ? 'Infinity' : '0')
+  const statistic = summary.moveSe === 0
+    ? (summary.meanMovesSaved > 0 ? Infinity : 0)
     : summary.moveSe === null || summary.meanMovesSaved === null
-      ? 'UNKNOWN' : (summary.meanMovesSaved / summary.moveSe).toFixed(6);
+      ? NaN : summary.meanMovesSaved / summary.moveSe;
+  const t = Number.isNaN(statistic) ? 'UNKNOWN'
+    : Number.isFinite(statistic) ? statistic.toFixed(6) : 'Infinity';
   return {
     holdoutLiftPct: summary.relativeMovesPct,
     t,
-    held: summary.netWins >= 0 && summary.relativeMovesPct > 0 && Number(t) > 3,
+    held: summary.netWins >= 0 && summary.relativeMovesPct > 0 && statistic > 3,
   };
 }
 
@@ -178,11 +206,56 @@ for (const tag of raw.manifest.positive.positive72Tags) {
   if (fitness(aggregate(tag), zero) > 0) correct += 1;
 }
 compare(correct, raw.headlines.positive.correct, 'item4.signCorrect');
+compare(raw.manifest.positive.positive72Tags.length, 50, 'item4.disjointBlocks');
+compare(new Set(raw.manifest.positive.positive72Tags).size, 50, 'item4.uniqueBlocks');
+compare(raw.headlines.positive.blocks, 50, 'item4.printedBlocks');
 console.log('RECOMPUTE item4 cells=' + positive.cells + ' gained=' + positive.winsGained
   + ' lost=' + positive.winsLost + ' moves=' + positive.meanMovesSaved
   + ' interval95=[' + positive.moveCi95.join(',') + '] sign=' + correct + '/50');
 
+const bad72 = aggregate('bad72');
+let eliminatedAt = firstTwoStage(bad72) === 'CUT' ? 'stage1' : null;
+if (!eliminatedAt && raw.panels.some((panel) => panel.tag === 'bad600')) {
+  if (firstTwoStage(aggregate('bad600')) === 'CUT') eliminatedAt = 'stage2';
+}
+const bad = aggregate(raw.manifest.knownBad.tag);
+compare(eliminatedAt, raw.headlines.knownBad.eliminatedAt, 'item5.eliminatedAt');
+compare(bad, raw.headlines.knownBad.summary, 'item5.summary');
+if (!eliminatedAt) differences.push('item5 known-bad policy survived both stages');
+console.log('RECOMPUTE item5 eliminated=' + eliminatedAt + ' cells=' + bad.cells
+  + ' gained=' + bad.winsGained + ' lost=' + bad.winsLost + ' moves=' + bad.meanMovesSaved);
+
+compare(raw.manifest.curse.policies.length, 30, 'item7.variantCount');
+compare(new Set(raw.manifest.curse.policies.map((entry) => entry.policyId)).size, 30, 'item7.uniqueVariants');
+const curseRows = raw.manifest.curse.policies.map((entry) => {
+  const params = raw.policies[entry.policyId].params;
+  const changed = Object.keys(DEFAULT_PARAMS).filter((key) => params[key] !== DEFAULT_PARAMS[key]);
+  if (changed.length !== 1) differences.push('item7 not a one-gene variant ' + entry.policyId);
+  const screen = aggregate(raw.manifest.curse.screenTag, entry.policyId);
+  const fresh = aggregate(raw.manifest.curse.freshTag, entry.policyId);
+  const screenPct = screen.relativeMovesPct ?? 0;
+  const freshPct = fresh.relativeMovesPct ?? 0;
+  const result = { name: entry.name, policyId: entry.policyId, screenPct, freshPct,
+    gapPct: freshPct - screenPct, screen, fresh };
+  const expected = raw.headlines.curse.rows.find((item) => item.policyId === entry.policyId);
+  compare(result, expected, 'item7.' + entry.policyId);
+  console.log('RECOMPUTE item7 ' + entry.name + ' screen_gained=' + screen.winsGained
+    + ' screen_lost=' + screen.winsLost + ' screen_moves=' + screen.meanMovesSaved
+    + ' fresh_gained=' + fresh.winsGained + ' fresh_lost=' + fresh.winsLost
+    + ' fresh_moves=' + fresh.meanMovesSaved + ' screen_pct=' + screenPct
+    + ' fresh_pct=' + freshPct + ' gap_pct=' + result.gapPct);
+  return result;
+});
+const meanGap = average(curseRows.map((entry) => entry.gapPct));
+compare(meanGap, raw.headlines.curse.meanGapPct, 'item7.meanGap');
+console.log('RECOMPUTE item7 variants=' + curseRows.length + ' mean_fresh_minus_screen_pct=' + meanGap);
+
 let stage1Survivors = 0;
+const screenArchive = new Map();
+const mapStage2 = new Map();
+compare(raw.manifest.map.mutantPolicies.length, 120, 'item9.frozenMutantCount');
+compare(new Set(raw.manifest.map.mutantPolicies.map((entry) => entry.policyId)).size, 120,
+  'item9.uniqueMutants');
 for (const mutant of raw.manifest.map.mutantPolicies) {
   const candidatePanel = raw.panels.find((panel) => (
     panel.tag === 'map72' && panel.arm === 'candidate' && panel.policyId === mutant.policyId
@@ -215,12 +288,31 @@ for (const mutant of raw.manifest.map.mutantPolicies) {
   keyed.delete(referenceKey);
   const observedStatus = firstTwoStage(result);
   compare(observedStatus, mutant.stage1, 'item9.mutant.' + mutant.policyId + '.stage1');
-  if (observedStatus === 'ADVANCE') stage1Survivors += 1;
+  const outcomes = mutantRows.map((entry) => entry.outcome);
+  const chains = outcomes.reduce((sum, outcome) => sum + outcome.chainCount, 0);
+  const tiles = outcomes.reduce((sum, outcome) => sum + outcome.chainTiles, 0);
+  const pace = average(outcomes.map((outcome) => (
+    (outcome.win ? outcome.movesToTarget : outcome.moveBudget + 1) / outcome.moveBudget
+  )));
+  const bin = (value, low, high) => Math.min(4, Math.max(0, Math.floor(5 * (value - low) / (high - low))));
+  const cell = bin(chains ? tiles / chains : 0, 3, 12) + ',' + bin(pace, 0, 1.2);
+  compare(cell, mutant.cell, 'item9.mutant.' + mutant.policyId + '.bin');
+  if (observedStatus === 'ADVANCE') {
+    stage1Survivors += 1;
+    const incumbent = screenArchive.get(cell);
+    if (!incumbent || fitness(result, incumbent.summary) > 0) {
+      screenArchive.set(cell, { policyId: mutant.policyId, summary: result });
+    }
+  }
 }
 compare(stage1Survivors, raw.headlines.map.stage1Survivors, 'item9.stage1Survivors');
 
 let stage2Survivors = 0;
 const stage2Panels = raw.panels.filter((panel) => panel.tag === 'map600' && panel.arm === 'candidate');
+const rankPolicies = (a, b) => fitness(b.summary, a.summary) || a.policyId.localeCompare(b.policyId);
+compare(stage2Panels.map((panel) => panel.policyId),
+  [...screenArchive.values()].sort(rankPolicies).slice(0, 8).map((entry) => entry.policyId),
+  'item9.stage2Promotions');
 for (const panel of stage2Panels) {
   const reference = raw.panels.find((item) => item.tag === 'map600' && item.arm === 'reference');
   const temporary = 'recompute-stage2-' + panel.policyId;
@@ -234,12 +326,18 @@ for (const panel of stage2Panels) {
   raw.panels.pop();
   keyed.delete([temporary, 'candidate', panel.policyId].join('|'));
   keyed.delete([temporary, 'reference', reference.policyId].join('|'));
-  if (firstTwoStage(result) === 'ADVANCE') stage2Survivors += 1;
+  if (firstTwoStage(result) === 'ADVANCE') {
+    stage2Survivors += 1;
+    mapStage2.set(panel.policyId, { policyId: panel.policyId, summary: result });
+  }
 }
 compare(stage2Survivors, raw.headlines.map.stage2Survivors, 'item9.stage2Survivors');
 
 const stage3Nominees = [];
 const stage3Panels = raw.panels.filter((panel) => panel.tag === 'map3000' && panel.arm === 'candidate');
+compare(stage3Panels.map((panel) => panel.policyId),
+  [...mapStage2.values()].sort(rankPolicies).slice(0, 3).map((entry) => entry.policyId),
+  'item9.stage3Promotions');
 for (const panel of stage3Panels) {
   const reference = raw.panels.find((item) => item.tag === 'map3000' && item.arm === 'reference');
   const temp = 'recompute-stage3-' + panel.policyId;
@@ -291,6 +389,10 @@ compare(raw.manifest.map.mutantPolicies.length, raw.headlines.map.mutants, 'item
 compare(raw.manifest.map.nominees.length, raw.headlines.map.nominees, 'item9.nominees');
 
 const reps = [];
+compare(raw.manifest.map.representatives.map((entry) => entry.policyId),
+  [...finalArchive.values()].map((entry) => ({ policyId: entry.policyId, summary: entry.fresh }))
+    .sort(rankPolicies).slice(0, 3).map((entry) => entry.policyId),
+  'item9.freshRepresentativeRank');
 for (const listed of raw.manifest.map.representatives) {
   const archived = finalArchive.get(listed.cell);
   if (!archived || archived.policyId !== listed.policyId) {
@@ -349,13 +451,18 @@ for (const [stage, tag] of [['stage1', 'map72'], ['stage2', 'map600'], ['stage3'
     compare(average(panels.map((panel) => panel.cpuSeconds)), expected.meanCpuSeconds,
       'item9.cost.' + stage + '.seconds');
   }
+  console.log('RECOMPUTE item9 ' + stage + ' candidates=' + panels.length
+    + ' games_per_candidate=' + expected.gamesPerCandidate + ' mean_summed_worker_elapsed_seconds='
+    + (panels.length ? average(panels.map((panel) => panel.cpuSeconds)) : 'UNVERIFIED_NOT_RUN'));
 }
 const positiveLift = reps.some((item) => item.stronger.holdoutLiftPct > 0);
 const outcome = strongerHeld ? 'SUPPORTED' : positiveLift ? 'INCONCLUSIVE' : 'FALSIFIED';
 compare(outcome, raw.headlines.domainOutcome, 'item9.domainOutcome');
 console.log('RECOMPUTE item9 mutants=' + raw.manifest.map.mutantPolicies.length
+  + ' stage1_survivors=' + stage1Survivors + ' stage2_survivors=' + stage2Survivors
   + ' nominees=' + raw.manifest.map.nominees.length + ' refused=' + refused
-  + ' archive=' + finalArchive.size + ' stronger=' + strongerHeld);
+  + ' archive=' + finalArchive.size + ' representatives=' + reps.length + ' stronger=' + strongerHeld
+  + ' domain=' + outcome + ' raw_games=' + raw.games.length);
 
 function replay(row) {
   const levelData = raw.levelDefinitions[row.level];
@@ -397,12 +504,13 @@ const replayRows = [
   ...raw.games.filter((row) => row.stage === 'map72' && row.arm === 'candidate').slice(0, 2),
   ...raw.games.filter((row) => row.stage === 'mapHoldout' && row.arm === 'candidate').slice(0, 2),
 ].filter(Boolean);
-for (const row of replayRows) replay(row);
-console.log('RECOMPUTE deterministic_replays=' + replayRows.length);
+const replayCount = differences.length ? 0 : replayRows.length;
+if (!differences.length) for (const row of replayRows) replay(row);
+console.log('RECOMPUTE deterministic_replays=' + replayCount);
 
 if (differences.length) {
   for (const difference of differences) console.log('DIFF ' + difference);
   process.exitCode = 1;
 } else {
-  console.log('MATCH item3 item4 item9');
+  console.log('MATCH item3 item4 item5 item7 item9');
 }

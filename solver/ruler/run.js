@@ -71,14 +71,16 @@ function compact(summary) {
 }
 
 function strongerPolicy(summary) {
-  const t = summary.moveSe === 0
-    ? (summary.meanMovesSaved > 0 ? 'Infinity' : '0')
+  const statistic = summary.moveSe === 0
+    ? (summary.meanMovesSaved > 0 ? Infinity : 0)
     : summary.moveSe === null || summary.meanMovesSaved === null
-      ? 'UNKNOWN' : (summary.meanMovesSaved / summary.moveSe).toFixed(6);
+      ? NaN : summary.meanMovesSaved / summary.moveSe;
+  const t = Number.isNaN(statistic) ? 'UNKNOWN'
+    : Number.isFinite(statistic) ? statistic.toFixed(6) : 'Infinity';
   return {
     holdoutLiftPct: summary.relativeMovesPct,
     t,
-    held: summary.netWins >= 0 && summary.relativeMovesPct > 0 && Number(t) > 3,
+    held: summary.netWins >= 0 && summary.relativeMovesPct > 0 && statistic > 3,
   };
 }
 
