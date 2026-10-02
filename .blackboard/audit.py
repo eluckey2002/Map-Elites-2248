@@ -24,11 +24,10 @@ def written_after_marker(private: Path) -> bool:
     modification time as they were when it was written; any difference since means a write, however soon after."""
     database, marker = private / "board.sqlite", private / locate.MIGRATED_MARKER
     try:
-        recorded = re.search(r"^fingerprint: size=(\d+) mtime_ns=(\d+)$", marker.read_text(encoding="utf-8"), re.M)
-        stat = database.stat()
+        recorded = re.search(r"^fingerprint: (.+)$", marker.read_text(encoding="utf-8"), re.M)
         if recorded:
-            return (stat.st_size, stat.st_mtime_ns) != (int(recorded.group(1)), int(recorded.group(2)))
-        return stat.st_mtime > marker.stat().st_mtime + 2  # a marker without a fingerprint (hand-made): best effort
+            return locate.db_fingerprint(private) != recorded.group(1).strip()
+        return database.stat().st_mtime > marker.stat().st_mtime + 2  # a marker without a fingerprint (hand-made): best effort
     except OSError:
         return False
 

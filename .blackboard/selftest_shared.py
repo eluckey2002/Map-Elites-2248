@@ -557,7 +557,7 @@ def test_migration_races(rt, base: Path) -> None:
             rt.create(ns(id="first", question="q", specialty="s", scope="b", acceptance="a", dependencies="", reviewer="checker",
                          stop_condition="d", stale_after=60, actor="sib"))
 
-    with patched(locate, "TOOL_ROOT", repo / ".blackboard"), patched(migrate, "BEFORE_SWAP", other_worktree_writes):
+    with patched(locate, "TOOL_ROOT", repo / ".blackboard"), patched(migrate, "HOOKS", {"before_swap": other_worktree_writes}):
         expect_error(lambda: migrate.migrate(ns(actor="t", abandon=False)), "another worktree wrote")
     with db(shared / "board.sqlite") as connection:
         expect(connection.execute("SELECT COUNT(*) FROM tasks").fetchone()[0] == 1, "the concurrent task was lost")
@@ -577,10 +577,69 @@ def test_migration_races(rt, base: Path) -> None:
         (shared2 / "snapshots").mkdir()
         (shared2 / "snapshots" / "cap.json").write_text("{}", encoding="utf-8")
 
-    with patched(locate, "TOOL_ROOT", other / ".blackboard"), patched(migrate, "BEFORE_SWAP", other_worktree_snapshots):
+    with patched(locate, "TOOL_ROOT", other / ".blackboard"), patched(migrate, "HOOKS", {"before_swap": other_worktree_snapshots}):
         expect_error(lambda: migrate.migrate(ns(actor="t", abandon=False)), "another worktree wrote")
     expect((shared2 / "snapshots" / "cap.json").is_file(), "a snapshot captured meanwhile was lost")
     expect(not list((other / ".git").glob("blackboard.empty-*")), "a board holding a snapshot was set aside")
+
+    # ...or an older tool writes a snapshot into the PRIVATE folder after it was copied.  The write lock covers only the
+    # database, so without a recheck that file would be left behind in a board nobody reads any more.
+    late, _ = make_repo(base, "late")
+    private_late = late / ".blackboard" / "runtime"
+    make_v1_board(private_late / "board.sqlite", None)
+
+    def older_tool_snapshots() -> None:
+        (private_late / "snapshots").mkdir(exist_ok=True)
+        (private_late / "snapshots" / "late.json").write_text("{}", encoding="utf-8")
+
+    with patched(locate, "TOOL_ROOT", late / ".blackboard"), patched(migrate, "HOOKS", {"after_copy": older_tool_snapshots}):
+        expect_error(lambda: migrate.migrate(ns(actor="t", abandon=False)), "changed while it was being copied")
+    expect(not (late / ".git" / "blackboard").exists(), "a migration that noticed a late file still installed a board")
+    expect(not (private_late / locate.MIGRATED_MARKER).exists(), "the private board was marked migrated over a late file")
+    with patched(locate, "TOOL_ROOT", late / ".blackboard"), contextlib.redirect_stdout(io.StringIO()):
+        migrate.migrate(ns(actor="t", abandon=False))  # once nothing is changing it goes through, late file included
+    expect((late / ".git" / "blackboard" / "snapshots" / "late.json").is_file(), "the late file was not carried over on the second run")
+
+    # ...or a racer recreates the shared folder in the instant it is free: the board file must be put back, not stranded
+    race, (sibling3,) = make_repo(base, "swap3", ("sib",))
+    make_v1_board(race / ".blackboard" / "runtime" / "board.sqlite", None)
+    expect(cli(sibling3, "init").returncode == 0, "the third sibling's init failed")
+    shared3 = race / ".git" / "blackboard"
+
+    def racer_recreates_folder() -> None:
+        (shared3 / "snapshots").mkdir(parents=True)
+        (shared3 / "snapshots" / "x.json").write_text("{}", encoding="utf-8")
+
+    with patched(locate, "TOOL_ROOT", race / ".blackboard"), patched(migrate, "HOOKS", {"after_aside": racer_recreates_folder}):
+        try:
+            migrate.migrate(ns(actor="t", abandon=False))
+            raise AssertionError("migration succeeded although the folder was recreated under it")
+        except OSError:
+            pass
+    expect((shared3 / "board.sqlite").is_file(), "the board file was left stranded outside the active folder")
+    expect((shared3 / "snapshots" / "x.json").is_file(), "the racer's file was lost")
+
+
+def test_wal_commit_is_noticed(base: Path) -> None:
+    """A commit that sits in the write-ahead log leaves the main database file untouched."""
+    repo, _ = make_repo(base, "wal")
+    private = repo / ".blackboard" / "runtime"
+    make_v1_board(private / "board.sqlite", None)
+    with db(private / "board.sqlite") as connection:
+        connection.execute("PRAGMA journal_mode=WAL")
+    done = cli(repo, "migrate", "--actor", "t")
+    expect(done.returncode == 0, f"migrating a WAL-mode board failed: {done.stdout}{done.stderr}")
+    expect("CHANGED after" not in cli(repo, "audit").stdout, "a migrated WAL board was reported as changed straight away")
+    stay = sqlite3.connect(private / "board.sqlite")  # a long-lived older process keeps the log alive
+    try:
+        stay.execute("SELECT COUNT(*) FROM tasks").fetchall()
+        with db(private / "board.sqlite") as writer:
+            writer.execute("INSERT INTO events(at, kind, task_id, actor, detail) VALUES "
+                           "('2026-10-02T00:00:00+00:00', 'progress_reported', 'old-claimed', 'legacy-agent', 'a commit in the log')")
+        flagged = cli(repo, "audit")
+        expect("CHANGED after it was set aside" in flagged.stdout, f"a commit sitting in the write-ahead log went unnoticed: {flagged.stdout}")
+    finally:
+        stay.close()
 
 
 def test_odd_database_paths(base: Path) -> None:
@@ -633,6 +692,7 @@ def run(rt) -> None:
             ("migrate copies, rewrites artifact paths, and an unmigrated board is never ignored", lambda: test_migrate(base)),
             ("accented and spaced worktree paths are not mistaken for gone", lambda: test_awkward_paths(base)),
             ("a migration holds off writers and will not replace a board that gained data", lambda: test_migration_races(rt, base)),
+            ("a commit sitting in a write-ahead log is noticed after migration", lambda: test_wal_commit_is_noticed(base)),
             ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),
             ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),
             ("a worktree's leftover private board shows up in audit", lambda: test_old_worktree_boards_are_visible(base)),

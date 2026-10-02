@@ -151,6 +151,20 @@ def live_worktrees() -> set[str] | None:
     return None if paths is None else {norm(path) for path in paths}
 
 
+def db_fingerprint(folder: Path) -> str:
+    """Size and modification time of the board's database and, if there is one, its write-ahead log.  A commit can live
+    in the log while the main file is untouched, so a main-file-only check would miss it."""
+    parts = []
+    for name in ("board.sqlite", "board.sqlite-wal"):
+        path = Path(folder) / name
+        if path.exists():
+            stat = path.stat()
+            if name.endswith("-wal") and stat.st_size == 0:
+                continue  # an empty log holds nothing, and open connections create and remove one on their own
+            parts.append(f"{name}={stat.st_size}:{stat.st_mtime_ns}")
+    return ";".join(parts)
+
+
 def readonly_uri(database: Path | str) -> str:
     """SQLite URI for read-only access.  The path is percent-encoded: spliced in raw, a `?`, `#` or `%` in the
     repository path is parsed as URI syntax and SQLite opens the wrong (empty) database."""

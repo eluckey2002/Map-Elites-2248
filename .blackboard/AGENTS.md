@@ -13,6 +13,6 @@ Use `python .blackboard/board.py` from the project root for commands.
 - Only the predeclared reviewer can accept or request repair; the reviewer must differ from the producer and submitter.
 - Task state records updates. It does not prove an agent is running or a result is correct.
 - Do not edit the SQLite database directly. Use the writer commands.
-- A checkout that still holds its own `.blackboard/runtime/board.sqlite` from before boards were shared refuses to run until you `migrate --actor <you>` it, or set it aside with `migrate --abandon`.
+- A checkout that still holds its own `.blackboard/runtime/board.sqlite` from before boards were shared refuses to run until you `migrate --actor <you>` it, or set it aside with `migrate --abandon`. Run `migrate` while no other agent is using the board: it holds off writers that use the board's own lock and refuses if files change underneath it, but it cannot stop a process that writes into the folder directly in the last instant.
 
 The board does not launch agents, schedule tasks, enforce a swarm-wide concurrency limit, or collect updates automatically.

@@ -23,7 +23,7 @@ import runtime
 
 SKIP = {"board.sqlite", "board.sqlite-journal", "board.sqlite-wal", "board.sqlite-shm", locate.MIGRATED_MARKER}
 BOARD_FILES = {"board.sqlite", "board.sqlite-journal"}  # what a shared board with nothing in it consists of
-BEFORE_SWAP = None  # tests set a callable here; it runs just before the staged board replaces the shared one
+HOOKS: dict = {}  # tests put callables here (after_copy, before_swap, after_aside) to play another worktree at the worst moment
 SLIPPED = ("another worktree wrote to the shared board at {target} while this migration was being prepared; "
            "nothing was changed. Run migrate again.")
 
@@ -33,6 +33,25 @@ def counts(connection: sqlite3.Connection) -> dict[str, int]:
         table: connection.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
         for table in ("tasks", "events", "defects")
     }
+
+
+def fire(name: str) -> None:
+    hook = HOOKS.get(name)
+    if hook is not None:
+        hook()
+
+
+def folder_fingerprint(folder: Path) -> list[tuple[str, int, int]]:
+    """Name, size and modification time of every file in the private folder except the database and the marker.
+    Links are not followed."""
+    found = []
+    for directory, _subdirs, names in os.walk(folder, followlinks=False):
+        for name in names:
+            path = Path(directory) / name
+            if name not in SKIP and not path.is_symlink():
+                stat = path.stat()
+                found.append((str(path.relative_to(folder)), stat.st_size, stat.st_mtime_ns))
+    return sorted(found)
 
 
 def holds_nothing(folder: Path, connection: sqlite3.Connection) -> bool:
@@ -66,9 +85,7 @@ def write_marker(legacy: Path, message: str) -> None:
     """The marker records the private database's size and modification time as they are NOW, so a later write by an
     older tool shows up however soon after the marker it happens (a bare time comparison would need a tolerance,
     and anything inside the tolerance would be invisible for good)."""
-    stat = (legacy / "board.sqlite").stat()
-    (legacy / locate.MIGRATED_MARKER).write_text(
-        f"{message}\nfingerprint: size={stat.st_size} mtime_ns={stat.st_mtime_ns}\n", encoding="utf-8")
+    (legacy / locate.MIGRATED_MARKER).write_text(f"{message}\nfingerprint: {locate.db_fingerprint(legacy)}\n", encoding="utf-8")
 
 
 @contextmanager
@@ -193,7 +210,9 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
         finally:
             copy.close()
             source_connection.close()
+        files_before = folder_fingerprint(legacy)
         files, skipped = copy_files(legacy, stage)
+        fire("after_copy")
         with runtime.transaction(stage / "board.sqlite") as connection:
             runtime.schema(connection)
             rewritten = rewrite_artifact_paths(connection, legacy, target)
@@ -207,13 +226,16 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
         expected = {**before, "events": before["events"] + 1}
         if after != expected or not intact:
             raise ValueError(f"the copy does not match the original (expected {expected}, got {after}); nothing was changed")
-        if BEFORE_SWAP is not None:
-            BEFORE_SWAP()  # test seam: lets a test play another worktree writing at the worst moment
+        fire("before_swap")
+        if folder_fingerprint(legacy) != files_before:
+            # The write lock covers the database, not a snapshot or artifact an older tool writes beside it.
+            raise ValueError(f"files in the private folder {legacy} changed while it was being copied; nothing was changed. Run migrate again.")
         if aside is not None:
             with writers_paused(shared_db) as shared_guard:  # nothing may be written to a board that is about to be replaced
                 if not holds_nothing(target, shared_guard):
                     raise ValueError(SLIPPED.format(target=target))
             target.rename(aside)
+            fire("after_aside")
             with locate.readonly(aside / "board.sqlite") as late:
                 slipped = not holds_nothing(aside, late)
             if slipped:
@@ -224,8 +246,13 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
         try:
             stage.rename(target)
         except BaseException:
-            if aside is not None and not target.exists():
-                aside.rename(target)  # put the empty board back; nothing was lost
+            if aside is not None:
+                if not target.exists():
+                    aside.rename(target)  # put the empty board back; nothing was lost
+                else:  # something recreated the folder in the instant it was free: put the board file back inside it
+                    for item in aside.iterdir():
+                        if not (target / item.name).exists():
+                            os.replace(item, target / item.name)
             raise
     except BaseException:
         shutil.rmtree(stage, ignore_errors=True)
