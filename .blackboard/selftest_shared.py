@@ -437,6 +437,16 @@ def test_migrate(base: Path) -> None:
     expect(resumed.returncode == 0 and "already migrated" in resumed.stdout, f"an interrupted migration could not be finished: {resumed.stdout}{resumed.stderr}")
     expect((private / locate.MIGRATED_MARKER).is_file(), "finishing an interrupted migration left no marker")
     expect(json.loads(cli(repo, "query", "summary").stdout)["summary"]["event_count"] == made["events"] + 1, "finishing wrote a second migration")
+    # an edit to an existing row changes no count, so counts alone cannot see it
+    (private / locate.MIGRATED_MARKER).unlink()
+    with db(private / "board.sqlite") as connection:
+        connection.execute("UPDATE tasks SET diagnostic_question='edited by an older tool' WHERE id='old-queued'")
+    edited = cli(repo, "migrate", "--actor", "t")
+    expect(edited.returncode == 1 and "changed after it was copied" in edited.stderr, f"an in-place edit was declared migrated: {edited.stdout}{edited.stderr}")
+    expect(not (private / locate.MIGRATED_MARKER).exists(), "a marker was written over an edited row")
+    with db(private / "board.sqlite") as connection:
+        connection.execute("UPDATE tasks SET diagnostic_question='q' WHERE id='old-queued'")
+    expect(cli(repo, "migrate", "--actor", "t").returncode == 0, "putting the edit back should let the interrupted migration finish")
     # ...but if the private board changed in the meantime, restoring the marker would silently drop those writes.
     # A file beside the database counts too: the write lock covers rows, not an artifact an older tool saves.
     (private / locate.MIGRATED_MARKER).unlink()
@@ -705,6 +715,18 @@ def test_file_written_after_marker(base: Path) -> None:
     expect(note.stat().st_size == before.st_size and note.stat().st_mtime_ns == before.st_mtime_ns, "the overwrite changed size or time")
     quiet = cli(other, "audit")
     expect("CHANGED after it was set aside" in quiet.stdout, f"a same-size overwrite that kept its mtime went unnoticed: {quiet.stdout}")
+
+    # a nested file that merely shares a reserved name (the board's own files are reserved only at the folder's root)
+    nested_repo, _ = make_repo(base, "nested")
+    private4 = nested_repo / ".blackboard" / "runtime"
+    make_v1_board(private4 / "board.sqlite", None)
+    (private4 / "snapshots").mkdir()
+    (private4 / "snapshots" / "board.sqlite").write_text("OLD", encoding="utf-8")
+    expect(cli(nested_repo, "migrate", "--actor", "t").returncode == 0, "migrate failed with a nested reserved name")
+    expect("CHANGED after" not in cli(nested_repo, "audit").stdout, "a freshly migrated board with a nested reserved name was reported as changed")
+    (private4 / "snapshots" / "board.sqlite").write_text("a different NEW content", encoding="utf-8")
+    seen = cli(nested_repo, "audit")
+    expect("CHANGED after it was set aside" in seen.stdout, f"a nested file with a reserved name went unnoticed: {seen.stdout}")
 
 
 def test_incomplete_marker(base: Path) -> None:

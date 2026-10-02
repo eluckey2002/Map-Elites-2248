@@ -52,9 +52,9 @@ def describe(found: dict[str, int]) -> str:
     return f"{found['tasks']} tasks, {found['events']} events, {found['defects']} defects"
 
 
-def recorded_migration(shared_db: Path, legacy: Path) -> tuple[dict[str, int], str | None] | None:
-    """(row counts, digest of the files beside the database) that a previous migration from this very folder recorded,
-    or None if the shared board records none."""
+def recorded_migration(shared_db: Path, legacy: Path) -> dict | None:
+    """What a previous migration from this very folder recorded (row counts, a fingerprint of the database's contents,
+    a digest of the files beside it), or None if the shared board records none."""
     try:
         with locate.readonly(shared_db) as connection:
             row = connection.execute(
@@ -67,8 +67,10 @@ def recorded_migration(shared_db: Path, legacy: Path) -> tuple[dict[str, int], s
     if not found:
         return None
     tasks, events, defects = map(int, found[0])
-    digest = re.search(r"; files=([0-9a-f]{16})\b", row["detail"])
-    return {"tasks": tasks, "events": events, "defects": defects}, (digest.group(1) if digest else None)
+    files = re.search(r"; files=([0-9a-f]{16})\b", row["detail"])
+    content = re.search(r"; db=([0-9a-f]{16})\b", row["detail"])
+    return {"counts": {"tasks": tasks, "events": events, "defects": defects},
+            "files": files.group(1) if files else None, "db": content.group(1) if content else None}
 
 
 def write_marker(legacy: Path, message: str) -> None:
@@ -164,12 +166,18 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
     if shared_db.exists():
         previous = recorded_migration(shared_db, legacy)
         if previous is not None:  # a previous run copied the board and stopped before leaving its marker
-            recorded, digest = previous
-            if recorded != before or (digest is not None and digest != locate.files_digest(locate.folder_files(legacy))):
-                # Something kept writing to the private board in between (an older tool would), rows or files beside
-                # them. Restoring the marker now would declare it migrated and silently drop those writes.
+            recorded = previous["counts"]
+            changed = (
+                recorded != before
+                or (previous["files"] is not None and previous["files"] != locate.files_digest(locate.folder_files(legacy)))
+                or (previous["db"] is not None and previous["db"] != locate.db_fingerprint(legacy))  # an edit in place changes no count
+            )
+            if changed:
+                # Something kept writing to the private board in between (an older tool would): rows, an edit to an
+                # existing row, or files beside the database. Restoring the marker now would declare it migrated and
+                # silently drop those writes.
                 raise ValueError(
-                    f"the private board at {legacy} changed after it was copied (its rows or the files beside it): it now "
+                    f"the private board at {legacy} changed after it was copied (its contents or the files beside it): it now "
                     f"holds {describe(before)}, and the migration recorded {describe(recorded)}. Those changes are not in the "
                     f"shared board, and boards are not merged. Re-run with --abandon to set it aside knowingly, or carry "
                     f"them over by hand first."
@@ -208,6 +216,7 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
             copy.close()
             source_connection.close()
         files_before = locate.folder_files(legacy)
+        db_before = locate.db_fingerprint(legacy)  # read while the guard holds the write lock, so it describes what is copied
         files, skipped = copy_files(legacy, stage)
         fire("after_copy")
         with runtime.transaction(stage / "board.sqlite") as connection:
@@ -216,7 +225,7 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
             runtime.emit(
                 connection, "board_migrated", None, args.actor,
                 f"Migrated from {legacy} ({describe(before)}); {rewritten} artifact paths rewritten, {files} files copied; "
-                f"files={locate.files_digest(files_before)}",
+                f"files={locate.files_digest(files_before)}; db={db_before}",
             )
         with locate.readonly(stage / "board.sqlite") as connection:
             after = counts(connection)

@@ -156,6 +156,9 @@ def live_worktrees() -> set[str] | None:
 DB_FILES = frozenset({"board.sqlite", "board.sqlite-journal", "board.sqlite-wal", "board.sqlite-shm"})
 
 
+RESERVED_NAMES = DB_FILES | {MIGRATED_MARKER, MIGRATED_MARKER + ".tmp"}  # the board's own files, at a board folder's root
+
+
 def content_hash(path: Path) -> str:
     digest = hashlib.sha256()
     with open(path, "rb") as handle:
@@ -178,8 +181,8 @@ def folder_files(folder: Path) -> list[tuple[str, int, str]]:
             if path.is_symlink():
                 # a link is fingerprinted by where it points, never followed: retargeting it changes what a copy of it means
                 found.append((relative, -1, hashlib.sha256(os.readlink(path).encode("utf-8", "surrogateescape")).hexdigest()[:16]))
-            elif name not in DB_FILES and name not in (MIGRATED_MARKER, MIGRATED_MARKER + ".tmp"):
-                found.append((relative, path.stat().st_size, content_hash(path)))
+            elif not (Path(directory) == Path(folder) and name in RESERVED_NAMES):  # reserved only AT the root: a nested
+                found.append((relative, path.stat().st_size, content_hash(path)))  # snapshots/board.sqlite is just a file
     return sorted(found)
 
 
