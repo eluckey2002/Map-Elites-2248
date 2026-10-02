@@ -13,14 +13,18 @@ KIND_TEXT = {
     "shared": "shared by every worktree of this repository",
     "env": f"set by the {locate.ENV_RUNTIME} environment variable",
     "local": "private to this checkout (not inside a git repository)",
+    "unavailable": "UNKNOWN: git could not be run, so the shared board cannot be located",
 }
 
 
 def legacy_state() -> tuple[str, str]:
     """("none" | "unmigrated" | "settled", one-line description) for this checkout's private board."""
     legacy = locate.legacy_runtime()
-    if locate.location()[0] != "shared" or not (legacy / "board.sqlite").is_file():
+    kind = locate.location()[0]
+    if kind == "local" or not (legacy / "board.sqlite").is_file():  # in local mode that folder IS the board
         return "none", "none"
+    if kind != "shared":
+        return "ignored", f"present at {legacy}, but not used because the board location is {kind}"
     if (legacy / locate.MIGRATED_MARKER).exists():
         return "settled", f"set aside, see {legacy / locate.MIGRATED_MARKER}"
     return "unmigrated", f"UNMIGRATED at {legacy} (ignored until you run migrate)"
@@ -48,6 +52,15 @@ def problems() -> list[str]:
     state, text = legacy_state()
     if state == "unmigrated":
         found.append(f"this checkout's own board is {text}")
+    if locate.location()[0] == "shared":
+        # A worktree on a branch from before boards were shared keeps writing to its own private board; nothing
+        # can stop that, but it can be seen here.
+        here = locate.norm(locate.TOOL_ROOT.parent)
+        for path in locate.worktree_paths() or []:
+            private = Path(path) / ".blackboard" / "runtime"
+            if locate.norm(path) != here and (private / "board.sqlite").is_file() and not (private / locate.MIGRATED_MARKER).exists():
+                found.append(f"worktree {path} has its own private board at {private}; update its .blackboard from a branch that has "
+                             f"shared boards, then run migrate there (only one board can be migrated; the others are set aside with --abandon)")
     database = locate.runtime_dir() / "board.sqlite"
     if not database.is_file():
         return found

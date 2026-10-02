@@ -34,6 +34,7 @@ def utcnow() -> str:
 def transaction(database: Path | None = None) -> Iterator[sqlite3.Connection]:
     target = Path(database) if database is not None else DATABASE
     target.parent.mkdir(parents=True, exist_ok=True)
+    locate.identity()  # runs git (cached); do it before taking the write lock so a slow git cannot stall other writers
     connection = sqlite3.connect(target, timeout=10, isolation_level=None)
     connection.row_factory = sqlite3.Row
     try:
@@ -204,6 +205,7 @@ def create(args: argparse.Namespace) -> None:
 
 
 def claim(args: argparse.Namespace) -> None:
+    live = locate.live_worktrees()  # git is slow; ask before taking the write lock
     with transaction() as connection:
         schema(connection)
         row = one(connection, args.id)
@@ -211,7 +213,7 @@ def claim(args: argparse.Namespace) -> None:
         lapsed = None
         if row["state"] == "claimed":
             # A claim protects its task only while its worktree exists and it keeps reporting.
-            status, why = leases.claim_status(row, leases.now(), locate.live_worktrees())
+            status, why = leases.claim_status(row, leases.now(), live)
             if status == "held":
                 raise ValueError(f"cannot claim task in claimed state: {row['assignee']} holds a live claim")
             if not reason:
@@ -238,9 +240,10 @@ def claim(args: argparse.Namespace) -> None:
 
 def reap(args: argparse.Namespace) -> None:
     """Return every lapsed claim to the queue, so the lapse has a consequence and not only a warning."""
+    live = locate.live_worktrees()
     with transaction() as connection:
         schema(connection)
-        at, live, released = leases.now(), locate.live_worktrees(), 0
+        at, released = leases.now(), 0
         for row in connection.execute("SELECT * FROM tasks WHERE state='claimed' ORDER BY id").fetchall():
             status, why = leases.claim_status(row, at, live)
             if status == "held":
@@ -261,12 +264,20 @@ def reap(args: argparse.Namespace) -> None:
             print("no lapsed claims")
 
 
+def holder_only(row: sqlite3.Row, actor: str, action: str) -> None:
+    """Once a claim can change hands, only its current holder may report on it or submit for it; otherwise the
+    agent whose claim was taken over could keep renewing the new holder's lease or submit the new holder's result."""
+    if actor.strip() != row["assignee"]:
+        raise ValueError(f"only {row['assignee']}, who holds this claim, can {action}; {actor.strip() or '(no actor)'} does not")
+
+
 def progress(args: argparse.Namespace) -> None:
     with transaction() as connection:
         schema(connection)
         row = one(connection, args.id)
         if row["state"] != "claimed":
             raise ValueError("progress is allowed only for claimed tasks")
+        holder_only(row, args.actor, "report progress")
         at = utcnow()
         connection.execute("UPDATE tasks SET last_reported_at=? WHERE id=?", (at, row["id"]))
         emit(connection, "progress_reported", row["id"], args.actor, text(args.detail, "detail"))
@@ -278,6 +289,7 @@ def submit(args: argparse.Namespace) -> None:
         row = one(connection, args.id)
         if row["state"] != "claimed":
             raise ValueError("submit is allowed only for claimed tasks")
+        holder_only(row, args.actor, "submit")
         artifact = allowed_artifact(args.artifact, row["id"])
         at = utcnow()
         connection.execute("UPDATE tasks SET state='submitted', artifact_path=?, submitted_at=? WHERE id=?",
@@ -478,7 +490,7 @@ def parser() -> argparse.ArgumentParser:
     def writer(name: str):
         command = commands.add_parser(name); command.add_argument("--actor", required=True); command.add_argument("--id", required=True); return command
     command = writer("create")
-    command.add_argument("--question", required=True); command.add_argument("--specialty", required=True); command.add_argument("--scope", required=True); command.add_argument("--acceptance", required=True); command.add_argument("--dependencies", default=""); command.add_argument("--reviewer", required=True); command.add_argument("--stop-condition", required=True); command.add_argument("--stale-after", type=int, default=300)
+    command.add_argument("--question", required=True); command.add_argument("--specialty", required=True); command.add_argument("--scope", required=True); command.add_argument("--acceptance", required=True); command.add_argument("--dependencies", default=""); command.add_argument("--reviewer", required=True); command.add_argument("--stop-condition", required=True); command.add_argument("--stale-after", type=int, default=3600, help="seconds without a report before the claim can be taken over (a lapse now has consequences, so the default is an hour)")
     command.set_defaults(function=create)
     command = writer("claim"); command.add_argument("--assignee", required=True); command.add_argument("--reason", default=""); command.set_defaults(function=claim)
     command = writer("progress"); command.add_argument("--detail", required=True); command.set_defaults(function=progress)
@@ -501,6 +513,9 @@ def main() -> int:
         args.function(args)
     except (ValueError, sqlite3.IntegrityError) as error:
         print(f"error: {error}", file=sys.stderr)
+        return 1
+    except sqlite3.OperationalError as error:
+        print(f"error: the board is busy or unavailable ({error}); try again", file=sys.stderr)
         return 1
     return 0
 

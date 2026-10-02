@@ -42,9 +42,11 @@ def norm(path: str | Path) -> str:
 def git(*args: str, cwd: str | Path | None = None) -> str | None:
     """Run git and return its stdout, or None when git is missing or the command fails."""
     try:
+        # git writes UTF-8; without saying so Python decodes it with the Windows ANSI codepage and any path
+        # with an accent comes back as mojibake, which makes a live worktree look like it no longer exists.
         done = subprocess.run(
             ["git", *args], cwd=str(cwd if cwd is not None else TOOL_ROOT),
-            capture_output=True, text=True, timeout=15,
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=15,
         )
     except (OSError, subprocess.SubprocessError):
         return None
@@ -64,13 +66,19 @@ def common_dir(cwd: str | Path | None = None) -> Path | None:
 
 
 def location() -> tuple[str, Path]:
-    """("env" | "shared" | "local", folder holding board.sqlite, its artifacts and snapshots)."""
+    """("env" | "shared" | "local" | "unavailable", folder holding board.sqlite, its artifacts and snapshots).
+
+    "unavailable" is a git checkout where git could not answer (missing, failing, timed out).  Falling back to a
+    private board there would recreate exactly the split this module exists to prevent, so callers refuse instead.
+    """
     override = os.environ.get(ENV_RUNTIME)
     if override:
         return "env", Path(override).resolve()
     common = common_dir()
     if common is not None:
         return "shared", common / "blackboard"
+    if (TOOL_ROOT.parent / ".git").exists():
+        return "unavailable", legacy_runtime()
     return "local", legacy_runtime()
 
 
@@ -82,6 +90,11 @@ def require_migrated() -> None:
     """Refuse to run beside an old private board that the shared board would silently ignore."""
     kind, shared = location()
     legacy = legacy_runtime()
+    if kind == "unavailable":
+        raise BoardError(
+            "git could not be run here (is it on PATH?), so the shared board cannot be located; refusing to fall "
+            "back to a private board inside a git checkout"
+        )
     if kind == "shared" and (legacy / "board.sqlite").is_file() and not (legacy / MIGRATED_MARKER).exists():
         raise BoardError(
             f"this checkout still has its own board at {legacy}, but boards are now shared per repository at "
@@ -113,18 +126,29 @@ def identity() -> dict[str, str | None]:
     return {"worktree": worktree, "branch": branch}
 
 
-def live_worktrees() -> set[str] | None:
-    """Normalised paths of this repository's existing worktrees, or None when git cannot say."""
-    out = git("worktree", "list", "--porcelain")
+def worktree_paths() -> list[str] | None:
+    """Paths of this repository's existing worktrees, or None when git cannot say."""
+    out = git("worktree", "list", "--porcelain", "-z")  # NUL-separated, so no path can break the parsing
+    separator, gap = "\0", "\0\0"
+    if out is None:  # git older than 2.36 has no -z
+        out = git("worktree", "list", "--porcelain")
+        separator, gap = "\n", "\n\n"
     if out is None:
         return None
-    live: set[str] = set()
-    for block in out.replace("\r\n", "\n").split("\n\n"):
-        lines = block.splitlines()
-        path = next((line[len("worktree "):] for line in lines if line.startswith("worktree ")), None)
-        if path and not any(line.startswith("prunable") for line in lines) and Path(path).is_dir():
-            live.add(norm(path))
-    return live
+    blocks = out.replace("\r\n", "\n").split(gap) if separator == "\n" else out.split(gap)
+    paths: list[str] = []
+    for block in blocks:
+        fields = block.split(separator)
+        path = next((field[len("worktree "):] for field in fields if field.startswith("worktree ")), None)
+        if path and not any(field.startswith("prunable") for field in fields) and Path(path).is_dir():
+            paths.append(path)
+    return paths
+
+
+def live_worktrees() -> set[str] | None:
+    """Normalised paths of this repository's existing worktrees, or None when git cannot say."""
+    paths = worktree_paths()
+    return None if paths is None else {norm(path) for path in paths}
 
 
 def open_readonly(database: Path) -> sqlite3.Connection:

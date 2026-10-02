@@ -13,8 +13,13 @@ def now() -> datetime:
     return _NOW() if _NOW else datetime.now(timezone.utc)
 
 
-def parse_time(value: str) -> datetime:
-    return datetime.fromisoformat(value)
+def parse_time(value: str) -> datetime | None:
+    """A timezone-aware time, or None when the text is not a timestamp (one bad row must not stop the others)."""
+    try:
+        parsed = datetime.fromisoformat(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
 
 
 def claim_status(row: Mapping[str, Any], at: datetime, live: set[str] | None) -> tuple[str, str]:
@@ -29,10 +34,10 @@ def claim_status(row: Mapping[str, Any], at: datetime, live: set[str] | None) ->
     worktree = row["claim_worktree"] if "claim_worktree" in keys else None
     if live is not None and worktree and locate.norm(worktree) not in live:
         return "orphaned", f"its worktree {worktree} no longer exists"
-    stamps = [row[key] for key in ("claimed_at", "last_reported_at") if key in keys and row[key]]
-    if not stamps:
-        return "expired", "the claim carries no timestamp"
-    idle = int((at - max(parse_time(stamp) for stamp in stamps)).total_seconds())
+    stamps = [parse_time(row[key]) for key in ("claimed_at", "last_reported_at") if key in keys and row[key]]
+    if not stamps or None in stamps:
+        return "expired", "the claim's timestamp is missing or unreadable"
+    idle = int((at - max(stamps)).total_seconds())
     limit = int(row["stale_after_seconds"])
     if idle > limit:
         return "expired", f"no report for {idle}s, limit {limit}s"

@@ -11,8 +11,10 @@ import os
 import shutil
 import sqlite3
 import sys
+import time
 from pathlib import Path
 
+import leases
 import locate
 import runtime
 
@@ -30,6 +32,17 @@ def describe(found: dict[str, int]) -> str:
     return f"{found['tasks']} tasks, {found['events']} events, {found['defects']} defects"
 
 
+def already_migrated(shared_db: Path, legacy: Path) -> bool:
+    """Does the shared board record a migration from this very folder?"""
+    try:
+        with locate.readonly(shared_db) as connection:
+            return connection.execute(
+                "SELECT 1 FROM events WHERE kind='board_migrated' AND instr(detail, ?) = 1 LIMIT 1", (f"Migrated from {legacy} ",)
+            ).fetchone() is not None
+    except sqlite3.Error:
+        return False
+
+
 def write_marker(legacy: Path, message: str) -> None:
     (legacy / locate.MIGRATED_MARKER).write_text(message + "\n", encoding="utf-8")
 
@@ -41,7 +54,7 @@ def copy_files(legacy: Path, stage: Path) -> int:
         if item.name in SKIP:
             continue
         if item.is_dir():
-            shutil.copytree(item, stage / item.name)
+            shutil.copytree(item, stage / item.name, symlinks=True)  # copy a link as a link; never follow it out of the folder
             copied += sum(1 for p in (stage / item.name).rglob("*") if p.is_file())
         else:
             shutil.copy2(item, stage / item.name)
@@ -81,15 +94,25 @@ def migrate(args: argparse.Namespace) -> None:
         print(f"set aside the private board at {legacy} ({describe(before)}); it was not copied and is not deleted")
         return
 
+    aside = None
     if shared_db.exists():
+        if already_migrated(shared_db, legacy):  # a previous run copied the board and stopped before leaving its marker
+            write_marker(legacy, f"Already migrated to {target} (marker restored by {args.actor}).")
+            print(f"the private board at {legacy} was already migrated into {target}; its marker is restored")
+            return
         with locate.readonly(shared_db) as connection:
             existing = counts(connection)
-        raise ValueError(
-            f"a shared board already exists at {target} ({describe(existing)}) and the private board holds "
-            f"{describe(before)}. Boards are not merged. Re-run with --abandon to set the private board aside, "
-            f"or move one of the two away first."
-        )
-    if target.exists() and any(target.iterdir()):
+        # An agent in another worktree may have run `init` first; that leaves a shared board with nothing in it.
+        # Set it aside (never delete it) rather than make the real board lose to an empty one.
+        if not any(existing.values()) and {p.name for p in target.iterdir()} <= {"board.sqlite", "board.sqlite-journal"}:
+            aside = target.parent / f"{target.name}.empty-{int(time.time())}"
+        else:
+            raise ValueError(
+                f"a shared board already exists at {target} ({describe(existing)}) and the private board holds "
+                f"{describe(before)}. Boards are not merged. Re-run with --abandon to set the private board aside, "
+                f"or move one of the two away first."
+            )
+    elif target.exists() and any(target.iterdir()):
         raise ValueError(f"{target} exists and is not empty, but holds no board; clear it first")
 
     stage = target.parent / f"{target.name}.migrating-{os.getpid()}"
@@ -117,15 +140,30 @@ def migrate(args: argparse.Namespace) -> None:
         expected = {**before, "events": before["events"] + 1}
         if after != expected or not intact:
             raise ValueError(f"the copy does not match the original (expected {expected}, got {after}); nothing was changed")
-        if target.exists():
+        if aside is not None:
+            target.rename(aside)
+        elif target.exists():
             target.rmdir()
-        stage.rename(target)
+        try:
+            stage.rename(target)
+        except BaseException:
+            if aside is not None and not target.exists():
+                aside.rename(target)  # put the empty board back; nothing was lost
+            raise
     except BaseException:
         shutil.rmtree(stage, ignore_errors=True)
         raise
     write_marker(legacy, f"Migrated to {target} by {args.actor}: {describe(before)}, {rewritten} artifact paths rewritten. This private copy is no longer used; it is kept as a backup.")
     print(f"migrated {describe(before)} into {target}; {rewritten} artifact paths rewritten, {files} files copied")
     print(f"the private board at {legacy} is left in place as a backup and will no longer be read")
+    if aside is not None:
+        print(f"an empty shared board that was in the way was set aside at {aside}")
+    with locate.readonly(target / "board.sqlite") as connection:
+        held = connection.execute("SELECT * FROM tasks WHERE state='claimed'").fetchall()
+    lapsed = sum(1 for row in held if leases.claim_status(row, leases.now(), locate.live_worktrees())[0] != "held")
+    if held:
+        print(f"{len(held)} task(s) are claimed, {lapsed} of them already lapsed under their own limits; claims keep the "
+              f"--stale-after they were made with. Run `python .blackboard/board.py audit` to see them.")
 
 
 def main() -> int:

@@ -144,8 +144,9 @@ def command(root: Path, *args: str) -> list[str]:
     return [PY, str(Path(root) / ".blackboard" / "board.py"), *args]
 
 
-def cli(root: Path, *args: str, cwd: Path | None = None) -> subprocess.CompletedProcess:
-    return subprocess.run(command(root, *args), cwd=str(cwd or root), capture_output=True, text=True, env=ENV, timeout=120)
+def cli(root: Path, *args: str, cwd: Path | None = None, env: dict | None = None) -> subprocess.CompletedProcess:
+    return subprocess.run(command(root, *args), cwd=str(cwd or root), capture_output=True, text=True, encoding="utf-8",
+                          errors="replace", env=env if env is not None else ENV, timeout=120)
 
 
 def create_args(identifier: str, stale_after: int = 300) -> list[str]:
@@ -285,6 +286,9 @@ def test_leases(rt, base: Path) -> None:
         taken = row("a")
         expect(taken["assignee"] == "y" and taken["last_reported_at"] is None, "takeover did not reset the claim")
         expect((taken["claim_worktree"], taken["claim_branch"]) == ("/w/one", "b1"), "claim was not stamped with worktree and branch")
+        # the agent whose claim was taken over must not be able to keep writing to it
+        expect_error(lambda: rt.progress(ns(id="a", actor="x", detail="still mine?")), "only y")
+        expect_error(lambda: rt.submit(ns(id="a", actor="x", artifact="unused", detail="mine")), "only y")
         with rt.transaction() as connection:
             events = connection.execute("SELECT kind, detail, worktree, branch FROM events WHERE task_id='a' ORDER BY sequence").fetchall()
         expect([e["kind"] for e in events] == ["created", "claimed", "progress_reported", "lease_expired", "claimed"],
@@ -326,6 +330,19 @@ def test_leases(rt, base: Path) -> None:
         with rt.transaction() as connection:
             after = connection.execute("SELECT COUNT(*) FROM events").fetchone()[0]
         expect("no lapsed claims" in again.getvalue() and before == after, "a second reap changed the board")
+
+        # one unreadable timestamp must not stop the others from being judged
+        for identifier in ("n1", "g1", "ok1"):
+            create(identifier, 3600)
+            claim(identifier, "x")
+        with rt.transaction() as connection:
+            connection.execute("UPDATE tasks SET claimed_at=? WHERE id='n1'", (clock.now.replace(tzinfo=None).isoformat(timespec="seconds"),))
+            connection.execute("UPDATE tasks SET claimed_at='garbage' WHERE id='g1'")
+        with contextlib.redirect_stdout(io.StringIO()):
+            rt.reap(ns(actor="reaper", dry_run=False))
+        expect(row("n1")["state"] == "claimed", "a timestamp without a timezone was judged lapsed")
+        expect(row("g1")["state"] == "queued", "an unreadable timestamp was not treated as lapsed")
+        expect(row("ok1")["state"] == "claimed", "a healthy claim was released")
 
 
 def test_schema_upgrade_and_guard(rt, base: Path) -> None:
@@ -390,12 +407,19 @@ def test_migrate(base: Path) -> None:
     expect(sha(private / "board.sqlite") == original, "the private board was modified")
     expect((private / locate.MIGRATED_MARKER).is_file(), "no migrated marker left behind")
     expect(cli(repo, "migrate", "--actor", "t").returncode == 1, "migrating twice was allowed")
+    # a run that copied the board and then died before leaving its marker must be finishable, not a dead end
+    (private / locate.MIGRATED_MARKER).unlink()
+    resumed = cli(repo, "migrate", "--actor", "t")
+    expect(resumed.returncode == 0 and "already migrated" in resumed.stdout, f"an interrupted migration could not be finished: {resumed.stdout}{resumed.stderr}")
+    expect((private / locate.MIGRATED_MARKER).is_file(), "finishing an interrupted migration left no marker")
+    expect(json.loads(cli(repo, "query", "summary").stdout)["summary"]["event_count"] == made["events"] + 1, "finishing wrote a second migration")
     claimed = cli(repo, "audit")
     expect("old-claimed" in claimed.stdout and "expired" in claimed.stdout and "UNMIGRATED" not in claimed.stdout,
            f"a migrated legacy claim was not judged by its lease: {claimed.stdout}")
 
     both, _ = make_repo(base, "both")
     expect(cli(both, "init").returncode == 0, "init failed")
+    expect(cli(both, *create_args("already-here")).returncode == 0, "create failed")  # a shared board with something in it
     stray = both / ".blackboard" / "runtime"
     make_v1_board(stray / "board.sqlite", None)
     expect(cli(both, "query", "summary").returncode == 2, "query ran beside an unmigrated board")
@@ -403,7 +427,24 @@ def test_migrate(base: Path) -> None:
     expect(refused.returncode == 1 and "already exists" in refused.stderr and "--abandon" in refused.stderr, f"merge was not refused: {refused.stderr}")
     expect(not (stray / locate.MIGRATED_MARKER).exists(), "a refused migration left a marker")
     expect(cli(both, "migrate", "--actor", "t", "--abandon").returncode == 0, "abandon failed")
-    expect(json.loads(cli(both, "query", "summary").stdout)["summary"]["task_count"] == 0, "the shared board was disturbed")
+    expect(json.loads(cli(both, "query", "summary").stdout)["summary"]["task_count"] == 1, "the shared board was disturbed")
+
+    # the realistic rollout: a sibling worktree runs `init` before the owner has migrated the real board
+    real, (sibling,) = make_repo(base, "rollout", ("sib",))
+    held = real / ".blackboard" / "runtime"
+    made = make_v1_board(held / "board.sqlite", None)
+    expect(cli(sibling, "init").returncode == 0, "the sibling's init failed")
+    done = cli(real, "migrate", "--actor", "t")
+    expect(done.returncode == 0, f"an empty shared board blocked migrating the real one: {done.stdout}{done.stderr}")
+    expect(json.loads(cli(real, "query", "summary").stdout)["summary"]["task_count"] == made["tasks"], "the real board did not win")
+    expect(list((real / ".git").glob("blackboard.empty-*")), "the empty board was deleted instead of set aside")
+
+    # an explicit BLACKBOARD_RUNTIME is the caller's choice, but `where` must not claim there is no old board
+    chosen = {**ENV, locate.ENV_RUNTIME: str(base / "chosen")}
+    told = cli(both, "where", env=chosen)
+    expect(told.returncode == 0 and locate.ENV_RUNTIME in told.stdout, f"where in env mode: {told.stdout}")
+    older = cli(real, "where", env=chosen)
+    expect("not used because" in older.stdout, f"where hid an old board that env mode ignores: {older.stdout}")
 
 
 def test_web_view(rt, base: Path) -> None:
@@ -422,6 +463,48 @@ def test_web_view(rt, base: Path) -> None:
         expect(client.get("/api/snapshot").status_code == 503, "the web view served a board written by a newer tool")
 
 
+def test_awkward_paths(base: Path) -> None:
+    """A live claim must never look orphaned because its worktree path has an accent or a space."""
+    repo, _ = make_repo(base, "awkward")
+    trees = [base / "wé x", base / "plain space"]
+    for number, tree in enumerate(trees):
+        git("worktree", "add", "-q", "-b", f"br{number}", str(tree), cwd=repo)
+        if number == 0:
+            expect(cli(tree, "init").returncode == 0, "init failed")
+        expect(cli(tree, *create_args(f"w{number}", 99999)).returncode == 0, "create failed")
+        expect(cli(tree, *claim_args(f"w{number}", "agent")).returncode == 0, "claim failed")
+    audit = cli(repo, "audit")
+    expect(audit.returncode == 0 and "no problems" in audit.stdout, f"a live claim in {trees} looked lapsed: {audit.stdout}")
+    expect(locate.norm(record(repo, "w0")["task"]["claim_worktree"]) == locate.norm(trees[0]), "the accented path was stamped wrongly")
+    # a lapse has consequences now, so a task made without --stale-after must not lapse after five quiet minutes
+    plain = ["create", "--actor", "t", "--id", "dflt", "--question", "q", "--specialty", "s", "--scope", "b", "--acceptance", "a",
+             "--reviewer", "checker", "--stop-condition", "done"]
+    expect(cli(repo, *plain).returncode == 0, "create without --stale-after failed")
+    expect(record(repo, "dflt")["task"]["stale_after_seconds"] == 3600, "the default --stale-after is not an hour")
+
+
+def test_git_unavailable(base: Path) -> None:
+    """If git cannot be run inside a git checkout, refuse; falling back to a private board recreates the split."""
+    repo, _ = make_repo(base, "nogit")
+    bare_path = {**ENV, "PATH": str(Path(PY).parent)}  # python is reachable, git is not
+    init = cli(repo, "init", env=bare_path)
+    expect(init.returncode == 1 and "git" in init.stderr, f"init proceeded without git: {init.stdout}{init.stderr}")
+    expect(not (repo / ".blackboard" / "runtime" / "board.sqlite").exists(), "a private board was created inside a git checkout")
+    expect(cli(repo, "query", "summary", env=bare_path).returncode == 2, "query proceeded without git")
+    expect(cli(repo, "init").returncode == 0, "with git available init should work")
+
+
+def test_old_worktree_boards_are_visible(base: Path) -> None:
+    """A worktree on an older branch keeps a private board; nothing can stop it, but audit must show it."""
+    repo, (old,) = make_repo(base, "oldbranch", ("old",))
+    expect(cli(repo, "init").returncode == 0, "init failed")
+    make_v1_board(old / ".blackboard" / "runtime" / "board.sqlite", None)
+    found = cli(repo, "audit")
+    expect(found.returncode == 1 and "has its own private board" in found.stdout and "old" in found.stdout, f"audit missed it: {found.stdout}")
+    expect(cli(old, "migrate", "--actor", "t", "--abandon").returncode == 0, "abandon failed")
+    expect(cli(repo, "audit").returncode == 0, "audit still reports a board that was set aside")
+
+
 def run(rt) -> None:
     expect(shutil.which("git"), "the shared-board self-test needs git on PATH")
     base = Path(tempfile.mkdtemp(prefix="blackboard-selftest-"))
@@ -431,6 +514,9 @@ def run(rt) -> None:
             ("leases, takeover, stamps and reap (fake clock)", lambda: test_leases(rt, base)),
             ("schema upgrade is lossless and idempotent; a newer schema is refused", lambda: test_schema_upgrade_and_guard(rt, base)),
             ("migrate copies, rewrites artifact paths, and an unmigrated board is never ignored", lambda: test_migrate(base)),
+            ("accented and spaced worktree paths are not mistaken for gone", lambda: test_awkward_paths(base)),
+            ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),
+            ("a worktree's leftover private board shows up in audit", lambda: test_old_worktree_boards_are_visible(base)),
             ("web view reads v2 and refuses a newer schema", lambda: test_web_view(rt, base)),
         ):
             test()
