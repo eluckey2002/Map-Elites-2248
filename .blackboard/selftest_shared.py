@@ -686,6 +686,20 @@ def test_file_written_after_marker(base: Path) -> None:
     expect("CHANGED after it was set aside" in quiet.stdout, f"a same-size overwrite that kept its mtime went unnoticed: {quiet.stdout}")
 
 
+def test_incomplete_marker(base: Path) -> None:
+    """A marker cut short by an interrupted write must not silently turn change detection off."""
+    repo, _ = make_repo(base, "cut")
+    private = repo / ".blackboard" / "runtime"
+    make_v1_board(private / "board.sqlite", None)
+    expect(cli(repo, "migrate", "--actor", "t").returncode == 0, "migrate failed")
+    marker = private / locate.MIGRATED_MARKER
+    expect(not list(private.glob(locate.MIGRATED_MARKER + ".tmp")), "the marker's temporary file was left behind")
+    expect("INCOMPLETE" not in cli(repo, "audit").stdout, "a complete marker was called incomplete")
+    marker.write_text(marker.read_text(encoding="utf-8").splitlines()[0] + "\n", encoding="utf-8")  # as if the write stopped early
+    cut = cli(repo, "audit")
+    expect(cut.returncode == 1 and "INCOMPLETE marker" in cut.stdout, f"a cut-short marker was trusted: {cut.stdout}")
+
+
 def test_wal_checkpoint_is_not_a_write(base: Path) -> None:
     """Closing a reader can checkpoint the log and change the database file's time although nothing was written; a
     fingerprint of the file would then report a change for ever.  A fingerprint of the contents does not."""
@@ -820,6 +834,7 @@ def run(rt) -> None:
             ("a file saved beside a settled private board is noticed", lambda: test_file_written_after_marker(base)),
             ("a commit sitting in a write-ahead log is noticed after migration", lambda: test_wal_commit_is_noticed(base)),
             ("a checkpoint that wrote nothing is not reported as a change", lambda: test_wal_checkpoint_is_not_a_write(base)),
+            ("an incomplete marker is reported, not trusted", lambda: test_incomplete_marker(base)),
             ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),
             ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),
             ("a worktree's leftover private board shows up in audit", lambda: test_old_worktree_boards_are_visible(base)),

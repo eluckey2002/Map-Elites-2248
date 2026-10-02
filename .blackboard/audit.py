@@ -20,21 +20,26 @@ KIND_TEXT = {
 
 def written_after_marker(private: Path) -> bool:
     """Has something written to a private board after it was migrated or set aside?  An older tool on a branch from
-    before boards were shared would, and it leaves the marker alone.  The marker records the database's size and
-    modification time as they were when it was written; any difference since means a write, however soon after."""
-    database, marker = private / "board.sqlite", private / locate.MIGRATED_MARKER
+    before boards were shared would, and it leaves the marker alone.  The marker records a fingerprint of the
+    database's contents and a digest of the files beside it as they were when it was written; any difference since means
+    a write, however soon after.  An incomplete marker cannot say, so it counts as a change rather than as all clear."""
+    fields = marker_fields(private)
+    if fields is None:
+        return True
+    # the files beside the database count too: an artifact or snapshot an older tool saves changes no row
+    return locate.db_fingerprint(private) != fields[0] or locate.files_digest(locate.folder_files(private)) != fields[1]
+
+
+def marker_fields(private: Path) -> tuple[str, str] | None:
+    """The (contents fingerprint, files digest) a COMPLETE marker records, or None.  An interrupted or out-of-space
+    write can leave a marker cut short, and require_migrated() trusts a marker's mere existence."""
     try:
-        text = marker.read_text(encoding="utf-8")
-        recorded = re.search(r"^fingerprint: (.+)$", text, re.M)
-        if recorded:
-            if locate.db_fingerprint(private) != recorded.group(1).strip():
-                return True
-            # the database is as it was; an artifact or snapshot an older tool wrote beside it is a write too
-            files = re.search(r"^files: ([0-9a-f]+)$", text, re.M)
-            return bool(files) and locate.files_digest(locate.folder_files(private)) != files.group(1)
-        return database.stat().st_mtime > marker.stat().st_mtime + 2  # a marker without a fingerprint (hand-made): best effort
+        text = (private / locate.MIGRATED_MARKER).read_text(encoding="utf-8")
     except OSError:
-        return False
+        return None
+    fingerprint = re.search(r"^fingerprint: (\S+)$", text, re.M)
+    files = re.search(r"^files: ([0-9a-f]{16})$", text, re.M)
+    return (fingerprint.group(1), files.group(1)) if fingerprint and files else None
 
 
 def legacy_state() -> tuple[str, str]:
@@ -46,6 +51,9 @@ def legacy_state() -> tuple[str, str]:
     if kind != "shared":
         return "ignored", f"present at {legacy}, but not used because the board location is {kind}"
     if (legacy / locate.MIGRATED_MARKER).exists():
+        if marker_fields(legacy) is None:
+            return "diverged", (f"has an INCOMPLETE marker ({legacy / locate.MIGRATED_MARKER}, left by an interrupted write), so later "
+                                f"writes cannot be told from earlier ones; delete the marker and run migrate again")
         if written_after_marker(legacy):
             return "diverged", (f"CHANGED after it was set aside, at {legacy}: something kept writing to it, so tasks or "
                                 f"claims may now exist outside the shared board")

@@ -173,7 +173,7 @@ def folder_files(folder: Path) -> list[tuple[str, int, str]]:
     for directory, _subdirs, names in os.walk(folder, followlinks=False):
         for name in names:
             path = Path(directory) / name
-            if name not in DB_FILES and name != MIGRATED_MARKER and not path.is_symlink():
+            if name not in DB_FILES and name not in (MIGRATED_MARKER, MIGRATED_MARKER + ".tmp") and not path.is_symlink():
                 found.append((str(path.relative_to(folder)), path.stat().st_size, content_hash(path)))
     return sorted(found)
 

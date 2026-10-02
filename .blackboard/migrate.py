@@ -75,9 +75,11 @@ def write_marker(legacy: Path, message: str) -> None:
     """The marker records the private database's size and modification time as they are NOW, so a later write by an
     older tool shows up however soon after the marker it happens (a bare time comparison would need a tolerance,
     and anything inside the tolerance would be invisible for good)."""
-    (legacy / locate.MIGRATED_MARKER).write_text(
-        f"{message}\nfingerprint: {locate.db_fingerprint(legacy)}\nfiles: {locate.files_digest(locate.folder_files(legacy))}\n",
-        encoding="utf-8")
+    text = f"{message}\nfingerprint: {locate.db_fingerprint(legacy)}\nfiles: {locate.files_digest(locate.folder_files(legacy))}\n"
+    marker = legacy / locate.MIGRATED_MARKER
+    pending = marker.with_name(marker.name + ".tmp")
+    pending.write_text(text, encoding="utf-8")
+    os.replace(pending, marker)  # atomic: a marker either exists complete or not at all (require_migrated trusts its existence)
 
 
 @contextmanager
