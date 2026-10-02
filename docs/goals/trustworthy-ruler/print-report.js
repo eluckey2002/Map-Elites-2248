@@ -51,6 +51,8 @@ console.log(git(['show', registrationCommit + ':experiments/SEEDS.md'])
   .split(/\r?\n/).filter((line) => line.startsWith('|')).join('\n'));
 
 console.log('\n2. PREREGISTRATION');
+captured('git show registration commit; Get-Process measured-run start time',
+  result + '/registration-output.txt');
 console.log('$ git show -s --format=%H%n%cI%n%s ' + registrationCommit);
 console.log(git(['show', '-s', '--format=%H%n%cI%n%s', registrationCommit]));
 console.log(section(protocol, '## Seed blocks and maximum cost'));
@@ -65,6 +67,8 @@ captured('node solver/ruler/run.js --protocol RESULT-0058', result + '/run-outpu
   }
   return text.trimEnd();
 });
+captured('node docs/goals/trustworthy-ruler/print-timing.js ' + result + '/raw-games.json',
+  result + '/timing-output.txt');
 console.log('\n6. SYNTHETIC ADMISSION — actual test names');
 captured('node --test solver/tests/ruler.test.js', result + '/admission-output.txt');
 console.log('\n10. INDEPENDENT RECOMPUTE');
