@@ -671,6 +671,27 @@ def test_file_written_after_marker(base: Path) -> None:
     flagged = cli(repo, "audit")
     expect("CHANGED after it was set aside" in flagged.stdout, f"a file saved beside a settled board went unnoticed: {flagged.stdout}")
 
+    # a link inside a copied folder is preserved as a link; retargeting it afterwards changes what the copy means
+    linked_repo, _ = make_repo(base, "relink")
+    private3 = linked_repo / ".blackboard" / "runtime"
+    make_v1_board(private3 / "board.sqlite", None)
+    (private3 / "snapshots").mkdir()
+    (private3 / "snapshots" / "a.json").write_text("{}", encoding="utf-8")
+    (private3 / "snapshots" / "b.json").write_text("[]", encoding="utf-8")
+    try:
+        os.symlink("a.json", private3 / "snapshots" / "latest.json")
+        made_link = True
+    except OSError:
+        made_link = False
+        print("  (note: the nested-link case was skipped; this machine cannot create links)")
+    if made_link:
+        expect(cli(linked_repo, "migrate", "--actor", "t").returncode == 0, "migrate failed with a nested link")
+        expect("CHANGED after" not in cli(linked_repo, "audit").stdout, "a freshly migrated board with a link was reported as changed")
+        (private3 / "snapshots" / "latest.json").unlink()
+        os.symlink("b.json", private3 / "snapshots" / "latest.json")
+        moved = cli(linked_repo, "audit")
+        expect("CHANGED after it was set aside" in moved.stdout, f"a retargeted nested link went unnoticed: {moved.stdout}")
+
     # an older tool overwrites an artifact with different bytes of the same length and puts the old modification time back
     other, _ = make_repo(base, "overwrite")
     private2 = other / ".blackboard" / "runtime"

@@ -170,11 +170,16 @@ def folder_files(folder: Path) -> list[tuple[str, int, str]]:
     how a write beside it is noticed.  Contents, not modification times: a same-length overwrite that puts the old
     time back changes nothing a timestamp can see."""
     found = []
-    for directory, _subdirs, names in os.walk(folder, followlinks=False):
-        for name in names:
+    for directory, subdirs, names in os.walk(folder, followlinks=False):
+        # os.walk lists a link to a directory among the subdirectories and never follows it
+        for name in [*names, *(d for d in subdirs if (Path(directory) / d).is_symlink())]:
             path = Path(directory) / name
-            if name not in DB_FILES and name not in (MIGRATED_MARKER, MIGRATED_MARKER + ".tmp") and not path.is_symlink():
-                found.append((str(path.relative_to(folder)), path.stat().st_size, content_hash(path)))
+            relative = str(path.relative_to(folder))
+            if path.is_symlink():
+                # a link is fingerprinted by where it points, never followed: retargeting it changes what a copy of it means
+                found.append((relative, -1, hashlib.sha256(os.readlink(path).encode("utf-8", "surrogateescape")).hexdigest()[:16]))
+            elif name not in DB_FILES and name not in (MIGRATED_MARKER, MIGRATED_MARKER + ".tmp"):
+                found.append((relative, path.stat().st_size, content_hash(path)))
     return sorted(found)
 
 
