@@ -21,7 +21,7 @@ import leases
 import locate
 import runtime
 
-SKIP = {"board.sqlite", "board.sqlite-journal", "board.sqlite-wal", "board.sqlite-shm", locate.MIGRATED_MARKER}
+SKIP = set(locate.DB_FILES) | {locate.MIGRATED_MARKER}
 BOARD_FILES = {"board.sqlite", "board.sqlite-journal"}  # what a shared board with nothing in it consists of
 HOOKS: dict = {}  # tests put callables here (after_copy, before_swap, after_aside) to play another worktree at the worst moment
 SLIPPED = ("another worktree wrote to the shared board at {target} while this migration was being prepared; "
@@ -41,19 +41,6 @@ def fire(name: str) -> None:
         hook()
 
 
-def folder_fingerprint(folder: Path) -> list[tuple[str, int, int]]:
-    """Name, size and modification time of every file in the private folder except the database and the marker.
-    Links are not followed."""
-    found = []
-    for directory, _subdirs, names in os.walk(folder, followlinks=False):
-        for name in names:
-            path = Path(directory) / name
-            if name not in SKIP and not path.is_symlink():
-                stat = path.stat()
-                found.append((str(path.relative_to(folder)), stat.st_size, stat.st_mtime_ns))
-    return sorted(found)
-
-
 def holds_nothing(folder: Path, connection: sqlite3.Connection) -> bool:
     """True only if the board has no rows AND its folder holds nothing but the database.  A snapshot or an artifact that
     another worktree adds is a file, not a row, so counting rows alone would let a board with content be set aside."""
@@ -64,8 +51,9 @@ def describe(found: dict[str, int]) -> str:
     return f"{found['tasks']} tasks, {found['events']} events, {found['defects']} defects"
 
 
-def recorded_counts(shared_db: Path, legacy: Path) -> dict[str, int] | None:
-    """The row counts a previous migration from this very folder recorded, or None if the shared board has none."""
+def recorded_migration(shared_db: Path, legacy: Path) -> tuple[dict[str, int], str | None] | None:
+    """(row counts, digest of the files beside the database) that a previous migration from this very folder recorded,
+    or None if the shared board records none."""
     try:
         with locate.readonly(shared_db) as connection:
             row = connection.execute(
@@ -78,14 +66,17 @@ def recorded_counts(shared_db: Path, legacy: Path) -> dict[str, int] | None:
     if not found:
         return None
     tasks, events, defects = map(int, found[0])
-    return {"tasks": tasks, "events": events, "defects": defects}
+    digest = re.search(r"; files=([0-9a-f]{16})\b", row["detail"])
+    return {"tasks": tasks, "events": events, "defects": defects}, (digest.group(1) if digest else None)
 
 
 def write_marker(legacy: Path, message: str) -> None:
     """The marker records the private database's size and modification time as they are NOW, so a later write by an
     older tool shows up however soon after the marker it happens (a bare time comparison would need a tolerance,
     and anything inside the tolerance would be invisible for good)."""
-    (legacy / locate.MIGRATED_MARKER).write_text(f"{message}\nfingerprint: {locate.db_fingerprint(legacy)}\n", encoding="utf-8")
+    (legacy / locate.MIGRATED_MARKER).write_text(
+        f"{message}\nfingerprint: {locate.db_fingerprint(legacy)}\nfiles: {locate.files_digest(locate.folder_files(legacy))}\n",
+        encoding="utf-8")
 
 
 @contextmanager
@@ -168,15 +159,17 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
 
     aside = None
     if shared_db.exists():
-        recorded = recorded_counts(shared_db, legacy)
-        if recorded is not None:  # a previous run copied the board and stopped before leaving its marker
-            if recorded != before:
-                # Something kept writing to the private board in between (an older tool would). Restoring the
-                # marker now would declare it migrated and silently drop those writes.
+        previous = recorded_migration(shared_db, legacy)
+        if previous is not None:  # a previous run copied the board and stopped before leaving its marker
+            recorded, digest = previous
+            if recorded != before or (digest is not None and digest != locate.files_digest(locate.folder_files(legacy))):
+                # Something kept writing to the private board in between (an older tool would), rows or files beside
+                # them. Restoring the marker now would declare it migrated and silently drop those writes.
                 raise ValueError(
-                    f"the private board at {legacy} changed after it was copied: it now holds {describe(before)}, "
-                    f"but the migration recorded {describe(recorded)}. Those changes are not in the shared board, and "
-                    f"boards are not merged. Re-run with --abandon to set it aside knowingly, or carry them over by hand first."
+                    f"the private board at {legacy} changed after it was copied (its rows or the files beside it): it now "
+                    f"holds {describe(before)}, and the migration recorded {describe(recorded)}. Those changes are not in the "
+                    f"shared board, and boards are not merged. Re-run with --abandon to set it aside knowingly, or carry "
+                    f"them over by hand first."
                 )
             write_marker(legacy, f"Already migrated to {target} (marker restored by {args.actor}).")
             print(f"the private board at {legacy} was already migrated into {target}; its marker is restored")
@@ -210,7 +203,7 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
         finally:
             copy.close()
             source_connection.close()
-        files_before = folder_fingerprint(legacy)
+        files_before = locate.folder_files(legacy)
         files, skipped = copy_files(legacy, stage)
         fire("after_copy")
         with runtime.transaction(stage / "board.sqlite") as connection:
@@ -218,7 +211,8 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
             rewritten = rewrite_artifact_paths(connection, legacy, target)
             runtime.emit(
                 connection, "board_migrated", None, args.actor,
-                f"Migrated from {legacy} ({describe(before)}); {rewritten} artifact paths rewritten, {files} files copied",
+                f"Migrated from {legacy} ({describe(before)}); {rewritten} artifact paths rewritten, {files} files copied; "
+                f"files={locate.files_digest(files_before)}",
             )
         with locate.readonly(stage / "board.sqlite") as connection:
             after = counts(connection)
@@ -227,7 +221,7 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
         if after != expected or not intact:
             raise ValueError(f"the copy does not match the original (expected {expected}, got {after}); nothing was changed")
         fire("before_swap")
-        if folder_fingerprint(legacy) != files_before:
+        if locate.folder_files(legacy) != files_before:
             # The write lock covers the database, not a snapshot or artifact an older tool writes beside it.
             raise ValueError(f"files in the private folder {legacy} changed while it was being copied; nothing was changed. Run migrate again.")
         if aside is not None:

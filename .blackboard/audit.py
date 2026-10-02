@@ -24,9 +24,14 @@ def written_after_marker(private: Path) -> bool:
     modification time as they were when it was written; any difference since means a write, however soon after."""
     database, marker = private / "board.sqlite", private / locate.MIGRATED_MARKER
     try:
-        recorded = re.search(r"^fingerprint: (.+)$", marker.read_text(encoding="utf-8"), re.M)
+        text = marker.read_text(encoding="utf-8")
+        recorded = re.search(r"^fingerprint: (.+)$", text, re.M)
         if recorded:
-            return locate.db_fingerprint(private) != recorded.group(1).strip()
+            if locate.db_fingerprint(private) != recorded.group(1).strip():
+                return True
+            # the database is as it was; an artifact or snapshot an older tool wrote beside it is a write too
+            files = re.search(r"^files: ([0-9a-f]+)$", text, re.M)
+            return bool(files) and locate.files_digest(locate.folder_files(private)) != files.group(1)
         return database.stat().st_mtime > marker.stat().st_mtime + 2  # a marker without a fingerprint (hand-made): best effort
     except OSError:
         return False

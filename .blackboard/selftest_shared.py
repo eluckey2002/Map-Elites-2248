@@ -437,8 +437,14 @@ def test_migrate(base: Path) -> None:
     expect(resumed.returncode == 0 and "already migrated" in resumed.stdout, f"an interrupted migration could not be finished: {resumed.stdout}{resumed.stderr}")
     expect((private / locate.MIGRATED_MARKER).is_file(), "finishing an interrupted migration left no marker")
     expect(json.loads(cli(repo, "query", "summary").stdout)["summary"]["event_count"] == made["events"] + 1, "finishing wrote a second migration")
-    # ...but if the private board changed in the meantime, restoring the marker would silently drop those writes
+    # ...but if the private board changed in the meantime, restoring the marker would silently drop those writes.
+    # A file beside the database counts too: the write lock covers rows, not an artifact an older tool saves.
     (private / locate.MIGRATED_MARKER).unlink()
+    (private / "late.txt").write_text("saved by an older tool after the copy", encoding="utf-8")
+    stray = cli(repo, "migrate", "--actor", "t")
+    expect(stray.returncode == 1 and "changed after it was copied" in stray.stderr, f"a stray file was declared migrated: {stray.stdout}{stray.stderr}")
+    expect(not (private / locate.MIGRATED_MARKER).exists(), "a marker was written over a stranded file")
+    (private / "late.txt").unlink()
     with db(private / "board.sqlite") as connection:
         connection.execute("INSERT INTO events(at, kind, task_id, actor, detail) VALUES "
                            "('2026-10-01T00:00:00+00:00', 'progress_reported', 'old-claimed', 'legacy-agent', 'a late write by an older tool')")
@@ -620,6 +626,19 @@ def test_migration_races(rt, base: Path) -> None:
     expect((shared3 / "snapshots" / "x.json").is_file(), "the racer's file was lost")
 
 
+def test_file_written_after_marker(base: Path) -> None:
+    """An artifact or snapshot an older tool saves beside a settled private board changes no row."""
+    repo, _ = make_repo(base, "afterfile")
+    private = repo / ".blackboard" / "runtime"
+    make_v1_board(private / "board.sqlite", None)
+    expect(cli(repo, "migrate", "--actor", "t").returncode == 0, "migrate failed")
+    expect("CHANGED after" not in cli(repo, "audit").stdout, "a freshly migrated board was reported as changed")
+    (private / "snapshots").mkdir()
+    (private / "snapshots" / "late.json").write_text("{}", encoding="utf-8")  # the database is not touched
+    flagged = cli(repo, "audit")
+    expect("CHANGED after it was set aside" in flagged.stdout, f"a file saved beside a settled board went unnoticed: {flagged.stdout}")
+
+
 def test_wal_commit_is_noticed(base: Path) -> None:
     """A commit that sits in the write-ahead log leaves the main database file untouched."""
     repo, _ = make_repo(base, "wal")
@@ -692,6 +711,7 @@ def run(rt) -> None:
             ("migrate copies, rewrites artifact paths, and an unmigrated board is never ignored", lambda: test_migrate(base)),
             ("accented and spaced worktree paths are not mistaken for gone", lambda: test_awkward_paths(base)),
             ("a migration holds off writers and will not replace a board that gained data", lambda: test_migration_races(rt, base)),
+            ("a file saved beside a settled private board is noticed", lambda: test_file_written_after_marker(base)),
             ("a commit sitting in a write-ahead log is noticed after migration", lambda: test_wal_commit_is_noticed(base)),
             ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),
             ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),

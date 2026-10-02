@@ -11,6 +11,8 @@ separately, and one of them drifting is how a board silently splits in two.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import os
 import sqlite3
 import subprocess
@@ -149,6 +151,27 @@ def live_worktrees() -> set[str] | None:
     """Normalised paths of this repository's existing worktrees, or None when git cannot say."""
     paths = worktree_paths()
     return None if paths is None else {norm(path) for path in paths}
+
+
+DB_FILES = frozenset({"board.sqlite", "board.sqlite-journal", "board.sqlite-wal", "board.sqlite-shm"})
+
+
+def folder_files(folder: Path) -> list[tuple[str, int, int]]:
+    """Name, size and modification time of every file in a private board's folder except the database and the
+    marker (artifacts, snapshots).  Links are not followed.  The write lock covers the database only, so these are
+    how a write beside it is noticed."""
+    found = []
+    for directory, _subdirs, names in os.walk(folder, followlinks=False):
+        for name in names:
+            path = Path(directory) / name
+            if name not in DB_FILES and name != MIGRATED_MARKER and not path.is_symlink():
+                stat = path.stat()
+                found.append((str(path.relative_to(folder)), stat.st_size, stat.st_mtime_ns))
+    return sorted(found)
+
+
+def files_digest(files: list[tuple[str, int, int]]) -> str:
+    return hashlib.sha256(json.dumps(files).encode("utf-8")).hexdigest()[:16]
 
 
 def db_fingerprint(folder: Path) -> str:
