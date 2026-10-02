@@ -860,6 +860,11 @@ def test_old_worktree_boards_are_visible(base: Path) -> None:
     expect(found.returncode == 1 and "has its own private board" in found.stdout and "old" in found.stdout, f"audit missed it: {found.stdout}")
     expect(cli(old, "migrate", "--actor", "t", "--abandon").returncode == 0, "abandon failed")
     expect(cli(repo, "audit").returncode == 0, "audit still reports a board that was set aside")
+    # the same holds for ANOTHER worktree's settled board whose marker was cut short: it must be reported, not trusted
+    marker = old / ".blackboard" / "runtime" / locate.MIGRATED_MARKER
+    marker.write_text(marker.read_text(encoding="utf-8").splitlines()[0] + "\n", encoding="utf-8")
+    cut = cli(repo, "audit")
+    expect(cut.returncode == 1 and "marker is incomplete" in cut.stdout, f"another worktree's cut-short marker was trusted: {cut.stdout}")
 
 
 def run(rt) -> None:

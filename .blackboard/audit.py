@@ -98,8 +98,9 @@ def problems() -> list[str]:
                 found.append(f"worktree {path} has its own private board at {private}; update its .blackboard from a branch that has "
                              f"shared boards, then run migrate there (only one board can be migrated; the others are set aside with --abandon)")
             elif written_after_marker(private):
-                found.append(f"worktree {path}: its private board at {private} changed after it was set aside, so an older tool is "
-                             f"still writing to it; update that worktree's .blackboard from a branch that has shared boards")
+                found.append(f"worktree {path}: its private board at {private} changed after it was set aside (or its marker is "
+                             f"incomplete, so that cannot be ruled out); an older tool may still be writing to it. Update that "
+                             f"worktree's .blackboard from a branch that has shared boards")
     database = locate.runtime_dir() / "board.sqlite"
     if not database.is_file():
         return found
