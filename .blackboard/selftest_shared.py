@@ -661,6 +661,38 @@ def test_wal_commit_is_noticed(base: Path) -> None:
         stay.close()
 
 
+def test_lock_held_through_the_swap(base: Path) -> None:
+    """Where a folder can be renamed under an open file (everywhere but Windows), the shared board's write lock must
+    stay held until the replacement is installed, or a writer could begin a transaction in the gap and commit it into
+    the board being set aside.  On Windows the open file itself blocks that rename, so there is nothing to check."""
+    import migrate
+
+    repo, (sibling,) = make_repo(base, "hold", ("sib",))
+    make_v1_board(repo / ".blackboard" / "runtime" / "board.sqlite", None)
+    expect(cli(sibling, "init").returncode == 0, "the sibling's init failed")
+    outcome: list[bool] = []
+
+    def competing_writer() -> None:  # runs right after the empty board was renamed aside, before the new one is in place
+        if os.name == "nt":
+            return
+        aside = next((repo / ".git").glob("blackboard.empty-*"))
+        other = sqlite3.connect(aside / "board.sqlite", timeout=0.2, isolation_level=None)
+        try:
+            try:
+                other.execute("BEGIN IMMEDIATE")
+                outcome.append(False)
+            except sqlite3.OperationalError:
+                outcome.append(True)
+        finally:
+            other.close()
+
+    with patched(locate, "TOOL_ROOT", repo / ".blackboard"), patched(migrate, "HOOKS", {"after_aside": competing_writer}), \
+            contextlib.redirect_stdout(io.StringIO()):
+        migrate.migrate(ns(actor="t", abandon=False))
+    expect(outcome in ([], [True]), "a writer got in while the board was being swapped")
+    expect(os.name == "nt" or outcome == [True], "the swap hook never ran")
+
+
 def test_odd_database_paths(base: Path) -> None:
     """Characters that mean something in a URI must not change which database is opened."""
     folder = base / "odd #1 %41 dir"
@@ -679,7 +711,9 @@ def test_odd_database_paths(base: Path) -> None:
 def test_git_unavailable(base: Path) -> None:
     """If git cannot be run inside a git checkout, refuse; falling back to a private board recreates the split."""
     repo, _ = make_repo(base, "nogit")
-    bare_path = {**ENV, "PATH": str(Path(PY).parent)}  # python is reachable, git is not
+    nowhere = base / "empty-path"  # python is run by absolute path, so a PATH with nothing on it hides git everywhere
+    nowhere.mkdir()
+    bare_path = {**ENV, "PATH": str(nowhere)}
     init = cli(repo, "init", env=bare_path)
     expect(init.returncode == 1 and "git" in init.stderr, f"init proceeded without git: {init.stdout}{init.stderr}")
     expect(not (repo / ".blackboard" / "runtime" / "board.sqlite").exists(), "a private board was created inside a git checkout")
@@ -711,6 +745,7 @@ def run(rt) -> None:
             ("migrate copies, rewrites artifact paths, and an unmigrated board is never ignored", lambda: test_migrate(base)),
             ("accented and spaced worktree paths are not mistaken for gone", lambda: test_awkward_paths(base)),
             ("a migration holds off writers and will not replace a board that gained data", lambda: test_migration_races(rt, base)),
+            ("the shared board stays locked until the replacement is installed (non-Windows)", lambda: test_lock_held_through_the_swap(base)),
             ("a file saved beside a settled private board is noticed", lambda: test_file_written_after_marker(base)),
             ("a commit sitting in a write-ahead log is noticed after migration", lambda: test_wal_commit_is_noticed(base)),
             ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),

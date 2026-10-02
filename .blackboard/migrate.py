@@ -7,6 +7,7 @@ with a MIGRATED.txt marker that stops it being picked up again.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import os
 import re
 import shutil
@@ -192,6 +193,7 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
 
     stage = target.parent / f"{target.name}.migrating-{os.getpid()}"
     shutil.rmtree(stage, ignore_errors=True)
+    locked = contextlib.ExitStack()  # holds the shared board's write lock until the replacement is in place
     try:
         stage.mkdir(parents=True)
         # The guard holds the write lock but must not be the backup's source: SQLite cannot back up from the very
@@ -225,9 +227,14 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
             # The write lock covers the database, not a snapshot or artifact an older tool writes beside it.
             raise ValueError(f"files in the private folder {legacy} changed while it was being copied; nothing was changed. Run migrate again.")
         if aside is not None:
-            with writers_paused(shared_db) as shared_guard:  # nothing may be written to a board that is about to be replaced
-                if not holds_nothing(target, shared_guard):
-                    raise ValueError(SLIPPED.format(target=target))
+            shared_guard = locked.enter_context(writers_paused(shared_db))  # nothing may be written to a board about to be replaced
+            if not holds_nothing(target, shared_guard):
+                raise ValueError(SLIPPED.format(target=target))
+            if os.name == "nt":
+                # Windows refuses to rename a folder that holds an open file, which also keeps a writer from slipping in.
+                # Elsewhere a rename succeeds under an open file, so the lock stays held until the replacement is installed:
+                # otherwise a writer could begin a transaction in the gap and commit it into the board being set aside.
+                locked.close()
             target.rename(aside)
             fire("after_aside")
             with locate.readonly(aside / "board.sqlite") as late:
@@ -248,7 +255,10 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
                         if not (target / item.name).exists():
                             os.replace(item, target / item.name)
             raise
+        finally:
+            locked.close()
     except BaseException:
+        locked.close()
         shutil.rmtree(stage, ignore_errors=True)
         raise
     write_marker(legacy, f"Migrated to {target} by {args.actor}: {describe(before)}, {rewritten} artifact paths rewritten. This private copy is no longer used; it is kept as a backup.")
