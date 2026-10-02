@@ -308,6 +308,7 @@ def test_leases(rt, base: Path) -> None:
         for identifier, stale in (("c1", 60), ("c2", 3600), ("c3", 60)):
             create(identifier, stale)
             claim(identifier, "x")
+        rt.progress(ns(id="c1", actor="x", detail="reported once, then went quiet"))  # reap must not leave this report behind
         with rt.transaction() as connection:  # c3 was claimed to repair reviewed work
             connection.execute("UPDATE tasks SET review_note='fix it', reviewed_at=? WHERE id='c3'", (rt.utcnow(),))
         clock.advance(120)
@@ -320,6 +321,7 @@ def test_leases(rt, base: Path) -> None:
             rt.reap(ns(actor="reaper", dry_run=False))
         c1, c2, c3 = row("c1"), row("c2"), row("c3")
         expect((c1["state"], c1["assignee"], c1["claim_worktree"]) == ("queued", None, None), f"c1 after reap: {c1}")
+        expect(c1["last_reported_at"] is None, "reap kept the former holder's report, which the next claimant would inherit")
         expect(c2["state"] == "claimed", "reap released a claim that was still held")
         expect(c3["state"] == "repair_requested", "a lapsed repair claim must go back to repair, not the plain queue")
         with rt.transaction() as connection:
@@ -525,9 +527,15 @@ def test_web_view(rt, base: Path) -> None:
         data = client.get("/api/snapshot").get_json()
         expect(data["service_state"] == "available" and data["tasks"][0]["id"] == "srv" and "claim_worktree" in data["tasks"][0],
                "the web view cannot read a v2 board")
+        artifact = folder / "srv.md"
+        artifact.write_text("evidence", encoding="utf-8")
+        with db(folder / "board.sqlite") as connection:
+            connection.execute("UPDATE tasks SET artifact_path=? WHERE id='srv'", (str(artifact),))
+        expect(client.get("/artifacts/tasks/srv").status_code == 200, "the artifact route does not serve a task's artifact")
         with db(folder / "board.sqlite") as connection:
             connection.execute("PRAGMA user_version = 99")
         expect(client.get("/api/snapshot").status_code == 503, "the web view served a board written by a newer tool")
+        expect(client.get("/artifacts/tasks/srv").status_code == 404, "the artifact route served a board written by a newer tool")
 
 
 def test_awkward_paths(base: Path) -> None:
@@ -836,6 +844,24 @@ def test_odd_database_paths(base: Path) -> None:
     expect(locate.readonly_uri(Path("/tmp/a?b/board.sqlite")).count("?") == 1, "a ? in the path was left raw in the URI")
 
 
+def test_location_is_decided_once(base: Path) -> None:
+    """Paths are fixed at import and the safety check asks again later; if git failed between the two and then answered,
+    the check would pass while the paths still pointed at the old private folder."""
+    repo, _ = make_repo(base, "flaky")
+    real, failures = locate.common_dir, [True]
+
+    def flaky(cwd=None):
+        return None if failures and failures.pop() else real(cwd)
+
+    with patched(locate, "TOOL_ROOT", repo / ".blackboard"), patched(locate, "common_dir", flaky):
+        locate._location.cache_clear()
+        first, second = locate.location()[0], locate.location()[0]
+        expect_error(locate.require_migrated, "git could not be run")
+    locate._location.cache_clear()
+    expect(first == "unavailable" and second == "unavailable",
+           f"the location changed within one process after a git failure: {first} then {second}")
+
+
 def test_git_unavailable(base: Path) -> None:
     """If git cannot be run inside a git checkout, refuse; falling back to a private board recreates the split."""
     repo, _ = make_repo(base, "nogit")
@@ -885,6 +911,7 @@ def run(rt) -> None:
             ("an incomplete marker is reported, not trusted", lambda: test_incomplete_marker(base)),
             ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),
             ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),
+            ("the board's location is decided once, so a flaky git cannot split the checks from the paths", lambda: test_location_is_decided_once(base)),
             ("a worktree's leftover private board shows up in audit", lambda: test_old_worktree_boards_are_visible(base)),
             ("web view reads v2 and refuses a newer schema", lambda: test_web_view(rt, base)),
         ):

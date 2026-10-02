@@ -255,7 +255,7 @@ def reap(args: argparse.Namespace) -> None:
                 print(f"would release {row['id']} (claimed by {row['assignee']}, {status}: {why}) -> {state}")
                 continue
             connection.execute(
-                "UPDATE tasks SET state=?, assignee=NULL, claimed_at=NULL, claim_worktree=NULL, claim_branch=NULL WHERE id=?",
+                "UPDATE tasks SET state=?, assignee=NULL, claimed_at=NULL, last_reported_at=NULL, claim_worktree=NULL, claim_branch=NULL WHERE id=?",
                 (state, row["id"]),
             )
             emit(connection, "lease_expired", row["id"], args.actor, f"Claim by {row['assignee']} {status} ({why}); returned to {state}")

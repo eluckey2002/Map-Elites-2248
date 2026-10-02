@@ -43,8 +43,10 @@ def task_artifact(task_id: str) -> Path | None:
     """Find one task's current artifact without exposing an arbitrary stored path."""
     if not TASK_ID_PATTERN.fullmatch(task_id) or not DATABASE.is_file():
         return None
-    uri = locate.readonly_uri(DATABASE)
-    connection = sqlite3.connect(uri, uri=True)
+    try:
+        connection = locate.open_readonly(DATABASE)  # refuses a schema a newer tool wrote, like every other read surface
+    except (sqlite3.Error, locate.BoardError):
+        return None
     try:
         row = connection.execute("SELECT artifact_path FROM tasks WHERE id = ?", (task_id,)).fetchone()
     except sqlite3.Error:

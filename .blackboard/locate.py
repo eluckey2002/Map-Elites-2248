@@ -73,13 +73,21 @@ def location() -> tuple[str, Path]:
     "unavailable" is a git checkout where git could not answer (missing, failing, timed out).  Falling back to a
     private board there would recreate exactly the split this module exists to prevent, so callers refuse instead.
     """
-    override = os.environ.get(ENV_RUNTIME)
+    return _location(str(TOOL_ROOT), os.environ.get(ENV_RUNTIME))
+
+
+@lru_cache(maxsize=32)
+def _location(tool_root: str, override: str | None) -> tuple[str, Path]:
+    """Decided ONCE per tool folder and environment for the life of the process.  Paths are fixed when modules are
+    imported and `require_migrated()` asks again later; if git failed in between and answered the second time, the
+    two would disagree and a command could write to the old private path after the safety check passed.  Deciding
+    once makes them agree, and a transient failure then fails closed (the command refuses; run it again)."""
     if override:
         return "env", Path(override).resolve()
     common = common_dir()
     if common is not None:
         return "shared", common / "blackboard"
-    if (TOOL_ROOT.parent / ".git").exists():
+    if (Path(tool_root).parent / ".git").exists():
         return "unavailable", legacy_runtime()
     return "local", legacy_runtime()
 
