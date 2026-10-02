@@ -9,10 +9,11 @@ from pathlib import Path
 
 from flask import Flask, abort, jsonify, request, send_file, send_from_directory
 
+import locate
 import snapshot_liveboard as journal
 
 ROOT = Path(__file__).resolve().parent
-DATABASE = ROOT / "runtime" / "board.sqlite"
+DATABASE = locate.runtime_dir() / "board.sqlite"
 TASK_ID_PATTERN = re.compile(r"^[A-Za-z0-9_-]+$")
 ALLOWED_LIVEBOARD_ARTIFACT_SUFFIXES = {".md", ".json", ".txt"}
 ALLOWED_STATIC_FILES = {"app.js", "index.html", "style.css"}
@@ -61,6 +62,7 @@ def read_snapshot() -> dict:
     connection = sqlite3.connect(uri, uri=True, isolation_level=None)
     connection.row_factory = sqlite3.Row
     try:
+        locate.check_schema_version(connection)
         connection.execute("BEGIN")
         tasks = [dict(row) for row in connection.execute("SELECT * FROM tasks ORDER BY id")]
         defects = [dict(row) for row in connection.execute("SELECT * FROM defects ORDER BY reported_at DESC, id DESC")]
@@ -125,7 +127,7 @@ def journal_comparison(before: str, after: str) -> dict:
 def snapshot():
     try:
         return jsonify(read_snapshot())
-    except sqlite3.Error:
+    except (sqlite3.Error, locate.BoardError):
         return jsonify({"now": datetime.now(timezone.utc).isoformat(timespec="seconds"), "service_state": "database_unavailable", "tasks": [], "defects": [], "events": []}), 503
 
 
@@ -172,6 +174,10 @@ def main() -> None:
     args = parser.parse_args()
     if args.host != "127.0.0.1":
         parser.error("Blackboard is loopback-only; --host must be 127.0.0.1")
+    try:
+        locate.require_migrated()
+    except locate.BoardError as error:
+        parser.error(str(error))
     app.run(host=args.host, port=args.port, debug=False, use_reloader=False)
 
 

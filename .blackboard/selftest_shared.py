@@ -1,0 +1,440 @@
+"""Self-test for the shared board: worktrees, leases, stamps, schema upgrade, migration.
+
+Run through `python .blackboard/board.py self-test`.  It builds throwaway git repositories and worktrees in a
+temporary directory and drives the real command line with real processes, because a mock of "two worktrees share
+one board" would only test the mock.  It never touches the project's own repository, worktrees or board.
+"""
+from __future__ import annotations
+
+import argparse
+import contextlib
+import hashlib
+import io
+import json
+import os
+import shutil
+import sqlite3
+import stat
+import subprocess
+import sys
+import tempfile
+from contextlib import contextmanager
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+import leases
+import locate
+
+PY = sys.executable
+ENV = {key: value for key, value in os.environ.items() if key != locate.ENV_RUNTIME}
+
+V1_DDL = (
+    """CREATE TABLE tasks (id TEXT PRIMARY KEY, diagnostic_question TEXT NOT NULL, specialty TEXT NOT NULL,
+       scope TEXT NOT NULL, acceptance TEXT NOT NULL, dependencies TEXT NOT NULL DEFAULT '', reviewer TEXT NOT NULL,
+       stop_condition TEXT NOT NULL, state TEXT NOT NULL CHECK(state IN ('queued','claimed','submitted','accepted','repair_requested')),
+       assignee TEXT, claimed_at TEXT, last_reported_at TEXT, submitted_at TEXT, reviewed_at TEXT, artifact_path TEXT,
+       review_note TEXT, stale_after_seconds INTEGER NOT NULL CHECK(stale_after_seconds > 0))""",
+    """CREATE TABLE events (sequence INTEGER PRIMARY KEY AUTOINCREMENT, at TEXT NOT NULL,
+       kind TEXT NOT NULL CHECK(kind IN ('created','claimed','progress_reported','submitted','defect_recorded','accepted','repair_requested','defect_disposition')),
+       task_id TEXT REFERENCES tasks(id), actor TEXT NOT NULL, detail TEXT NOT NULL)""",
+    """CREATE TABLE defects (id INTEGER PRIMARY KEY AUTOINCREMENT, task_id TEXT NOT NULL REFERENCES tasks(id),
+       summary TEXT NOT NULL, state TEXT NOT NULL DEFAULT 'open' CHECK(state IN ('open','fixed','dismissed')),
+       reported_at TEXT NOT NULL, disposition TEXT NOT NULL DEFAULT '')""",
+)
+
+
+class Clock:
+    def __init__(self) -> None:
+        self.now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+
+    def __call__(self) -> datetime:
+        return self.now
+
+    def advance(self, seconds: int) -> None:
+        self.now += timedelta(seconds=seconds)
+
+
+def ns(**fields) -> argparse.Namespace:
+    return argparse.Namespace(**fields)
+
+
+def expect(condition: object, message: str) -> None:
+    if not condition:
+        raise AssertionError(message)
+
+
+def expect_error(call, fragment: str) -> None:
+    try:
+        call()
+    except ValueError as error:
+        expect(fragment in str(error), f"error {str(error)!r} does not mention {fragment!r}")
+        return
+    raise AssertionError(f"expected an error mentioning {fragment!r}")
+
+
+@contextmanager
+def patched(owner, name: str, value):
+    original = getattr(owner, name)
+    setattr(owner, name, value)
+    try:
+        yield
+    finally:
+        setattr(owner, name, original)
+
+
+@contextmanager
+def using_board(rt, folder: Path):
+    folder.mkdir(parents=True, exist_ok=True)
+    original = rt.RUNTIME, rt.DATABASE
+    rt.RUNTIME, rt.DATABASE = folder, folder / "board.sqlite"
+    try:
+        yield
+    finally:
+        rt.RUNTIME, rt.DATABASE = original
+
+
+@contextmanager
+def db(path: Path):
+    """A connection that is committed and CLOSED on exit (sqlite3's own `with` leaves it open, and Windows
+    will not delete a database file that is still open)."""
+    connection = sqlite3.connect(path)
+    try:
+        yield connection
+        connection.commit()
+    finally:
+        connection.close()
+
+
+def sha(path: Path) -> str:
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def git(*args: str, cwd: Path) -> None:
+    subprocess.run(["git", "-c", "user.name=selftest", "-c", "user.email=selftest@example.invalid", *args],
+                   cwd=str(cwd), check=True, capture_output=True, text=True)
+
+
+def remove_tree(path: Path) -> None:
+    def force(function, target, _error):  # git object files are read-only, which Windows will not delete
+        os.chmod(target, stat.S_IWRITE)
+        function(target)
+    if sys.version_info >= (3, 12):
+        shutil.rmtree(path, onexc=force)
+    else:
+        shutil.rmtree(path, onerror=force)
+
+
+def make_repo(base: Path, name: str, branches: tuple[str, ...] = ()) -> tuple[Path, list[Path]]:
+    """A throwaway repository holding this tool, plus one real worktree per branch."""
+    repo = base / name
+    repo.mkdir()
+    git("init", "-q", "-b", "main", cwd=repo)
+    shutil.copytree(locate.TOOL_ROOT, repo / ".blackboard", ignore=shutil.ignore_patterns("runtime", "__pycache__", "*.pyc"))
+    git("add", "-A", cwd=repo)
+    git("commit", "-q", "-m", "tool", cwd=repo)
+    trees = []
+    for branch in branches:
+        tree = base / f"{name}-{branch}"
+        git("worktree", "add", "-q", "-b", branch, str(tree), cwd=repo)
+        trees.append(tree)
+    return repo, trees
+
+
+def command(root: Path, *args: str) -> list[str]:
+    return [PY, str(Path(root) / ".blackboard" / "board.py"), *args]
+
+
+def cli(root: Path, *args: str, cwd: Path | None = None) -> subprocess.CompletedProcess:
+    return subprocess.run(command(root, *args), cwd=str(cwd or root), capture_output=True, text=True, env=ENV, timeout=120)
+
+
+def create_args(identifier: str, stale_after: int = 300) -> list[str]:
+    return ["create", "--actor", "t", "--id", identifier, "--question", "q", "--specialty", "s", "--scope", "bounded",
+            "--acceptance", "a", "--reviewer", "checker", "--stop-condition", "done", "--stale-after", str(stale_after)]
+
+
+def claim_args(identifier: str, who: str, reason: str = "") -> list[str]:
+    args = ["claim", "--actor", who, "--id", identifier, "--assignee", who]
+    return args + ["--reason", reason] if reason else args
+
+
+def record(root: Path, identifier: str, cwd: Path | None = None) -> dict:
+    done = cli(root, "query", "task", identifier, cwd=cwd)
+    expect(done.returncode == 0, f"query task {identifier} failed: {done.stdout}{done.stderr}")
+    return json.loads(done.stdout)
+
+
+def make_v1_board(path: Path, artifact: Path | None) -> dict[str, int]:
+    """A board exactly as the pre-shared tool wrote it: old DDL, user_version 0, absolute artifact path."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    connection = sqlite3.connect(path)
+    for statement in V1_DDL:
+        connection.execute(statement)
+    when = "2026-09-27T01:00:00+00:00"
+    rows = [
+        ("old-queued", "queued", None, None, None, None),
+        ("old-claimed", "claimed", "legacy-agent", when, None, None),
+        ("old-done", "accepted", "legacy-agent", when, when, str(artifact) if artifact else None),
+    ]
+    for identifier, state, assignee, claimed, reviewed, artifact_path in rows:
+        connection.execute(
+            "INSERT INTO tasks(id, diagnostic_question, specialty, scope, acceptance, reviewer, stop_condition, state, assignee,"
+            " claimed_at, reviewed_at, artifact_path, stale_after_seconds) VALUES (?, 'q', 's', 'b', 'a', 'checker', 'd', ?, ?, ?, ?, ?, 300)",
+            (identifier, state, assignee, claimed, reviewed, artifact_path),
+        )
+    events = [("created", "old-queued"), ("created", "old-claimed"), ("claimed", "old-claimed"), ("created", "old-done"),
+              ("claimed", "old-done"), ("submitted", "old-done"), ("accepted", "old-done")]
+    for kind, identifier in events:
+        connection.execute("INSERT INTO events(at, kind, task_id, actor, detail) VALUES (?, ?, ?, 'legacy-agent', 'legacy event')",
+                           (when, kind, identifier))
+    connection.execute("INSERT INTO defects(task_id, summary, reported_at) VALUES ('old-done', 'a defect', ?)", (when,))
+    connection.commit()
+    connection.close()
+    return {"tasks": len(rows), "events": len(events), "defects": 1}
+
+
+def test_worktrees_share_one_board(base: Path) -> None:
+    repo, (wt_a, wt_b) = make_repo(base, "shared", ("wt-a", "wt-b"))
+    shared = repo / ".git" / "blackboard"
+    for place in (repo, wt_a, wt_b):
+        out = cli(place, "where")
+        expect(out.returncode == 0, f"where failed in {place}: {out.stderr}")
+        line = next(item for item in out.stdout.splitlines() if item.startswith("board:"))
+        reported = line[len("board:"):].split("  (")[0].strip()
+        expect(locate.norm(reported) == locate.norm(shared), f"{place} reports board {reported}, expected {shared}")
+    expect(cli(wt_a, "init").returncode == 0, "init failed")
+    for tree in (repo, wt_a, wt_b):
+        expect(not (tree / ".blackboard" / "runtime" / "board.sqlite").exists(), f"{tree} grew a private board")
+    expect((shared / "board.sqlite").is_file(), "the shared board was not created in the git common directory")
+
+    expect(cli(wt_a, *create_args("t1")).returncode == 0, "create failed")
+    expect(cli(wt_a, *claim_args("t1", "agent-a")).returncode == 0, "claim failed")
+    seen = record(wt_b, "t1")["task"]  # read from the OTHER worktree
+    expect(seen["state"] == "claimed" and seen["assignee"] == "agent-a", "wt-b cannot see wt-a's claim")
+    expect(locate.norm(seen["claim_worktree"]) == locate.norm(wt_a), f"claim stamped with {seen['claim_worktree']}")
+    expect(seen["claim_branch"] == "wt-a", f"claim stamped with branch {seen['claim_branch']}")
+    refused = cli(wt_b, *claim_args("t1", "agent-b", "taking over"))
+    expect(refused.returncode == 1 and "live claim" in refused.stderr, f"a live claim was not protected: {refused.stderr}")
+
+    cli(wt_a, *create_args("race"))
+    racers = [subprocess.Popen(command(tree, *claim_args("race", name)), cwd=str(tree), env=ENV, text=True,
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE) for name, tree in (("agent-a", wt_a), ("agent-b", wt_b))]
+    codes = sorted(racer.wait(timeout=120) for racer in racers)
+    [racer.communicate() for racer in racers]
+    expect(codes == [0, 1], f"two worktrees racing for one claim must give exactly one winner, got exit codes {codes}")
+
+    outside = base / "outside"
+    outside.mkdir()
+    cli(repo, *create_args("o1"))
+    expect(cli(repo, *claim_args("o1", "stray"), cwd=outside).returncode == 0, "claim from outside the repository failed")
+    expect(record(repo, "o1")["task"]["claim_worktree"] is None, "a caller outside the repository was stamped with a worktree")
+
+    git("worktree", "remove", "--force", str(wt_a), cwd=repo)  # the agent's worktree disappears; its claim is still on the board
+    audit = cli(repo, "audit")
+    expect(audit.returncode == 1 and "t1" in audit.stdout and "orphaned" in audit.stdout, f"audit missed an orphaned claim: {audit.stdout}")
+    expect("o1" not in audit.stdout, "a claim made from outside the repository was flagged as orphaned")
+    quiet = cli(wt_b, *claim_args("t1", "agent-b"))
+    expect(quiet.returncode == 1 and "requires --reason" in quiet.stderr, f"reclaiming without a reason was allowed: {quiet.stderr}")
+    expect(cli(wt_b, *claim_args("t1", "agent-b", "agent-a's worktree is gone")).returncode == 0, "reclaiming an orphaned claim failed")
+    after = record(wt_b, "t1")
+    expect(after["task"]["assignee"] == "agent-b" and "lease_expired" in [e["kind"] for e in after["events"]],
+           "takeover left no lease_expired event")
+
+    cli(wt_b, *create_args("r1"))
+    cli(wt_b, *claim_args("r1", "agent-b"))
+    git("worktree", "remove", "--force", str(wt_b), cwd=repo)
+    dry = cli(repo, "reap", "--actor", "t", "--dry-run")
+    expect(dry.returncode == 0 and "would release r1" in dry.stdout, f"dry run: {dry.stdout}{dry.stderr}")
+    expect(record(repo, "r1")["task"]["state"] == "claimed", "a dry run changed the board")
+    expect(cli(repo, "reap", "--actor", "t").returncode == 0, "reap failed")
+    released = record(repo, "r1")["task"]
+    expect(released["state"] == "queued" and released["assignee"] is None, "reap did not return the claim to the queue")
+    expect(record(repo, "t1")["task"]["state"] == "queued", "reap missed the second orphaned claim")
+    final = cli(repo, "audit")
+    expect(final.returncode == 0 and "no problems" in final.stdout, f"audit still reports problems after reap: {final.stdout}")
+
+
+def test_leases(rt, base: Path) -> None:
+    clock = Clock()
+    stamp = {"worktree": "/w/one", "branch": "b1"}
+    with using_board(rt, base / "leases"), patched(leases, "_NOW", clock), \
+            patched(locate, "live_worktrees", lambda: None), patched(locate, "identity", lambda: stamp):
+        rt.init(ns())
+
+        def create(identifier: str, stale_after: int) -> None:
+            rt.create(ns(id=identifier, question="q", specialty="s", scope="b", acceptance="a", dependencies="",
+                         reviewer="checker", stop_condition="d", stale_after=stale_after, actor="t"))
+
+        def claim(identifier: str, who: str, reason: str = "") -> None:
+            rt.claim(ns(id=identifier, assignee=who, actor=who, reason=reason))
+
+        def row(identifier: str) -> dict:
+            with rt.transaction() as connection:
+                return dict(rt.one(connection, identifier))
+
+        create("a", 60)
+        claim("a", "x")
+        expect_error(lambda: claim("a", "y", "please"), "live claim")
+        clock.advance(59)
+        rt.progress(ns(id="a", actor="x", detail="still here"))  # renews the lease
+        clock.advance(60)
+        expect_error(lambda: claim("a", "y", "please"), "live claim")  # exactly at the limit is still held
+        clock.advance(1)
+        expect_error(lambda: claim("a", "y"), "requires --reason")
+        claim("a", "y", "x went quiet")
+        taken = row("a")
+        expect(taken["assignee"] == "y" and taken["last_reported_at"] is None, "takeover did not reset the claim")
+        expect((taken["claim_worktree"], taken["claim_branch"]) == ("/w/one", "b1"), "claim was not stamped with worktree and branch")
+        with rt.transaction() as connection:
+            events = connection.execute("SELECT kind, detail, worktree, branch FROM events WHERE task_id='a' ORDER BY sequence").fetchall()
+        expect([e["kind"] for e in events] == ["created", "claimed", "progress_reported", "lease_expired", "claimed"],
+               f"unexpected event order {[e['kind'] for e in events]}")
+        expect("x" in events[3]["detail"] and all(e["worktree"] == "/w/one" for e in events), "events were not stamped or the lapse was not explained")
+
+        create("b", 3600)
+        claim("b", "x")
+        with patched(locate, "live_worktrees", lambda: {locate.norm("/w/one")}):
+            expect_error(lambda: claim("b", "y", "try"), "live claim")  # worktree exists and the lease is fresh
+        with patched(locate, "live_worktrees", lambda: {locate.norm("/w/other")}):
+            claim("b", "y", "its worktree is gone")  # orphaned: reclaimable even though the lease is fresh
+        with rt.transaction() as connection:
+            detail = connection.execute("SELECT detail FROM events WHERE task_id='b' AND kind='lease_expired'").fetchone()["detail"]
+        expect("no longer exists" in detail, f"orphan takeover not explained: {detail}")
+
+        for identifier, stale in (("c1", 60), ("c2", 3600), ("c3", 60)):
+            create(identifier, stale)
+            claim(identifier, "x")
+        with rt.transaction() as connection:  # c3 was claimed to repair reviewed work
+            connection.execute("UPDATE tasks SET review_note='fix it', reviewed_at=? WHERE id='c3'", (rt.utcnow(),))
+        clock.advance(120)
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            rt.reap(ns(actor="reaper", dry_run=True))
+        expect("would release c1" in buffer.getvalue() and "c2" not in buffer.getvalue(), f"dry run output: {buffer.getvalue()}")
+        expect(row("c1")["state"] == "claimed", "a dry run changed the board")
+        with contextlib.redirect_stdout(io.StringIO()):
+            rt.reap(ns(actor="reaper", dry_run=False))
+        c1, c2, c3 = row("c1"), row("c2"), row("c3")
+        expect((c1["state"], c1["assignee"], c1["claim_worktree"]) == ("queued", None, None), f"c1 after reap: {c1}")
+        expect(c2["state"] == "claimed", "reap released a claim that was still held")
+        expect(c3["state"] == "repair_requested", "a lapsed repair claim must go back to repair, not the plain queue")
+        with rt.transaction() as connection:
+            before = connection.execute("SELECT COUNT(*) FROM events").fetchone()[0]
+        again = io.StringIO()
+        with contextlib.redirect_stdout(again):
+            rt.reap(ns(actor="reaper", dry_run=False))
+        with rt.transaction() as connection:
+            after = connection.execute("SELECT COUNT(*) FROM events").fetchone()[0]
+        expect("no lapsed claims" in again.getvalue() and before == after, "a second reap changed the board")
+
+
+def test_schema_upgrade_and_guard(rt, base: Path) -> None:
+    import query_liveboard
+    path = base / "v1" / "board.sqlite"
+    make_v1_board(path, None)
+    with db(path) as connection:
+        old_events = connection.execute("SELECT sequence, kind, detail FROM events ORDER BY sequence").fetchall()
+        expect(connection.execute("PRAGMA user_version").fetchone()[0] == 0, "fixture is not a pre-versioned board")
+    for _ in range(2):  # the second pass proves the upgrade is idempotent
+        with rt.transaction(path) as connection:
+            rt.schema(connection)
+    with db(path) as connection:
+        expect(connection.execute("SELECT sequence, kind, detail FROM events ORDER BY sequence").fetchall() == old_events,
+               "upgrading rewrote or lost events")
+        columns = {row[1] for row in connection.execute("PRAGMA table_info(events)")}
+        task_columns = {row[1] for row in connection.execute("PRAGMA table_info(tasks)")}
+        expect({"worktree", "branch"} <= columns and {"claim_worktree", "claim_branch"} <= task_columns, "new columns missing")
+        expect(connection.execute("PRAGMA user_version").fetchone()[0] == locate.SCHEMA_VERSION, "schema version not recorded")
+    with rt.transaction(path) as connection:
+        rt.emit(connection, "lease_expired", None, "t", "new kind accepted")
+        newest = connection.execute("SELECT MAX(sequence) FROM events").fetchone()[0]
+    expect(newest == len(old_events) + 1, "event sequence did not continue after the upgrade")
+    with db(path) as connection:
+        connection.execute("PRAGMA user_version = 99")
+    def write_to_newer() -> None:
+        with rt.transaction(path) as connection:
+            rt.schema(connection)
+    expect_error(write_to_newer, "newer tool wrote it")
+    expect_error(lambda: query_liveboard.connection_for(path), "newer tool wrote it")
+
+
+def test_migrate(base: Path) -> None:
+    repo, _ = make_repo(base, "legacy")
+    private = repo / ".blackboard" / "runtime"
+    private.mkdir()
+    artifact = private / "old-done.md"
+    artifact.write_text("evidence", encoding="utf-8")
+    (private / "snapshots").mkdir()
+    (private / "snapshots" / "snap1.json").write_text("{}", encoding="utf-8")
+    made = make_v1_board(private / "board.sqlite", artifact)
+    original = sha(private / "board.sqlite")
+
+    summary = cli(repo, "query", "summary")
+    expect(summary.returncode == 2 and "migrate" in summary.stdout, f"query ran beside an unmigrated board: {summary.stdout}")
+    init = cli(repo, "init")
+    expect(init.returncode == 1 and "migrate" in init.stderr, "init created a second board beside an unmigrated one")
+    expect("UNMIGRATED" in cli(repo, "where").stdout, "where does not mention the unmigrated board")
+    unmigrated = cli(repo, "audit")
+    expect(unmigrated.returncode == 1 and "UNMIGRATED" in unmigrated.stdout, "audit missed the unmigrated board")
+
+    done = cli(repo, "migrate", "--actor", "t")
+    expect(done.returncode == 0, f"migrate failed: {done.stdout}{done.stderr}")
+    totals = json.loads(cli(repo, "query", "summary").stdout)["summary"]
+    expect((totals["task_count"], totals["event_count"], totals["defect_count"]) == (made["tasks"], made["events"] + 1, made["defects"]),
+           f"counts changed in migration: {totals}")
+    shared = repo / ".git" / "blackboard"
+    moved = record(repo, "old-done")["task"]
+    expect(locate.norm(moved["artifact_path"]) == locate.norm(shared / "old-done.md"), f"artifact path not rewritten: {moved['artifact_path']}")
+    expect(Path(moved["artifact_path"]).read_text(encoding="utf-8") == "evidence", "artifact was not copied")
+    expect((shared / "snapshots" / "snap1.json").is_file(), "snapshots were not copied")
+    expect(sha(private / "board.sqlite") == original, "the private board was modified")
+    expect((private / locate.MIGRATED_MARKER).is_file(), "no migrated marker left behind")
+    expect(cli(repo, "migrate", "--actor", "t").returncode == 1, "migrating twice was allowed")
+    claimed = cli(repo, "audit")
+    expect("old-claimed" in claimed.stdout and "expired" in claimed.stdout and "UNMIGRATED" not in claimed.stdout,
+           f"a migrated legacy claim was not judged by its lease: {claimed.stdout}")
+
+    both, _ = make_repo(base, "both")
+    expect(cli(both, "init").returncode == 0, "init failed")
+    stray = both / ".blackboard" / "runtime"
+    make_v1_board(stray / "board.sqlite", None)
+    expect(cli(both, "query", "summary").returncode == 2, "query ran beside an unmigrated board")
+    refused = cli(both, "migrate", "--actor", "t")
+    expect(refused.returncode == 1 and "already exists" in refused.stderr and "--abandon" in refused.stderr, f"merge was not refused: {refused.stderr}")
+    expect(not (stray / locate.MIGRATED_MARKER).exists(), "a refused migration left a marker")
+    expect(cli(both, "migrate", "--actor", "t", "--abandon").returncode == 0, "abandon failed")
+    expect(json.loads(cli(both, "query", "summary").stdout)["summary"]["task_count"] == 0, "the shared board was disturbed")
+
+
+def test_web_view(rt, base: Path) -> None:
+    import server
+    folder = base / "web"
+    with using_board(rt, folder), patched(server, "DATABASE", folder / "board.sqlite"), patched(locate, "live_worktrees", lambda: None):
+        rt.init(ns())
+        rt.create(ns(id="srv", question="q", specialty="s", scope="b", acceptance="a", dependencies="", reviewer="checker",
+                     stop_condition="d", stale_after=60, actor="t"))
+        client = server.app.test_client()
+        data = client.get("/api/snapshot").get_json()
+        expect(data["service_state"] == "available" and data["tasks"][0]["id"] == "srv" and "claim_worktree" in data["tasks"][0],
+               "the web view cannot read a v2 board")
+        with db(folder / "board.sqlite") as connection:
+            connection.execute("PRAGMA user_version = 99")
+        expect(client.get("/api/snapshot").status_code == 503, "the web view served a board written by a newer tool")
+
+
+def run(rt) -> None:
+    expect(shutil.which("git"), "the shared-board self-test needs git on PATH")
+    base = Path(tempfile.mkdtemp(prefix="blackboard-selftest-"))
+    try:
+        for name, test in (
+            ("two real worktrees share one board; claims, races and orphans", lambda: test_worktrees_share_one_board(base)),
+            ("leases, takeover, stamps and reap (fake clock)", lambda: test_leases(rt, base)),
+            ("schema upgrade is lossless and idempotent; a newer schema is refused", lambda: test_schema_upgrade_and_guard(rt, base)),
+            ("migrate copies, rewrites artifact paths, and an unmigrated board is never ignored", lambda: test_migrate(base)),
+            ("web view reads v2 and refuses a newer schema", lambda: test_web_view(rt, base)),
+        ):
+            test()
+            print(f"  ok: {name}")
+    finally:
+        remove_tree(base)
+    print("self-test passed (shared board)")
