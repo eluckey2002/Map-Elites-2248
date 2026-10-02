@@ -346,6 +346,28 @@ def test_leases(rt, base: Path) -> None:
         expect(row("g1")["state"] == "queued", "an unreadable timestamp was not treated as lapsed")
         expect(row("ok1")["state"] == "claimed", "a healthy claim was released")
 
+        # a claim that starts a new cycle (here, repair after a review) must not inherit the previous cycle's report
+        create("rep", 3600)
+        claim("rep", "x")
+        rt.progress(ns(id="rep", actor="x", detail="first cycle"))
+        with rt.transaction() as connection:
+            connection.execute("UPDATE tasks SET state='repair_requested', assignee=NULL, review_note='fix it', reviewed_at=? WHERE id='rep'",
+                               (rt.utcnow(),))
+        claim("rep", "y", "repairing")
+        expect(row("rep")["last_reported_at"] is None, "a repair claim inherited the previous claim's report")
+
+        # a blocker the holder records as a defect is the holder reporting, so it renews the lease; someone else's does not
+        create("blk", 60)
+        create("oth", 60)
+        claim("blk", "x")
+        claim("oth", "x")
+        clock.advance(50)
+        rt.defect(ns(id="blk", actor="x", summary="blocked on review"))
+        rt.defect(ns(id="oth", actor="z", summary="a bystander's note"))
+        clock.advance(11)
+        expect_error(lambda: claim("blk", "y", "try"), "live claim")
+        claim("oth", "y", "x went quiet")
+
         # A holder that went quiet past its limit but was NOT replaced may still report: the lease only matters once
         # someone takes the claim over, and the single write lock orders a renewal and a takeover one way or the other.
         create("slow", 60)
@@ -542,6 +564,8 @@ def test_awkward_paths(base: Path) -> None:
     """A live claim must never look orphaned because its worktree path has an accent or a space."""
     repo, _ = make_repo(base, "awkward")
     trees = [base / "wé x", base / "plain space"]
+    if os.name != "nt":  # Windows strips a trailing space from a folder name; elsewhere it is a legal, distinct path
+        trees.append(base / "trailing ")
     for number, tree in enumerate(trees):
         git("worktree", "add", "-q", "-b", f"br{number}", str(tree), cwd=repo)
         if number == 0:
@@ -862,6 +886,46 @@ def test_location_is_decided_once(base: Path) -> None:
            f"the location changed within one process after a git failure: {first} then {second}")
 
 
+def test_identity_failure_is_not_an_outside_caller(base: Path) -> None:
+    """If git cannot run while the claimant is identified, the claim must be refused: stamping it with no worktree would
+    make it impossible to orphan.  A caller that really is outside every repository is a different, legitimate case."""
+    repo, _ = make_repo(base, "idfail")
+    outside = base / "no-repo-here"
+    outside.mkdir()
+    real = locate.git_run
+
+    def broken(*args, **kwargs):
+        return None if args[:2] == ("rev-parse", "--git-dir") else real(*args, **kwargs)
+
+    here = os.getcwd()
+    try:
+        with patched(locate, "TOOL_ROOT", repo / ".blackboard"):
+            os.chdir(repo)
+            locate._identity.cache_clear()
+            with patched(locate, "git_run", broken):
+                expect_error(locate.identity, "while identifying the worktree")
+            locate._identity.cache_clear()
+            os.chdir(outside)
+            expect(locate.identity() == {"worktree": None, "branch": None}, "a caller outside every repository was not recognised")
+    finally:
+        os.chdir(here)
+        locate._identity.cache_clear()
+
+
+def test_marker_cannot_collide_with_an_artifact(base: Path) -> None:
+    """A task whose id is MIGRATED legitimately has an artifact named MIGRATED.txt; it must not be mistaken for the marker."""
+    repo, _ = make_repo(base, "collide")
+    private = repo / ".blackboard" / "runtime"
+    make_v1_board(private / "board.sqlite", None)
+    (private / "MIGRATED.txt").write_text("evidence for a task whose id is MIGRATED", encoding="utf-8")
+    summary = cli(repo, "query", "summary")
+    expect(summary.returncode == 2 and "migrate" in summary.stdout, f"an artifact named MIGRATED.txt was mistaken for the marker: {summary.stdout}")
+    done = cli(repo, "migrate", "--actor", "t")
+    expect(done.returncode == 0, f"migrate refused a board holding an artifact named MIGRATED.txt: {done.stdout}{done.stderr}")
+    expect((repo / ".git" / "blackboard" / "MIGRATED.txt").is_file(), "the artifact was not carried over")
+    expect("INCOMPLETE" not in cli(repo, "audit").stdout, "audit called the artifact an incomplete marker")
+
+
 def test_git_unavailable(base: Path) -> None:
     """If git cannot be run inside a git checkout, refuse; falling back to a private board recreates the split."""
     repo, _ = make_repo(base, "nogit")
@@ -912,6 +976,8 @@ def run(rt) -> None:
             ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),
             ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),
             ("the board's location is decided once, so a flaky git cannot split the checks from the paths", lambda: test_location_is_decided_once(base)),
+            ("a git failure while identifying a claimant is refused, not taken for an outside caller", lambda: test_identity_failure_is_not_an_outside_caller(base)),
+            ("an artifact named MIGRATED.txt is not mistaken for the migration marker", lambda: test_marker_cannot_collide_with_an_artifact(base)),
             ("a worktree's leftover private board shows up in audit", lambda: test_old_worktree_boards_are_visible(base)),
             ("web view reads v2 and refuses a newer schema", lambda: test_web_view(rt, base)),
         ):

@@ -229,11 +229,11 @@ def claim(args: argparse.Namespace) -> None:
             emit(connection, "lease_expired", row["id"], args.actor, lapsed)
         connection.execute(
             """UPDATE tasks SET state='claimed', assignee=?, claimed_at=?,
-                 last_reported_at=CASE WHEN ? THEN NULL ELSE last_reported_at END,
+                 last_reported_at=NULL,
                  claim_worktree=?, claim_branch=?,
                  review_note=CASE WHEN state='queued' THEN NULL ELSE review_note END
                WHERE id=?""",
-            (text(args.assignee, "assignee"), at, 1 if lapsed else 0, who["worktree"], who["branch"], row["id"]),
+            (text(args.assignee, "assignee"), at, who["worktree"], who["branch"], row["id"]),
         )
         emit(connection, "claimed", row["id"], args.actor, reason or f"Claimed by {args.assignee.strip()}")
 
@@ -308,6 +308,9 @@ def defect(args: argparse.Namespace) -> None:
         at = utcnow()
         connection.execute("INSERT INTO defects(task_id, summary, state, reported_at, disposition) VALUES (?, ?, ?, ?, ?)",
                            (row["id"], text(args.summary, "summary"), "open", at, ""))
+        if row["state"] == "claimed" and args.actor.strip() == row["assignee"]:
+            # a blocker recorded as a defect is the holder reporting; it renews the lease like a progress note
+            connection.execute("UPDATE tasks SET last_reported_at=? WHERE id=?", (at, row["id"]))
         emit(connection, "defect_recorded", row["id"], args.actor, text(args.summary, "summary"))
 
 

@@ -2,7 +2,7 @@
 
 Nothing here deletes the private board: it is copied (SQLite's backup API, so a write in flight cannot
 tear the copy), the copy is checked against the original, and the private folder is left in place
-with a MIGRATED.txt marker that stops it being picked up again.
+with a `.migrated` marker that stops it being picked up again.
 """
 from __future__ import annotations
 

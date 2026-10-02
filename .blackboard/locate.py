@@ -23,7 +23,7 @@ from typing import Iterator
 
 SCHEMA_VERSION = 2
 ENV_RUNTIME = "BLACKBOARD_RUNTIME"
-MIGRATED_MARKER = "MIGRATED.txt"
+MIGRATED_MARKER = ".migrated"  # dot-prefixed: a task id cannot contain a dot, so no artifact (<id>.md/.json/.txt) can be named this
 TOOL_ROOT = Path(__file__).resolve().parent  # the .blackboard folder of the checkout running this copy
 
 
@@ -41,8 +41,9 @@ def norm(path: str | Path) -> str:
     return os.path.normcase(os.path.realpath(str(path)))
 
 
-def git(*args: str, cwd: str | Path | None = None) -> str | None:
-    """Run git and return its stdout, or None when git is missing or the command fails."""
+def git_run(*args: str, cwd: str | Path | None = None) -> tuple[int, str] | None:
+    """Run git: (exit code, stdout) when it ran, None when it could not run at all (missing, timed out).  The two are
+    different answers: "not a repository" is an outside caller, "could not run" is a failure to be treated as one."""
     try:
         # git writes UTF-8; without saying so Python decodes it with the Windows ANSI codepage and any path
         # with an accent comes back as mojibake, which makes a live worktree look like it no longer exists.
@@ -52,7 +53,19 @@ def git(*args: str, cwd: str | Path | None = None) -> str | None:
         )
     except (OSError, subprocess.SubprocessError):
         return None
-    return done.stdout.strip() if done.returncode == 0 else None
+    out = done.stdout
+    # remove only git's own line terminator: a path may legitimately end in a space, which strip() would eat
+    if out.endswith("\n"):
+        out = out[:-1]
+    if out.endswith("\r"):
+        out = out[:-1]
+    return done.returncode, out
+
+
+def git(*args: str, cwd: str | Path | None = None) -> str | None:
+    """Run git and return its stdout, or None when git is missing or the command fails."""
+    ran = git_run(*args, cwd=cwd)
+    return ran[1] if ran is not None and ran[0] == 0 else None
 
 
 def common_dir(cwd: str | Path | None = None) -> Path | None:
@@ -115,9 +128,16 @@ def require_migrated() -> None:
 
 @lru_cache(maxsize=64)
 def _identity(cwd: str, tool_root: str) -> tuple[str | None, str | None]:
+    probe = git_run("rev-parse", "--git-dir", cwd=cwd)
+    if probe is None:
+        # git could not run: that is a failure, not an outside caller.  Stamping the claim with no worktree would make it
+        # impossible to orphan, so a worktree removed later would no longer release it.
+        raise BoardError("git could not be run while identifying the worktree; try again")
+    if probe[0] != 0:
+        return None, None  # git ran and says the caller is not inside any git repository
     here = common_dir(cwd)
     if here is None:
-        return None, None  # the caller is not inside any git repository
+        raise BoardError("git could not be run while identifying the worktree; try again")
     board = common_dir(tool_root)
     if board is not None and norm(here) != norm(board):
         return None, None  # the caller is in a different repository than the board's
