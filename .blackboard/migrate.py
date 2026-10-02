@@ -23,7 +23,7 @@ import locate
 import runtime
 
 SKIP = set(locate.DB_FILES) | {locate.MIGRATED_MARKER}
-BOARD_FILES = {"board.sqlite", "board.sqlite-journal"}  # what a shared board with nothing in it consists of
+BOARD_FILES = set(locate.DB_FILES)  # what a shared board with nothing in it consists of (a WAL-mode one keeps -wal and -shm too)
 HOOKS: dict = {}  # tests put callables here (after_copy, before_swap, after_aside) to play another worktree at the worst moment
 SLIPPED = ("another worktree wrote to the shared board at {target} while this migration was being prepared; "
            "nothing was changed. Run migrate again.")

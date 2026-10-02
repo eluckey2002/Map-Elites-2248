@@ -487,6 +487,15 @@ def test_migrate(base: Path) -> None:
     expect(json.loads(cli(real, "query", "summary").stdout)["summary"]["task_count"] == made["tasks"], "the real board did not win")
     expect(list((real / ".git").glob("blackboard.empty-*")), "the empty board was deleted instead of set aside")
 
+    # a shared board in WAL mode keeps -wal and -shm files while it is open; they are part of the database, not content
+    wal_repo, (sibling5,) = make_repo(base, "walshared", ("sib",))
+    make_v1_board(wal_repo / ".blackboard" / "runtime" / "board.sqlite", None)
+    expect(cli(sibling5, "init").returncode == 0, "the fifth sibling's init failed")
+    with db(wal_repo / ".git" / "blackboard" / "board.sqlite") as connection:
+        connection.execute("PRAGMA journal_mode=WAL")
+    done = cli(wal_repo, "migrate", "--actor", "t")
+    expect(done.returncode == 0, f"an empty WAL-mode shared board blocked migrating the real one: {done.stdout}{done.stderr}")
+
     # an explicit BLACKBOARD_RUNTIME is the caller's choice, but `where` must not claim there is no old board
     chosen = {**ENV, locate.ENV_RUNTIME: str(base / "chosen")}
     told = cli(both, "where", env=chosen)
