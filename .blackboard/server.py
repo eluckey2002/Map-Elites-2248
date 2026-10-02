@@ -43,7 +43,7 @@ def task_artifact(task_id: str) -> Path | None:
     """Find one task's current artifact without exposing an arbitrary stored path."""
     if not TASK_ID_PATTERN.fullmatch(task_id) or not DATABASE.is_file():
         return None
-    uri = f"file:{DATABASE.as_posix()}?mode=ro"
+    uri = locate.readonly_uri(DATABASE)
     connection = sqlite3.connect(uri, uri=True)
     try:
         row = connection.execute("SELECT artifact_path FROM tasks WHERE id = ?", (task_id,)).fetchone()
@@ -58,7 +58,7 @@ def read_snapshot() -> dict:
     now = datetime.now(timezone.utc)
     if not DATABASE.is_file():
         return {"now": now.isoformat(timespec="seconds"), "service_state": "database_unavailable", "tasks": [], "defects": [], "events": []}
-    uri = f"file:{DATABASE.as_posix()}?mode=ro"
+    uri = locate.readonly_uri(DATABASE)
     connection = sqlite3.connect(uri, uri=True, isolation_level=None)
     connection.row_factory = sqlite3.Row
     try:

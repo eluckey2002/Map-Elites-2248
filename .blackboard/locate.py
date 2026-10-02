@@ -151,9 +151,15 @@ def live_worktrees() -> set[str] | None:
     return None if paths is None else {norm(path) for path in paths}
 
 
+def readonly_uri(database: Path | str) -> str:
+    """SQLite URI for read-only access.  The path is percent-encoded: spliced in raw, a `?`, `#` or `%` in the
+    repository path is parsed as URI syntax and SQLite opens the wrong (empty) database."""
+    return Path(database).resolve().as_uri() + "?mode=ro"
+
+
 def open_readonly(database: Path) -> sqlite3.Connection:
     """A read-only connection to the ledger.  Raises BoardError for a newer schema without leaking the connection."""
-    connection = sqlite3.connect(f"file:{Path(database).as_posix()}?mode=ro", uri=True)
+    connection = sqlite3.connect(readonly_uri(database), uri=True)
     connection.row_factory = sqlite3.Row
     try:
         check_schema_version(connection)

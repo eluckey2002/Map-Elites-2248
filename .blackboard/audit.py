@@ -17,6 +17,15 @@ KIND_TEXT = {
 }
 
 
+def written_after_marker(private: Path) -> bool:
+    """Has something written to a private board after it was migrated or set aside?  An older tool on a branch from
+    before boards were shared would, and it leaves the marker alone, so only the file times can tell."""
+    try:
+        return (private / "board.sqlite").stat().st_mtime > (private / locate.MIGRATED_MARKER).stat().st_mtime + 2
+    except OSError:
+        return False
+
+
 def legacy_state() -> tuple[str, str]:
     """("none" | "unmigrated" | "settled", one-line description) for this checkout's private board."""
     legacy = locate.legacy_runtime()
@@ -26,6 +35,9 @@ def legacy_state() -> tuple[str, str]:
     if kind != "shared":
         return "ignored", f"present at {legacy}, but not used because the board location is {kind}"
     if (legacy / locate.MIGRATED_MARKER).exists():
+        if written_after_marker(legacy):
+            return "diverged", (f"CHANGED after it was set aside, at {legacy}: something kept writing to it, so tasks or "
+                                f"claims may now exist outside the shared board")
         return "settled", f"set aside, see {legacy / locate.MIGRATED_MARKER}"
     return "unmigrated", f"UNMIGRATED at {legacy} (ignored until you run migrate)"
 
@@ -50,7 +62,7 @@ def where() -> int:
 def problems() -> list[str]:
     found: list[str] = []
     state, text = legacy_state()
-    if state == "unmigrated":
+    if state in ("unmigrated", "diverged"):
         found.append(f"this checkout's own board is {text}")
     if locate.location()[0] == "shared":
         # A worktree on a branch from before boards were shared keeps writing to its own private board; nothing
@@ -58,9 +70,14 @@ def problems() -> list[str]:
         here = locate.norm(locate.TOOL_ROOT.parent)
         for path in locate.worktree_paths() or []:
             private = Path(path) / ".blackboard" / "runtime"
-            if locate.norm(path) != here and (private / "board.sqlite").is_file() and not (private / locate.MIGRATED_MARKER).exists():
+            if locate.norm(path) == here or not (private / "board.sqlite").is_file():
+                continue
+            if not (private / locate.MIGRATED_MARKER).exists():
                 found.append(f"worktree {path} has its own private board at {private}; update its .blackboard from a branch that has "
                              f"shared boards, then run migrate there (only one board can be migrated; the others are set aside with --abandon)")
+            elif written_after_marker(private):
+                found.append(f"worktree {path}: its private board at {private} changed after it was set aside, so an older tool is "
+                             f"still writing to it; update that worktree's .blackboard from a branch that has shared boards")
     database = locate.runtime_dir() / "board.sqlite"
     if not database.is_file():
         return found

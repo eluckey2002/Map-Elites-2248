@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
 import sqlite3
 import sys
@@ -32,26 +33,40 @@ def describe(found: dict[str, int]) -> str:
     return f"{found['tasks']} tasks, {found['events']} events, {found['defects']} defects"
 
 
-def already_migrated(shared_db: Path, legacy: Path) -> bool:
-    """Does the shared board record a migration from this very folder?"""
+def recorded_counts(shared_db: Path, legacy: Path) -> dict[str, int] | None:
+    """The row counts a previous migration from this very folder recorded, or None if the shared board has none."""
     try:
         with locate.readonly(shared_db) as connection:
-            return connection.execute(
-                "SELECT 1 FROM events WHERE kind='board_migrated' AND instr(detail, ?) = 1 LIMIT 1", (f"Migrated from {legacy} ",)
-            ).fetchone() is not None
+            row = connection.execute(
+                "SELECT detail FROM events WHERE kind='board_migrated' AND instr(detail, ?) = 1 ORDER BY sequence DESC LIMIT 1",
+                (f"Migrated from {legacy} ",),
+            ).fetchone()
     except sqlite3.Error:
-        return False
+        return None
+    found = re.findall(r"\((\d+) tasks, (\d+) events, (\d+) defects\)", row["detail"]) if row else []
+    if not found:
+        return None
+    tasks, events, defects = map(int, found[0])
+    return {"tasks": tasks, "events": events, "defects": defects}
 
 
 def write_marker(legacy: Path, message: str) -> None:
     (legacy / locate.MIGRATED_MARKER).write_text(message + "\n", encoding="utf-8")
 
 
-def copy_files(legacy: Path, stage: Path) -> int:
-    """Copy artifacts and snapshots (everything except the database itself); return how many files."""
-    copied = 0
+def copy_files(legacy: Path, stage: Path) -> tuple[int, list[str]]:
+    """Copy artifacts and snapshots (everything except the database itself); return (files copied, links skipped).
+
+    A link directly inside the folder is skipped, never followed: `copytree(symlinks=True)` only keeps links found
+    *beneath* the directory it is given, so a top-level link to a directory would be copied as the whole tree it
+    points at, wherever that is.
+    """
+    copied, skipped = 0, []
     for item in legacy.iterdir():
         if item.name in SKIP:
+            continue
+        if item.is_symlink():
+            skipped.append(item.name)
             continue
         if item.is_dir():
             shutil.copytree(item, stage / item.name, symlinks=True)  # copy a link as a link; never follow it out of the folder
@@ -59,7 +74,7 @@ def copy_files(legacy: Path, stage: Path) -> int:
         else:
             shutil.copy2(item, stage / item.name)
             copied += 1
-    return copied
+    return copied, skipped
 
 
 def rewrite_artifact_paths(connection: sqlite3.Connection, legacy: Path, target: Path) -> int:
@@ -96,7 +111,16 @@ def migrate(args: argparse.Namespace) -> None:
 
     aside = None
     if shared_db.exists():
-        if already_migrated(shared_db, legacy):  # a previous run copied the board and stopped before leaving its marker
+        recorded = recorded_counts(shared_db, legacy)
+        if recorded is not None:  # a previous run copied the board and stopped before leaving its marker
+            if recorded != before:
+                # Something kept writing to the private board in between (an older tool would). Restoring the
+                # marker now would declare it migrated and silently drop those writes.
+                raise ValueError(
+                    f"the private board at {legacy} changed after it was copied: it now holds {describe(before)}, "
+                    f"but the migration recorded {describe(recorded)}. Those changes are not in the shared board, and "
+                    f"boards are not merged. Re-run with --abandon to set it aside knowingly, or carry them over by hand first."
+                )
             write_marker(legacy, f"Already migrated to {target} (marker restored by {args.actor}).")
             print(f"the private board at {legacy} was already migrated into {target}; its marker is restored")
             return
@@ -126,7 +150,7 @@ def migrate(args: argparse.Namespace) -> None:
         finally:
             copy.close()
             source_connection.close()
-        files = copy_files(legacy, stage)
+        files, skipped = copy_files(legacy, stage)
         with runtime.transaction(stage / "board.sqlite") as connection:
             runtime.schema(connection)
             rewritten = rewrite_artifact_paths(connection, legacy, target)
@@ -158,6 +182,8 @@ def migrate(args: argparse.Namespace) -> None:
     print(f"the private board at {legacy} is left in place as a backup and will no longer be read")
     if aside is not None:
         print(f"an empty shared board that was in the way was set aside at {aside}")
+    if skipped:
+        print(f"not followed, not copied: {len(skipped)} link(s) in the private folder ({', '.join(skipped)})")
     with locate.readonly(target / "board.sqlite") as connection:
         held = connection.execute("SELECT * FROM tasks WHERE state='claimed'").fetchall()
     lapsed = sum(1 for row in held if leases.claim_status(row, leases.now(), locate.live_worktrees())[0] != "held")

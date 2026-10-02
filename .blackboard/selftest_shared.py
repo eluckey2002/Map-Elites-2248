@@ -18,6 +18,7 @@ import stat
 import subprocess
 import sys
 import tempfile
+import time
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -385,6 +386,16 @@ def test_migrate(base: Path) -> None:
     (private / "snapshots" / "snap1.json").write_text("{}", encoding="utf-8")
     made = make_v1_board(private / "board.sqlite", artifact)
     original = sha(private / "board.sqlite")
+    # a link out of the folder is not part of the board and must not be followed (copytree would copy its whole target)
+    secret = base / "outside-secret"
+    secret.mkdir()
+    (secret / "secret.txt").write_text("not part of the board", encoding="utf-8")
+    try:
+        os.symlink(secret, private / "linked", target_is_directory=True)
+        linked = True
+    except OSError:
+        linked = False  # creating links needs a privilege some machines lack
+        print("  (note: the symlink case was skipped; this machine cannot create links)")
 
     summary = cli(repo, "query", "summary")
     expect(summary.returncode == 2 and "migrate" in summary.stdout, f"query ran beside an unmigrated board: {summary.stdout}")
@@ -404,6 +415,9 @@ def test_migrate(base: Path) -> None:
     expect(locate.norm(moved["artifact_path"]) == locate.norm(shared / "old-done.md"), f"artifact path not rewritten: {moved['artifact_path']}")
     expect(Path(moved["artifact_path"]).read_text(encoding="utf-8") == "evidence", "artifact was not copied")
     expect((shared / "snapshots" / "snap1.json").is_file(), "snapshots were not copied")
+    if linked:
+        expect(not (shared / "linked").exists(), "a link out of the folder was followed and its target copied into the board")
+        expect("not followed" in done.stdout, f"the skipped link was not reported: {done.stdout}")
     expect(sha(private / "board.sqlite") == original, "the private board was modified")
     expect((private / locate.MIGRATED_MARKER).is_file(), "no migrated marker left behind")
     expect(cli(repo, "migrate", "--actor", "t").returncode == 1, "migrating twice was allowed")
@@ -413,9 +427,23 @@ def test_migrate(base: Path) -> None:
     expect(resumed.returncode == 0 and "already migrated" in resumed.stdout, f"an interrupted migration could not be finished: {resumed.stdout}{resumed.stderr}")
     expect((private / locate.MIGRATED_MARKER).is_file(), "finishing an interrupted migration left no marker")
     expect(json.loads(cli(repo, "query", "summary").stdout)["summary"]["event_count"] == made["events"] + 1, "finishing wrote a second migration")
+    # ...but if the private board changed in the meantime, restoring the marker would silently drop those writes
+    (private / locate.MIGRATED_MARKER).unlink()
+    with db(private / "board.sqlite") as connection:
+        connection.execute("INSERT INTO events(at, kind, task_id, actor, detail) VALUES "
+                           "('2026-10-01T00:00:00+00:00', 'progress_reported', 'old-claimed', 'legacy-agent', 'a late write by an older tool')")
+    late = cli(repo, "migrate", "--actor", "t")
+    expect(late.returncode == 1 and "changed after it was copied" in late.stderr, f"a changed private board was declared migrated: {late.stdout}{late.stderr}")
+    expect(not (private / locate.MIGRATED_MARKER).exists(), "a marker was written over unmigrated changes")
+    expect(cli(repo, "migrate", "--actor", "t", "--abandon").returncode == 0, "setting the changed board aside on purpose failed")
     claimed = cli(repo, "audit")
     expect("old-claimed" in claimed.stdout and "expired" in claimed.stdout and "UNMIGRATED" not in claimed.stdout,
            f"a migrated legacy claim was not judged by its lease: {claimed.stdout}")
+    # an older tool that resumes writing to a settled private board leaves the marker alone; only file times show it
+    long_ago = time.time() - 100
+    os.utime(private / locate.MIGRATED_MARKER, (long_ago, long_ago))
+    diverged = cli(repo, "audit")
+    expect(diverged.returncode == 1 and "CHANGED after it was set aside" in diverged.stdout, f"a write after the marker went unnoticed: {diverged.stdout}")
 
     both, _ = make_repo(base, "both")
     expect(cli(both, "init").returncode == 0, "init failed")
@@ -483,6 +511,21 @@ def test_awkward_paths(base: Path) -> None:
     expect(record(repo, "dflt")["task"]["stale_after_seconds"] == 3600, "the default --stale-after is not an hour")
 
 
+def test_odd_database_paths(base: Path) -> None:
+    """Characters that mean something in a URI must not change which database is opened."""
+    folder = base / "odd #1 %41 dir"
+    folder.mkdir()
+    path = folder / "board.sqlite"
+    with db(path) as connection:
+        connection.execute("CREATE TABLE tasks(id)")
+        connection.execute("INSERT INTO tasks VALUES ('here')")
+    with locate.readonly(path) as connection:
+        found = [tuple(row) for row in connection.execute("SELECT id FROM tasks").fetchall()]  # Row objects never equal tuples
+        expect(found == [("here",)], "opened the wrong database for a path with # and %")
+    expect("%23" in locate.readonly_uri(path), "a # in the path was left raw in the URI")
+    expect(locate.readonly_uri(Path("/tmp/a?b/board.sqlite")).count("?") == 1, "a ? in the path was left raw in the URI")
+
+
 def test_git_unavailable(base: Path) -> None:
     """If git cannot be run inside a git checkout, refuse; falling back to a private board recreates the split."""
     repo, _ = make_repo(base, "nogit")
@@ -515,6 +558,7 @@ def run(rt) -> None:
             ("schema upgrade is lossless and idempotent; a newer schema is refused", lambda: test_schema_upgrade_and_guard(rt, base)),
             ("migrate copies, rewrites artifact paths, and an unmigrated board is never ignored", lambda: test_migrate(base)),
             ("accented and spaced worktree paths are not mistaken for gone", lambda: test_awkward_paths(base)),
+            ("a path with #, % or a space still opens the right database", lambda: test_odd_database_paths(base)),
             ("a git failure inside a checkout is refused, not worked around", lambda: test_git_unavailable(base)),
             ("a worktree's leftover private board shows up in audit", lambda: test_old_worktree_boards_are_visible(base)),
             ("web view reads v2 and refuses a newer schema", lambda: test_web_view(rt, base)),
