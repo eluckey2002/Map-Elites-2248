@@ -65,3 +65,16 @@ file and the repository before declaring a range fresh.
 | 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
 | 1, 2, 10, 777 | owner play recordings on levels 51–54 (ten recordings in `recordings/`; seed 777 twice on level 52) | 2026-08 | `recordings/*.json` |
 | 9,100,000–9,100,001 and 9,200,004–9,200,005 | seed-variance bounded test, real control through the production `playMeasured` seam | 2026-09-01 | `solver/tests/seedVariance.test.js`, `experiments/RESULT-0021/protocol.md` |
+
+| 50,000,000–50,000,099 | RESULT-0058 champion/champion null control, 10 levels × 100 seeds | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,100,000–50,100,249 | RESULT-0058 champion/chooseBaseMove 3,000-cell positive control | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,200,000–50,200,299 | RESULT-0058 positive-control 50 disjoint six-seed blocks, 72 cells per block | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,300,000–50,300,005 | RESULT-0058 short-myopic stage-1 control | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,301,000–50,301,049 | RESULT-0058 short-myopic stage-2 contingency; reserved even if stage 1 cuts | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,400,000–50,400,005 | RESULT-0058 one-gene winner-curse screens | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,401,000–50,401,005 | RESULT-0058 one-gene winner-curse fresh checks | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,500,000–50,500,005 | RESULT-0058 MAP-Elites 72-game screens | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,501,000–50,501,049 | RESULT-0058 MAP-Elites 600-game stage; reserved if no candidate advances | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,502,000–50,502,249 | RESULT-0058 MAP-Elites 3,000-game stage; reserved if no candidate advances | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,503,000–50,503,005 | RESULT-0058 MAP-Elites independent fresh admission recheck; reserved if no nominee | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,504,000–50,504,249 | RESULT-0058 MAP-Elites final holdout; reserved if archive empty | 2026-10-02 | experiments/RESULT-0058/protocol.md |

@@ -168,6 +168,18 @@ async function runAll(registration) {
   const costs = { stage1: [], stage2: [], stage3: [] };
   let gameCount = 0;
 
+  function persistControl(tag, candidate, reference, levelNumbers, seedNumbers, evaluate) {
+    return persistBeforeVerdict({
+      file: path.join(ROOT, 'experiments', RESULT, tag + '-raw.json'),
+      artifact: {
+        result: RESULT, tag, registration: registrationStamp(registration),
+        levels: levelNumbers, seeds: seedNumbers,
+        cells: makePairs(candidate, reference, levelNumbers, seedNumbers),
+      },
+      evaluate,
+    });
+  }
+
   async function runPanel(tag, arm, policy, levelNumbers, seedNumbers, costStage = null) {
     const count = levelNumbers.length * seedNumbers.length;
     if (gameCount + count > MAX_GAMES) throw new Error('60,000-game effort bound would be exceeded');
@@ -195,19 +207,23 @@ async function runAll(registration) {
     const nullCandidate = await runPanel('null', 'candidate', CHAMPION, NULL_LEVELS, nullSeeds);
     const nullReference = await runPanel('null', 'reference', CHAMPION, NULL_LEVELS, nullSeeds);
     const nullSummary = paired(nullCandidate, nullReference, NULL_LEVELS, nullSeeds);
-    printFitness('NULL', nullSummary);
-    if (nullSummary.winsGained !== 0 || nullSummary.winsLost !== 0
-      || nullSummary.meanMovesSaved !== 0) throw new Error('NULL control failed');
+    persistControl('null', nullCandidate, nullReference, NULL_LEVELS, nullSeeds, () => {
+      printFitness('NULL', nullSummary);
+      if (nullSummary.winsGained !== 0 || nullSummary.winsLost !== 0
+        || nullSummary.meanMovesSaved !== 0) throw new Error('NULL control failed');
+    });
 
     const positiveSeeds = seeds('positive3000');
     const positiveCandidate = await runPanel('positive3000', 'candidate', CHAMPION, LEVELS, positiveSeeds);
     const positiveReference = await runPanel('positive3000', 'reference', BASE, LEVELS, positiveSeeds);
     const positiveSummary = paired(positiveCandidate, positiveReference, LEVELS, positiveSeeds);
-    printFitness('POSITIVE', positiveSummary);
-    if (compareFitness(positiveSummary, CHAMPION_FITNESS) <= 0
-      || positiveSummary.moveCi95[0] === null || positiveSummary.moveCi95[0] <= 0) {
-      throw new Error('POSITIVE control failed');
-    }
+    persistControl('positive3000', positiveCandidate, positiveReference, LEVELS, positiveSeeds, () => {
+      printFitness('POSITIVE', positiveSummary);
+      if (compareFitness(positiveSummary, CHAMPION_FITNESS) <= 0
+        || positiveSummary.moveCi95[0] === null || positiveSummary.moveCi95[0] <= 0) {
+        throw new Error('POSITIVE control failed');
+      }
+    });
 
     let correct = 0;
     const positive72Tags = [];
@@ -228,13 +244,17 @@ async function runAll(registration) {
     const badCandidate = await runPanel('bad72', 'candidate', badPolicy, LEVELS, badSeeds);
     const badReference = await runPanel('bad72', 'reference', CHAMPION, LEVELS, badSeeds);
     let badSummary = paired(badCandidate, badReference, LEVELS, badSeeds);
-    let eliminatedAt = stageDecision(badSummary, 1) === 'CUT' ? 'stage1' : null;
+    const badStage1 = persistControl('bad72', badCandidate, badReference, LEVELS, badSeeds,
+      () => stageDecision(badSummary, 1));
+    let eliminatedAt = badStage1 === 'CUT' ? 'stage1' : null;
     if (!eliminatedAt) {
       const wideSeeds = seeds('bad600');
       const candidate = await runPanel('bad600', 'candidate', badPolicy, LEVELS, wideSeeds);
       const reference = await runPanel('bad600', 'reference', CHAMPION, LEVELS, wideSeeds);
       badSummary = paired(candidate, reference, LEVELS, wideSeeds);
-      if (stageDecision(badSummary, 2) === 'CUT') eliminatedAt = 'stage2';
+      const badStage2 = persistControl('bad600', candidate, reference, LEVELS, wideSeeds,
+        () => stageDecision(badSummary, 2));
+      if (badStage2 === 'CUT') eliminatedAt = 'stage2';
     }
     printFitness('KNOWN-BAD ' + (eliminatedAt || 'NOT ELIMINATED'), badSummary);
     if (!eliminatedAt) throw new Error('known-bad control survived stage 2');
