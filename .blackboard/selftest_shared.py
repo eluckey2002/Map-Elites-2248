@@ -548,7 +548,7 @@ def test_migration_races(rt, base: Path) -> None:
 
     # another worktree writes the first task into the empty shared board just before it would be set aside
     repo, (sibling,) = make_repo(base, "swap", ("sib",))
-    made = make_v1_board(repo / ".blackboard" / "runtime" / "board.sqlite", None)
+    make_v1_board(repo / ".blackboard" / "runtime" / "board.sqlite", None)
     expect(cli(sibling, "init").returncode == 0, "the sibling's init failed")
     shared = repo / ".git" / "blackboard"
 
@@ -566,7 +566,21 @@ def test_migration_races(rt, base: Path) -> None:
     expect(not (repo / ".blackboard" / "runtime" / locate.MIGRATED_MARKER).exists(), "the private board was marked migrated anyway")
     with patched(locate, "TOOL_ROOT", repo / ".blackboard"):  # with the shared board now holding data, merging is refused
         expect_error(lambda: migrate.migrate(ns(actor="t", abandon=False)), "Boards are not merged")
-    expect(made["tasks"] == 3, "fixture changed")
+
+    # ...or another worktree captures a snapshot, which adds a FILE to the shared folder but changes no row count
+    other, (sibling2,) = make_repo(base, "swap2", ("sib",))
+    make_v1_board(other / ".blackboard" / "runtime" / "board.sqlite", None)
+    expect(cli(sibling2, "init").returncode == 0, "the second sibling's init failed")
+    shared2 = other / ".git" / "blackboard"
+
+    def other_worktree_snapshots() -> None:
+        (shared2 / "snapshots").mkdir()
+        (shared2 / "snapshots" / "cap.json").write_text("{}", encoding="utf-8")
+
+    with patched(locate, "TOOL_ROOT", other / ".blackboard"), patched(migrate, "BEFORE_SWAP", other_worktree_snapshots):
+        expect_error(lambda: migrate.migrate(ns(actor="t", abandon=False)), "another worktree wrote")
+    expect((shared2 / "snapshots" / "cap.json").is_file(), "a snapshot captured meanwhile was lost")
+    expect(not list((other / ".git").glob("blackboard.empty-*")), "a board holding a snapshot was set aside")
 
 
 def test_odd_database_paths(base: Path) -> None:

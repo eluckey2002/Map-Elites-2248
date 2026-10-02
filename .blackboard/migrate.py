@@ -22,6 +22,7 @@ import locate
 import runtime
 
 SKIP = {"board.sqlite", "board.sqlite-journal", "board.sqlite-wal", "board.sqlite-shm", locate.MIGRATED_MARKER}
+BOARD_FILES = {"board.sqlite", "board.sqlite-journal"}  # what a shared board with nothing in it consists of
 BEFORE_SWAP = None  # tests set a callable here; it runs just before the staged board replaces the shared one
 SLIPPED = ("another worktree wrote to the shared board at {target} while this migration was being prepared; "
            "nothing was changed. Run migrate again.")
@@ -32,6 +33,12 @@ def counts(connection: sqlite3.Connection) -> dict[str, int]:
         table: connection.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
         for table in ("tasks", "events", "defects")
     }
+
+
+def holds_nothing(folder: Path, connection: sqlite3.Connection) -> bool:
+    """True only if the board has no rows AND its folder holds nothing but the database.  A snapshot or an artifact that
+    another worktree adds is a file, not a row, so counting rows alone would let a board with content be set aside."""
+    return not any(counts(connection).values()) and {p.name for p in folder.iterdir()} <= BOARD_FILES
 
 
 def describe(found: dict[str, int]) -> str:
@@ -159,9 +166,10 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
             return
         with locate.readonly(shared_db) as connection:
             existing = counts(connection)
+            empty = holds_nothing(target, connection)
         # An agent in another worktree may have run `init` first; that leaves a shared board with nothing in it.
         # Set it aside (never delete it) rather than make the real board lose to an empty one.
-        if not any(existing.values()) and {p.name for p in target.iterdir()} <= {"board.sqlite", "board.sqlite-journal"}:
+        if empty:
             aside = target.parent / f"{target.name}.empty-{int(time.time())}"
         else:
             raise ValueError(
@@ -203,11 +211,11 @@ def settle(args: argparse.Namespace, legacy: Path, source: Path, target: Path, g
             BEFORE_SWAP()  # test seam: lets a test play another worktree writing at the worst moment
         if aside is not None:
             with writers_paused(shared_db) as shared_guard:  # nothing may be written to a board that is about to be replaced
-                if any(counts(shared_guard).values()):
+                if not holds_nothing(target, shared_guard):
                     raise ValueError(SLIPPED.format(target=target))
             target.rename(aside)
             with locate.readonly(aside / "board.sqlite") as late:
-                slipped = any(counts(late).values())
+                slipped = not holds_nothing(aside, late)
             if slipped:
                 aside.rename(target)  # a write landed during the rename itself; put the board back untouched
                 raise ValueError(SLIPPED.format(target=target))
