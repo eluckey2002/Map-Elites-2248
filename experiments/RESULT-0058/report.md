@@ -65,19 +65,44 @@ The repair flips no collected decision. The immutable run still identifies
 registration commit 577163495b0e5bde2c34c6e7a59ed1189a44bb8e; raw games were
 not edited or rerun.
 
+CORRECTION-0018 is an append-only supplement following actual Codex review
+5393741165. The repaired independent audit reconstructs the frozen adaptive
+mutation stream, verifies parameter hashes/ranges and enforces complete
+panel grids. recompute-reviewed-output.txt prints MATCH and two additional
+late-Level-52 replay matches, completing the allowance of eight together
+with the original six. No further game replay or confirmation is authorized.
+
+full-summary.json and full-summary-output.txt retain and print both win and
+move uncertainty axes for every paired panel, derived with the registered
+core from the sealed source. independent-full-summary.json derives all fields
+without producer imports; full-summary-match-output.txt prints MATCH FULL
+STATISTICS. The original raw artifact and headline schema remain unchanged.
+Six new regression tests pass in review-regression-output.txt, including
+tampered mutation identity, incomplete stage-2 grid, replacement/refusal
+counting and negative infinite t. The replacement qualification fixture is
+explicitly synthetic, traverses every current recompute path, and must be
+rejected as confirmation evidence. The historical fixture is preserved.
+
 ### C10 — close-out gates
 
-INCONCLUSIVE while publication and Codex review are pending. The final local
-suite prints 602 tests, 596 pass, five fail and one existing skip; the failure
-names equal the baseline exactly. Both complete suite outputs are retained
-under docs/goals/trustworthy-ruler/. The first close-out attempt started before
-the metadata gate finished and captured three ledger-schema failures. Its
-output is preserved in closeout-tests-before-schema-repair.txt; the corrected
-suite is closeout-tests.txt. No existing test was modified or skipped.
+The reviewed local close-out passes its unchanged oracle: 608 tests, 602 pass,
+five fail and one existing skip; the failure names equal the baseline exactly.
+reviewed-closeout-tests.txt and reviewed-closeout-output.txt retain the suite
+and boundary checks. Both complete earlier suites are also retained under
+docs/goals/trustworthy-ruler/. The first close-out attempt started before the
+metadata gate finished and captured three ledger-schema failures. Its output
+is preserved in closeout-tests-before-schema-repair.txt. No existing test was
+modified or skipped.
 
 The corrected experiment gate, ledger authorship gate and generated index
-check pass. RESULT-0058 is provisional with written_by and no checked_by;
-CURRENT.md cites the record and both touched backlog Histories have append-only
-updates. closeout-output.txt records the protected-file, existing-test,
-seed-prefix and History-only checks. PR checks and completed-review evidence
-are UNVERIFIED until publication.
+check pass. RESULT-0058 and CORRECTION-0018 are provisional with written_by
+and no checked_by; CURRENT.md cites both records and both touched backlog
+Histories have append-only updates. The close-out outputs record protected
+files, existing tests, the seed prefix, History-only changes and effort counts.
+
+Publication is PR #61. The first Codex review completed with six findings;
+CORRECTION-0018 records their implementation and regression evidence. The
+finish condition still requires a fresh actual Codex verdict and a green
+experiment gate after the repair push. print-publication.js reads that state
+live when print-report.js runs; it never substitutes a saved pending review
+for completion. The PR must remain open and unmerged.

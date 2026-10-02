@@ -15,10 +15,13 @@ decision. Leave this PR unmerged.
   per-candidate elapsed times are printed and retained with the complete raw
   game artifact.
 - Independent scripts print MATCH for all measured headlines and MATCH LEGACY;
-  six deterministic game replays match. They import no producer module.
+  eight deterministic confirmation game replays match. They import no producer module.
+- CORRECTION-0018 supplements the sealed data with all win and move uncertainty
+  axes, independently matched for every paired panel. The independent audit now
+  reconstructs the frozen adaptive mutation stream and enforces complete grids.
 - A strict t > 3 boundary regression was red before repair and green after;
   the post-sealing repair flips no collected decision.
-- Local full suite: 602 tests, 596 pass, five baseline failures, one existing
+- Reviewed local full suite: 608 tests, 602 pass, five baseline failures, one existing
   skip. No existing test was modified or skipped. Corrected experiment,
   authorship and index gates pass.
 
@@ -37,9 +40,10 @@ ledger record stays provisional with no checked_by.
 
 ## Review
 
-Please review the ruler and its independent recompute. The opening agent will
-answer findings, wait for the experiment gate and completed Codex review, and
-retain the worktree. Do not merge or adopt a policy.
+All six first-review findings have implemented repairs and six passing new
+regression tests. Please review the repair commit and independent recompute.
+The opening agent will wait for the experiment gate and fresh completed Codex
+review, and retain the worktree. Do not merge or adopt a policy.
 
 ## Raw report
 

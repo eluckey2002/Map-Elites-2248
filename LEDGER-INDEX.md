@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 86 (38 accepted, 24 narrowed, 3 open, 7 provisional, 4 stale, 10 superseded).
+Records: 87 (38 accepted, 24 narrowed, 3 open, 8 provisional, 4 stale, 10 superseded).
 
 ## Current records
 
@@ -84,6 +84,7 @@ Records: 86 (38 accepted, 24 narrowed, 3 open, 7 provisional, 4 stale, 10 supers
 | CORRECTION-0015 | The chain-coverage check needs more memory than Node's default | accepted | direct_source | Narrows `RESULT-0011` and `CORRECTION-0003`. | 1607 |
 | CORRECTION-0016 | Four results' reverify runs the whole test suite, which fails for reasons outside their claims | accepted | direct_source | Narrows those four records. | 1624 |
 | CORRECTION-0017 | FACT-0007's check count and RESULT-0011's effect size, measured on today's tree | accepted | direct_source, heuristic_observation | Narrows `FACT-0007` and `RESULT-0011`. | 1641 |
+| CORRECTION-0018 | RESULT-0058 gains complete win uncertainty and a stricter independent input audit | provisional | direct_source | The six findings in Codex review 5393741165 identified missing win-uncertainty output and weaknesses in mutation provenance, grid completeness, refusal counting, the synthetic qualification fixture and a zero-variance n… | 1658 |
 | HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1307 |
 | HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1321 |
 | QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1337 |

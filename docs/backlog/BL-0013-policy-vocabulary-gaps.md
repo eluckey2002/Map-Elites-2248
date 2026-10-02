@@ -99,3 +99,5 @@ the whole space. Not one term at a time.
   and fresh-admission mechanism with provisional evidence; its bounded search
   is FALSIFIED. The proposed vocabulary implementation and adoption decision
   remain open.
+- 2026-10-02 — CORRECTION-0018 records the reviewer-driven ruler audit and
+  reporting repair; the proposed vocabulary and adoption remain open.

@@ -61,6 +61,11 @@ function compact(summary) {
     winsLost: summary.winsLost,
     netWins: summary.netWins,
     bothWin: summary.bothWin,
+    winRateDifference: summary.winRateDifference,
+    winSe: summary.winSe,
+    winSeLevel: summary.winSeLevel,
+    winSeSeed: summary.winSeSeed,
+    winCi95: summary.winCi95,
     meanMovesSaved: summary.meanMovesSaved,
     moveSe: summary.moveSe,
     moveSeLevel: summary.moveSeLevel,
@@ -71,12 +76,10 @@ function compact(summary) {
 }
 
 function strongerPolicy(summary) {
-  const statistic = summary.moveSe === 0
-    ? (summary.meanMovesSaved > 0 ? Infinity : 0)
-    : summary.moveSe === null || summary.meanMovesSaved === null
-      ? NaN : summary.meanMovesSaved / summary.moveSe;
+  const statistic = summary.moveSe === null || summary.meanMovesSaved === null
+    ? NaN : summary.meanMovesSaved / summary.moveSe;
   const t = Number.isNaN(statistic) ? 'UNKNOWN'
-    : Number.isFinite(statistic) ? statistic.toFixed(6) : 'Infinity';
+    : Number.isFinite(statistic) ? statistic.toFixed(6) : String(statistic);
   return {
     holdoutLiftPct: summary.relativeMovesPct,
     t,
@@ -84,10 +87,27 @@ function strongerPolicy(summary) {
   };
 }
 
+function recheckArchive(nominations) {
+  const archive = new Map();
+  let refused = 0;
+  for (const entry of nominations) {
+    const incumbent = archive.get(entry.cell);
+    const admission = admit(entry.stage3, entry.fresh, incumbent && incumbent.fresh);
+    if (admission.admitted) archive.set(entry.cell, { ...entry, fresh: compact(entry.fresh) });
+    else refused += 1;
+  }
+  return { archive, refused };
+}
+
 function printFitness(name, summary) {
   const interval = summary.moveCi95.map((value) => value === null ? 'NA' : value.toFixed(6));
   console.log(name + ' cells=' + summary.cells
     + ' wins_gained=' + summary.winsGained + ' wins_lost=' + summary.winsLost
+    + ' win_rate_difference=' + summary.winRateDifference.toFixed(6)
+    + ' win_se_level=' + (summary.winSeLevel === null ? 'NA' : summary.winSeLevel.toFixed(6))
+    + ' win_se_seed=' + (summary.winSeSeed === null ? 'NA' : summary.winSeSeed.toFixed(6))
+    + ' win_se=' + (summary.winSe === null ? 'NA' : summary.winSe.toFixed(6))
+    + ' win_interval95=[' + summary.winCi95.map((value) => value === null ? 'NA' : value.toFixed(6)).join(',') + ']'
     + ' mean_moves_saved=' + (summary.meanMovesSaved === null ? 'NA' : summary.meanMovesSaved.toFixed(6))
     + ' se_level=' + (summary.moveSeLevel === null ? 'NA' : summary.moveSeLevel.toFixed(6))
     + ' se_seed=' + (summary.moveSeSeed === null ? 'NA' : summary.moveSeSeed.toFixed(6))
@@ -339,18 +359,18 @@ async function runAll(registration) {
       }
     }
 
-    const finalArchive = new Map();
+    const recheckRows = [];
     if (nominees.length) {
       const freshSeeds = seeds('mapFresh');
       const reference = await runPanel('mapFresh', 'reference', CHAMPION, LEVELS, freshSeeds);
       for (const entry of nominees) {
         const candidate = await runPanel('mapFresh', 'candidate', variant(entry.params), LEVELS, freshSeeds);
         const fresh = paired(candidate, reference, LEVELS, freshSeeds);
-        const incumbent = finalArchive.get(entry.cell);
-        const admission = admit(entry.stage3, fresh, incumbent && incumbent.fresh);
-        if (admission.admitted) finalArchive.set(entry.cell, { ...entry, fresh: compact(fresh) });
+        recheckRows.push({ ...entry, fresh });
       }
     }
+    const rechecked = recheckArchive(recheckRows);
+    const finalArchive = rechecked.archive;
     const rankedArchive = [...finalArchive.values()].sort((a, b) => fitnessSort(a, b, 'fresh'));
     const representatives = [];
     if (rankedArchive.length) {
@@ -397,7 +417,7 @@ async function runAll(registration) {
       map: {
         mutants: MUTANTS, stage1Survivors: stage1Survivors.length,
         stage2Survivors: stage2Survivors.length, nominees: nominees.length,
-        recheckRefused: nominees.length - finalArchive.size,
+        recheckRefused: rechecked.refused,
         archiveEntrants: finalArchive.size, representatives, cost,
         strongerRuleHeld: anyStronger,
       },
@@ -429,4 +449,4 @@ if (require.main === module) {
   main().catch((error) => { console.error('FAIL: ' + (error.stack || error)); process.exitCode = 1; });
 }
 
-module.exports = { makePairs, paired, runAll, strongerPolicy };
+module.exports = { makePairs, paired, runAll, strongerPolicy, recheckArchive };

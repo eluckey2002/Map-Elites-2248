@@ -56,7 +56,9 @@ captured('git show registration commit; Get-Process measured-run start time',
 console.log('$ git show -s --format=%H%n%cI%n%s ' + registrationCommit);
 console.log(git(['show', '-s', '--format=%H%n%cI%n%s', registrationCommit]));
 console.log(section(protocol, '## Seed blocks and maximum cost'));
+console.log(section(protocol, '## Subject, units, and estimand'));
 console.log(section(protocol, '## Frozen stage and archive decisions'));
+console.log(section(protocol, '## Checks and exact oracles'));
 console.log(section(protocol, '## Domain outcomes after controls pass'));
 
 console.log('\n3, 4, 5, 7, 8, 9. ONE-SHOT CONTROLS, DIAGNOSTICS AND MAP RUN');
@@ -76,6 +78,12 @@ captured('node --test solver/tests/ruler.test.js', result + '/admission-output.t
 console.log('\n10. INDEPENDENT RECOMPUTE');
 captured('node solver/ruler/recompute.js ' + result + '/raw-games.json',
   result + '/recompute-output.txt');
+captured('node solver/ruler/recompute.js ' + result + '/raw-games.json (reviewed audit; control win axes shown)',
+  result + '/recompute-reviewed-output.txt', (text) => text.split(/\r?\n/)
+    .filter((line) => !/^RECOMPUTE WIN_AXIS /u.test(line)
+      || /^RECOMPUTE WIN_AXIS (?:null|positive3000|bad72) /u.test(line)).join('\n').trimEnd());
+captured('node solver/ruler/compare-supplement.js', result + '/full-summary-match-output.txt');
+captured('node --test solver/tests/ruler-review.test.js', result + '/review-regression-output.txt');
 captured('node solver/ruler/recompute-legacy.js ' + result + '/raw-games.json .orch/policy-search-02.cells.json',
   result + '/legacy-recompute-output.txt');
 captured('node --test solver/tests/rulerHoldoutBoundary.test.js (expected negative before repair)',
@@ -86,7 +94,17 @@ captured('sealed artifact and frozen-source checks before repair', result + '/se
 console.log('\nCLOSE-OUT');
 captured('node --test solver/tests/*.test.js (close-out; failure names and totals)',
   'docs/goals/trustworthy-ruler/closeout-tests.txt', testSummary);
+captured('node --test solver/tests/*.test.js (reviewed close-out; failure names and totals)',
+  'docs/goals/trustworthy-ruler/reviewed-closeout-tests.txt', testSummary);
 captured('close-out repository and experiment checks', result + '/closeout-output.txt');
-captured('pull-request checks and Codex review evidence', result + '/pr-output.txt');
+captured('reviewed close-out repository and experiment checks', result + '/reviewed-closeout-output.txt');
+console.log('\n$ node docs/goals/trustworthy-ruler/print-publication.js (live, read-only)');
+try {
+  console.log(execFileSync(process.execPath, [path.join(__dirname, 'print-publication.js')],
+    { cwd: root, encoding: 'utf8' }).trimEnd());
+} catch (error) {
+  console.log('UNVERIFIED: live pull-request evidence unavailable: ' + error.message);
+  missing = true;
+}
 
 if (missing) process.exitCode = 1;
