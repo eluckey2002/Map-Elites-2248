@@ -1,0 +1,69 @@
+14710dc7f2f4debbbd99ca957f802de48abf3b8f
+codex/trustworthy-ruler-20261002
+M	CURRENT.md
+M	EVIDENCE_LEDGER.md
+M	LEDGER-INDEX.md
+M	docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md
+M	docs/backlog/BL-0013-policy-vocabulary-gaps.md
+A	docs/goals/trustworthy-ruler/baseline-output.txt
+A	docs/goals/trustworthy-ruler/build-recompute-qualification.js
+A	docs/goals/trustworthy-ruler/print-report.js
+A	docs/goals/trustworthy-ruler/print-timing.js
+A	docs/goals/trustworthy-ruler/print-winner-curse.js
+A	docs/goals/trustworthy-ruler/recompute-qualification.json
+A	experiments/RESULT-0058/admission-output.txt
+A	experiments/RESULT-0058/bad72-raw.json
+A	experiments/RESULT-0058/boundary-after-output.txt
+A	experiments/RESULT-0058/boundary-before-output.txt
+A	experiments/RESULT-0058/legacy-recompute-output.txt
+A	experiments/RESULT-0058/null-raw.json
+A	experiments/RESULT-0058/positive3000-raw.json
+A	experiments/RESULT-0058/protocol.md
+A	experiments/RESULT-0058/raw-games.json
+A	experiments/RESULT-0058/recompute-output.txt
+A	experiments/RESULT-0058/registration-output.txt
+A	experiments/RESULT-0058/report.md
+A	experiments/RESULT-0058/run-output.txt
+A	experiments/RESULT-0058/seal-output.txt
+A	experiments/RESULT-0058/timing-output.txt
+A	experiments/RESULT-0058/winner-curse-output.txt
+M	experiments/SEEDS.md
+A	solver/ruler/backtest.js
+A	solver/ruler/config.js
+A	solver/ruler/core.js
+A	solver/ruler/game.js
+A	solver/ruler/policies.js
+A	solver/ruler/pool.js
+A	solver/ruler/recompute-legacy.js
+A	solver/ruler/recompute.js
+A	solver/ruler/run.js
+A	solver/ruler/worker.js
+A	solver/tests/ruler.test.js
+A	solver/tests/rulerHoldoutBoundary.test.js
+PROTECTED_FILE_DIFF_EXIT=0
+BASELINE_FAILURE_NAMES=["LIVE: no linked worktree is holding uncommitted .orch state","candidate-levels-52.json has a receipt that verifies against the current bot","candidate-levels-54.json has a receipt that verifies against the current bot","launcher keeps validation roles separate in ports and recording paths","the builder is byte-stable and the committed generated views are current"]
+CLOSEOUT_FAILURE_NAMES=["LIVE: no linked worktree is holding uncommitted .orch state","candidate-levels-52.json has a receipt that verifies against the current bot","candidate-levels-54.json has a receipt that verifies against the current bot","launcher keeps validation roles separate in ports and recording paths","the builder is byte-stable and the committed generated views are current"]
+NEW_FAILURE_NAMES=[]
+EXISTING_SKIP_NAMES_MATCH=true
+SEEDS_APPEND_ONLY=true
+HISTORY_ONLY docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md=true
+HISTORY_ONLY docs/backlog/BL-0013-policy-vocabulary-gaps.md=true
+EXISTING_TESTS_UNCHANGED=true
+CONFIRMATION_GAMES=35720 INDEPENDENT_REPLAYS=6 TOTAL=35726 LIMIT=60000
+HISTORICAL_QUALIFICATION_REPLAYS=8 TOTAL_INCLUDING_QUALIFICATION=35734
+LEDGER_PROVISIONAL_WITH_WRITER_AND_NO_CHECKER=true
+EXPERIMENT GATE PASS
+EXPERIMENT_GATE_EXIT=0
+LEDGER AUTHORSHIP GATE PASS (base fced429c)
+LEDGER_AUTHORSHIP_EXIT=0
+LEDGER INDEX CURRENT
+LEDGER_INDEX_CHECK_EXIT=0
+7:const fs = require('node:fs');
+8:const crypto = require('node:crypto');
+9:const path = require('node:path');
+12:} = require('../engine');
+13:const { chooseMove, chooseBaseMove, DEFAULT_PARAMS } = require('../bot');
+
+Algorithm : SHA256
+Hash      : 9FFD27BB4D848A032F7698B935304CD3A54FEC06EE7B3769507CFFB4846D0062
+

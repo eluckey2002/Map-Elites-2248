@@ -64,3 +64,7 @@ re-measure the MAP-Elites comparison against it.
 
 - 2026-09-05 — captured at the owner's request while reviewing where the
   project's real weakness lies.
+- 2026-10-02 — RESULT-0058 provisionally qualifies the owner's paired target-race
+  ruler through controls and independent recomputation on its declared panel;
+  the bounded MAP search is FALSIFIED. This does not settle benchmark quality
+  for other panels or replace the recorded-human comparison.

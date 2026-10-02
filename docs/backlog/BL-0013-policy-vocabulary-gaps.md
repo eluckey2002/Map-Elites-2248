@@ -95,3 +95,7 @@ the whole space. Not one term at a time.
 - 2026-09-05 — captured at the owner's direction, after agreeing that
   enumerating the missing vocabulary should precede any further parameter
   search.
+- 2026-10-02 — RESULT-0058 supplies the owner-specified paired fitness ruler
+  and fresh-admission mechanism with provisional evidence; its bounded search
+  is FALSIFIED. The proposed vocabulary implementation and adoption decision
+  remain open.

@@ -67,5 +67,17 @@ not edited or rerun.
 
 ### C10 — close-out gates
 
-INCONCLUSIVE. UNVERIFIED until the close-out suite, gates and pull-request
-review finish. No completed-review claim is made here.
+INCONCLUSIVE while publication and Codex review are pending. The final local
+suite prints 602 tests, 596 pass, five fail and one existing skip; the failure
+names equal the baseline exactly. Both complete suite outputs are retained
+under docs/goals/trustworthy-ruler/. The first close-out attempt started before
+the metadata gate finished and captured three ledger-schema failures. Its
+output is preserved in closeout-tests-before-schema-repair.txt; the corrected
+suite is closeout-tests.txt. No existing test was modified or skipped.
+
+The corrected experiment gate, ledger authorship gate and generated index
+check pass. RESULT-0058 is provisional with written_by and no checked_by;
+CURRENT.md cites the record and both touched backlog Histories have append-only
+updates. closeout-output.txt records the protected-file, existing-test,
+seed-prefix and History-only checks. PR checks and completed-review evidence
+are UNVERIFIED until publication.
