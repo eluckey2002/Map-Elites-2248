@@ -101,7 +101,7 @@ function main() {
       same(row.policy,policy,'proposal policy');
       const allowedPath=`solver/policy-lab/runs/recovery/candidates/round-${String(row.round).padStart(2,'0')}.js`;
       if(row.configPath!==allowedPath||hash(row.configPath)!==row.configHash)throw new Error('candidate config identity');
-      const literal=/module\.exports = ([\s\S]*);\n$/.exec(read(row.configPath).toString());
+      const literal=/^'use strict';\n\/\/ [^\n]*\nmodule\.exports = ([\s\S]*);\n$/.exec(read(row.configPath).toString());
       if(!literal)throw new Error('configuration is not literal code');same(JSON.parse(literal[1]),row.policy,'candidate code');
       if(row.historicalSource.file!=='solver/policy-lab/runs/generation.json'||hash(row.historicalSource.file)!==row.historicalSource.sha256)throw new Error('planning source differs');
       const addresses=new Set();for(const b of row.boards){const original=generation.moves.find(m=>m.file===b.file&&m.move===b.move);same(b,original,'planning board');if(!b.ownerFaster||addresses.has(`${b.file}/${b.move}`))throw new Error('planning board eligibility');addresses.add(`${b.file}/${b.move}`);}
@@ -132,6 +132,22 @@ function main() {
   console.log('MATCH retained proposal arithmetic; same-author re-implementation, not independent verification');
 }
 function auditCompletion(raw,controls,completed) {
+  if(raw.status==='BUDGET_STOP'){
+    if(raw.path!=='D'||!raw.error?.budget||raw.panels.length!==raw.dispatches.length||completed.length!==raw.rows.length+raw.jointRows.length)throw new Error('incomplete bounded stop');
+    const budget=raw.error.budget;
+    if(budget==='recheck-blocks'){
+      if(raw.recheckAllocations.length!==11)throw new Error('recheck effort stop not exhausted');
+    }else if(budget==='proposal-rounds'){
+      if(raw.proposalRounds!==20)throw new Error('proposal round stop not exhausted');
+    }else{
+      const refusal=/^BUDGET_STOP (\w+): used=(\d+) requested=(\d+) total=(\d+)$/.exec(raw.error.message);
+      const total=Object.values(raw.counts).reduce((a,b)=>a+b,0);
+      if(!refusal||refusal[1]!==budget||Number(refusal[2])!==raw.counts[budget]||Number(refusal[4])!==total
+        ||!(raw.counts[budget]+Number(refusal[3])>raw.config.budgets[budget]||total+Number(refusal[3])>120000))throw new Error('budget refusal not independently reproduced');
+    }
+    console.log('PASS independently reproduced Path D bound',budget);
+    auditJournal(raw);return;
+  }
   if(raw.status!=='EXPLORATION_COMPLETE'){console.log('UNVERIFIED complete phase; status',raw.status);return;}
   if(raw.rows.length!==15||completed.length!==raw.rows.length+raw.jointRows.length||raw.panels.length!==raw.dispatches.length)throw new Error('incomplete proposal phase');
   const counts=field=>raw.rows.reduce((a,r)=>(a[r[field]]=(a[r[field]]||0)+1,a),{});
@@ -163,6 +179,9 @@ function auditCompletion(raw,controls,completed) {
     same(raw.selected,{id:winner.id,policy:winner.policy,recheck:winner.recheck,recheckBlock:winner.recheckBlock},'selected frozen candidate');
     if(raw.path!=='CONFIRMATION_REGISTRATION_PENDING')throw new Error('selection phase disposition');
   }
+  auditJournal(raw);
+}
+function auditJournal(raw) {
   const directory=path.join(ROOT,'solver/policy-lab/runs/recovery/proposal-journal');
   const files=fs.readdirSync(directory).filter(f=>f.endsWith('.completed.json'));
   if(files.length!==raw.dispatches.length*58)throw new Error('incomplete completed-job journal');
@@ -203,7 +222,7 @@ function confirmation() {
     'solver/policy-lab/run-confirmation.js','solver/policy-lab/proposal-recompute.js','solver/experiment-guard.js','tools/verify-experiments.js','tools/persist-before-verdict.js'])
     if(sources[source]!==hash(source).slice(0,16))throw new Error(`confirmation protocol omits source ${source}`);
   if(raw.candidate.path!==candidatePath||raw.candidate.sha256!==hash(candidatePath)||sources[candidatePath]!==hash(candidatePath).slice(0,16))throw new Error('candidate path/hash');
-  const literal=/module\.exports = ([\s\S]*);\n$/.exec(read(candidatePath).toString());
+  const literal=/^(?:'use strict';\n)?module\.exports = ([\s\S]*);\n$/.exec(read(candidatePath).toString());
   if(!literal)throw new Error('candidate configuration is not frozen literal code');
   same(raw.candidate.policy,JSON.parse(literal[1]),'frozen candidate policy');
   const phase=json('solver/policy-lab/runs/recovery/proposals-raw.json');

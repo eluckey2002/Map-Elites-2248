@@ -3,10 +3,16 @@ const fs=require('node:fs');
 const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const {registeredConfiguration}=require('../../../solver/policy-lab/recovery-controls');
+const {requiredAudits,requireCompletedAudit}=require('./recovery-closure-state');
 const ROOT=path.resolve(__dirname,'../../..');
 const BASE='cd83127f176111a0b0fb40eb14402f301a1fab07';
 const git=args=>execFileSync('git',args,{cwd:ROOT,encoding:'utf8'});
 const {config,commit}=registeredConfiguration();
+const optionalJson=file=>fs.existsSync(path.join(ROOT,file))?JSON.parse(fs.readFileSync(path.join(ROOT,file),'utf8')):null;
+const closure=optionalJson(`experiments/${config.result}/closure.json`);
+const audits=requiredAudits({closure,controls:optionalJson('solver/policy-lab/runs/recovery/controls-raw.json'),
+  proposals:optionalJson('solver/policy-lab/runs/recovery/proposals-raw.json'),
+  confirmation:optionalJson(`experiments/${config.result}/raw-pairs.json`),verdict:optionalJson(`experiments/${config.result}/verdict.json`)});
 const inventory='solver/tests/failedRunLedger.test.js';
 const before=git(['show',`${BASE}:${inventory}`]);
 const needle="'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042',";
@@ -32,7 +38,9 @@ const suite=fs.readFileSync(path.join(__dirname,'recovery-final-tests.txt'),'utf
 if(JSON.stringify(failures(baseline))!==JSON.stringify(failures(suite))||!/^# fail 3$/m.test(suite)||!/^# skipped 1$/m.test(suite))throw new Error('full suite does not match original named failures and skip');
 console.log('PASS exact original named test failures and skip');
 console.log(suite.split('\n').filter(l=>/^not ok |^# (tests|pass|fail|skipped) /.test(l)).join('\n'));
-for(const command of ['tools/verify-experiments.js','tools/verify-ledger-authorship.js','tools/ledger-index.js --check','tools/failed-run-ledger.js','solver/policy-lab/recovery-recompute.js']){
-  console.log('$ node',command);process.stdout.write(execFileSync(process.execPath,command.split(' '),{cwd:ROOT,encoding:'utf8',maxBuffer:32*1024*1024}));
+for(const command of ['tools/verify-experiments.js','tools/verify-ledger-authorship.js','tools/ledger-index.js --check','tools/failed-run-ledger.js',...audits]){
+  console.log('$ node',command);
+  const output=execFileSync(process.execPath,command.split(' '),{cwd:ROOT,encoding:'utf8',maxBuffer:64*1024*1024});
+  process.stdout.write(output);if(audits.includes(command))requireCompletedAudit(command,output,closure);
 }
-console.log('PASS recovery close-out checks; scientific closure and owner acceptance must still be reported explicitly');
+console.log('PASS recovery close-out checks for completed Path',closure.path,'; scientific acceptance remains with a distinct reviewer');

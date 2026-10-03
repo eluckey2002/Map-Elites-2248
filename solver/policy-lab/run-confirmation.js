@@ -26,9 +26,13 @@ function chunks(seeds,size=10) {
   return Array.from({length:Math.ceil(seeds.length/size)},(_,i)=>seeds.slice(i*size,(i+1)*size));
 }
 function literalCandidate(code) {
-  const literal=/module\.exports = ([\s\S]*);\n$/.exec(code);
+  const literal=/^(?:'use strict';\n)?module\.exports = ([\s\S]*);\n$/.exec(code);
   if(!literal)throw new Error('candidate must use literal module.exports = <JSON> code');
   try{return JSON.parse(literal[1]);}catch{throw new Error('candidate must use literal module.exports = <JSON> code');}
+}
+function reportProgress(detail,{send,warn=message=>console.error(message)}={}) {
+  try{send(detail);return true;}
+  catch(error){warn(`OPERATIONAL_PROGRESS_WARNING ${error.message}; journaled science continues.`);return false;}
 }
 async function run(argv=process.argv) {
   const registration=requireProtocol(argv,{name:'policy terms one-shot confirmation'});
@@ -69,7 +73,7 @@ async function run(argv=process.argv) {
       ...Object.keys(require.cache).map(f=>path.relative(ROOT,f).replaceAll('\\','/'))])].sort(),status:'RUNNING'};
   const file=path.join(out,'checkpoint.json');const checkpoint=()=>atomicJson(file,raw);checkpoint();
   const pool=createJournaledPool(4,{directory:path.join(out,'journal'),runId:`${config.result}-one-shot-F`});
-  const progress=detail=>execFileSync('python',['.blackboard/board.py','progress','--actor',config.actor,'--id',config.task,'--detail',detail],{cwd:ROOT,stdio:'inherit'});
+  const progress=detail=>reportProgress(detail,{send:message=>execFileSync('python',['.blackboard/board.py','progress','--actor',config.actor,'--id',config.task,'--detail',message],{cwd:ROOT,stdio:'inherit'})});
   async function measure(arm,policy) {
     requireProtocol(argv,{name:'policy terms one-shot confirmation'});registeredConfiguration();
     if(raw.dispatches.some(d=>d.arm===arm))throw new Error('confirmation arm already dispatched');
@@ -122,4 +126,4 @@ async function run(argv=process.argv) {
   finally{await pool.close();}
 }
 if(require.main===module)run().catch(e=>{console.error(e.stack);process.exitCode=1;});
-module.exports={verdict,chunks,literalCandidate,run};
+module.exports={verdict,chunks,literalCandidate,reportProgress,run};

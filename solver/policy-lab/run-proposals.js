@@ -70,7 +70,10 @@ async function run() {
   };
   checkpoint();
   const pool = createJournaledPool(4,{directory:path.join(OUT,'proposal-journal'),runId:`${config.result}-registered-proposals`});
-  const progress = detail => execFileSync('python',['.blackboard/board.py','progress','--actor',config.actor,'--id',config.task,'--detail',detail],{cwd:ROOT,stdio:'inherit'});
+  const progress = detail => {
+    try{execFileSync('python',['.blackboard/board.py','progress','--actor',config.actor,'--id',config.task,'--detail',detail],{cwd:ROOT,stdio:'inherit'});}
+    catch(error){console.error('OPERATIONAL_PROGRESS_WARNING',error.message,'; journaled science continues.');}
+  };
   const unchanged = () => {
     registeredConfiguration();
     for (const [f,h] of Object.entries(sourceHashes)) if (sha(f)!==h) throw new Error(`phase source drift: ${f}`);
