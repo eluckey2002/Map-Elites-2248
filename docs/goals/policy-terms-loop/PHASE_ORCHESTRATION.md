@@ -23,6 +23,12 @@ than gate scores, determine the logged outcome. Full-panel funding is checked
 before a paired recheck dispatch. Dispatches, completed jobs, panels, counters
 and CSV rows persist before the next decision. A loss stops rather than resumes.
 
+The carried G champion ran inert qualification callbacks during its games.
+Its physical CPU total includes that instrumentation. Gate CPU ratios cannot
+estimate pure policy overhead; the raw artifact and stdout state this caveat.
+Fresh R, S and F references run without those callbacks. No reference is replayed
+and no estimated instrumentation cost is subtracted.
+
 Joint search is conditional on ACCEPTED changes. Each accepted coordinate's
 domain contains accepted doses and their immediate declared neighbors. Rank
 complete Cartesian configurations by the sum of index distances from the best

@@ -34,14 +34,17 @@ if (exists(controls)) {
   for (const key of ['result', 'registration', 'status', 'parity', 'inert', 'excludedOriginalPanels', 'counts', 'headlines', 'error'])
     if (Object.hasOwn(raw, key)) console.log(key.toUpperCase(), JSON.stringify(raw[key]));
   for (const row of raw.headlines.controls) {
-    const loss = summary => ({meanMovesLost: -summary.meanMovesSaved,
-      lostCi95: [-summary.moveCi95[1], -summary.moveCi95[0]], detected: summary.moveCi95[1] < 0});
+    const negate = value => value === null ? null : -value;
+    const loss = summary => ({meanMovesLost: negate(summary.meanMovesSaved),
+      lostCi95: [negate(summary.moveCi95[1]), negate(summary.moveCi95[0])],
+      detected: summary.moveCi95[1] !== null && summary.moveCi95[1] < 0});
     console.log('MEASURED_HANDICAP_LOSS', JSON.stringify({block: row.block, every10: loss(row.mild), every5: loss(row.strong)}));
   }
 } else console.log('UNVERIFIED_NOT_RUN');
 show('5. JOURNALED CONTROLLER RAW OUTPUT', 'solver/policy-lab/runs/recovery-controls.log');
 show('6-9. PROPOSAL, JOINT-SEARCH AND CANDIDATE-FREEZE OUTPUT', 'solver/policy-lab/runs/recovery/proposals-output.txt');
 show('7. PROPOSAL LOG', 'solver/policy-lab/runs/proposals.csv');
+console.log('G CPU reference includes the carried inert qualification callbacks. Gate CPU ratios are physical instrumented totals, not pure policy overhead. Fresh R, S and F references have no inert qualification callbacks; CPU and wall time are reported separately.');
 show('10-11. CONDITIONAL ONE-SHOT CONFIRMATION OUTPUT', 'docs/goals/policy-terms-loop/recovery-confirmation-output.txt');
 show('INDEPENDENT HISTORICAL ARITHMETIC', 'solver/policy-lab/runs/recompute-output.txt');
 show('12. INDEPENDENT RECOVERY ARITHMETIC, COVERAGE AND DISJOINTNESS', 'docs/goals/policy-terms-loop/recovery-recompute-output.txt');

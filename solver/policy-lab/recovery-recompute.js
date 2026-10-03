@@ -111,7 +111,8 @@ function main() {
       compare(result[key], row[key], `${row.block}/${key}`);
     }
     derived.push(result); console.log('INDEPENDENT_CONTROL', JSON.stringify(result));
-    const loss=s=>({meanMovesLost:-s.meanMovesSaved,lostCi95:[-s.moveCi95[1],-s.moveCi95[0]],detected:s.moveCi95[1]<0});
+    const negate=x=>x===null?null:-x;
+    const loss=s=>({meanMovesLost:negate(s.meanMovesSaved),lostCi95:[negate(s.moveCi95[1]),negate(s.moveCi95[0])],detected:s.moveCi95[1]!==null&&s.moveCi95[1]<0});
     console.log('INDEPENDENT_HANDICAP_LOSS',JSON.stringify({block:result.block,every10:loss(result.mild),every5:loss(result.strong)}));
   }
   if (raw.status === 'CONTROLS_COMPLETE') {

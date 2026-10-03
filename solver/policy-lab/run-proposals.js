@@ -61,6 +61,7 @@ async function run() {
   const raw = {kind:'exploration-diagnostic-proposals',result:config.result,registration:{recoveryPlanCommit:commit,phaseCommit,exploratory:true},config,
     sourceHashes,priorCounts:structuredClone(controls.counts),counts:structuredClone(controls.counts),proposalRounds:0,
     panels:[],dispatches:[],rows:[],jointRows:[],recheckAllocations:[],
+    computeCaveat:'G champion CPU includes carried inert qualification callbacks; gate ratios compare physical instrumented totals and do not estimate pure policy overhead. Fresh R and S references have no inert callbacks. CPU and wall time are separate physical measurements.',
     filesRead:[...new Set([...sources,...Object.keys(config.harnessFreeze),...Object.keys(config.carryForward.sourceHashes),
       ...Object.keys(require.cache).map(RELATIVE)])].sort(),status:'RUNNING'};
   const checkpoint = () => {
@@ -105,6 +106,7 @@ async function run() {
   try {
     console.log('PROPOSAL_PHASE_SOURCE_FREEZE',JSON.stringify(sourceHashes));
     console.log('CARRIED_ACCOUNTING',JSON.stringify(raw.counts));
+    console.log('COMPUTE_CAVEAT',raw.computeCaveat);
     const champion=controls.panels.find(p=>p.block==='G' && p.arm==='champion');assertPanel(champion,config);
     for(let round=1;round<=15;round++) {
       if(raw.proposalRounds>=config.maxProposalRounds){const e=new Error('EFFORT_STOP: twenty proposal rounds');e.budget='proposal-rounds';throw e;}

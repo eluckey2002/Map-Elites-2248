@@ -2,79 +2,79 @@ TAP version 13
 # Subtest: confirmation requires positive overall interval without net win regressions
 ok 1 - confirmation requires positive overall interval without net win regressions
   ---
-  duration_ms: 0.773259
+  duration_ms: 1.233589
   type: 'test'
   ...
 # Subtest: confirmation journals ten-seed jobs without substituting the 150-seed denominator
 ok 2 - confirmation journals ten-seed jobs without substituting the 150-seed denominator
   ---
-  duration_ms: 5.541141
+  duration_ms: 1.496937
   type: 'test'
   ...
 # Subtest: unregistered confirmation is refused before any game or run marker
 ok 3 - unregistered confirmation is refused before any game or run marker
   ---
-  duration_ms: 0.938893
+  duration_ms: 1.165686
   type: 'test'
   ...
 # Subtest: candidate format guard rejects nonliteral modules without executing their code
 ok 4 - candidate format guard rejects nonliteral modules without executing their code
   ---
-  duration_ms: 0.534352
+  duration_ms: 0.565429
   type: 'test'
   ...
 # Subtest: registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
 ok 5 - registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
   ---
-  duration_ms: 1.91986
+  duration_ms: 2.964178
   type: 'test'
   ...
 # Subtest: joint search varies accepted coordinates together and caps complete candidates at thirty-one
 ok 6 - joint search varies accepted coordinates together and caps complete candidates at thirty-one
   ---
-  duration_ms: 2.985612
+  duration_ms: 7.143462
   type: 'test'
   ...
 # Subtest: candidate freeze chooses fresh recheck speed and fewer changes on ties
 ok 7 - candidate freeze chooses fresh recheck speed and fewer changes on ties
   ---
-  duration_ms: 0.324941
+  duration_ms: 1.582536
   type: 'test'
   ...
 # Subtest: paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
 ok 8 - paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
   ---
-  duration_ms: 0.882966
+  duration_ms: 0.751101
   type: 'test'
   ...
 # Subtest: proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
 ok 9 - proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
   ---
-  duration_ms: 0.520215
+  duration_ms: 0.712941
   type: 'test'
   ...
 # Subtest: independent proposal arithmetic reproduces a hand-calculated four-cell grid
 ok 10 - independent proposal arithmetic reproduces a hand-calculated four-cell grid
   ---
-  duration_ms: 0.647942
+  duration_ms: 0.893239
   type: 'test'
   ...
 # Subtest: independent verdict refuses gate-only success, fresh uncertainty and win regressions
 ok 11 - independent verdict refuses gate-only success, fresh uncertainty and win regressions
   ---
-  duration_ms: 0.166247
+  duration_ms: 0.24145
   type: 'test'
   ...
 # Subtest: planning preserves three distinct eligible historical boards and refuses candidate overwrite
 ok 12 - planning preserves three distinct eligible historical boards and refuses candidate overwrite
   ---
-  duration_ms: 2.453211
+  duration_ms: 3.03248
   type: 'test'
   ...
 # Subtest: phase admission pins the committed audit and rejects uncommitted drift before execution
 ok 13 - phase admission pins the committed audit and rejects uncommitted drift before execution
   ---
-  duration_ms: 84.361329
+  duration_ms: 52.709273
   type: 'test'
   ...
 1..13
@@ -85,4 +85,4 @@ ok 13 - phase admission pins the committed audit and rejects uncommitted drift b
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 288.001744
+# duration_ms 168.143214
