@@ -26,14 +26,17 @@ try {
   if (probe.error || probe.status !== 0 || probe.stdout.trim() !== 'true') finish('');
 
   const env = { ...process.env, GIT_TERMINAL_PROMPT: '0' };
-  const child = spawn(process.execPath, [path.join(__dirname, 'check.js'), cwd], { cwd, env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, [path.join(__dirname, 'check.js'), cwd], { cwd, env, windowsHide: true, detached: process.platform !== 'win32', stdio: ['ignore', 'pipe', 'pipe'] });
   let out = '';
   child.stdout.on('data', (d) => { out += d; });
   child.stderr.on('data', () => {});
   const timer = setTimeout(() => {
-    try { child.kill('SIGKILL'); } catch (_) { /* ignore */ }
     if (process.platform === 'win32') {
+      // taskkill must run BEFORE child.kill: once the child is dead its tree cannot be walked.
       try { spawnSync('taskkill', ['/pid', String(child.pid), '/T', '/F'], { timeout: 2000, windowsHide: true }); } catch (_) { /* ignore */ }
+      try { child.kill('SIGKILL'); } catch (_) { /* ignore */ }
+    } else {
+      try { process.kill(-child.pid, 'SIGKILL'); } catch (_) { try { child.kill('SIGKILL'); } catch (_2) { /* ignore */ } }
     }
     finish(`UNVERIFIED: freshness check timed out after ${timeoutMs} ms; this checkout's freshness was not checked.`);
   }, timeoutMs);
