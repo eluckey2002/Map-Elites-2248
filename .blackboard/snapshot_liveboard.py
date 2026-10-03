@@ -13,9 +13,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterator
 
+import locate
 
 ROOT = Path(__file__).resolve().parent
-DEFAULT_DATABASE = ROOT / "runtime" / "board.sqlite"
+DEFAULT_DATABASE = locate.runtime_dir() / "board.sqlite"
 NAME_PATTERN = re.compile(r"^[A-Za-z0-9_-]+$")
 BOUNDARY = (
     "This journal contains recorded operational metadata only. It is not independent evidence, "
@@ -52,9 +53,7 @@ def snapshot_path(database: Path, name: str) -> Path:
 def readonly_connection(database: Path) -> sqlite3.Connection:
     if not database.is_file():
         raise FileNotFoundError(database)
-    connection = sqlite3.connect(f"file:{database.as_posix()}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
+    return locate.open_readonly(database)
 
 
 def count_by(items: list[dict[str, Any]], field: str) -> dict[str, int]:
@@ -193,6 +192,8 @@ def main() -> int:
     args = parser().parse_args()
     database = args.database.resolve()
     try:
+        if args.database == DEFAULT_DATABASE:  # an explicit --database means the caller chose the board
+            locate.require_migrated()
         if args.command == "capture":
             path = write_snapshot(database, args.name)
             emit("liveboard_snapshot_capture", {"snapshot_path": str(path), "snapshot_name": args.name})
