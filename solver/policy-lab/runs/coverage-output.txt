@@ -1,0 +1,91 @@
+PASS all reserved ranges inside allocation [{"name":"G","first":60000000,"last":60000009},{"name":"S","first":60010000,"last":60010009},{"name":"R1","first":60020000,"last":60020009},{"name":"R2","first":60021000,"last":60021009},{"name":"R3","first":60022000,"last":60022009},{"name":"R4","first":60023000,"last":60023009},{"name":"R5","first":60024000,"last":60024009},{"name":"R6","first":60025000,"last":60025009},{"name":"R7","first":60026000,"last":60026009},{"name":"R8","first":60027000,"last":60027009},{"name":"R9","first":60028000,"last":60028009},{"name":"R10","first":60029000,"last":60029009},{"name":"R11","first":60030000,"last":60030009},{"name":"C1","first":60040000,"last":60040009},{"name":"C2","first":60041000,"last":60041009},{"name":"C3","first":60042000,"last":60042009},{"name":"C4","first":60043000,"last":60043009},{"name":"C5","first":60044000,"last":60044009},{"name":"C6","first":60045000,"last":60045009},{"name":"C7","first":60046000,"last":60046009},{"name":"C8","first":60047000,"last":60047009},{"name":"C9","first":60048000,"last":60048009},{"name":"C10","first":60049000,"last":60049009},{"name":"C11","first":60050000,"last":60050009},{"name":"C12","first":60051000,"last":60051009},{"name":"F","first":60100000,"last":60100149}]
+PASS all reserved blocks pairwise disjoint "shared references reuse a block, not a fresh range"
+PASS G: at most one shared champion reference 1
+PASS S: at most one shared champion reference 0
+PASS R1: at most one shared champion reference 0
+PASS R2: at most one shared champion reference 0
+PASS R3: at most one shared champion reference 0
+PASS R4: at most one shared champion reference 0
+PASS R5: at most one shared champion reference 0
+PASS R6: at most one shared champion reference 0
+PASS R7: at most one shared champion reference 0
+PASS R8: at most one shared champion reference 0
+PASS R9: at most one shared champion reference 0
+PASS R10: at most one shared champion reference 0
+PASS R11: at most one shared champion reference 0
+PASS C1: at most one shared champion reference 1
+PASS C2: at most one shared champion reference 1
+PASS C3: at most one shared champion reference 1
+PASS C4: at most one shared champion reference 0
+PASS C5: at most one shared champion reference 0
+PASS C6: at most one shared champion reference 0
+PASS C7: at most one shared champion reference 0
+PASS C8: at most one shared champion reference 0
+PASS C9: at most one shared champion reference 0
+PASS C10: at most one shared champion reference 0
+PASS C11: at most one shared champion reference 0
+PASS C12: at most one shared champion reference 0
+PASS F: at most one shared champion reference 0
+PASS G/champion: complete 58 x 10 580
+PASS G/champion: declared seeds only "60000000-60000009"
+PASS C1/champion: complete 58 x 10 580
+PASS C1/champion: declared seeds only "60040000-60040009"
+PASS C1/zero: complete 58 x 10 580
+PASS C1/zero: declared seeds only "60040000-60040009"
+PASS C1/handicap10: complete 58 x 10 580
+PASS C1/handicap10: declared seeds only "60040000-60040009"
+PASS C1/handicap5: complete 58 x 10 580
+PASS C1/handicap5: declared seeds only "60040000-60040009"
+PASS C2/champion: complete 58 x 10 580
+PASS C2/champion: declared seeds only "60041000-60041009"
+PASS C2/zero: complete 58 x 10 580
+PASS C2/zero: declared seeds only "60041000-60041009"
+PASS C2/handicap10: complete 58 x 10 580
+PASS C2/handicap10: declared seeds only "60041000-60041009"
+PASS C2/handicap5: complete 58 x 10 580
+PASS C2/handicap5: declared seeds only "60041000-60041009"
+PASS C3/champion: complete 58 x 10 580
+PASS C3/champion: declared seeds only "60042000-60042009"
+PASS C3/zero: complete 58 x 10 580
+PASS C3/zero: declared seeds only "60042000-60042009"
+PASS experimental panel paths never read recording files ["docs/goals/policy-terms-loop/EXPLORATION_PLAN.md","docs/goals/policy-terms-loop/GOAL.txt","solver/behavior-descriptors.js","solver/bot.js","solver/engine.js","solver/policy-lab/chooser.js","solver/policy-lab/decision.js","solver/policy-lab/play.js","solver/policy-lab/pool.js","solver/policy-lab/run-controls.js","solver/policy-lab/settings.js","solver/policy-lab/worker.js","solver/ruler/core.js","solver/ruler/game.js","src/game.js"]
+not run S 
+not run R1 
+not run R2 
+not run R3 
+not run R4 
+not run R5 
+not run R6 
+not run R7 
+not run R8 
+not run R9 
+not run R10 
+not run R11 
+not run C4 
+not run C5 
+not run C6 
+not run C7 
+not run C8 
+not run C9 
+not run C10 
+not run C11 
+not run C12 
+not run F 
+confirmation protocol not registered; Path A not reached
+FILES_READ
+docs/goals/policy-terms-loop/EXPLORATION_PLAN.md
+docs/goals/policy-terms-loop/GOAL.txt
+solver/behavior-descriptors.js
+solver/bot.js
+solver/engine.js
+solver/policy-lab/chooser.js
+solver/policy-lab/decision.js
+solver/policy-lab/play.js
+solver/policy-lab/pool.js
+solver/policy-lab/run-controls.js
+solver/policy-lab/runs/controls-raw.json
+solver/policy-lab/settings.js
+solver/policy-lab/worker.js
+solver/ruler/core.js
+solver/ruler/game.js
+src/game.js

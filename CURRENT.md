@@ -4,11 +4,15 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
+## Policy terms diagnostic — 2026-10-03
+
+[RESULT-0080](EVIDENCE_LEDGER.md#result-0080--policy-terms-diagnostic-stopped-before-complete-controls-after-an-execution-interruption) records an interrupted diagnostic run provisionally. Its immutable exploration plan and retained arithmetic are available in the [goal folder](docs/goals/policy-terms-loop/). Execution stopped UNVERIFIED before the complete controls, so no Path A-D completed and no idea was judged. FR-0006 preserves the failure and the executable completeness fence. No confirmation or adoption occurred; BL-0012 and BL-0013 remain open. The required failed closure exposes an additional failure in the existing scanner test's fixed historical list; that test remains unchanged under the goal's allowed-file rules.
+
 ## Trustworthy ruler — 2026-10-02
 
 [RESULT-0058](EVIDENCE_LEDGER.md#result-0058--paired-target-race-ruler-controls-match-the-independent-recompute-bounded-search-is-falsified) records the owner-specified paired target-race ruler provisionally. Its controls and bounded search are independently recomputed; the search outcome is FALSIFIED. Read the [protocol and report](experiments/RESULT-0058/report.md) and [raw-output command](docs/goals/trustworthy-ruler/print-report.js) for its scope, unreached panels and timing-unit limitation. Scientific acceptance and any policy adoption remain separate owner decisions.
 
-The append-only audit and reporting repair is [CORRECTION-0018](EVIDENCE_LEDGER.md#correction-0018--result-0058-gains-complete-win-uncertainty-and-a-stricter-independent-input-audit). It preserves RESULT-0058's sealed data and outcome while adding complete uncertainty output and stricter independent checks. Both records remain provisional; PR #61 is under review and must stay unmerged.
+The append-only audit and reporting repair is [CORRECTION-0018](EVIDENCE_LEDGER.md#correction-0018--result-0058-gains-complete-win-uncertainty-and-a-stricter-independent-input-audit). It preserves RESULT-0058's sealed data and outcome while adding complete uncertainty output and stricter independent checks. Both records remain provisional. PR #61 is merged in the origin/main base used for RESULT-0080; merge status does not change either record's scientific standing.
 
 ## Evidence-capture hardening — 2026-09-26
 
