@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 87 (38 accepted, 24 narrowed, 3 open, 8 provisional, 4 stale, 10 superseded).
+Records: 88 (38 accepted, 24 narrowed, 3 open, 9 provisional, 4 stale, 10 superseded).
 
 ## Current records
 
@@ -67,6 +67,7 @@ Records: 87 (38 accepted, 24 narrowed, 3 open, 8 provisional, 4 stale, 10 supers
 | RESULT-0052 | On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels | accepted | direct_source | The verify loop printed win rates of 100% on every sampled level except level 50 at 97%, and 0% board lockouts on every sampled level, with `RESULT: PASS`. | 1111 |
 | RESULT-0056 | Fresh-board owner-vs-oracle run for RESULT-0044: board-2 human attempt invalid, INCONCLUSIVE | accepted | direct_source, owner_decision | This closes `RESULT-0044`'s protocol option 1, a fresh run under that identity. | 1128 |
 | RESULT-0058 | Paired target-race ruler controls match the independent recompute; bounded search is FALSIFIED | provisional | direct_source, heuristic_observation | The paired win-first ruler passes its null, positive, known-bad and synthetic-admission controls at the declared scope. | 1145 |
+| RESULT-0080 | Policy terms diagnostic stopped before complete controls after an execution interruption | provisional | direct_source | Start checks found the worktree based on merged ruler origin/main cd83127f176111a0b0fb40eb14402f301a1fab07 and RESULT-0080 unused across 34 remote refs. | 1674 |
 | CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1381 |
 | CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1395 |
 | CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1410 |

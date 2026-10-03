@@ -92,3 +92,10 @@ HUMAN-PILOT-0002 was walked.
 
 - 2026-09-05 — captured at the owner's request, replacing an earlier and
   incorrect "the human is 33% better" framing with the paired measurement.
+- 2026-10-03 — RESULT-0080 retains the owner-faster subset diagnostic and
+  selects the generation branch on that evidence. Execution stopped
+  UNVERIFIED before complete controls; no proposed change was judged.
+- 2026-10-03 — The owner approved the bounded journaled continuation assigned
+  RESULT-0081 under the original collision rule. Historical RESULT-0080 stays
+  unchanged. Controls are running; conditional generation orchestration is
+  prepared, with no proposal result or adoption yet.

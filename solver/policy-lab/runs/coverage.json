@@ -1,0 +1,526 @@
+{
+  "checks": [
+    {
+      "name": "all reserved ranges inside allocation",
+      "pass": true,
+      "detail": [
+        {
+          "name": "G",
+          "first": 60000000,
+          "last": 60000009
+        },
+        {
+          "name": "S",
+          "first": 60010000,
+          "last": 60010009
+        },
+        {
+          "name": "R1",
+          "first": 60020000,
+          "last": 60020009
+        },
+        {
+          "name": "R2",
+          "first": 60021000,
+          "last": 60021009
+        },
+        {
+          "name": "R3",
+          "first": 60022000,
+          "last": 60022009
+        },
+        {
+          "name": "R4",
+          "first": 60023000,
+          "last": 60023009
+        },
+        {
+          "name": "R5",
+          "first": 60024000,
+          "last": 60024009
+        },
+        {
+          "name": "R6",
+          "first": 60025000,
+          "last": 60025009
+        },
+        {
+          "name": "R7",
+          "first": 60026000,
+          "last": 60026009
+        },
+        {
+          "name": "R8",
+          "first": 60027000,
+          "last": 60027009
+        },
+        {
+          "name": "R9",
+          "first": 60028000,
+          "last": 60028009
+        },
+        {
+          "name": "R10",
+          "first": 60029000,
+          "last": 60029009
+        },
+        {
+          "name": "R11",
+          "first": 60030000,
+          "last": 60030009
+        },
+        {
+          "name": "C1",
+          "first": 60040000,
+          "last": 60040009
+        },
+        {
+          "name": "C2",
+          "first": 60041000,
+          "last": 60041009
+        },
+        {
+          "name": "C3",
+          "first": 60042000,
+          "last": 60042009
+        },
+        {
+          "name": "C4",
+          "first": 60043000,
+          "last": 60043009
+        },
+        {
+          "name": "C5",
+          "first": 60044000,
+          "last": 60044009
+        },
+        {
+          "name": "C6",
+          "first": 60045000,
+          "last": 60045009
+        },
+        {
+          "name": "C7",
+          "first": 60046000,
+          "last": 60046009
+        },
+        {
+          "name": "C8",
+          "first": 60047000,
+          "last": 60047009
+        },
+        {
+          "name": "C9",
+          "first": 60048000,
+          "last": 60048009
+        },
+        {
+          "name": "C10",
+          "first": 60049000,
+          "last": 60049009
+        },
+        {
+          "name": "C11",
+          "first": 60050000,
+          "last": 60050009
+        },
+        {
+          "name": "C12",
+          "first": 60051000,
+          "last": 60051009
+        },
+        {
+          "name": "F",
+          "first": 60100000,
+          "last": 60100149
+        }
+      ]
+    },
+    {
+      "name": "all reserved blocks pairwise disjoint",
+      "pass": true,
+      "detail": "shared references reuse a block, not a fresh range"
+    },
+    {
+      "name": "G: at most one shared champion reference",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "S: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R1: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R2: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R3: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R4: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R5: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R6: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R7: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R8: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R9: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R10: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "R11: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C1: at most one shared champion reference",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "C2: at most one shared champion reference",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "C3: at most one shared champion reference",
+      "pass": true,
+      "detail": 1
+    },
+    {
+      "name": "C4: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C5: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C6: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C7: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C8: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C9: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C10: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C11: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "C12: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "F: at most one shared champion reference",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "G/champion: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "G/champion: declared seeds only",
+      "pass": true,
+      "detail": "60000000-60000009"
+    },
+    {
+      "name": "parity-champion-replays: exact 200 declared parity cells",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "parity-champion-replays: declared seeds only",
+      "pass": true,
+      "detail": "G parity selection"
+    },
+    {
+      "name": "parity-base: exact 200 declared parity cells",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "parity-base: declared seeds only",
+      "pass": true,
+      "detail": "G parity selection"
+    },
+    {
+      "name": "parity-variant: exact 200 declared parity cells",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "parity-variant: declared seeds only",
+      "pass": true,
+      "detail": "G parity selection"
+    },
+    {
+      "name": "C1/champion: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C1/champion: declared seeds only",
+      "pass": true,
+      "detail": "60040000-60040009"
+    },
+    {
+      "name": "C1/zero: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C1/zero: declared seeds only",
+      "pass": true,
+      "detail": "60040000-60040009"
+    },
+    {
+      "name": "C1/handicap10: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C1/handicap10: declared seeds only",
+      "pass": true,
+      "detail": "60040000-60040009"
+    },
+    {
+      "name": "C1/handicap5: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C1/handicap5: declared seeds only",
+      "pass": true,
+      "detail": "60040000-60040009"
+    },
+    {
+      "name": "C2/champion: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C2/champion: declared seeds only",
+      "pass": true,
+      "detail": "60041000-60041009"
+    },
+    {
+      "name": "C2/zero: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C2/zero: declared seeds only",
+      "pass": true,
+      "detail": "60041000-60041009"
+    },
+    {
+      "name": "C2/handicap10: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C2/handicap10: declared seeds only",
+      "pass": true,
+      "detail": "60041000-60041009"
+    },
+    {
+      "name": "C2/handicap5: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C2/handicap5: declared seeds only",
+      "pass": true,
+      "detail": "60041000-60041009"
+    },
+    {
+      "name": "C3/champion: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C3/champion: declared seeds only",
+      "pass": true,
+      "detail": "60042000-60042009"
+    },
+    {
+      "name": "C3/zero: complete 58 x 10",
+      "pass": true,
+      "detail": 580
+    },
+    {
+      "name": "C3/zero: declared seeds only",
+      "pass": true,
+      "detail": "60042000-60042009"
+    },
+    {
+      "name": "experimental panel paths never read recording files",
+      "pass": true,
+      "detail": [
+        "docs/goals/policy-terms-loop/EXPLORATION_PLAN.md",
+        "docs/goals/policy-terms-loop/GOAL.txt",
+        "solver/behavior-descriptors.js",
+        "solver/bot.js",
+        "solver/engine.js",
+        "solver/policy-lab/chooser.js",
+        "solver/policy-lab/decision.js",
+        "solver/policy-lab/play.js",
+        "solver/policy-lab/pool.js",
+        "solver/policy-lab/run-controls.js",
+        "solver/policy-lab/settings.js",
+        "solver/policy-lab/worker.js",
+        "solver/ruler/core.js",
+        "solver/ruler/game.js",
+        "src/game.js"
+      ]
+    },
+    {
+      "name": "S",
+      "notRun": true
+    },
+    {
+      "name": "R1",
+      "notRun": true
+    },
+    {
+      "name": "R2",
+      "notRun": true
+    },
+    {
+      "name": "R3",
+      "notRun": true
+    },
+    {
+      "name": "R4",
+      "notRun": true
+    },
+    {
+      "name": "R5",
+      "notRun": true
+    },
+    {
+      "name": "R6",
+      "notRun": true
+    },
+    {
+      "name": "R7",
+      "notRun": true
+    },
+    {
+      "name": "R8",
+      "notRun": true
+    },
+    {
+      "name": "R9",
+      "notRun": true
+    },
+    {
+      "name": "R10",
+      "notRun": true
+    },
+    {
+      "name": "R11",
+      "notRun": true
+    },
+    {
+      "name": "C4",
+      "notRun": true
+    },
+    {
+      "name": "C5",
+      "notRun": true
+    },
+    {
+      "name": "C6",
+      "notRun": true
+    },
+    {
+      "name": "C7",
+      "notRun": true
+    },
+    {
+      "name": "C8",
+      "notRun": true
+    },
+    {
+      "name": "C9",
+      "notRun": true
+    },
+    {
+      "name": "C10",
+      "notRun": true
+    },
+    {
+      "name": "C11",
+      "notRun": true
+    },
+    {
+      "name": "C12",
+      "notRun": true
+    },
+    {
+      "name": "F",
+      "notRun": true
+    }
+  ],
+  "failed": 0,
+  "rawSha256": "deb60ca48b2bbb82bec829ecd0a6555681272006635af52f3ff56546a92ef974"
+}

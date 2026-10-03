@@ -1,0 +1,135 @@
+✔ solver/tests/authorLevelCli.test.js (121.296749ms)
+✖ solver/tests/authoringServer.test.js (116.796212ms)
+✖ solver/tests/bankAndBreakValidation.test.js (728.847293ms)
+✔ solver/tests/beam-witness.test.js (76.727146ms)
+✔ solver/tests/behaviorDescriptors.test.js (75.172708ms)
+✔ solver/tests/bot.test.js (7015.337782ms)
+✖ solver/tests/botVision.test.js (8315.898627ms)
+✔ solver/tests/calibration.test.js (57.958909ms)
+✔ solver/tests/choiceRecoveryDescriptors.test.js (4619.459385ms)
+✔ solver/tests/customLevel.test.js (71.589555ms)
+✔ solver/tests/engine.test.js (108.238028ms)
+✔ solver/tests/evaluatorBoundary.test.js (136.410396ms)
+✔ solver/tests/exact-score.test.js (78.402959ms)
+✖ solver/tests/exactGreedDenominator.test.js (170.144775ms)
+✖ solver/tests/experiments.test.js (23541.912154ms)
+✔ solver/tests/failedRunLedger.test.js (58.341178ms)
+✔ solver/tests/fixedBoard.test.js (15443.182197ms)
+✔ solver/tests/fixedSeedLevel.test.js (53.602954ms)
+✔ solver/tests/forcedDiversityDescriptors.test.js (58.714297ms)
+✔ solver/tests/gameLevels.test.js (45.160026ms)
+✔ solver/tests/generateLevels.test.js (62.804807ms)
+✔ solver/tests/greedDescriptorResult.test.js (60.366224ms)
+✖ solver/tests/greedDescriptorScreen.test.js (971.491054ms)
+✔ solver/tests/harvestPolicy.test.js (75.432857ms)
+✖ solver/tests/humanBenchmark.test.js (88778.279538ms)
+✔ solver/tests/humanPilot.test.js (145.751507ms)
+✔ solver/tests/humanPilot0002.test.js (77.949989ms)
+✖ solver/tests/ledgerAuthorship.test.js (112.36301ms)
+✖ solver/tests/ledgerIndex.test.js (85.161389ms)
+✔ solver/tests/levelAuthor.test.js (79.549134ms)
+✔ solver/tests/levelJump.test.js (74.199011ms)
+✔ solver/tests/mapElites.test.js (74.39104ms)
+✔ solver/tests/mergeSpreadDescriptors.test.js (92.634545ms)
+✔ solver/tests/mergeSpreadMap.test.js (58.6465ms)
+✔ solver/tests/mirrors-game.test.js (840.611872ms)
+✖ solver/tests/oracle.test.js (129051.264248ms)
+✔ solver/tests/persistBeforeVerdict.test.js (66.075134ms)
+✖ solver/tests/playServer.test.js (66.137236ms)
+✔ solver/tests/policy-eval.test.js (12328.579531ms)
+✔ solver/tests/profileShapes.test.js (68.723657ms)
+✔ solver/tests/prototypeLearning.test.js (7393.299908ms)
+✔ solver/tests/puzzleDescriptorWitness.test.js (125.165176ms)
+✔ solver/tests/puzzleDescriptors.test.js (761.117742ms)
+✖ solver/tests/receiptGate.test.js (11321.847963ms)
+✔ solver/tests/recordingReplay.test.js (75.845577ms)
+✖ solver/tests/repoBaseline.test.js (71.460246ms)
+✖ solver/tests/ruler-review.test.js (778.626526ms)
+✔ solver/tests/ruler.test.js (80.146723ms)
+✔ solver/tests/rulerHoldoutBoundary.test.js (57.413213ms)
+✖ solver/tests/seedVariance.test.js (1334.905128ms)
+✔ solver/tests/sweep.test.js (51.686112ms)
+✔ solver/tests/targetAwareChallenger.test.js (14609.072513ms)
+✔ solver/tests/targetAwareEvaluation.test.js (9706.959792ms)
+✖ solver/tests/targetedChainGenerator.test.js (13071.2603ms)
+✔ solver/tests/trajectoryAudit.test.js (7068.065634ms)
+✖ solver/tests/universeMap.test.js (162.263598ms)
+✔ solver/tests/upper-bound.test.js (144.593565ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 40
+ℹ fail 17
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 153438.926387
+
+✖ failing tests:
+
+test at solver/tests/authoringServer.test.js:1:1
+✖ solver/tests/authoringServer.test.js (116.796212ms)
+  'test failed'
+
+test at solver/tests/bankAndBreakValidation.test.js:1:1
+✖ solver/tests/bankAndBreakValidation.test.js (728.847293ms)
+  'test failed'
+
+test at solver/tests/botVision.test.js:1:1
+✖ solver/tests/botVision.test.js (8315.898627ms)
+  'test failed'
+
+test at solver/tests/exactGreedDenominator.test.js:1:1
+✖ solver/tests/exactGreedDenominator.test.js (170.144775ms)
+  'test failed'
+
+test at solver/tests/experiments.test.js:1:1
+✖ solver/tests/experiments.test.js (23541.912154ms)
+  'test failed'
+
+test at solver/tests/greedDescriptorScreen.test.js:1:1
+✖ solver/tests/greedDescriptorScreen.test.js (971.491054ms)
+  'test failed'
+
+test at solver/tests/humanBenchmark.test.js:1:1
+✖ solver/tests/humanBenchmark.test.js (88778.279538ms)
+  'test failed'
+
+test at solver/tests/ledgerAuthorship.test.js:1:1
+✖ solver/tests/ledgerAuthorship.test.js (112.36301ms)
+  'test failed'
+
+test at solver/tests/ledgerIndex.test.js:1:1
+✖ solver/tests/ledgerIndex.test.js (85.161389ms)
+  'test failed'
+
+test at solver/tests/oracle.test.js:1:1
+✖ solver/tests/oracle.test.js (129051.264248ms)
+  'test failed'
+
+test at solver/tests/playServer.test.js:1:1
+✖ solver/tests/playServer.test.js (66.137236ms)
+  'test failed'
+
+test at solver/tests/receiptGate.test.js:1:1
+✖ solver/tests/receiptGate.test.js (11321.847963ms)
+  'test failed'
+
+test at solver/tests/repoBaseline.test.js:1:1
+✖ solver/tests/repoBaseline.test.js (71.460246ms)
+  'test failed'
+
+test at solver/tests/ruler-review.test.js:1:1
+✖ solver/tests/ruler-review.test.js (778.626526ms)
+  'test failed'
+
+test at solver/tests/seedVariance.test.js:1:1
+✖ solver/tests/seedVariance.test.js (1334.905128ms)
+  'test failed'
+
+test at solver/tests/targetedChainGenerator.test.js:1:1
+✖ solver/tests/targetedChainGenerator.test.js (13071.2603ms)
+  'test failed'
+
+test at solver/tests/universeMap.test.js:1:1
+✖ solver/tests/universeMap.test.js (162.263598ms)
+  'test failed'

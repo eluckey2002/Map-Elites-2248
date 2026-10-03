@@ -1,0 +1,81 @@
+RESULT-0080 RECOVERY PROPOSAL — DRAFT, NOT PREREGISTERED
+
+The research objective and every scientific acceptance threshold remain those
+in GOAL.txt. This proposal is an append-only recovery exception to the old
+run's immutable registration; it does not revise historical evidence.
+No new scientific games or seed reservations are authorized by this draft.
+
+1. Preserve the original exploration plan, frozen harness, raw panels,
+   UNVERIFIED closure receipt, FR-0006, and RESULT-0080 direct-source record.
+   Keep their exact hashes and original stopping boundary. Never rerun the
+   old controller or dispatch a previously used policy/level/seed game.
+
+2. Retain completed control blocks C1 and C2, the G reference, and the
+   qualified parity/inert checks. Exclude the partial old C3 from the
+   twelve-block aggregate; retain its raw panels and charges as failed-run
+   evidence. Replace only C3 using 60,052,000–60,052,009 for all 58 levels and
+   all four arms. Finish C4–C12 using their original reserved ranges. Each
+   complete block has one shared champion reference. The replacement range
+   is a proposal; it is not reserved or used yet. A fetched-ref seed audit
+   found no overlapping declared range; repeat before reservation.
+
+3. Carry forward ALL charged games, including the lost dispatch:
+   controls 6,380; proposals 580; replays 1,380; total 8,340.
+   Ten remaining complete control blocks cost 23,200 games.
+   Projected total control spending: 29,580 / 30,000, leaving 420 games.
+   Total remaining allowance now: 111,660 / 120,000.
+   No extra replay allowance is assumed; any fresh qualification must be
+   charged. Keep the original six sub-budgets, the protected confirmation
+   reserve, the 20-round cap, and every Path D stop rule. Round count is 0.
+
+4. Before any recovery game, create and commit a distinct recovery
+   registration and new controller, referencing the immutable original
+   registration and raw hashes. Freeze the reviewed journaled-pool adapter
+   and all new controller/registration code in that registration. The new
+   code must journal dispatch and completed jobs before aggregation, enforce
+   carried-forward budgets, verify source identities and panel coverage,
+   preserve all decision rules, and refuse replay of dispatched jobs. Do
+   not alter the old frozen controller. Do not treat this draft as an
+   already-committed registration or make a reconstructed protocol.
+
+5. Only after all twelve complete blocks pass the original aggregate bars,
+   run the original generation-branch proposal sequence. Keep the same
+   promising/accepted rules and at least 15 proposal rows unless an original
+   early-closure condition applies. Joint search remains conditional. At
+   most one frozen candidate receives one preregistered confirmation.
+   Persist raw evidence before verdict, independently reproduce headline
+   arithmetic, leave checked_by unset, complete review, and never merge or
+   adopt a policy.
+
+6. One narrowly scoped existing-test change is required to recognize the
+   required retained failed closure. The actual proposed change is:
+
+   File: solver/tests/failedRunLedger.test.js
+   Test: LIVE: scanner reads the real retained failed closures
+
+   - 'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042',
+   + 'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042', 'RESULT-0080',
+
+   Keep its scanner call, problems assertion, legacy assertions and every
+   other existing test unchanged. Do not modify receipt or Universe Map
+   tests, skip tests, exempt closures, waive ledger verification, or change
+   the three original known failures. Add a recovery close-out audit that
+   allows only this explicitly approved inventory edit; preserve the old
+   close-out audit and its historic refusal. Verify the actual full suite
+   after applying an approved change; a draft does not establish a pass.
+
+WHY OWNER EXCEPTIONS ARE REQUIRED
+
+GOAL.txt freezes every named seed block after the first game and allows
+only new files under solver/tests/, with no existing test modified or
+skipped. The interrupted original registration has no contingency block.
+An ordinary request to proceed does not clearly waive either restriction.
+
+Requested exceptions are limited to (a) the new pre-game recovery
+registration replacing C3 and using a journaled controller, and (b) the
+one existing inventory-test addition shown above. All other original
+constraints, evidence standing, seed reservations, budget charges, bars,
+and thresholds remain in force. This is not a valid A–D closure yet.
+
+Audit command (no games):
+python docs/goals/policy-terms-loop/recovery-audit.py

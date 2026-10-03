@@ -1,0 +1,44 @@
+REFUSE COMPLETE CLOSURE: UNVERIFIED
+C3/handicap10: expected exactly one retained panel
+C3/handicap5: expected exactly one retained panel
+C4/champion: expected exactly one retained panel
+C4/zero: expected exactly one retained panel
+C4/handicap10: expected exactly one retained panel
+C4/handicap5: expected exactly one retained panel
+C5/champion: expected exactly one retained panel
+C5/zero: expected exactly one retained panel
+C5/handicap10: expected exactly one retained panel
+C5/handicap5: expected exactly one retained panel
+C6/champion: expected exactly one retained panel
+C6/zero: expected exactly one retained panel
+C6/handicap10: expected exactly one retained panel
+C6/handicap5: expected exactly one retained panel
+C7/champion: expected exactly one retained panel
+C7/zero: expected exactly one retained panel
+C7/handicap10: expected exactly one retained panel
+C7/handicap5: expected exactly one retained panel
+C8/champion: expected exactly one retained panel
+C8/zero: expected exactly one retained panel
+C8/handicap10: expected exactly one retained panel
+C8/handicap5: expected exactly one retained panel
+C9/champion: expected exactly one retained panel
+C9/zero: expected exactly one retained panel
+C9/handicap10: expected exactly one retained panel
+C9/handicap5: expected exactly one retained panel
+C10/champion: expected exactly one retained panel
+C10/zero: expected exactly one retained panel
+C10/handicap10: expected exactly one retained panel
+C10/handicap5: expected exactly one retained panel
+C11/champion: expected exactly one retained panel
+C11/zero: expected exactly one retained panel
+C11/handicap10: expected exactly one retained panel
+C11/handicap5: expected exactly one retained panel
+C12/champion: expected exactly one retained panel
+C12/zero: expected exactly one retained panel
+C12/handicap10: expected exactly one retained panel
+C12/handicap5: expected exactly one retained panel
+control panel count 10, required 48
+complete control summaries 2, required 12 in order
+charged controls 6380 differ from retained 5800
+aggregate control bars absent
+no completed control disposition
