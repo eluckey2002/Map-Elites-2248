@@ -164,3 +164,25 @@ test('launcher: a crashing check.js still exits 0 with one UNVERIFIED line', () 
   assert.equal(r.status, 0, r.stderr);
   assert.match(r.stdout, /^UNVERIFIED: .*crashed/);
 });
+
+test('launcher: on timeout the hung git-fetch grandchild is killed too (no survivor)', async () => {
+  const b = staleCheckout(); // clone b is behind origin by one commit, so fetch has work
+  const dir = tmp('sleeper');
+  const pidFile = path.join(dir, 'pid.txt');
+  const sleeper = path.join(dir, 'sleeper.js');
+  fs.writeFileSync(sleeper, `require('fs').writeFileSync(${JSON.stringify(pidFile)}, String(process.pid)); setTimeout(() => {}, 600000);\n`);
+  git(b, 'config', 'remote.origin.uploadpack', `node ${sleeper.split(path.sep).join('/')}`);
+  let pid = null;
+  const alive = (p) => { try { process.kill(p, 0); return true; } catch (e) { return e.code !== 'ESRCH'; } };
+  try {
+    const r = launcher(b, TOOLS, { FRESHNESS_TIMEOUT_MS: '2000' });
+    assert.equal(r.status, 0, r.stderr);
+    assert.match(r.stdout, /^UNVERIFIED: .*timed out/);
+    assert.ok(fs.existsSync(pidFile), 'sleeper never started, so the test did not exercise a hung fetch');
+    pid = Number(fs.readFileSync(pidFile, 'utf8'));
+    for (let i = 0; i < 30 && alive(pid); i++) await new Promise((res) => setTimeout(res, 100));
+    assert.equal(alive(pid), false, `sleeper pid ${pid} survived the launcher timeout`);
+  } finally {
+    if (pid && alive(pid)) { try { process.kill(pid, 'SIGKILL'); } catch (_) { /* ignore */ } }
+  }
+});
