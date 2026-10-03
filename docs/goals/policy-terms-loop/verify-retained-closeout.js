@@ -3,7 +3,7 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const {requiredAudits}=require('./recovery-closure-state');
-const {loadInputs,assertBindings}=require('./closure-inputs');
+const {loadInputs,assertBindings,evidencePaths}=require('./closure-inputs');
 const {verifyPin}=require('./audit-source-pin');
 const dir='docs/goals/policy-terms-loop/';
 function verify(root) {
@@ -19,7 +19,7 @@ function verify(root) {
   const commands=['tools/verify-experiments.js','tools/verify-ledger-authorship.js','tools/ledger-index.js --check','tools/failed-run-ledger.js',...audits];
   const pin=JSON.parse(fs.readFileSync(receipt,'utf8'));
   if(pin.result!==result||pin.path!==closure.path||JSON.stringify(pin.commands)!==JSON.stringify(commands))throw new Error('retained audit pin does not bind this closure');
-  verifyPin(pin,[...commands.map(c=>c.split(' ')[0]),...['recovery-closeout.js','recovery-closure-state.js','audit-source-pin.js','pin-recovery-closeout.js','closure-inputs.js','verify-retained-closeout.js'].map(f=>dir+f)],{root});
+  verifyPin(pin,[...commands.map(c=>c.split(' ')[0]),...evidencePaths(result,closure,inputs),...['recovery-closeout.js','recovery-closure-state.js','audit-source-pin.js','pin-recovery-closeout.js','closure-inputs.js','verify-retained-closeout.js'].map(f=>dir+f)],{root});
   return{pending:false,result,path:closure.path,sourceCommit:pin.sourceCommit};
 }
 if(require.main===module){try{console.log('RETAINED_CLOSEOUT',JSON.stringify(verify(path.resolve(__dirname,'../../..'))));}catch(error){console.error(error.stack);process.exitCode=1;}}

@@ -69,7 +69,7 @@ async function run() {
     atomicJson(file,raw);atomicText(path.join(__dirname,'runs/proposals.csv'),csv(raw.rows));
   };
   checkpoint();
-  const pool = createJournaledPool(4,{directory:path.join(OUT,'proposal-journal'),runId:`${config.result}-registered-proposals`});
+  let pool;
   const progress = detail => {
     try{execFileSync('python',['.blackboard/board.py','progress','--actor',config.actor,'--id',config.task,'--detail',detail],{cwd:ROOT,stdio:'inherit'});}
     catch(error){console.error('OPERATIONAL_PROGRESS_WARNING',error.message,'; journaled science continues.');}
@@ -107,6 +107,7 @@ async function run() {
     row.outcome=disposition(row.gate,row.recheck);checkpoint();console.log('RECHECK',JSON.stringify(row));
   }
   try {
+    pool=createJournaledPool(4,{directory:path.join(OUT,'proposal-journal'),runId:`${config.result}-registered-proposals`});
     console.log('PROPOSAL_PHASE_SOURCE_FREEZE',JSON.stringify(sourceHashes));
     console.log('CARRIED_ACCOUNTING',JSON.stringify(raw.counts));
     console.log('COMPUTE_CAVEAT',raw.computeCaveat);
@@ -163,7 +164,7 @@ async function run() {
   } catch(e) {
     raw.status=e.budget?'BUDGET_STOP':'UNVERIFIED';raw.path=e.budget?'D':null;raw.error={message:e.message,budget:e.budget||null};checkpoint();
     console.error(e.stack);progress(`Proposal phase stopped ${raw.status}: ${e.message}; charges retained, never restart.`);throw e;
-  } finally {await pool.close();}
+  } finally {if(pool)await pool.close();}
 }
 if(require.main===module)run().catch(e=>{console.error(e.stack);process.exitCode=1;});
 module.exports={csv,preflight,committedPhaseSources,run};

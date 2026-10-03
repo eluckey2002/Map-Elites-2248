@@ -72,7 +72,7 @@ async function run(argv=process.argv) {
       ...Object.keys(sources),...Object.keys(config.harnessFreeze),...Object.keys(config.carryForward.sourceHashes),
       ...Object.keys(require.cache).map(f=>path.relative(ROOT,f).replaceAll('\\','/'))])].sort(),status:'RUNNING'};
   const file=path.join(out,'checkpoint.json');const checkpoint=()=>atomicJson(file,raw);checkpoint();
-  const pool=createJournaledPool(4,{directory:path.join(out,'journal'),runId:`${config.result}-one-shot-F`});
+  let pool;
   const progress=detail=>reportProgress(detail,{send:message=>execFileSync('python',['.blackboard/board.py','progress','--actor',config.actor,'--id',config.task,'--detail',message],{cwd:ROOT,stdio:'inherit'})});
   async function measure(arm,policy) {
     requireProtocol(argv,{name:'policy terms one-shot confirmation'});registeredConfiguration();
@@ -99,6 +99,7 @@ async function run(argv=process.argv) {
     return panel;
   }
   try {
+    pool=createJournaledPool(4,{directory:path.join(out,'journal'),runId:`${config.result}-one-shot-F`});
     console.log('CONFIRMATION_REGISTRATION',registration.protocolCommit,'CANDIDATE',CANDIDATE,raw.candidate.sha256);
     const champion=await measure('champion',{kind:'champion'});
     const candidate=await measure('candidate',policy);
@@ -123,7 +124,7 @@ async function run(argv=process.argv) {
     console.log('COMPUTE',JSON.stringify(result.compute));for(const c of result.caveats)console.log(c);
     console.log('COUNTS',JSON.stringify(raw.counts));progress(`One-shot F complete: all-58 verdict=${result.primaryOutcome}; raw pairs persisted first. No rerun, adoption, merge or scientific acceptance.`);
   }catch(e){raw.status=e.budget?'BUDGET_STOP':'UNVERIFIED';raw.error={message:e.message,budget:e.budget||null};checkpoint();console.error(e.stack);progress(`One-shot F stopped ${raw.status}: ${e.message}. All charges retained; never restart.`);throw e;}
-  finally{await pool.close();}
+  finally{if(pool)await pool.close();}
 }
 if(require.main===module)run().catch(e=>{console.error(e.stack);process.exitCode=1;});
 module.exports={verdict,chunks,literalCandidate,reportProgress,run};

@@ -7,7 +7,7 @@ const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const {requiredAudits,requireCompletedAudit}=require('../../docs/goals/policy-terms-loop/recovery-closure-state');
 const {createPin,verifyPin}=require('../../docs/goals/policy-terms-loop/audit-source-pin');
-const {assertBindings}=require('../../docs/goals/policy-terms-loop/closure-inputs');
+const {assertBindings,evidencePaths}=require('../../docs/goals/policy-terms-loop/closure-inputs');
 const {verify}=require('../../docs/goals/policy-terms-loop/verify-retained-closeout');
 const {startingState}=require('../../docs/goals/policy-terms-loop/prepare-confirmation-protocol');
 const controls={status:'CONTROLS_COMPLETE',headlines:{controls:Array(12).fill({}),path:'CONTROLS_PASSED'}};
@@ -28,6 +28,11 @@ test('no-confirmation audit pin rejects uncommitted changes, missing auditors an
     assert.throws(()=>verifyPin(pin,['audit.js'],{root}),/identity differs/);
     git(['add','audit.js']);git(['commit','-qm','changed fixture']);
     assert.equal(verifyPin(createPin(['audit.js'],{root}),['audit.js'],{root}),true);
+    fs.writeFileSync(path.join(root,'raw.json'),'{"mean":1}\n');fs.writeFileSync(path.join(root,'closure.json'),'{"mean":1}\n');
+    git(['add','raw.json','closure.json']);git(['commit','-qm','retained data']);
+    const dataPin=createPin(['audit.js','raw.json','closure.json'],{root});
+    fs.writeFileSync(path.join(root,'raw.json'),'{"mean":2}\n');fs.writeFileSync(path.join(root,'closure.json'),'{"mean":2}\n');
+    assert.throws(()=>verifyPin(dataPin,['audit.js','raw.json','closure.json'],{root}),/identity differs/);
   }finally{fs.rmSync(root,{recursive:true,force:true});}
 });
 test('no-candidate and confirmed closeouts require their actual phase audits',()=>{
@@ -57,6 +62,16 @@ test('rendered protocol retains the template pre-registration identity through a
   const line='- git HEAD abcdef12, branch codex/fixture.';
   assert.equal(startingState('registered: date\n'+line+'\n'),line);
   assert.throws(()=>startingState('- git HEAD <sha>, branch <name>.\n'),/starting identity absent/);
+});
+test('confirmed closure binds the actual verdict and pins both raw evidence and closure bytes',()=>{
+  const inputs={result:'RESULT-0081',controls:{result:'RESULT-0081',registration:{recoveryPlanCommit:'recover',originalPlanCommit:'original'}},confirmation:{result:'RESULT-0081',registration:{protocol:'RESULT-0081',protocolCommit:'registered',exploratory:false},counts:{confirmation:17400}},verdict:{result:'RESULT-0081',primaryOutcome:'SUPPORTED'},artifacts:{controls:{path:'controls.json',sha256:'controlhash'},confirmation:{path:'experiments/RESULT-0081/raw-pairs.json',sha256:'rawhash'},verdict:{path:'experiments/RESULT-0081/verdict.json',sha256:'verdicthash'}}};
+  const closure={result:'RESULT-0081',registration:{...inputs.controls.registration,...inputs.confirmation.registration},diagnosticInputs:inputs.artifacts,chargedAccounting:inputs.confirmation.counts,proposalRounds:0,primary_outcome:'SUPPORTED',contract:{path:'closeout-contract.json'},artifacts:[{path:'report.md'}]};
+  assert.equal(assertBindings(closure,inputs),true);
+  assert.throws(()=>assertBindings({...closure,primary_outcome:'FALSIFIED'},inputs),/primary outcome differs/);
+  assert.throws(()=>assertBindings({...closure,diagnosticInputs:{...inputs.artifacts,verdict:{...inputs.artifacts.verdict,sha256:'different'}}},inputs),/hashes differ/);
+  const paths=evidencePaths('RESULT-0081',closure,inputs);
+  for(const file of ['experiments/RESULT-0081/closure.json','controls.json','experiments/RESULT-0081/raw-pairs.json','experiments/RESULT-0081/verdict.json','experiments/RESULT-0081/closeout-contract.json','experiments/RESULT-0081/report.md'])assert.ok(paths.includes(file));
+  assert.throws(()=>evidencePaths('RESULT-0081',{...closure,contract:{path:'../../outside.json'}},inputs),/escaping/);
 });
 test('recurring final-tree suite revalidates every retained closeout and committed audit pin',()=>{
   const result=verify(path.resolve(__dirname,'../..'));

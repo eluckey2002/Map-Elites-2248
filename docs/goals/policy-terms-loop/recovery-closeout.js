@@ -5,21 +5,22 @@ const {execFileSync}=require('node:child_process');
 const {registeredConfiguration}=require('../../../solver/policy-lab/recovery-controls');
 const {requiredAudits,requireCompletedAudit}=require('./recovery-closure-state');
 const {verifyPin}=require('./audit-source-pin');
-const {loadInputs,assertBindings}=require('./closure-inputs');
+const {loadInputs,assertBindings,evidencePaths}=require('./closure-inputs');
 const ROOT=path.resolve(__dirname,'../../..');
 const BASE='cd83127f176111a0b0fb40eb14402f301a1fab07';
 const git=args=>execFileSync('git',args,{cwd:ROOT,encoding:'utf8'});
 const {config,commit}=registeredConfiguration();
 const optionalJson=file=>fs.existsSync(path.join(ROOT,file))?JSON.parse(fs.readFileSync(path.join(ROOT,file),'utf8')):null;
 const closure=optionalJson(`experiments/${config.result}/closure.json`);
-if(closure)assertBindings(closure,loadInputs(ROOT,config.result));
+const inputs=loadInputs(ROOT,config.result);
+if(closure)assertBindings(closure,inputs);
 const audits=requiredAudits({closure,controls:optionalJson('solver/policy-lab/runs/recovery/controls-raw.json'),
   proposals:optionalJson('solver/policy-lab/runs/recovery/proposals-raw.json'),
   confirmation:optionalJson(`experiments/${config.result}/raw-pairs.json`),verdict:optionalJson(`experiments/${config.result}/verdict.json`)});
 const commands=['tools/verify-experiments.js','tools/verify-ledger-authorship.js','tools/ledger-index.js --check','tools/failed-run-ledger.js',...audits];
 const auditPin=optionalJson('docs/goals/policy-terms-loop/recovery-closeout-audits.json');
 if(auditPin?.result!==config.result||auditPin?.path!==closure.path||JSON.stringify(auditPin?.commands)!==JSON.stringify(commands))throw new Error('closeout audit pin does not bind this closure and command list');
-verifyPin(auditPin,[...commands.map(c=>c.split(' ')[0]),...['recovery-closeout.js','recovery-closure-state.js','audit-source-pin.js','pin-recovery-closeout.js','closure-inputs.js','verify-retained-closeout.js'].map(f=>'docs/goals/policy-terms-loop/'+f)],{root:ROOT});
+verifyPin(auditPin,[...commands.map(c=>c.split(' ')[0]),...evidencePaths(config.result,closure,inputs),...['recovery-closeout.js','recovery-closure-state.js','audit-source-pin.js','pin-recovery-closeout.js','closure-inputs.js','verify-retained-closeout.js'].map(f=>'docs/goals/policy-terms-loop/'+f)],{root:ROOT});
 console.log('PASS committed closeout audit identities',JSON.stringify(auditPin));
 const inventory='solver/tests/failedRunLedger.test.js';
 const before=git(['show',`${BASE}:${inventory}`]);
