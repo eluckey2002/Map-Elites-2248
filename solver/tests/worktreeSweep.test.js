@@ -163,3 +163,27 @@ test('real clone (.git is a directory) is skipped', (t) => {
   assert.equal(snapClone(), before, 'clone list / branches / status / top-level entries unchanged');
   assert.ok(fs.existsSync(`${clone}/.git`));
 });
+
+test('fresh heartbeat + dead pid + merged + clean: live, not a candidate', (t) =>
+  run(t, (f, wt) => fs.writeFileSync(f.leasePath(wt), lease({ pid: deadPid() })), (l, out) => {
+    assert.match(l, /lease=live/); assert.match(l, /^\[REPORT\]/);
+    assert.match(l, /merged-into-origin\/main=yes/); assert.match(l, /tree=clean/);
+    assert.match(out, /removal candidates .*nothing removed\): 0/);
+  }));
+
+test('unparseable lease text: absent, not a candidate, no crash', (t) =>
+  run(t, (f, wt) => fs.writeFileSync(f.leasePath(wt), '{not json'), (l, out) => {
+    assert.match(l, /lease=absent \(unparseable lease treated as absent\)/); assert.match(l, /^\[REPORT\]/);
+    assert.match(out, /removal candidates .*nothing removed\): 0/);
+  }));
+
+for (const [name, body] of [
+  ['null', 'null'], ['empty array', '[]'], ['number', '42'], ['string', '"x"'],
+  ['missing host', JSON.stringify({ pid: process.pid, heartbeat: OLD() })],
+]) {
+  test(`malformed lease (${name}): absent, not a candidate, no crash`, (t) =>
+    run(t, (f, wt) => fs.writeFileSync(f.leasePath(wt), body), (l, out) => {
+      assert.match(l, /lease=absent \(malformed lease treated as absent\)/); assert.match(l, /^\[REPORT\]/);
+      assert.match(out, /removal candidates .*nothing removed\): 0/);
+    }));
+}
