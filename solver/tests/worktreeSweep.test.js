@@ -59,10 +59,16 @@ function run(t, setup, check) {
   const wt = f.addWt('feat');
   setup(f, wt);
   const before = f.snap();
+  const shaBefore = git(f.main, 'rev-parse', 'feat').trim();
   const out = sweep(f.main);
   check(lineFor(out, wt), out, wt);
   assert.equal(f.snap(), before, 'worktree list / branch -a must be byte-identical');
   assert.ok(fs.existsSync(wt), 'worktree dir still exists');
+  // Explicit survival assertions (not only the snapshot): branch, sha, worktree dir + registration.
+  assert.match(git(f.main, 'branch', '--list', 'feat'), /\bfeat\b/, 'branch feat still listed in main clone');
+  assert.equal(git(f.main, 'rev-parse', 'feat').trim(), shaBefore, 'branch feat sha unchanged');
+  assert.ok(git(f.main, 'worktree', 'list', '--porcelain').split(/\r?\n/).some((l) => l === `worktree ${wt}`),
+    'worktree still registered in git worktree list --porcelain');
 }
 
 test('live lease (fresh heartbeat): reported live, not a candidate', (t) =>
@@ -114,6 +120,23 @@ test('merged-and-clean but live lease: reported, not candidate', (t) =>
   run(t, (f, wt) => fs.writeFileSync(f.leasePath(wt), lease({})), (l) => {
     assert.match(l, /merged-into-origin\/main=yes/); assert.match(l, /tree=clean/); assert.match(l, /^\[REPORT\]/);
   }));
+
+test('merged-and-clean branch with NO worktree: survives, never removed', (t) => {
+  const f = fixture(t);
+  git(f.main, 'branch', 'orphan-merged', 'origin/main');
+  git(f.main, 'merge-base', '--is-ancestor', 'orphan-merged', 'origin/main');
+  const shaBefore = git(f.main, 'rev-parse', 'orphan-merged').trim();
+  const before = f.snap();
+  const out = sweep(f.main);
+  assert.match(git(f.main, 'branch', '--list', 'orphan-merged'), /orphan-merged/, 'branch still exists');
+  assert.equal(git(f.main, 'rev-parse', 'orphan-merged').trim(), shaBefore, 'sha unchanged');
+  assert.equal(f.snap(), before, 'worktree list / branch -a must be byte-identical');
+  // Output may ignore it entirely; if it mentions it, never as removed/deleted or as a candidate.
+  for (const l of out.split('\n').filter((x) => x.includes('orphan-merged'))) {
+    assert.doesNotMatch(l, /remov|delet|CANDIDATE/i, `branch must not be reported as removed: ${l}`);
+  }
+  assert.match(out, /nothing removed/);
+});
 
 test('real clone (.git is a directory) is skipped', (t) => {
   const f = fixture(t);
