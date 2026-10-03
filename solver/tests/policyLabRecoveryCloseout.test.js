@@ -6,7 +6,7 @@ const os=require('node:os');
 const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const {requiredAudits,requireCompletedAudit}=require('../../docs/goals/policy-terms-loop/recovery-closure-state');
-const {createPin,verifyPin}=require('../../docs/goals/policy-terms-loop/audit-source-pin');
+const {createPin,verifyPin,readAnchoredPin}=require('../../docs/goals/policy-terms-loop/audit-source-pin');
 const {assertBindings,evidencePaths}=require('../../docs/goals/policy-terms-loop/closure-inputs');
 const {verify}=require('../../docs/goals/policy-terms-loop/verify-retained-closeout');
 const {startingState}=require('../../docs/goals/policy-terms-loop/prepare-confirmation-protocol');
@@ -76,4 +76,19 @@ test('confirmed closure binds the actual verdict and pins both raw evidence and 
 test('recurring final-tree suite revalidates every retained closeout and committed audit pin',()=>{
   const result=verify(path.resolve(__dirname,'../..'));
   assert.equal(typeof result.pending,'boolean');
+});
+test('replacing committed evidence and regenerating its pin cannot replace the first-added receipt',()=>{
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'policy-receipt-anchor-'));
+  const git=args=>execFileSync('git',args,{cwd:root,stdio:'pipe'});
+  try{
+    git(['init','-q']);git(['config','user.email','fixture@example.invalid']);git(['config','user.name','Fixture']);
+    fs.writeFileSync(path.join(root,'raw.json'),'{"mean":1}\n');git(['add','raw.json']);git(['commit','-qm','initial evidence']);
+    fs.writeFileSync(path.join(root,'pin.json'),JSON.stringify(createPin(['raw.json'],{root}))+'\n');
+    assert.throws(()=>readAnchoredPin('pin.json',{root}),/committed before validation/);
+    git(['add','pin.json']);git(['commit','-qm','anchor first pin']);
+    assert.equal(verifyPin(readAnchoredPin('pin.json',{root}),['raw.json'],{root}),true);
+    fs.writeFileSync(path.join(root,'raw.json'),'{"mean":2}\n');git(['add','raw.json']);git(['commit','-qm','replacement evidence']);
+    fs.writeFileSync(path.join(root,'pin.json'),JSON.stringify(createPin(['raw.json'],{root}))+'\n');git(['add','pin.json']);git(['commit','-qm','replacement pin']);
+    assert.throws(()=>readAnchoredPin('pin.json',{root}),/first-added bytes/);
+  }finally{fs.rmSync(root,{recursive:true,force:true});}
 });

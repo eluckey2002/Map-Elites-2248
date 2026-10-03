@@ -26,4 +26,14 @@ function verifyPin(pin,requiredFiles,{root}) {
   }
   return true;
 }
-module.exports={createPin,verifyPin};
+function readAnchoredPin(file,{root}) {
+  const bytes=fs.readFileSync(path.join(root,file));
+  const first=execFileSync('git',['log','--diff-filter=A','--format=%H','--',file],{cwd:root,encoding:'utf8'}).trim().split('\n').at(-1);
+  if(!first)throw new Error('pin receipt must be committed before validation');
+  const registered=execFileSync('git',['show',`${first}:${file}`],{cwd:root});
+  if(digest(bytes)!==digest(registered))throw new Error('retained pin receipt differs from its first-added bytes');
+  const pin=JSON.parse(bytes);
+  execFileSync('git',['merge-base','--is-ancestor',pin.sourceCommit,first],{cwd:root});
+  return pin;
+}
+module.exports={createPin,verifyPin,readAnchoredPin};
