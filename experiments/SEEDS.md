@@ -105,3 +105,7 @@ file and the repository before declaring a range fresh.
 | 60,050,000–60,050,009 | RESULT-0080 reserved C11; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
 | 60,051,000–60,051,009 | RESULT-0080 reserved C12; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
 | 60,100,000–60,100,149 | RESULT-0080 reserved F; one-shot confirmation, 58 x 150; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+
+| 60,052,000–60,052,009 | RESULT-0080 approved journaled recovery replacement C3; 58 x 10, four arms; old C3 remains burned | 2026-10-03 | docs/goals/policy-terms-loop/RECOVERY_PLAN.md; RECOVERY_APPROVAL.txt |
+
+| 60,052,000–60,052,009; original reserved C4–C12, G/S/R/F ranges above | RESULT-0081 continuation of RESULT-0080 under original assigned-ID collision fallback; only C3 is replaced; existing G/C1/C2 results are retained, not replayed; other ranges keep their original purposes and are never dispatched twice | 2026-10-03 | docs/goals/policy-terms-loop/RECOVERY_PLAN.md; recovery-result-id-check.json |

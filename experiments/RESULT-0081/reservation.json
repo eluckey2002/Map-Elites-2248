@@ -1,0 +1,15 @@
+{
+  "kind": "identity-reservation-before-games",
+  "result": "RESULT-0081",
+  "reserved_on": "2026-10-03",
+  "purpose": "Journaled continuation of the original bot policy goal, with at most one conditional confirmation",
+  "assignment_rule": "GOAL.txt assigns the next unused RESULT above all remote branches when RESULT-0080 is occupied",
+  "assignment_receipt": "docs/goals/policy-terms-loop/recovery-result-id-check.json",
+  "legacy_result_preserved": "RESULT-0080",
+  "recovery_registration": "docs/goals/policy-terms-loop/RECOVERY_PLAN.md",
+  "prior_charged_games": 8340,
+  "goal_max_total_games": 120000,
+  "max_confirmation_runs": 1,
+  "confirmation_protocol": "NOT_REGISTERED: register only after an accepted candidate is frozen",
+  "recovery_games": "NOT_RUN_AT_RESERVATION"
+}

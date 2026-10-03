@@ -1,0 +1,100 @@
+{
+  "purpose": "recovery proposal audit, not a preregistration or scientific result",
+  "head": "5ceae4cf9bea049c33d97cee9a93e5e910738d81",
+  "originMain": "cd83127f176111a0b0fb40eb14402f301a1fab07",
+  "oldRegistration": "e76f3ec4af2496495697322851bafca0ab73b253",
+  "originalPlanUnchanged": true,
+  "frozenSourceMatches": {
+    "solver/policy-lab/play.js": true,
+    "solver/policy-lab/chooser.js": true,
+    "solver/policy-lab/pool.js": true,
+    "solver/policy-lab/worker.js": true,
+    "solver/policy-lab/settings.js": true,
+    "solver/policy-lab/decision.js": true,
+    "solver/policy-lab/run-controls.js": true,
+    "solver/ruler/core.js": true,
+    "solver/ruler/game.js": true,
+    "solver/bot.js": true,
+    "solver/engine.js": true,
+    "src/game.js": true,
+    "solver/behavior-descriptors.js": true,
+    "docs/goals/policy-terms-loop/GOAL.txt": true
+  },
+  "originalRawSha256": "deb60ca48b2bbb82bec829ecd0a6555681272006635af52f3ff56546a92ef974",
+  "originalClosureSha256": "b65e04ac5db1c26fae9aefaccc3878a119a3c758dd7ceceaf32daba9d252796c",
+  "retainedControlArms": {
+    "C1": [
+      "champion",
+      "zero",
+      "handicap10",
+      "handicap5"
+    ],
+    "C2": [
+      "champion",
+      "zero",
+      "handicap10",
+      "handicap5"
+    ],
+    "C3": [
+      "champion",
+      "zero"
+    ]
+  },
+  "completeControlBlocks": [
+    "C1",
+    "C2"
+  ],
+  "chargedAccountingCarriedForward": {
+    "controls": 6380,
+    "proposals": 580,
+    "jointSearch": 0,
+    "confirmation": 0,
+    "replays": 1380,
+    "buffer": 0
+  },
+  "totalAlreadyCharged": 8340,
+  "proposalRoundsAlreadyCharged": 0,
+  "proposedReplacementC3": {
+    "start": 60052000,
+    "end": 60052009,
+    "reserved": false
+  },
+  "fetchedRemoteRefsWithSeedDeclarations": [
+    "refs/remotes/origin/HEAD",
+    "refs/remotes/origin/codex/authoring-ideation-20260916",
+    "refs/remotes/origin/codex/champion-research-queue-20261002",
+    "refs/remotes/origin/codex/lc0013-target-gap-arithmetic",
+    "refs/remotes/origin/feat/board-map-elites-20260917",
+    "refs/remotes/origin/feat/family-board-map-elites-20260919",
+    "refs/remotes/origin/ledger/status-index",
+    "refs/remotes/origin/main",
+    "refs/remotes/origin/port/family-board-map-elites",
+    "refs/remotes/origin/recovery/mac/codex-failed-run-ledger-2026-09-22-20260930",
+    "refs/remotes/origin/recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930",
+    "refs/remotes/origin/recovery/mac/codex-lc0013-target-gap-arithmetic-20260930",
+    "refs/remotes/origin/recovery/mac/codex-nightly-reverify-36579791639-20260930",
+    "refs/remotes/origin/recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930",
+    "refs/remotes/origin/recovery/mac/main-root-dirty-20260930",
+    "refs/remotes/origin/recovery/mac/map-elites-qa-dirty-20260930",
+    "refs/remotes/origin/recovery/mac/review-unbuilt-map-candidates-dirty-20260930",
+    "refs/remotes/origin/recovery/windows/backup-pre-collector-drop-20260930",
+    "refs/remotes/origin/recovery/windows/claude-mac-project-sync-ee1d99-20260930",
+    "refs/remotes/origin/recovery/windows/codex-level-map-elites-authoring-20260930",
+    "refs/remotes/origin/recovery/windows/codex-u1-asset-contract-20260930",
+    "refs/remotes/origin/recovery/windows/codex-u1-eol-path-20260930",
+    "refs/remotes/origin/recovery/windows/recheck-loop-dirty-20260930",
+    "refs/remotes/origin/recovery/windows/recovery-local-work-20260926-20260930",
+    "refs/remotes/origin/recovery/windows/stash-20260926-20260930",
+    "refs/remotes/origin/recovery/windows/tmp-44-20260930",
+    "refs/remotes/origin/recovery/windows/u1-combined-dirty-20260930",
+    "refs/remotes/origin/work/policy-measurement-records-2026-09-05"
+  ],
+  "declaredSeedCollisions": [],
+  "freshnessLimit": "Declared ranges only; check again immediately before reservation. No seeds reserved by this audit.",
+  "additionalControlGames": 23200,
+  "projectedTotalControlGames": 29580,
+  "remainingControlAllowanceAfterCompletion": 420,
+  "remainingTotalAllowanceNow": 111660,
+  "newScientificGamesPlayed": 0,
+  "status": "DRAFT_REQUIRES_OWNER_EXCEPTION_FOR_RECOVERY_REGISTRATION_AND_EXISTING_TEST_INVENTORY"
+}

@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: CSV parser preserves quoted commas and doubled quotes
+ok 1 - CSV parser preserves quoted commas and doubled quotes
+  ---
+  duration_ms: 2.419108
+  type: 'test'
+  ...
+# Subtest: LIVE: scanner reads the real retained failed closures
+ok 2 - LIVE: scanner reads the real retained failed closures
+  ---
+  duration_ms: 3.105091
+  type: 'test'
+  ...
+# Subtest: a real UNVERIFIED closure fails when its ledger row is absent
+ok 3 - a real UNVERIFIED closure fails when its ledger row is absent
+  ---
+  duration_ms: 1.619302
+  type: 'test'
+  ...
+# Subtest: two failed closures cannot share one run_id and one ledger row
+ok 4 - two failed closures cannot share one run_id and one ledger row
+  ---
+  duration_ms: 1.650166
+  type: 'test'
+  ...
+# Subtest: a ledger row cannot claim prevention through missing files
+ok 5 - a ledger row cannot claim prevention through missing files
+  ---
+  duration_ms: 1.591511
+  type: 'test'
+  ...
+# Subtest: an intentional failing control inside a CLOSED run is not a failed run
+ok 6 - an intentional failing control inside a CLOSED run is not a failed run
+  ---
+  duration_ms: 0.78962
+  type: 'test'
+  ...
+# Subtest: calendar dates and legacy evidence identities are exact
+ok 7 - calendar dates and legacy evidence identities are exact
+  ---
+  duration_ms: 1.185292
+  type: 'test'
+  ...
+# Subtest: a retained legacy incident fails when its CSV row is removed
+ok 8 - a retained legacy incident fails when its CSV row is removed
+  ---
+  duration_ms: 1.74574
+  type: 'test'
+  ...
+# Subtest: LIVE: every retained failed closure has one complete prevention record
+ok 9 - LIVE: every retained failed closure has one complete prevention record
+  ---
+  duration_ms: 1.653302
+  type: 'test'
+  ...
+# Subtest: Windows directory-sync branch avoids the unavailable directory open while POSIX still syncs
+ok 10 - Windows directory-sync branch avoids the unavailable directory open while POSIX still syncs
+  ---
+  duration_ms: 2.166135
+  type: 'test'
+  ...
+# Subtest: journal retains a completed job when a later job fails and refuses replay
+ok 11 - journal retains a completed job when a later job fails and refuses replay
+  ---
+  duration_ms: 2.750431
+  type: 'test'
+  ...
+# Subtest: journal survives actual controller termination while another job is in flight
+ok 12 - journal survives actual controller termination while another job is in flight
+  ---
+  duration_ms: 59.732738
+  type: 'test'
+  ...
+# Subtest: recovery excludes partial C3 while retaining all burned-game charges and completed controls
+ok 13 - recovery excludes partial C3 while retaining all burned-game charges and completed controls
+  ---
+  duration_ms: 22.605129
+  type: 'test'
+  ...
+# Subtest: carried accounting reaches 29580 and cannot exceed the unchanged control cap
+ok 14 - carried accounting reaches 29580 and cannot exceed the unchanged control cap
+  ---
+  duration_ms: 0.809177
+  type: 'test'
+  ...
+# Subtest: fresh C3 validation refuses the old burned C3, duplicated addresses, and missing rows
+ok 15 - fresh C3 validation refuses the old burned C3, duplicated addresses, and missing rows
+  ---
+  duration_ms: 3.719813
+  type: 'test'
+  ...
+# Subtest: recovery completion refuses a missing arm, lost-game discount, or weakened aggregate bar
+ok 16 - recovery completion refuses a missing arm, lost-game discount, or weakened aggregate bar
+  ---
+  duration_ms: 287.717353
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 421.531378
