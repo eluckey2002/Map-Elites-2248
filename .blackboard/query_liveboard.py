@@ -11,9 +11,10 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
 
+import locate
 
 ROOT = Path(__file__).resolve().parent
-DEFAULT_DATABASE = ROOT / "runtime" / "board.sqlite"
+DEFAULT_DATABASE = locate.runtime_dir() / "board.sqlite"
 ID_PATTERN = re.compile(r"^[A-Za-z0-9_-]+$")
 BOUNDARY = (
     "This is a read-only record from the local Liveboard ledger. Recorded state is not "
@@ -31,9 +32,7 @@ def identifier(value: str) -> str:
 def connection_for(database: Path) -> sqlite3.Connection:
     if not database.is_file():
         raise FileNotFoundError(f"no board at {database}; create it with: python .blackboard/board.py init")
-    connection = sqlite3.connect(f"file:{database.as_posix()}?mode=ro", uri=True)
-    connection.row_factory = sqlite3.Row
-    return connection
+    return locate.open_readonly(database)
 
 
 @contextmanager
@@ -132,6 +131,8 @@ def parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = parser().parse_args()
     try:
+        if args.database == DEFAULT_DATABASE:  # an explicit --database means the caller chose the board
+            locate.require_migrated()
         with read_transaction(args.database.resolve()) as connection:
             if args.command == "summary":
                 payload = summary_record(connection)

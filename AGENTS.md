@@ -3,7 +3,8 @@
 ## Blackboard: use it during project work
 
 At the start of each working session, read [.blackboard/AGENTS.md](.blackboard/AGENTS.md)
-and run `python .blackboard/board.py query summary` from the project root. Inspect
+and run `python .blackboard/board.py query summary` from the project root (the board
+is shared by every worktree of this repository, so run it from your own worktree). Inspect
 relevant existing tasks with `query task <id>` before creating duplicate work.
 If the summary shows tasks, run `query tasks` to list their IDs, states, and
 assignees.
@@ -17,9 +18,13 @@ For implementation, investigation, or other substantive project work:
   claim work already owned by another agent.
 - Claim the task before doing the work. Record progress at meaningful changes,
   blockers, and handoffs rather than on every tool call. A blocker is a progress
-  note or defect; do not invent a task state the board does not support.
-- Save the result and verification evidence to `.blackboard/runtime/<id>.md`
-  (or `.json` / `.txt`) and submit it using `python .blackboard/board.py`.
+  note or defect; do not invent a task state the board does not support. A claim
+  lapses when its worktree is removed or when nothing is reported for its
+  `--stale-after` seconds, and another agent may then reclaim it, so set a
+  `--stale-after` longer than your longest quiet stretch.
+- Save the result and verification evidence as `<id>.md` (or `.json` / `.txt`) in
+  the folder printed by `python .blackboard/board.py where`, and submit it using
+  `python .blackboard/board.py`.
 - Acceptance requires an actual check by the declared reviewer, distinct from
   the producer and submitter. Never impersonate a reviewer or invent approval.
   A coordinator may record a review only after receiving that reviewer's actual
