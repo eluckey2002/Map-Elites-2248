@@ -1,0 +1,17 @@
+✔ ruler A/A has zero wins gained, zero lost and exactly zero moves saved (4.4834ms)
+✔ ruler compares wins before mutual-win moves (1.0534ms)
+✔ two-axis SE catches seed-wide variation when level means are equal (0.5398ms)
+✔ ruler rejects a missing or reordered paired cell (0.9668ms)
+✔ admission refuses synthetic entrant with screen +3% and fresh -3% (1.8232ms)
+✔ admission accepts synthetic entrant positive on screen and fresh block (0.5878ms)
+✔ admission ranks same-cell entrants on fresh number only (0.3044ms)
+✔ winner-curse panel has 30 unique one-gene champion variants (2.4547ms)
+✔ declared seed blocks are disjoint and worst-case measured games stay below 60,000 (0.5085ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 222.5633

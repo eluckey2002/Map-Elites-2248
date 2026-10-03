@@ -1,0 +1,32 @@
+[
+  {
+    "commentId": 4167286636,
+    "threadId": "PRRT_kwDOT_TwF86oZTvd",
+    "body": "Reconstructed the frozen seed-20261002 adaptive mutation stream independently, including parent insertion order, gene selection, bounds, fallback and uniqueness. Every retained policy ID is checked against its canonical parameter hash; every MAP mutation must match the regenerated ID and parameters. The new test `independent recompute rejects a canonically rekeyed out-of-range cut mutant` passes. The sealed confirmation prints MATCH with all 120 mutations audited. Evidence: experiments/RESULT-0058/recompute-reviewed-output.txt and review-regression-output.txt; CORRECTION-0018."
+  },
+  {
+    "commentId": 4167286640,
+    "threadId": "PRRT_kwDOT_TwF86oZTvf",
+    "body": "Fresh admission now increments a refusal counter only when admit() returns false. Successful same-cell replacement is an admission. The independent recompute counts the same decisions separately from final archive size. Both new tests for same-cell replacements and actual fresh-block refusals pass. The collected zero-nominee headline remains unchanged. Evidence: experiments/RESULT-0058/review-regression-output.txt; CORRECTION-0018."
+  },
+  {
+    "commentId": 4167286648,
+    "threadId": "PRRT_kwDOT_TwF86oZTvl",
+    "body": "Preserved the historical qualification artifact and updated the builder to emit recompute-qualification-current.json with the required bad72 and all 30 screen/fresh variant panels. It is explicitly synthetic numeric-only data, not measured confirmation evidence. Its regression test traverses items 3/4/5/7/9 without crashing, reproduces the historical arithmetic and expects DIFF on the frozen confirmation-size/seed/mutation checks. No game is played. Evidence: experiments/RESULT-0058/qualification-current-build-output.txt and review-regression-output.txt; CORRECTION-0018."
+  },
+  {
+    "commentId": 4167286660,
+    "threadId": "PRRT_kwDOT_TwF86oZTvq",
+    "body": "The independent audit now requires both declared panel.games and retained rows to equal levels.length * seeds.length, and aggregation checks the complete paired grid. The new test truncates the stage-2 candidate to 599 rows and adjusts its self-reported counts; it is rejected with `DIFF incomplete panel grid ... expected=600 declared=599 retained=599`. The unchanged complete confirmation still prints MATCH. Evidence: experiments/RESULT-0058/review-regression-output.txt and recompute-reviewed-output.txt; CORRECTION-0018."
+  },
+  {
+    "commentId": 4167286668,
+    "threadId": "PRRT_kwDOT_TwF86oZTvw",
+    "body": "Both producer helper and independent recompute now use the unrounded mean/SE statistic directly: negative mean with zero SE prints -Infinity, and zero/zero prints UNKNOWN. The strict t > 3 threshold is unchanged. The new negative-infinity regression and original unrounded-boundary tests pass. No collected verdict flips. Evidence: experiments/RESULT-0058/review-regression-output.txt and boundary-after-output.txt; CORRECTION-0018."
+  },
+  {
+    "commentId": 4167286680,
+    "threadId": "PRRT_kwDOT_TwF86oZTv5",
+    "body": "The producer compact summary and printed fitness now retain the win-rate difference, both level/seed SEs, selected SE and 95% interval. The sealed raw artifact is immutable, so its missing output is supplied by full-summary.json/full-summary-output.txt, derived with the registered core. recompute.js independently derives all complete fields into independent-full-summary.json without producer imports. compare-supplement.js prints MATCH FULL STATISTICS for all 235 paired panels. The positive win interval includes zero; the required mutual-win move interval remains strictly positive. Evidence: experiments/RESULT-0058/full-summary-match-output.txt and recompute-reviewed-output.txt; CORRECTION-0018."
+  }
+]

@@ -1,0 +1,14 @@
+✔ recheck counts accepted same-cell replacements as admissions, not refusals (1.702ms)
+✔ recheck counts only actual fresh-block admission refusals (0.2932ms)
+✔ stronger-policy t retains negative Infinity and labels zero over zero UNKNOWN (0.1893ms)
+✔ independent recompute rejects a canonically rekeyed out-of-range cut mutant (363.4181ms)
+✔ independent recompute rejects a 599-row stage-2 panel with matching self-reported counts (350.5793ms)
+✔ current synthetic qualification fixture traverses every recompute path and is refused as confirmation evidence (113.5836ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 983.7852
