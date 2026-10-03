@@ -25,6 +25,11 @@ function chunks(seeds,size=10) {
   if(!Number.isInteger(size)||size<1)throw new Error('invalid job chunk size');
   return Array.from({length:Math.ceil(seeds.length/size)},(_,i)=>seeds.slice(i*size,(i+1)*size));
 }
+function literalCandidate(code) {
+  const literal=/module\.exports = ([\s\S]*);\n$/.exec(code);
+  if(!literal)throw new Error('candidate must use literal module.exports = <JSON> code');
+  try{return JSON.parse(literal[1]);}catch{throw new Error('candidate must use literal module.exports = <JSON> code');}
+}
 async function run(argv=process.argv) {
   const registration=requireProtocol(argv,{name:'policy terms one-shot confirmation'});
   const {config,commit}=registeredConfiguration();
@@ -42,7 +47,9 @@ async function run(argv=process.argv) {
   if(proposals.status!=='EXPLORATION_COMPLETE'||proposals.path!=='CONFIRMATION_REGISTRATION_PENDING'||!proposals.selected)throw new Error('no qualified frozen candidate');
   const audit=execFileSync(process.execPath,['solver/policy-lab/proposal-recompute.js'],{cwd:ROOT,encoding:'utf8',maxBuffer:64*1024*1024});
   if(!audit.includes('PASS completed proposal journal jobs')||!audit.includes('MATCH retained proposal arithmetic'))throw new Error('proposal arithmetic/coverage not qualified');
-  const policy=require(path.join(ROOT,CANDIDATE));
+  // Match the independent audit's format before any output marker or dispatch,
+  // and parse data without executing a hand-authored module.
+  const policy=literalCandidate(fs.readFileSync(path.join(ROOT,CANDIDATE),'utf8'));
   if(JSON.stringify(policy)!==JSON.stringify(proposals.selected.policy)||sha(CANDIDATE).slice(0,16)!==front.version_freeze[CANDIDATE])throw new Error('frozen candidate differs from selected fresh result');
   const sources={...front.version_freeze};
   const out=path.join(__dirname,'runs/recovery/confirmation');
@@ -68,7 +75,15 @@ async function run(argv=process.argv) {
     if(raw.dispatches.some(d=>d.arm===arm))throw new Error('confirmation arm already dispatched');
     charge(raw.counts,'confirmation',8700,config);raw.dispatches.push({block:'F',arm,policy,games:8700,budget:'confirmation',seeds:raw.seeds});checkpoint();
     const started=performance.now();
-    const jobs=await Promise.all(LEVELS.flatMap(levelData=>chunks(raw.seeds).map(seeds=>pool.run({levelData,seeds,policy}))));
+    let retainedJobs=0;
+    const jobs=await Promise.all(LEVELS.flatMap(levelData=>chunks(raw.seeds).map(seeds=>pool.run({levelData,seeds,policy}).then(part=>{
+      retainedJobs++;
+      if(retainedJobs%100===0){
+        console.log('CONFIRMATION_JOURNAL_PROGRESS',arm,'completed_jobs',retainedJobs,'of',870);
+        progress(`One-shot F ${arm}: ${retainedJobs}/870 ten-seed jobs durably retained. This is progress only; no verdict or mean inferred.`);
+      }
+      return part;
+    }))));
     const panel={block:'F',arm,policy,levels:config.levels,seeds:raw.seeds,games:jobs.flatMap(j=>j.games).sort((a,b)=>a.level-b.level||a.seed-b.seed),
       workerElapsedSeconds:jobs.reduce((s,j)=>s+j.workerElapsedSeconds,0),threadCpuSeconds:jobs.reduce((s,j)=>s+j.threadCpuSeconds,0),wallSeconds:(performance.now()-started)/1000,
       filesRead:[...new Set(jobs.flatMap(j=>j.filesRead).map(f=>path.relative(ROOT,f).replaceAll('\\','/')))].sort()};
@@ -107,4 +122,4 @@ async function run(argv=process.argv) {
   finally{await pool.close();}
 }
 if(require.main===module)run().catch(e=>{console.error(e.stack);process.exitCode=1;});
-module.exports={verdict,chunks,run};
+module.exports={verdict,chunks,literalCandidate,run};

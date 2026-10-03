@@ -35,24 +35,29 @@ function csv(rows) {
   }[k])).join(',')).join('\n') + (rows.length ? '\n' : '');
 }
 function preflight(counts, budget, games, config) {charge(structuredClone(counts), budget, games, config);}
+function committedPhaseSources(sources,{root=ROOT}={}) {
+  const phaseCommit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
+  const sourceHashes=Object.fromEntries(sources.map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')]));
+  for(const source of sources.filter(f=>f.endsWith('.js'))){
+    const committed=execFileSync('git',['show',`${phaseCommit}:${source}`],{cwd:root});
+    if(crypto.createHash('sha256').update(committed).digest('hex')!==sourceHashes[source])throw new Error(`phase executable must be committed before use: ${source}`);
+  }
+  return{phaseCommit,sourceHashes};
+}
 async function run() {
   const {config, commit} = registeredConfiguration();
   const controls = JSON.parse(fs.readFileSync(path.join(ROOT, CONTROL)));
   if (controls.status !== 'CONTROLS_COMPLETE' || controls.headlines.path !== 'CONTROLS_PASSED'
       || completionProblems(controls).length) throw new Error('proposals forbidden: complete qualified controls required');
-  const independent = execFileSync(process.execPath, ['solver/policy-lab/recovery-recompute.js'], {cwd:ROOT, encoding:'utf8',maxBuffer:32*1024*1024});
-  if (!independent.includes('PASS complete journal jobs 2320') || !independent.includes('MATCH retained arithmetic')) throw new Error('controls arithmetic qualification absent');
   const file = path.join(OUT, 'proposals-raw.json');
   if (fs.existsSync(file) || fs.existsSync(path.join(OUT, 'proposal-journal'))
       || fs.existsSync(path.join(OUT,'candidates')) || fs.existsSync(path.join(__dirname,'runs/proposals.csv'))) throw new Error('burned proposal run: never resume or reuse outputs');
-  const sources = ['solver/policy-lab/run-proposals.js','solver/policy-lab/proposal-planning.js','solver/policy-lab/proposal-space.js',
+  const sources = ['solver/policy-lab/run-proposals.js','solver/policy-lab/proposal-planning.js','solver/policy-lab/proposal-space.js','solver/policy-lab/recovery-recompute.js',
     'solver/policy-lab/runs/generation.json',CONTROL,'docs/goals/policy-terms-loop/RECOVERY_PLAN.md'];
-  const sourceHashes = Object.fromEntries(sources.map(f => [f,sha(f)]));
-  const phaseCommit = execFileSync('git',['rev-parse','HEAD'],{cwd:ROOT,encoding:'utf8'}).trim();
-  for(const source of sources.slice(0,3)) {
-    const committed=execFileSync('git',['show',`${phaseCommit}:${source}`],{cwd:ROOT});
-    if(crypto.createHash('sha256').update(committed).digest('hex')!==sourceHashes[source])throw new Error('phase orchestration must be committed before use');
-  }
+  const {sourceHashes,phaseCommit}=committedPhaseSources(sources);
+  // Verify the executable identity before executing the admission audit.
+  const independent = execFileSync(process.execPath, ['solver/policy-lab/recovery-recompute.js'], {cwd:ROOT, encoding:'utf8',maxBuffer:32*1024*1024});
+  if (!independent.includes('PASS complete journal jobs 2320') || !independent.includes('MATCH retained arithmetic')) throw new Error('controls arithmetic qualification absent');
   const raw = {kind:'exploration-diagnostic-proposals',result:config.result,registration:{recoveryPlanCommit:commit,phaseCommit,exploratory:true},config,
     sourceHashes,priorCounts:structuredClone(controls.counts),counts:structuredClone(controls.counts),proposalRounds:0,
     panels:[],dispatches:[],rows:[],jointRows:[],recheckAllocations:[],
@@ -156,4 +161,4 @@ async function run() {
   } finally {await pool.close();}
 }
 if(require.main===module)run().catch(e=>{console.error(e.stack);process.exitCode=1;});
-module.exports={csv,preflight,run};
+module.exports={csv,preflight,committedPhaseSources,run};

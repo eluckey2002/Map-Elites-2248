@@ -3,7 +3,7 @@ const test=require('node:test');
 const assert=require('node:assert/strict');
 const {specification,plan}=require('../policy-lab/proposal-planning');
 const {jointSpace,selectFrozen}=require('../policy-lab/proposal-space');
-const {csv,preflight}=require('../policy-lab/run-proposals');
+const {csv,preflight,committedPhaseSources}=require('../policy-lab/run-proposals');
 const independent=require('../policy-lab/proposal-recompute');
 test('registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses',()=>{
   const specs=Array.from({length:15},(_,i)=>specification(i+1));
@@ -82,4 +82,18 @@ test('planning preserves three distinct eligible historical boards and refuses c
   assert.throws(()=>plan(2,{root}),/fewer than three/);
   fs.writeFileSync(file,JSON.stringify({branch:'GENERATION',moves:[boards[0],boards[0],boards[0]]}));
   assert.throws(()=>plan(2,{root}),/duplicate planning board/);
+});
+test('phase admission pins the committed audit and rejects uncommitted drift before execution',t=>{
+  const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),cp=require('node:child_process');
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'policy-audit-identity-'));
+  t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+  const git=args=>cp.execFileSync('git',args,{cwd:root,stdio:'ignore'});
+  git(['init','--quiet']);git(['config','user.name','Qualification fixture']);git(['config','user.email','fixture@example.invalid']);
+  const file=path.join(root,'audit.js');fs.writeFileSync(file,"throw new Error('must never execute during identity validation');\n");
+  git(['add','audit.js']);git(['commit','--quiet','-m','Fixture audit identity']);
+  const pinned=committedPhaseSources(['audit.js'],{root});assert.match(pinned.phaseCommit,/^[a-f0-9]{40}$/);assert.match(pinned.sourceHashes['audit.js'],/^[a-f0-9]{64}$/);
+  fs.writeFileSync(file,"console.log('fake qualification');\n");
+  assert.throws(()=>committedPhaseSources(['audit.js'],{root}),/must be committed before use: audit\.js/);
+  git(['add','audit.js']);git(['commit','--quiet','-m','New fixture identity before use']);
+  const next=committedPhaseSources(['audit.js'],{root});assert.notEqual(next.phaseCommit,pinned.phaseCommit);assert.notEqual(next.sourceHashes['audit.js'],pinned.sourceHashes['audit.js']);
 });

@@ -1,8 +1,8 @@
 'use strict';
 const test=require('node:test');
 const assert=require('node:assert/strict');
-const {verdict,chunks,run}=require('../policy-lab/run-confirmation');
-test('confirmation requires positive overall interval without win regressions',()=>{
+const {verdict,chunks,literalCandidate,run}=require('../policy-lab/run-confirmation');
+test('confirmation requires positive overall interval without net win regressions',()=>{
   const s=(netWins,meanMovesSaved,ci)=>({netWins,meanMovesSaved,moveCi95:ci});
   assert.equal(verdict(s(0,0.3,[0.01,0.59])),'SUPPORTED');
   assert.equal(verdict(s(-1,3,[2,4])),'FALSIFIED');
@@ -19,4 +19,11 @@ test('confirmation journals ten-seed jobs without substituting the 150-seed deno
 });
 test('unregistered confirmation is refused before any game or run marker',async()=>{
   await assert.rejects(run(['node','run-confirmation.js']),/needs a registered protocol/);
+});
+test('candidate format guard rejects nonliteral modules without executing their code',()=>{
+  const policy={kind:'lab',params:{width:32}};
+  assert.deepEqual(literalCandidate("'use strict';\nmodule.exports = "+JSON.stringify(policy)+";\n"),policy);
+  assert.throws(()=>literalCandidate("module.exports = Object.freeze({kind: 'lab', params: {width: 32}});\n"),/literal module\.exports/);
+  assert.throws(()=>literalCandidate("module.exports = (() => { throw new Error('executed'); })();\n"),/literal module\.exports/);
+  assert.throws(()=>literalCandidate("exports.policy = {};\n"),/literal module\.exports/);
 });

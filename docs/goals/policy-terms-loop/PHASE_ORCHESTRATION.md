@@ -10,7 +10,8 @@ sequence or confirmation allowance is introduced.
 their original aggregate bars pass, and the independent control arithmetic
 and completed-job journal qualify. It also refuses existing output markers.
 Before the first proposal it records the reachable phase commit and hashes of
-its orchestration, planning reader, search-space code and immutable inputs.
+its orchestration, planning reader, search-space code, executable control audit
+and immutable inputs. The audit's committed hash is verified before execution.
 Each panel rechecks those identities and the frozen recovery registration.
 
 For each of the original fifteen generation proposals, a separate planning
@@ -37,7 +38,9 @@ by fresh recheck mean moves saved, breaking ties by fewer changes.
 `run-confirmation.js` is prepared but cannot run without the assigned committed
 protocol, the exact frozen candidate, complete qualified proposals and their
 independent audit. Freeze all mandatory measurement inputs, thresholds and F
-before use. It refuses a previous confirmation directory or raw artifact and
+before use. The candidate is literal `module.exports = <JSON>` code, parsed
+without execution and validated against the audit's format before any output
+marker or dispatch. It refuses a previous confirmation directory or raw artifact and
 checks funding for both arms before dispatch. Ten-seed journal jobs preserve
 the original 58 × 150 denominator. Full raw pairs are written through
 persist-before-verdict before computing the verdict. SUPPORTED requires the

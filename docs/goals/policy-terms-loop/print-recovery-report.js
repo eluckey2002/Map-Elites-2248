@@ -33,6 +33,11 @@ if (exists(controls)) {
   const raw = JSON.parse(read(controls));
   for (const key of ['result', 'registration', 'status', 'parity', 'inert', 'excludedOriginalPanels', 'counts', 'headlines', 'error'])
     if (Object.hasOwn(raw, key)) console.log(key.toUpperCase(), JSON.stringify(raw[key]));
+  for (const row of raw.headlines.controls) {
+    const loss = summary => ({meanMovesLost: -summary.meanMovesSaved,
+      lostCi95: [-summary.moveCi95[1], -summary.moveCi95[0]], detected: summary.moveCi95[1] < 0});
+    console.log('MEASURED_HANDICAP_LOSS', JSON.stringify({block: row.block, every10: loss(row.mild), every5: loss(row.strong)}));
+  }
 } else console.log('UNVERIFIED_NOT_RUN');
 show('5. JOURNALED CONTROLLER RAW OUTPUT', 'solver/policy-lab/runs/recovery-controls.log');
 show('6-9. PROPOSAL, JOINT-SEARCH AND CANDIDATE-FREEZE OUTPUT', 'solver/policy-lab/runs/recovery/proposals-output.txt');

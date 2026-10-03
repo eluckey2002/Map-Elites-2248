@@ -63,7 +63,7 @@ function main() {
   if(raw.result!==config.result||raw.registration.recoveryPlanCommit!==first||git(['show',`${first}:${plan}`])!==text)throw new Error('registration differs');
   for(const commit of[first,raw.registration.phaseCommit])git(['merge-base','--is-ancestor',commit,'HEAD']);
   for(const [f,h]of Object.entries({...config.harnessFreeze,...config.carryForward.sourceHashes,...raw.sourceHashes}))if(hash(f)!==h)throw new Error(`source drift ${f}`);
-  for(const f of['solver/policy-lab/run-proposals.js','solver/policy-lab/proposal-planning.js','solver/policy-lab/proposal-space.js']){
+  for(const f of['solver/policy-lab/run-proposals.js','solver/policy-lab/proposal-planning.js','solver/policy-lab/proposal-space.js','solver/policy-lab/recovery-recompute.js']){
     const bytes=execFileSync('git',['show',`${raw.registration.phaseCommit}:${f}`],{cwd:ROOT});
     if(crypto.createHash('sha256').update(bytes).digest('hex')!==raw.sourceHashes[f])throw new Error('phase not committed before use');
   }
