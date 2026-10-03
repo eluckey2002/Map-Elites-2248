@@ -192,3 +192,45 @@ test('an upstream that is not origin/main and is behind only on a non-evidence f
     assert.match(r.out, /FRESH/);
   } finally { w.cleanup(); }
 });
+
+test('each of the three evidence files, touched alone on origin/main, makes the checkout stale', () => {
+  for (const file of ['EVIDENCE_LEDGER.md', 'LEDGER-INDEX.md', 'CURRENT.md']) {
+    const w = makeWorld();
+    try {
+      w.advance(file, 'v2\n');
+      const r = run(w.subject);
+      assert.equal(r.code, 1, `${file}: ${r.out}`);
+      assert.match(r.out, /lacks from origin\/main: 1 commit\(s\), 1 touching/, file);
+    } finally { w.cleanup(); }
+  }
+});
+
+// Break the subject's origin URL so `git fetch --all` fails while local refs remain.
+function breakFetch(w) {
+  git(w.subject, 'remote', 'set-url', 'origin', path.join(w.root, 'does-not-exist.git'));
+}
+
+test('a failed fetch with no known-stale evidence exits 2 and says UNVERIFIED, never FRESH', () => {
+  const w = makeWorld();
+  try {
+    breakFetch(w);
+    const r = run(w.subject);
+    assert.equal(r.code, 2, r.out);
+    assert.match(r.out, /WARNING: git fetch failed/);
+    assert.match(r.out, /UNVERIFIED/);
+    assert.doesNotMatch(r.out, /FRESH/);
+  } finally { w.cleanup(); }
+});
+
+test('a failed fetch on a checkout already stale from local refs still exits 1 and warns', () => {
+  const w = makeWorld();
+  try {
+    w.advance('EVIDENCE_LEDGER.md', 'v2\n');
+    git(w.subject, 'fetch', 'origin'); // local origin/main is now ahead with an evidence commit
+    breakFetch(w);
+    const r = run(w.subject);
+    assert.equal(r.code, 1, r.out);
+    assert.match(r.out, /WARNING: git fetch failed/);
+    assert.match(r.out, /STALE/);
+  } finally { w.cleanup(); }
+});
