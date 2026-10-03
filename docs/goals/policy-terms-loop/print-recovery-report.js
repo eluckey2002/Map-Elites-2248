@@ -53,6 +53,10 @@ show('12. INDEPENDENT PROPOSAL ARITHMETIC, COVERAGE AND DISJOINTNESS', 'docs/goa
 show('11-12. INDEPENDENT CONFIRMATION ARITHMETIC AND COVERAGE', 'docs/goals/policy-terms-loop/recovery-confirmation-recompute-output.txt');
 console.log('Independent re-implementation by the same author checks arithmetic and transcription only; independent scientific verification and acceptance remain separate.');
 show('RECOVERY CLOSURE RECEIPT', 'experiments/RESULT-0081/closure.json');
+show('OBSERVED EXECUTION INTERRUPTION', 'docs/goals/policy-terms-loop/recovery-transport-observation.json');
+show('INDEPENDENT PARTIAL-JOURNAL AUDIT', 'docs/goals/policy-terms-loop/recovery-interruption-output.txt');
+show('COMMITTED FAILED-RECEIPT AUDIT IDENTITIES', 'docs/goals/policy-terms-loop/recovery-interruption-audits.json');
+show('FINAL FULL TEST SUITE', 'docs/goals/policy-terms-loop/recovery-final-tests.txt');
 show('COMMITTED CLOSEOUT AUDIT IDENTITIES', 'docs/goals/policy-terms-loop/recovery-closeout-audits.json');
 show('CLOSE-OUT RAW OUTPUT', 'docs/goals/policy-terms-loop/recovery-closeout-output.txt');
 show('PUBLICATION AND ACTUAL REVIEW RECEIPT', 'docs/goals/policy-terms-loop/recovery-publication-output.txt');

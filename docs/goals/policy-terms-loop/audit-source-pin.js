@@ -8,7 +8,7 @@ function createPin(files,{root}) {
   const sourceCommit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
   const sourceHashes={};
   for(const file of [...new Set(files)].sort()){
-    const committed=execFileSync('git',['show',`${sourceCommit}:${file}`],{cwd:root});
+    const committed=execFileSync('git',['show',`${sourceCommit}:${file}`],{cwd:root,maxBuffer:64*1024*1024});
     const actual=fs.readFileSync(path.join(root,file));
     if(digest(committed)!==digest(actual))throw new Error(`audit must be committed before pinning: ${file}`);
     sourceHashes[file]=digest(actual);
@@ -21,7 +21,7 @@ function verifyPin(pin,requiredFiles,{root}) {
   for(const file of requiredFiles){
     const expected=pin.sourceHashes[file];
     if(!expected||digest(fs.readFileSync(path.join(root,file)))!==expected)throw new Error(`closeout audit identity differs: ${file}`);
-    const committed=execFileSync('git',['show',`${pin.sourceCommit}:${file}`],{cwd:root});
+    const committed=execFileSync('git',['show',`${pin.sourceCommit}:${file}`],{cwd:root,maxBuffer:64*1024*1024});
     if(digest(committed)!==expected)throw new Error(`closeout audit pin lacks committed bytes: ${file}`);
   }
   return true;

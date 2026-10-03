@@ -109,3 +109,7 @@ the whole space. Not one term at a time.
   RESULT-0080 evidence and starts the journaled controls. Conditional proposal
   and confirmation orchestration is prepared; effects and adoption remain
   unresolved and no new vocabulary result is claimed.
+- 2026-10-03 — RESULT-0081 stops UNVERIFIED after an environment replacement
+  during the final control block. Durable partial jobs and all charges are
+  retained; no idea was judged, neither stopped controller may be restarted,
+  and the proposed changes and adoption remain unresolved.

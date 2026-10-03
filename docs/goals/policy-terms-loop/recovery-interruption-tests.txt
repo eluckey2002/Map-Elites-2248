@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: partial durable results cannot become a completed control verdict or erase charged jobs
+ok 1 - partial durable results cannot become a completed control verdict or erase charged jobs
+  ---
+  duration_ms: 1.1927
+  type: 'test'
+  ...
+# Subtest: committed evidence identities support raw artifacts larger than the child-process default buffer
+ok 2 - committed evidence identities support raw artifacts larger than the child-process default buffer
+  ---
+  duration_ms: 76.380232
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 136.460783

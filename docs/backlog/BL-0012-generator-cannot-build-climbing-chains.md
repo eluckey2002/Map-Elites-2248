@@ -99,3 +99,7 @@ HUMAN-PILOT-0002 was walked.
   RESULT-0081 under the original collision rule. Historical RESULT-0080 stays
   unchanged. Controls are running; conditional generation orchestration is
   prepared, with no proposal result or adoption yet.
+- 2026-10-03 — RESULT-0081 stops UNVERIFIED after an environment replacement
+  during the final control block. Durable partial jobs and all charges are
+  retained; no idea was judged, neither stopped controller may be restarted,
+  and the proposed changes and adoption remain unresolved.

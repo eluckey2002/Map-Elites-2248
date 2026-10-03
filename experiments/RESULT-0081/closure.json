@@ -1,0 +1,109 @@
+{
+  "result": "RESULT-0081",
+  "run_id": "RESULT-0081-journaled-recovery-60052000-interrupted",
+  "closure_status": "UNVERIFIED",
+  "path": "NONE",
+  "stopping_rule": "If an item cannot be met, stop and report it.",
+  "reason": "Execution environment restarted during C12 champion. The previously launched controller and workers are absent. Eleven control blocks and completed job journals survived; the twelve-block aggregate remains incomplete. Exact termination mechanism is unverified.",
+  "effortBoundExhausted": false,
+  "proposalRounds": 0,
+  "noIdeaJudged": true,
+  "itemsMet": [
+    1,
+    2,
+    3,
+    4,
+    "5a",
+    "5b"
+  ],
+  "itemsPartiallyMet": [
+    "5c: eleven zero-effect panels",
+    "5d: eleven panels per handicap",
+    "12: every retained complete panel and partial journal job"
+  ],
+  "itemsUnverified": [
+    "5c twelve-block aggregate",
+    "5d twelve-block aggregate",
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "registration": {
+    "exploratory": true,
+    "recoveryPlanCommit": "d2025dbfb33d7f9f51647547ac13ec7d618fcbff",
+    "originalPlanCommit": "e76f3ec4af2496495697322851bafca0ab73b253"
+  },
+  "diagnosticInputs": {
+    "controls": {
+      "path": "solver/policy-lab/runs/recovery/controls-raw.json",
+      "sha256": "05b7a71b2a4324314cc84954d68473fee563250518f83366580a82ce0f89be8a"
+    }
+  },
+  "chargedAccounting": {
+    "controls": 27840,
+    "proposals": 580,
+    "jointSearch": 0,
+    "confirmation": 0,
+    "replays": 1380,
+    "buffer": 0
+  },
+  "completeControlBlocks": 11,
+  "interruptionSummary": {
+    "result": "RESULT-0081",
+    "closure_status": "UNVERIFIED",
+    "scientificComplete": false,
+    "completeControlBlocks": 11,
+    "completedJobs": 2136,
+    "dispatchedJobs": 2146,
+    "pendingJobs": 10,
+    "completedNewGames": 21360,
+    "retainedPartialGames": 480,
+    "unknownNewGames": 100,
+    "includedCompleteControlGames": 25520,
+    "zeroAccepted": 1,
+    "strongDetected": 11,
+    "mildDetected": 6,
+    "chargedAccounting": {
+      "controls": 27840,
+      "proposals": 580,
+      "jointSearch": 0,
+      "confirmation": 0,
+      "replays": 1380,
+      "buffer": 0
+    },
+    "totalCharged": 29800,
+    "rawSha256": "05b7a71b2a4324314cc84954d68473fee563250518f83366580a82ce0f89be8a",
+    "pendingJobIds": [
+      "21306662bee75287818a334e382611834cd28f36f748916e6cf703ff61a400e8",
+      "3e56f031e9a46161c500b1600e250b533abbb3673b90b9a125872429c6f57f21",
+      "4f7993924bea60f7270e2a6ab27e96edf0dbdecc7fde1ef67152560e0210dff7",
+      "515bc4e2adc321a94fa45ed7bef6ca493d519df3c618253bbca30de3c4bd5b64",
+      "5eab9636bdb3257c36e315b0c49f114768697b920b2ca2ea01e06dec96b45c34",
+      "8b3608ba909fe8072eeafb0dde22bcc1a1744e04d3e960a3c35748df0d02bcb4",
+      "8cfd5d8c3caa51f75abc7e7405ca734b8bbb91b4d153d94a742b7a77f2ac7fa2",
+      "a034d41c26cb4fc25553b59a42d9a2ce9993c0184434762845a6a08c66301ca3",
+      "b2e4d16d1b901420ea0c71f369134fdb5e9b6aac2b140f748dc16846e4fb555c",
+      "f917224ef66735781d4597d72232d1de41c2b3b84e80872abe67fa724a51b156"
+    ]
+  },
+  "coverageScope": "C1-C11 complete. C12 champion retains 48 of 58 ten-seed jobs; ten dispatched jobs have no retained outcome. C12 zero, every10 and every5 were not dispatched. Partial C12 does not back an aggregate verdict. Unrun S, R and F remain unused.",
+  "retainedControlAccounting": {
+    "includedCompletePanels": 25520,
+    "excludedOriginalPartialPanels": 1160,
+    "newPartialJournalGames": 480,
+    "totalRetained": 27160,
+    "charged": 27840,
+    "unretainedChargedGames": 680
+  },
+  "accountingLimit": "Unknown completed count within the original lost 580 games and the new 100 games without journal outcomes. All 680 remain charged. No budget reset, seed replay or recovery relaunch.",
+  "failedRunId": "FR-0007",
+  "preventionArtifact": "docs/goals/policy-terms-loop/interrupted-recovery.js",
+  "preventionTest": "solver/tests/policyLabInterruptedRecovery.test.js",
+  "preventionScope": "Read-only interruption reducer validates every dispatched/completed job identity, exact ten-seed addresses, outcomes and equality with retained complete panels; preserves partial results and charges; refuses any completed-path or effort-stop reinterpretation. Existing durable journaling preserved all 480 completed partial-panel games. This prevents lost results or a false complete receipt, not infrastructure termination itself.",
+  "noRelaunch": true,
+  "protocolRegistered": false,
+  "confirmationGames": 0
+}

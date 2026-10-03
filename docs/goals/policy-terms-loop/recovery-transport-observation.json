@@ -1,0 +1,20 @@
+{
+  "observedUTC": "2026-10-03T23:53:20.765191+00:00",
+  "execError": "exec-server transport disconnected; failed to resume exec-server session: exec-server protocol error: executor key changed during session recovery",
+  "bootId": "de641ea3-2cc4-422c-b1ba-9b1ba5907e14",
+  "uptimeSeconds": 342.23,
+  "processObservation": "    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   caas-prefix-tra\n    115       1 Ssl  dockerd\n    165     115 Ssl  containerd\n    439       0 Sl+  codex\n    679     439 Ss   bash\n    682     679 S    python\n    683     682 R    ps\n",
+  "priorController": {
+    "pid": 28953,
+    "registration": "d2025dbfb33d7f9f51647547ac13ec7d618fcbff",
+    "launchedUTC": "2026-10-03T20:14:51.280249+00:00",
+    "workers": 4,
+    "relaunchAllowed": false
+  },
+  "controllerPresent": false,
+  "checkpointStatus": "RUNNING",
+  "checkpointSha256": "05b7a71b2a4324314cc84954d68473fee563250518f83366580a82ce0f89be8a",
+  "completedJournalJobs": 2136,
+  "dispatchedJournalJobs": 2146,
+  "terminationMechanism": "UNVERIFIED: environment uptime and lost process are observed; no exit signal, host reset event or cause receipt survived."
+}

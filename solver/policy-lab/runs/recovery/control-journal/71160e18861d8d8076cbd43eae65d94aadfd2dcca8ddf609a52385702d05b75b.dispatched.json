@@ -1,0 +1,1 @@
+{"id":"71160e18861d8d8076cbd43eae65d94aadfd2dcca8ddf609a52385702d05b75b","runId":"RESULT-0081-journaled-recovery-60052000","job":{"levelData":{"level":6,"target":2650,"tileScale":1,"moves":24,"minChain":2,"gridW":5,"gridH":8,"blockers":[]},"seeds":[60050000,60050001,60050002,60050003,60050004,60050005,60050006,60050007,60050008,60050009],"policy":{"kind":"handicap","every":5}}}
