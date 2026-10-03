@@ -34,6 +34,13 @@ function reportProgress(detail,{send,warn=message=>console.error(message)}={}) {
   try{send(detail);return true;}
   catch(error){warn(`OPERATIONAL_PROGRESS_WARNING ${error.message}; journaled science continues.`);return false;}
 }
+function assertFrozenInputs(freeze,{root=ROOT}={}) {
+  for(const [file,expected] of Object.entries(freeze)){
+    const actual=crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex').slice(0,16);
+    if(actual!==expected)throw new Error(`confirmation frozen input drift: ${file}`);
+  }
+  return true;
+}
 async function run(argv=process.argv) {
   const registration=requireProtocol(argv,{name:'policy terms one-shot confirmation'});
   const {config,commit}=registeredConfiguration();
@@ -46,6 +53,7 @@ async function run(argv=process.argv) {
     'solver/policy-lab/run-confirmation.js','solver/policy-lab/proposal-recompute.js',
     'solver/experiment-guard.js','tools/verify-experiments.js','tools/persist-before-verdict.js'];
   for(const source of requiredSources)if(front.version_freeze[source]!==sha(source).slice(0,16))throw new Error(`confirmation protocol omits frozen measurement input ${source}`);
+  assertFrozenInputs(front.version_freeze);
   const proposalsFile='solver/policy-lab/runs/recovery/proposals-raw.json';
   const proposals=JSON.parse(fs.readFileSync(path.join(ROOT,proposalsFile)));
   if(proposals.status!=='EXPLORATION_COMPLETE'||proposals.path!=='CONFIRMATION_REGISTRATION_PENDING'||!proposals.selected)throw new Error('no qualified frozen candidate');
@@ -76,6 +84,7 @@ async function run(argv=process.argv) {
   const progress=detail=>reportProgress(detail,{send:message=>execFileSync('python',['.blackboard/board.py','progress','--actor',config.actor,'--id',config.task,'--detail',message],{cwd:ROOT,stdio:'inherit'})});
   async function measure(arm,policy) {
     requireProtocol(argv,{name:'policy terms one-shot confirmation'});registeredConfiguration();
+    assertFrozenInputs(front.version_freeze);
     if(raw.dispatches.some(d=>d.arm===arm))throw new Error('confirmation arm already dispatched');
     charge(raw.counts,'confirmation',8700,config);raw.dispatches.push({block:'F',arm,policy,games:8700,budget:'confirmation',seeds:raw.seeds});checkpoint();
     const started=performance.now();
@@ -127,4 +136,4 @@ async function run(argv=process.argv) {
   finally{if(pool)await pool.close();}
 }
 if(require.main===module)run().catch(e=>{console.error(e.stack);process.exitCode=1;});
-module.exports={verdict,chunks,literalCandidate,reportProgress,run};
+module.exports={verdict,chunks,literalCandidate,reportProgress,assertFrozenInputs,run};

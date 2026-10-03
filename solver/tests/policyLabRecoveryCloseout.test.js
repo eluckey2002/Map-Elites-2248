@@ -92,3 +92,18 @@ test('replacing committed evidence and regenerating its pin cannot replace the f
     assert.throws(()=>readAnchoredPin('pin.json',{root}),/first-added bytes/);
   }finally{fs.rmSync(root,{recursive:true,force:true});}
 });
+test('merge history cannot hide a competing evidence and receipt addition',()=>{
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'policy-merge-anchor-'));
+  const git=args=>execFileSync('git',args,{cwd:root,stdio:'pipe'});
+  try{
+    git(['init','-q']);git(['config','user.email','fixture@example.invalid']);git(['config','user.name','Fixture']);
+    fs.writeFileSync(path.join(root,'raw.json'),'{"mean":1}\n');git(['add','raw.json']);git(['commit','-qm','initial evidence']);
+    const base=git(['rev-parse','HEAD']).toString().trim(),branch=git(['branch','--show-current']).toString().trim();
+    fs.writeFileSync(path.join(root,'pin.json'),JSON.stringify(createPin(['raw.json'],{root}))+'\n');git(['add','pin.json']);git(['commit','-qm','original pin']);
+    git(['checkout','-qb','replacement',base]);fs.writeFileSync(path.join(root,'raw.json'),'{"mean":2}\n');git(['add','raw.json']);git(['commit','-qm','replacement evidence']);
+    fs.writeFileSync(path.join(root,'pin.json'),JSON.stringify(createPin(['raw.json'],{root}))+'\n');git(['add','pin.json']);git(['commit','-qm','competing pin']);
+    git(['checkout','-q',branch]);assert.throws(()=>git(['merge','--no-commit','--no-ff','replacement']));
+    git(['checkout','--theirs','raw.json','pin.json']);git(['add','raw.json','pin.json']);git(['commit','-qm','merge replacement']);
+    assert.throws(()=>readAnchoredPin('pin.json',{root}),/multiple receipt additions in full history/);
+  }finally{fs.rmSync(root,{recursive:true,force:true});}
+});

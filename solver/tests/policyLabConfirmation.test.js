@@ -1,7 +1,11 @@
 'use strict';
 const test=require('node:test');
 const assert=require('node:assert/strict');
-const {verdict,chunks,literalCandidate,reportProgress,run}=require('../policy-lab/run-confirmation');
+const {verdict,chunks,literalCandidate,reportProgress,assertFrozenInputs,run}=require('../policy-lab/run-confirmation');
+const fs=require('node:fs');
+const os=require('node:os');
+const path=require('node:path');
+const crypto=require('node:crypto');
 test('confirmation requires positive overall interval without net win regressions',()=>{
   const s=(netWins,meanMovesSaved,ci)=>({netWins,meanMovesSaved,moveCi95:ci});
   assert.equal(verdict(s(0,0.3,[0.01,0.59])),'SUPPORTED');
@@ -39,4 +43,15 @@ test('operational reporting failure cannot reject a durably completed scientific
   });
   assert.deepEqual(result,{retained:true});assert.match(warnings[0],/task no longer claimed/);
   let detail;assert.equal(reportProgress('done',{send:m=>{detail=m;}}),true);assert.equal(detail,'done');
+});
+test('confirmation preflight rejects drift in extra protocol-frozen selection data',()=>{
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'policy-confirm-freeze-'));
+  try{
+    fs.writeFileSync(path.join(root,'core.js'),'module.exports = {};\n');
+    fs.writeFileSync(path.join(root,'proposals-raw.json'),'{"selected":"P1"}\n');
+    const freeze=Object.fromEntries(['core.js','proposals-raw.json'].map(f=>[f,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex').slice(0,16)]));
+    assert.equal(assertFrozenInputs(freeze,{root}),true);
+    fs.writeFileSync(path.join(root,'proposals-raw.json'),'{"selected":"P2"}\n');
+    assert.throws(()=>assertFrozenInputs(freeze,{root}),/frozen input drift: proposals-raw.json/);
+  }finally{fs.rmSync(root,{recursive:true,force:true});}
 });

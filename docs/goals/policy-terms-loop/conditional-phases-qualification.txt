@@ -2,147 +2,159 @@ TAP version 13
 # Subtest: confirmation requires positive overall interval without net win regressions
 ok 1 - confirmation requires positive overall interval without net win regressions
   ---
-  duration_ms: 1.053067
+  duration_ms: 0.79702
   type: 'test'
   ...
 # Subtest: confirmation journals ten-seed jobs without substituting the 150-seed denominator
 ok 2 - confirmation journals ten-seed jobs without substituting the 150-seed denominator
   ---
-  duration_ms: 1.558671
+  duration_ms: 1.159236
   type: 'test'
   ...
 # Subtest: unregistered confirmation is refused before any game or run marker
 ok 3 - unregistered confirmation is refused before any game or run marker
   ---
-  duration_ms: 1.287005
+  duration_ms: 5.07807
   type: 'test'
   ...
 # Subtest: candidate format guard rejects nonliteral modules without executing their code
 ok 4 - candidate format guard rejects nonliteral modules without executing their code
   ---
-  duration_ms: 0.679239
+  duration_ms: 0.474416
   type: 'test'
   ...
 # Subtest: operational reporting failure cannot reject a durably completed scientific job
 ok 5 - operational reporting failure cannot reject a durably completed scientific job
   ---
-  duration_ms: 0.721958
+  duration_ms: 0.341829
+  type: 'test'
+  ...
+# Subtest: confirmation preflight rejects drift in extra protocol-frozen selection data
+ok 6 - confirmation preflight rejects drift in extra protocol-frozen selection data
+  ---
+  duration_ms: 1.078089
   type: 'test'
   ...
 # Subtest: registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
-ok 6 - registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
+ok 7 - registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
   ---
-  duration_ms: 1.772544
+  duration_ms: 2.56894
   type: 'test'
   ...
 # Subtest: joint search varies accepted coordinates together and caps complete candidates at thirty-one
-ok 7 - joint search varies accepted coordinates together and caps complete candidates at thirty-one
+ok 8 - joint search varies accepted coordinates together and caps complete candidates at thirty-one
   ---
-  duration_ms: 7.019237
+  duration_ms: 6.583071
   type: 'test'
   ...
 # Subtest: candidate freeze chooses fresh recheck speed and fewer changes on ties
-ok 8 - candidate freeze chooses fresh recheck speed and fewer changes on ties
+ok 9 - candidate freeze chooses fresh recheck speed and fewer changes on ties
   ---
-  duration_ms: 0.365091
+  duration_ms: 0.849426
   type: 'test'
   ...
 # Subtest: paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
-ok 9 - paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
+ok 10 - paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
   ---
-  duration_ms: 0.493662
+  duration_ms: 0.474592
   type: 'test'
   ...
 # Subtest: proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
-ok 10 - proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
+ok 11 - proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
   ---
-  duration_ms: 0.57622
+  duration_ms: 4.804326
   type: 'test'
   ...
 # Subtest: independent proposal arithmetic reproduces a hand-calculated four-cell grid
-ok 11 - independent proposal arithmetic reproduces a hand-calculated four-cell grid
+ok 12 - independent proposal arithmetic reproduces a hand-calculated four-cell grid
   ---
-  duration_ms: 0.716969
+  duration_ms: 0.890878
   type: 'test'
   ...
 # Subtest: independent verdict refuses gate-only success, fresh uncertainty and win regressions
-ok 12 - independent verdict refuses gate-only success, fresh uncertainty and win regressions
+ok 13 - independent verdict refuses gate-only success, fresh uncertainty and win regressions
   ---
-  duration_ms: 0.248884
+  duration_ms: 0.232831
   type: 'test'
   ...
 # Subtest: planning preserves three distinct eligible historical boards and refuses candidate overwrite
-ok 13 - planning preserves three distinct eligible historical boards and refuses candidate overwrite
+ok 14 - planning preserves three distinct eligible historical boards and refuses candidate overwrite
   ---
-  duration_ms: 3.716507
+  duration_ms: 8.067935
   type: 'test'
   ...
 # Subtest: phase admission pins the committed audit and rejects uncommitted drift before execution
-ok 14 - phase admission pins the committed audit and rejects uncommitted drift before execution
+ok 15 - phase admission pins the committed audit and rejects uncommitted drift before execution
   ---
-  duration_ms: 101.922068
+  duration_ms: 130.279511
   type: 'test'
   ...
 # Subtest: closeout refuses a running recovery or absent named closure
-ok 15 - closeout refuses a running recovery or absent named closure
+ok 16 - closeout refuses a running recovery or absent named closure
   ---
-  duration_ms: 5.688024
+  duration_ms: 1.138106
   type: 'test'
   ...
 # Subtest: no-confirmation audit pin rejects uncommitted changes, missing auditors and post-pin drift
-ok 16 - no-confirmation audit pin rejects uncommitted changes, missing auditors and post-pin drift
+ok 17 - no-confirmation audit pin rejects uncommitted changes, missing auditors and post-pin drift
   ---
-  duration_ms: 207.232944
+  duration_ms: 186.059312
   type: 'test'
   ...
 # Subtest: no-candidate and confirmed closeouts require their actual phase audits
-ok 17 - no-candidate and confirmed closeouts require their actual phase audits
+ok 18 - no-candidate and confirmed closeouts require their actual phase audits
   ---
-  duration_ms: 1.230418
+  duration_ms: 1.090869
   type: 'test'
   ...
 # Subtest: successful command exit with partial arithmetic cannot qualify closeout
-ok 18 - successful command exit with partial arithmetic cannot qualify closeout
+ok 19 - successful command exit with partial arithmetic cannot qualify closeout
   ---
-  duration_ms: 0.436712
+  duration_ms: 0.251106
   type: 'test'
   ...
 # Subtest: direct-source closure binds its result, registration, raw hashes and consumed charges
-ok 19 - direct-source closure binds its result, registration, raw hashes and consumed charges
+ok 20 - direct-source closure binds its result, registration, raw hashes and consumed charges
   ---
-  duration_ms: 0.8472
+  duration_ms: 0.537249
   type: 'test'
   ...
 # Subtest: rendered protocol retains the template pre-registration identity through amend
-ok 20 - rendered protocol retains the template pre-registration identity through amend
+ok 21 - rendered protocol retains the template pre-registration identity through amend
   ---
-  duration_ms: 0.336932
+  duration_ms: 0.329403
   type: 'test'
   ...
 # Subtest: confirmed closure binds the actual verdict and pins both raw evidence and closure bytes
-ok 21 - confirmed closure binds the actual verdict and pins both raw evidence and closure bytes
+ok 22 - confirmed closure binds the actual verdict and pins both raw evidence and closure bytes
   ---
-  duration_ms: 0.828725
+  duration_ms: 0.380938
   type: 'test'
   ...
 # Subtest: recurring final-tree suite revalidates every retained closeout and committed audit pin
-ok 22 - recurring final-tree suite revalidates every retained closeout and committed audit pin
+ok 23 - recurring final-tree suite revalidates every retained closeout and committed audit pin
   ---
-  duration_ms: 0.695685
+  duration_ms: 0.475969
   type: 'test'
   ...
 # Subtest: replacing committed evidence and regenerating its pin cannot replace the first-added receipt
-ok 23 - replacing committed evidence and regenerating its pin cannot replace the first-added receipt
+ok 24 - replacing committed evidence and regenerating its pin cannot replace the first-added receipt
   ---
-  duration_ms: 143.007177
+  duration_ms: 110.369653
   type: 'test'
   ...
-1..23
-# tests 23
+# Subtest: merge history cannot hide a competing evidence and receipt addition
+ok 25 - merge history cannot hide a competing evidence and receipt addition
+  ---
+  duration_ms: 123.435451
+  type: 'test'
+  ...
+1..25
+# tests 25
 # suites 0
-# pass 23
+# pass 25
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 576.291041
+# duration_ms 583.152202
