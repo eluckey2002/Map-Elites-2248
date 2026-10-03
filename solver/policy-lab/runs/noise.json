@@ -1,0 +1,660 @@
+{
+  "contrasts": "champion versus base; no challenger variability claim",
+  "sources": [
+    "experiments/RESULT-0049/corpus.json",
+    "experiments/RESULT-0058/raw-games.json"
+  ],
+  "perLevel": [
+    {
+      "level": 1,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.5833333333333334,
+      "pairedVariance": 0.3508918617614269,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 0.3588915662650595
+    },
+    {
+      "level": 2,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8933333333333333,
+      "pairedVariance": 0.510323299888517,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 3,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.7666666666666667,
+      "pairedVariance": 0.8684503901895193,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 4,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.1166666666666667,
+      "pairedVariance": 1.3408584169453772,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 5,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.5833333333333333,
+      "pairedVariance": 1.6351727982162747,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 1.7195823293172745
+    },
+    {
+      "level": 6,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.81,
+      "pairedVariance": 1.9470568561872896,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 7,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 2.35,
+      "pairedVariance": 2.709866220735784,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 8,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 2.5833333333333335,
+      "pairedVariance": 3.447881828316614,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 9,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 2.93,
+      "pairedVariance": 4.37301003344482,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 10,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 299,
+      "mean": 2.9698996655518393,
+      "pairedVariance": 5.4319768355368065,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 5.240738955823293
+    },
+    {
+      "level": 11,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.4433333333333334,
+      "pairedVariance": 2.669018952062433,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 12,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.5133333333333334,
+      "pairedVariance": 2.551661092530663,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 13,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.5466666666666666,
+      "pairedVariance": 2.7369453734671074,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 14,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.5366666666666666,
+      "pairedVariance": 2.818049052396877,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 15,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.2733333333333334,
+      "pairedVariance": 2.0721962095875086,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 3.1829879518072306
+    },
+    {
+      "level": 16,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.2766666666666666,
+      "pairedVariance": 2.1339018952062463,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 17,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.4633333333333334,
+      "pairedVariance": 3.406677814938688,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 18,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.9633333333333334,
+      "pairedVariance": 1.2394537346711272,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 19,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8266666666666667,
+      "pairedVariance": 1.0668450390189508,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 20,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.2166666666666666,
+      "pairedVariance": 2.1234671125975444,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 3.1913895582329315
+    },
+    {
+      "level": 21,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.1633333333333333,
+      "pairedVariance": 1.7825975473801527,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 22,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.32,
+      "pairedVariance": 2.4390635451504936,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 23,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.3,
+      "pairedVariance": 2.2240802675585325,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 24,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.9266666666666666,
+      "pairedVariance": 1.2788851727982176,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 25,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.8266666666666667,
+      "pairedVariance": 4.016677814938679,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 26,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.6,
+      "pairedVariance": 2.7959866220735745,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 4.257044176706834
+    },
+    {
+      "level": 27,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.5833333333333333,
+      "pairedVariance": 2.7722965440356835,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 28,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.2566666666666666,
+      "pairedVariance": 2.8268784838350176,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 29,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.15,
+      "pairedVariance": 1.9473244147157176,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 30,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.2933333333333332,
+      "pairedVariance": 2.709654403567443,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 3.1713413654618554
+    },
+    {
+      "level": 31,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.22,
+      "pairedVariance": 2.118662207357861,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 32,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.9966666666666667,
+      "pairedVariance": 1.5016610925306626,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 33,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8,
+      "pairedVariance": 1.4448160535117023,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 34,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.9333333333333333,
+      "pairedVariance": 1.373467112597548,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 35,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8233333333333334,
+      "pairedVariance": 0.9887513935340041,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 1.0087710843373463
+    },
+    {
+      "level": 36,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.0366666666666666,
+      "pairedVariance": 1.6207246376811566,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 37,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.7666666666666667,
+      "pairedVariance": 0.9821627647714597,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 38,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8666666666666667,
+      "pairedVariance": 1.212931995540691,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 39,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 298,
+      "mean": 0.802013422818792,
+      "pairedVariance": 1.129019501502729,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 40,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 299,
+      "mean": 1.137123745819398,
+      "pairedVariance": 1.8435500886624319,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 248,
+      "crossCheckVariance": 1.5498073658090656
+    },
+    {
+      "level": 41,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8166666666666667,
+      "pairedVariance": 0.9595875139353373,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 42,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.11,
+      "pairedVariance": 1.8039130434782567,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 43,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 297,
+      "mean": 0.898989898989899,
+      "pairedVariance": 1.1721949221949268,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 44,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.0066666666666666,
+      "pairedVariance": 1.7323968784838397,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 45,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.7866666666666666,
+      "pairedVariance": 1.0981493868450434,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 0.9511485943775103
+    },
+    {
+      "level": 46,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.9333333333333333,
+      "pairedVariance": 1.4671125975473829,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 47,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 298,
+      "mean": 0.8087248322147651,
+      "pairedVariance": 0.9363545974284196,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 48,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 296,
+      "mean": 0.7905405405405406,
+      "pairedVariance": 1.2169949610627626,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 49,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 296,
+      "mean": 0.6756756756756757,
+      "pairedVariance": 0.8436097114063221,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 50,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 281,
+      "mean": 0.6868327402135231,
+      "pairedVariance": 1.0158617183528214,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 239,
+      "crossCheckVariance": 0.9390668401251746
+    },
+    {
+      "level": 51,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 1.1266666666666667,
+      "pairedVariance": 2.258149386845041,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 52,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8866666666666667,
+      "pairedVariance": 1.304838350055739,
+      "crossCheckSource": "experiments/RESULT-0058/raw-games.json",
+      "crossCheckMutualWins": 250,
+      "crossCheckVariance": 1.662586345381525
+    },
+    {
+      "level": 53,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 298,
+      "mean": 0.8355704697986577,
+      "pairedVariance": 1.006541929360718,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 54,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 267,
+      "mean": 0.599250936329588,
+      "pairedVariance": 0.6621046999521283,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 55,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.7733333333333333,
+      "pairedVariance": 1.0253734671125962,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 56,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8066666666666666,
+      "pairedVariance": 1.0260423634336688,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 57,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8133333333333334,
+      "pairedVariance": 1.142296544035675,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    },
+    {
+      "level": 58,
+      "source": "experiments/RESULT-0049/corpus.json",
+      "mutualWins": 300,
+      "mean": 0.8533333333333334,
+      "pairedVariance": 1.142296544035676,
+      "crossCheckSource": "not covered",
+      "crossCheckMutualWins": 0,
+      "crossCheckVariance": null
+    }
+  ],
+  "designs": [
+    {
+      "levels": 58,
+      "seeds": 10,
+      "permittedForExploration": true,
+      "empiricalHistoricalSubset": "first N frozen RESULT-0049 seeds",
+      "mean": 1.07439446366782,
+      "se": 0.08197671074852235,
+      "seLevel": 0.06976344305089431,
+      "seSeed": 0.08197671074852235,
+      "ci95": [
+        0.9137201106007162,
+        1.2350688167349237
+      ],
+      "n": 578,
+      "halfWidth95": 0.16067435306710381,
+      "smallestDetectableGain80": 0.22953479009586256
+    },
+    {
+      "levels": 58,
+      "seeds": 30,
+      "permittedForExploration": false,
+      "empiricalHistoricalSubset": "first N frozen RESULT-0049 seeds",
+      "mean": 1.0933717579250721,
+      "se": 0.05907018776562238,
+      "seLevel": 0.05907018776562238,
+      "seSeed": 0.04586447405592469,
+      "ci95": [
+        0.9775941899044522,
+        1.209149325945692
+      ],
+      "n": 1735,
+      "halfWidth95": 0.11577756802061986,
+      "smallestDetectableGain80": 0.16539652574374267
+    },
+    {
+      "levels": 58,
+      "seeds": 150,
+      "permittedForExploration": false,
+      "empiricalHistoricalSubset": "first N frozen RESULT-0049 seeds",
+      "mean": 1.1871682437110547,
+      "se": 0.06835451792499067,
+      "seLevel": 0.06835451792499067,
+      "seSeed": 0.02039257980747491,
+      "ci95": [
+        1.0531933885780729,
+        1.3211430988440365
+      ],
+      "n": 8666,
+      "halfWidth95": 0.1339748551329817,
+      "smallestDetectableGain80": 0.19139265018997387
+    },
+    {
+      "levels": 58,
+      "seeds": 300,
+      "permittedForExploration": false,
+      "empiricalHistoricalSubset": "first N frozen RESULT-0049 seeds",
+      "mean": 1.1857002712216516,
+      "se": 0.06848636817685169,
+      "seLevel": 0.06848636817685169,
+      "seSeed": 0.01529486764804804,
+      "ci95": [
+        1.0514669895950222,
+        1.319933552848281
+      ],
+      "n": 17329,
+      "halfWidth95": 0.1342332816266293,
+      "smallestDetectableGain80": 0.19176183089518473
+    }
+  ],
+  "caveat": "Adding seeds does not shrink the level-axis error. Estimates from different empirical subsets can fluctuate. Detectable gains are conditional on historical champion-versus-base variance, not a challenger calibration."
+}
