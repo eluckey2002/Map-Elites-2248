@@ -60,3 +60,7 @@ Print the complete saved raw command output without launching games:
 ```sh
 node docs/goals/policy-terms-loop/print-report.js
 ```
+
+The second review adds exact parity-cell validation in both audit implementations.
+The Windows directory-sync branch is covered by simulation; native Windows
+execution is UNVERIFIED. File fsync and atomic rename remain active there.

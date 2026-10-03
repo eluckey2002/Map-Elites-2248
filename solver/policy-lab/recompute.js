@@ -93,6 +93,16 @@ function gameAccounting(raw) {
   return counts;
 }
 
+function assertParityCells(panel, gateStart) {
+  const expected = new Set();
+  for (let n = 0; n < 200; n++) expected.add(`${1 + n % 58}/${gateStart + Math.trunc(n / 58)}`);
+  if (panel.block !== 'G' || panel.games.length !== 200) throw new Error('recompute: incomplete parity selection');
+  for (const game of panel.games) {
+    if (!expected.delete(`${game.level}/${game.seed}`)) throw new Error('recompute: repeated or undeclared parity cell');
+  }
+  if (expected.size) throw new Error('recompute: missing declared parity cells');
+}
+
 function main() {
   const prior = read('experiments/RESULT-0049/corpus.json');
   const cross = read('experiments/RESULT-0058/raw-games.json');
@@ -166,6 +176,7 @@ function main() {
     }
     for (const parity of raw.parity) {
       const p = raw.panels.find(p => p.arm === `parity-${parity.policy}${parity.policy === 'champion' ? '-replays' : ''}`);
+      assertParityCells(p, planConfig.blocks.G.start);
       compare(`parity ${parity.policy}`, p.games.filter(g => g.outcome.traceIdentity === g.parityOutcome.traceIdentity).length, parity.identical);
       compare(`parity ${parity.policy} total`, p.games.length, parity.total);
     }
@@ -212,4 +223,4 @@ function main() {
   if (mismatches.length) { console.log(JSON.stringify(mismatches, null, 2)); process.exitCode = 1; }
 }
 if (require.main === module) main();
-module.exports = { axis, pairedSummary, gameAccounting };
+module.exports = { axis, pairedSummary, gameAccounting, assertParityCells };

@@ -15,7 +15,14 @@ function assertions(config, raw) {
     add(`${name}: at most one shared champion reference`, refs.length <= 1, refs.length);
   }
   for (const p of raw.panels) {
-    if (p.arm.startsWith('parity-')) continue;
+    if (p.arm.startsWith('parity-')) {
+      const expected = Array.from({ length: 200 }, (_, i) => ({ level: i % 58 + 1, seed: config.blocks.G.start + Math.floor(i / 58) }))
+        .sort((a, b) => a.level - b.level || a.seed - b.seed).map(g => `${g.level}/${g.seed}`);
+      const actual = p.games.map(g => `${g.level}/${g.seed}`);
+      add(`${p.arm}: exact 200 declared parity cells`, p.block === 'G' && actual.length === expected.length && actual.every((k, i) => k === expected[i]), actual.length);
+      add(`${p.arm}: declared seeds only`, p.games.every(g => g.seed >= config.blocks.G.start && g.seed < config.blocks.G.start + config.blocks.G.count), 'G parity selection');
+      continue;
+    }
     const block = config.blocks[p.block];
     const seedCount = p.block === 'F' ? block.count : 10;
     const expected = expectedLevels.flatMap(level => Array.from({ length: seedCount }, (_, i) => `${level}/${block.start + i}`));
@@ -36,7 +43,7 @@ function main() {
   const config = JSON.parse(/```json\n([\s\S]*?)\n```/.exec(text)[1]);
   const raw = JSON.parse(fs.readFileSync(path.join(__dirname, 'runs/controls-raw.json'), 'utf8'));
   const checks = assertions(config, raw);
-  for (const c of checks) console.log(c.notRun ? 'not run' : c.pass ? 'PASS' : 'FAIL', c.name, c.detail === undefined ? '' : JSON.stringify(c.detail));
+  for (const c of checks) console.log([c.notRun ? 'not run' : c.pass ? 'PASS' : 'FAIL', c.name, ...(c.detail === undefined ? [] : [JSON.stringify(c.detail)])].join(' '));
   const protocol = path.join(root, `experiments/${config.result}/protocol.md`);
   console.log('confirmation protocol', fs.existsSync(protocol) ? 'registered; additional F assertions required for Path A' : 'not registered; Path A not reached');
   console.log('FILES_READ');

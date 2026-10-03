@@ -282,6 +282,36 @@
       "detail": "60000000-60000009"
     },
     {
+      "name": "parity-champion-replays: exact 200 declared parity cells",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "parity-champion-replays: declared seeds only",
+      "pass": true,
+      "detail": "G parity selection"
+    },
+    {
+      "name": "parity-base: exact 200 declared parity cells",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "parity-base: declared seeds only",
+      "pass": true,
+      "detail": "G parity selection"
+    },
+    {
+      "name": "parity-variant: exact 200 declared parity cells",
+      "pass": true,
+      "detail": 200
+    },
+    {
+      "name": "parity-variant: declared seeds only",
+      "pass": true,
+      "detail": "G parity selection"
+    },
+    {
       "name": "C1/champion: complete 58 x 10",
       "pass": true,
       "detail": 580

@@ -7,14 +7,21 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const { createPool } = require('./pool');
 
+function syncDirectory(directory, platform = process.platform, io = fs) {
+  // Node's normal open flags cannot open Windows directories. File fsync
+  // and atomic rename remain in force; directory fsync is POSIX-only.
+  if (platform === 'win32') return;
+  const fd = io.openSync(directory, 'r');
+  try { io.fsyncSync(fd); } finally { io.closeSync(fd); }
+}
+
 function atomicJson(file, value) {
   const temporary = `${file}.${crypto.randomUUID()}.tmp`;
   const fd = fs.openSync(temporary, 'wx');
   try { fs.writeFileSync(fd, JSON.stringify(value) + '\n'); fs.fsyncSync(fd); }
   finally { fs.closeSync(fd); }
   fs.renameSync(temporary, file);
-  const directory = fs.openSync(path.dirname(file), 'r');
-  try { fs.fsyncSync(directory); } finally { fs.closeSync(directory); }
+  syncDirectory(path.dirname(file));
 }
 
 function createJournaledPool(size, { directory, runId, poolFactory = createPool }) {
@@ -32,8 +39,7 @@ function createJournaledPool(size, { directory, runId, poolFactory = createPool 
       const fd = fs.openSync(claim, 'wx');
       try { fs.writeFileSync(fd, JSON.stringify({ id, runId, job }) + '\n'); fs.fsyncSync(fd); }
       finally { fs.closeSync(fd); }
-      const dir = fs.openSync(directory, 'r');
-      try { fs.fsyncSync(dir); } finally { fs.closeSync(dir); }
+      syncDirectory(directory);
       const result = await pool.run(job);
       // Retain each completed level job before its promise resolves to a panel's
       // Promise.all. A later job failure or controller loss cannot discard it.
@@ -44,4 +50,4 @@ function createJournaledPool(size, { directory, runId, poolFactory = createPool 
   };
 }
 
-module.exports = { createJournaledPool };
+module.exports = { createJournaledPool, syncDirectory };

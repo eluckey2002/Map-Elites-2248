@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { axis, pairedSummary, gameAccounting } = require('../policy-lab/recompute');
+const { axis, pairedSummary, gameAccounting, assertParityCells } = require('../policy-lab/recompute');
 
 test('independent arithmetic retains the level uncertainty when seed columns tie', () => {
   const result = axis([1, 1, 3, 3], 2, 2);
@@ -38,4 +38,12 @@ test('independent paired arithmetic refuses null winning move counts', () => {
   const damaged = { ...panel, games: structuredClone(games) };
   damaged.games[579].outcome.movesToTarget = null;
   assert.throws(() => pairedSummary(damaged, panel), /invalid winning move count/);
+});
+
+test('independent parity audit rejects 200 duplicate identities and cells outside the frozen recipe', () => {
+  const games = Array.from({ length: 200 }, (_, i) => ({ level: i % 58 + 1, seed: 60000000 + Math.floor(i / 58) }));
+  assert.doesNotThrow(() => assertParityCells({ block: 'G', games }, 60000000));
+  assert.throws(() => assertParityCells({ block: 'G', games: Array(200).fill(games[0]) }, 60000000), /repeated or undeclared/);
+  const outside = structuredClone(games); outside[199].seed = 60000009;
+  assert.throws(() => assertParityCells({ block: 'G', games: outside }, 60000000), /repeated or undeclared/);
 });

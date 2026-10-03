@@ -6,7 +6,16 @@ const { spawn } = require('node:child_process');
 const { once } = require('node:events');
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { createJournaledPool } = require('../policy-lab/journaled-pool');
+const { createJournaledPool, syncDirectory } = require('../policy-lab/journaled-pool');
+
+test('Windows directory-sync branch avoids the unavailable directory open while POSIX still syncs', () => {
+  const unavailable = { openSync: () => { throw Object.assign(new Error('directory open unavailable'), { code: 'EPERM' }); } };
+  assert.doesNotThrow(() => syncDirectory('synthetic-directory', 'win32', unavailable));
+  assert.throws(() => syncDirectory('synthetic-directory', 'linux', unavailable), /unavailable/);
+  const events = [];
+  syncDirectory('synthetic-directory', 'linux', { openSync: () => 7, fsyncSync: fd => events.push(['sync', fd]), closeSync: fd => events.push(['close', fd]) });
+  assert.deepEqual(events, [['sync', 7], ['close', 7]]);
+});
 
 test('journal retains a completed job when a later job fails and refuses replay', async t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'policy-journal-'));

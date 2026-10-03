@@ -1,0 +1,124 @@
+TAP version 13
+# Subtest: policy lab occupancy agrees with the project classifier, including recoverable values and stones
+ok 1 - policy lab occupancy agrees with the project classifier, including recoverable values and stones
+  ---
+  duration_ms: 0.909227
+  type: 'test'
+  ...
+# Subtest: policy lab acceptance rejects a win regression, a zero lower bound and a gate-only gain
+ok 2 - policy lab acceptance rejects a win regression, a zero lower bound and a gate-only gain
+  ---
+  duration_ms: 0.27647
+  type: 'test'
+  ...
+# Subtest: board build potential excludes tiles in the dealt range and blocked company
+ok 3 - board build potential excludes tiles in the dealt range and blocked company
+  ---
+  duration_ms: 0.450576
+  type: 'test'
+  ...
+# Subtest: policy lab rejects a fifth worker before launching any workers
+ok 4 - policy lab rejects a fifth worker before launching any workers
+  ---
+  duration_ms: 0.445933
+  type: 'test'
+  ...
+# Subtest: completion fence refuses dispatched but unretained games even with a claimed verdict
+ok 5 - completion fence refuses dispatched but unretained games even with a claimed verdict
+  ---
+  duration_ms: 6.866721
+  type: 'test'
+  ...
+# Subtest: completion fence cannot certify a two-block interruption or duplicated reference
+ok 6 - completion fence cannot certify a two-block interruption or duplicated reference
+  ---
+  duration_ms: 2.935614
+  type: 'test'
+  ...
+# Subtest: policy panel audit rejects incomplete late levels and repeated cells
+ok 7 - policy panel audit rejects incomplete late levels and repeated cells
+  ---
+  duration_ms: 7.517856
+  type: 'test'
+  ...
+# Subtest: policy panel audit rejects reused ranges, out-of-allocation seeds and recording reads
+ok 8 - policy panel audit rejects reused ranges, out-of-allocation seeds and recording reads
+  ---
+  duration_ms: 0.419019
+  type: 'test'
+  ...
+# Subtest: policy panel audit reports unused blocks as not run without fabricating failures
+ok 9 - policy panel audit reports unused blocks as not run without fabricating failures
+  ---
+  duration_ms: 0.169495
+  type: 'test'
+  ...
+# Subtest: parity audit rejects repeated, incomplete and undeclared cells even with 200 matching traces
+ok 10 - parity audit rejects repeated, incomplete and undeclared cells even with 200 matching traces
+  ---
+  duration_ms: 2.222383
+  type: 'test'
+  ...
+# Subtest: Windows directory-sync branch avoids the unavailable directory open while POSIX still syncs
+ok 11 - Windows directory-sync branch avoids the unavailable directory open while POSIX still syncs
+  ---
+  duration_ms: 1.393545
+  type: 'test'
+  ...
+# Subtest: journal retains a completed job when a later job fails and refuses replay
+ok 12 - journal retains a completed job when a later job fails and refuses replay
+  ---
+  duration_ms: 3.123799
+  type: 'test'
+  ...
+# Subtest: journal survives actual controller termination while another job is in flight
+ok 13 - journal survives actual controller termination while another job is in flight
+  ---
+  duration_ms: 69.237359
+  type: 'test'
+  ...
+# Subtest: independent arithmetic retains the level uncertainty when seed columns tie
+ok 14 - independent arithmetic retains the level uncertainty when seed columns tie
+  ---
+  duration_ms: 2.126388
+  type: 'test'
+  ...
+# Subtest: independent arithmetic cannot turn missing mutual wins into zero-effect observations
+ok 15 - independent arithmetic cannot turn missing mutual wins into zero-effect observations
+  ---
+  duration_ms: 0.800505
+  type: 'test'
+  ...
+# Subtest: independent accounting counts both parity games and refuses duplicate panels
+ok 16 - independent accounting counts both parity games and refuses duplicate panels
+  ---
+  duration_ms: 0.602023
+  type: 'test'
+  ...
+# Subtest: independent paired arithmetic refuses null winning move counts
+ok 17 - independent paired arithmetic refuses null winning move counts
+  ---
+  duration_ms: 4.644602
+  type: 'test'
+  ...
+# Subtest: independent parity audit rejects 200 duplicate identities and cells outside the frozen recipe
+ok 18 - independent parity audit rejects 200 duplicate identities and cells outside the frozen recipe
+  ---
+  duration_ms: 1.015467
+  type: 'test'
+  ...
+# Subtest: registration check rejects a sibling retained in the object store and accepts reachable registration
+ok 19 - registration check rejects a sibling retained in the object store and accepts reachable registration
+  ---
+  duration_ms: 90.657856
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 249.672776

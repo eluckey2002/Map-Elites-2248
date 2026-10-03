@@ -26,3 +26,15 @@ test('policy panel audit reports unused blocks as not run without fabricating fa
   assert.equal(result.filter(c => c.notRun).length, 2);
   assert.equal(result.filter(c => !c.notRun && !c.pass).length, 0);
 });
+
+test('parity audit rejects repeated, incomplete and undeclared cells even with 200 matching traces', () => {
+  const games = Array.from({ length: 200 }, (_, i) => ({ level: i % 58 + 1, seed: 60000000 + Math.floor(i / 58) })).sort((a, b) => a.level - b.level || a.seed - b.seed);
+  const raw = { panels: [{ block: 'G', arm: 'parity-base', games }], filesRead: [] };
+  assert.equal(failures(config, raw).length, 0);
+  raw.panels[0].games = Array(200).fill(games[0]);
+  assert.match(JSON.stringify(failures(config, raw)), /exact 200 declared parity cells/);
+  raw.panels[0].games = games.slice(0, 199);
+  assert.match(JSON.stringify(failures(config, raw)), /exact 200 declared parity cells/);
+  raw.panels[0].games = structuredClone(games); raw.panels[0].games[199].seed = 70000000;
+  assert.match(JSON.stringify(failures(config, raw)), /declared seeds only/);
+});
