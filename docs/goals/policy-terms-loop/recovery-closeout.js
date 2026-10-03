@@ -4,6 +4,7 @@ const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const {registeredConfiguration}=require('../../../solver/policy-lab/recovery-controls');
 const {requiredAudits,requireCompletedAudit}=require('./recovery-closure-state');
+const {verifyPin}=require('./audit-source-pin');
 const ROOT=path.resolve(__dirname,'../../..');
 const BASE='cd83127f176111a0b0fb40eb14402f301a1fab07';
 const git=args=>execFileSync('git',args,{cwd:ROOT,encoding:'utf8'});
@@ -13,6 +14,11 @@ const closure=optionalJson(`experiments/${config.result}/closure.json`);
 const audits=requiredAudits({closure,controls:optionalJson('solver/policy-lab/runs/recovery/controls-raw.json'),
   proposals:optionalJson('solver/policy-lab/runs/recovery/proposals-raw.json'),
   confirmation:optionalJson(`experiments/${config.result}/raw-pairs.json`),verdict:optionalJson(`experiments/${config.result}/verdict.json`)});
+const commands=['tools/verify-experiments.js','tools/verify-ledger-authorship.js','tools/ledger-index.js --check','tools/failed-run-ledger.js',...audits];
+const auditPin=optionalJson('docs/goals/policy-terms-loop/recovery-closeout-audits.json');
+if(auditPin?.result!==config.result||auditPin?.path!==closure.path||JSON.stringify(auditPin?.commands)!==JSON.stringify(commands))throw new Error('closeout audit pin does not bind this closure and command list');
+verifyPin(auditPin,[...commands.map(c=>c.split(' ')[0]),...['recovery-closeout.js','recovery-closure-state.js','audit-source-pin.js','pin-recovery-closeout.js'].map(f=>'docs/goals/policy-terms-loop/'+f)],{root:ROOT});
+console.log('PASS committed closeout audit identities',JSON.stringify(auditPin));
 const inventory='solver/tests/failedRunLedger.test.js';
 const before=git(['show',`${BASE}:${inventory}`]);
 const needle="'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042',";
@@ -38,7 +44,7 @@ const suite=fs.readFileSync(path.join(__dirname,'recovery-final-tests.txt'),'utf
 if(JSON.stringify(failures(baseline))!==JSON.stringify(failures(suite))||!/^# fail 3$/m.test(suite)||!/^# skipped 1$/m.test(suite))throw new Error('full suite does not match original named failures and skip');
 console.log('PASS exact original named test failures and skip');
 console.log(suite.split('\n').filter(l=>/^not ok |^# (tests|pass|fail|skipped) /.test(l)).join('\n'));
-for(const command of ['tools/verify-experiments.js','tools/verify-ledger-authorship.js','tools/ledger-index.js --check','tools/failed-run-ledger.js',...audits]){
+for(const command of commands){
   console.log('$ node',command);
   const output=execFileSync(process.execPath,command.split(' '),{cwd:ROOT,encoding:'utf8',maxBuffer:64*1024*1024});
   process.stdout.write(output);if(audits.includes(command))requireCompletedAudit(command,output,closure);
