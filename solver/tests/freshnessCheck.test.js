@@ -140,3 +140,55 @@ test('the check leaves HEAD, branch, refs of the work tree and files unchanged',
     assert.equal(before.ledger, 'v1\n');
   } finally { w.cleanup(); }
 });
+
+// Push a commit touching `file` to origin/feature (branched from main), then point a
+// fresh subject branch at it as upstream while the subject itself lacks that commit.
+function trackFeatureBranch(w, file, text) {
+  git(w.pusher, 'checkout', '-b', 'feature');
+  fs.writeFileSync(path.join(w.pusher, file), text);
+  git(w.pusher, 'add', file);
+  git(w.pusher, 'commit', '-m', `feature touches ${file}`);
+  git(w.pusher, 'push', 'origin', 'feature');
+  git(w.subject, 'fetch', 'origin');
+  git(w.subject, 'checkout', '-b', 'topic');
+  git(w.subject, 'branch', '--set-upstream-to=origin/feature', 'topic');
+}
+
+test('an upstream that is not origin/main and has newer evidence fails even when origin/main is current', () => {
+  const w = makeWorld();
+  try {
+    trackFeatureBranch(w, 'EVIDENCE_LEDGER.md', 'v2\n');
+    const r = run(w.subject);
+    assert.equal(r.code, 1, r.out);
+    assert.match(r.out, /lacks from upstream origin\/feature: 1 commit\(s\), 1 touching/);
+    assert.match(r.out, /lacks from origin\/main: 0 commit\(s\), 0 touching/);
+    assert.match(r.out, /merge --ff-only origin\/feature/);
+  } finally { w.cleanup(); }
+});
+
+test('a local-only evidence commit ahead of upstream and origin/main is fresh', () => {
+  const w = makeWorld();
+  try {
+    git(w.subject, 'checkout', '-b', 'topic');
+    git(w.subject, 'push', '-u', 'origin', 'topic');
+    fs.writeFileSync(path.join(w.subject, 'EVIDENCE_LEDGER.md'), 'local\n');
+    git(w.subject, 'add', 'EVIDENCE_LEDGER.md');
+    git(w.subject, 'commit', '-m', 'local evidence');
+    const r = run(w.subject);
+    assert.equal(r.code, 0, r.out);
+    assert.match(r.out, /lacks from upstream origin\/topic: 0 commit\(s\), 0 touching/);
+    assert.match(r.out, /lacks from origin\/main: 0 commit\(s\), 0 touching/);
+    assert.match(r.out, /FRESH/);
+  } finally { w.cleanup(); }
+});
+
+test('an upstream that is not origin/main and is behind only on a non-evidence file passes', () => {
+  const w = makeWorld();
+  try {
+    trackFeatureBranch(w, 'README.md', 'v2\n');
+    const r = run(w.subject);
+    assert.equal(r.code, 0, r.out);
+    assert.match(r.out, /lacks from upstream origin\/feature: 1 commit\(s\), 0 touching/);
+    assert.match(r.out, /FRESH/);
+  } finally { w.cleanup(); }
+});
