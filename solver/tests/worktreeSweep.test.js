@@ -17,6 +17,18 @@ function git(cwd, ...args) {
   return r.stdout;
 }
 
+const SEP = '\n--\n';
+// Content snapshot of the main clone and every linked worktree: porcelain status (incl. every
+// untracked file) plus top-level entry names (excluding .git). Catches a sweep that writes into
+// the trees it inspects.
+function treesState(repo) {
+  const paths = git(repo, 'worktree', 'list', '--porcelain').split(/\r?\n/)
+    .filter((l) => l.startsWith('worktree ')).map((l) => l.slice('worktree '.length));
+  if (!paths.includes(repo)) paths.unshift(repo);
+  return paths.sort().map((p) => '## ' + p + '\n' + git(p, 'status', '--porcelain', '--untracked-files=all') +
+    '-- entries: ' + fs.readdirSync(p).filter((n) => n !== '.git').sort().join(',')).join('\n');
+}
+
 function fixture(t) {
   const root = norm(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'sweep-'))));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
@@ -36,7 +48,7 @@ function fixture(t) {
     return p;
   };
   const leasePath = (wt) => `${norm(git(wt, 'rev-parse', '--absolute-git-dir').trim())}/agent-lease`;
-  const snap = () => git(main, 'worktree', 'list', '--porcelain') + '\n--\n' + git(main, 'branch', '-a');
+  const snap = () => git(main, 'worktree', 'list', '--porcelain') + '\n--\n' + git(main, 'branch', '-a') + SEP + treesState(main);
   return { root, main, addWt, leasePath, snap };
 }
 
@@ -62,7 +74,7 @@ function run(t, setup, check) {
   const shaBefore = git(f.main, 'rev-parse', 'feat').trim();
   const out = sweep(f.main);
   check(lineFor(out, wt), out, wt);
-  assert.equal(f.snap(), before, 'worktree list / branch -a must be byte-identical');
+  assert.equal(f.snap(), before, 'worktree list / branch -a / per-tree status + entries must be byte-identical');
   assert.ok(fs.existsSync(wt), 'worktree dir still exists');
   // Explicit survival assertions (not only the snapshot): branch, sha, worktree dir + registration.
   assert.match(git(f.main, 'branch', '--list', 'feat'), /\bfeat\b/, 'branch feat still listed in main clone');
@@ -130,7 +142,7 @@ test('merged-and-clean branch with NO worktree: survives, never removed', (t) =>
   const out = sweep(f.main);
   assert.match(git(f.main, 'branch', '--list', 'orphan-merged'), /orphan-merged/, 'branch still exists');
   assert.equal(git(f.main, 'rev-parse', 'orphan-merged').trim(), shaBefore, 'sha unchanged');
-  assert.equal(f.snap(), before, 'worktree list / branch -a must be byte-identical');
+  assert.equal(f.snap(), before, 'worktree list / branch -a / per-tree status + entries must be byte-identical');
   // Output may ignore it entirely; if it mentions it, never as removed/deleted or as a candidate.
   for (const l of out.split('\n').filter((x) => x.includes('orphan-merged'))) {
     assert.doesNotMatch(l, /remov|delet|CANDIDATE/i, `branch must not be reported as removed: ${l}`);
@@ -143,10 +155,11 @@ test('real clone (.git is a directory) is skipped', (t) => {
   const clone = `${f.root}/realclone`;
   git(f.root, 'clone', `${f.root}/origin.git`, clone);
   // register the clone's path as if listed: sweep it as the main dir; it is its own main worktree
-  const before = git(clone, 'worktree', 'list', '--porcelain') + git(clone, 'branch', '-a');
+  const snapClone = () => git(clone, 'worktree', 'list', '--porcelain') + git(clone, 'branch', '-a') + SEP + treesState(clone);
+  const before = snapClone();
   const out = sweep(clone);
   assert.match(out, /\[SKIP\] .*realclone \| \.git is a directory/);
   assert.match(out, /removal candidates .*: 0/);
-  assert.equal(git(clone, 'worktree', 'list', '--porcelain') + git(clone, 'branch', '-a'), before);
+  assert.equal(snapClone(), before, 'clone list / branches / status / top-level entries unchanged');
   assert.ok(fs.existsSync(`${clone}/.git`));
 });
