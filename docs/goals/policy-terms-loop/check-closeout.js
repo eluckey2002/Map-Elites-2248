@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
+const { assertRegistration } = require('../../../solver/policy-lab/registration');
 const ROOT = path.resolve(__dirname, '../../..');
 const BASE = 'cd83127f176111a0b0fb40eb14402f301a1fab07';
 const git = args => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' });
@@ -30,7 +31,8 @@ console.log('PASS History-only backlog updates');
 const raw = JSON.parse(fs.readFileSync(path.join(ROOT, 'solver/policy-lab/runs/controls-raw.json'), 'utf8'));
 const planPath = 'docs/goals/policy-terms-loop/EXPLORATION_PLAN.md';
 const planText = fs.readFileSync(path.join(ROOT, planPath), 'utf8');
-if (git(['show', `${raw.registration.explorationPlanCommit}:${planPath}`]) !== planText) throw new Error('committed exploration plan changed');
+if (assertRegistration(ROOT, raw.registration.explorationPlanCommit, planPath) !== planText) throw new Error('committed exploration plan changed');
+console.log('PASS reachable first-addition exploration registration');
 const config = JSON.parse(/```json\n([\s\S]*?)\n```/.exec(planText)[1]);
 if (JSON.stringify(config) !== JSON.stringify(raw.config)) throw new Error('retained config differs from registered plan');
 for (const [file, hash] of Object.entries(config.harnessFreeze)) {

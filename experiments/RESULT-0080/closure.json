@@ -69,9 +69,9 @@
   "rawPath": "solver/policy-lab/runs/controls-raw.json",
   "rawSha256": "deb60ca48b2bbb82bec829ecd0a6555681272006635af52f3ff56546a92ef974",
   "failedRunId": "FR-0006",
-  "preventionArtifact": "solver/policy-lab/completion.js",
-  "preventionTest": "solver/tests/policyLabCompletion.test.js",
-  "preventionScope": "Prevents an incomplete artifact from being reported as a complete control closure; does not claim to prevent infrastructure disconnections.",
+  "preventionArtifact": "solver/policy-lab/journaled-pool.js",
+  "preventionTest": "solver/tests/policyLabJournal.test.js",
+  "preventionScope": "A new adapter fsyncs and atomically retains each completed job before returning it to a panel aggregate; a synthetic child-termination test retains the first result while a second dispatch is in flight. It is for a future preregistered harness and was not applied to or rerun on the stopped immutable harness. The separate completion fence still refuses a complete closure from missing outcomes.",
   "registration": {
     "exploratory": true,
     "explorationPlanCommit": "e76f3ec4af2496495697322851bafca0ab73b253"

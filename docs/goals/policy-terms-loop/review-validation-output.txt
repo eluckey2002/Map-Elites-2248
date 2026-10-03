@@ -1,0 +1,34 @@
+PASS reachable registration, unchanged registered plan and frozen source identities e76f3ec4af2496495697322851bafca0ab73b253
+$ node tools/verify-experiments.js
+EXPERIMENT GATE PASS
+exit_code 0
+$ node tools/verify-ledger-authorship.js
+LEDGER AUTHORSHIP GATE PASS (base cd83127f)
+exit_code 0
+$ node tools/ledger-index.js --check
+LEDGER INDEX CURRENT
+exit_code 0
+$ node tools/failed-run-ledger.js
+FAILED-RUN LEDGER PASS (5 retained failed closures and 1 legacy incident(s) covered)
+exit_code 0
+$ node solver/policy-lab/recompute.js
+HISTORICAL NOISE MATCH
+GENERATION COUNTS AND BRANCH MATCH
+RETAINED GAME ACCOUNTING {"controls":5800,"proposals":580,"jointSearch":0,"confirmation":0,"replays":1380,"buffer":0}
+CHARGED GAME ACCOUNTING {"controls":6380,"proposals":580,"jointSearch":0,"confirmation":0,"replays":1380,"buffer":0}
+UNRETAINED DISPATCH ALLOWANCE 580
+CONTROL ARITHMETIC MATCH completed blocks 2
+remaining control blocks UNVERIFIED_NOT_RUN
+INTERRUPTION RECEIPT MATCH
+This is independent arithmetic re-implementation by the same agent, not independent verification; checked_by remains unset.
+exit_code 0
+$ node --test --test-reporter=tap solver/tests/*.test.js (saved completed reviewed run)
+not ok 275 - LIVE: scanner reads the real retained failed closures
+not ok 483 - candidate-levels-52.json has a receipt that verifies against the current bot
+not ok 484 - candidate-levels-54.json has a receipt that verifies against the current bot
+not ok 608 - the builder is byte-stable and the committed generated views are current
+# tests 624
+# pass 619
+# fail 4
+# skipped 1
+Baseline-only close-out requirement remains UNMET; original strict refusal is preserved in closeout-output.txt.

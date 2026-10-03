@@ -38,4 +38,5 @@ if (raw?.headlines.path === 'C' && complete) {
 show('INDEPENDENT ARITHMETIC RE-IMPLEMENTATION', 'solver/policy-lab/runs/recompute-output.txt');
 show('12. COVERAGE AND DISJOINTNESS', 'solver/policy-lab/runs/coverage-output.txt');
 show('CLOSE-OUT', 'docs/goals/policy-terms-loop/closeout-output.txt');
+show('REVIEWED VALIDATION', 'docs/goals/policy-terms-loop/review-validation-output.txt');
 show('PUBLICATION', 'docs/goals/policy-terms-loop/publication-output.txt');

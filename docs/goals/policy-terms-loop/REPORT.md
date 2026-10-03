@@ -34,9 +34,13 @@ count is unknown. See the exact values in the [closure receipt](../../../experim
 
 FR-0006 records this failed run. [completion.js](../../../solver/policy-lab/completion.js)
 refuses an incomplete control closure and is exercised by negative tests.
-It prevents reporting missing outcomes as complete controls; it does not
-claim to prevent infrastructure disconnections. The report command invokes
-that fence before allowing a Path C label.
+The report command invokes that fence before allowing a Path C label.
+A separate [journaled-pool.js](../../../solver/policy-lab/journaled-pool.js)
+retains completed jobs through fsync and atomic rename before a panel
+aggregate can discard them. Its synthetic interruption test kills the
+controller while a second job is in flight and confirms the first result
+survives. This adapter is for a future preregistered harness; it was not
+applied to the stopped run, and its frozen files remain unchanged.
 
 The required fifth failed closure conflicts with the existing scanner
 test's hard-coded four-closure list. That test is preserved unchanged, as
