@@ -180,3 +180,4 @@ wiring, the merged-worktree sweep, and their tests in a fresh worktree off
 - 2026-09-27: Addressed Codex review on b774c96 (sidecar location; foreign-host leases).
 - 2026-09-27: Addressed Codex review on bb3bbd8: absent leases are report-only; lease-before-sweep ordering and a serialized sweep.
 - 2026-09-27: Removed the leftover "or absent" from the deletion test case; only an existing stale local-host lease with a dead pid qualifies (Codex review on 07007de).
+- 2026-10-03: Delivered tools/freshness/check.js (criterion 2, with tests in solver/tests/freshnessCheck.test.js) and tools/freshness/sweep.js (criteria 4 and 7, REPORT-ONLY, with tests in solver/tests/worktreeSweep.test.js). Not delivered: machine-level SessionStart wiring for Claude Code and Codex (criterion 1) and the lease writer; sweep removes nothing.

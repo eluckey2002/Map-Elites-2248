@@ -58,6 +58,8 @@ Read [LEDGER-INDEX.md](LEDGER-INDEX.md) before substantive reasoning about game 
 
 You may write a ledger record; you may not accept your own. Every new record names `written_by` (your agent or session). A record reaches `accepted` or `narrowed` only when `checked_by` names a different agent, a script run, or the owner who actually checked it. Until then it stays `provisional`. The gate is `tools/verify-ledger-authorship.js`.
 
+First run `node tools/freshness/check.js` from the repo root — it fetches, reports whether your checkout lacks newer ledger or CURRENT commits, and exits non-zero when stale; if stale, do not trust the ledger until you run the printed `git fetch` and merge command.
+
 After the ledger, read [CURRENT.md](CURRENT.md) for the active milestone and its linked backlog records. Treat chat as management intake, backlog files as durable intent, and only the ledger at its recorded standing plus cited primary artifacts as evidence. Conversation and backlog status never change proof standing.
 
 Every run under `.orch/runs/` started from 2026-09-27 ends with a line `ledger: <RECORD-ID>` or `ledger: not reportable — <reason>` as the final line of its `worklog.md` or `stop-record.md`; the experiment gate enforces it, so a finished result cannot go unrecorded.
