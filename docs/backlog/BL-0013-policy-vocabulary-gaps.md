@@ -105,3 +105,7 @@ the whole space. Not one term at a time.
   retained parity checks. An execution interruption left the controls
   incomplete and closure UNVERIFIED; vocabulary effects and adoption
   remain open, and no idea was judged.
+- 2026-10-03 — Owner-approved RESULT-0081 continuation preserves the historical
+  RESULT-0080 evidence and starts the journaled controls. Conditional proposal
+  and confirmation orchestration is prepared; effects and adoption remain
+  unresolved and no new vocabulary result is claimed.
