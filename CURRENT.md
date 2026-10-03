@@ -1,5 +1,9 @@
 # Current work
 
+## Opportunistic champion research — 2026-10-02
+
+[BL-0024](docs/backlog/BL-0024-champion-research-queue.md) captures seven owner-requested AI and search improvement goals. Start with CR-01 decision-error diagnosis; later items depend on that review. Work is bounded to one item and a one-hour session by default. The queue records intent, not evidence, and does not itself launch agents or authorize policy adoption.
+
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
