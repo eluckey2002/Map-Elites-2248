@@ -18,6 +18,7 @@ show('1. SEED DECLARATIONS', 'experiments/SEEDS.md');
 show('2. HISTORICAL NOISE TABLE', 'solver/policy-lab/runs/noise-output.txt');
 console.log('Adding seeds does not shrink the level-axis error. Historical detectable gain is conditional on champion/base variance.');
 show('3. HISTORICAL GENERATION DIAGNOSIS', 'solver/policy-lab/runs/generation-output.txt');
+show('3. ALL-SESSION DIAGNOSTIC SCOPE AND LIMITATION', 'docs/goals/policy-terms-loop/CORPUS_SCOPE.md');
 console.log('\n4. ORIGINAL AND RECOVERY REGISTRATION COMMITS');
 for (const file of ['EXPLORATION_PLAN.md', 'RECOVERY_PLAN.md']) {
   const registered = `docs/goals/policy-terms-loop/${file}`;
@@ -48,6 +49,8 @@ console.log('G CPU reference includes the carried inert qualification callbacks.
 show('10-11. CONDITIONAL ONE-SHOT CONFIRMATION OUTPUT', 'docs/goals/policy-terms-loop/recovery-confirmation-output.txt');
 show('INDEPENDENT HISTORICAL ARITHMETIC', 'solver/policy-lab/runs/recompute-output.txt');
 show('12. INDEPENDENT RECOVERY ARITHMETIC, COVERAGE AND DISJOINTNESS', 'docs/goals/policy-terms-loop/recovery-recompute-output.txt');
+show('12. INDEPENDENT PROPOSAL ARITHMETIC, COVERAGE AND DISJOINTNESS', 'docs/goals/policy-terms-loop/recovery-proposal-recompute-output.txt');
+show('11-12. INDEPENDENT CONFIRMATION ARITHMETIC AND COVERAGE', 'docs/goals/policy-terms-loop/recovery-confirmation-recompute-output.txt');
 console.log('Independent re-implementation by the same author checks arithmetic and transcription only; independent scientific verification and acceptance remain separate.');
 show('RECOVERY CLOSURE RECEIPT', 'experiments/RESULT-0081/closure.json');
 show('CLOSE-OUT RAW OUTPUT', 'docs/goals/policy-terms-loop/recovery-closeout-output.txt');
