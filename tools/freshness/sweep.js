@@ -58,8 +58,9 @@ function classifyLease(gitDir, now) {
   try { raw = fs.readFileSync(file, 'utf8'); } catch { return { cls: 'absent' }; }
   let lease;
   try { lease = JSON.parse(raw); } catch { return { cls: 'absent', note: 'unparseable lease treated as absent' }; }
-  const hb = typeof lease.heartbeat === 'number' ? lease.heartbeat : Date.parse(lease.heartbeat);
-  if (!lease || Number.isNaN(hb) || typeof lease.host !== 'string') {
+  const hb = lease && typeof lease === 'object' && !Array.isArray(lease)
+    ? (typeof lease.heartbeat === 'number' ? lease.heartbeat : Date.parse(lease.heartbeat)) : NaN;
+  if (Number.isNaN(hb) || typeof lease.host !== 'string') {
     return { cls: 'absent', note: 'malformed lease treated as absent' };
   }
   if (lease.host !== os.hostname()) return { cls: 'foreign-host' };
