@@ -2,117 +2,135 @@ TAP version 13
 # Subtest: confirmation requires positive overall interval without net win regressions
 ok 1 - confirmation requires positive overall interval without net win regressions
   ---
-  duration_ms: 10.437019
+  duration_ms: 1.095869
   type: 'test'
   ...
 # Subtest: confirmation journals ten-seed jobs without substituting the 150-seed denominator
 ok 2 - confirmation journals ten-seed jobs without substituting the 150-seed denominator
   ---
-  duration_ms: 1.754135
+  duration_ms: 1.430332
   type: 'test'
   ...
 # Subtest: unregistered confirmation is refused before any game or run marker
 ok 3 - unregistered confirmation is refused before any game or run marker
   ---
-  duration_ms: 8.432864
+  duration_ms: 2.656848
   type: 'test'
   ...
 # Subtest: candidate format guard rejects nonliteral modules without executing their code
 ok 4 - candidate format guard rejects nonliteral modules without executing their code
   ---
-  duration_ms: 0.654788
+  duration_ms: 0.655293
   type: 'test'
   ...
 # Subtest: operational reporting failure cannot reject a durably completed scientific job
 ok 5 - operational reporting failure cannot reject a durably completed scientific job
   ---
-  duration_ms: 0.425166
+  duration_ms: 0.404056
   type: 'test'
   ...
 # Subtest: registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
 ok 6 - registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
   ---
-  duration_ms: 4.439956
+  duration_ms: 7.143707
   type: 'test'
   ...
 # Subtest: joint search varies accepted coordinates together and caps complete candidates at thirty-one
 ok 7 - joint search varies accepted coordinates together and caps complete candidates at thirty-one
   ---
-  duration_ms: 9.9994
+  duration_ms: 8.920141
   type: 'test'
   ...
 # Subtest: candidate freeze chooses fresh recheck speed and fewer changes on ties
 ok 8 - candidate freeze chooses fresh recheck speed and fewer changes on ties
   ---
-  duration_ms: 11.369026
+  duration_ms: 0.998756
   type: 'test'
   ...
 # Subtest: paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
 ok 9 - paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
   ---
-  duration_ms: 0.609064
+  duration_ms: 2.25111
   type: 'test'
   ...
 # Subtest: proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
 ok 10 - proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
   ---
-  duration_ms: 0.668296
+  duration_ms: 0.735147
   type: 'test'
   ...
 # Subtest: independent proposal arithmetic reproduces a hand-calculated four-cell grid
 ok 11 - independent proposal arithmetic reproduces a hand-calculated four-cell grid
   ---
-  duration_ms: 0.762336
+  duration_ms: 0.806481
   type: 'test'
   ...
 # Subtest: independent verdict refuses gate-only success, fresh uncertainty and win regressions
 ok 12 - independent verdict refuses gate-only success, fresh uncertainty and win regressions
   ---
-  duration_ms: 0.23068
+  duration_ms: 0.257442
   type: 'test'
   ...
 # Subtest: planning preserves three distinct eligible historical boards and refuses candidate overwrite
 ok 13 - planning preserves three distinct eligible historical boards and refuses candidate overwrite
   ---
-  duration_ms: 8.300001
+  duration_ms: 11.930984
   type: 'test'
   ...
 # Subtest: phase admission pins the committed audit and rejects uncommitted drift before execution
 ok 14 - phase admission pins the committed audit and rejects uncommitted drift before execution
   ---
-  duration_ms: 149.288014
+  duration_ms: 84.540551
   type: 'test'
   ...
 # Subtest: closeout refuses a running recovery or absent named closure
 ok 15 - closeout refuses a running recovery or absent named closure
   ---
-  duration_ms: 2.018598
+  duration_ms: 5.210033
   type: 'test'
   ...
 # Subtest: no-confirmation audit pin rejects uncommitted changes, missing auditors and post-pin drift
 ok 16 - no-confirmation audit pin rejects uncommitted changes, missing auditors and post-pin drift
   ---
-  duration_ms: 197.582433
+  duration_ms: 98.817066
   type: 'test'
   ...
 # Subtest: no-candidate and confirmed closeouts require their actual phase audits
 ok 17 - no-candidate and confirmed closeouts require their actual phase audits
   ---
-  duration_ms: 1.215
+  duration_ms: 0.923449
   type: 'test'
   ...
 # Subtest: successful command exit with partial arithmetic cannot qualify closeout
 ok 18 - successful command exit with partial arithmetic cannot qualify closeout
   ---
-  duration_ms: 0.468204
+  duration_ms: 0.302697
   type: 'test'
   ...
-1..18
-# tests 18
+# Subtest: direct-source closure binds its result, registration, raw hashes and consumed charges
+ok 19 - direct-source closure binds its result, registration, raw hashes and consumed charges
+  ---
+  duration_ms: 0.647238
+  type: 'test'
+  ...
+# Subtest: rendered protocol retains the template pre-registration identity through amend
+ok 20 - rendered protocol retains the template pre-registration identity through amend
+  ---
+  duration_ms: 0.257506
+  type: 'test'
+  ...
+# Subtest: recurring final-tree suite revalidates every retained closeout and committed audit pin
+ok 21 - recurring final-tree suite revalidates every retained closeout and committed audit pin
+  ---
+  duration_ms: 0.531786
+  type: 'test'
+  ...
+1..21
+# tests 21
 # suites 0
-# pass 18
+# pass 21
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 494.124728
+# duration_ms 336.297082

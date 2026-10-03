@@ -4,11 +4,15 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
-const {execFileSync}=require('node:child_process');
 const ROOT=path.resolve(__dirname,'../../..');
 const read=f=>fs.readFileSync(path.join(ROOT,f),'utf8');
 const json=f=>JSON.parse(read(f));
 const sha=f=>crypto.createHash('sha256').update(read(f)).digest('hex');
+function startingState(template) {
+  const line=/^- git HEAD [0-9a-f]{7,40}, branch [^\n]+\.$/m.exec(template)?.[0];
+  if(!line)throw new Error('pre-registration starting identity absent from generated template');
+  return line;
+}
 function render() {
   const plan='docs/goals/policy-terms-loop/RECOVERY_PLAN.md';
   const config=JSON.parse(/```json\n([\s\S]*?)\n```/.exec(read(plan))[1]);
@@ -28,7 +32,7 @@ function render() {
     'solver/experiment-guard.js','tools/verify-experiments.js','tools/persist-before-verdict.js',
     'solver/policy-lab/runs/recovery/proposals-raw.json'])].sort();
   const freeze=files.map(f=>`  ${f}: ${sha(f).slice(0,16)}`).join('\n');
-  const head=execFileSync('git',['rev-parse','HEAD'],{cwd:ROOT,encoding:'utf8'}).trim();
+  const startingLine=startingState(read(protocol));
   const suite=read('docs/goals/policy-terms-loop/recovery-final-tests.txt');
   const totals=suite.split('\n').filter(l=>/^# (tests|pass|fail|skipped) /.test(l)).join('; ');
   const failures=suite.split('\n').filter(l=>/^not ok /.test(l)).join('\n');
@@ -115,8 +119,10 @@ R1-R11. No exploration seed is confirmation evidence. No other F is allowed.
 
 ## Starting state, recorded independently
 
-- git HEAD ${head}, branch codex/latest-main-20261002; the first protocol
-  commit is finalized before F and recorded by experiment-guard.
+${startingLine}
+  This is the pre-registration identity retained from tools/new-experiment.js,
+  not the temporary template commit that is amended before F. The finalized
+  first protocol commit is recorded by experiment-guard.
 - Full-suite totals before F: ${totals}.
 - Exact original deliberate failures:
 
@@ -209,4 +215,4 @@ scientific self-acceptance or shipped rule/target change is authorized.
 `;
 }
 if(require.main===module){try{process.stdout.write(render());}catch(error){console.error(error.stack);process.exitCode=1;}}
-module.exports={render};
+module.exports={render,startingState};

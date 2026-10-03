@@ -7,6 +7,9 @@ const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const {requiredAudits,requireCompletedAudit}=require('../../docs/goals/policy-terms-loop/recovery-closure-state');
 const {createPin,verifyPin}=require('../../docs/goals/policy-terms-loop/audit-source-pin');
+const {assertBindings}=require('../../docs/goals/policy-terms-loop/closure-inputs');
+const {verify}=require('../../docs/goals/policy-terms-loop/verify-retained-closeout');
+const {startingState}=require('../../docs/goals/policy-terms-loop/prepare-confirmation-protocol');
 const controls={status:'CONTROLS_COMPLETE',headlines:{controls:Array(12).fill({}),path:'CONTROLS_PASSED'}};
 test('closeout refuses a running recovery or absent named closure',()=>{
   assert.throws(()=>requiredAudits({controls}),/named closure/);
@@ -41,4 +44,21 @@ test('successful command exit with partial arithmetic cannot qualify closeout',(
   assert.throws(()=>requireCompletedAudit('solver/policy-lab/proposal-recompute.js','MATCH retained proposal arithmetic',{path:'B'}),/complete proposal/);
   assert.throws(()=>requireCompletedAudit('solver/policy-lab/proposal-recompute.js --confirmation','MATCH confirmation arithmetic',{path:'A'}),/complete confirmation/);
   assert.doesNotThrow(()=>requireCompletedAudit('solver/policy-lab/proposal-recompute.js','PASS completed proposal journal jobs 100\nMATCH retained proposal arithmetic',{path:'B'}));
+});
+test('direct-source closure binds its result, registration, raw hashes and consumed charges',()=>{
+  const inputs={result:'RESULT-0081',controls:{result:'RESULT-0081',registration:{recoveryPlanCommit:'recover',originalPlanCommit:'original'},counts:{controls:29580}},proposals:{result:'RESULT-0081',registration:{phaseCommit:'phase'},counts:{controls:29580,proposals:17400},proposalRounds:15},artifacts:{controls:{path:'control.json',sha256:'controlhash'},proposals:{path:'proposals.json',sha256:'proposalhash'}}};
+  const closure={result:'RESULT-0081',registration:{recoveryPlanCommit:'recover',originalPlanCommit:'original',phaseCommit:'phase',exploratory:true},diagnosticInputs:inputs.artifacts,chargedAccounting:inputs.proposals.counts,proposalRounds:15};
+  assert.equal(assertBindings(closure,inputs),true);
+  for(const mutate of [c=>c.result='RESULT-0080',c=>c.registration.recoveryPlanCommit='different',c=>c.diagnosticInputs.controls.sha256='stale',c=>c.chargedAccounting.proposals--,c=>c.proposalRounds--]){
+    const bad=structuredClone(closure);mutate(bad);assert.throws(()=>assertBindings(bad,inputs),/differs|differ/);
+  }
+});
+test('rendered protocol retains the template pre-registration identity through amend',()=>{
+  const line='- git HEAD abcdef12, branch codex/fixture.';
+  assert.equal(startingState('registered: date\n'+line+'\n'),line);
+  assert.throws(()=>startingState('- git HEAD <sha>, branch <name>.\n'),/starting identity absent/);
+});
+test('recurring final-tree suite revalidates every retained closeout and committed audit pin',()=>{
+  const result=verify(path.resolve(__dirname,'../..'));
+  assert.equal(typeof result.pending,'boolean');
 });
