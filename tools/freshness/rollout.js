@@ -41,7 +41,11 @@ function inspect(wt) {
   if (wt.bare) {
     return { label: 'UNVERIFIED', behind: '?', fixes: [], note: 'bare entry, no working tree to check' };
   }
-  const r = spawnSync('node', [CHECK, wt.path], { encoding: 'utf8' });
+  const timeoutMs = Number(process.env.ROLLOUT_CHECK_TIMEOUT_MS) > 0 ? Number(process.env.ROLLOUT_CHECK_TIMEOUT_MS) : 60000;
+  const r = spawnSync('node', [CHECK, wt.path], { encoding: 'utf8', timeout: timeoutMs, killSignal: 'SIGKILL' });
+  if ((r.error && r.error.code === 'ETIMEDOUT') || r.signal) {
+    return { label: 'UNVERIFIED', behind: '?', fixes: [], note: `check timed out after ${timeoutMs} ms` };
+  }
   if (r.error) {
     return { label: 'UNVERIFIED', behind: '?', fixes: [], note: `check.js did not run: ${r.error.message}` };
   }
@@ -51,7 +55,8 @@ function inspect(wt) {
     const m = /^\(b\) lacks from origin\/main: \d+ commit\(s\), (\d+) touching/.exec(l);
     if (m) { behind = m[1]; break; }
   }
-  const label = r.status === 0 ? 'FRESH' : r.status === 1 ? 'STALE' : 'UNVERIFIED';
+  const unchecked = r.status === 0 ? lines.find((l) => l.startsWith('UNCHECKED:')) : undefined;
+  const label = unchecked ? 'UNVERIFIED' : r.status === 0 ? 'FRESH' : r.status === 1 ? 'STALE' : 'UNVERIFIED';
   const fixes = [];
   const i = lines.findIndex((l) => l.startsWith('To bring it current'));
   if (i >= 0) {
@@ -61,7 +66,7 @@ function inspect(wt) {
   }
   let note = '';
   if (label === 'UNVERIFIED') {
-    const why = lines.find((l) => /^(WARNING|UNVERIFIED|UNCHECKED|freshness: .*not a git)/.test(l))
+    const why = unchecked || lines.find((l) => /^(WARNING|UNVERIFIED|UNCHECKED|freshness: .*not a git)/.test(l))
       || (r.stderr || '').split(/\r?\n/)[0] || `check.js exit ${r.status}`;
     note = why;
   }
