@@ -1,0 +1,10 @@
+{
+  "result": "RESULT-0082",
+  "status": "STARTED",
+  "relaunchAllowed": false,
+  "entrypoint": "solver/policy-lab/resume-pipeline.js",
+  "preregistration": "cd7741d87ae722206b0d70f388fd5602e76d6215",
+  "pid": 26038,
+  "launchedAtUtc": "2026-10-04T05:24:30.503539+00:00",
+  "log": "solver/policy-lab/runs/resume-controls.log"
+}

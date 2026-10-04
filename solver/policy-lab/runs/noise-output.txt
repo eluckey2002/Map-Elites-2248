@@ -1,0 +1,67 @@
+NOISE TABLE: no new games; champion versus base
+level primary_n paired_variance crosscheck_n crosscheck_variance source
+1 300 0.3508918617614269 250 0.3588915662650595 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+2 300 0.510323299888517 0 null experiments/RESULT-0049/corpus.json not covered
+3 300 0.8684503901895193 0 null experiments/RESULT-0049/corpus.json not covered
+4 300 1.3408584169453772 0 null experiments/RESULT-0049/corpus.json not covered
+5 300 1.6351727982162747 250 1.7195823293172745 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+6 300 1.9470568561872896 0 null experiments/RESULT-0049/corpus.json not covered
+7 300 2.709866220735784 0 null experiments/RESULT-0049/corpus.json not covered
+8 300 3.447881828316614 0 null experiments/RESULT-0049/corpus.json not covered
+9 300 4.37301003344482 0 null experiments/RESULT-0049/corpus.json not covered
+10 299 5.4319768355368065 250 5.240738955823293 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+11 300 2.669018952062433 0 null experiments/RESULT-0049/corpus.json not covered
+12 300 2.551661092530663 0 null experiments/RESULT-0049/corpus.json not covered
+13 300 2.7369453734671074 0 null experiments/RESULT-0049/corpus.json not covered
+14 300 2.818049052396877 0 null experiments/RESULT-0049/corpus.json not covered
+15 300 2.0721962095875086 250 3.1829879518072306 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+16 300 2.1339018952062463 0 null experiments/RESULT-0049/corpus.json not covered
+17 300 3.406677814938688 0 null experiments/RESULT-0049/corpus.json not covered
+18 300 1.2394537346711272 0 null experiments/RESULT-0049/corpus.json not covered
+19 300 1.0668450390189508 0 null experiments/RESULT-0049/corpus.json not covered
+20 300 2.1234671125975444 250 3.1913895582329315 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+21 300 1.7825975473801527 0 null experiments/RESULT-0049/corpus.json not covered
+22 300 2.4390635451504936 0 null experiments/RESULT-0049/corpus.json not covered
+23 300 2.2240802675585325 0 null experiments/RESULT-0049/corpus.json not covered
+24 300 1.2788851727982176 0 null experiments/RESULT-0049/corpus.json not covered
+25 300 4.016677814938679 0 null experiments/RESULT-0049/corpus.json not covered
+26 300 2.7959866220735745 250 4.257044176706834 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+27 300 2.7722965440356835 0 null experiments/RESULT-0049/corpus.json not covered
+28 300 2.8268784838350176 0 null experiments/RESULT-0049/corpus.json not covered
+29 300 1.9473244147157176 0 null experiments/RESULT-0049/corpus.json not covered
+30 300 2.709654403567443 250 3.1713413654618554 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+31 300 2.118662207357861 0 null experiments/RESULT-0049/corpus.json not covered
+32 300 1.5016610925306626 0 null experiments/RESULT-0049/corpus.json not covered
+33 300 1.4448160535117023 0 null experiments/RESULT-0049/corpus.json not covered
+34 300 1.373467112597548 0 null experiments/RESULT-0049/corpus.json not covered
+35 300 0.9887513935340041 250 1.0087710843373463 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+36 300 1.6207246376811566 0 null experiments/RESULT-0049/corpus.json not covered
+37 300 0.9821627647714597 0 null experiments/RESULT-0049/corpus.json not covered
+38 300 1.212931995540691 0 null experiments/RESULT-0049/corpus.json not covered
+39 298 1.129019501502729 0 null experiments/RESULT-0049/corpus.json not covered
+40 299 1.8435500886624319 248 1.5498073658090656 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+41 300 0.9595875139353373 0 null experiments/RESULT-0049/corpus.json not covered
+42 300 1.8039130434782567 0 null experiments/RESULT-0049/corpus.json not covered
+43 297 1.1721949221949268 0 null experiments/RESULT-0049/corpus.json not covered
+44 300 1.7323968784838397 0 null experiments/RESULT-0049/corpus.json not covered
+45 300 1.0981493868450434 250 0.9511485943775103 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+46 300 1.4671125975473829 0 null experiments/RESULT-0049/corpus.json not covered
+47 298 0.9363545974284196 0 null experiments/RESULT-0049/corpus.json not covered
+48 296 1.2169949610627626 0 null experiments/RESULT-0049/corpus.json not covered
+49 296 0.8436097114063221 0 null experiments/RESULT-0049/corpus.json not covered
+50 281 1.0158617183528214 239 0.9390668401251746 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+51 300 2.258149386845041 0 null experiments/RESULT-0049/corpus.json not covered
+52 300 1.304838350055739 250 1.662586345381525 experiments/RESULT-0049/corpus.json experiments/RESULT-0058/raw-games.json
+53 298 1.006541929360718 0 null experiments/RESULT-0049/corpus.json not covered
+54 267 0.6621046999521283 0 null experiments/RESULT-0049/corpus.json not covered
+55 300 1.0253734671125962 0 null experiments/RESULT-0049/corpus.json not covered
+56 300 1.0260423634336688 0 null experiments/RESULT-0049/corpus.json not covered
+57 300 1.142296544035675 0 null experiments/RESULT-0049/corpus.json not covered
+58 300 1.142296544035676 0 null experiments/RESULT-0049/corpus.json not covered
+design permitted se_level se_seed se 95_half_width smallest_detectable_gain_80pct
+58x10 true 0.06976344305089431 0.08197671074852235 0.08197671074852235 0.16067435306710381 0.22953479009586256
+58x30 false 0.05907018776562238 0.04586447405592469 0.05907018776562238 0.11577756802061986 0.16539652574374267
+58x150 false 0.06835451792499067 0.02039257980747491 0.06835451792499067 0.1339748551329817 0.19139265018997387
+58x300 false 0.06848636817685169 0.01529486764804804 0.06848636817685169 0.1342332816266293 0.19176183089518473
+alpha=0.05; power=0.80; smallest detectable gain = 2.8 x SE
+Adding seeds does not shrink the level-axis error. Estimates from different empirical subsets can fluctuate. Detectable gains are conditional on historical champion-versus-base variance, not a challenger calibration.

@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 90 (38 accepted, 24 narrowed, 3 open, 10 provisional, 4 stale, 11 superseded).
+Records: 93 (38 accepted, 24 narrowed, 3 open, 13 provisional, 4 stale, 11 superseded).
 
 ## Current records
 
@@ -68,6 +68,9 @@ Records: 90 (38 accepted, 24 narrowed, 3 open, 10 provisional, 4 stale, 11 super
 | RESULT-0052 | On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels | accepted | direct_source | The verify loop printed win rates of 100% on every sampled level except level 50 at 97%, and 0% board lockouts on every sampled level, with `RESULT: PASS`. | 1111 |
 | RESULT-0056 | Fresh-board owner-vs-oracle run for RESULT-0044: board-2 human attempt invalid, INCONCLUSIVE | accepted | direct_source, owner_decision | This closes `RESULT-0044`'s protocol option 1, a fresh run under that identity. | 1128 |
 | RESULT-0058 | Paired target-race ruler controls match the independent recompute; bounded search is FALSIFIED | provisional | direct_source, heuristic_observation | The paired win-first ruler passes its null, positive, known-bad and synthetic-admission controls at the declared scope. | 1145 |
+| RESULT-0080 | Policy terms diagnostic stopped before complete controls after an execution interruption | provisional | direct_source | Start checks found the worktree based on merged ruler origin/main cd83127f176111a0b0fb40eb14402f301a1fab07 and RESULT-0080 unused across 34 remote refs. | 1707 |
+| RESULT-0081 | Journaled policy diagnostic interrupted during the final control block | provisional | direct_source | The continuation preserved RESULT-0080 and all prior charges. | 1725 |
+| RESULT-0082 | Wider candidate search clears the paired move-gain and net-win bars | provisional | heuristic_observation, direct_source | Path A closes CLOSED with the predeclared primary outcome SUPPORTED. | 1745 |
 | CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1414 |
 | CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1428 |
 | CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1443 |
@@ -86,7 +89,7 @@ Records: 90 (38 accepted, 24 narrowed, 3 open, 10 provisional, 4 stale, 11 super
 | CORRECTION-0016 | Four results' reverify runs the whole test suite, which fails for reasons outside their claims | accepted | direct_source | Narrows those four records. | 1657 |
 | CORRECTION-0017 | FACT-0007's check count and RESULT-0011's effect size, measured on today's tree | accepted | direct_source, heuristic_observation | Narrows `FACT-0007` and `RESULT-0011`. | 1674 |
 | CORRECTION-0018 | RESULT-0058 gains complete win uncertainty and a stricter independent input audit | provisional | direct_source | The six findings in Codex review 5393741165 identified missing win-uncertainty output and weaknesses in mutation provenance, grid completeness, refusal counting, the synthetic qualification fixture and a zero-variance n… | 1691 |
-| CORRECTION-0019 | Learned-judge historical cross-check required real reference-arm coverage | provisional | direct_source | Narrows RESULT-0083's claim that its first arithmetic receipt reproduced the RESULT-0058 cross-check. | 1724 |
+| CORRECTION-0019 | Learned-judge historical cross-check required real reference-arm coverage | provisional | direct_source | Narrows RESULT-0083's claim that its first arithmetic receipt reproduced the RESULT-0058 cross-check. | 1780 |
 | HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1340 |
 | HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1354 |
 | QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1370 |

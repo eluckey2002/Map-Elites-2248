@@ -1,0 +1,178 @@
+{
+  "branches_scanned": 34,
+  "maximum_id_in_paths_or_ledger": 78,
+  "RESULT_0080_holders": [],
+  "assigned": "RESULT-0080",
+  "branches": [
+    {
+      "ref": "refs/remotes/origin/HEAD",
+      "maximum_id_in_paths_or_ledger": 58,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/archive/worktree-ticket-records-20260908",
+      "maximum_id_in_paths_or_ledger": 15,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/authoring-ideation-20260916",
+      "maximum_id_in_paths_or_ledger": 39,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/champion-research-queue-20261002",
+      "maximum_id_in_paths_or_ledger": 58,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/lc0013-target-gap-arithmetic",
+      "maximum_id_in_paths_or_ledger": 78,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/evidence/result-0018-6a07294",
+      "maximum_id_in_paths_or_ledger": 18,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/board-map-elites-20260917",
+      "maximum_id_in_paths_or_ledger": 47,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/evaluator-foundation",
+      "maximum_id_in_paths_or_ledger": 15,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/family-board-map-elites-20260919",
+      "maximum_id_in_paths_or_ledger": 47,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/player-playtest-feedback",
+      "maximum_id_in_paths_or_ledger": 17,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/ledger/status-index",
+      "maximum_id_in_paths_or_ledger": 43,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/main",
+      "maximum_id_in_paths_or_ledger": 58,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/port/family-board-map-elites",
+      "maximum_id_in_paths_or_ledger": 55,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-failed-run-ledger-2026-09-22-20260930",
+      "maximum_id_in_paths_or_ledger": 48,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930",
+      "maximum_id_in_paths_or_ledger": 64,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-lc0013-target-gap-arithmetic-20260930",
+      "maximum_id_in_paths_or_ledger": 77,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-nightly-reverify-36579791639-20260930",
+      "maximum_id_in_paths_or_ledger": 56,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930",
+      "maximum_id_in_paths_or_ledger": 77,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/main-root-dirty-20260930",
+      "maximum_id_in_paths_or_ledger": 56,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/map-elites-qa-dirty-20260930",
+      "maximum_id_in_paths_or_ledger": 51,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/review-unbuilt-map-candidates-dirty-20260930",
+      "maximum_id_in_paths_or_ledger": 49,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/backup-pre-collector-drop-20260930",
+      "maximum_id_in_paths_or_ledger": 43,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/claude-mac-project-sync-ee1d99-20260930",
+      "maximum_id_in_paths_or_ledger": 56,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-level-map-elites-authoring-20260930",
+      "maximum_id_in_paths_or_ledger": 48,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-u1-asset-contract-20260930",
+      "maximum_id_in_paths_or_ledger": 48,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-u1-eol-path-20260930",
+      "maximum_id_in_paths_or_ledger": 48,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/recheck-loop-dirty-20260930",
+      "maximum_id_in_paths_or_ledger": 48,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/recovery-local-work-20260926-20260930",
+      "maximum_id_in_paths_or_ledger": 43,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/stash-20260926-20260930",
+      "maximum_id_in_paths_or_ledger": 43,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/tmp-44-20260930",
+      "maximum_id_in_paths_or_ledger": 48,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/u1-combined-dirty-20260930",
+      "maximum_id_in_paths_or_ledger": 48,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/work/policy-measurement-records-2026-09-05",
+      "maximum_id_in_paths_or_ledger": 28,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/worktree-archify-diagrams",
+      "maximum_id_in_paths_or_ledger": 20,
+      "holds_RESULT_0080": false
+    },
+    {
+      "ref": "refs/remotes/origin/worktree-deterministic-2048-solver",
+      "maximum_id_in_paths_or_ledger": 8,
+      "holds_RESULT_0080": false
+    }
+  ]
+}

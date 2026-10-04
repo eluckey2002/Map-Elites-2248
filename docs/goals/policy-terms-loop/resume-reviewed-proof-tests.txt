@@ -1,0 +1,11 @@
+✔ full history rejects a restored side-branch edit that the retained simplified audit accepts (80.847618ms)
+✔ full custody also rejects merge-only edit/restore and allows an unchanged integration (126.243031ms)
+✔ unchanged trust bytes inherited by a CI-style merge from its second parent are allowed (66.310984ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 339.308276

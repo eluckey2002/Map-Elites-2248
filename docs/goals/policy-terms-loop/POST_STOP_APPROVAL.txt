@@ -1,0 +1,25 @@
+OWNER POST-STOP AUTHORIZATION — 2026-10-04
+
+The owner was asked:
+"Approve publishing the retained evidence to PR #62 and the exact inventory
+exception?"
+The linked PROPOSED_INVENTORY_EXCEPTION.txt specified adding only RESULT-0081
+to the existing inventory assertion, and a distinct post-stop audit preserving
+the original registrations, failed receipts, pins, raw journals and charges.
+
+After a status update reiterated both pending actions, the owner responded:
+"You have my approval to move this forward"
+
+Authorized: publish the preserved raw journals, logs and failed receipts to
+the existing public PR https://github.com/eluckey2002/Map-Elites-2248/pull/62;
+apply exactly the one-line RESULT-0081 inventory addition; record its
+post-stop audit separately; finish the already requested code-review fixes.
+
+This is a maintenance/publication exception after the scientific run stopped.
+The original registration and failure pin are not rewritten. The inventory
+fixture used by the historical independent reducer is taken from its original
+committed identity; the current test must match exactly the approved addition.
+All scientific source files and retained data remain unchanged.
+
+No new games, seed reuse, controller relaunch, merge, policy adoption, changed
+closure/verdict or scientific acceptance is authorized by this exception.

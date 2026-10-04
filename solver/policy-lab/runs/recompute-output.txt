@@ -1,0 +1,9 @@
+HISTORICAL NOISE MATCH
+GENERATION COUNTS AND BRANCH MATCH
+RETAINED GAME ACCOUNTING {"controls":5800,"proposals":580,"jointSearch":0,"confirmation":0,"replays":1380,"buffer":0}
+CHARGED GAME ACCOUNTING {"controls":6380,"proposals":580,"jointSearch":0,"confirmation":0,"replays":1380,"buffer":0}
+UNRETAINED DISPATCH ALLOWANCE 580
+CONTROL ARITHMETIC MATCH completed blocks 2
+remaining control blocks UNVERIFIED_NOT_RUN
+INTERRUPTION RECEIPT MATCH
+This is independent arithmetic re-implementation by the same agent, not independent verification; checked_by remains unset.

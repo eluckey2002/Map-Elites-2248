@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: resumed closeout cannot turn a running phase or unconfirmed candidate into a named finish
+ok 1 - resumed closeout cannot turn a running phase or unconfirmed candidate into a named finish
+  ---
+  duration_ms: 1.609174
+  type: 'test'
+  ...
+# Subtest: resumed closure binds all three registrations, charges and every measurement input identity
+ok 2 - resumed closure binds all three registrations, charges and every measurement input identity
+  ---
+  duration_ms: 4.949166
+  type: 'test'
+  ...
+# Subtest: closeout rejects successful exits with incomplete numeric audits and keeps the active run pending
+ok 3 - closeout rejects successful exits with incomplete numeric audits and keeps the active run pending
+  ---
+  duration_ms: 0.911163
+  type: 'test'
+  ...
+# Subtest: full-history guard rejects an independently added replacement hidden by a merge
+ok 4 - full-history guard rejects an independently added replacement hidden by a merge
+  ---
+  duration_ms: 161.385054
+  type: 'test'
+  ...
+# Subtest: additional trust audit rejects validator/baseline drift even after bytes are restored
+ok 5 - additional trust audit rejects validator/baseline drift even after bytes are restored
+  ---
+  duration_ms: 98.807927
+  type: 'test'
+  ...
+# Subtest: recurring completion runs pinned numeric audits and refuses unsuccessful or incomplete output
+ok 6 - recurring completion runs pinned numeric audits and refuses unsuccessful or incomplete output
+  ---
+  duration_ms: 0.513231
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 469.796182

@@ -1,0 +1,19 @@
+NOT APPLIED — OWNER EXCEPTION REQUIRED
+
+The original goal forbids existing-test edits. RECOVERY_APPROVAL.txt
+allowed only the earlier RESULT-0080 addition. Proposed exact change:
+
+--- solver/tests/failedRunLedger.test.js (current)
++++ solver/tests/failedRunLedger.test.js (proposed)
+@@
+-    'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042', 'RESULT-0080',
++    'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042', 'RESULT-0080', 'RESULT-0081',
+
+No other existing test change, omission or skip is proposed. If approved,
+record this post-stop authorization and audit the exact exception in a
+new receipt while preserving both original registrations, old failed
+receipts, pins, raw journals and charged budgets. The current failed-receipt
+pin includes the original inventory identity, so do not overwrite its pin
+or pretend the original frozen source changed. Keep the failed run
+UNVERIFIED. No new games, seed reuse, controller relaunch, merge, policy
+adoption or independent scientific acceptance is authorized by this diff.

@@ -1,0 +1,13 @@
+{
+  "observedUTC": "2026-10-04T00:00:32.441633+00:00",
+  "localHead": "254ca6bebb31a805fde55a91c1882ede1faa4e9c",
+  "remoteHead": "702e0d37358bd4fd8e0ce66940725b6cdd53348e",
+  "publication": "BLOCKED_BY_AUTO_REVIEW",
+  "rejectedAction": "git push origin codex/latest-main-20261002",
+  "reason": "This pushes extensive nonpublic raw journals, execution logs, and failure receipts to a public GitHub PR; no trusted user authorization covers that payload and destination.",
+  "pullRequest": "https://github.com/eluckey2002/Map-Elites-2248/pull/62",
+  "newLocalReceiptReviewed": false,
+  "goalComplete": false,
+  "merged": false,
+  "adopted": false
+}

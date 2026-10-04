@@ -1,0 +1,21 @@
+✔ policy lab occupancy agrees with the project classifier, including recoverable values and stones (1.188524ms)
+✔ policy lab acceptance rejects a win regression, a zero lower bound and a gate-only gain (0.354297ms)
+✔ board build potential excludes tiles in the dealt range and blocked company (0.471729ms)
+✔ policy lab rejects a fifth worker before launching any workers (0.548367ms)
+✔ completion fence refuses dispatched but unretained games even with a claimed verdict (4.334299ms)
+✔ completion fence cannot certify a two-block interruption or duplicated reference (1.689303ms)
+✔ policy panel audit rejects incomplete late levels and repeated cells (4.26512ms)
+✔ policy panel audit rejects reused ranges, out-of-allocation seeds and recording reads (0.533594ms)
+✔ policy panel audit reports unused blocks as not run without fabricating failures (0.170523ms)
+✔ independent arithmetic retains the level uncertainty when seed columns tie (1.22517ms)
+✔ independent arithmetic cannot turn missing mutual wins into zero-effect observations (0.704891ms)
+✔ independent accounting counts both parity games and refuses duplicate panels (0.561089ms)
+✔ independent paired arithmetic refuses null winning move counts (2.50376ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 135.444787

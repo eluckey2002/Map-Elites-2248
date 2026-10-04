@@ -1,0 +1,15 @@
+{
+  "kind": "committed-closeout-audit-identities",
+  "sourceCommit": "a2c7d045491ca4698cff8cc3998d2cc6cc4927b8",
+  "sourceHashes": {
+    "docs/goals/policy-terms-loop/audit-source-pin.js": "9b86b3b21d71ca033b35dac58efd315337320e32c59cef71325e6ab648f68f17",
+    "docs/goals/policy-terms-loop/resume-closeout-audits.json": "f60c915096452a85e8c9e447390e23fdf161e23b65976bc27143ba6d3938d86d",
+    "docs/goals/policy-terms-loop/resume-closeout.js": "d6a908a5ce40b67ff84c1eb2d34512a40ce5081dd0993c960e01b41c966386c4",
+    "docs/goals/policy-terms-loop/resume-terminal-buffer-failure.txt": "c2528cf309ff9bcc9623ccb399ee8a7d44ea741ef1eb868dbd008e47607ba34b",
+    "docs/goals/policy-terms-loop/resume-terminal-buffer-tests.txt": "bdb48c68f419b6b420370581b8410a20a83a059e6020e404c45c2c8fe344b3c6",
+    "docs/goals/policy-terms-loop/resume-terminal-buffer.js": "1327f7e93ce83f962a60f9e3df4c564e55458dfd979582f69e09c47d763b64e9",
+    "solver/tests/policyLabTerminalBuffer.test.js": "7a19e71b1c50118926d9064b62cad6a993ce2a169846c5cde71cc4c1f475d50e"
+  },
+  "result": "RESULT-0082",
+  "operation": "complete terminal Git output"
+}

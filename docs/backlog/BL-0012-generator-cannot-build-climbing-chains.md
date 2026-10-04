@@ -92,3 +92,20 @@ HUMAN-PILOT-0002 was walked.
 
 - 2026-09-05 — captured at the owner's request, replacing an earlier and
   incorrect "the human is 33% better" framing with the paired measurement.
+- 2026-10-03 — RESULT-0080 retains the owner-faster subset diagnostic and
+  selects the generation branch on that evidence. Execution stopped
+  UNVERIFIED before complete controls; no proposed change was judged.
+- 2026-10-03 — The owner approved the bounded journaled continuation assigned
+  RESULT-0081 under the original collision rule. Historical RESULT-0080 stays
+  unchanged. Controls are running; conditional generation orchestration is
+  prepared, with no proposal result or adoption yet.
+- 2026-10-03 — RESULT-0081 stops UNVERIFIED after an environment replacement
+  during the final control block. Durable partial jobs and all charges are
+  retained; no idea was judged, neither stopped controller may be restarted,
+  and the proposed changes and adoption remain unresolved.
+- 2026-10-04 — Owner-approved RESULT-0081 inventory exception and public
+  failure-evidence publication are recorded separately from the unchanged
+  scientific registrations and receipts. Both runs remain UNVERIFIED, and
+  policy effects and adoption remain open.
+
+- 2026-10-04 (UTC) — RESULT-0082 completes the sole registered confirmation on Path A, provisionally SUPPORTED under the sampled net-win and move-gain bars; see experiments/RESULT-0082/report.md and its ledger record. Independent arithmetic and complete-panel/journal/disjointness checks match. Earlier failed runs and charges remain unchanged. Individual win regressions, added CPU cost and the original validator-freeze omission are disclosed. No scientific acceptance, policy adoption or PR merge; this backlog remains open.

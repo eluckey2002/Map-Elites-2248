@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: continuation retains eleven controls and every unknown-game charge without replaying a cell
+ok 1 - continuation retains eleven controls and every unknown-game charge without replaying a cell
+  ---
+  duration_ms: 138.829825
+  type: 'test'
+  ...
+# Subtest: minimum budget increase funds exactly one whole replacement while preserving other funded phases
+ok 2 - minimum budget increase funds exactly one whole replacement while preserving other funded phases
+  ---
+  duration_ms: 0.413047
+  type: 'test'
+  ...
+# Subtest: completion refuses lost-game discounts, old C12 seeds, missing arms and weakened bars
+ok 3 - completion refuses lost-game discounts, old C12 seeds, missing arms and weakened bars
+  ---
+  duration_ms: 313.098813
+  type: 'test'
+  ...
+# Subtest: independent CLI refuses erased charges and inherited-panel mutations without playing new games
+ok 4 - independent CLI refuses erased charges and inherited-panel mutations without playing new games
+  ---
+  duration_ms: 936.678165
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1516.379783

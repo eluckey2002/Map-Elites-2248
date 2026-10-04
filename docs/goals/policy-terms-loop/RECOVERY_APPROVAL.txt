@@ -1,0 +1,19 @@
+OWNER RECOVERY AUTHORIZATION — 2026-10-03
+
+The owner explicitly approved proceeding in this chat after this request:
+
+"Approve the recovery registration and the one-line RESULT-0080
+inventory-test addition? Your original goal freezes the plan and forbids
+existing-test edits, so these require explicit exceptions."
+
+Owner response: "Ok, proceed"
+
+The approved proposal is RECOVERY_PROPOSAL.txt, accompanied by the read-only
+recovery-audit.json. Approval is limited to a distinct pre-game recovery
+registration/controller replacing only lost C3, retaining completed C1/C2
+and all old evidence, carrying all 8,340 charged games, and adding only
+RESULT-0080 to the existing failed-closure inventory test.
+
+All other original goal constraints remain in force. This is authorization
+to carry out the recovery, not independent scientific acceptance, checked_by
+authorization, policy adoption, approval of a verdict, or permission to merge.
