@@ -109,3 +109,6 @@ file and the repository before declaring a range fresh.
 | 60,052,000–60,052,009 | RESULT-0080 approved journaled recovery replacement C3; 58 x 10, four arms; old C3 remains burned | 2026-10-03 | docs/goals/policy-terms-loop/RECOVERY_PLAN.md; RECOVERY_APPROVAL.txt |
 
 | 60,052,000–60,052,009; original reserved C4–C12, G/S/R/F ranges above | RESULT-0081 continuation of RESULT-0080 under original assigned-ID collision fallback; only C3 is replaced; existing G/C1/C2 results are retained, not replayed; other ranges keep their original purposes and are never dispatched twice | 2026-10-03 | docs/goals/policy-terms-loop/RECOVERY_PLAN.md; recovery-result-id-check.json |
+
+| 60,053,000–60,053,009 | RESULT-0082 resumed goal replacement C12; all58levels x10seeds, four arms; old C12 remains burned | 2026-10-04 | docs/goals/policy-terms-loop/RESUME_PLAN.md; RESUME_GOAL.txt |
+| Original G/S/R1–R11/F and complete C1–C11 reservations above | RESULT-0082 carries unchanged original purposes and retained results from RESULT-0080/0081; no played cell replay, no reassignment | 2026-10-04 | docs/goals/policy-terms-loop/RESUME_PLAN.md |

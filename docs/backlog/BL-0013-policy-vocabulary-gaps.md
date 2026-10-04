@@ -118,3 +118,4 @@ the whole space. Not one term at a time.
   scientific registrations and receipts. Both runs remain UNVERIFIED, and
   policy effects and adoption remain open.
 - 2026-10-03 (America/Chicago) — Owner said "Well, just increase the budget" after the replacement-control shortfall was explained. BUDGET_APPROVAL.txt and BUDGET_AMENDMENT.json record the prospective increase; historical RESULT-0080/0081 registrations, evidence and charges remain intact. Fresh continuation registration is still required before new games.
+- 2026-10-04 (America/Chicago) — Owner requested resumption and a new goal statement. RESUME_GOAL.txt and prospective RESUME_PLAN.md define RESULT-0082, retained RESULT-0080/0081 evidence and charges, the fresh C12 reservation and unchanged scientific bars. No new result is claimed at registration.

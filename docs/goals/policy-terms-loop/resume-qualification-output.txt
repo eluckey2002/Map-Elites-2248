@@ -1,0 +1,11 @@
+✔ continuation retains eleven controls and every unknown-game charge without replaying a cell (147.091437ms)
+✔ minimum budget increase funds exactly one whole replacement while preserving other funded phases (0.450595ms)
+✔ completion refuses lost-game discounts, old C12 seeds, missing arms and weakened bars (321.69615ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 596.722843
