@@ -29,6 +29,8 @@ test('a Codex review counts only once submitted and not dismissed',()=>{
  assert.equal(isSubmittedCodexReview({...base,state:'PENDING'}),false,'PENDING is never submitted even with a timestamp');
  assert.equal(isSubmittedCodexReview({...base,submitted_at:null}),false);
  assert.equal(isSubmittedCodexReview({...base,state:'DISMISSED'}),false);
+ assert.equal(isSubmittedCodexReview({...base,state:'CHANGES_REQUESTED'}),false,'a change request is not completed review evidence');
+ assert.equal(isSubmittedCodexReview({...base,state:'SOMETHING_NEW'}),false,'unknown states fail closed');
  assert.equal(isSubmittedCodexReview({...base,user:{login:'chatgpt-codex-connector-evil'}}),false);
  assert.equal(isSubmittedCodexReview({...base,user:null}),false);
 });

@@ -3,9 +3,13 @@
 // 'chatgpt-codex-connector-evil' must not be mistaken for the reviewer app.
 const CODEX_LOGIN='chatgpt-codex-connector[bot]';
 const codex=u=>u===CODEX_LOGIN;
-// A review counts only once submitted: PENDING reviews are drafts (no
-// submitted_at) and DISMISSED ones were withdrawn.
-const submittedCodexReview=r=>codex(r?.user?.login)&&Boolean(r.submitted_at)&&!['PENDING','DISMISSED'].includes(r.state);
+// A review counts as completed evidence only when submitted and in a state that
+// does not ask for more work. An allowlist, not a denylist: PENDING is a draft,
+// DISMISSED was withdrawn, and CHANGES_REQUESTED is an open request even when it
+// has no inline thread. Codex reports findings as COMMENTED plus threads, or
+// APPROVED.
+const COMPLETED_REVIEW_STATES=['COMMENTED','APPROVED'];
+const submittedCodexReview=r=>codex(r?.user?.login)&&Boolean(r.submitted_at)&&COMPLETED_REVIEW_STATES.includes(r.state);
 function validHeadThumbs(head,reactions,comments){
  const stamps=comments.filter(c=>codex(c.user?.login)).filter(c=>{
   const match=c.body.match(/<!-- codex-security-review:v1 (\{[^\n]+\}) -->/);
