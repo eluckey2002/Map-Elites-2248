@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0083",
+  "run_id": "RESULT-0083-corrected-historical-prerequisite",
+  "closure_status": "CLOSED",
+  "primary_outcome": "GENERATION_BOTTLENECK",
+  "path": "E",
+  "fresh_games": 0,
+  "corrects_failed_closure": "experiments/RESULT-0083/closure.json",
+  "correction": "CORRECTION-0019",
+  "generation_artifact": "docs/goals/policy-learned-judge/ceiling.json",
+  "noise_artifact": "docs/goals/policy-learned-judge/noise.json",
+  "distinct_review": "Codex PR reviewer; pending; scientific ledger remains provisional"
+}

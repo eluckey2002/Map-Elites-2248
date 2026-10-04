@@ -6,9 +6,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 0.3508918617614268,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 0.3588915662650595,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -50,9 +50,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 1.6351727982162747,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 1.7195823293172745,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -105,9 +105,9 @@
       "cells": 300,
       "mutualWins": 299,
       "pairedVariance": 5.431976835536807,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 5.240738955823295,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -160,9 +160,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 2.072196209587508,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 3.182987951807231,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -215,9 +215,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 2.1234671125975444,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 3.1913895582329315,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -281,9 +281,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 2.795986622073574,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 4.257044176706833,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -325,9 +325,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 2.709654403567442,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 3.1713413654618554,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -380,9 +380,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 0.9887513935340038,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 1.0087710843373465,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -435,9 +435,9 @@
       "cells": 300,
       "mutualWins": 299,
       "pairedVariance": 1.8435500886624316,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 1.5498073658090654,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -490,9 +490,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 1.0981493868450432,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 0.9511485943775103,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -545,9 +545,9 @@
       "cells": 300,
       "mutualWins": 281,
       "pairedVariance": 1.0158617183528211,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 0.9390668401251744,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {
@@ -567,9 +567,9 @@
       "cells": 300,
       "mutualWins": 300,
       "pairedVariance": 1.3048383500557386,
-      "crossCheckSource": "RESULT-0058 positive3000",
-      "crossCheckCells": 250,
-      "crossCheckVariance": 1.6625863453815253,
+      "crossCheckSource": "not covered",
+      "crossCheckCells": 0,
+      "crossCheckVariance": null,
       "uncovered": false
     },
     {

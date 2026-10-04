@@ -37,3 +37,15 @@ Items 5–11: **not run / UNVERIFIED_NOT_RUN**, as required by Path E. No model,
 ## Closeout and publication
 
 The raw final report is `docs/goals/policy-learned-judge/RAW-REPORT.txt`, printed by `print-report.js` from retained outputs. `closeout-tests.txt` and `closeout-output.txt` supply the final baseline comparison, unchanged protected files and test boundary, and experiment gate. Ledger and generated index commit together; CURRENT.md cites RESULT-0083. No backlog was edited, so no History line is required. Publication state is read live and retained in `publication-output.json`: PR remains open; do not merge. Blackboard stays submitted until the declared reviewer has actually decided.
+
+## Append-only correction — CORRECTION-0019
+
+The initial item-2 cross-check and its MATCH claim above were incomplete: both readers used the nonexistent champion arm label. Earlier output is retained, and `experiments/RESULT-0083/closure.json` marks that initial closure INVALID, with FR-0010 in FAILED-RUN-LEDGER.CSV and an implemented coverage guard plus negative test. The corrected reference-arm reduction now requires complete historical grids and matches. The frozen generation artifact and Path E counts are unchanged; no new games or confirmation were run. The final CLOSED receipt is `docs/goals/policy-learned-judge/closed-closure.json`. The original closure-status paragraph's statement that no failed-run row is appropriate is superseded by this correction. The final ledger standing is RESULT-0083 provisional with CORRECTION-0019 provisional, both unaccepted with checked_by absent. Latest raw output and actual Codex review govern finish readiness.
+
+## Codex review response — publication evidence
+
+The original closeout paragraph's claim that publication-output.json was retained was incorrect. At this checkpoint, the PR is open and publication/review evidence remains pending on the revised head; no saved artifact is substituted for actual review. The final live output from print-publication.js will be retained locally and printed when the revised head is reviewed. Codex finding 4177039536 is addressed by this explicit correction. The initial RESULT-0083 record is superseded, without promotion, by provisional CORRECTION-0019; neither record is accepted and checked_by stays absent. This standing statement supersedes the preceding provisional-plus-provisional wording.
+
+## Owner-approved closeout exception
+
+The mandatory new failed closure conflicts with the existing test's fixed older inventory. The owner approved adding RESULT-0083 to that expected list and finishing. OWNER_TEST_EXCEPTION.txt retains the exact authorization and PROPOSED_TEST_EXCEPTION.patch the exact change. This is the only existing-test edit; no test is skipped, removed or weakened and all older inventory entries remain. The unchanged-test wording above is qualified by this explicit exception.

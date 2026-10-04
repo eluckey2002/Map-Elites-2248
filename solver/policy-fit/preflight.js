@@ -17,12 +17,15 @@ function noise() {
  const summary=twoAxis(historical,58,300);
  const cross=b.games.filter(g=>g.stage==='positive3000');
  const champ=new Map(cross.filter(g=>g.arm==='candidate').map(g=>[g.level+':'+g.seed,g.outcome]));
+ const expectedCrossLevels=[1,5,10,15,20,26,30,35,40,45,50,52];
+ if(cross.filter(g=>g.arm==='candidate').length!==3000||cross.filter(g=>g.arm==='reference').length!==3000)throw Error('incomplete historical positive3000 arms');
+ for(const level of expectedCrossLevels)if(cross.filter(g=>g.level===level&&g.arm==='reference').length!==250)throw Error('incomplete historical cross-check level '+level);
  const rows=[];
  for(let level=1;level<=58;level++) {
   const main=a.cells.filter(c=>c.level===level);
   if(main.length!==300) throw Error('historical coverage failed level '+level);
   const s=twoAxis(main.map(c=>c.base.win&&c.champion.win?c.base.movesToTarget-c.champion.movesToTarget:null),1,300);
-  const xp=cross.filter(g=>g.level===level&&g.arm==='champion');
+  const xp=cross.filter(g=>g.level===level&&g.arm==='reference');
   const x=xp.length?twoAxis(xp.map(g=>{const c=champ.get(g.level+':'+g.seed); return c&&c.win&&g.outcome.win ? g.outcome.movesToTarget-c.movesToTarget:null;}),1,xp.length):null;
   const row={level,source:'RESULT-0049 champion-vs-base',cells:main.length,mutualWins:s.n,pairedVariance:s.seSeed===null?null:s.seSeed*s.seSeed*s.n,crossCheckSource:xp.length?'RESULT-0058 positive3000':'not covered',crossCheckCells:xp.length,crossCheckVariance:x?.seSeed===null?null:x?x.seSeed*x.seSeed*x.n:null,uncovered:false};
   rows.push(row); console.log(JSON.stringify(row));
@@ -82,5 +85,6 @@ function ceiling() {
  fs.writeFileSync(path.join(OUT,'ceiling.json'),JSON.stringify(raw,null,2)+'\n');
  if(issues.length||benchmark.unresolved.length) process.exitCode=1;
 }
+module.exports={noise,ceiling};
 if(require.main===module) {noise();ceiling();}
 

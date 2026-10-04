@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "result": "RESULT-0083",
+  "run_id": "RESULT-0083-prepublication-crosscheck-46f1df5",
+  "closure_status": "INVALID",
+  "stage": "RECOMPUTATION",
+  "location": "solver/policy-fit/preflight.js",
+  "observed_failure": "The initial closure prints zero cross-check cells at every level while its reducer claims MATCH for twelve levels.",
+  "root_cause": "Both readers assumed the base arm was named champion; sealed positive3000 stores it as reference, and no assertion required nonempty cross-check coverage.",
+  "evidence": [
+    "docs/goals/policy-learned-judge/noise-before-arm-correction.json",
+    "docs/goals/policy-learned-judge/recompute-before-arm-correction.txt",
+    "docs/goals/policy-learned-judge/RAW-REPORT-before-arm-correction.txt"
+  ],
+  "prior_report_commit": "46f1df5959074f75a31e1649bca1aac0b517e1ee",
+  "prevention_artifact": "solver/policy-fit/recompute-preflight.js",
+  "prevention_test": "solver/tests/policyFitHistoricalCoverage.test.js",
+  "correction": "CORRECTION-0019",
+  "stage_detail": "historical cross-check arm selection and coverage"
+}

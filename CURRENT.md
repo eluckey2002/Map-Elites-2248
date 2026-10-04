@@ -417,3 +417,7 @@ node solver/routing-ablation.js                         # what that is worth in 
 ```
 
 Last reviewed: 2026-09-28
+
+2026-10-04: [CORRECTION-0019](EVIDENCE_LEDGER.md) narrows RESULT-0083's first historical cross-check receipt, corrects the reference-arm lookup with mandatory complete coverage, and records the retained initial invalid closure in FR-0010. The corrected Path E stop uses the unchanged generation artifact and no fresh games. Scientific standing stays unaccepted; read both records together.
+
+2026-10-04 standing correction: the initial RESULT-0083 record is superseded because its first historical cross-check was incomplete. CORRECTION-0019 remains provisional and carries the corrected no-new-game Path E reduction. Neither is accepted; checked_by stays absent.

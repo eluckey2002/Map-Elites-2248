@@ -20,16 +20,19 @@ function same(a,b,name) {
  else if(a&&typeof a==='object'){for(const k of Object.keys(a))same(a[k],b[k],name+'.'+k);}
  else assert.equal(a,b,name);
 }
-const noise=read('docs/goals/policy-learned-judge/noise.json');
+const noise=process.argv[2]?JSON.parse(fs.readFileSync(process.argv[2],'utf8')):read('docs/goals/policy-learned-judge/noise.json');
 const historical=read('experiments/RESULT-0049/corpus.json');
 const vals=historical.cells.map(c=>c.base.win&&c.champion.win?c.base.movesToTarget-c.champion.movesToTarget:null);
 const rebuilt=axes(vals,58,300);same(rebuilt,noise.historical,'historical');
 for(const r of noise.rows) {const c=historical.cells.filter(c=>c.level===r.level);assert.equal(c.length,300);const a=axes(c.map(c=>c.base.win&&c.champion.win?c.base.movesToTarget-c.champion.movesToTarget:null),1,300);same(a.seSeed**2*a.n,r.pairedVariance,'level '+r.level+' variance');}
 const legacy=read('experiments/RESULT-0058/raw-games.json');
 const panel=legacy.games.filter(g=>g.stage==='positive3000');
+assert.equal(panel.filter(g=>g.arm==='candidate').length,3000,'historical champion arm coverage');
+assert.equal(panel.filter(g=>g.arm==='reference').length,3000,'historical base arm coverage');
+assert.equal(noise.rows.filter(r=>r.crossCheckCells===250).length,12,'cross-check must actually cover twelve levels');
 const candidate=new Map(panel.filter(g=>g.arm==='candidate').map(g=>[g.level+':'+g.seed,g.outcome]));
 for(const r of noise.rows) {
- const refs=panel.filter(g=>g.level===r.level&&g.arm==='champion');
+ const refs=panel.filter(g=>g.level===r.level&&g.arm==='reference');
  assert.equal(refs.length,r.crossCheckCells);
  if(refs.length) {const a=axes(refs.map(g=>{const c=candidate.get(g.level+':'+g.seed);return c.win&&g.outcome.win?g.outcome.movesToTarget-c.movesToTarget:null;}),1,refs.length);same(a.seSeed*a.seSeed*a.n,r.crossCheckVariance,'cross-check level '+r.level);}
 }

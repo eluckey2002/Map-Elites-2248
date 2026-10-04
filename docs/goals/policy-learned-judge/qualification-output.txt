@@ -1,12 +1,14 @@
-✔ generation ceiling does not stop an undersized all-missing subset (1.0632ms)
-✔ generation ceiling stops exactly at the frozen minimum and half threshold (0.2387ms)
-✔ generation ceiling excludes bot-faster boards and tied owner points (0.1494ms)
-✔ unresolved recording prevents a generation prerequisite verdict (0.1459ms)
-ℹ tests 4
+✔ generation ceiling does not stop an undersized all-missing subset (0.9564ms)
+✔ generation ceiling stops exactly at the frozen minimum and half threshold (0.2007ms)
+✔ generation ceiling excludes bot-faster boards and tied owner points (0.1347ms)
+✔ unresolved recording prevents a generation prerequisite verdict (0.1273ms)
+✔ historical recompute rejects the retained zero-coverage cross-check receipt (211.5297ms)
+✔ historical recompute requires and reduces both real twelve-level arms (218.1502ms)
+ℹ tests 6
 ℹ suites 0
-ℹ pass 4
+ℹ pass 6
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 131.8688
+ℹ duration_ms 552.2658

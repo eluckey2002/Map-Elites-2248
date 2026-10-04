@@ -15,9 +15,13 @@ console.log('$ node solver/policy-fit/preflight.js (retained historical output)'
 console.log('Same-seed recorded-board rows retained in human-benchmark.json');
 console.log('$ git rev-parse HEAD (plan commit, before any fresh game)');console.log(read('plan-commit.txt'));
 console.log('$ node solver/policy-fit/recompute-preflight.js');console.log(read('recompute-output.txt'));
-console.log('$ node --test solver/tests/policyFitGeneration.test.js');console.log(read('qualification-output.txt'));
+console.log('$ node --test solver/tests/policyFitGeneration.test.js solver/tests/policyFitHistoricalCoverage.test.js');console.log(read('qualification-output.txt'));
 console.log('$ node solver/policy-fit/check-coverage.js');console.log(read('coverage-output.txt'));
 console.log('$ game accounting');console.log(read('budget.json'));
 console.log('PATH E: items 1–4 complete. Items 5–11: not run / UNVERIFIED_NOT_RUN. No claim about moves outside the diagnostic subset.');
-if(fs.existsSync(path.join(dir,'closeout-output.txt'))) {console.log('$ closeout checks');console.log(read('closeout-output.txt'));}else console.log('UNVERIFIED: closeout checks not yet collected');
+if(fs.existsSync(path.join(dir,'closeout-output.txt'))) {console.log('$ final closeout checks');console.log(read('closeout-output.txt'));}else console.log('UNVERIFIED: closeout checks not yet collected');
 if(fs.existsSync(path.join(dir,'publication-output.json'))) {console.log('$ live GitHub publication state');console.log(read('publication-output.json'));}else console.log('UNVERIFIED: publication and actual Codex review not yet collected');
+
+if(fs.existsSync(path.join(dir,'CLOSEOUT_BLOCKER.md'))&&!fs.existsSync(path.join(dir,'OWNER_TEST_EXCEPTION.txt'))) {console.log('CURRENT FINISH: UNVERIFIED; required owner exception pending');console.log(read('CLOSEOUT_BLOCKER.md'));console.log(read('closeout-blocker-output.txt'));}
+
+if(fs.existsSync(path.join(dir,'OWNER_TEST_EXCEPTION.txt'))) {console.log('$ owner-authorized test boundary exception');console.log(read('OWNER_TEST_EXCEPTION.txt'));}
