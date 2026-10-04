@@ -270,6 +270,13 @@ test('frozen-tree recompute entries must cite a real decision and a reason', () 
     frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, live_files: ['tools/live-check.js'], append_only: ['experiments/SEEDS.md'] }, named),
     [],
   );
+  for (const magic of [':(exclude)EVIDENCE_LEDGER.md', ':(exclude,glob)**', '../outside', '/abs', 'a/*', 'a//b', '']) {
+    assert.match(
+      frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, extra_immutable: ['EVIDENCE_LEDGER.md', magic] }, ledger).join('\n'),
+      /extra_immutable has .*which is not a plain relative path/,
+      `${JSON.stringify(magic)} must not reach git as a pathspec`,
+    );
+  }
   assert.match(frozenTreeEntryProblems('RESULT-0082', { reason }, ledger)[0], /must cite a ledger decision/);
   assert.match(
     frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0099', reason }, ledger)[0],
@@ -296,6 +303,12 @@ test('LIVE: every input the RESULT-0082 recomputation reads stays bound to its a
   assert.match(gate.join('\n'), /inputs differ from admission commit d9b5475f: .*verify-experiments\.js/);
   const ledger = frozenInputProblems('RESULT-0082', admission, { ...entry, extra_immutable: ['EVIDENCE_LEDGER.md'] });
   assert.match(ledger.join('\n'), /inputs differ from admission commit d9b5475f: .*EVIDENCE_LEDGER\.md/);
+  // The exact control Codex ran: exclude-magic combined with a changed file
+  // must not turn a detected mismatch into silence, even if a registry edit
+  // bypassed entry validation and reached the comparison directly.
+  const magic = frozenInputProblems('RESULT-0082', admission, { ...entry, extra_immutable: ['EVIDENCE_LEDGER.md', ':(exclude)EVIDENCE_LEDGER.md'] });
+  assert.ok(magic.length > 0, 'pathspec magic must not hide a changed input');
+  assert.match(magic.join('\n'), /not a plain relative path/);
   const prefix = frozenInputProblems('RESULT-0082', admission, { ...entry, live_files: [], append_only: ['tools/verify-experiments.js'] });
   assert.match(prefix.join('\n'), /append-only input tools\/verify-experiments\.js no longer begins with its admitted bytes/);
 

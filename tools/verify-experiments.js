@@ -437,6 +437,13 @@ function frozenTreeRegistry() {
   try { return JSON.parse(fs.readFileSync(FROZEN_TREE_REGISTRY, 'utf8')); } catch { return {}; }
 }
 
+// Registry paths reach git as pathspecs, where ':(exclude)x' or a glob would
+// change what is compared. Only plain slash-separated names are accepted, and
+// git is also run with --literal-pathspecs (see frozenInputProblems).
+function isPlainRelativePath(p) {
+  return typeof p === 'string' && p.split('/').every((seg) => /^[A-Za-z0-9_.-]+$/.test(seg) && seg !== '.' && seg !== '..');
+}
+
 function frozenTreeEntryProblems(id, entry, ledgerText) {
   const problems = [];
   if (!entry || typeof entry !== 'object') return [`${id} frozen-tree entry is not an object`];
@@ -470,6 +477,10 @@ function frozenTreeEntryProblems(id, entry, ledgerText) {
   for (const field of ['append_only', 'live_files', 'extra_immutable']) {
     if (entry[field] !== undefined && !(Array.isArray(entry[field]) && entry[field].every((p) => typeof p === 'string'))) {
       problems.push(`${id} frozen-tree entry ${field} must be a list of paths`);
+    } else {
+      for (const p of entry[field] || []) {
+        if (!isPlainRelativePath(p)) problems.push(`${id} frozen-tree entry ${field} has ${JSON.stringify(p)}, which is not a plain relative path`);
+      }
     }
   }
   if (typeof entry.reason !== 'string' || entry.reason.trim().length < 20) {
@@ -507,13 +518,16 @@ function frozenInputProblems(id, commit, entry) {
   for (const exempt of [...appendOnly, ...live]) {
     if (!frozen.includes(exempt)) problems.push(`${id} exemption ${exempt} is not a version_freeze file of the protocol`);
   }
-  if (problems.length) return problems;
   const immutable = [...new Set([resultRel, ...frozen, ...(entry.extra_immutable || [])])]
     .filter((p) => !appendOnly.has(p) && !live.has(p));
+  for (const p of immutable) {
+    if (!isPlainRelativePath(p)) problems.push(`${id} immutable input ${JSON.stringify(p)} is not a plain relative path`);
+  }
+  if (problems.length) return problems;
   try {
-    execFileSync('git', ['diff', '--quiet', commit, '--', ...immutable], { cwd: ROOT, stdio: 'ignore' });
+    execFileSync('git', ['--literal-pathspecs', 'diff', '--quiet', commit, '--', ...immutable], { cwd: ROOT, stdio: 'ignore' });
   } catch {
-    const changed = execFileSync('git', ['diff', '--name-only', commit, '--', ...immutable], { cwd: ROOT, encoding: 'utf8' })
+    const changed = execFileSync('git', ['--literal-pathspecs', 'diff', '--name-only', commit, '--', ...immutable], { cwd: ROOT, encoding: 'utf8' })
       .trim().split('\n').filter(Boolean);
     problems.push(`${id} inputs differ from admission commit ${commit.slice(0, 8)}: ${changed.slice(0, 5).join(', ')}${changed.length > 5 ? ` (+${changed.length - 5} more)` : ''}`);
   }
