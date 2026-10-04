@@ -1291,3 +1291,68 @@ that passed while inspecting nothing.
   never exempt them to manufacture green.
 - **Shipped:** 2026-09-16, isolated `feat/bounded-authoring-oracle` branch; qualification
   attempt 2. Verdict: **PROCEED** at report-only rung.
+
+---
+
+### finite-connection-pack-replay · report
+
+- **Protects:** the first three puzzles must have complete legal winning routes,
+  not disconnected objective witnesses or an empty-corpus pass.
+- **Where:** tools/author-connection-levels.js qualify; connectionLevels tests.
+- **Level:** catalog entry and whole action trace; does not inspect human choices.
+- **Kind:** shape/value and replayed feasibility; owner play owns difficulty/fun.
+- **Scope:** src/connection-levels.js; three fixed puzzle IDs, positive integer
+  grids, three separated fixed-position goals per puzzle; private JSON witnesses
+  in docs/game-design/levels/connection-pack/. Excludes legacy/prototype captures.
+- **Reads own output?:** yes, authored traces are replayed through the actual
+  finite runtime. It does not compare a copied claimed outcome. Runtime and
+  checker sharing a defect remains possible; retained-transition parity reduces
+  that risk without becoming independent model review. No Git porcelain parsing.
+- **Sampling memory:** n/a for qualification; all three catalog entries are read.
+  The separate two-commitment shortcut report searches only the opening goal;
+  node/state exhaustion is UNKNOWN, not a clean audit or impossibility result.
+- **Does NOT catch:** shortest routes, later-goal shortcuts, human difficulty,
+  enjoyment, single-player bias, or a coherent bug shared by runtime and replay.
+- **Crafted-bypass test:** connectionLevels.test.js rejects an absent catalog,
+  absent witnesses, a corrupted illegal chain and an actual absent witness file.
+  These ran and failed at the intended boundaries before the positive pack passed.
+- **Retires:** NO — continuous replay has no fixed catalog/finite budget. Widening
+  it would alter the retained live mode; the scoped finite qualifier is separate.
+- **Enforcement:** local feasibility report; malformed/infeasible inputs fail
+  the command and ordinary tests. No difficulty/adoption gate. Promotion of any
+  difficulty signal needs a new owner-approved protocol and qualification.
+- **Decay:** rerun after any catalog/model/witness edit; failures stay in the
+  build receipt. Known legacy-suite reds are not exempted or repaired here.
+- **Shipped:** local build 2026-10-03, CONNECTIONS-LEVELS-BUILD-1. PROCEED at report rung.
+
+### finite-connection-capture-replay · report
+
+- **Protects:** store only actions that replay on the identified finite runtime;
+  stale/forged saves cannot rewrite the current attempt or contaminate legacy data.
+- **Where:** tools/connection-capture.js and /api/connection-attempts.
+- **Level:** one complete attempt revision; does not judge feedback meaning.
+- **Kind:** identity, metadata values and authoritative action replay; native
+  input fidelity and puzzle quality remain owner/QA work.
+- **Scope:** loopback playserver; schema 1, UUID attempt IDs, three catalog IDs,
+  merge/removal/undo actions; connection-sessions/ only. Identity covers engine,
+  finite rules/data, app entry/router/math/style/view and capture/server sources.
+  Excludes original score sessions, recordings/ and every prototype session store.
+- **Reads own output?:** reads a prior stored revision only for monotonicity and
+  exact-request deduplication. Recomputes the new final state from actual actions.
+- **Sampling memory:** n/a; validates every submitted action, with a bounded body
+  and action count. No sampled play-quality verdict.
+- **Does NOT catch:** cheating by a local owner supplying different legal actions,
+  native input errors, external authentication, tampering with server and checker
+  together, or UI quality. Loopback capture is not a public production API.
+- **Crafted-bypass test:** connectionCapture.test.js sends wrong runtime identity,
+  a forged bank, illegal removal, skip, null action, old revision and conflicting
+  same revision over actual HTTP. Rejections preserve the prior file bytes;
+  undo changes a previously won attempt back to playing. Served browser replay
+  and an existing legacy capture also run on the same real server.
+- **Retires:** NO — existing score capture cannot represent removals/undo or fixed
+  Connection goals. Its endpoint and storage stay unchanged, per the plan.
+- **Enforcement:** local capture integrity, not a scientific-evidence or production
+  adoption gate. Broader publication requires a separately approved API scope.
+- **Decay:** focused real-HTTP tests after runtime/capture changes; mismatched
+  identities cannot be silently resumed. Record outcomes in implementation receipts.
+- **Shipped:** local build 2026-10-03, CONNECTIONS-LEVELS-BUILD-1. PROCEED at report rung.

@@ -35,3 +35,12 @@ human miss.
 Non-blocked tile value distributed across equal or doubling-compatible tiers
 that a ranking policy treats as material for future high-value chains, distinct
 from a single isolated maximum tile.
+
+## Connection play
+
+### Connection puzzle level
+
+A self-contained attempt with a designed starting board, a finite ordered
+sequence of connection objectives and one shared move allowance. Retry recreates
+the same puzzle. Distinct from the endless Connection Run and from chapters
+that advance while retaining a board from earlier play.

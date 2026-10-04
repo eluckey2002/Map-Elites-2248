@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delivery · Staggered · 2248</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a href="/" class="wordmark">2248 <span>PLAYTEST STUDIO</span></a><span class="draft">A new Delivery layout.</span></header>
+<main>
+  <section class="intro"><p class="eyebrow">DELIVERY / VARIATION 04</p><h1>Leave a way through.</h1><p>One parcel. More than one way down.</p></section>
+  <nav aria-label="Choose a prototype"><button data-level="delivery">04 <strong>Staggered</strong></button></nav>
+  <div class="play-layout">
+    <section class="play-area" aria-label="Game">
+      <div class="stats"><div><span id="goal-label">SCORE</span><strong id="score">0</strong></div><div><span>MOVES LEFT</span><strong id="moves">8</strong></div><div><span id="special-label">PARCEL</span><strong id="special">In transit</strong></div></div>
+      <div id="feeders" hidden></div>
+      <div class="chain-total" role="status" aria-live="polite" aria-atomic="true"><span>Chain sum</span><strong id="chain-sum">0</strong></div>
+      <div class="board-shell"><div id="board" aria-label="Number board"></div><svg id="path" aria-hidden="true"></svg></div>
+      <div id="exit" hidden>↓ PARCEL EXIT ↓</div>
+      <p id="selection" class="selection" aria-live="polite">Tap connected tiles to make a chain.</p>
+      <div class="actions"><button id="clear" class="quiet">Clear</button><button id="preview" class="secondary" disabled>Preview result</button><button id="merge" class="primary" disabled>Merge chain</button></div>
+      <div class="minor-actions"><button id="undo">↶ Undo move</button><button id="restart">↻ Same board again</button></div>
+    </section>
+    <aside>
+      <p class="eyebrow" id="number">PROTOTYPE 01</p><h2 id="name">Delivery · Staggered</h2><p class="subtitle" id="subtitle"></p>
+      <div class="rule"><h3>The twist</h3><p id="rule"></p><p id="detail"></p></div>
+      <div class="basics"><h3>How to make a chain</h3><p>Connect at least three touching tiles, including diagonals. Start with two equal numbers, then keep the same value or double it.</p><p>Tap tiles or drag a path. The last tile becomes the sum. Preview before committing.</p></div>
+      <div id="outcome" role="status" hidden></div>
+      <details id="feedback-panel"><summary>What did you think?</summary><label for="feedback" id="question"></label><textarea id="feedback" rows="3" maxlength="4000" placeholder="What changed your decision? What felt confusing or automatic?"></textarea><button id="save-feedback" class="secondary">Save feedback</button></details>
+      <p id="capture" class="capture" role="status">Starting recording…</p><button id="export" class="text-button">Download this play</button>
+    </aside>
+  </div>
+</main>
+<footer>Same opening and refill on every restart. Undo freely. Reload starts a new play. This is a playtest, not a finished level.</footer>
+<script src="/core.js"></script><script src="/model.js"></script><script src="/app.js"></script>
+</body></html>

@@ -1,0 +1,723 @@
+{
+  "file": "connection-sessions/d678dcd0-c5d2-4690-90a4-1cab96c6c4e2.json",
+  "sha256": "de7629a655a8ac7f8d8abcfd1b8b080f514a563ae7d87b66ad09be5087b52b4b",
+  "capture": {
+    "schemaVersion": 1,
+    "standing": "Unreviewed local Connection playtest; not experiment evidence",
+    "attemptId": "d678dcd0-c5d2-4690-90a4-1cab96c6c4e2",
+    "identity": "e619e005527beb8fbe6f48ff586546c65a1c5c400e6739b50cd0f780555b437b",
+    "levelId": "keep-a-line",
+    "revision": 26,
+    "actions": [
+      {
+        "type": "move",
+        "chain": [
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "type": "undo"
+      },
+      {
+        "type": "undo"
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            3,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            4
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            5
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      },
+      {
+        "type": "undo"
+      },
+      {
+        "type": "undo"
+      },
+      {
+        "type": "undo"
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            5
+          ]
+        ]
+      },
+      {
+        "type": "undo"
+      },
+      {
+        "type": "undo"
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            5
+          ]
+        ]
+      },
+      {
+        "type": "undo"
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            5
+          ]
+        ]
+      },
+      {
+        "type": "move",
+        "chain": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      }
+    ],
+    "feedback": "",
+    "finalState": {
+      "id": "keep-a-line",
+      "gridWidth": 5,
+      "gridHeight": 6,
+      "grid": [
+        [
+          {
+            "x": 0,
+            "y": 0,
+            "value": 32,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "value": 64,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "value": 16,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "value": 128,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 4,
+            "y": 0,
+            "value": 16,
+            "cargo": false,
+            "blocker": null
+          }
+        ],
+        [
+          {
+            "x": 0,
+            "y": 1,
+            "value": 64,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 1,
+            "y": 1,
+            "value": 2,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "value": 32,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 3,
+            "y": 1,
+            "value": 8,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 4,
+            "y": 1,
+            "value": 8,
+            "cargo": false,
+            "blocker": null
+          }
+        ],
+        [
+          {
+            "x": 0,
+            "y": 2,
+            "value": 64,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 1,
+            "y": 2,
+            "value": 16,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 2,
+            "y": 2,
+            "value": 64,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 3,
+            "y": 2,
+            "value": 8,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 4,
+            "y": 2,
+            "value": 128,
+            "cargo": false,
+            "blocker": null
+          }
+        ],
+        [
+          {
+            "x": 0,
+            "y": 3,
+            "value": 2,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 1,
+            "y": 3,
+            "value": 64,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 2,
+            "y": 3,
+            "value": 8,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 3,
+            "y": 3,
+            "value": 512,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 4,
+            "y": 3,
+            "value": 2,
+            "cargo": false,
+            "blocker": null
+          }
+        ],
+        [
+          {
+            "x": 0,
+            "y": 4,
+            "value": 80,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 1,
+            "y": 4,
+            "value": 128,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 2,
+            "y": 4,
+            "value": 128,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 3,
+            "y": 4,
+            "value": 4,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 4,
+            "y": 4,
+            "value": 4,
+            "cargo": false,
+            "blocker": null
+          }
+        ],
+        [
+          {
+            "x": 0,
+            "y": 5,
+            "value": 32,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 1,
+            "y": 5,
+            "value": 64,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 2,
+            "y": 5,
+            "value": 64,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 3,
+            "y": 5,
+            "value": 4,
+            "cargo": false,
+            "blocker": null
+          },
+          {
+            "x": 4,
+            "y": 5,
+            "value": 4,
+            "cargo": false,
+            "blocker": null
+          }
+        ]
+      ],
+      "minChain": 3,
+      "tileScale": 1,
+      "score": 1888,
+      "moves": 9,
+      "maxMoves": 9,
+      "refillSeed": 2581,
+      "randomCursor": 25,
+      "charges": 0,
+      "completed": 2,
+      "objectives": [
+        {
+          "ends": [
+            [
+              2,
+              1
+            ],
+            [
+              0,
+              4
+            ]
+          ],
+          "target": 80
+        },
+        {
+          "ends": [
+            [
+              3,
+              5
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "target": 128
+        },
+        {
+          "ends": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              4
+            ]
+          ],
+          "target": 576
+        }
+      ],
+      "objective": {
+        "ends": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            4
+          ]
+        ],
+        "target": 576
+      },
+      "outcome": "lost",
+      "last": {
+        "type": "move",
+        "points": 192,
+        "landing": {
+          "x": 2,
+          "y": 4,
+          "value": 128
+        },
+        "refill": [
+          {
+            "x": 0,
+            "y": 0,
+            "value": 32
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "value": 64
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "value": 16
+          }
+        ],
+        "completedObjective": null,
+        "powerupEarned": false,
+        "powerupFull": false
+      }
+    },
+    "savedAt": "2026-10-03T23:38:45.128Z"
+  }
+}

@@ -1,0 +1,38 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const os=require('node:os');
+const path=require('node:path');
+const {once}=require('node:events');
+const {randomUUID}=require('node:crypto');
+const vm=require('node:vm');
+const {createServer}=require('./serve');
+const game=require('./model');
+const routes=require('./witnesses.json');
+
+test('served page and browser rules match the captured three-move game',async t=>{
+  const directory=fs.mkdtempSync(path.join(os.tmpdir(),'delivery-sequence-qa-'));
+  const server=createServer({sessionsDir:directory});
+  t.after(()=>{server.closeAllConnections();server.close();fs.rmSync(directory,{recursive:true,force:true});});
+  server.listen(0,'127.0.0.1');await once(server,'listening');
+  const url=`http://127.0.0.1:${server.address().port}`;
+  const identity=(await(await fetch(url+'/api/identity')).json()).identity;
+  const html=await(await fetch(url)).text();
+  assert.match(html,/<title>Delivery · Staggered · 2248<\/title>/);
+  assert.match(html,/id="chain-sum"/);
+  const browser={};browser.window=browser;vm.createContext(browser);
+  for(const asset of ['/core.js','/model.js'])vm.runInContext(await(await fetch(url+asset)).text(),browser);
+  assert.deepEqual(JSON.parse(JSON.stringify(browser.Archetypes.create('delivery'))),game.create('delivery'));
+  const actions=routes.prepareFirst.map(chain=>({type:'move',chain,swapped:false}));
+  const payload={identity,level:'delivery',sessionId:randomUUID(),revision:1,actions,feedback:'QA only'};
+  const post=body=>fetch(url+'/api/session',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+  assert.equal((await post(payload)).status,200);
+  const file=path.join(directory,payload.sessionId+'.json');
+  const record=JSON.parse(fs.readFileSync(file));
+  assert.deepEqual(record.finalState,game.replay('delivery',actions));
+  assert.equal(record.finalState.outcome,'won');
+  const before=fs.readFileSync(file,'utf8');
+  assert.equal((await post({...payload,revision:2,identity:'wrong'})).status,400);
+  assert.equal((await post({...payload,revision:2,actions:[{type:'move',chain:[[2,1],[2,2],[2,3]],swapped:false}]})).status,400);
+  assert.equal(fs.readFileSync(file,'utf8'),before,'Bad captures cannot replace the valid play');
+});
