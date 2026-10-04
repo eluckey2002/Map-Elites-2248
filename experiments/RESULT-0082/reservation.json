@@ -1,0 +1,11 @@
+{
+  "result": "RESULT-0082",
+  "kind": "assigned-identity-reservation",
+  "confirmationProtocolRegistered": false,
+  "scientificComplete": false,
+  "purpose": "Owner-requested continuation; exploration remains outside experiments, conditional one-shot protocol only after actual candidate selection",
+  "goal": "docs/goals/policy-terms-loop/RESUME_GOAL.txt",
+  "explorationRegistration": "docs/goals/policy-terms-loop/RESUME_PLAN.md",
+  "explorationPlanCommit": "cd7741d87ae722206b0d70f388fd5602e76d6215",
+  "collisionCheck": "docs/goals/policy-terms-loop/resume-result-id-check.json"
+}
