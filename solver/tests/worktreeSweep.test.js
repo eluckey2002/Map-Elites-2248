@@ -21,11 +21,18 @@ const SEP = '\n--\n';
 // Content snapshot of the main clone and every linked worktree: porcelain status (incl. every
 // untracked file) plus top-level entry names (excluding .git). Catches a sweep that writes into
 // the trees it inspects.
-function treesState(repo) {
+// `tolerate` = paths whose status is allowed to fail (deliberately corrupted index): the error
+// text is recorded instead of throwing. Every other tree still must give a clean git status.
+function treesState(repo, tolerate = new Set()) {
   const paths = git(repo, 'worktree', 'list', '--porcelain').split(/\r?\n/)
     .filter((l) => l.startsWith('worktree ')).map((l) => l.slice('worktree '.length));
   if (!paths.includes(repo)) paths.unshift(repo);
-  return paths.sort().map((p) => '## ' + p + '\n' + git(p, 'status', '--porcelain', '--untracked-files=all') +
+  const statusOf = (p) => {
+    if (!tolerate.has(p)) return git(p, 'status', '--porcelain', '--untracked-files=all');
+    const r = spawnSync('git', ['status', '--porcelain', '--untracked-files=all'], { cwd: p, encoding: 'utf8' });
+    return r.status === 0 ? r.stdout : 'STATUS-FAILED(' + r.status + '): ' + r.stderr;
+  };
+  return paths.sort().map((p) => '## ' + p + '\n' + statusOf(p) +
     '-- entries: ' + fs.readdirSync(p).filter((n) => n !== '.git').sort().join(',')).join('\n');
 }
 
@@ -48,8 +55,9 @@ function fixture(t) {
     return p;
   };
   const leasePath = (wt) => `${norm(git(wt, 'rev-parse', '--absolute-git-dir').trim())}/agent-lease`;
-  const snap = () => git(main, 'worktree', 'list', '--porcelain') + '\n--\n' + git(main, 'branch', '-a') + SEP + treesState(main);
-  return { root, main, addWt, leasePath, snap };
+  const tolerate = new Set();
+  const snap = () => git(main, 'worktree', 'list', '--porcelain') + '\n--\n' + git(main, 'branch', '-a') + SEP + treesState(main, tolerate);
+  return { root, main, addWt, leasePath, snap, tolerate };
 }
 
 function sweep(main) {
@@ -187,3 +195,37 @@ for (const [name, body] of [
       assert.match(out, /removal candidates .*nothing removed\): 0/);
     }));
 }
+
+test('failed git status (corrupt index) on merged, stale, dead-pid worktree: tree=unknown, not a candidate, exit 0', (t) =>
+  run(t, (f, wt) => {
+    fs.writeFileSync(f.leasePath(wt), lease({ pid: deadPid(), heartbeat: OLD() }));
+    const gd = norm(git(wt, 'rev-parse', '--absolute-git-dir').trim());
+    fs.writeFileSync(`${gd}/index`, Buffer.from('not an index, garbage bytes \x00\x01\x02\xff', 'latin1'));
+    assert.notEqual(spawnSync('git', ['status', '--porcelain'], { cwd: wt }).status, 0, 'precondition: git status fails');
+    f.tolerate.add(wt);
+  }, (l, out) => {
+    assert.match(l, /^\[REPORT\]/); assert.match(l, /tree=unknown\(/); assert.doesNotMatch(l, /tree=clean/);
+    assert.match(l, /merged-into-origin\/main=yes/); assert.match(l, /lease=stale-local-dead-pid/);
+    assert.match(out, /removal candidates .*nothing removed\): 0/);
+  }));
+
+for (const [name, pid] of [['0', 0], ['negative', -5], ['string', '123'], ['missing', undefined]]) {
+  test(`lease with non-positive-integer pid (${name}) + stale heartbeat: absent, not a candidate, no crash`, (t) =>
+    run(t, (f, wt) => fs.writeFileSync(f.leasePath(wt), lease({ pid, heartbeat: OLD() })), (l, out) => {
+      assert.match(l, /lease=absent \(malformed lease treated as absent\)/); assert.match(l, /^\[REPORT\]/);
+      assert.match(l, /merged-into-origin\/main=yes/); assert.match(l, /tree=clean/);
+      assert.match(out, /removal candidates .*nothing removed\): 0/);
+    }));
+}
+
+test('failed rev-list (broken remote ref) on merged, stale, dead-pid worktree: tree=unknown, not a candidate, exit 0', (t) =>
+  run(t, (f, wt) => {
+    fs.writeFileSync(f.leasePath(wt), lease({ pid: deadPid(), heartbeat: OLD() }));
+    fs.writeFileSync(`${f.main}/.git/refs/remotes/origin/junk`, '1'.repeat(40) + '\n');
+    assert.notEqual(spawnSync('git', ['rev-list', '--count', 'HEAD', '--not', '--remotes'], { cwd: wt }).status, 0, 'precondition: rev-list fails');
+    assert.equal(spawnSync('git', ['status', '--porcelain'], { cwd: wt }).status, 0, 'precondition: git status still works');
+  }, (l, out) => {
+    assert.match(l, /^\[REPORT\]/); assert.match(l, /tree=unknown\(/); assert.doesNotMatch(l, /tree=clean/);
+    assert.match(l, /merged-into-origin\/main=yes/); assert.match(l, /lease=stale-local-dead-pid/);
+    assert.match(out, /removal candidates .*nothing removed\): 0/);
+  }));
