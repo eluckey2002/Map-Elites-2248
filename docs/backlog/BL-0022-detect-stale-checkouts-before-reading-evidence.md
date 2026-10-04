@@ -138,9 +138,9 @@ None in the ledger; the table above is a direct `git` observation.
 
 ## Next action
 
-Write the check, the `SessionStart`-hook (and Codex-equivalent) startup
-wiring, the merged-worktree sweep, and their tests in a fresh worktree off
-`main`.
+Owner decision (criterion 1): approve or decline applying the drafted machine-level hook. `node tools/freshness/install.js --dry-run` prints the exact change to the user-level Claude Code settings; apply it only with the owner's explicit approval, then confirm in a fresh session that the warning reaches the model. The Codex change is optional and should wait until it is confirmed that Codex hooks are enabled (the existing SessionStart hooks show `enabled = false` in the Codex config).
+
+Open engineering work, not started: (1) a lease writer plus an opt-in removal step for the sweep (criterion 4; until then the sweep removes nothing); (2) a CI step so `tools/freshness` and its tests are actually gated, which is a workflow change and an owner decision; (3) promote this record in `CURRENT.md` once the owner accepts the pull request.
 
 ## History
 
@@ -180,3 +180,6 @@ wiring, the merged-worktree sweep, and their tests in a fresh worktree off
 - 2026-09-27: Addressed Codex review on b774c96 (sidecar location; foreign-host leases).
 - 2026-09-27: Addressed Codex review on bb3bbd8: absent leases are report-only; lease-before-sweep ordering and a serialized sweep.
 - 2026-09-27: Removed the leftover "or absent" from the deletion test case; only an existing stale local-host lease with a dead pid qualifies (Codex review on 07007de).
+- 2026-10-03: Delivered tools/freshness/check.js (criterion 2, with tests in solver/tests/freshnessCheck.test.js) and tools/freshness/sweep.js (criteria 4 and 7, REPORT-ONLY, with tests in solver/tests/worktreeSweep.test.js). Not delivered: machine-level SessionStart wiring for Claude Code and Codex (criterion 1) and the lease writer; sweep removes nothing.
+- 2026-10-03: Correction to the entry above: tools/freshness/session-freshness.js (launcher), tools/freshness/install.js (installer) and solver/tests/freshnessInstall.test.js are delivered and tested, but criterion 1 is NOT met, because nothing has been applied to the user-level Claude Code or Codex configuration; applying it needs the owner's explicit approval, and the proposed settings changes were drafted and reviewed outside the repo. tools/freshness/rollout.js (with solver/tests/freshnessRollout.test.js) is delivered for criterion 3 (read-only rollout sweep over every worktree from `git worktree list`). The lease writer is still not delivered, and the sweep removes nothing.
+- 2026-10-04: Review-fix round on pull request #63 after the Codex review. Changed: check.js now prints a fix that works in a linked worktree (it fast-forwards the current branch and never switches to main) and never prints the same fix twice; rollout.js reports a worktree whose check printed UNCHECKED as UNVERIFIED (it was reported FRESH), bounds each check with a timeout (ROLLOUT_CHECK_TIMEOUT_MS, default 60000), and its exit-2-to-UNVERIFIED mapping is now tested; session-freshness.js prints an UNVERIFIED line when its git probe errors or times out (it exited silently) and waits up to 1 s for the killed child before exiting; sweep.js treats a failed git status or rev-list as tree=unknown and never a candidate, and treats a lease whose pid is not a positive integer as absent; the installer tests remove their temporary directories; the Next action section was rewritten. Still unverified: the POSIX child-reaping change (tested only on Windows), and rollout.js's timeout kills check.js but a git fetch it spawned may outlive it. Criterion 1 is still NOT met: nothing has been applied to the Claude Code or Codex configuration.
