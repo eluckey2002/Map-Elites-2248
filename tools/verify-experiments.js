@@ -456,6 +456,15 @@ function frozenTreeEntryProblems(id, entry, ledgerText) {
       if (!body.includes(id) || !body.includes('FROZEN-TREE-RECOMPUTE.json') || !/\*\*proof_class:\*\* `owner_decision`/.test(body)) {
         problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not an owner decision naming ${id} and FROZEN-TREE-RECOMPUTE.json`);
       }
+      // Each exemption widens what may change without the gate noticing, so the
+      // decision must name that exact path; a registry edit alone cannot add one.
+      for (const field of ['append_only', 'live_files']) {
+        for (const exempt of Array.isArray(entry[field]) ? entry[field] : []) {
+          if (typeof exempt === 'string' && !body.includes(`\`${exempt}\``)) {
+            problems.push(`${id} frozen-tree entry exempts ${exempt} (${field}), which ${entry.decision} does not name`);
+          }
+        }
+      }
     }
   }
   for (const field of ['append_only', 'live_files', 'extra_immutable']) {
@@ -493,6 +502,12 @@ function frozenInputProblems(id, commit, entry) {
   const appendOnly = new Set(entry.append_only || []);
   const live = new Set(entry.live_files || []);
   const frozen = freeze[1].trimEnd().split('\n').map((line) => line.trim().replace(/: [0-9a-f]{16}$/, ''));
+  // An exemption is one exact file the protocol itself froze: never a
+  // directory, the result directory, or a path outside the freeze list.
+  for (const exempt of [...appendOnly, ...live]) {
+    if (!frozen.includes(exempt)) problems.push(`${id} exemption ${exempt} is not a version_freeze file of the protocol`);
+  }
+  if (problems.length) return problems;
   const immutable = [...new Set([resultRel, ...frozen, ...(entry.extra_immutable || [])])]
     .filter((p) => !appendOnly.has(p) && !live.has(p));
   try {

@@ -260,6 +260,16 @@ test('frozen-tree recompute entries must cite a real decision and a reason', () 
     frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, append_only: 'SEEDS.md' }, ledger)[0],
     /append_only must be a list/,
   );
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, live_files: ['package.json'] }, ledger)[0],
+    /exempts package\.json \(live_files\), which DECISION-0011 does not name/,
+    'a registry edit alone cannot add an exemption',
+  );
+  const named = ledger.replace('- **proof_class:**', '- **statement:** exempts `tools/live-check.js` and `experiments/SEEDS.md`\n- **proof_class:**');
+  assert.deepEqual(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, live_files: ['tools/live-check.js'], append_only: ['experiments/SEEDS.md'] }, named),
+    [],
+  );
   assert.match(frozenTreeEntryProblems('RESULT-0082', { reason }, ledger)[0], /must cite a ledger decision/);
   assert.match(
     frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0099', reason }, ledger)[0],
@@ -286,8 +296,18 @@ test('LIVE: every input the RESULT-0082 recomputation reads stays bound to its a
   assert.match(gate.join('\n'), /inputs differ from admission commit d9b5475f: .*verify-experiments\.js/);
   const ledger = frozenInputProblems('RESULT-0082', admission, { ...entry, extra_immutable: ['EVIDENCE_LEDGER.md'] });
   assert.match(ledger.join('\n'), /inputs differ from admission commit d9b5475f: .*EVIDENCE_LEDGER\.md/);
-  const prefix = frozenInputProblems('RESULT-0082', admission, { ...entry, append_only: ['CURRENT.md'] });
-  assert.match(prefix.join('\n'), /append-only input CURRENT\.md no longer begins with its admitted bytes/);
+  const prefix = frozenInputProblems('RESULT-0082', admission, { ...entry, live_files: [], append_only: ['tools/verify-experiments.js'] });
+  assert.match(prefix.join('\n'), /append-only input tools\/verify-experiments\.js no longer begins with its admitted bytes/);
+
+  // An exemption must be one exact file the protocol froze. Hiding the result
+  // directory, the journals or an unrelated path behind live_files is refused.
+  for (const hidden of ['experiments/RESULT-0082', 'solver/policy-lab/runs/resume', 'package.json']) {
+    assert.match(
+      frozenInputProblems('RESULT-0082', admission, { ...entry, live_files: [...entry.live_files, hidden] }).join('\n'),
+      new RegExp(`exemption ${hidden.replaceAll('/', '\\/')} is not a version_freeze file`),
+      `${hidden} must not be exemptable`,
+    );
+  }
 });
 
 test('LIVE: RESULT-0082 recomputes at its admission commit, so appending to SEEDS.md cannot break it', () => {
