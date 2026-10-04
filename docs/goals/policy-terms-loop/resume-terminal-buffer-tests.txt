@@ -1,0 +1,10 @@
+✔ real Git inventory exceeding the default buffer retains every path and the forbidden tail (111.968681ms)
+✔ Git errors propagate and the original function is restored after refusal (36.391957ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 214.786578
