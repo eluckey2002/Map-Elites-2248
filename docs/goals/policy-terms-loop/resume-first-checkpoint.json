@@ -1,0 +1,19 @@
+{
+  "result": "RESULT-0082",
+  "status": "RUNNING",
+  "registration": "cd7741d87ae722206b0d70f388fd5602e76d6215",
+  "charged": {
+    "controls": 28420,
+    "proposals": 580,
+    "jointSearch": 0,
+    "confirmation": 0,
+    "replays": 1380,
+    "buffer": 0
+  },
+  "totalCharged": 30380,
+  "freshPanelsCompleted": 0,
+  "freshJobsCompleted": 10,
+  "freshJobsDispatched": 58,
+  "retainedCompletedNewGames": 100,
+  "proposalGamesNotYetStarted": true
+}
