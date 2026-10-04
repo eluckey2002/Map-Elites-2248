@@ -60,7 +60,8 @@ function classifyLease(gitDir, now) {
   try { lease = JSON.parse(raw); } catch { return { cls: 'absent', note: 'unparseable lease treated as absent' }; }
   const hb = lease && typeof lease === 'object' && !Array.isArray(lease)
     ? (typeof lease.heartbeat === 'number' ? lease.heartbeat : Date.parse(lease.heartbeat)) : NaN;
-  if (Number.isNaN(hb) || typeof lease.host !== 'string') {
+  // A pid that is not a positive integer is malformed: never let it read as a dead pid.
+  if (Number.isNaN(hb) || typeof lease.host !== 'string' || !Number.isInteger(lease.pid) || lease.pid <= 0) {
     return { cls: 'absent', note: 'malformed lease treated as absent' };
   }
   if (lease.host !== os.hostname()) return { cls: 'foreign-host' };
@@ -87,10 +88,15 @@ function main() {
 
     const gd = git(wt.path, ['rev-parse', '--absolute-git-dir']);
     const merged = git(wt.path, ['merge-base', '--is-ancestor', 'HEAD', 'origin/main']).ok;
-    const dirty = git(wt.path, ['status', '--porcelain']).out.length > 0;
+    const status = git(wt.path, ['status', '--porcelain']);
     // Unpushed = commits reachable from HEAD that are on no remote-tracking ref.
-    const unpushedN = parseInt(git(wt.path, ['rev-list', '--count', 'HEAD', '--not', '--remotes']).out, 10) || 0;
-    const clean = !dirty && unpushedN === 0;
+    const revs = git(wt.path, ['rev-list', '--count', 'HEAD', '--not', '--remotes']);
+    // If either query failed, cleanliness was never established: unknown, never clean.
+    const failed = !status.ok ? status : !revs.ok ? revs : null;
+    const unknown = failed !== null;
+    const dirty = status.ok && status.out.length > 0;
+    const unpushedN = revs.ok ? parseInt(revs.out, 10) || 0 : 0;
+    const clean = !unknown && !dirty && unpushedN === 0;
     const lease = gd.ok ? classifyLease(gd.out, now) : { cls: 'absent', note: 'git dir unreadable' };
 
     const isCand = merged && clean && lease.cls === 'stale-local-dead-pid';
@@ -98,7 +104,7 @@ function main() {
     console.log(
       `[${isCand ? 'CANDIDATE' : 'REPORT'}] ${wt.path} | branch=${wt.branch}` +
       ` | merged-into-origin/main=${merged ? 'yes' : 'no'}` +
-      ` | tree=${clean ? 'clean' : 'not-clean(' + (dirty ? 'uncommitted' : '') + (dirty && unpushedN ? ',' : '') + (unpushedN ? unpushedN + ' unpushed' : '') + ')'}` +
+      ` | tree=${unknown ? 'unknown(' + (failed.err.split('\n')[0] || 'git query failed') + ')' : clean ? 'clean' : 'not-clean(' + (dirty ? 'uncommitted' : '') + (dirty && unpushedN ? ',' : '') + (unpushedN ? unpushedN + ' unpushed' : '') + ')'}` +
       ` | lease=${lease.cls}${lease.note ? ' (' + lease.note + ')' : ''}`
     );
   }
