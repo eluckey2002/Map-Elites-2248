@@ -234,3 +234,78 @@ test('a failed fetch on a checkout already stale from local refs still exits 1 a
     assert.match(r.out, /STALE/);
   } finally { w.cleanup(); }
 });
+
+// Printed fix lines: everything under "To bring it current", comment stripped.
+function fixLines(out) {
+  const all = out.split(/\r?\n/);
+  const i = all.findIndex((l) => l.includes('To bring it current'));
+  return all.slice(i + 1).filter((l) => /^\s+\S/.test(l)).map((l) => l.trim());
+}
+
+// Execute every printed fix line (inside temp repos only) and return their results.
+function runFix(out, cwd) {
+  return fixLines(out).map((l) => spawnSync(l.replace(/\s+#.*$/, ''), { shell: true, cwd, encoding: 'utf8' }));
+}
+
+test('a merged topic branch in a LINKED worktree gets a fix that runs there (no switch main) and ends FRESH', () => {
+  const w = makeWorld();
+  try {
+    const linked = path.join(w.root, 'linked');
+    git(w.subject, 'worktree', 'add', '-b', 'topic', linked, 'HEAD'); // primary stays on main
+    w.advance('EVIDENCE_LEDGER.md', 'v2\n');
+    const r = run(linked);
+    assert.equal(r.code, 1, r.out);
+    assert.match(r.out, /branch topic is already merged into origin\/main/);
+    assert.doesNotMatch(r.out, /switch main/);
+    assert.equal(fixLines(r.out).length, 1, r.out);
+    for (const f of runFix(r.out, w.root)) assert.equal(f.status, 0, `${f.stdout}${f.stderr}`);
+    const again = run(linked);
+    assert.equal(again.code, 0, again.out);
+    assert.match(again.out, /FRESH/);
+  } finally { w.cleanup(); }
+});
+
+test('the main clone behind origin/main prints exactly one fix line and it brings the clone current', () => {
+  const w = makeWorld();
+  try {
+    git(w.subject, 'branch', '--set-upstream-to=origin/main', 'main');
+    w.advance('EVIDENCE_LEDGER.md', 'v2\n');
+    const r = run(w.subject);
+    assert.equal(r.code, 1, r.out);
+    assert.equal(fixLines(r.out).length, 1, r.out);
+    for (const f of runFix(r.out, w.root)) assert.equal(f.status, 0, `${f.stdout}${f.stderr}`);
+    const again = run(w.subject);
+    assert.equal(again.code, 0, again.out);
+    assert.match(again.out, /FRESH/);
+  } finally { w.cleanup(); }
+});
+
+test('a detached HEAD behind origin/main gets a fix that ends FRESH', () => {
+  const w = makeWorld();
+  try {
+    git(w.subject, 'checkout', '--detach');
+    w.advance('EVIDENCE_LEDGER.md', 'v2\n');
+    const r = run(w.subject);
+    assert.equal(r.code, 1, r.out);
+    assert.match(r.out, /switch --detach origin\/main/);
+    for (const f of runFix(r.out, w.root)) assert.equal(f.status, 0, `${f.stdout}${f.stderr}`);
+    const again = run(w.subject);
+    assert.equal(again.code, 0, again.out);
+    assert.match(again.out, /FRESH/);
+  } finally { w.cleanup(); }
+});
+
+test('an unmerged branch with its own commit behind an evidence commit still fails and keeps the rebase hint', () => {
+  const w = makeWorld();
+  try {
+    git(w.subject, 'checkout', '-b', 'topic');
+    fs.writeFileSync(path.join(w.subject, 'README.md'), 'mine\n');
+    git(w.subject, 'add', 'README.md');
+    git(w.subject, 'commit', '-m', 'own work');
+    w.advance('EVIDENCE_LEDGER.md', 'v2\n');
+    const r = run(w.subject);
+    assert.equal(r.code, 1, r.out);
+    assert.match(r.out, /branch topic is NOT already merged/);
+    assert.match(r.out, /merge --ff-only origin\/main\s+# or rebase onto origin\/main/);
+  } finally { w.cleanup(); }
+});
