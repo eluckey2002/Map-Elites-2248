@@ -59,6 +59,11 @@ function print(){
   show('FRESH RESULT-PREPARATION NUMERIC AUDITS',GOAL+'resume-result-recompute-output.txt');
   show('FINAL TERMINAL CLOSEOUT; retained transcript, not a new execution',GOAL+'resume-final-closeout-output.txt');
   show('FINAL EXECUTED RECURRING AUDIT RECEIPT',GOAL+'resume-final-recurring-output.txt');
+  show('CURRENT REVIEWED COMPLETION REQUIREMENTS',GOAL+'RESUME_FINAL_REVIEW_ADDENDUM.md');
+  show('REVIEWED FULL-HISTORY CUSTODY QUALIFICATION',GOAL+'resume-reviewed-proof-tests.txt');
+  show('ACTUAL REVIEWED FULL-HISTORY CUSTODY PROOF',GOAL+'resume-reviewed-proof-output.txt');
+  show('CURRENT REVIEWED TERMINAL CLOSEOUT',GOAL+'resume-reviewed-closeout-output.txt');
+  show('CURRENT REVIEWED EXECUTED RETAINED AUDIT',GOAL+'resume-reviewed-recurring-output.txt');
   show('ACTUAL FINAL PR REVIEW RECEIPT',GOAL+'resume-final-review.json');
   show('ACTUAL FINAL CI RECEIPT',GOAL+'resume-final-ci.json');
   console.log('Any pending or interrupted phase stays pending/UNVERIFIED. Only a retained, independently audited budget or effort stop can be Path D.');
