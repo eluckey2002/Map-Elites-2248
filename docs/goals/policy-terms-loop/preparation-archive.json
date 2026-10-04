@@ -1,0 +1,35 @@
+{
+  "purpose": "Preserve six untracked prior preparation transcripts outside the checkout so clean one-shot preregistration can proceed; no scientific inputs moved.",
+  "files": [
+    {
+      "original": "/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/ci-0278b17-full-suite.txt",
+      "archived": "/workspace/policy-terms-preparation-archive-20261004/ci-0278b17-full-suite.txt",
+      "sha256": "2361b2a45b1a078f19cc18e1e0d75b5019f6a2ed36693cb1d3d0ec3cedb07b80"
+    },
+    {
+      "original": "/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/ci-13111d1-full-suite.txt",
+      "archived": "/workspace/policy-terms-preparation-archive-20261004/ci-13111d1-full-suite.txt",
+      "sha256": "b437376a367e9e058b8f5da85a430ec26f05af3383acd9a2be64f1a4268878e1"
+    },
+    {
+      "original": "/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/ci-d988061-full-suite.txt",
+      "archived": "/workspace/policy-terms-preparation-archive-20261004/ci-d988061-full-suite.txt",
+      "sha256": "7a35e56d795b78723d7d556cc2a233e8d4ebfddfb2129cc79eec07bcb691c5e3"
+    },
+    {
+      "original": "/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/ci-dd1be09-full-suite.txt",
+      "archived": "/workspace/policy-terms-preparation-archive-20261004/ci-dd1be09-full-suite.txt",
+      "sha256": "c2d6eaccc5bdef20bda7c26cf46f7f63d7282139806af9abea6842a813007e3c"
+    },
+    {
+      "original": "/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/phase-preparation-experiment-gate.txt",
+      "archived": "/workspace/policy-terms-preparation-archive-20261004/phase-preparation-experiment-gate.txt",
+      "sha256": "7986486ff5f73450602c515b3f1455984c18ec18372fd115cf511bb005142b90"
+    },
+    {
+      "original": "/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/proposal-orchestration-qualification.txt",
+      "archived": "/workspace/policy-terms-preparation-archive-20261004/proposal-orchestration-qualification.txt",
+      "sha256": "c601fc136c73d8f53fc31cf1e1c1cb3fd1a84a95bdd3df43074fae42048909a3"
+    }
+  ]
+}
