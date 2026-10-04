@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "result": "RESULT-0082",
+  "run_id": "RESULT-0082-one-shot-F",
+  "closure_status": "CLOSED",
+  "path": "A",
+  "primary_outcome": "SUPPORTED",
+  "final_subject_identity": "c475648e8d9778208f8b92c1fbee16a4fc8a589efbcba239494d30d337a62d3f",
+  "contract": {
+    "path": "closeout-contract.json",
+    "sha256": "05aac5a7afe288527d09a75446d71fe1b3ff3402743ba863b62a5c46969c1619"
+  },
+  "registration": {
+    "exploratory": false,
+    "recoveryPlanCommit": "cd7741d87ae722206b0d70f388fd5602e76d6215",
+    "originalPlanCommit": "e76f3ec4af2496495697322851bafca0ab73b253",
+    "previousPlanCommit": "d2025dbfb33d7f9f51647547ac13ec7d618fcbff",
+    "phaseCommit": "00dc7894f869e60223e796edaa6b879086375c39",
+    "protocol": "RESULT-0082",
+    "protocolCommit": "f301e1925c13f4e0ec5b4fd4c23a0989a3009630"
+  },
+  "diagnosticInputs": {
+    "controls": {
+      "path": "solver/policy-lab/runs/resume/controls-raw.json",
+      "sha256": "050865106c6db0e10f9d9f2ee86f22d65e34aad8c54937ce615e77acdcee0fae"
+    },
+    "proposals": {
+      "path": "solver/policy-lab/runs/resume/proposals-raw.json",
+      "sha256": "1172cd49f7cafd33102653dece5e0dc188c5aaa54fd3f98c1de53596fa9157d3"
+    },
+    "confirmation": {
+      "path": "experiments/RESULT-0082/raw-pairs.json",
+      "sha256": "663039d4b412978bb622fc00eb8b6cfee4248e0f95ecf6089a484bd93a33fed2"
+    },
+    "verdict": {
+      "path": "experiments/RESULT-0082/verdict.json",
+      "sha256": "9ec44292b20c3126871b14fdc7912e499c52dff96b41d9d8280e72cc8226b3fc"
+    }
+  },
+  "chargedAccounting": {
+    "controls": 30160,
+    "proposals": 16240,
+    "jointSearch": 4640,
+    "confirmation": 17400,
+    "replays": 1380,
+    "buffer": 0
+  },
+  "proposalRounds": 15,
+  "claims": [
+    {
+      "id": "C1",
+      "status": "PASS",
+      "reason": "Inherited exact parity/inert qualification and source identities independently rechecked.",
+      "evidence_subject_identity": "c475648e8d9778208f8b92c1fbee16a4fc8a589efbcba239494d30d337a62d3f"
+    },
+    {
+      "id": "C2",
+      "status": "PASS",
+      "reason": "All twelve complete disjoint control blocks meet the unchanged bars.",
+      "evidence_subject_identity": "c475648e8d9778208f8b92c1fbee16a4fc8a589efbcba239494d30d337a62d3f"
+    },
+    {
+      "id": "C3",
+      "status": "PASS",
+      "reason": "Fresh current full suite retains the original three named failures and one skip.",
+      "evidence_subject_identity": "c475648e8d9778208f8b92c1fbee16a4fc8a589efbcba239494d30d337a62d3f"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "raw-pairs",
+      "path": "raw-pairs.json",
+      "sha256": "663039d4b412978bb622fc00eb8b6cfee4248e0f95ecf6089a484bd93a33fed2"
+    },
+    {
+      "id": "verdict",
+      "path": "verdict.json",
+      "sha256": "9ec44292b20c3126871b14fdc7912e499c52dff96b41d9d8280e72cc8226b3fc"
+    },
+    {
+      "id": "report",
+      "path": "report.md",
+      "sha256": "f8b90c4d4b45e547716916c6c1949773a3c327170a9804b6a6932cd469da918a"
+    },
+    {
+      "id": "primary-recomputation",
+      "path": "primary-recomputation.json",
+      "sha256": "6d366c53e13d7da6dfcddf1b8cc29e7cbdd85c3ce5cbc08699b068644bf9b06a"
+    }
+  ],
+  "scientificAcceptance": false,
+  "adoption": false,
+  "notes": "Valid FALSIFIED or INCONCLUSIVE is CLOSED, not a failed run. Both earlier failed runs remain immutable. Report/ledger/pin/live checks and actual PR review still govern goal completion."
+}

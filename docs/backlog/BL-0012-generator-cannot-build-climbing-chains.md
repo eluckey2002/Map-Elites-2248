@@ -107,3 +107,5 @@ HUMAN-PILOT-0002 was walked.
   failure-evidence publication are recorded separately from the unchanged
   scientific registrations and receipts. Both runs remain UNVERIFIED, and
   policy effects and adoption remain open.
+
+- 2026-10-04 (UTC) — RESULT-0082 completes the sole registered confirmation on Path A, provisionally SUPPORTED under the sampled net-win and move-gain bars; see experiments/RESULT-0082/report.md and its ledger record. Independent arithmetic and complete-panel/journal/disjointness checks match. Earlier failed runs and charges remain unchanged. Individual win regressions, added CPU cost and the original validator-freeze omission are disclosed. No scientific acceptance, policy adoption or PR merge; this backlog remains open.
