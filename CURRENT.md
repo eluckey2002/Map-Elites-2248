@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Selectable Nemesis opponents — 2026-10-04
+
+DECISION-0012 records the owner-authorized additional Wider-search bot from RESULT-0082. Nemesis now selects either opponent on the same board and seed, retaining that selection for result checks. The shipped bot remains the default. See [implementation and verification](docs/game-design/levels/receipts/NEMESIS-POLICY-1.md). Task NEMESIS-POLICY-1 awaits owner review; independent Codex PR review and merge remain open.
+
 ## Level archetype design — current as of 2026-10-04
 
 **2026-10-04 main integration authorized:** DECISION-0010 and PDL-035 record

@@ -93,3 +93,5 @@ their pre-game benchmark display without changing level rules or targets.
   The target-aware bot remained deterministic at 126,464 in 15 moves on that
   same seed. These two captures update the owner-observation history; they do
   not establish an owner minimum or a bot optimum.
+
+- 2026-10-04 — DECISION-0012 records owner authorization for a selectable Wider-search opponent from RESULT-0082. Nemesis retains the chosen opponent in benchmark display and result polling; the shipped default and human seed/capture format remain unchanged. NEMESIS-POLICY-1 holds verification and review boundaries.

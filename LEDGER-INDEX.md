@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 91 (38 accepted, 24 narrowed, 3 open, 12 provisional, 4 stale, 10 superseded).
+Records: 92 (38 accepted, 24 narrowed, 3 open, 13 provisional, 4 stale, 10 superseded).
 
 ## Current records
 
@@ -27,6 +27,7 @@ Records: 91 (38 accepted, 24 narrowed, 3 open, 12 provisional, 4 stale, 10 super
 | DECISION-0008 | Pause porting the family-board MAP-Elites work until frozen renumbering is defined | provisional | owner_decision | Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the owner's intent… | 1271 |
 | DECISION-0009 | Keep Level 53 as shipped at 101,000 | provisional | owner_decision | The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. | 1288 |
 | DECISION-0010 | Land the selected finite Connections variant in the original game | provisional | owner_decision | The owner authorizes landing the existing Connections work in the main project through its protected pull-request process. | 1305 |
+| DECISION-0012 | Offer the wider-search candidate as a selectable Nemesis opponent | provisional | owner_decision | The owner authorized adding a selectable Wider-search bot alongside the shipped bot after discussing how to play against the candidate from PR #62. | 1747 |
 | RESULT-0001 | Accepted 12,336 score | narrowed | replayed_lower_bound | **Corrected by CORRECTION-0010 (RESULT-0001 and RESULT-0004 verifiers were deleted from the tree); the wording below may no longer hold.** A 32-move witness replays to 12,336 at spawn cursor 520. | 373 |
 | RESULT-0002 | Mass/cursor upper bound | accepted | proven_upper_bound | Complete enumeration of the mass/cursor relaxation proves a 326,390 upper bound. | 389 |
 | RESULT-0003 | Exact move-one envelope | accepted | exact_result | Complete position-aware enumeration finds 1,868,975 physical first moves and an exact move-one maximum of 430. | 403 |

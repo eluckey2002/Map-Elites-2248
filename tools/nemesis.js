@@ -12,6 +12,14 @@ const { playBot, resolveRecordedBoard } = require('../solver/human-benchmark');
 const { candidateIndex, replay } = require('../solver/recording-replay');
 const { LEVELS } = require('../src/game.js');
 
+const { play } = require('../solver/policy-lab/play');
+const { chooserFor } = require('../solver/policy-lab/chooser');
+const widerCandidate = require('../solver/policy-lab/resume-frozen-candidate');
+const POLICIES = [
+  { id: 'shipped', label: 'Shipped bot' },
+  { id: 'wider-search', label: 'Wider-search bot', record: 'RESULT-0082' },
+];
+
 const ROOT = path.join(__dirname, '..');
 const BOARD_FIELDS = ['gridW', 'gridH', 'blockers', 'minChain', 'moves', 'target', 'tileScale'];
 
@@ -39,9 +47,17 @@ function playable(level, seed) {
   return Boolean(shipped) && Number.isInteger(seed) && seed >= 0 && seed <= 0xffffffff;
 }
 
-function botResult(level, seed, cache) {
-  const key = `${level}:${seed}`;
-  if (!cache.has(key)) cache.set(key, playBot(shippedLevel(level), seed));
+function botResult(level, seed, cache, policy) {
+  const key = `${policy.id}:${level}:${seed}`;
+  if (!cache.has(key)) {
+    if (policy.id === 'shipped') cache.set(key, playBot(shippedLevel(level), seed));
+    else {
+      const result = play(shippedLevel(level), seed, chooserFor(widerCandidate));
+      const bot = { score: result.score, moves: result.movesUsed, outcome: result.win ? 'win' : 'lose' };
+      if (!result.win) bot.reason = result.reason;
+      cache.set(key, bot);
+    }
+  }
   return cache.get(key);
 }
 
@@ -77,8 +93,8 @@ function verdict(you, bot) {
   return you.moves === bot.moves ? 'tie' : 'loss';
 }
 
-function board(level, seed, attempts, cache) {
-  const bot = botResult(level, seed, cache);
+function board(level, seed, attempts, cache, policy) {
+  const bot = botResult(level, seed, cache, policy);
   const mine = attempts.filter((a) => a.level === level && a.seed === seed);
   const wins = mine.filter((a) => a.outcome === 'win');
   const best = wins.length ? wins.reduce((a, b) => (b.moves < a.moves ? b : a)) : null;
@@ -89,6 +105,7 @@ function board(level, seed, attempts, cache) {
     seed,
     target: shippedLevel(level).target,
     moveBudget: shippedLevel(level).moves,
+    policy,
     bot,
     attempts: mine.length,
     best,
@@ -99,18 +116,18 @@ function board(level, seed, attempts, cache) {
 
 const ORDER = { open: 0, loss: 0, tie: 1, beat: 2 };
 
-function listChallenges({ sources = defaultSources(), cache = new Map() } = {}) {
+function listChallenges({ sources = defaultSources(), cache = new Map(), policy = POLICIES[0] } = {}) {
   const attempts = humanAttempts(sources);
   const keys = [...new Set(attempts.map((a) => `${a.level}:${a.seed}`))];
   return keys
-    .map((key) => { const [level, seed] = key.split(':').map(Number); return board(level, seed, attempts, cache); })
+    .map((key) => { const [level, seed] = key.split(':').map(Number); return board(level, seed, attempts, cache, policy); })
     .map((entry) => ({ ...entry, status: entry.status === 'loss' ? 'open' : entry.status }))
     .sort((a, b) => ORDER[a.status] - ORDER[b.status] || a.level - b.level || a.seed - b.seed);
 }
 
-function oneChallenge(level, seed, { sources = defaultSources(), cache = new Map() } = {}) {
+function oneChallenge(level, seed, { sources = defaultSources(), cache = new Map(), policy = POLICIES[0] } = {}) {
   if (!playable(level, seed)) return null;
-  const entry = board(level, seed, humanAttempts(sources), cache);
+  const entry = board(level, seed, humanAttempts(sources), cache, policy);
   return { ...entry, status: entry.status === 'loss' ? 'open' : entry.status };
 }
 
@@ -130,4 +147,4 @@ function main() {
 
 if (require.main === module) main();
 
-module.exports = { listChallenges, oneChallenge, sameBoard, verdict };
+module.exports = { POLICIES, listChallenges, oneChallenge, sameBoard, verdict };

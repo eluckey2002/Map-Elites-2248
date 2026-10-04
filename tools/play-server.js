@@ -14,7 +14,7 @@ const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { listChallenges, oneChallenge } = require('./nemesis');
+const { POLICIES, listChallenges, oneChallenge } = require('./nemesis');
 const { createConnectionCapture } = require('./connection-capture');
 
 const ROOT = path.join(__dirname, '..');
@@ -124,10 +124,13 @@ function createPlayServer({ store = STORE, connectionsStore, now = () => new Dat
     }
 
     if (request.method === 'GET' && pathname === '/api/nemesis') {
+      const policy = POLICIES.find(p => p.id === (url.searchParams.get('policy') || 'shipped'));
+      if (!policy) { json(response, 400, { error: 'unknown bot policy' }); return; }
+      const options = { ...nemesisOptions(), policy };
       const level = url.searchParams.get('level');
       const seed = url.searchParams.get('seed');
-      if (level === null && seed === null) { json(response, 200, { challenges: listChallenges(nemesisOptions()) }); return; }
-      const challenge = oneChallenge(Number(level), Number(seed), nemesisOptions());
+      if (level === null && seed === null) { json(response, 200, { challenges: listChallenges(options), policies: POLICIES, policy }); return; }
+      const challenge = oneChallenge(Number(level), Number(seed), options);
       if (!challenge) { json(response, 400, { error: 'unknown level or seed' }); return; }
       json(response, 200, { challenge });
       return;
