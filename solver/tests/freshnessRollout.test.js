@@ -128,3 +128,64 @@ test('git failure (not a repo): UNVERIFIED, exit 2, no crash', () => {
     assert.match(r.out, /^\[UNVERIFIED\] /m);
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('no origin remote at all: UNCHECKED worktrees are UNVERIFIED, never FRESH; exit 2', (t) => {
+  const root = norm(fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'rollout-noorigin-'))));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const main = `${root}/main`;
+  git(root, 'init', '-b', 'main', main);
+  git(main, 'config', 'user.email', 't@t'); git(main, 'config', 'user.name', 't');
+  fs.writeFileSync(`${main}/EVIDENCE_LEDGER.md`, 'one\n');
+  git(main, 'add', 'EVIDENCE_LEDGER.md'); git(main, 'commit', '-m', 'init');
+  const wt = `${root}/linked`;
+  git(main, 'worktree', 'add', '-b', 'linked', wt, 'HEAD');
+  const snap = () => git(main, 'worktree', 'list', '--porcelain') + git(main, 'branch', '-a') +
+    [main, wt].map((p) => git(p, 'rev-parse', 'HEAD') + git(p, 'status', '--porcelain', '--untracked-files=all')).join('\n');
+  const before = snap();
+  const r = rollout(main);
+  assert.equal(r.status, 2, `stderr=${r.err}; out=${r.out}`);
+  assert.match(lineFor(r.out, wt), /^\[UNVERIFIED\] .* \| branch=linked \| evidence-behind=\? \| UNCHECKED:/);
+  assert.match(lineFor(r.out, main), /^\[UNVERIFIED\] /);
+  assert.match(r.out, /^rollout: 2 worktrees, 0 fresh, 0 stale, 2 unverified, 0 missing$/m);
+  assert.equal(snap(), before, 'read-only');
+});
+
+test('fetch fails (origin URL dead) with no stale evidence: UNVERIFIED, exit 2', (t) =>
+  runCase(t, (f) => {
+    f.advance();
+    const fresh = f.addWt('fresh', 'origin/main');
+    git(f.main, 'remote', 'set-url', 'origin', `${f.root}/does-not-exist.git`);
+    return { fresh };
+  }, 2, (out, { fresh }, f) => {
+    assert.match(lineFor(out, fresh), /^\[UNVERIFIED\] .* \| branch=fresh \| evidence-behind=0 \| WARNING: git fetch failed/);
+    assert.match(lineFor(out, f.main), /^\[UNVERIFIED\] /);
+    assert.match(out, /^rollout: 2 worktrees, 0 fresh, 0 stale, 2 unverified, 0 missing$/m);
+  }));
+
+test('fetch fails but local refs already stale: STALE wins, exit 1', (t) =>
+  runCase(t, (f) => {
+    const stale = f.addWt('stale', f.oldSha);
+    f.advance();
+    const fresh = f.addWt('fresh', 'origin/main');
+    git(f.main, 'remote', 'set-url', 'origin', `${f.root}/does-not-exist.git`);
+    return { stale, fresh };
+  }, 1, (out, { stale, fresh }) => {
+    assert.match(lineFor(out, stale), /^\[STALE\] .* \| branch=stale \| evidence-behind=1$/);
+    assert.match(lineFor(out, fresh), /^\[UNVERIFIED\] /);
+    assert.match(out, /^rollout: 3 worktrees, 0 fresh, 1 stale, 2 unverified, 0 missing$/m);
+  }));
+
+test('check timeout: every checked worktree UNVERIFIED with "timed out", summary printed, exit 2', (t) => {
+  const f = fixture(t);
+  f.advance();
+  const fresh = f.addWt('fresh', 'origin/main');
+  const before = f.snap();
+  const r = spawnSync('node', [ROLLOUT, f.main], {
+    encoding: 'utf8', env: { ...process.env, ROLLOUT_CHECK_TIMEOUT_MS: '1' },
+  });
+  assert.equal(r.status, 2, `stderr=${r.stderr}; out=${r.stdout}`);
+  assert.match(lineFor(r.stdout, fresh), /^\[UNVERIFIED\] .* \| evidence-behind=\? \| check timed out after 1 ms$/);
+  assert.match(lineFor(r.stdout, f.main), /^\[UNVERIFIED\] .*timed out/);
+  assert.match(r.stdout, /^rollout: 2 worktrees, 0 fresh, 0 stale, 2 unverified, 0 missing$/m);
+  assert.equal(f.snap(), before, 'read-only');
+});
