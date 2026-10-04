@@ -11,3 +11,15 @@ Experiment, authorship, ledger-index and failed-run ledger gates pass. The recur
 The newly committed raw journals and execution logs are still local. Automatic approval review rejected pushing them to public PR62 because authorization for that payload and destination was not established. The PR remains at its previously published head; it cannot review the new local receipt until publication is authorized. No merge or policy adoption is authorized.
 
 Saved output: `recovery-interruption-output.txt`, `recovery-recompute-output.txt`, `recovery-final-tests.txt`, `recovery-closeout-output.txt`, and `recovery-raw-report.txt`. `node docs/goals/policy-terms-loop/print-recovery-report.js` prints the full saved report without games. Its missing-phase labels are UNVERIFIED_NOT_RUN, not successful checks.
+
+## Post-stop maintenance — 2026-10-04
+
+The owner approved publication and the exact RESULT-0081 inventory addition.
+The prior paragraphs are the original stop-time record. The inventory change
+is now applied and separately audited; the original registrations and failed
+pin remain unchanged. Publication succeeded to PR62 at commit5da99a5.
+The new current-suite closeout check executes the tests instead of trusting
+saved text, with a real child-suite negative regression. Current full-suite validation reports663 tests,659 pass, the original3
+failures and1 skip. Experiment/authorship/index/failed-run gates pass. The
+closeout finding is fixed and answered; updated PR review is pending. The scientific goal remains UNVERIFIED and
+no Path A-D has been completed; no scientific game was added or replayed.

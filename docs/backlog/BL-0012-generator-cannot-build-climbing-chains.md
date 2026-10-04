@@ -103,3 +103,7 @@ HUMAN-PILOT-0002 was walked.
   during the final control block. Durable partial jobs and all charges are
   retained; no idea was judged, neither stopped controller may be restarted,
   and the proposed changes and adoption remain unresolved.
+- 2026-10-04 — Owner-approved RESULT-0081 inventory exception and public
+  failure-evidence publication are recorded separately from the unchanged
+  scientific registrations and receipts. Both runs remain UNVERIFIED, and
+  policy effects and adoption remain open.

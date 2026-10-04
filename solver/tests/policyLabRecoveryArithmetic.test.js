@@ -37,7 +37,9 @@ test('independent audit matches inherited real panels and rejects discounted cha
   const raw={...structuredClone(old),result:config.result,config,registration:{recoveryPlanCommit:first},status:'QUALIFICATION_SNAPSHOT',dispatches:[],
     panels:old.panels.filter(p=>p.block!=='C3'),excludedOriginalPanels:old.panels.filter(p=>p.block==='C3').map(p=>({block:p.block,arm:p.arm,games:p.games.length}))};
   const file=path.join(temp,'snapshot.json');
-  const run=value=>{fs.writeFileSync(file,JSON.stringify(value));return spawnSync(process.execPath,[path.join(root,'solver/policy-lab/recovery-recompute.js'),file],{cwd:root,encoding:'utf8',maxBuffer:16*1024*1024});};
+  const historicalFixture=fs.existsSync(path.join(root,'docs/goals/policy-terms-loop/POST_STOP_APPROVAL.txt'))
+    ?['--require',path.join(root,'solver/tests/fixtures/poststop-inventory-preload.js')]:[];
+  const run=value=>{fs.writeFileSync(file,JSON.stringify(value));return spawnSync(process.execPath,[...historicalFixture,path.join(root,'solver/policy-lab/recovery-recompute.js'),file],{cwd:root,encoding:'utf8',maxBuffer:16*1024*1024});};
   const valid=run(raw);assert.equal(valid.status,0,valid.stderr);assert.match(valid.stdout,/MATCH retained arithmetic/);assert.match(valid.stdout,/UNVERIFIED aggregate/);
   const discounted=structuredClone(raw);discounted.counts.controls-=580;
   const badCharge=run(discounted);assert.equal(badCharge.status,1);assert.match(badCharge.stderr,/charged accounting/);

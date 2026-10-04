@@ -1,0 +1,22 @@
+{
+  "observedUTC": "2026-10-04T01:04:06.633222+00:00",
+  "pullRequest": "https://github.com/eluckey2002/Map-Elites-2248/pull/62",
+  "ownerApproval": "docs/goals/policy-terms-loop/POST_STOP_APPROVAL.txt",
+  "publishedEvidenceHead": "5da99a53f7a343aa72d5e9f1e9f24f805a2f28b8",
+  "publication": "PUBLISHED",
+  "newRawJournalsPublished": true,
+  "inventoryExceptionApplied": true,
+  "originalRegistrationsPreserved": true,
+  "originalFailurePinPreserved": true,
+  "scientificGoalComplete": false,
+  "closureStatus": "UNVERIFIED",
+  "merged": false,
+  "adopted": false,
+  "fullSuite": {
+    "tests": 663,
+    "pass": 659,
+    "fail": 3,
+    "skip": 1
+  },
+  "scope": "Scientific run remains stopped. Report/test-fixture validation updates are being finalized."
+}
