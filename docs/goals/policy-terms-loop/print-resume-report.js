@@ -55,6 +55,12 @@ function print(){
   show('ACTUAL CLOSURE',`experiments/${config.result}/closure.json`);
   show('CLOSEOUT AUDIT IDENTITIES',GOAL+'resume-closeout-audits.json');
   show('LATEST RETAINED HANDOFF SUITE; terminal closeout must execute the current suite',GOAL+'resume-handoff-tests.txt');
+  show('ACTUAL RESULT-PREPARATION SUITE',GOAL+'resume-result-tests.txt');
+  show('FRESH RESULT-PREPARATION NUMERIC AUDITS',GOAL+'resume-result-recompute-output.txt');
+  show('FINAL TERMINAL CLOSEOUT; retained transcript, not a new execution',GOAL+'resume-final-closeout-output.txt');
+  show('FINAL EXECUTED RECURRING AUDIT RECEIPT',GOAL+'resume-final-recurring-output.txt');
+  show('ACTUAL FINAL PR REVIEW RECEIPT',GOAL+'resume-final-review.json');
+  show('ACTUAL FINAL CI RECEIPT',GOAL+'resume-final-ci.json');
   console.log('Any pending or interrupted phase stays pending/UNVERIFIED. Only a retained, independently audited budget or effort stop can be Path D.');
 }
 if(require.main===module){try{print();}catch(error){console.error(error.stack);process.exitCode=1;}}
