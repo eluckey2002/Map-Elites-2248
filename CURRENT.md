@@ -2,6 +2,14 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Experiment gate: frozen-tree recompute — current as of 2026-10-04
+
+DECISION-0011 (provisional, check pending) lets the gate recompute a listed
+closed result at the commit that admitted its closure, so append-only
+`experiments/SEEDS.md` can grow without turning `RESULT-0082` red. The list is
+the code-owned `FROZEN_TREE_POLICY` table in `tools/verify-experiments.js`; PR #66
+(`RESULT-0083`) is the first reservation that needs it.
+
 ## Level archetype design — current as of 2026-10-04
 
 **2026-10-04 main integration authorized:** DECISION-0010 and PDL-035 record

@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 91 (38 accepted, 24 narrowed, 3 open, 12 provisional, 4 stale, 10 superseded).
+Records: 92 (38 accepted, 24 narrowed, 3 open, 13 provisional, 4 stale, 10 superseded).
 
 ## Current records
 
@@ -27,6 +27,7 @@ Records: 91 (38 accepted, 24 narrowed, 3 open, 12 provisional, 4 stale, 10 super
 | DECISION-0008 | Pause porting the family-board MAP-Elites work until frozen renumbering is defined | provisional | owner_decision | Branch `feat/family-board-map-elites-20260919` (records RESULT-0044..0047 there, colliding with main's IDs) is not ported until `BL-0023` criterion 7 defines alias-based renumbering the gate enforces; the owner's intent… | 1271 |
 | DECISION-0009 | Keep Level 53 as shipped at 101,000 | provisional | owner_decision | The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. | 1288 |
 | DECISION-0010 | Land the selected finite Connections variant in the original game | provisional | owner_decision | The owner authorizes landing the existing Connections work in the main project through its protected pull-request process. | 1305 |
+| DECISION-0011 | Recompute a closed result at its admission commit when its frozen files are meant to keep growing | provisional | owner_decision | The owner grants a recorded exception to the rule that a red gate is fixed in the ledger or the protocol and never by editing the gate (`AGENTS.md`, Landing changes on `main`). | 1322 |
 | RESULT-0001 | Accepted 12,336 score | narrowed | replayed_lower_bound | **Corrected by CORRECTION-0010 (RESULT-0001 and RESULT-0004 verifiers were deleted from the tree); the wording below may no longer hold.** A 32-move witness replays to 12,336 at spawn cursor 520. | 373 |
 | RESULT-0002 | Mass/cursor upper bound | accepted | proven_upper_bound | Complete enumeration of the mass/cursor relaxation proves a 326,390 upper bound. | 389 |
 | RESULT-0003 | Exact move-one envelope | accepted | exact_result | Complete position-aware enumeration finds 1,868,975 physical first moves and an exact move-one maximum of 430. | 403 |
@@ -68,32 +69,32 @@ Records: 91 (38 accepted, 24 narrowed, 3 open, 12 provisional, 4 stale, 10 super
 | RESULT-0052 | On 2026-09-26 the verify loop shows 97-100% wins and no lockouts on sampled levels | accepted | direct_source | The verify loop printed win rates of 100% on every sampled level except level 50 at 97%, and 0% board lockouts on every sampled level, with `RESULT: PASS`. | 1111 |
 | RESULT-0056 | Fresh-board owner-vs-oracle run for RESULT-0044: board-2 human attempt invalid, INCONCLUSIVE | accepted | direct_source, owner_decision | This closes `RESULT-0044`'s protocol option 1, a fresh run under that identity. | 1128 |
 | RESULT-0058 | Paired target-race ruler controls match the independent recompute; bounded search is FALSIFIED | provisional | direct_source, heuristic_observation | The paired win-first ruler passes its null, positive, known-bad and synthetic-admission controls at the declared scope. | 1145 |
-| RESULT-0080 | Policy terms diagnostic stopped before complete controls after an execution interruption | provisional | direct_source | Start checks found the worktree based on merged ruler origin/main cd83127f176111a0b0fb40eb14402f301a1fab07 and RESULT-0080 unused across 34 remote refs. | 1691 |
-| RESULT-0081 | Journaled policy diagnostic interrupted during the final control block | provisional | direct_source | The continuation preserved RESULT-0080 and all prior charges. | 1709 |
-| RESULT-0082 | Wider candidate search clears the paired move-gain and net-win bars | provisional | heuristic_observation, direct_source | Path A closes CLOSED with the predeclared primary outcome SUPPORTED. | 1729 |
-| CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1398 |
-| CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1412 |
-| CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1427 |
-| CORRECTION-0004 | RESULT-0015 was invalidated when the beam was made additive | accepted | direct_source, heuristic_observation | Supersedes `RESULT-0015`. | 1444 |
-| CORRECTION-0005 | RESULT-0029 screened 103 distinct starting boards | accepted | exact_result | Supersedes only `RESULT-0029`'s claim that its 104 screened seed observations were 104 distinct starting boards. | 1459 |
-| CORRECTION-0006 | RESULT-0030 exceeded its registered candidate cap | accepted | direct_source, replayed_upper_bound | Supersedes `RESULT-0030` as a protocol-conforming confirmation. | 1474 |
-| CORRECTION-0007 | RESULT-0037 and RESULT-0038 overstate stability and receipt closure | accepted | direct_source, heuristic_observation, unresolved, UNKNOWN | Supersedes the evidence standing of `RESULT-0037` and `RESULT-0038`. | 1489 |
-| CORRECTION-0008 | Off-lattice tiles are recoverable, not permanently dead | accepted | direct_source, unresolved | Narrows `FACT-0006`. | 1504 |
-| CORRECTION-0009 | Recorded human games stop at the target | accepted | exact_result, direct_source | Supersedes the objective interpretation, not the recorded scores. | 1519 |
-| CORRECTION-0010 | RESULT-0001 and RESULT-0004 verifiers were deleted from the tree | accepted | direct_source | Narrows `RESULT-0001` and `RESULT-0004`. | 1534 |
-| CORRECTION-0011 | RESULT-0041's closure verifier lived outside the repository | accepted | direct_source | Narrows `RESULT-0041`. | 1551 |
-| CORRECTION-0012 | DECISION-0004's evidence commit was on no branch | accepted | direct_source | Narrows `DECISION-0004`. | 1568 |
-| CORRECTION-0013 | Seven results' reverify commands check today's source, not the frozen one | accepted | direct_source | Narrows those seven records. | 1585 |
-| CORRECTION-0014 | Five results' reverify commands check today's source, not the tree they were admitted at | accepted | direct_source | Narrows those five records. | 1602 |
-| CORRECTION-0015 | The chain-coverage check needs more memory than Node's default | accepted | direct_source | Narrows `RESULT-0011` and `CORRECTION-0003`. | 1624 |
-| CORRECTION-0016 | Four results' reverify runs the whole test suite, which fails for reasons outside their claims | accepted | direct_source | Narrows those four records. | 1641 |
-| CORRECTION-0017 | FACT-0007's check count and RESULT-0011's effect size, measured on today's tree | accepted | direct_source, heuristic_observation | Narrows `FACT-0007` and `RESULT-0011`. | 1658 |
-| CORRECTION-0018 | RESULT-0058 gains complete win uncertainty and a stricter independent input audit | provisional | direct_source | The six findings in Codex review 5393741165 identified missing win-uncertainty output and weaknesses in mutation provenance, grid completeness, refusal counting, the synthetic qualification fixture and a zero-variance n… | 1675 |
-| HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1324 |
-| HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1338 |
-| QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1354 |
-| QUESTION-0002 | What is the exact maximum? | open | unresolved | What is the maximum legal score over the full frozen horizon? | 1368 |
-| QUESTION-0003 | Which first move is globally best? | open | unresolved | Which first move maximizes final score rather than immediate score? | 1382 |
+| RESULT-0080 | Policy terms diagnostic stopped before complete controls after an execution interruption | provisional | direct_source | Start checks found the worktree based on merged ruler origin/main cd83127f176111a0b0fb40eb14402f301a1fab07 and RESULT-0080 unused across 34 remote refs. | 1708 |
+| RESULT-0081 | Journaled policy diagnostic interrupted during the final control block | provisional | direct_source | The continuation preserved RESULT-0080 and all prior charges. | 1726 |
+| RESULT-0082 | Wider candidate search clears the paired move-gain and net-win bars | provisional | heuristic_observation, direct_source | Path A closes CLOSED with the predeclared primary outcome SUPPORTED. | 1746 |
+| CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1415 |
+| CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1429 |
+| CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1444 |
+| CORRECTION-0004 | RESULT-0015 was invalidated when the beam was made additive | accepted | direct_source, heuristic_observation | Supersedes `RESULT-0015`. | 1461 |
+| CORRECTION-0005 | RESULT-0029 screened 103 distinct starting boards | accepted | exact_result | Supersedes only `RESULT-0029`'s claim that its 104 screened seed observations were 104 distinct starting boards. | 1476 |
+| CORRECTION-0006 | RESULT-0030 exceeded its registered candidate cap | accepted | direct_source, replayed_upper_bound | Supersedes `RESULT-0030` as a protocol-conforming confirmation. | 1491 |
+| CORRECTION-0007 | RESULT-0037 and RESULT-0038 overstate stability and receipt closure | accepted | direct_source, heuristic_observation, unresolved, UNKNOWN | Supersedes the evidence standing of `RESULT-0037` and `RESULT-0038`. | 1506 |
+| CORRECTION-0008 | Off-lattice tiles are recoverable, not permanently dead | accepted | direct_source, unresolved | Narrows `FACT-0006`. | 1521 |
+| CORRECTION-0009 | Recorded human games stop at the target | accepted | exact_result, direct_source | Supersedes the objective interpretation, not the recorded scores. | 1536 |
+| CORRECTION-0010 | RESULT-0001 and RESULT-0004 verifiers were deleted from the tree | accepted | direct_source | Narrows `RESULT-0001` and `RESULT-0004`. | 1551 |
+| CORRECTION-0011 | RESULT-0041's closure verifier lived outside the repository | accepted | direct_source | Narrows `RESULT-0041`. | 1568 |
+| CORRECTION-0012 | DECISION-0004's evidence commit was on no branch | accepted | direct_source | Narrows `DECISION-0004`. | 1585 |
+| CORRECTION-0013 | Seven results' reverify commands check today's source, not the frozen one | accepted | direct_source | Narrows those seven records. | 1602 |
+| CORRECTION-0014 | Five results' reverify commands check today's source, not the tree they were admitted at | accepted | direct_source | Narrows those five records. | 1619 |
+| CORRECTION-0015 | The chain-coverage check needs more memory than Node's default | accepted | direct_source | Narrows `RESULT-0011` and `CORRECTION-0003`. | 1641 |
+| CORRECTION-0016 | Four results' reverify runs the whole test suite, which fails for reasons outside their claims | accepted | direct_source | Narrows those four records. | 1658 |
+| CORRECTION-0017 | FACT-0007's check count and RESULT-0011's effect size, measured on today's tree | accepted | direct_source, heuristic_observation | Narrows `FACT-0007` and `RESULT-0011`. | 1675 |
+| CORRECTION-0018 | RESULT-0058 gains complete win uncertainty and a stricter independent input audit | provisional | direct_source | The six findings in Codex review 5393741165 identified missing win-uncertainty output and weaknesses in mutation provenance, grid completeness, refusal counting, the synthetic qualification fixture and a zero-variance n… | 1692 |
+| HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1341 |
+| HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1355 |
+| QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1371 |
+| QUESTION-0002 | What is the exact maximum? | open | unresolved | What is the maximum legal score over the full frozen horizon? | 1385 |
+| QUESTION-0003 | Which first move is globally best? | open | unresolved | Which first move maximizes final score rather than immediate score? | 1399 |
 
 ## Superseded or rejected records
 

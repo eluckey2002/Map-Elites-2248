@@ -19,6 +19,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const os = require('node:os');
 const { execFileSync } = require('node:child_process');
 const { assessFailedRunLedger } = require('./failed-run-ledger');
 
@@ -420,6 +421,157 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
   return problems;
 }
 
+// DECISION-0011. A closed result whose recomputation hashes files that are
+// meant to keep growing (experiments/SEEDS.md is append-only) cannot be
+// recomputed against today's tree: any later seed reservation would turn its
+// gate red. FROZEN_TREE_POLICY lists such results; the gate then runs the
+// closeout contract's own command, unchanged, in a detached checkout of the
+// commit that admitted the closure. This is not a grandfather: the entry must
+// cite an owner decision naming the result and every path it exempts or pins,
+// the closure must be reachable from HEAD, and every input the recomputation
+// reads must still match that commit (see frozenInputProblems), so the retained
+// evidence is still bound byte-for-byte. The policy lives in this file, not in
+// an editable data file: the mandatory path set cannot be shrunk or swapped by
+// a config-only change, only by a reviewed edit to the gate.
+const FROZEN_TREE_POLICY = {
+  'RESULT-0082': {
+    decision: 'DECISION-0011',
+    reason: 'Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail.',
+    append_only: ['experiments/SEEDS.md'],
+    live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js'],
+    extra_immutable: ['solver/policy-lab/runs/resume'],
+  },
+};
+
+// Policy paths reach git as pathspecs, where ':(exclude)x' or a glob would
+// change what is compared. Only plain slash-separated names are accepted, and
+// git is also run with --literal-pathspecs (see frozenInputProblems).
+function isPlainRelativePath(p) {
+  return typeof p === 'string' && p.split('/').every((seg) => /^[A-Za-z0-9_.-]+$/.test(seg) && seg !== '.' && seg !== '..');
+}
+
+function frozenTreeEntryProblems(id, entry, ledgerText) {
+  const problems = [];
+  if (!entry || typeof entry !== 'object') return [`${id} frozen-tree entry is not an object`];
+  if (!/^DECISION-\d{4}$/.test(entry.decision || '')) {
+    problems.push(`${id} frozen-tree entry must cite a ledger decision`);
+  } else {
+    // The decision must be an owner decision that itself names this result and
+    // this policy; a heading that merely exists would let any entry cite an
+    // unrelated decision.
+    const start = ledgerText.search(new RegExp(`^### ${entry.decision} `, 'm'));
+    if (start < 0) {
+      problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not in the ledger`);
+    } else {
+      const rest = ledgerText.slice(start + 4);
+      const end = rest.search(/^#{2,3} /m);
+      const body = end < 0 ? rest : rest.slice(0, end);
+      if (!body.includes(id) || !body.includes('FROZEN_TREE_POLICY') || !/\*\*proof_class:\*\* `owner_decision`/.test(body)) {
+        problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not an owner decision naming ${id} and FROZEN_TREE_POLICY`);
+      }
+      // Every exemption widens what may change without the gate noticing, and
+      // every pinned path narrows what is checked, so the decision must name
+      // each exact path; an edit to the policy alone cannot add or swap one.
+      for (const field of ['append_only', 'live_files', 'extra_immutable']) {
+        for (const named of Array.isArray(entry[field]) ? entry[field] : []) {
+          if (typeof named === 'string' && !body.includes(`\`${named}\``)) {
+            problems.push(`${id} frozen-tree entry lists ${named} (${field}), which ${entry.decision} does not name`);
+          }
+        }
+      }
+    }
+  }
+  for (const field of ['append_only', 'live_files', 'extra_immutable']) {
+    if (entry[field] !== undefined && !(Array.isArray(entry[field]) && entry[field].every((p) => typeof p === 'string'))) {
+      problems.push(`${id} frozen-tree entry ${field} must be a list of paths`);
+    } else {
+      for (const p of entry[field] || []) {
+        if (!isPlainRelativePath(p)) problems.push(`${id} frozen-tree entry ${field} has ${JSON.stringify(p)}, which is not a plain relative path`);
+      }
+    }
+  }
+  if (typeof entry.reason !== 'string' || entry.reason.trim().length < 20) {
+    problems.push(`${id} frozen-tree entry must say why the live tree cannot be recomputed`);
+  }
+  return problems;
+}
+
+function frozenTreeEntry(id) {
+  const entry = FROZEN_TREE_POLICY[id];
+  if (!entry) return null;
+  const problems = frozenTreeEntryProblems(id, entry, fs.readFileSync(LEDGER, 'utf8'));
+  if (problems.length) throw new Error(problems.join('; '));
+  return entry;
+}
+
+// Everything the recomputation reads must still be what the closure was
+// admitted against, because the recomputation itself runs on the admission
+// checkout and so cannot notice a later change on this tree. Immutable: the
+// result directory, every file in the protocol's version_freeze, and any
+// extra_immutable path (journals). Exempt: append_only files must still begin
+// with their admitted bytes (SEEDS.md grows), and live_files are the live
+// checks themselves, which the contract only hashes. Returns problem strings.
+function frozenInputProblems(id, commit, entry) {
+  const problems = [];
+  const resultRel = `experiments/${id}`;
+  const protocol = showAtCommit(commit, `${resultRel}/protocol.md`);
+  const freeze = protocol && /^version_freeze:\n((?:  [^\n]+\n)+)/m.exec(protocol);
+  if (!freeze) return [`${id} protocol has no readable version_freeze at ${commit.slice(0, 8)}`];
+  const appendOnly = new Set(entry.append_only || []);
+  const live = new Set(entry.live_files || []);
+  const frozen = freeze[1].trimEnd().split('\n').map((line) => line.trim().replace(/: [0-9a-f]{16}$/, ''));
+  // An exemption is one exact file the protocol itself froze: never a
+  // directory, the result directory, or a path outside the freeze list.
+  for (const exempt of [...appendOnly, ...live]) {
+    if (!frozen.includes(exempt)) problems.push(`${id} exemption ${exempt} is not a version_freeze file of the protocol`);
+  }
+  const immutable = [...new Set([resultRel, ...frozen, ...(entry.extra_immutable || [])])]
+    .filter((p) => !appendOnly.has(p) && !live.has(p));
+  for (const p of immutable) {
+    if (!isPlainRelativePath(p)) problems.push(`${id} immutable input ${JSON.stringify(p)} is not a plain relative path`);
+  }
+  if (problems.length) return problems;
+  try {
+    execFileSync('git', ['--literal-pathspecs', 'diff', '--quiet', commit, '--', ...immutable], { cwd: ROOT, stdio: 'ignore' });
+  } catch {
+    const changed = execFileSync('git', ['--literal-pathspecs', 'diff', '--name-only', commit, '--', ...immutable], { cwd: ROOT, encoding: 'utf8' })
+      .trim().split('\n').filter(Boolean);
+    problems.push(`${id} inputs differ from admission commit ${commit.slice(0, 8)}: ${changed.slice(0, 5).join(', ')}${changed.length > 5 ? ` (+${changed.length - 5} more)` : ''}`);
+  }
+  for (const rel of appendOnly) {
+    const admitted = showAtCommit(commit, rel, ROOT, { raw: true });
+    const current = fs.existsSync(path.join(ROOT, rel)) ? fs.readFileSync(path.join(ROOT, rel)) : null;
+    if (!admitted || !current || current.length < admitted.length || !current.subarray(0, admitted.length).equals(admitted)) {
+      problems.push(`${id} append-only input ${rel} no longer begins with its admitted bytes`);
+    }
+  }
+  return problems;
+}
+
+function runAtAdmissionCommit(result, closureRel, argv, cwd, entry) {
+  const rel = gitObjectPath(path.relative(ROOT, path.join(ROOT, closureRel)));
+  const commit = execFileSync('git', ['log', '--diff-filter=A', '--format=%H', '--', rel], { cwd: ROOT, encoding: 'utf8' })
+    .trim().split('\n').filter(Boolean).at(-1);
+  if (!commit || !reachableFromHead(commit)) throw new Error(`no admission commit for ${rel} reachable from HEAD`);
+  const inputProblems = frozenInputProblems(result.id, commit, entry);
+  if (inputProblems.length) throw new Error(inputProblems.join('; '));
+  const checkout = fs.mkdtempSync(path.join(os.tmpdir(), `${result.id.toLowerCase()}-frozen-`));
+  let attached = false;
+  try {
+    execFileSync('git', ['worktree', 'add', '--detach', checkout, commit], { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+    attached = true;
+    return execFileSync(argv[0], argv.slice(1), {
+      cwd: path.join(checkout, path.relative(ROOT, cwd)),
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      maxBuffer: 64 * 1024 * 1024,
+    });
+  } finally {
+    if (attached) execFileSync('git', ['worktree', 'remove', '--force', checkout], { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+    else fs.rmSync(checkout, { recursive: true, force: true });
+  }
+}
+
 // A closure receipt is not self-authenticating: changing its verdict and then
 // saving the file again must not leave a green gate. Bind it back to the
 // closeout contract (including its protocol pin when one was registered),
@@ -507,12 +659,15 @@ function assessClosureReceipt(result, protocol, opened) {
     }
     let fresh;
     try {
-      fresh = JSON.parse(execFileSync(argv[0], argv.slice(1), {
-        cwd: recomputationCwd,
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'pipe'],
-        maxBuffer: 64 * 1024 * 1024,
-      }));
+      const frozen = frozenTreeEntry(result.id);
+      fresh = JSON.parse(frozen
+        ? runAtAdmissionCommit(result, entry.rel, argv, recomputationCwd, frozen)
+        : execFileSync(argv[0], argv.slice(1), {
+          cwd: recomputationCwd,
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'pipe'],
+          maxBuffer: 64 * 1024 * 1024,
+        }));
     } catch (error) {
       problems.push(`${label} recomputation command failed (${error.message})`);
       continue;
@@ -1203,5 +1358,5 @@ module.exports = {
   assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
   assessClosureReceipt, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
-  committedVersions, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
+  FROZEN_TREE_POLICY, committedVersions, frozenInputProblems, frozenTreeEntryProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };
