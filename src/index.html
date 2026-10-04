@@ -315,8 +315,10 @@
         }
     </style>
     <link rel="stylesheet" href="keeper-motion-prototype.css?v=alchemy-26">
+    <style>#legacy-app{display:contents}#legacy-app[hidden],#connections-app[hidden]{display:none!important}</style>
 </head>
 <body>
+    <div id="legacy-app">
     <header class="keeper-brand" aria-label="Keeper">
         <div class="keeper-wordmark">Keeper</div>
         <div class="keeper-subtitle">The Apothecary Bench</div>
@@ -414,12 +416,39 @@
     <div class="modal" id="levelSelectModal">
         <div class="modal-content">
             <div class="modal-title">Select Level</div>
+            <a id="connections-entry" class="btn btn-secondary" href="?mode=connections" style="display:block;text-align:center;text-decoration:none;margin-bottom:12px">Connection puzzles →</a>
             <div class="level-select" id="levelSelect"></div>
             <button class="btn btn-secondary" id="closeLevelSelect" style="width: 100%; margin-top: 15px;">Close</button>
         </div>
     </div>
 
-    <script src="game.js"></script>
-    <script src="keeper-motion-prototype.js?v=alchemy-27"></script>
+    </div>
+    <main id="connections-app" class="cx-app" hidden>
+        <header class="cx-header"><a id="cx-legacy" href="?mode=legacy">2248 <span>TILE GAME</span></a><a id="cx-library-link" href="?mode=connections">Puzzle library</a></header>
+        <section class="cx-intro"><p class="cx-eyebrow">BUILD · CONNECT · CLEAR A WAY</p><h1 id="cx-title">Connection puzzles</h1><p id="cx-subtitle">Three connections. One board. Find your own way through.</p></section>
+        <p id="cx-error" role="alert" hidden></p>
+        <section id="cx-library" hidden><div id="cx-level-list" class="cx-level-list"></div><p class="cx-note">Choose any puzzle. Each retry restores the same board and refills. Endless play remains unchanged.</p></section>
+        <div id="cx-play" class="cx-layout" hidden>
+            <section aria-label="Connection puzzle">
+                <div class="cx-stats"><div><span>CONNECTIONS</span><strong id="cx-progress">0 / 3</strong></div><div><span>MOVES LEFT</span><strong id="cx-moves"></strong></div><div><span>REMOVALS</span><strong id="cx-charges">0 / 3</strong></div></div>
+                <div class="cx-objective" aria-live="polite"><p id="cx-goal-number"></p><h2 id="cx-goal-title"></h2><p>Start and end on the marked places. Make the exact sum. Every other normal play is still allowed.</p><div class="cx-math"><span class="cx-eyebrow">HALVING REFERENCE · EACH STEP ÷ 2</span><p id="cx-halves"></p></div><button id="cx-combinations-toggle" class="cx-secondary" aria-expanded="false" aria-controls="cx-combinations">Show combinations</button><div id="cx-combinations" hidden><p class="cx-note">Arithmetic examples, not paths or required moves. Some values may need to be built.</p><ul id="cx-recipes"></ul></div></div>
+                <div class="cx-chain-total" role="status"><span>Chain sum<small id="cx-balance"></small></span><strong id="cx-sum">0</strong></div>
+                <div class="cx-board-shell"><div id="cx-board" aria-label="Tile board"></div><svg id="cx-path" aria-hidden="true"></svg></div>
+                <p id="cx-selection" class="cx-selection" role="status"></p>
+                <div class="cx-actions"><button id="cx-merge" class="cx-primary">Merge chain</button><button id="cx-preview" class="cx-secondary">Preview result</button><button id="cx-clear" class="cx-secondary">Clear</button></div>
+                <div class="cx-minor-actions"><button id="cx-undo">Undo</button><button id="cx-retry">Retry puzzle</button></div>
+                <section id="cx-result" class="cx-result" aria-live="polite" hidden><h2 id="cx-result-title"></h2><p id="cx-result-detail"></p><a id="cx-next" href="?mode=connections">Choose another puzzle →</a></section>
+            </section>
+            <aside class="cx-aside">
+                <section class="cx-powerup"><div class="cx-powerup-heading"><h2>Make room</h2><span>Earn it. Save it. Spend it.</span></div><p>Each merge creating a tile worth 2,048 or more earns one removal. Bank up to three.</p><button id="cx-remove" class="cx-secondary" aria-pressed="false">Remove a tile</button><p id="cx-powerup-status" role="status"></p></section>
+                <div class="cx-rule"><h2>Two places. One exact value.</h2><p>The markers stay in place while tiles fall. The last selected tile keeps the chain sum, then gravity and refill apply.</p><p>Start with two equal neighbors. Continue equal or double. Use at least three tiles; diagonals count.</p></div>
+                <div class="cx-rule"><h3>A finite finish</h3><p>Complete all three connections within the shared move budget. Merging or removing spends one move. Preview, cancel and undo are free.</p><p>You start with no removals. Spending one clears the chosen tile and settles its column; it gives no points and does not complete a goal.</p><p>Retries use identical boards, objectives and refills. Removals do not carry between puzzles. New tiles range from 2 to 128.</p></div>
+                <label for="cx-feedback">Optional playtest note</label><textarea id="cx-feedback" rows="3" maxlength="1000" placeholder="What affected your plan?"></textarea>
+                <p id="cx-save" class="cx-note" role="status">Connecting to local capture…</p>
+            </aside>
+        </div>
+        <footer class="cx-footer">Connections · Local first-pack playtest · Original level progress is preserved</footer>
+    </main>
+    <script src="game-library.js"></script>
 </body>
 </html>

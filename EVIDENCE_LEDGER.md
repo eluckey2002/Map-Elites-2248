@@ -1286,6 +1286,23 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **checked_by:** pending
 - **notes:** The measurement figures in Level 53's `src/game.js` comment (median 107,200, 300-seed holdout 191 wins) come from archived receipt `043ca53f`, which `solver/candidates-archive/README.md` records as failing current verification (`calibration stamp mismatch`, 2026-09-03) and not to be quoted; this decision does not rely on them, and that comment's claim that the receipt "verifies against the current bot" is stale. Why Level 53 was earlier rejected as a candidate was not re-examined; the owner chose to keep it as played. The 1,000-point difference from the frozen evaluator is explained by the evaluator change, not by an error.
 
+### DECISION-0010 — Land the selected finite Connections variant in the original game
+
+- **type:** decision
+- **status:** provisional
+- **scope:** The existing finite Connections pack and retained archetype design references on `codex/archetype-design-20261001`; no change to legacy score levels, policy, engine, calibration or campaign progression
+- **statement:** The owner authorizes landing the existing Connections work in the main project through its protected pull-request process. The original app receives the independently selectable finite pack; retained prototypes and design history remain references, not additional newly selected app modes.
+- **evidence:** Owner request on 2026-10-04: "so we need to  get this work onto the main project"; PDL-035 in `prototypes/PLAYTEST-DECISION-LEDGER.md`; [integration record](docs/game-design/levels/connections-integration.md); `src/connection-levels.js` and `src/connection-rules.js`, whose source/catalog capture identity at intake is `e619e005527beb8fbe6f48ff586546c65a1c5c400e6739b50cd0f780555b437b`.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-10-04
+- **reverify:** Read PDL-035 and its quoted authorization, the integration record, and the source/catalog named above at the commit introducing this decision. Release checks and source identity are recorded separately; this ruling is not a test verdict.
+- **updated:** 2026-10-04
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** Codex session on `codex/archetype-design-20261001`
+- **checked_by:** pending
+- **notes:** This records owner authority with the integration action. It does not establish human difficulty, strongest-bot difficulty, long-run board health, native QA, review approval or completion of the merge. Optional column forecasts remain proposed BL-0025. New finite-variant behavior is isolated from the legacy rules, so no legacy scoring-rule performance claim or retune is made.
+
 ## Hypothesis registry
 
 ### HYPOTHESIS-0001 — Compact state may guide an approximate search
