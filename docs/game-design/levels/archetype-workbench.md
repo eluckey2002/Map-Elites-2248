@@ -1,9 +1,16 @@
 # Archetype workbench
 
-Current as of 2026-10-03. This is navigation and project intent, not scientific
+Current as of 2026-10-04. This is navigation and project intent, not scientific
 evidence or production adoption. **Current goal: keep the strong existing
 Connections mode and Delivery references; no forced third archetype** (PDL-026).
 The original 3–5-family target is historical, not an outstanding quota.
+
+**Main integration is now authorized** (DECISION-0010, PDL-035). The existing
+finite pack is committed inside the original app, with the retained prototypes
+and design history. See [the integration record](connections-integration.md)
+for fresh verification and review/QA boundaries. Older checkpoint descriptions
+below retain their historical authority limits; this request does not select
+forecasts, additional app modes, campaign changes or a legacy restyle.
 
 ## Current checkpoint and retained play
 
@@ -27,7 +34,8 @@ now identifies integration surfaces, a proposed teaching sequence and later
 verification. No campaign interleaving or whole-game visual redesign was chosen.
 Task: CONNECTIONS-LEVELS-BUILD-1; owner play at 8285 remains unchanged.
 Native visual/touch QA and independent review remain open; source/controller
-checks do not establish rendering or human difficulty. No release is selected.
+checks do not establish rendering or human difficulty. The later PDL-035
+authorizes the protected main-integration process, not a QA waiver.
 
 **Before close-out:** PDL-027 records the later sustained-play residue report.
 Non-power results remain, power-only refills do not naturally match them, and

@@ -2,14 +2,15 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
-## Level archetype design — current as of 2026-10-03
+## Level archetype design — current as of 2026-10-04
 
 **2026-10-04 main integration authorized:** DECISION-0010 and PDL-035 record
 the owner's request to land this work in the original game. The finite pack is
 already inside the app; this pass commits the selected variant and retained
 design references, integrates current main and follows the protected PR path.
 See [release state and verification](docs/game-design/levels/connections-integration.md).
-No merge is claimed until that record names the completed review and merge.
+The protected PR's live state determines whether review and merge completed;
+the integration record preserves the verified candidate and QA limits.
 Saved games and live servers stay intact; forecast, campaign ordering, Delivery
 integration and legacy restyling remain outside scope.
 

@@ -17,14 +17,16 @@ ordering, new levels, Delivery integration or a legacy visual redesign.
 
 ## Release state
 
-Integration is being prepared on `codex/archetype-design-20261001`.
+The candidate is committed on `codex/archetype-design-20261001`.
 Intake HEAD was `fced429`; freshly fetched main is `cd83127`, containing the
-unrelated shared-Blackboard and ruler updates. Incorporate these before final
-verification. Open PRs 62/63 overlap navigation/instructions but not the game
+unrelated shared-Blackboard and ruler updates. It was integrated in `cbc9533`;
+the sole conflict was the generated index, regenerated from the combined
+ledger. Open PRs 62/63 overlap navigation/instructions but not the game
 source; preserve their independent work.
 
 No merge, independent review approval or native gameplay/touch pass is claimed
-here. A draft PR may carry the independent GitHub Codex review; it must not be
+by this pre-review receipt. The PR's live state records review and merge. A
+draft PR carries the independent GitHub Codex review; it must not be
 made ready or merged before actual review and the required green gates.
 
 The local ce-code-review full workflow cannot finish its separately dispatched
@@ -57,3 +59,40 @@ outside the Git worktree. Ongoing raw captures and the Blackboard database are
 not included in this publication. Leave the live worktree in place while its
 servers and local sessions depend on it, even after merge; no cleanup is
 authorized as part of this integration.
+
+## Fresh pre-review verification
+
+Checks run on committed integration `cbc9533`, 2026-10-04:
+
+- `node tools/verify-experiments.js`: EXPERIMENT GATE PASS.
+- `node tools/verify-ledger-authorship.js`: PASS against base `cd83127f`.
+- `node tools/ledger-index.js --check`: LEDGER INDEX CURRENT.
+- Focused Connections/model/UI/HTTP/legacy/pilot set: 63 passed, none failed.
+  Command: `node --test --test-reporter=spec solver/tests/{connectionRules,connectionLevels,gameLibrary,connectionGame,connectionCapture,playServer,gameLevels,mirrors-game,customLevel,levelJump,fixedSeedLevel,humanPilot0002}.test.js`.
+- Retained prototype tests: 69 passed, none failed, using the actual staged
+  `.test.js` paths from this work's ten prototype directories. Real temporary
+  HTTP servers are exercised; owner servers are not used as test fixtures.
+- Fresh `git archive HEAD` extraction: 20/20 finite-pack model/catalog/router/
+  controller/actual HTTP tests passed. The tracked legacy capture fixture was
+  present. No ignored local capture or Blackboard input was required.
+- Full informational suite: 628 tests, 623 pass, four fail, one skip. Command:
+  `node --test --test-reporter=spec solver/tests/*.test.js`. Failures remain the
+  prototype session collector inventory, stale level-52 receipt, stale level-54
+  receipt and stale Universe generated view. No check was waived or weakened.
+- `node tools/author-connection-levels.js`: actual private routes finish the
+  three puzzles within their budgets; the third uses one removal. Bounded
+  two-move opening routes were found for every first objective. This is not
+  shortest whole-level proof, a difficulty measurement or a player hint.
+- Protected game/engine/author/pilot bytes match `origin/main`; source-derived
+  finite capture identity remains `e619e005527beb8fbe6f48ff586546c65a1c5c400e6739b50cd0f780555b437b`.
+- All 27 historical receipt/input snapshots match their original bytes.
+
+The shared-Blackboard update migrated 26 tasks and their operational files to
+the common Git-directory board. Its original private copy remains as a backup;
+no task was accepted or capture removed. Historical migrated claims retain
+their original stored limits; progress renews this task rather than inventing
+an unsupported claim flag.
+
+This verification section is documentation only. Reapply the required gates
+to its committed state before publication. Native gameplay/touch QA remains
+partial as recorded in the handoff; no full rendered pass is claimed.
