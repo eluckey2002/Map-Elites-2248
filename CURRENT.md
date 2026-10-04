@@ -423,3 +423,5 @@ Last reviewed: 2026-09-28
 2026-10-04 standing correction: the initial RESULT-0083 record is superseded because its first historical cross-check was incomplete. CORRECTION-0019 remains provisional and carries the corrected no-new-game Path E reduction. Neither is accepted; checked_by stays absent.
 
 2026-10-04 review follow-up: CORRECTION-0019 replay inputs now pin the archived candidate stores and receipts; its prior record uses one append-only notes field. PR #66 preserves preregistration and correction history and remains unmerged.
+
+2026-10-04 latest review: CORRECTION-0019 retains the explicitly frozen all-session descriptive prerequisite; publication review evidence now requires the exact reviewed head. No fresh games or standing promotion.

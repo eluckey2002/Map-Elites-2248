@@ -217,6 +217,17 @@ $ node --test solver/tests/policyFitGeneration.test.js solver/tests/policyFitHis
 ℹ skipped 0
 ℹ todo 0
 ℹ duration_ms 634.7103
+$ node --test solver/tests/policyFitReviewEvidence.test.js
+✔ old-head thumbs up cannot qualify a newer unpublished local commit (1.7701ms)
+✔ thumbs up requires exact-head completed review evidence and follows its timestamp (0.271ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.5312
 $ node solver/policy-fit/check-coverage.js
 PASS declared level set: 1 to 58
 PASS T1 declared range inside authorized interval and disjoint
@@ -299,25 +310,25 @@ PASS allowed tracked write scope
 PASS seed log append-only
 PASS historical input hashes unchanged
 No backlog touched; no History update required
-✖ launcher keeps validation roles separate in ports and recording paths (6.0531ms)
-✖ candidate-levels-52.json has a receipt that verifies against the current bot (11.2244ms)
-✖ candidate-levels-54.json has a receipt that verifies against the current bot (8.4727ms)
-✖ LIVE: no linked worktree is holding uncommitted .orch state (2916.6437ms)
-✖ the builder is byte-stable and the committed generated views are current (23.5103ms)
-ℹ tests 636
+✖ launcher keeps validation roles separate in ports and recording paths (7.7091ms)
+✖ candidate-levels-52.json has a receipt that verifies against the current bot (13.8309ms)
+✖ candidate-levels-54.json has a receipt that verifies against the current bot (9.5155ms)
+✖ LIVE: no linked worktree is holding uncommitted .orch state (2493.8728ms)
+✖ the builder is byte-stable and the committed generated views are current (29.6006ms)
+ℹ tests 638
 ℹ suites 0
-ℹ pass 630
+ℹ pass 632
 ℹ fail 5
 ℹ cancelled 0
 ℹ skipped 1
 ℹ todo 0
-ℹ duration_ms 251429.2585
+ℹ duration_ms 205919.976
 ✖ failing tests:
-✖ launcher keeps validation roles separate in ports and recording paths (6.0531ms)
-✖ candidate-levels-52.json has a receipt that verifies against the current bot (11.2244ms)
-✖ candidate-levels-54.json has a receipt that verifies against the current bot (8.4727ms)
-✖ LIVE: no linked worktree is holding uncommitted .orch state (2916.6437ms)
-✖ the builder is byte-stable and the committed generated views are current (23.5103ms)
+✖ launcher keeps validation roles separate in ports and recording paths (7.7091ms)
+✖ candidate-levels-52.json has a receipt that verifies against the current bot (13.8309ms)
+✖ candidate-levels-54.json has a receipt that verifies against the current bot (9.5155ms)
+✖ LIVE: no linked worktree is holding uncommitted .orch state (2493.8728ms)
+✖ the builder is byte-stable and the committed generated views are current (29.6006ms)
 $ node solver/policy-fit/check-inputs.js
 PASS complete historical input manifest: 77 files, archived candidates and receipts included
 $ node tools/verify-experiments.js
@@ -329,37 +340,37 @@ LEDGER INDEX CURRENT
 $ live GitHub publication state
 {
   "pr": {
-    "headRefOid": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+    "headRefOid": "0bd0494a675ce9f1f65cc66b87cec65f760c40b2",
     "number": 66,
     "state": "OPEN",
     "statusCheckRollup": [
       {
         "__typename": "CheckRun",
-        "completedAt": "2026-10-04T10:18:26Z",
+        "completedAt": "2026-10-04T10:47:18Z",
         "conclusion": "SUCCESS",
-        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37194924474/job/111414695955",
+        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37196487326/job/111419352467",
         "name": "experiment gate",
-        "startedAt": "2026-10-04T10:18:11Z",
+        "startedAt": "2026-10-04T10:47:05Z",
         "status": "COMPLETED",
         "workflowName": "experiment-gate"
       },
       {
         "__typename": "CheckRun",
-        "completedAt": "2026-10-04T10:19:52Z",
+        "completedAt": "2026-10-04T10:49:57Z",
         "conclusion": "FAILURE",
-        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37194924474/job/111414696008",
+        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37196487326/job/111419352596",
         "name": "full test suite (informational until the three known failures are retired)",
-        "startedAt": "2026-10-04T10:18:11Z",
+        "startedAt": "2026-10-04T10:47:04Z",
         "status": "COMPLETED",
         "workflowName": "experiment-gate"
       },
       {
         "__typename": "CheckRun",
-        "completedAt": "2026-10-04T10:18:29Z",
+        "completedAt": "2026-10-04T10:47:21Z",
         "conclusion": "SUCCESS",
-        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37194924474/job/111414696011",
+        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37196487326/job/111419352587",
         "name": "freshness tools tests (BL-0022)",
-        "startedAt": "2026-10-04T10:18:11Z",
+        "startedAt": "2026-10-04T10:47:05Z",
         "status": "COMPLETED",
         "workflowName": "experiment-gate"
       }
@@ -368,11 +379,11 @@ $ live GitHub publication state
   },
   "headReviews": [
     {
-      "id": 5405528409,
+      "id": 5405602345,
       "state": "COMMENTED",
-      "body": "\n### 💡 Codex Review\n\nHere are some automated review suggestions for this pull request.\n\n**Reviewed commit:** `83d0094d4a`\n    \n\n<details> <summary>ℹ️ About Codex in GitHub</summary>\n<br/>\n\n[Your team has set up Codex to review pull requests in this repo](https://chatgpt.com/codex/cloud/settings/general). Reviews are triggered when you\n- Open a pull request for review\n- Mark a draft as ready\n- Comment \"@codex review\".\n\nIf Codex has suggestions, it will comment; otherwise it will react with 👍.\n\n\n\n\nCodex can also answer questions or update the PR. Try commenting \"@codex address that feedback\".\n            \n</details>",
-      "commit": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
-      "submitted_at": "2026-10-04T10:31:43Z"
+      "body": "\n### 💡 Codex Review\n\nHere are some automated review suggestions for this pull request.\n\n**Reviewed commit:** `0bd0494a67`\n    \n\n<details> <summary>ℹ️ About Codex in GitHub</summary>\n<br/>\n\n[Your team has set up Codex to review pull requests in this repo](https://chatgpt.com/codex/cloud/settings/general). Reviews are triggered when you\n- Open a pull request for review\n- Mark a draft as ready\n- Comment \"@codex review\".\n\nIf Codex has suggestions, it will comment; otherwise it will react with 👍.\n\n\n\n\nCodex can also answer questions or update the PR. Try commenting \"@codex address that feedback\".\n            \n</details>",
+      "commit": "0bd0494a675ce9f1f65cc66b87cec65f760c40b2",
+      "submitted_at": "2026-10-04T10:54:37Z"
     }
   ],
   "codexThumbsUp": [],
@@ -383,16 +394,16 @@ $ live GitHub publication state
       "path": "experiments/RESULT-0083/report.md",
       "line": 39,
       "original_line": 39,
-      "commit_id": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+      "commit_id": "0bd0494a675ce9f1f65cc66b87cec65f760c40b2",
       "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177039536"
     },
     {
       "id": 4177125265,
       "body": "**<sub><sub>![P1 Badge](https://img.shields.io/badge/P1-orange?style=flat)</sub></sub>  Replace the unreachable correction commit citation**\n\nOn this squashed commit, `46f1df5959074f75a31e1649bca1aac0b517e1ee` is not an ancestor of `a73c6ed`, so running `node tools/verify-experiments.js` on the exact target adds `CORRECTION-0019: cited commit ... is not in this branch's history`; the similarly cited plan commit `3186ddf` is also unreachable. Consequently, the retained `EXPERIMENT GATE PASS` output describes the pre-squash branch rather than this revision, and the required gate cannot be green until these citations identify reachable evidence or the intermediate history is preserved.\n\nAGENTS.md reference: [AGENTS.md:L104-L112](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L104-L112)\n\nUseful? React with 👍 / 👎.",
       "path": "EVIDENCE_LEDGER.md",
-      "line": 1732,
+      "line": 1730,
       "original_line": 1732,
-      "commit_id": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+      "commit_id": "0bd0494a675ce9f1f65cc66b87cec65f760c40b2",
       "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125265"
     },
     {
@@ -401,22 +412,40 @@ $ live GitHub publication state
       "path": "docs/goals/policy-learned-judge/historical-inputs.json",
       "line": 59,
       "original_line": 59,
-      "commit_id": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+      "commit_id": "0bd0494a675ce9f1f65cc66b87cec65f760c40b2",
       "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125269"
     },
     {
       "id": 4177125272,
       "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Append correction text inside the existing notes field**\n\nRESULT-0083 now declares a second `notes` field instead of extending the first one. The index parser overwrites the first value with this line, while the append-only history parser uses `??=` and keeps only the first value; deleting this correction-notes field consequently produces no history-check error. This leaves the added correction provenance removable without detection and makes repository consumers disagree about the record, so append the text within the original notes field or retain it only in CORRECTION-0019.\n\nAGENTS.md reference: [AGENTS.md:L67-L69](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L67-L69)\n\nUseful? React with 👍 / 👎.",
       "path": "EVIDENCE_LEDGER.md",
-      "line": 1177,
+      "line": null,
       "original_line": 1177,
       "commit_id": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
       "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125272"
+    },
+    {
+      "id": 4177183618,
+      "body": "**<sub><sub>![P1 Badge](https://img.shields.io/badge/P1-orange?style=flat)</sub></sub>  Exclude ordinary play sessions from the evidence corpus**\n\nWhen the prerequisite is evaluated on the retained corpus, 32 of its 50 qualifying moves come from `play-sessions/`; removing those ordinary, non-receipted captures leaves only 18 qualifying moves, below the frozen `N_MIN = 30`, so this inclusion is what changes the result from inconclusive to Path E. The repository explicitly separates `play-sessions/` from the candidate evidence corpus, so the stop verdict cannot be based on this mixed directory list.\n\nAGENTS.md reference: [AGENTS.md:L55-L55](https://github.com/eluckey2002/Map-Elites-2248/blob/0bd0494a675ce9f1f65cc66b87cec65f760c40b2/AGENTS.md#L55-L55)\n\nUseful? React with 👍 / 👎.",
+      "path": "solver/policy-fit/preflight.js",
+      "line": 44,
+      "original_line": 44,
+      "commit_id": "0bd0494a675ce9f1f65cc66b87cec65f760c40b2",
+      "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177183618"
+    },
+    {
+      "id": 4177183621,
+      "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Require head-specific evidence before accepting a thumbs-up**\n\nA PR reaction has no commit association, and comparing its creation time with the head commit's committer timestamp does not create one: if a fix commit exists locally before an older-head 👍 arrives and is pushed afterward, that stale reaction passes this filter and makes `reviewComplete`/`finishReady` true for an unreviewed head. Accept only a review whose `commit_id` equals `headRefOid`, or otherwise obtain publication-time evidence that the reaction was made after that head was actually published, because fixes require a new Codex verdict.\n\nAGENTS.md reference: [AGENTS.md:L145-L151](https://github.com/eluckey2002/Map-Elites-2248/blob/0bd0494a675ce9f1f65cc66b87cec65f760c40b2/AGENTS.md#L145-L151)\n\nUseful? React with 👍 / 👎.",
+      "path": "docs/goals/policy-learned-judge/print-publication.js",
+      "line": 14,
+      "original_line": 14,
+      "commit_id": "0bd0494a675ce9f1f65cc66b87cec65f760c40b2",
+      "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177183621"
     }
   ],
   "openFindings": [
     {
-      "id": "PRRT_kwDOT_TwF86oxSQP",
+      "id": "PRRT_kwDOT_TwF86oxbYQ",
       "isResolved": false,
       "comments": {
         "nodes": [
@@ -424,38 +453,8 @@ $ live GitHub publication state
             "author": {
               "login": "chatgpt-codex-connector"
             },
-            "body": "**<sub><sub>![P1 Badge](https://img.shields.io/badge/P1-orange?style=flat)</sub></sub>  Replace the unreachable correction commit citation**\n\nOn this squashed commit, `46f1df5959074f75a31e1649bca1aac0b517e1ee` is not an ancestor of `a73c6ed`, so running `node tools/verify-experiments.js` on the exact target adds `CORRECTION-0019: cited commit ... is not in this branch's history`; the similarly cited plan commit `3186ddf` is also unreachable. Consequently, the retained `EXPERIMENT GATE PASS` output describes the pre-squash branch rather than this revision, and the required gate cannot be green until these citations identify reachable evidence or the intermediate history is preserved.\n\nAGENTS.md reference: [AGENTS.md:L104-L112](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L104-L112)\n\nUseful? React with 👍 / 👎.",
-            "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125265"
-          }
-        ]
-      }
-    },
-    {
-      "id": "PRRT_kwDOT_TwF86oxSQS",
-      "isResolved": false,
-      "comments": {
-        "nodes": [
-          {
-            "author": {
-              "login": "chatgpt-codex-connector"
-            },
-            "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Pin archived candidates used during replay**\n\n`resolveRecordedBoard()` uses `candidateIndex()`, which scans both `solver/` and `solver/candidates-archive/`, but this manifest hashes only the top-level candidate stores. Eight of the 36 sessions resolve through four omitted archived candidates, accounting for 14 of the 50 primary diagnostic rows and 12 of the 37 misses; changing one of those candidate or receipt files would therefore alter or invalidate these replays while the closeout hash check still reports every listed historical input unchanged. Add the consumed archive candidates and receipts to the manifest.\n\nAGENTS.md reference: [AGENTS.md:L65-L67](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L65-L67)\n\nUseful? React with 👍 / 👎.",
-            "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125269"
-          }
-        ]
-      }
-    },
-    {
-      "id": "PRRT_kwDOT_TwF86oxSQU",
-      "isResolved": false,
-      "comments": {
-        "nodes": [
-          {
-            "author": {
-              "login": "chatgpt-codex-connector"
-            },
-            "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Append correction text inside the existing notes field**\n\nRESULT-0083 now declares a second `notes` field instead of extending the first one. The index parser overwrites the first value with this line, while the append-only history parser uses `??=` and keeps only the first value; deleting this correction-notes field consequently produces no history-check error. This leaves the added correction provenance removable without detection and makes repository consumers disagree about the record, so append the text within the original notes field or retain it only in CORRECTION-0019.\n\nAGENTS.md reference: [AGENTS.md:L67-L69](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L67-L69)\n\nUseful? React with 👍 / 👎.",
-            "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125272"
+            "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Require head-specific evidence before accepting a thumbs-up**\n\nA PR reaction has no commit association, and comparing its creation time with the head commit's committer timestamp does not create one: if a fix commit exists locally before an older-head 👍 arrives and is pushed afterward, that stale reaction passes this filter and makes `reviewComplete`/`finishReady` true for an unreviewed head. Accept only a review whose `commit_id` equals `headRefOid`, or otherwise obtain publication-time evidence that the reaction was made after that head was actually published, because fixes require a new Codex verdict.\n\nAGENTS.md reference: [AGENTS.md:L145-L151](https://github.com/eluckey2002/Map-Elites-2248/blob/0bd0494a675ce9f1f65cc66b87cec65f760c40b2/AGENTS.md#L145-L151)\n\nUseful? React with 👍 / 👎.",
+            "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177183621"
           }
         ]
       }

@@ -53,3 +53,9 @@ The mandatory new failed closure conflicts with the existing test's fixed older 
 ## Revised-head review responses
 
 Archived replay stores and receipts are now included in historical-inputs.json; their bytes match the original base, and check-inputs.js refuses an omitted archive input, tested negatively. No replay was rerun. RESULT-0083 correction text is appended within its single original notes field. The published branch preserves both cited intermediate commits (plan 3186ddf and original result 46f1df5); Git ancestry and the GitHub PR commit list confirm this. A squashed checkout discarding these commits is not the published branch. Do not squash away preregistration history; the owner retains the merge decision.
+
+## Latest review responses
+
+Revision 5 explicitly requires every recorded session and the diagnostic boards where the owner was faster from human-benchmark.js --json. The frozen plan uses that descriptive all-session subset. Ordinary captures remain in play-sessions, separate from receipted candidate recordings, and are resolved and replay-validated by their own board identity; they are not represented as human confirmation evidence. Restricting the frozen subset after observing its counts would change the owner-selected prerequisite. The corpus finding is answered with this explicit task scope; no population claim or inference outside the subset is added.
+
+The publication oracle now accepts a thumbs-up only with a Codex summary identifying the exact current head and a completed code review, and requires the reaction to follow that summary timestamp. Exact commit_id reviews remain accepted directly. Two negative/boundary tests prevent older-head or running-review evidence from qualifying.

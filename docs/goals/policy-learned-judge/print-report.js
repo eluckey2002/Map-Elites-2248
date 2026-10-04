@@ -17,6 +17,7 @@ console.log('Same-seed recorded-board rows retained in human-benchmark.json');
 console.log('$ git rev-parse HEAD (plan commit, before any fresh game)');console.log(read('plan-commit.txt'));
 console.log('$ node solver/policy-fit/recompute-preflight.js');console.log(read('recompute-output.txt'));
 console.log('$ node --test solver/tests/policyFitGeneration.test.js solver/tests/policyFitHistoricalCoverage.test.js solver/tests/policyFitInputManifest.test.js');console.log(read('qualification-output.txt'));
+if(fs.existsSync(path.join(dir,'review-oracle-tests.txt'))){console.log('$ node --test solver/tests/policyFitReviewEvidence.test.js');console.log(read('review-oracle-tests.txt'));}
 console.log('$ node solver/policy-fit/check-coverage.js');console.log(read('coverage-output.txt'));
 console.log('$ game accounting');console.log(read('budget.json'));
 console.log('PATH E: items 1–4 complete. Items 5–11: not run / UNVERIFIED_NOT_RUN. No claim about moves outside the diagnostic subset.');
