@@ -1,0 +1,6 @@
+BUDGET AMENDMENT PASS
+controls 30000 -> 30160; total 120000 -> 120160
+carried charges 29800 unchanged
+next complete block 2320; projected controls 30160; projected total 32120
+8 historical source hashes MATCH
+No new scientific games; fresh registration not run

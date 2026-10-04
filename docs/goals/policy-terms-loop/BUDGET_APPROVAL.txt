@@ -1,0 +1,28 @@
+Owner-authorized prospective policy-terms budget increase
+
+Owner instruction: "Well, just increase the budget"
+Context: the reported replacement control block costs 2,320 games, while
+2,160 games remained in the control allocation. The assistant stated it would
+increase controls and the total cap by the missing 160 games. This records
+that narrow interpretation of the owner's approval.
+
+Controls: 30,000 -> 30,160 games.
+Total: 120,000 -> 120,160 games.
+Other allocations and the 20-proposal-round bound remain unchanged.
+This adds budget; it does not transfer games from the buffer or reset charges.
+BUDGET_AMENDMENT.json contains the prospective limits, carried charges and
+hashes of the unchanged historical registrations, raw checkpoint and receipts.
+
+This supersedes only the goal's budget limits for a fresh continuation.
+Neither GOAL.txt nor either historical exploration registration is rewritten.
+RESULT-0080 and RESULT-0081 remain interrupted, provisional and UNVERIFIED.
+The existing controllers still enforce their original registered limits and
+must not be relaunched. The amendment is not an experiment preregistration.
+Before new scientific games, a fresh continuation must commit its registration
+with these revised caps, the carried charges, new unused seed range, and frozen
+controller identity. Preserve completed panels and exclude incomplete panels
+from the control aggregate. No burned seed may be replayed.
+
+The owner's preference is to tolerate the small active-game loss and fund a
+replacement block. Custom restart-recovery qualification is not a prerequisite
+of this budget amendment or of the original scientific goal.

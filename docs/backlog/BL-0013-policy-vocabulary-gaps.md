@@ -117,3 +117,4 @@ the whole space. Not one term at a time.
   failure-evidence publication are recorded separately from the unchanged
   scientific registrations and receipts. Both runs remain UNVERIFIED, and
   policy effects and adoption remain open.
+- 2026-10-03 (America/Chicago) — Owner said "Well, just increase the budget" after the replacement-control shortfall was explained. BUDGET_APPROVAL.txt and BUDGET_AMENDMENT.json record the prospective increase; historical RESULT-0080/0081 registrations, evidence and charges remain intact. Fresh continuation registration is still required before new games.
