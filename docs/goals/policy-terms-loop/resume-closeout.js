@@ -11,6 +11,10 @@ const {requireHandoff}=require('./resume-handoff-presence');
 const {audit:proofAudit}=require('./resume-proof-audit');
 const ROOT=path.resolve(__dirname,'../../..');
 const BASE='cd83127f176111a0b0fb40eb14402f301a1fab07';
+// Main advanced during the registered run. Preserve registration ancestry by
+// merging this exact upstream commit after F, then audit this goal's changes
+// relative to it. Original inventory/seed/history constraints still use BASE.
+const INTEGRATION_BASE='77d23d7f0efe3c582abbe51a0f0cba4fe854f170';
 const git=args=>execFileSync('git',args,{cwd:ROOT,encoding:'utf8'});
 const result=JSON.parse(/```json\n([\s\S]*?)\n```/.exec(fs.readFileSync(path.join(__dirname,'RESUME_PLAN.md'),'utf8'))[1]).result;
 requireHandoff(ROOT,result);
@@ -38,7 +42,8 @@ const allowed=f=>/^(solver\/policy-lab\/|solver\/tests\/|experiments\/RESULT-008
   ||f.startsWith(`experiments/${config.result}/`)
   ||['experiments/SEEDS.md','FAILED-RUN-LEDGER.CSV','EVIDENCE_LEDGER.md','LEDGER-INDEX.md','CURRENT.md',
     'docs/backlog/BL-0012-generator-cannot-build-climbing-chains.md','docs/backlog/BL-0013-policy-vocabulary-gaps.md'].includes(f);
-const changed=[...new Set([...git(['diff','--name-only',BASE]).split('\n'),...git(['ls-files','--others','--exclude-standard']).split('\n')].filter(Boolean))];
+git(['merge-base','--is-ancestor',INTEGRATION_BASE,'HEAD']);
+const changed=[...new Set([...git(['diff','--name-only',INTEGRATION_BASE]).split('\n'),...git(['ls-files','--others','--exclude-standard']).split('\n')].filter(Boolean))];
 for(const f of changed){
   if(!allowed(f))throw new Error(`out of scope ${f}`);
   if(f.startsWith('solver/tests/')&&f!==inventory&&git(['ls-tree','--name-only',BASE,'--',f]).trim())throw new Error(`unapproved existing test edit ${f}`);
@@ -46,6 +51,7 @@ for(const f of changed){
 if(!fs.readFileSync(path.join(ROOT,'experiments/SEEDS.md'),'utf8').startsWith(git(['show',`${BASE}:experiments/SEEDS.md`])))throw new Error('seed declarations not append-only');
 for(const f of changed.filter(f=>f.startsWith('docs/backlog/')))if(!fs.readFileSync(path.join(ROOT,f),'utf8').startsWith(git(['show',`${BASE}:${f}`])))throw new Error(`backlog changed beyond appended history ${f}`);
 console.log('PASS authorized paths, exact approved existing-test inventory additions, unchanged frozen sources and carried evidence',commit);
+console.log('PASS integrated upstream ancestry and goal-only scope baseline',INTEGRATION_BASE);
 console.log('PASS append-only seeds and backlog History');
 console.log('$ node --test --test-reporter=tap solver/tests/*.test.js (fresh execution)');
 const {output:suite}=runCurrentSuite(ROOT);
