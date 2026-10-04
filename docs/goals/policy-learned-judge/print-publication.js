@@ -1,6 +1,6 @@
 'use strict';
 const {execFileSync}=require('node:child_process');
-const {validHeadThumbs,isCodexLogin:codex,headReviewEvidence,openCodexFindings,collectPages,flattenSlurped}=require('../../../solver/policy-fit/review-evidence');
+const {validHeadApproval,isCodexLogin:codex,headReviewEvidence,openCodexFindings,collectPages,flattenSlurped}=require('../../../solver/policy-fit/review-evidence');
 const repo='eluckey2002/Map-Elites-2248';
 function gh(...args){return JSON.parse(execFileSync('gh',args,{encoding:'utf8',maxBuffer:256*1024*1024}));}
 // Every list is read to the end (see collectPages); a partial read throws.
@@ -28,7 +28,7 @@ const threads=collectPages(after=>graphql(THREADS,{after}).repository.pullReques
 });
 const headReviews=headReviewEvidence(reviews,pr.headRefOid);
 const summaries=rest(`repos/${repo}/issues/${pr.number}/comments`).filter(c=>codex(c.user?.login));
-const approvals=validHeadThumbs(pr.headRefOid,reactions,summaries);
+const approvals=validHeadApproval(pr.headRefOid,reviews,reactions,summaries);
 const openFindings=openCodexFindings(threads);
 const gate=pr.statusCheckRollup.filter(c=>c.name==='experiment gate');
 const gateGreen=gate.length>0&&gate.every(c=>c.status==='COMPLETED'&&c.conclusion==='SUCCESS');

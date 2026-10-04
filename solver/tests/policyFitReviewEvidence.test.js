@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {validHeadThumbs,isCodexLogin,isSubmittedCodexReview,isCodexGraphqlAuthor,openCodexFindings,collectPages,flattenSlurped,headReviewEvidence}=require('../policy-fit/review-evidence');
+const {validHeadThumbs,isCodexLogin,isSubmittedCodexReview,isCodexGraphqlAuthor,openCodexFindings,collectPages,flattenSlurped,headReviewEvidence,validHeadApproval}=require('../policy-fit/review-evidence');
 const user={login:'chatgpt-codex-connector[bot]'};
 const summary=(head,status='completed')=>({user,updated_at:'2026-10-04T10:00:00Z',body:'<!-- codex-security-review:v1 '+JSON.stringify({headSha:head,status})+' -->\n**Code Review** | \u2705 **Completed**'});
 const reaction=time=>({user,content:'+1',created_at:time});
@@ -86,4 +86,19 @@ test('the latest same-head Codex review decides, not an earlier accepted one',()
  assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t1,'old')],'new'),[],'a review of another head does not count');
  assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t1,'new','chatgpt-codex-connector-evil')],'new'),[],'a lookalike does not count');
  assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t3),r(2,'APPROVED',t3)],'new').map(x=>x.id),[2],'same-instant reviews break ties by id');
+});
+test('an old thumbs-up does not survive a later negative review of the same head',()=>{
+ const codexUser={login:'chatgpt-codex-connector[bot]'};
+ const stamp=summary('new'); // updated_at 10:00
+ const thumb=at=>({user:codexUser,content:'+1',created_at:at});
+ const review=(id,state,at)=>({id,user:codexUser,state,submitted_at:at,commit_id:'new'});
+ const early=thumb('2026-10-04T10:01:00Z'),late=thumb('2026-10-04T10:20:00Z');
+ assert.deepEqual(validHeadApproval('new',[],[early],[stamp]),[early],'no reviews: a valid thumbs-up counts');
+ assert.deepEqual(validHeadApproval('new',[review(1,'COMMENTED','2026-10-04T10:02:00Z')],[early],[stamp]),[early],'a completed latest review does not hide it');
+ assert.deepEqual(validHeadApproval('new',[review(1,'CHANGES_REQUESTED','2026-10-04T10:10:00Z')],[early],[stamp]),[],'a later change request invalidates the older thumbs-up');
+ assert.deepEqual(validHeadApproval('new',[review(1,'CHANGES_REQUESTED','2026-10-04T10:10:00Z')],[early,late],[stamp]),[late],'a thumbs-up after the request counts');
+ assert.deepEqual(validHeadApproval('new',[review(1,'DISMISSED','2026-10-04T10:10:00Z')],[early],[stamp]),[],'a later dismissal fails closed');
+ assert.deepEqual(validHeadApproval('new',[review(1,'CHANGES_REQUESTED','2026-10-04T10:10:00Z'),review(2,'COMMENTED','2026-10-04T10:15:00Z')],[early],[stamp]),[early],'a later completed review supersedes the request');
+ assert.deepEqual(validHeadApproval('new',[{...review(1,'CHANGES_REQUESTED','2026-10-04T10:10:00Z'),commit_id:'old'}],[early],[stamp]),[early],'a request on another head is irrelevant');
+ assert.deepEqual(validHeadApproval('new',[{...review(1,'CHANGES_REQUESTED','2026-10-04T10:10:00Z'),user:{login:'chatgpt-codex-connector-evil'}}],[early],[stamp]),[early],'a lookalike cannot veto');
 });
