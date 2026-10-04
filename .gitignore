@@ -20,3 +20,5 @@ solver/.session-*.json
 /.playwright-mcp
 # Local brainstorm plugin event log (machine-local, regenerated)
 .brainstorm-last-events.jsonl
+# Finite Connections attempts have their own action-replay contract.
+/connection-sessions/

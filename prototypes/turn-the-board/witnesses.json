@@ -1,0 +1,15 @@
+{
+  "standing": "Authored feasibility routes, not difficulty or required-length claims. Coordinates are zero-based [column,row].",
+  "turnFirst": [
+    {"type":"rotate","direction":"cw"},
+    {"type":"move","chain":[[2,2],[1,3],[0,4]]},
+    {"type":"rotate","direction":"cw"},
+    {"type":"move","chain":[[1,4],[1,3],[0,2],[1,2],[2,2]]}
+  ],
+  "harvestFirst": [
+    {"type":"move","chain":[[3,2],[4,3],[4,4]]},
+    {"type":"rotate","direction":"cw"},
+    {"type":"move","chain":[[1,4],[2,3],[2,2]]},
+    {"type":"move","chain":[[1,3],[2,3],[3,4]]}
+  ]
+}

@@ -2,6 +2,263 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Level archetype design — current as of 2026-10-04
+
+**2026-10-04 main integration authorized:** DECISION-0010 and PDL-035 record
+the owner's request to land this work in the original game. The finite pack is
+already inside the app; this pass commits the selected variant and retained
+design references, integrates current main and follows the protected PR path.
+See [release state and verification](docs/game-design/levels/connections-integration.md).
+The protected PR's live state determines whether review and merge completed;
+the integration record preserves the verified candidate and QA limits.
+Saved games and live servers stay intact; forecast, campaign ordering, Delivery
+integration and legacy restyling remain outside scope.
+
+Start with the [archetype workbench](docs/game-design/levels/archetype-workbench.md).
+Current direction: **keep the one strong Connections mode; do not force three
+archetypes** (PDL-026). Existing Delivery Staggered and Landing remain retained.
+The owner has removed the numerical collection target and the need for another
+Connections variant solely to satisfy the old plan. No third-family search,
+quota-driven replacement build or new mechanic is queued. Task: ARCHETYPES-SCOPE-1.
+
+**Next selected mode: separate, budgeted Connection puzzles** (PDL-030).
+The [confirmed requirements brief](docs/plans/2026-10-03-0341-feat-connection-puzzle-levels-plan.md)
+covers a first pack with designed boards, ordered connections and repeatable
+retries. Removal costs a budgeted move; inventory is independent between levels.
+Same-board chapters remain a future option. PDL-031 now explicitly places the
+variants in the original game; PDL-032 makes the Connections prototype the
+preferred visual reference. The same artifact now contains a source-grounded
+integration plan, a proposed teaching sequence and verification units.
+**The first finite pack is now a local original-app playtest** (PDL-033), at
+[Connection puzzles](http://127.0.0.1:8286/?mode=connections): Crosscurrent,
+Keep a Line and Borrow a Space. Each has three ordered goals, one shared move
+budget, identical retries and independent earned-removal inventory. Existing
+score levels and unlock keys are unchanged; the original app's Level Select
+contains the variant entry. Campaign interleaving and whole-game restyling are
+not selected. The current 8285 game has not been replaced or restarted.
+Task: CONNECTIONS-LEVELS-BUILD-1; [local verification and limits](docs/game-design/levels/receipts/CONNECTIONS-LEVELS-BUILD-1.md).
+Owner play, native visual/touch QA and independent review remain open. Authored
+routes prove feasibility, not difficulty or a sustained-play lifecycle fix.
+No commit, PR, release or formal acceptance is claimed.
+
+The later Keep a Line discussion is in
+[the exact-attempt analysis](docs/game-design/levels/receipts/KEEP-A-LINE-PATH-1.md), including
+an append-only correction: free Preview result already reveals immediate
+refills; the ordinary board does not. The owner had not used that control.
+[BL-0025](docs/backlog/BL-0025-connections-next-tile-forecast.md) preserves the
+proposed next tile above each column. It is not an authorized refill change
+or the next scheduled build. The owner requested continuing the finite-pack
+handoff instead; task CONNECTIONS-LEVELS-HANDOFF-1 preserves that boundary.
+
+The [completed local handoff](docs/game-design/levels/receipts/CONNECTIONS-LEVELS-HANDOFF-1.md)
+records restored tests, capture replay and a verified same-machine snapshot
+under workspace `preservation/connections-levels-20261003-r2/`. The initial
+snapshot is retained and explicitly superseded. Native Chrome rendered the
+library, but its next observation switched to the owner's active window;
+interaction was stopped. Native gameplay/touch QA and independent review
+therefore remain open. No gameplay tuning or live-server change followed.
+
+**New sustained-play issue before close-out:** the owner reports non-power-of-two
+results accumulating and becoming difficult to use (PDL-027). A frozen local
+41-move capture replays exactly and has three such values with no current legal
+complete-chain participation. Targets favor non-power results every third card,
+ordinary merges can create them too, and refills supply only powers of two.
+New board resets the material; there is no dedicated in-board recycling rule.
+Retention remains, but continuous-play material lifecycle needs a decision
+before calling this ready for sustained play. The subsequent selected response
+is an isolated playtest, not an established lifecycle fix.
+Task: CONNECTIONS-RESIDUE-1; [diagnosis](docs/game-design/levels/receipts/CONNECTIONS-RESIDUE-1.md).
+
+**Connection Run + Power-up is ready for owner play at http://127.0.0.1:8285**
+(PDL-028). The owner authorized a separate bankable tile-removal trial,
+with three charges as the initial inventory cap. The owner's intent is to
+encourage planning, building up and scoring high tiles as well as board recovery.
+The owner selected one charge per merge creating a tile worth 2048 or higher,
+over the score-meter alternative and exactly-2048 restriction. The announced
+first-trial defaults are zero initial charges, discarded awards at capacity,
+one move/no score per removal, bank preserved on Skip/New board and cleared on
+Restart. See [concept and trial record](docs/backlog/BL-0024-connections-earned-cleanup.md).
+The owner agreed that spending a charge removes the selected tile, applies
+normal gravity/refill and leaves the objective unchanged. Original 8281 play,
+spawn pool, ordinary rules and objective bank are untouched. Fifteen new-mode
+checks and 88 focused checks pass; native rendered/touch QA and independent
+review remain open. The full solver suite is not green; the
+[implementation receipt](docs/game-design/levels/receipts/CONNECTIONS-POWERUP-1.md) records
+its four failures, including a separately reproduced existing collector gap.
+Owner feedback now calls the balance good and the game fun, describing competing
+growth, connection and removal-earning priorities and difficulty saving charges
+(PDL-029). This supports the current loop for this owner, not a proven long-run
+lifecycle fix. No tuning followed. Task: CONNECTIONS-POWERUP-1; reviewer: owner.
+
+**Turn the Board remains parked as this archetype version** (PDL-025).
+The owner found it interesting but was mixed on whether it was worthwhile or
+just compacted/re-aligned the pieces, then clarified they were not trying to
+create a setup or strategy. The owner agreed to park it. Keep rotation as a
+possible board-control mechanic, not a retained third family or a selected
+future build. The playable version remains unchanged at http://127.0.0.1:8284;
+see [rules and prior checks](prototypes/turn-the-board/README.md).
+Task: TURN-BOARD-1. Native rendering/touch QA remains unverified.
+PDL-026 removes the need to select a replacement; no further Turn tuning is
+scheduled.
+
+The owner reports Feeder Choice did not change play (PDL-023). Keep that
+version unchanged and parked. Its existing page remains on
+http://127.0.0.1:8274/?level=feeders for reference.
+The [Delivery authoring guide](docs/game-design/levels/delivery-authoring-guide.md)
+is complete as a first version. Task: DELIVERY-GUIDE-1. No further Delivery
+layout or Feeder tuning was started; both retained Delivery references remain.
+
+Retained Delivery contrast: **Delivery · Landing**, http://127.0.0.1:8283.
+The owner authorized a contrasting layout after Staggered's encouraging play.
+Landing explores immediate parcel progress versus the placement of a merged
+survivor, with the same rules, eight moves and refill pool through 128.
+See [design and checks](prototypes/delivery-bridge/README.md). Six focused tests
+and shared-UI stand-in interactions pass; native browser/touch QA remains
+unverified. Owner now reports considering the endpoint, its placement affecting
+the next move, and that choice feeling satisfying. Retain Landing as a
+contrasting Delivery reference (PDL-021). This is conversation feedback, not
+a matched replay or final collection acceptance. Task: DELIVERY-BRIDGE-1.
+
+**Delivery · Staggered** remains unchanged at http://127.0.0.1:8282.
+Owner feedback calls it much better and not obvious, reports losing the first
+attempt, and says that helped subsequent planning (PDL-019). Retain this board
+as a Delivery reference; do not automatically make it harder. This is owner
+report, not a matched replay or final family acceptance. See its
+[design and checks](prototypes/delivery-sequence/README.md).
+
+Connection Run with optional combinations remains available at 8281. Preserve
+its existing session URL when continuing; opening its bare URL starts another
+capture. Delivery reload starts a new play. Older servers remain untouched.
+
+The preceding bounded consolidation pass preserved source and captures,
+clarified current versus historical records, and recorded dispositions. No gameplay,
+server shutdown, production adoption, or change to the original portfolio goal
+was part of that pass. PDL-017 records the latest aid feedback verbatim;
+PDL-018 records Staggered's preparation, PDL-019 its owner feedback, and PDL-020
+the authorized contrasting layout. PDL-021 records Landing's positive owner
+feedback; gameplay remains unchanged.
+
+Delivery remains the strongest endorsed direction, with Staggered and Landing retained as references;
+Connections is now retained as the single current mode on the owner's strong
+endorsement (PDL-026). Current Gates, Feeder Choice and Turn the Board
+designs are parked; Heat remains an unselected reserve.
+The original 3–5-archetype count and required Connections contrast are
+superseded, not unfinished mandatory work. Delivery has two retained references
+and a first guide. Keep known QA and optional-aid questions explicit; this
+scope decision is not release approval, production adoption or formal task
+acceptance. No exclusive Connections-only product direction is inferred.
+PDL-027 adds the later long-run residue concern without reinstating the quota.
+
+Current scope task: ARCHETYPES-SCOPE-1; reviewer: owner. The earlier
+consolidation task was ARCHETYPES-CONSOLIDATE-1. See the workbench
+for preservation/restore instructions, remaining checks, and next decisions.
+
+### Historical progression — 2026-10-01
+
+The entries below retain the checkpoints and verification reported at the time.
+Their "current", "ready", and "await" wording is historical, not today's queue.
+
+The owner requests three to five distinct archetypes, conceptual design before
+technical experimentation, and autonomous work between human decision
+checkpoints. The owner explicitly allows new mechanics. This design work is
+separate from the historical policy and experiment frontier below.
+
+The [working plan](docs/plans/2026-10-01-level-archetypes-approach.md) owns the
+approach. The [concept packet](docs/game-design/levels/2026-10-01-archetype-concepts.md)
+recommended Gates, Delivery, and Feeder Choice, with Heat and Turn the Board as
+reserves. The owner replied “Honestly any of them sound fine,” delegating the
+selection. Codex selected the recommended trio and built isolated representatives.
+
+Current checkpoint: owner play of [the three prototypes](prototypes/archetype-trio/README.md)
+at http://127.0.0.1:8274. Eleven rule/replay/capture tests pass; desktop selection,
+preview, merge, undo, navigation and saving were checked in Chrome. A narrow
+desktop layout was inspected; phone-touch testing remains unverified. The
+owner subsequently clarified that Delivery is the clear winner and Feeder
+Choice is still undecided (it had not initially been played). Gates did not
+require a real decision. Prioritize Delivery and park the current Gates design. The requested
+live chain-sum readout is implemented above the board (ARCHETYPES-CHAIN-SUM-1),
+with fourteen focused checks passing. Reload starts a new play; do not reset
+an active owner game to demonstrate the update.
+
+The next Delivery variation, [Pair Drop](prototypes/delivery-pair-drop/README.md),
+is ready at http://127.0.0.1:8275, separately from the original game on 8274.
+It explores making a matching value while lowering its partner into position.
+The rules and move allowance are unchanged; an exact endpoint contrast and a
+winning witness are checked. Nineteen scoped tests pass. The owner has now
+played it: the idea is right, but the layout felt easy. The saved three-move
+play and its refill-assisted sweep are described in PDL-011 in the
+[playtest ledger](prototypes/PLAYTEST-DECISION-LEDGER.md). Keep the Delivery
+direction and revise the placement consequences; do not infer family acceptance.
+Operational task: DELIVERY-PAIR-DROP-1. The original server was not restarted.
+
+The third board, [Crossroads](prototypes/delivery-crossroads/README.md), is
+ready separately at http://127.0.0.1:8276. Two equal-value opening placements
+lead to different preparation sequences; both authored routes deliver without
+selecting any refill tile. This is feasibility, not difficulty evidence.
+Shared rules/UI were untouched. Replay, DOM-stand-in interaction and HTTP
+capture checks passed; isolated browser rendering could not be checked.
+Both older servers and identities remain unchanged. The owner subsequently
+won Crossroads in two moves using no refill tiles. They reported multiple
+two-move solutions and explained that the almost-complete value ladder made
+the missing construction obvious. See PDL-012 in the playtest ledger.
+Operational task: DELIVERY-CROSSROADS-1; reviewer: owner.
+
+The owner then proposed fixed-place and moving-tile connection objectives,
+including several per level, and authorized a playtest. [Connections](prototypes/connections/README.md)
+is ready separately at http://127.0.0.1:8277: two moving-tile goals plus one
+fixed-place goal, all visible, any order, completion retained. A/B endpoints
+are protected until their own connection completes; this first-version
+convention was announced, not separately accepted. Wider value pools remain
+unimplemented. Legal solution routes, marker gravity, undo, UI-script and HTTP
+capture checks pass. Visual/native-input QA awaits browser permission.
+Operational task: CONNECTIONS-SHARED-1; reviewer: owner. All three Delivery
+servers remain unchanged. No shipped gameplay rules were modified.
+
+The owner rejected the first Connections spacing: A and C were adjacent.
+[Across the Board](prototypes/connections-spaced/README.md) revises only the
+layout and is ready at http://127.0.0.1:8278. Each pair spans four columns;
+no goal can be completed on the opening board. Two different goal orders
+have checked winning routes without selecting refill tiles. The original
+four servers remain live with unchanged identities. Browser QA still awaits
+permission; no additional Chrome access was attempted. Operational task:
+CONNECTIONS-SPACED-1; reviewer: owner. Await play, not acceptance from checks.
+
+The owner found the spacing more fun but three simultaneous goals too cluttered.
+They clarified that ordinary moves must remain unrestricted: an objective is
+only satisfied when its endpoint and exact resulting-value conditions match.
+The requested longer-running [Connection Run](prototypes/connections-continuous/README.md)
+is ready separately at http://127.0.0.1:8279. One fixed-position objective is
+active at a time; a 24-entry board-adapted bank wraps without resetting the board.
+Opening/refill values range from 2 through 128. Skip, new board, undo, live sum,
+per-challenge feedback and local replay capture are available. See PDL-014.
+Twenty-five scoped checks pass, including 32 witnessed completions and actual
+HTTP capture. Visual/native-input QA remains unverified; no additional browser
+access was attempted. All five older games retain their live identities.
+Operational task: CONNECTIONS-CONTINUOUS-1; reviewer: owner. Await owner play.
+
+The owner reports enjoying the non-power-of-two twist, but requests help with
+repeated target arithmetic. The [updated UI](http://127.0.0.1:8280) adds a
+whole-number halving reference and live remaining/over-target amounts, without
+changing gameplay or revealing a route. Saved-run continuation preserves the
+owner's current 352 challenge in a new capture; the original 8279 game remains
+untouched. Twenty-eight scoped checks pass; browser visual/native-input QA
+remains unverified. Operational task: CONNECTIONS-MATH-AID-1; reviewer: owner.
+
+The owner clarified that the 352 difficulty was finding the seven-tile numerical
+composition, not recognizing the 64's required placement. They approved an
+optional **Show combinations** aid. It is ready at http://127.0.0.1:8281, with
+saved-run continuation, no board-route spoilers, and unchanged rules. Examples
+use power-of-two values and are explicitly non-exhaustive arithmetic possibilities,
+not guaranteed board paths. All seven earlier games remain unchanged. Thirty-two
+scoped checks pass; native browser QA and dedicated review remain unverified.
+See PDL-016. Operational task: CONNECTIONS-COMBINATIONS-1; reviewer: owner.
+
+Do not interpret “continue” for this task as a request to resume policy research.
+No shipped game rules changed and no new reportable experiment was run.
+Operational task: ARCHETYPES-PROTOTYPES-1; reviewer: owner. After the play
+checkpoint, refine retained concepts and provide contrasting variations and
+authoring guidance; do not treat this first playable packet as final acceptance.
+
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
 ## Policy terms diagnostic — 2026-10-03

@@ -1,0 +1,5 @@
+.intro{margin-bottom:28px}
+.turn-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.turn-controls button{flex:1;min-width:130px}
+.turn-controls p{flex-basis:100%;margin:0;font-size:11px;color:#61745f}
+.empty{aspect-ratio:1;min-width:0;border:1px dashed #b4c1aa;border-radius:9px;background:#e4e9dc}

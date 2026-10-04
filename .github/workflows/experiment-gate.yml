@@ -8,6 +8,10 @@
 # carries three known failures (two deliberately visible receipt mismatches
 # and one generated-view staleness check) that are
 # tracked elsewhere and must not mask a red gate.
+# Job 3 runs the tests of tools/freshness (BL-0022). The gate above does not run
+# them, so without this job nothing exercised that code in CI. It is a separate
+# job so a failure is visible on the pull request; making it a required check is a
+# branch-protection setting, not something this file can do.
 name: experiment-gate
 
 on:
@@ -55,3 +59,16 @@ jobs:
           node-version: 24
       - name: node --test
         run: node --test solver/tests/*.test.js
+
+  freshness-tools:
+    name: freshness tools tests (BL-0022)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: node --test (tools/freshness)
+        run: node --test solver/tests/freshnessCheck.test.js solver/tests/worktreeSweep.test.js solver/tests/freshnessRollout.test.js solver/tests/freshnessInstall.test.js

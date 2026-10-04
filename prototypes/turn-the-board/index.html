@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Turn the Board · 2248</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a href="/" class="wordmark">2248 <span>PLAYTEST STUDIO</span></a><span class="draft">Your play decides.</span></header>
+<main>
+  <section class="intro"><p class="eyebrow">A DIFFERENT KIND OF CHOICE</p><h1>Turn the Board.</h1><p>Choose what falls together—and what you leave apart.</p></section>
+  <div class="play-layout">
+    <section class="play-area" aria-label="Game">
+      <div class="stats"><div><span>SCORE / TARGET</span><strong id="score">0 / 550</strong></div><div><span>MOVES LEFT</span><strong id="moves">8</strong></div><div><span id="gravity-label">GRAVITY</span><strong id="gravity">↓ Down</strong></div></div>
+      <div class="turn-controls" aria-label="Turn previews"><button id="turn-ccw" class="secondary">↶ Preview turn</button><button id="turn-cw" class="secondary">↷ Preview turn</button><p>Quarter-turn · 1 move · no points</p></div>
+      <div class="chain-total" role="status" aria-live="polite" aria-atomic="true"><span>Chain sum</span><strong id="chain-sum">0</strong></div>
+      <div class="board-shell"><div id="board" aria-label="Number board"></div><svg id="path" aria-hidden="true"></svg></div>
+      <p id="selection" class="selection" aria-live="polite">Tap connected tiles to make a chain.</p>
+      <div class="actions"><button id="clear" class="quiet">Clear</button><button id="preview" class="secondary" disabled>Preview result</button><button id="merge" class="primary" disabled>Merge chain</button></div>
+      <div class="minor-actions"><button id="undo">↶ Undo action</button><button id="restart">↻ Same board again</button></div>
+    </section>
+    <aside>
+      <p class="eyebrow">PROTOTYPE · GRAVITY CHOICE</p><h2>Choose what falls together.</h2>
+      <div class="rule"><h3>The twist</h3><p>Preview a clockwise or counterclockwise quarter-turn, then commit it for one move. Tiles settle toward the new arrow. That direction stays until you turn again.</p><p>Turns add no tiles and no points. Merges replace only the tiles they remove in the affected lanes, with values from 2 through 128.</p><p>Eight empty cells stay on the board. They are open space, not walls.</p></div>
+      <div class="basics"><h3>How to make a chain</h3><p>Connect at least three touching tiles, including diagonals. Start with two equal numbers, then keep the same value or double it.</p><p>Tap tiles or drag a path. The last tile becomes the sum, then gravity acts. Preview before committing. Undo turns and merges freely.</p></div>
+      <div id="outcome" role="status" hidden></div>
+      <details id="feedback-panel"><summary>What did you think?</summary><label for="feedback">What drove your choice to turn, keep the direction, or clear something first? Was that worthwhile?</label><textarea id="feedback" rows="3" maxlength="4000" placeholder="What changed your plan? What felt confusing or automatic?"></textarea><button id="save-feedback" class="secondary">Save feedback</button></details>
+      <p id="capture" class="capture" role="status">Starting recording…</p><button id="export" class="text-button">Download this play</button>
+    </aside>
+  </div>
+</main>
+<footer>Same opening and deterministic refill on every restart. Preview is free. Restart begins a new play.</footer>
+<script src="/core.js"></script><script src="/model.js"></script><script src="/app.js"></script>
+</body></html>
