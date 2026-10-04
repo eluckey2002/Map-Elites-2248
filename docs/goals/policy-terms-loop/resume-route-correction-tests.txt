@@ -1,0 +1,11 @@
+✔ exact routing correction preserves all claims and rejects an added scientific claim (101.57108ms)
+✔ unrelated CURRENT or generated-index edits are refused (78.534313ms)
+✔ the exception cannot admit changed scientific data or an unexpected adapter (0.316278ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 243.963065

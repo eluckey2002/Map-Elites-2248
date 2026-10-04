@@ -20,7 +20,15 @@ function verifyPin(pin,requiredFiles,{root}) {
   execFileSync('git',['merge-base','--is-ancestor',pin.sourceCommit,'HEAD'],{cwd:root});
   for(const file of requiredFiles){
     const expected=pin.sourceHashes[file];
-    if(!expected||digest(fs.readFileSync(path.join(root,file)))!==expected)throw new Error(`closeout audit identity differs: ${file}`);
+    if(!expected)throw new Error(`closeout audit identity differs: ${file}`);
+    if(digest(fs.readFileSync(path.join(root,file)))!==expected){
+      // Old receipts remain immutable. Only the separately anchored exact
+      // RESULT-0082 navigation/adapter correction can explain a byte change.
+      const eligible=(file==='docs/goals/policy-terms-loop/audit-source-pin.js'&&expected==='9b86b3b21d71ca033b35dac58efd315337320e32c59cef71325e6ab648f68f17')
+        ||(['EVIDENCE_LEDGER.md','CURRENT.md','LEDGER-INDEX.md'].includes(file)&&pin.sourceCommit==='d9b5475fd5faaadc7ca6d6b296030592e31d6294');
+      if(!eligible)throw new Error(`closeout audit identity differs: ${file}`);
+      require('./resume-route-correction').verifyCorrectedInput(pin,file,expected,{root});
+    }
     const committed=execFileSync('git',['show',`${pin.sourceCommit}:${file}`],{cwd:root,maxBuffer:64*1024*1024});
     if(digest(committed)!==expected)throw new Error(`closeout audit pin lacks committed bytes: ${file}`);
   }

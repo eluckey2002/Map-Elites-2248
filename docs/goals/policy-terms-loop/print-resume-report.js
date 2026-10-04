@@ -60,6 +60,8 @@ function print(){
   show('FINAL TERMINAL CLOSEOUT; retained transcript, not a new execution',GOAL+'resume-final-closeout-output.txt');
   show('FINAL EXECUTED RECURRING AUDIT RECEIPT',GOAL+'resume-final-recurring-output.txt');
   show('CURRENT REVIEWED COMPLETION REQUIREMENTS',GOAL+'RESUME_FINAL_REVIEW_ADDENDUM.md');
+  show('AUTHORITATIVE VERIFICATION ROUTING CORRECTION',GOAL+'RESUME_ROUTE_CORRECTION.md');
+  show('EXACT ROUTING CORRECTION QUALIFICATION',GOAL+'resume-route-correction-tests.txt');
   show('REVIEWED FULL-HISTORY CUSTODY QUALIFICATION',GOAL+'resume-reviewed-proof-tests.txt');
   show('ACTUAL REVIEWED FULL-HISTORY CUSTODY PROOF',GOAL+'resume-reviewed-proof-output.txt');
   show('CURRENT REVIEWED TERMINAL CLOSEOUT',GOAL+'resume-reviewed-closeout-output.txt');
