@@ -26,7 +26,7 @@ assert all(hashlib.sha256((root/p).read_bytes()).hexdigest()==h for p,h in manif
 rows=[line for line in text.splitlines() if line.startswith('ℹ ') or line.startswith('✖ ')]
 output='PASS baseline failure names exactly unchanged\n'+json.dumps(names,indent=2)+'\nPASS protected files unchanged\nPASS existing tests unchanged except owner-approved one-line failed-closure inventory addition; no tests skipped\nPASS allowed tracked write scope\nPASS seed log append-only\nPASS historical input hashes unchanged\nNo backlog touched; no History update required\n'+'\n'.join(rows)+'\n'
 (goal/'closeout-output.txt').write_text(output,encoding='utf-8');print(output)
-for argv in [['node','tools/verify-experiments.js'],['node','tools/verify-ledger-authorship.js'],['node','tools/ledger-index.js','--check']]:
+for argv in [['node','solver/policy-fit/check-inputs.js'],['node','tools/verify-experiments.js'],['node','tools/verify-ledger-authorship.js'],['node','tools/ledger-index.js','--check']]:
  p=subprocess.run(argv,capture_output=True,text=True,encoding='utf-8');output='$ '+' '.join(argv)+'\n'+p.stdout+p.stderr
  with (goal/'closeout-output.txt').open('a',encoding='utf-8') as f:f.write(output)
  print(output);assert p.returncode==0,argv

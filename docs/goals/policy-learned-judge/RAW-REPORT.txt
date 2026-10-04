@@ -2,7 +2,7 @@ $ Goal 3 revision 5 / RESULT-0083 / PATH E raw report
 $ git rev-parse HEAD; git branch --show-current (captured start)
 6fea334c2f5fd61a86cce4a1842cb9b03f709ee1
 codex/policy-learned-judge-r5
-$ remote result-ID scan (captured start)
+$ preliminary remote scan (superseded by literal-ID scan below)
 {
   "assigned": "RESULT-0083",
   "checkedRemoteRefs": 35,
@@ -14,6 +14,13 @@ $ remote result-ID scan (captured start)
   ],
   "maximumExperimentDirectory": 82,
   "possibleSeedOverlapRows": []
+}
+$ final literal result-ID scan before publication
+{
+  "assigned": "RESULT-0083",
+  "checkedRefs": 70,
+  "matches": [],
+  "maximumOtherExperimentDirectory": 82
 }
 $ node --test solver/tests/*.test.js (captured baseline)
 ✖ launcher keeps validation roles separate in ports and recording paths (13.5214ms)
@@ -193,21 +200,23 @@ MATCH NOISE: all 58 historical level variances, both axes, interval widths and d
 MATCH GENERATION: exact subset counts, comparison counts and unchanged N_MIN / majority stop
 [{"label":"overall","n":502,"poolBelowOwner":97,"botBelowOwner":147,"fraction":0.19322709163346613},{"label":"levels 56 to 58","n":104,"poolBelowOwner":24,"botBelowOwner":30,"fraction":0.23076923076923078},{"label":"DIAGNOSTIC SUBSET: owner faster mutual-win boards and owner chain scores above bot choice","n":50,"poolBelowOwner":37,"botBelowOwner":50,"fraction":0.74}]
 Arithmetic reimplementation only; distinct reviewer acceptance is still required.
-$ node --test solver/tests/policyFitGeneration.test.js solver/tests/policyFitHistoricalCoverage.test.js
-✔ generation ceiling does not stop an undersized all-missing subset (0.9564ms)
-✔ generation ceiling stops exactly at the frozen minimum and half threshold (0.2007ms)
-✔ generation ceiling excludes bot-faster boards and tied owner points (0.1347ms)
-✔ unresolved recording prevents a generation prerequisite verdict (0.1273ms)
-✔ historical recompute rejects the retained zero-coverage cross-check receipt (211.5297ms)
-✔ historical recompute requires and reduces both real twelve-level arms (218.1502ms)
-ℹ tests 6
+$ node --test solver/tests/policyFitGeneration.test.js solver/tests/policyFitHistoricalCoverage.test.js solver/tests/policyFitInputManifest.test.js
+✔ generation ceiling does not stop an undersized all-missing subset (0.9714ms)
+✔ generation ceiling stops exactly at the frozen minimum and half threshold (0.2017ms)
+✔ generation ceiling excludes bot-faster boards and tied owner points (0.1403ms)
+✔ unresolved recording prevents a generation prerequisite verdict (0.1415ms)
+✔ historical recompute rejects the retained zero-coverage cross-check receipt (227.3391ms)
+✔ historical recompute requires and reduces both real twelve-level arms (262.495ms)
+✔ historical manifest pins all archive stores and receipts with unchanged hashes (55.183ms)
+✔ historical manifest rejects an omitted archived candidate input (1.1865ms)
+ℹ tests 8
 ℹ suites 0
-ℹ pass 6
+ℹ pass 8
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 552.2658
+ℹ duration_ms 634.7103
 $ node solver/policy-fit/check-coverage.js
 PASS declared level set: 1 to 58
 PASS T1 declared range inside authorized interval and disjoint
@@ -290,32 +299,172 @@ PASS allowed tracked write scope
 PASS seed log append-only
 PASS historical input hashes unchanged
 No backlog touched; no History update required
-✖ launcher keeps validation roles separate in ports and recording paths (11.6464ms)
-✖ candidate-levels-52.json has a receipt that verifies against the current bot (29.1604ms)
-✖ candidate-levels-54.json has a receipt that verifies against the current bot (8.8908ms)
-✖ LIVE: no linked worktree is holding uncommitted .orch state (8998.7137ms)
-✖ the builder is byte-stable and the committed generated views are current (57.3282ms)
-ℹ tests 634
+✖ launcher keeps validation roles separate in ports and recording paths (6.0531ms)
+✖ candidate-levels-52.json has a receipt that verifies against the current bot (11.2244ms)
+✖ candidate-levels-54.json has a receipt that verifies against the current bot (8.4727ms)
+✖ LIVE: no linked worktree is holding uncommitted .orch state (2916.6437ms)
+✖ the builder is byte-stable and the committed generated views are current (23.5103ms)
+ℹ tests 636
 ℹ suites 0
-ℹ pass 628
+ℹ pass 630
 ℹ fail 5
 ℹ cancelled 0
 ℹ skipped 1
 ℹ todo 0
-ℹ duration_ms 217169.8718
+ℹ duration_ms 251429.2585
 ✖ failing tests:
-✖ launcher keeps validation roles separate in ports and recording paths (11.6464ms)
-✖ candidate-levels-52.json has a receipt that verifies against the current bot (29.1604ms)
-✖ candidate-levels-54.json has a receipt that verifies against the current bot (8.8908ms)
-✖ LIVE: no linked worktree is holding uncommitted .orch state (8998.7137ms)
-✖ the builder is byte-stable and the committed generated views are current (57.3282ms)
+✖ launcher keeps validation roles separate in ports and recording paths (6.0531ms)
+✖ candidate-levels-52.json has a receipt that verifies against the current bot (11.2244ms)
+✖ candidate-levels-54.json has a receipt that verifies against the current bot (8.4727ms)
+✖ LIVE: no linked worktree is holding uncommitted .orch state (2916.6437ms)
+✖ the builder is byte-stable and the committed generated views are current (23.5103ms)
+$ node solver/policy-fit/check-inputs.js
+PASS complete historical input manifest: 77 files, archived candidates and receipts included
 $ node tools/verify-experiments.js
 EXPERIMENT GATE PASS
 $ node tools/verify-ledger-authorship.js
 LEDGER AUTHORSHIP GATE PASS (base 6fea334c)
 $ node tools/ledger-index.js --check
 LEDGER INDEX CURRENT
-UNVERIFIED: publication and actual Codex review not yet collected
+$ live GitHub publication state
+{
+  "pr": {
+    "headRefOid": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+    "number": 66,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T10:18:26Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37194924474/job/111414695955",
+        "name": "experiment gate",
+        "startedAt": "2026-10-04T10:18:11Z",
+        "status": "COMPLETED",
+        "workflowName": "experiment-gate"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T10:19:52Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37194924474/job/111414696008",
+        "name": "full test suite (informational until the three known failures are retired)",
+        "startedAt": "2026-10-04T10:18:11Z",
+        "status": "COMPLETED",
+        "workflowName": "experiment-gate"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-04T10:18:29Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/eluckey2002/Map-Elites-2248/actions/runs/37194924474/job/111414696011",
+        "name": "freshness tools tests (BL-0022)",
+        "startedAt": "2026-10-04T10:18:11Z",
+        "status": "COMPLETED",
+        "workflowName": "experiment-gate"
+      }
+    ],
+    "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66"
+  },
+  "headReviews": [
+    {
+      "id": 5405528409,
+      "state": "COMMENTED",
+      "body": "\n### 💡 Codex Review\n\nHere are some automated review suggestions for this pull request.\n\n**Reviewed commit:** `83d0094d4a`\n    \n\n<details> <summary>ℹ️ About Codex in GitHub</summary>\n<br/>\n\n[Your team has set up Codex to review pull requests in this repo](https://chatgpt.com/codex/cloud/settings/general). Reviews are triggered when you\n- Open a pull request for review\n- Mark a draft as ready\n- Comment \"@codex review\".\n\nIf Codex has suggestions, it will comment; otherwise it will react with 👍.\n\n\n\n\nCodex can also answer questions or update the PR. Try commenting \"@codex address that feedback\".\n            \n</details>",
+      "commit": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+      "submitted_at": "2026-10-04T10:31:43Z"
+    }
+  ],
+  "codexThumbsUp": [],
+  "inlineComments": [
+    {
+      "id": 4177039536,
+      "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Remove the claim that missing publication evidence is retained**\n\nThe commit does not contain `publication-output.json`, and the committed `RAW-REPORT.txt` instead ends by saying that publication state and the actual Codex review are still unverified. Consequently, this closeout paragraph claims evidence was retained when it was not; either retain the generated artifact or describe publication/review as pending so the report accurately reflects its evidence boundary.\n\nAGENTS.md reference: [AGENTS.md:L28-L32](https://github.com/eluckey2002/Map-Elites-2248/blob/46f1df5959074f75a31e1649bca1aac0b517e1ee/AGENTS.md#L28-L32)\n\nUseful? React with 👍 / 👎.",
+      "path": "experiments/RESULT-0083/report.md",
+      "line": 39,
+      "original_line": 39,
+      "commit_id": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+      "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177039536"
+    },
+    {
+      "id": 4177125265,
+      "body": "**<sub><sub>![P1 Badge](https://img.shields.io/badge/P1-orange?style=flat)</sub></sub>  Replace the unreachable correction commit citation**\n\nOn this squashed commit, `46f1df5959074f75a31e1649bca1aac0b517e1ee` is not an ancestor of `a73c6ed`, so running `node tools/verify-experiments.js` on the exact target adds `CORRECTION-0019: cited commit ... is not in this branch's history`; the similarly cited plan commit `3186ddf` is also unreachable. Consequently, the retained `EXPERIMENT GATE PASS` output describes the pre-squash branch rather than this revision, and the required gate cannot be green until these citations identify reachable evidence or the intermediate history is preserved.\n\nAGENTS.md reference: [AGENTS.md:L104-L112](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L104-L112)\n\nUseful? React with 👍 / 👎.",
+      "path": "EVIDENCE_LEDGER.md",
+      "line": 1732,
+      "original_line": 1732,
+      "commit_id": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+      "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125265"
+    },
+    {
+      "id": 4177125269,
+      "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Pin archived candidates used during replay**\n\n`resolveRecordedBoard()` uses `candidateIndex()`, which scans both `solver/` and `solver/candidates-archive/`, but this manifest hashes only the top-level candidate stores. Eight of the 36 sessions resolve through four omitted archived candidates, accounting for 14 of the 50 primary diagnostic rows and 12 of the 37 misses; changing one of those candidate or receipt files would therefore alter or invalidate these replays while the closeout hash check still reports every listed historical input unchanged. Add the consumed archive candidates and receipts to the manifest.\n\nAGENTS.md reference: [AGENTS.md:L65-L67](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L65-L67)\n\nUseful? React with 👍 / 👎.",
+      "path": "docs/goals/policy-learned-judge/historical-inputs.json",
+      "line": 59,
+      "original_line": 59,
+      "commit_id": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+      "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125269"
+    },
+    {
+      "id": 4177125272,
+      "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Append correction text inside the existing notes field**\n\nRESULT-0083 now declares a second `notes` field instead of extending the first one. The index parser overwrites the first value with this line, while the append-only history parser uses `??=` and keeps only the first value; deleting this correction-notes field consequently produces no history-check error. This leaves the added correction provenance removable without detection and makes repository consumers disagree about the record, so append the text within the original notes field or retain it only in CORRECTION-0019.\n\nAGENTS.md reference: [AGENTS.md:L67-L69](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L67-L69)\n\nUseful? React with 👍 / 👎.",
+      "path": "EVIDENCE_LEDGER.md",
+      "line": 1177,
+      "original_line": 1177,
+      "commit_id": "83d0094d4a620d6ba810ebefbf4624cbf9310e12",
+      "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125272"
+    }
+  ],
+  "openFindings": [
+    {
+      "id": "PRRT_kwDOT_TwF86oxSQP",
+      "isResolved": false,
+      "comments": {
+        "nodes": [
+          {
+            "author": {
+              "login": "chatgpt-codex-connector"
+            },
+            "body": "**<sub><sub>![P1 Badge](https://img.shields.io/badge/P1-orange?style=flat)</sub></sub>  Replace the unreachable correction commit citation**\n\nOn this squashed commit, `46f1df5959074f75a31e1649bca1aac0b517e1ee` is not an ancestor of `a73c6ed`, so running `node tools/verify-experiments.js` on the exact target adds `CORRECTION-0019: cited commit ... is not in this branch's history`; the similarly cited plan commit `3186ddf` is also unreachable. Consequently, the retained `EXPERIMENT GATE PASS` output describes the pre-squash branch rather than this revision, and the required gate cannot be green until these citations identify reachable evidence or the intermediate history is preserved.\n\nAGENTS.md reference: [AGENTS.md:L104-L112](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L104-L112)\n\nUseful? React with 👍 / 👎.",
+            "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125265"
+          }
+        ]
+      }
+    },
+    {
+      "id": "PRRT_kwDOT_TwF86oxSQS",
+      "isResolved": false,
+      "comments": {
+        "nodes": [
+          {
+            "author": {
+              "login": "chatgpt-codex-connector"
+            },
+            "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Pin archived candidates used during replay**\n\n`resolveRecordedBoard()` uses `candidateIndex()`, which scans both `solver/` and `solver/candidates-archive/`, but this manifest hashes only the top-level candidate stores. Eight of the 36 sessions resolve through four omitted archived candidates, accounting for 14 of the 50 primary diagnostic rows and 12 of the 37 misses; changing one of those candidate or receipt files would therefore alter or invalidate these replays while the closeout hash check still reports every listed historical input unchanged. Add the consumed archive candidates and receipts to the manifest.\n\nAGENTS.md reference: [AGENTS.md:L65-L67](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L65-L67)\n\nUseful? React with 👍 / 👎.",
+            "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125269"
+          }
+        ]
+      }
+    },
+    {
+      "id": "PRRT_kwDOT_TwF86oxSQU",
+      "isResolved": false,
+      "comments": {
+        "nodes": [
+          {
+            "author": {
+              "login": "chatgpt-codex-connector"
+            },
+            "body": "**<sub><sub>![P2 Badge](https://img.shields.io/badge/P2-yellow?style=flat)</sub></sub>  Append correction text inside the existing notes field**\n\nRESULT-0083 now declares a second `notes` field instead of extending the first one. The index parser overwrites the first value with this line, while the append-only history parser uses `??=` and keeps only the first value; deleting this correction-notes field consequently produces no history-check error. This leaves the added correction provenance removable without detection and makes repository consumers disagree about the record, so append the text within the original notes field or retain it only in CORRECTION-0019.\n\nAGENTS.md reference: [AGENTS.md:L67-L69](https://github.com/eluckey2002/Map-Elites-2248/blob/83d0094d4a620d6ba810ebefbf4624cbf9310e12/AGENTS.md#L67-L69)\n\nUseful? React with 👍 / 👎.",
+            "url": "https://github.com/eluckey2002/Map-Elites-2248/pull/66#discussion_r4177125272"
+          }
+        ]
+      }
+    }
+  ],
+  "gateGreen": true,
+  "reviewComplete": true,
+  "finishReady": false
+}
 $ owner-authorized test boundary exception
 Owner exception received 2026-10-04 in this chat.
 

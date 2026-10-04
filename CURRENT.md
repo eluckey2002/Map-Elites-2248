@@ -421,3 +421,5 @@ Last reviewed: 2026-09-28
 2026-10-04: [CORRECTION-0019](EVIDENCE_LEDGER.md) narrows RESULT-0083's first historical cross-check receipt, corrects the reference-arm lookup with mandatory complete coverage, and records the retained initial invalid closure in FR-0010. The corrected Path E stop uses the unchanged generation artifact and no fresh games. Scientific standing stays unaccepted; read both records together.
 
 2026-10-04 standing correction: the initial RESULT-0083 record is superseded because its first historical cross-check was incomplete. CORRECTION-0019 remains provisional and carries the corrected no-new-game Path E reduction. Neither is accepted; checked_by stays absent.
+
+2026-10-04 review follow-up: CORRECTION-0019 replay inputs now pin the archived candidate stores and receipts; its prior record uses one append-only notes field. PR #66 preserves preregistration and correction history and remains unmerged.

@@ -49,3 +49,7 @@ The original closeout paragraph's claim that publication-output.json was retaine
 ## Owner-approved closeout exception
 
 The mandatory new failed closure conflicts with the existing test's fixed older inventory. The owner approved adding RESULT-0083 to that expected list and finishing. OWNER_TEST_EXCEPTION.txt retains the exact authorization and PROPOSED_TEST_EXCEPTION.patch the exact change. This is the only existing-test edit; no test is skipped, removed or weakened and all older inventory entries remain. The unchanged-test wording above is qualified by this explicit exception.
+
+## Revised-head review responses
+
+Archived replay stores and receipts are now included in historical-inputs.json; their bytes match the original base, and check-inputs.js refuses an omitted archive input, tested negatively. No replay was rerun. RESULT-0083 correction text is appended within its single original notes field. The published branch preserves both cited intermediate commits (plan 3186ddf and original result 46f1df5); Git ancestry and the GitHub PR commit list confirm this. A squashed checkout discarding these commits is not the published branch. Do not squash away preregistration history; the owner retains the merge decision.

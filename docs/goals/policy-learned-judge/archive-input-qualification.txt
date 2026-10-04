@@ -1,0 +1,11 @@
+PASS all 10 archived stores/receipts match initial base bytes; no replay games required
+solver/candidates-archive/candidate-levels-51-split-channel-524f37c0.json
+solver/candidates-archive/candidate-levels-51-split-channel-524f37c0.receipt.json
+solver/candidates-archive/candidate-levels-54-tighter-pace-56c8eab0.json
+solver/candidates-archive/candidate-levels-54-tighter-pace-56c8eab0.receipt.json
+solver/candidates-archive/candidate-levels-gen0010.json
+solver/candidates-archive/candidate-levels-gen0010.receipt.json
+solver/candidates-archive/candidate-levels-gen0014-wide-sprint-043ca53f.json
+solver/candidates-archive/candidate-levels-gen0014-wide-sprint-043ca53f.receipt.json
+solver/candidates-archive/candidate-levels-gen0021.json
+solver/candidates-archive/candidate-levels-gen0021.receipt.json

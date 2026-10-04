@@ -65,5 +65,15 @@
   "solver/generated-batch-01.json": "64719ac33173d78a001fde15401872f5debbab5eba06a10d0b8e30b06becf03a",
   "solver/generated-batch-02.json": "88d7e4947899104b63b1e47e68476c8784753e4f7e1f1c764d7fe4ad189386c8",
   "solver/generated-batch-03.json": "e6c042d545abf6c3a4a27bf2f0bde048c9e71b39e0f6612234aad6a0d1c8fb20",
-  "solver/generated-batch-04.json": "5b0dd3bfd0d79a977d68f54ad1c59cc736b50c98459a3113e05f1ef2fa5a4c1f"
+  "solver/generated-batch-04.json": "5b0dd3bfd0d79a977d68f54ad1c59cc736b50c98459a3113e05f1ef2fa5a4c1f",
+  "solver/candidates-archive/candidate-levels-51-split-channel-524f37c0.json": "49920ea643bbb060fc351be38f46ad5382513713becc0b05e491c1e921a73f33",
+  "solver/candidates-archive/candidate-levels-51-split-channel-524f37c0.receipt.json": "4886484a092f03da0fd0cb638b8f514cf3215e837ba3002d4acee1db0f719878",
+  "solver/candidates-archive/candidate-levels-54-tighter-pace-56c8eab0.json": "13fc225de6fceb13a2a9d984c40c5a4fb86cf9142e7d8968fdfbe060077ede2a",
+  "solver/candidates-archive/candidate-levels-54-tighter-pace-56c8eab0.receipt.json": "07a9e9f4de5330b554445725b1a317213901a81dbb4fede14c097db9edcdf368",
+  "solver/candidates-archive/candidate-levels-gen0010.json": "17ceb1432d3c5c58fc008e942e50d887e3dd21b100a2cda295fa4514968829f9",
+  "solver/candidates-archive/candidate-levels-gen0010.receipt.json": "019204f8f3b62fecda8953aacd14d1890f13ed022489baa1539ba86c6ce02ecf",
+  "solver/candidates-archive/candidate-levels-gen0014-wide-sprint-043ca53f.json": "0b046cfe11090e2b8a3836e0964913800c115b2a4d16f558acc08b725bdfedda",
+  "solver/candidates-archive/candidate-levels-gen0014-wide-sprint-043ca53f.receipt.json": "261ad85e9566974cf709429bd566a627a4fe5413db0d15e90fe8efa0ec8a6e0b",
+  "solver/candidates-archive/candidate-levels-gen0021.json": "17a76ff3b660967697f1aa358dc595fcd50624e24e0cbd60721f6c87bc0d7ec7",
+  "solver/candidates-archive/candidate-levels-gen0021.receipt.json": "ca143af6064f5038be93f6f3cad6eeadb98c241555bbff38233a05a3d5d8e06c"
 }
