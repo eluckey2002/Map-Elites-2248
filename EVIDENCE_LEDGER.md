@@ -1319,6 +1319,23 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **checked_by:** pending
 - **notes:** This records owner authority with the integration action. It does not establish human difficulty, strongest-bot difficulty, long-run board health, native QA, review approval or completion of the merge. Optional column forecasts remain proposed BL-0025. New finite-variant behavior is isolated from the legacy rules, so no legacy scoring-rule performance claim or retune is made.
 
+### DECISION-0011 — Recompute a closed result at its admission commit when its frozen files are meant to keep growing
+
+- **type:** decision
+- **status:** provisional
+- **scope:** the experiment gate's closure recomputation in `tools/verify-experiments.js`, for results named in `experiments/FROZEN-TREE-RECOMPUTE.json` (today only `RESULT-0082`); no change to any result's measurements, closure, contract or protocol, and no change for any unlisted result
+- **statement:** The owner grants a recorded exception to the rule that a red gate is fixed in the ledger or the protocol and never by editing the gate (`AGENTS.md`, Landing changes on `main`). `RESULT-0082`'s closeout contract runs a recomputation that hashes the whole of `experiments/SEEDS.md` against the value frozen at registration. `SEEDS.md` is append-only by rule (a new protocol declares its ranges there before it runs, `experiments/README.md`), so the next reservation, including `RESULT-0083`'s, turns that recomputation red on any tree that carries it. For listed results the gate now runs the contract's own, unchanged command in a detached checkout of the commit that admitted the closure. A listed entry must cite a ledger decision and a reason, the admission commit must be reachable from `HEAD`, and nothing under the result's directory may differ from that commit. No record is exempted from verification; the retained evidence stays bound byte for byte.
+- **evidence:** Owner replies in the 2026-10-04 session on PR #66: chose "1" (a recorded exception, then a gate change in its own pull request) and then wrote "you have standing approval"; `AGENTS.md` line 164 (the rule excepted); `experiments/README.md` lines 107-108 (`SEEDS.md` is declared before a protocol runs); `solver/policy-lab/resume-proposal-recompute.js` line 219 (`confirmation frozen drift experiments/SEEDS.md`); `experiments/RESULT-0082/protocol.md` (frozen `experiments/SEEDS.md: 0e489768f3306b38`); admission commit `d9b5475f`.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-10-04
+- **reverify:** Read the owner replies quoted above and the cited lines at the commit introducing this decision. Then run `node tools/verify-experiments.js` and expect `EXPERIMENT GATE PASS` with `RESULT-0082` listed in `experiments/FROZEN-TREE-RECOMPUTE.json`; append any line to `experiments/SEEDS.md` and expect the gate to still pass, which is the case this decision exists for. This ruling is not a test verdict.
+- **updated:** 2026-10-04
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude-sonnet-5.5, session_01LhM3So22hhoNZqgY4Cojr7
+- **checked_by:** pending
+- **notes:** Found while resolving the merge conflicts on PR #66 (`codex/policy-learned-judge-r5`): its `RESULT-0083` seed block in `SEEDS.md` is the first reservation to land after `RESULT-0082` closed. The ledger rules forbid the writer from accepting its own record, so this stays provisional until the owner or another agent checks it. Known cost: three policy-lab closeout tests that pin the ledger, `CURRENT.md` and the gate byte for byte go red on any ledger-touching change, this one and PR #66 alike; the owner chose to ship the gate fix and track the pin design as BL-0026. Rejected alternatives: declaring `RESULT-0083`'s seeds outside `SEEDS.md` (against `experiments/README.md`), and editing `RESULT-0082`'s frozen sources (every one of them is hash-bound by its own recomputation).
+
 ## Hypothesis registry
 
 ### HYPOTHESIS-0001 — Compact state may guide an approximate search

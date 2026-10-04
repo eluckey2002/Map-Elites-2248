@@ -19,6 +19,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const os = require('node:os');
 const { execFileSync } = require('node:child_process');
 const { assessFailedRunLedger } = require('./failed-run-ledger');
 
@@ -420,6 +421,69 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
   return problems;
 }
 
+// DECISION-0011. A closed result whose recomputation hashes files that are
+// meant to keep growing (experiments/SEEDS.md is append-only) cannot be
+// recomputed against today's tree: any later seed reservation would turn its
+// gate red. FROZEN-TREE-RECOMPUTE.json lists such results; the gate then runs
+// the closeout contract's own command, unchanged, in a detached checkout of
+// the commit that admitted the closure. This is not a grandfather: the entry
+// must cite a ledger decision, the closure must be reachable from HEAD, and
+// nothing under the result's directory may differ from that commit, so the
+// retained evidence is still bound byte-for-byte.
+const FROZEN_TREE_REGISTRY = path.join(EXPERIMENTS, 'FROZEN-TREE-RECOMPUTE.json');
+
+function frozenTreeRegistry() {
+  try { return JSON.parse(fs.readFileSync(FROZEN_TREE_REGISTRY, 'utf8')); } catch { return {}; }
+}
+
+function frozenTreeEntryProblems(id, entry, ledgerText) {
+  const problems = [];
+  if (!entry || typeof entry !== 'object') return [`${id} frozen-tree entry is not an object`];
+  if (!/^DECISION-\d{4}$/.test(entry.decision || '')) {
+    problems.push(`${id} frozen-tree entry must cite a ledger decision`);
+  } else if (!new RegExp(`^### ${entry.decision} `, 'm').test(ledgerText)) {
+    problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not in the ledger`);
+  }
+  if (typeof entry.reason !== 'string' || entry.reason.trim().length < 20) {
+    problems.push(`${id} frozen-tree entry must say why the live tree cannot be recomputed`);
+  }
+  return problems;
+}
+
+function frozenTreeEntry(id) {
+  const entry = frozenTreeRegistry()[id];
+  if (!entry) return null;
+  const problems = frozenTreeEntryProblems(id, entry, fs.readFileSync(LEDGER, 'utf8'));
+  if (problems.length) throw new Error(problems.join('; '));
+  return entry;
+}
+
+function runAtAdmissionCommit(result, closureRel, argv, cwd) {
+  const rel = gitObjectPath(path.relative(ROOT, path.join(ROOT, closureRel)));
+  const commit = execFileSync('git', ['log', '--diff-filter=A', '--format=%H', '--', rel], { cwd: ROOT, encoding: 'utf8' })
+    .trim().split('\n').filter(Boolean).at(-1);
+  if (!commit || !reachableFromHead(commit)) throw new Error(`no admission commit for ${rel} reachable from HEAD`);
+  const resultRel = gitObjectPath(path.relative(ROOT, path.join(EXPERIMENTS, result.id)));
+  try {
+    execFileSync('git', ['diff', '--quiet', commit, '--', resultRel], { cwd: ROOT, stdio: 'ignore' });
+  } catch { throw new Error(`${resultRel} differs from its admission commit ${commit.slice(0, 8)}`); }
+  const checkout = fs.mkdtempSync(path.join(os.tmpdir(), `${result.id.toLowerCase()}-frozen-`));
+  let attached = false;
+  try {
+    execFileSync('git', ['worktree', 'add', '--detach', checkout, commit], { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+    attached = true;
+    return execFileSync(argv[0], argv.slice(1), {
+      cwd: path.join(checkout, path.relative(ROOT, cwd)),
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      maxBuffer: 64 * 1024 * 1024,
+    });
+  } finally {
+    if (attached) execFileSync('git', ['worktree', 'remove', '--force', checkout], { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+    else fs.rmSync(checkout, { recursive: true, force: true });
+  }
+}
+
 // A closure receipt is not self-authenticating: changing its verdict and then
 // saving the file again must not leave a green gate. Bind it back to the
 // closeout contract (including its protocol pin when one was registered),
@@ -507,12 +571,15 @@ function assessClosureReceipt(result, protocol, opened) {
     }
     let fresh;
     try {
-      fresh = JSON.parse(execFileSync(argv[0], argv.slice(1), {
-        cwd: recomputationCwd,
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'pipe'],
-        maxBuffer: 64 * 1024 * 1024,
-      }));
+      const frozen = frozenTreeEntry(result.id);
+      fresh = JSON.parse(frozen
+        ? runAtAdmissionCommit(result, entry.rel, argv, recomputationCwd)
+        : execFileSync(argv[0], argv.slice(1), {
+          cwd: recomputationCwd,
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'pipe'],
+          maxBuffer: 64 * 1024 * 1024,
+        }));
     } catch (error) {
       problems.push(`${label} recomputation command failed (${error.message})`);
       continue;
@@ -1203,5 +1270,5 @@ module.exports = {
   assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
   assessClosureReceipt, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
-  committedVersions, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
+  committedVersions, frozenTreeEntryProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };

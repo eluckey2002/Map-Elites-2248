@@ -238,6 +238,40 @@ test('LIVE: RESULT-0049 closure must agree with its pinned contract and fresh re
   assert.ok(problems.some((problem) => /contradicts recomputation "SUPPORTS_CURRENT_CHAMPION"/.test(problem)));
 });
 
+test('frozen-tree recompute entries must cite a real decision and a reason', () => {
+  const { frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
+  const ledger = '### DECISION-0011 — x\n';
+  const reason = 'the live tree cannot be recomputed because a frozen file grows';
+  assert.deepEqual(frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason }, ledger), []);
+  assert.match(frozenTreeEntryProblems('RESULT-0082', { reason }, ledger)[0], /must cite a ledger decision/);
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0099', reason }, ledger)[0],
+    /not in the ledger/,
+  );
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason: 'short' }, ledger)[0],
+    /must say why/,
+  );
+  assert.match(frozenTreeEntryProblems('RESULT-0082', null, ledger)[0], /not an object/);
+});
+
+test('LIVE: RESULT-0082 recomputes at its admission commit, so appending to SEEDS.md cannot break it', () => {
+  const registry = JSON.parse(fsx.readFileSync(path.join(ROOT, 'experiments', 'FROZEN-TREE-RECOMPUTE.json'), 'utf8'));
+  assert.ok(registry['RESULT-0082'], 'RESULT-0082 must be listed, or this test inspects the live-tree path');
+  const result = liveResult('RESULT-0082');
+  const opened = openCitedArtifacts(result);
+  const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0082', 'protocol.md'), 'utf8');
+  assert.deepEqual(assessClosureReceipt(result, protocol, opened), [], 'the real closure must verify at its admission commit');
+
+  const closureEntry = opened.find((entry) => entry.rel === 'experiments/RESULT-0082/closure.json');
+  assert.ok(closureEntry && closureEntry.artifact, 'the live gate must open the cited closure receipt');
+  closureEntry.artifact.primary_outcome = 'FALSIFIED';
+  assert.ok(
+    assessClosureReceipt(result, protocol, opened).some((problem) => /contradicts recomputation "SUPPORTED"/.test(problem)),
+    'a forged verdict must still be caught on the frozen-tree path',
+  );
+});
+
 test('LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit', () => {
   const result = liveResult('RESULT-0049');
   const opened = openCitedArtifacts(result);
