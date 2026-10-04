@@ -53,9 +53,25 @@ git (the way `FROZEN-TREE-RECOMPUTE.json` now does for RESULT-0082's
 recomputation) instead of to the working tree. The closeout then verifies what
 it was admitted against, and later ledger growth is irrelevant to it.
 
+## CI standing
+
+`.github/workflows/experiment-gate.yml` already defines a `test-suite` job
+(lines 49-61) that runs `node --test solver/tests/*.test.js`, which includes
+all three files above. It is `continue-on-error: true` and named "informational
+until the three known failures are retired", so these failures are reported on
+every pull request but do not block merging. Retiring them is also what lets
+that job become a required check.
+
 ## Open questions
 
-- Whether CI runs these tests at all. The experiment-gate workflow runs only
-  `node tools/verify-experiments.js`; the unit-test job, if any, was not read.
 - Whether the same pins exist for the earlier `policyLabRecovery*` closeouts
   beyond the three failing tests above.
+
+## History
+
+- 2026-10-04: Proposed while resolving PR #66's conflicts (session
+  `session_01LhM3So22hhoNZqgY4Cojr7`). The three tests were confirmed passing on
+  `origin/main` and failing on the `DECISION-0011` branch and on PR #66's merged
+  tree. Codex review of PR #67 noted the missing History and that the CI job
+  already runs the tests; both corrected here. Status stays `proposed`: no fix
+  is started and the owner chose to ship `DECISION-0011` first.

@@ -427,9 +427,10 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
 // gate red. FROZEN-TREE-RECOMPUTE.json lists such results; the gate then runs
 // the closeout contract's own command, unchanged, in a detached checkout of
 // the commit that admitted the closure. This is not a grandfather: the entry
-// must cite a ledger decision, the closure must be reachable from HEAD, and
-// nothing under the result's directory may differ from that commit, so the
-// retained evidence is still bound byte-for-byte.
+// must cite an owner decision naming the result, the closure must be reachable
+// from HEAD, and every input the recomputation reads must still match that
+// commit (see frozenInputProblems), so the retained evidence is still bound
+// byte-for-byte.
 const FROZEN_TREE_REGISTRY = path.join(EXPERIMENTS, 'FROZEN-TREE-RECOMPUTE.json');
 
 function frozenTreeRegistry() {
@@ -441,8 +442,26 @@ function frozenTreeEntryProblems(id, entry, ledgerText) {
   if (!entry || typeof entry !== 'object') return [`${id} frozen-tree entry is not an object`];
   if (!/^DECISION-\d{4}$/.test(entry.decision || '')) {
     problems.push(`${id} frozen-tree entry must cite a ledger decision`);
-  } else if (!new RegExp(`^### ${entry.decision} `, 'm').test(ledgerText)) {
-    problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not in the ledger`);
+  } else {
+    // The decision must be an owner decision that itself names this result and
+    // this registry; a heading that merely exists would let any entry cite an
+    // unrelated decision.
+    const start = ledgerText.search(new RegExp(`^### ${entry.decision} `, 'm'));
+    if (start < 0) {
+      problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not in the ledger`);
+    } else {
+      const rest = ledgerText.slice(start + 4);
+      const end = rest.search(/^#{2,3} /m);
+      const body = end < 0 ? rest : rest.slice(0, end);
+      if (!body.includes(id) || !body.includes('FROZEN-TREE-RECOMPUTE.json') || !/\*\*proof_class:\*\* `owner_decision`/.test(body)) {
+        problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not an owner decision naming ${id} and FROZEN-TREE-RECOMPUTE.json`);
+      }
+    }
+  }
+  for (const field of ['append_only', 'live_files', 'extra_immutable']) {
+    if (entry[field] !== undefined && !(Array.isArray(entry[field]) && entry[field].every((p) => typeof p === 'string'))) {
+      problems.push(`${id} frozen-tree entry ${field} must be a list of paths`);
+    }
   }
   if (typeof entry.reason !== 'string' || entry.reason.trim().length < 20) {
     problems.push(`${id} frozen-tree entry must say why the live tree cannot be recomputed`);
@@ -458,15 +477,48 @@ function frozenTreeEntry(id) {
   return entry;
 }
 
-function runAtAdmissionCommit(result, closureRel, argv, cwd) {
+// Everything the recomputation reads must still be what the closure was
+// admitted against, because the recomputation itself runs on the admission
+// checkout and so cannot notice a later change on this tree. Immutable: the
+// result directory, every file in the protocol's version_freeze, and any
+// extra_immutable path (journals). Exempt: append_only files must still begin
+// with their admitted bytes (SEEDS.md grows), and live_files are the live
+// checks themselves, which the contract only hashes. Returns problem strings.
+function frozenInputProblems(id, commit, entry) {
+  const problems = [];
+  const resultRel = `experiments/${id}`;
+  const protocol = showAtCommit(commit, `${resultRel}/protocol.md`);
+  const freeze = protocol && /^version_freeze:\n((?:  [^\n]+\n)+)/m.exec(protocol);
+  if (!freeze) return [`${id} protocol has no readable version_freeze at ${commit.slice(0, 8)}`];
+  const appendOnly = new Set(entry.append_only || []);
+  const live = new Set(entry.live_files || []);
+  const frozen = freeze[1].trimEnd().split('\n').map((line) => line.trim().replace(/: [0-9a-f]{16}$/, ''));
+  const immutable = [...new Set([resultRel, ...frozen, ...(entry.extra_immutable || [])])]
+    .filter((p) => !appendOnly.has(p) && !live.has(p));
+  try {
+    execFileSync('git', ['diff', '--quiet', commit, '--', ...immutable], { cwd: ROOT, stdio: 'ignore' });
+  } catch {
+    const changed = execFileSync('git', ['diff', '--name-only', commit, '--', ...immutable], { cwd: ROOT, encoding: 'utf8' })
+      .trim().split('\n').filter(Boolean);
+    problems.push(`${id} inputs differ from admission commit ${commit.slice(0, 8)}: ${changed.slice(0, 5).join(', ')}${changed.length > 5 ? ` (+${changed.length - 5} more)` : ''}`);
+  }
+  for (const rel of appendOnly) {
+    const admitted = showAtCommit(commit, rel, ROOT, { raw: true });
+    const current = fs.existsSync(path.join(ROOT, rel)) ? fs.readFileSync(path.join(ROOT, rel)) : null;
+    if (!admitted || !current || current.length < admitted.length || !current.subarray(0, admitted.length).equals(admitted)) {
+      problems.push(`${id} append-only input ${rel} no longer begins with its admitted bytes`);
+    }
+  }
+  return problems;
+}
+
+function runAtAdmissionCommit(result, closureRel, argv, cwd, entry) {
   const rel = gitObjectPath(path.relative(ROOT, path.join(ROOT, closureRel)));
   const commit = execFileSync('git', ['log', '--diff-filter=A', '--format=%H', '--', rel], { cwd: ROOT, encoding: 'utf8' })
     .trim().split('\n').filter(Boolean).at(-1);
   if (!commit || !reachableFromHead(commit)) throw new Error(`no admission commit for ${rel} reachable from HEAD`);
-  const resultRel = gitObjectPath(path.relative(ROOT, path.join(EXPERIMENTS, result.id)));
-  try {
-    execFileSync('git', ['diff', '--quiet', commit, '--', resultRel], { cwd: ROOT, stdio: 'ignore' });
-  } catch { throw new Error(`${resultRel} differs from its admission commit ${commit.slice(0, 8)}`); }
+  const inputProblems = frozenInputProblems(result.id, commit, entry);
+  if (inputProblems.length) throw new Error(inputProblems.join('; '));
   const checkout = fs.mkdtempSync(path.join(os.tmpdir(), `${result.id.toLowerCase()}-frozen-`));
   let attached = false;
   try {
@@ -573,7 +625,7 @@ function assessClosureReceipt(result, protocol, opened) {
     try {
       const frozen = frozenTreeEntry(result.id);
       fresh = JSON.parse(frozen
-        ? runAtAdmissionCommit(result, entry.rel, argv, recomputationCwd)
+        ? runAtAdmissionCommit(result, entry.rel, argv, recomputationCwd, frozen)
         : execFileSync(argv[0], argv.slice(1), {
           cwd: recomputationCwd,
           encoding: 'utf8',
@@ -1270,5 +1322,5 @@ module.exports = {
   assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
   assessClosureReceipt, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
-  committedVersions, frozenTreeEntryProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
+  committedVersions, frozenInputProblems, frozenTreeEntryProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };

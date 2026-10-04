@@ -1,6 +1,9 @@
 {
   "RESULT-0082": {
     "decision": "DECISION-0011",
-    "reason": "Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail."
+    "reason": "Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail.",
+    "append_only": ["experiments/SEEDS.md"],
+    "live_files": ["tools/verify-experiments.js", "solver/tests/failedRunLedger.test.js"],
+    "extra_immutable": ["solver/policy-lab/runs/resume"]
   }
 }
