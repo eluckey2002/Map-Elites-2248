@@ -2,6 +2,7 @@
 // BL-0022 criterion 1: installer + SessionStart launcher. Real temp dirs only;
 // the real home directory is never read or written by these tests.
 const test = require('node:test');
+const { after } = test;
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
@@ -14,7 +15,12 @@ const INSTALL = path.join(TOOLS, 'install.js');
 const LAUNCHER = path.join(TOOLS, 'session-freshness.js');
 const WARNING = 'FRESHNESS WARNING: this checkout is missing newer evidence commits; run the printed git command before trusting EVIDENCE_LEDGER.md';
 
-const tmp = (label) => fs.mkdtempSync(path.join(os.tmpdir(), `fresh-${label}-`));
+const TMP_PREFIX = 'fresh-';
+const made = [];
+const tmp = (label) => { const d = fs.mkdtempSync(path.join(os.tmpdir(), `${TMP_PREFIX}${label}-`)); made.push(d); return d; };
+after(() => {
+  for (const d of made) fs.rmSync(d, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+});
 const GIT_ENV = { ...process.env, GIT_TERMINAL_PROMPT: '0', GIT_AUTHOR_NAME: 't', GIT_AUTHOR_EMAIL: 't@t', GIT_COMMITTER_NAME: 't', GIT_COMMITTER_EMAIL: 't@t' };
 const git = (cwd, ...args) => {
   const r = spawnSync('git', args, { cwd, encoding: 'utf8', env: GIT_ENV });
