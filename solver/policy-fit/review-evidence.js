@@ -10,6 +10,15 @@ const codex=u=>u===CODEX_LOGIN;
 // APPROVED.
 const COMPLETED_REVIEW_STATES=['COMMENTED','APPROVED'];
 const submittedCodexReview=r=>codex(r?.user?.login)&&Boolean(r.submitted_at)&&COMPLETED_REVIEW_STATES.includes(r.state);
+// The latest submitted Codex review of the head decides: an earlier COMMENTED or
+// APPROVED must not survive a later CHANGES_REQUESTED (or DISMISSED) on the same
+// head. Returns [that review] when it is completed evidence, else [].
+function headReviewEvidence(reviews,head){
+ const submitted=reviews.filter(r=>codex(r?.user?.login)&&r.commit_id===head&&r.submitted_at&&r.state!=='PENDING');
+ submitted.sort((a,b)=>a.submitted_at<b.submitted_at?-1:a.submitted_at>b.submitted_at?1:Number(a.id)-Number(b.id));
+ const latest=submitted[submitted.length-1];
+ return latest&&submittedCodexReview(latest)?[latest]:[];
+}
 function validHeadThumbs(head,reactions,comments){
  const stamps=comments.filter(c=>codex(c.user?.login)).filter(c=>{
   const match=c.body.match(/<!-- codex-security-review:v1 (\{[^\n]+\}) -->/);
@@ -57,4 +66,4 @@ function flattenSlurped(pages){
  if(!Array.isArray(pages)||!pages.every(Array.isArray))throw new Error('paginated REST result is not a list of pages: failing closed');
  return pages.flat();
 }
-module.exports={validHeadThumbs,isCodexLogin:codex,isSubmittedCodexReview:submittedCodexReview,isCodexGraphqlAuthor:codexGraphqlAuthor,openCodexFindings,collectPages,flattenSlurped};
+module.exports={validHeadThumbs,isCodexLogin:codex,isSubmittedCodexReview:submittedCodexReview,isCodexGraphqlAuthor:codexGraphqlAuthor,openCodexFindings,collectPages,flattenSlurped,headReviewEvidence};

@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {validHeadThumbs,isCodexLogin,isSubmittedCodexReview,isCodexGraphqlAuthor,openCodexFindings,collectPages,flattenSlurped}=require('../policy-fit/review-evidence');
+const {validHeadThumbs,isCodexLogin,isSubmittedCodexReview,isCodexGraphqlAuthor,openCodexFindings,collectPages,flattenSlurped,headReviewEvidence}=require('../policy-fit/review-evidence');
 const user={login:'chatgpt-codex-connector[bot]'};
 const summary=(head,status='completed')=>({user,updated_at:'2026-10-04T10:00:00Z',body:'<!-- codex-security-review:v1 '+JSON.stringify({headSha:head,status})+' -->\n**Code Review** | \u2705 **Completed**'});
 const reaction=time=>({user,content:'+1',created_at:time});
@@ -73,4 +73,17 @@ test('lists are read to the end, and anything incomplete fails closed',()=>{
  const threadPages={null:{nodes:first,pageInfo:{hasNextPage:true,endCursor:'c'}},c:{nodes:[late],pageInfo:{hasNextPage:false,endCursor:null}}};
  assert.deepEqual(openCodexFindings(collectPages(after=>threadPages[after])).map(t=>t.id),['late'],'a finding on page 2 is not dropped');
  assert.deepEqual(openCodexFindings(first),[], 'the first page alone would have missed it');
+});
+test('the latest same-head Codex review decides, not an earlier accepted one',()=>{
+ const r=(id,state,at,head='new',login='chatgpt-codex-connector[bot]')=>({id,user:{login},state,submitted_at:at,commit_id:head});
+ const t1='2026-10-04T10:00:00Z',t2='2026-10-04T10:05:00Z',t3='2026-10-04T10:10:00Z';
+ assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t1)],'new').map(x=>x.id),[1]);
+ assert.deepEqual(headReviewEvidence([r(1,'APPROVED',t1),r(2,'CHANGES_REQUESTED',t2)],'new'),[],'a later change request invalidates an earlier approval');
+ assert.deepEqual(headReviewEvidence([r(2,'CHANGES_REQUESTED',t2),r(1,'APPROVED',t1)],'new'),[],'input order does not matter');
+ assert.deepEqual(headReviewEvidence([r(1,'CHANGES_REQUESTED',t1),r(2,'COMMENTED',t2)],'new').map(x=>x.id),[2],'a later completed review supersedes an earlier request');
+ assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t1),r(2,'DISMISSED',t2)],'new'),[],'a later dismissal fails closed');
+ assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t1),r(2,'PENDING',undefined)],'new').map(x=>x.id),[1],'a draft is ignored, not decisive');
+ assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t1,'old')],'new'),[],'a review of another head does not count');
+ assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t1,'new','chatgpt-codex-connector-evil')],'new'),[],'a lookalike does not count');
+ assert.deepEqual(headReviewEvidence([r(1,'COMMENTED',t3),r(2,'APPROVED',t3)],'new').map(x=>x.id),[2],'same-instant reviews break ties by id');
 });
