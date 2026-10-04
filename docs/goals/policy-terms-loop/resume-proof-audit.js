@@ -53,4 +53,4 @@ function audit(root){
     scope:'Additional read-only evidence audit. Original protocol unchanged; it did not separately freeze validator/baseline. They equal their actual pre-F receipt-commit bytes and never changed in subsequent history.'};
 }
 if(require.main===module){try{console.log('PASS_ADDITIONAL_PROOF_AUDIT',JSON.stringify(audit(path.resolve(__dirname,'../../..'))));}catch(error){console.error(error.stack);process.exitCode=1;}}
-module.exports={audit,requireUniqueAddition,requireTrustInputs,trustPaths:()=>[...TRUST,DIR+'resume-proof-audit.js']};
+module.exports={audit,requireUniqueAddition,requireTrustInputs,trustPaths:()=>[...TRUST,DIR+'resume-proof-audit.js',DIR+'resume-additional-proof-output.json']};
