@@ -138,9 +138,9 @@ None in the ledger; the table above is a direct `git` observation.
 
 ## Next action
 
-Write the check, the `SessionStart`-hook (and Codex-equivalent) startup
-wiring, the merged-worktree sweep, and their tests in a fresh worktree off
-`main`.
+Owner decision (criterion 1): approve or decline applying the drafted machine-level hook. `node tools/freshness/install.js --dry-run` prints the exact change to the user-level Claude Code settings; apply it only with the owner's explicit approval, then confirm in a fresh session that the warning reaches the model. The Codex change is optional and should wait until it is confirmed that Codex hooks are enabled (the existing SessionStart hooks show `enabled = false` in the Codex config).
+
+Open engineering work, not started: (1) a lease writer plus an opt-in removal step for the sweep (criterion 4; until then the sweep removes nothing); (2) a CI step so `tools/freshness` and its tests are actually gated, which is a workflow change and an owner decision; (3) promote this record in `CURRENT.md` once the owner accepts the pull request.
 
 ## History
 
