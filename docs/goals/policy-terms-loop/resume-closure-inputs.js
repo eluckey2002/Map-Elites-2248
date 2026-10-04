@@ -3,6 +3,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const {handoffPaths}=require('./resume-handoff-presence');
+const {trustPaths}=require('./resume-proof-audit');
 function loadInputs(root,result) {
   const inputs={result,artifacts:{}};
   for(const [id,file] of Object.entries({controls:'solver/policy-lab/runs/resume/controls-raw.json',
@@ -39,7 +40,7 @@ function evidencePaths(result,closure,inputs) {
     if(!full.startsWith(directory))throw new Error('escaping closure artifact');
     return full;
   };
-  return [...new Set([directory+'closure.json',...handoffPaths(result),'docs/goals/policy-terms-loop/resume-handoff-presence.js',...Object.values(inputs.artifacts).map(a=>a.path),
+  return [...new Set([directory+'closure.json',...handoffPaths(result),...trustPaths(),'docs/goals/policy-terms-loop/resume-handoff-presence.js',...Object.values(inputs.artifacts).map(a=>a.path),
     ...Object.keys(inputs.controls?.config?.harnessFreeze||{}),
     ...Object.keys(inputs.controls?.config?.carryForward?.sourceHashes||{}),
     ...Object.keys(inputs.proposals?.sourceHashes||{}),

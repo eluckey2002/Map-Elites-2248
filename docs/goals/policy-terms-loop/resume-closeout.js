@@ -8,6 +8,7 @@ const {verifyPin,readAnchoredPin}=require('./audit-source-pin');
 const {loadInputs,assertBindings,evidencePaths}=require('./resume-closure-inputs');
 const {runCurrentSuite}=require('./live-suite');
 const {requireHandoff}=require('./resume-handoff-presence');
+const {audit:proofAudit}=require('./resume-proof-audit');
 const ROOT=path.resolve(__dirname,'../../..');
 const BASE='cd83127f176111a0b0fb40eb14402f301a1fab07';
 const git=args=>execFileSync('git',args,{cwd:ROOT,encoding:'utf8'});
@@ -26,6 +27,7 @@ const auditPin=readAnchoredPin('docs/goals/policy-terms-loop/resume-closeout-aud
 if(auditPin?.result!==config.result||auditPin?.path!==closure.path||JSON.stringify(auditPin?.commands)!==JSON.stringify(commands))throw new Error('closeout audit pin does not bind this closure and command list');
 verifyPin(auditPin,[...commands.map(c=>c.split(' ')[0]),...evidencePaths(config.result,closure,inputs),...['resume-closeout.js','resume-closure-state.js','audit-source-pin.js','pin-resume-closeout.js','resume-closure-inputs.js','verify-resume-closeout.js'].map(f=>'docs/goals/policy-terms-loop/'+f)],{root:ROOT});
 console.log('PASS committed closeout audit identities',JSON.stringify(auditPin));
+if(closure.path==='A')console.log('PASS additional full-history and actual pre-F trust audit',JSON.stringify(proofAudit(ROOT)));
 const inventory='solver/tests/failedRunLedger.test.js';
 const before=git(['show',`${BASE}:${inventory}`]);
 const needle="'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042',";

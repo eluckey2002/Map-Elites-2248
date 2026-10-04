@@ -4,9 +4,18 @@ const fs=require('node:fs');
 const path=require('node:path');
 const {loadInputs,assertBindings,evidencePaths}=require('./resume-closure-inputs');
 const {requiredAudits}=require('./resume-closure-state');
+const {requireCompletedAudit}=require('./resume-closure-state');
+const {execFileSync}=require('node:child_process');
+const {audit:proofAudit}=require('./resume-proof-audit');
 const {requireHandoff}=require('./resume-handoff-presence');
 const {verifyPin,readAnchoredPin}=require('./audit-source-pin');
 const DIR='docs/goals/policy-terms-loop/';
+function executePinnedAudits(root,audits,closure,{execute=execFileSync}={}){
+  for(const command of audits){
+    const output=execute(process.execPath,command.split(' '),{cwd:root,encoding:'utf8',maxBuffer:64*1024*1024});
+    requireCompletedAudit(command,output,closure);
+  }
+}
 function verify(root){
   const plan=fs.readFileSync(path.join(root,DIR+'RESUME_PLAN.md'),'utf8');
   const config=JSON.parse(/```json\n([\s\S]*?)\n```/.exec(plan)[1]);
@@ -23,7 +32,9 @@ function verify(root){
   const files=[...commands.map(c=>c.split(' ')[0]),...evidencePaths(config.result,closure,inputs),
     ...['resume-closeout.js','resume-closure-state.js','audit-source-pin.js','pin-resume-closeout.js','resume-closure-inputs.js','verify-resume-closeout.js'].map(f=>DIR+f)];
   verifyPin(pin,files,{root});
+  executePinnedAudits(root,audits,closure);
+  if(closure.path==='A')proofAudit(root);
   return{pending:false,scientificComplete:true,result:config.result,path:closure.path,sourceCommit:pin.sourceCommit,scientificAcceptance:false};
 }
 if(require.main===module){try{console.log('RETAINED_RESUMED_CLOSEOUT',JSON.stringify(verify(path.resolve(__dirname,'../../..'))));}catch(error){console.error(error.stack);process.exitCode=1;}}
-module.exports={verify};
+module.exports={verify,executePinnedAudits};
