@@ -1,0 +1,15 @@
+.intro{margin-bottom:24px}.intro>p:last-child{max-width:640px;line-height:1.6}
+.goal-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 28px}
+.goal-card{border:1px solid #ced6c5;border-radius:10px;padding:13px;background:#fafaf5;display:flex;align-items:center;gap:12px}
+.goal-letter{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;font-weight:800;flex-shrink:0;background:#e9e1ef;color:#6e4285}
+.goal-card.goal-B .goal-letter{background:#dbeaf6;color:#245e89}.goal-card.goal-C .goal-letter{background:#f5e4d1;color:#8b541a;border-radius:4px;border:1px dashed #b47d40}
+.goal-card strong{display:block;font-size:15px}.goal-card small{display:block;font-size:11px;line-height:1.5;color:#6a7b66;margin-top:3px}
+.goal-card.done{background:#e0ebd8}.goal-card.done .goal-letter{background:#285941;color:white;border:none}
+.tile .mark{position:absolute;top:4px;right:4px;min-width:23px;padding:2px 4px;border-radius:10px;font-size:10px;line-height:1.1;background:#efe5f7;color:#61377a;box-shadow:0 0 0 1px #845a9b;font-weight:800}
+.tile .mark.mark-B{background:#e0f0fb;color:#1f547a;box-shadow:0 0 0 1px #387caf}
+.tile.marked-A{border:2px solid #8658a2}.tile.marked-B{border:2px solid #3b82b3}
+.tile.fixed-end{box-shadow:inset 0 0 0 3px #c18b4e}.tile .fixed-tag{position:absolute;bottom:3px;left:4px;font-size:9px;line-height:1.1;padding:2px 4px;border:1px dashed #9a612d;border-radius:3px;color:#784716;background:#fff1dd}
+.tile.fixed-done{box-shadow:inset 0 0 0 2px #aac095}.tile.fixed-done .fixed-tag{color:#557149;border-color:#92a886;background:#ecf4e3}
+#preview-label{padding:7px 10px;margin-bottom:10px;border-radius:6px;background:#f5dfbf;color:#86531d;font-size:12px;font-weight:700}
+.selection{min-height:48px}.fixed-rule{border-left-style:dashed}.play-area #outcome{font-weight:650}
+@media(max-width:740px){.goal-list{gap:6px;margin-bottom:20px}.goal-card{padding:9px 7px;gap:6px;align-items:flex-start;flex-direction:column}.goal-letter{width:25px;height:25px;font-size:12px}.goal-card strong{font-size:13px}.goal-card small{font-size:10px}.tile .mark{font-size:9px;top:3px;right:3px;min-width:20px}.tile .fixed-tag{font-size:8px;bottom:2px;left:3px}.tile{padding-top:8px}.tile .order{font-size:9px;top:3px;left:3px}}

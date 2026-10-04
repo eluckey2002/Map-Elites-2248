@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Connections · 2248 Playtest</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a href="/" class="wordmark">2248 <span>PLAYTEST STUDIO</span></a><span class="draft">Connections / first playtest</span></header>
+<main>
+  <section class="intro"><p class="eyebrow">THREE GOALS · ONE BOARD</p><h1>Make the connections.</h1><p>Complete all three in any order. Every merge changes the board for the goals still left.</p></section>
+  <div id="goals" class="goal-list" aria-label="Connection goals" aria-live="polite"></div>
+  <div class="play-layout">
+    <section class="play-area" aria-label="Game">
+      <div class="stats"><div><span>CONNECTIONS</span><strong id="completed">0 / 3</strong></div><div><span>MOVES LEFT</span><strong id="moves">10</strong></div><div><span>MERGE SCORE</span><strong id="score">0</strong></div></div>
+      <div class="chain-total" role="status" aria-live="polite"><span>Chain sum</span><strong id="chain-sum">0</strong></div>
+      <div id="preview-label" hidden>PREVIEW — not committed</div>
+      <div class="board-shell"><div id="board" aria-label="Number board"></div><svg id="path" aria-hidden="true"></svg></div>
+      <p id="selection" class="selection" role="status">Loading board…</p>
+      <div class="actions"><button id="clear" class="quiet">Clear</button><button id="preview" class="secondary" disabled>Preview result</button><button id="merge" class="primary" disabled>Merge chain</button></div>
+      <div class="minor-actions"><button id="undo">↶ Undo move</button><button id="restart">↻ Same board again</button></div>
+      <div id="outcome" role="status" hidden></div>
+    </section>
+    <aside>
+      <p class="eyebrow">WHAT COUNTS</p><h2>Two ends. One chain.</h2>
+      <div class="rule"><h3>A & B travel with their tiles</h3><p>Start at A1 and finish at A2, or reverse them. For B, start at B1 (16) and finish at B2 (64).</p><p>Unfinished marked tiles can only be used as the two ends of their own connection. Clear beneath them to move them with gravity.</p></div>
+      <div class="rule fixed-rule"><h3>C stays on the board</h3><p>Start at C1 and finish at C2, or reverse them. The dashed positions stay fixed; the numbers inside can change.</p></div>
+      <div class="basics"><h3>Same chaining rules</h3><p>Connect at least three touching tiles, including diagonals. The first two must match; each following tile must be equal or double.</p><p>The last tile becomes the sum. Ordinary chains can prepare the board. A completed goal stays checked off.</p><p>Tap or drag. Preview and undo freely. Score is not the objective.</p></div>
+      <details><summary>What did you think?</summary><label for="feedback">Did completing one connection change your plan for another?</label><textarea id="feedback" rows="3" maxlength="4000" placeholder="What did you try first? What changed after it?"></textarea><button id="save-feedback" class="secondary">Save feedback</button></details>
+      <p id="capture" class="capture" role="status">Starting recording…</p><button id="export" class="text-button">Download this play</button>
+    </aside>
+  </div>
+</main>
+<footer>Local prototype. Same board and refill on restart. No changes to the Delivery games.</footer>
+<script src="/core.js"></script><script src="/model.js"></script><script src="/app.js"></script>
+</body></html>
