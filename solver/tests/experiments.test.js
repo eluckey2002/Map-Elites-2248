@@ -241,7 +241,7 @@ test('LIVE: RESULT-0049 closure must agree with its pinned contract and fresh re
 test('frozen-tree recompute entries must cite a real decision and a reason', () => {
   const { frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
   const ledger = [
-    '### DECISION-0011 — x', '- **scope:** RESULT-0082 in experiments/FROZEN-TREE-RECOMPUTE.json',
+    '### DECISION-0011 — x', '- **scope:** RESULT-0082 in the FROZEN_TREE_POLICY table',
     '- **proof_class:** `owner_decision`', '', '### DECISION-0002 — Level 26 tuning', '- **proof_class:** `owner_decision`', '',
   ].join('\n');
   const reason = 'the live tree cannot be recomputed because a frozen file grows';
@@ -262,17 +262,23 @@ test('frozen-tree recompute entries must cite a real decision and a reason', () 
   );
   assert.match(
     frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, live_files: ['package.json'] }, ledger)[0],
-    /exempts package\.json \(live_files\), which DECISION-0011 does not name/,
-    'a registry edit alone cannot add an exemption',
+    /lists package\.json \(live_files\), which DECISION-0011 does not name/,
+    'a policy edit alone cannot add an exemption',
   );
-  const named = ledger.replace('- **proof_class:**', '- **statement:** exempts `tools/live-check.js` and `experiments/SEEDS.md`\n- **proof_class:**');
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, extra_immutable: ['solver/other'] }, ledger)[0],
+    /lists solver\/other \(extra_immutable\), which DECISION-0011 does not name/,
+    'a policy edit alone cannot swap the pinned journal path for another',
+  );
+  const named = ledger.replace('- **proof_class:**', '- **statement:** exempts `tools/live-check.js` and `experiments/SEEDS.md`, pins `solver/journals`\n- **proof_class:**');
   assert.deepEqual(
-    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, live_files: ['tools/live-check.js'], append_only: ['experiments/SEEDS.md'] }, named),
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, live_files: ['tools/live-check.js'], append_only: ['experiments/SEEDS.md'], extra_immutable: ['solver/journals'] }, named),
     [],
   );
+  const namedMagic = named.replace('pins `solver/journals`', 'pins `solver/journals`, `:(exclude)EVIDENCE_LEDGER.md`, `:(exclude,glob)**`, `../outside`, `/abs`, `a/*`, `a//b`');
   for (const magic of [':(exclude)EVIDENCE_LEDGER.md', ':(exclude,glob)**', '../outside', '/abs', 'a/*', 'a//b', '']) {
     assert.match(
-      frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, extra_immutable: ['EVIDENCE_LEDGER.md', magic] }, ledger).join('\n'),
+      frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, extra_immutable: ['EVIDENCE_LEDGER.md', magic] }, namedMagic).join('\n'),
       /extra_immutable has .*which is not a plain relative path/,
       `${JSON.stringify(magic)} must not reach git as a pathspec`,
     );
@@ -290,11 +296,26 @@ test('frozen-tree recompute entries must cite a real decision and a reason', () 
 });
 
 test('LIVE: every input the RESULT-0082 recomputation reads stays bound to its admission commit', () => {
-  const { frozenInputProblems } = require('../../tools/verify-experiments.js');
-  const registry = JSON.parse(fsx.readFileSync(path.join(ROOT, 'experiments', 'FROZEN-TREE-RECOMPUTE.json'), 'utf8'));
-  const entry = registry['RESULT-0082'];
+  const { FROZEN_TREE_POLICY, frozenInputProblems, frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
+  const entry = FROZEN_TREE_POLICY['RESULT-0082'];
   const admission = 'd9b5475fd5faaadc7ca6d6b296030592e31d6294';
-  assert.deepEqual(frozenInputProblems('RESULT-0082', admission, entry), [], 'the live registry entry must hold today');
+  // The mandatory set is pinned in code and in the decision text. Any change to
+  // it must change this test and DECISION-0011 together, in a reviewed edit.
+  assert.deepEqual(
+    { append_only: entry.append_only, live_files: entry.live_files, extra_immutable: entry.extra_immutable, decision: entry.decision },
+    {
+      append_only: ['experiments/SEEDS.md'],
+      live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js'],
+      extra_immutable: ['solver/policy-lab/runs/resume'],
+      decision: 'DECISION-0011',
+    },
+  );
+  assert.deepEqual(
+    frozenTreeEntryProblems('RESULT-0082', entry, fsx.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8')),
+    [],
+    'the live ledger decision must name the result, the table and every pinned or exempt path',
+  );
+  assert.deepEqual(frozenInputProblems('RESULT-0082', admission, entry), [], 'the live policy must hold today');
 
   // Negative controls against real history: tools/verify-experiments.js,
   // EVIDENCE_LEDGER.md and CURRENT.md all changed after admission (DECISION-0011
@@ -324,8 +345,8 @@ test('LIVE: every input the RESULT-0082 recomputation reads stays bound to its a
 });
 
 test('LIVE: RESULT-0082 recomputes at its admission commit, so appending to SEEDS.md cannot break it', () => {
-  const registry = JSON.parse(fsx.readFileSync(path.join(ROOT, 'experiments', 'FROZEN-TREE-RECOMPUTE.json'), 'utf8'));
-  assert.ok(registry['RESULT-0082'], 'RESULT-0082 must be listed, or this test inspects the live-tree path');
+  const { FROZEN_TREE_POLICY } = require('../../tools/verify-experiments.js');
+  assert.ok(FROZEN_TREE_POLICY['RESULT-0082'], 'RESULT-0082 must be listed, or this test inspects the live-tree path');
   const result = liveResult('RESULT-0082');
   const opened = openCitedArtifacts(result);
   const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0082', 'protocol.md'), 'utf8');

@@ -49,7 +49,7 @@ not either change.
 ## Sketch
 
 Pin the navigation files and the gate to the admission commit's bytes read from
-git (the way `FROZEN-TREE-RECOMPUTE.json` now does for RESULT-0082's
+git (the way `FROZEN_TREE_POLICY` now does for RESULT-0082's
 recomputation) instead of to the working tree. The closeout then verifies what
 it was admitted against, and later ledger growth is irrelevant to it.
 

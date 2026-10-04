@@ -424,20 +424,26 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
 // DECISION-0011. A closed result whose recomputation hashes files that are
 // meant to keep growing (experiments/SEEDS.md is append-only) cannot be
 // recomputed against today's tree: any later seed reservation would turn its
-// gate red. FROZEN-TREE-RECOMPUTE.json lists such results; the gate then runs
-// the closeout contract's own command, unchanged, in a detached checkout of
-// the commit that admitted the closure. This is not a grandfather: the entry
-// must cite an owner decision naming the result, the closure must be reachable
-// from HEAD, and every input the recomputation reads must still match that
-// commit (see frozenInputProblems), so the retained evidence is still bound
-// byte-for-byte.
-const FROZEN_TREE_REGISTRY = path.join(EXPERIMENTS, 'FROZEN-TREE-RECOMPUTE.json');
+// gate red. FROZEN_TREE_POLICY lists such results; the gate then runs the
+// closeout contract's own command, unchanged, in a detached checkout of the
+// commit that admitted the closure. This is not a grandfather: the entry must
+// cite an owner decision naming the result and every path it exempts or pins,
+// the closure must be reachable from HEAD, and every input the recomputation
+// reads must still match that commit (see frozenInputProblems), so the retained
+// evidence is still bound byte-for-byte. The policy lives in this file, not in
+// an editable data file: the mandatory path set cannot be shrunk or swapped by
+// a config-only change, only by a reviewed edit to the gate.
+const FROZEN_TREE_POLICY = {
+  'RESULT-0082': {
+    decision: 'DECISION-0011',
+    reason: 'Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail.',
+    append_only: ['experiments/SEEDS.md'],
+    live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js'],
+    extra_immutable: ['solver/policy-lab/runs/resume'],
+  },
+};
 
-function frozenTreeRegistry() {
-  try { return JSON.parse(fs.readFileSync(FROZEN_TREE_REGISTRY, 'utf8')); } catch { return {}; }
-}
-
-// Registry paths reach git as pathspecs, where ':(exclude)x' or a glob would
+// Policy paths reach git as pathspecs, where ':(exclude)x' or a glob would
 // change what is compared. Only plain slash-separated names are accepted, and
 // git is also run with --literal-pathspecs (see frozenInputProblems).
 function isPlainRelativePath(p) {
@@ -451,7 +457,7 @@ function frozenTreeEntryProblems(id, entry, ledgerText) {
     problems.push(`${id} frozen-tree entry must cite a ledger decision`);
   } else {
     // The decision must be an owner decision that itself names this result and
-    // this registry; a heading that merely exists would let any entry cite an
+    // this policy; a heading that merely exists would let any entry cite an
     // unrelated decision.
     const start = ledgerText.search(new RegExp(`^### ${entry.decision} `, 'm'));
     if (start < 0) {
@@ -460,15 +466,16 @@ function frozenTreeEntryProblems(id, entry, ledgerText) {
       const rest = ledgerText.slice(start + 4);
       const end = rest.search(/^#{2,3} /m);
       const body = end < 0 ? rest : rest.slice(0, end);
-      if (!body.includes(id) || !body.includes('FROZEN-TREE-RECOMPUTE.json') || !/\*\*proof_class:\*\* `owner_decision`/.test(body)) {
-        problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not an owner decision naming ${id} and FROZEN-TREE-RECOMPUTE.json`);
+      if (!body.includes(id) || !body.includes('FROZEN_TREE_POLICY') || !/\*\*proof_class:\*\* `owner_decision`/.test(body)) {
+        problems.push(`${id} frozen-tree entry cites ${entry.decision}, which is not an owner decision naming ${id} and FROZEN_TREE_POLICY`);
       }
-      // Each exemption widens what may change without the gate noticing, so the
-      // decision must name that exact path; a registry edit alone cannot add one.
-      for (const field of ['append_only', 'live_files']) {
-        for (const exempt of Array.isArray(entry[field]) ? entry[field] : []) {
-          if (typeof exempt === 'string' && !body.includes(`\`${exempt}\``)) {
-            problems.push(`${id} frozen-tree entry exempts ${exempt} (${field}), which ${entry.decision} does not name`);
+      // Every exemption widens what may change without the gate noticing, and
+      // every pinned path narrows what is checked, so the decision must name
+      // each exact path; an edit to the policy alone cannot add or swap one.
+      for (const field of ['append_only', 'live_files', 'extra_immutable']) {
+        for (const named of Array.isArray(entry[field]) ? entry[field] : []) {
+          if (typeof named === 'string' && !body.includes(`\`${named}\``)) {
+            problems.push(`${id} frozen-tree entry lists ${named} (${field}), which ${entry.decision} does not name`);
           }
         }
       }
@@ -490,7 +497,7 @@ function frozenTreeEntryProblems(id, entry, ledgerText) {
 }
 
 function frozenTreeEntry(id) {
-  const entry = frozenTreeRegistry()[id];
+  const entry = FROZEN_TREE_POLICY[id];
   if (!entry) return null;
   const problems = frozenTreeEntryProblems(id, entry, fs.readFileSync(LEDGER, 'utf8'));
   if (problems.length) throw new Error(problems.join('; '));
@@ -1351,5 +1358,5 @@ module.exports = {
   assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
   assessClosureReceipt, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
-  committedVersions, frozenInputProblems, frozenTreeEntryProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
+  FROZEN_TREE_POLICY, committedVersions, frozenInputProblems, frozenTreeEntryProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };
