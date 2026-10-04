@@ -21,5 +21,7 @@ pin remain unchanged. Publication succeeded to PR62 at commit5da99a5.
 The new current-suite closeout check executes the tests instead of trusting
 saved text, with a real child-suite negative regression. Current full-suite validation reports663 tests,659 pass, the original3
 failures and1 skip. Experiment/authorship/index/failed-run gates pass. The
-closeout finding is fixed and answered; updated PR review is pending. The scientific goal remains UNVERIFIED and
+closeout finding is fixed and answered; Codex reviewed published implementation b0ff26b and found no major issues.
+Every finding is answered and resolved. The code/evidence review receipt is
+poststop-review-output.json; final receipt/handoff changes add no code or data. The scientific goal remains UNVERIFIED and
 no Path A-D has been completed; no scientific game was added or replayed.
