@@ -144,6 +144,13 @@ test('launcher: non-git directory -> exit 0 and nothing printed', () => {
   assert.equal(r.stdout, '');
 });
 
+test('launcher: a failed git probe in a real checkout -> exit 0 and one UNVERIFIED probe line', () => {
+  const r = launcher(staleCheckout(), TOOLS, { FRESHNESS_PROBE_TIMEOUT_MS: '1' });
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /^UNVERIFIED: .*probe/);
+  assert.equal(r.stdout.trim().split('\n').length, 1);
+});
+
 test('launcher: a hanging check.js is killed within the timeout, exit 0, one UNVERIFIED line', () => {
   const dir = tmp('hang');
   fs.copyFileSync(LAUNCHER, path.join(dir, 'session-freshness.js'));
@@ -173,7 +180,13 @@ test('launcher: on timeout the hung git-fetch grandchild is killed too (no survi
   fs.writeFileSync(sleeper, `require('fs').writeFileSync(${JSON.stringify(pidFile)}, String(process.pid)); setTimeout(() => {}, 600000);\n`);
   git(b, 'config', 'remote.origin.uploadpack', `node ${sleeper.split(path.sep).join('/')}`);
   let pid = null;
-  const alive = (p) => { try { process.kill(p, 0); return true; } catch (e) { return e.code !== 'ESRCH'; } };
+  const alive = (p) => {
+    try { process.kill(p, 0); } catch (e) { return e.code !== 'ESRCH'; }
+    if (process.platform === 'linux') { // a zombie answers kill(0) but is dead
+      try { return fs.readFileSync(`/proc/${p}/stat`, 'utf8').replace(/^.*\) /, '')[0] !== 'Z'; } catch (_) { return false; }
+    }
+    return true;
+  };
   try {
     const r = launcher(b, TOOLS, { FRESHNESS_TIMEOUT_MS: '2000' });
     assert.equal(r.status, 0, r.stderr);
