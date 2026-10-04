@@ -36,6 +36,6 @@ PASS complete historical input manifest: 77 files, archived candidates and recei
 $ node tools/verify-experiments.js
 EXPERIMENT GATE PASS
 $ node tools/verify-ledger-authorship.js
-LEDGER AUTHORSHIP GATE PASS (base 6fea334c)
+LEDGER AUTHORSHIP GATE PASS (base 7bcecce9)
 $ node tools/ledger-index.js --check
 LEDGER INDEX CURRENT

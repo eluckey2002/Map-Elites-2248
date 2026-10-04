@@ -1,7 +1,9 @@
 import pathlib, subprocess,json,re,hashlib
 root=pathlib.Path.cwd();goal=root/'docs/goals/policy-learned-judge'
 def git(*args):return subprocess.check_output(['git',*args],text=True,encoding='utf-8').strip()
-base='6fea334c2f5fd61a86cce4a1842cb9b03f709ee1'
+# The integrated base: the tip of origin/main this branch has merged. Comparing against
+# the original 6fea334 base would also count main's own later changes as this goal's.
+base=git('merge-base','HEAD','origin/main')
 text=(goal/'closeout-tests.txt').read_text(encoding='utf-8-sig')
 names=sorted(set(re.findall(r'^✖ ([^\n]+) \([0-9.]+ms\)',text,re.M)))
 expected=json.loads((goal/'baseline-summary.json').read_text(encoding='utf-8'))['failureNames']
@@ -12,7 +14,7 @@ modified=git('diff','--name-only','--diff-filter=MDR',base,'--','solver/tests/')
 assert modified==['solver/tests/failedRunLedger.test.js'], 'unexpected existing test edits'
 original=git('show',base+':solver/tests/failedRunLedger.test.js')
 current=(root/'solver/tests/failedRunLedger.test.js').read_text(encoding='utf-8').strip()
-needle="    'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042',\n"
+needle="    'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042', 'RESULT-0080', 'RESULT-0081',\n"
 assert current==original.replace(needle,needle+"    'RESULT-0083',\n",1), 'exception exceeds one inventory line'
 assert (goal/'OWNER_TEST_EXCEPTION.txt').exists(), 'owner exception receipt missing'
 changed=git('diff','--name-only',base).splitlines()
