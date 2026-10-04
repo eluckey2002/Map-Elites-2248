@@ -15,6 +15,7 @@ const http = require('node:http');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { listChallenges, oneChallenge } = require('./nemesis');
+const { createConnectionCapture } = require('./connection-capture');
 
 const ROOT = path.join(__dirname, '..');
 const SRC = path.join(ROOT, 'src');
@@ -95,13 +96,32 @@ function storedSessionId(store, session) {
   return identity;
 }
 
-function createPlayServer({ store = STORE, now = () => new Date().toISOString(), challengeSources = null } = {}) {
+function createPlayServer({ store = STORE, connectionsStore, now = () => new Date().toISOString(), challengeSources = null } = {}) {
   fs.mkdirSync(store, { recursive: true });
+  const connections = createConnectionCapture({ store: connectionsStore });
   const botCache = new Map();
   const nemesisOptions = () => ({ cache: botCache, ...(challengeSources ? { sources: challengeSources } : {}) });
   return http.createServer(async (request, response) => {
     const url = new URL(request.url || '/', 'http://localhost');
     const { pathname } = url;
+
+    if (request.method === 'GET' && pathname === '/api/connection-identity') {
+      json(response, 200, { identity: connections.identity, schemaVersion: 1 }); return;
+    }
+    if (request.method === 'GET' && pathname.startsWith('/api/connection-attempts/')) {
+      try {
+        const record = connections.readAttempt(pathname.slice('/api/connection-attempts/'.length));
+        json(response, record ? 200 : 404, record || { error: 'Attempt not found' });
+      } catch { json(response, 400, { error: 'Could not read attempt' }); }
+      return;
+    }
+    if (request.method === 'POST' && pathname === '/api/connection-attempts') {
+      try {
+        const result = connections.saveAttempt(JSON.parse(await readBody(request, 512000)));
+        json(response, result.status, result.body);
+      } catch (error) { json(response, 400, { error: error.message }); }
+      return;
+    }
 
     if (request.method === 'GET' && pathname === '/api/nemesis') {
       const level = url.searchParams.get('level');
@@ -138,6 +158,12 @@ function createPlayServer({ store = STORE, now = () => new Date().toISOString(),
 
     if (request.method === 'GET') {
       const name = pathname === '/' ? '/index.html' : pathname;
+      if (connections.assets[name]) {
+        const body = connections.assets[name];
+        response.writeHead(200, { 'content-type': TYPES[path.extname(name)], 'content-length': body.length,
+          'cache-control': 'no-store', 'x-content-type-options': 'nosniff' });
+        response.end(body); return;
+      }
       if (name.includes('..') || name.includes('\0')) { json(response, 400, { error: 'bad path' }); return; }
       const file = path.join(SRC, name);
       if (file.startsWith(SRC) && fs.existsSync(file) && fs.statSync(file).isFile()) {

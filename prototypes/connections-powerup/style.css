@@ -1,0 +1,9 @@
+.powerup{border:1px solid #ccb988;background:#f8f0db;border-radius:10px;padding:13px 16px;margin-bottom:13px}
+.powerup-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.powerup h2{margin:0;font-size:17px}.powerup strong{font-size:22px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.powerup p{font-size:12px;line-height:1.5;margin:8px 0;overflow-wrap:anywhere}
+.powerup button{min-height:44px;width:100%;margin-top:4px}
+#powerup-status{margin-bottom:0;color:#604d29}
+.removing .tile:not(:disabled){cursor:crosshair;box-shadow:inset 0 0 0 2px #9c542e}
+.removing #remove{background:#8a4329;color:#fff}
+.tile:focus-visible,#remove:focus-visible{outline:3px solid #b86529;outline-offset:3px}
