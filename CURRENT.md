@@ -260,6 +260,12 @@ authoring guidance; do not treat this first playable packet as final acceptance.
 
 Open the generated [Universe Map](UNIVERSE.md) for the one-screen control panel of identities, evaluation coverage, evidence standing, warnings, and the current research frontier.
 
+## Trustworthy ruler — 2026-10-02
+
+[RESULT-0058](EVIDENCE_LEDGER.md#result-0058--paired-target-race-ruler-controls-match-the-independent-recompute-bounded-search-is-falsified) records the owner-specified paired target-race ruler provisionally. Its controls and bounded search are independently recomputed; the search outcome is FALSIFIED. Read the [protocol and report](experiments/RESULT-0058/report.md) and [raw-output command](docs/goals/trustworthy-ruler/print-report.js) for its scope, unreached panels and timing-unit limitation. Scientific acceptance and any policy adoption remain separate owner decisions.
+
+The append-only audit and reporting repair is [CORRECTION-0018](EVIDENCE_LEDGER.md#correction-0018--result-0058-gains-complete-win-uncertainty-and-a-stricter-independent-input-audit). It preserves RESULT-0058's sealed data and outcome while adding complete uncertainty output and stricter independent checks. Both records remain provisional; PR #61 is under review and must stay unmerged.
+
 ## Evidence-capture hardening — 2026-09-26
 
 [BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. [RESULT-0049](EVIDENCE_LEDGER.md) is the preregistered confirmation supporting the current target-aware champion. The lost 2026-08-28 MAP-Elites archives are [RESULT-0050](EVIDENCE_LEDGER.md) and [RESULT-0051](EVIDENCE_LEDGER.md), neither replacing the then-champion `52f500c`; they were renumbered from PR #46's original RESULT-0049/0050 labels when PR #49 landed first. CORRECTION-0010 to CORRECTION-0017 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still awaits RESULT-0016's confirmation run; two solver bugs found by it are listed in BL-0016.
@@ -312,7 +318,7 @@ The implementation check now distinguishes an open 2x2 real play from its one-st
 
 [BL-0013](docs/backlog/BL-0013-policy-vocabulary-gaps.md) is the live piece of work. `RESULT-0017`'s MAP-Elites search over the existing weights returned -0.64%, usually read as the weights being near optimal; the 2026-09-05 session found evidence for a second reading, that the answer is not in the space being searched. The policy has no term for holding value now to build a larger chain later, which is the strategy measurably outscoring it in owner play — owner chains sum 264-356, bot chains sum near 64. Three replacement terms are specified there.
 
-**The decision that gates it: the search needs a fitness function and one has not been chosen.** Score, moves-to-win and win rate give different answers, and conflating them produced a wrong conclusion during that session. Shipped-level win rate cannot serve — the bot wins 71-100% of every shipped level ([BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md)). `solver/human-benchmark.js` provides an unsaturated alternative.
+**The owner-specified fitness ruler is implemented and provisionally qualified in RESULT-0058.** Compare paired wins gained or lost first, then moves-to-target on mutual wins, with independent fresh admission for archive nominees. The [report](experiments/RESULT-0058/report.md) bounds that qualification to its declared shipped-level panel. [BL-0011](docs/backlog/BL-0011-shipped-levels-cannot-measure-policy-quality.md) still governs benchmark saturation, and `solver/human-benchmark.js` supplies the recorded-human comparison. BL-0013's proposed policy vocabulary remains open.
 
 Read [HANDOFF.md](HANDOFF.md)'s 2026-09-05 section before editing `src/game.js`, `solver/engine.js` or `solver/level-author.js` — each is hash-pinned into receipts that break on any edit, including comments.
 

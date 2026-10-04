@@ -1,0 +1,71 @@
+NULL cells=1000 wins_gained=0 wins_lost=0 mean_moves_saved=0.000000 se_level=0.000000 se_seed=0.000000 se=0.000000 interval95=[0.000000,0.000000]
+POSITIVE cells=3000 wins_gained=2 wins_lost=0 mean_moves_saved=1.259458 se_level=0.178690 se_seed=0.028321 se=0.178690 interval95=[0.909225,1.609690]
+POSITIVE 72 blocks completed=10/50
+POSITIVE 72 blocks completed=20/50
+POSITIVE 72 blocks completed=30/50
+POSITIVE 72 blocks completed=40/50
+POSITIVE 72 blocks completed=50/50
+KNOWN-BAD stage1 cells=72 wins_gained=0 wins_lost=26 mean_moves_saved=-5.369565 se_level=0.973209 se_seed=0.488226 se=0.973209 interval95=[-7.277055,-3.462075]
+WINNER CURSE completed variants=30
+LEGACY BACKTEST definite_stage1_cuts=66
+MAP screen mutants=20/120
+MAP screen mutants=40/120
+MAP screen mutants=60/120
+MAP screen mutants=80/120
+MAP screen mutants=100/120
+MAP screen mutants=120/120
+RESULT RESULT-0058 raw_games=35720 protocol_commit=577163495b0e5bde2c34c6e7a59ed1189a44bb8e
+NULL champion vs itself cells=1000 wins_gained=0 wins_lost=0 mean_moves_saved=0.000000 se_level=0.000000 se_seed=0.000000 se=0.000000 interval95=[0.000000,0.000000]
+POSITIVE champion vs chooseBaseMove stage3000 cells=3000 wins_gained=2 wins_lost=0 mean_moves_saved=1.259458 se_level=0.178690 se_seed=0.028321 se=0.178690 interval95=[0.909225,1.609690]
+POSITIVE sign stage72 disjoint_blocks=50 correct=50 frequency=100.00%
+KNOWN-BAD short-myopic stage1 cells=72 wins_gained=0 wins_lost=26 mean_moves_saved=-5.369565 se_level=0.973209 se_seed=0.488226 se=0.973209 interval95=[-7.277055,-3.462075]
+ADMISSION TESTS: node --test solver/tests/ruler.test.js
+WINNER CURSE one-gene variants: screen_pct fresh_pct gap_pct
+wRoll-0.75 -7.073 -7.407 -0.335
+wRoll-0.3 -2.111 -1.670 0.441
+wRoll+0.3 -1.344 -2.695 -1.351
+wRoll+0.75 -8.251 -4.204 4.047
+wRoll+1.5 -8.963 -6.786 2.177
+wPlace-0.75 0.480 -0.577 -1.057
+wPlace-0.3 0.096 -0.674 -0.770
+wPlace+0.3 -0.096 1.925 2.021
+wPlace+0.75 0.000 1.059 1.059
+wPlace+1.5 0.480 -1.251 -1.731
+turnover-30 -1.056 0.481 1.537
+turnover-15 0.960 0.493 -0.467
+turnover+15 0.288 0.292 0.004
+turnover+30 -0.096 2.021 2.117
+turnover+60 -1.727 1.444 3.171
+bombMax-3 -0.192 -0.192 -0.001
+bombMax-2 -1.367 -0.096 1.271
+bombMax-1 1.631 3.176 1.545
+bombMax+1 0.982 0.866 -0.116
+bombMax+2 0.576 2.310 1.734
+wHarvest-1.5 -1.714 -1.677 0.037
+wHarvest-0.75 -0.096 -0.789 -0.693
+wHarvest-0.25 0.000 1.059 1.059
+wHarvest+0.5 1.727 1.444 -0.284
+wHarvest+1.5 3.071 1.732 -1.339
+pathWidth-4 1.056 -0.577 -1.633
+pathWidth-2 4.031 0.000 -4.031
+pathWidth-1 0.480 1.251 0.771
+pathWidth+1 0.864 0.786 -0.078
+pathWidth+2 1.344 -1.059 -2.402
+WINNER CURSE mean_fresh_minus_screen_pct=0.223501
+LEGACY BACKTEST screened=108 definite_stage1_cuts=66 definite_advances=23 unresolved_moves=19
+LEGACY HOLDOUT policy_id screen_score_rank stage1 win_net screen_score_proxy_pct holdout_score_pct
+fa270112bcbf 60 UNRESOLVED_MOVES 0 0.000 0.000
+63ecd3201e3b 1 ADVANCE 2 4.849 0.781
+c3729baee2ee 10 CUT -2 2.703 0.110
+9913d4c0b2e6 12 CUT -2 2.703 0.079
+0117a2758919 2 ADVANCE 2 4.338 0.696
+e32656c25399 6 CUT -2 2.896 0.253
+SMOKE TEST ONLY: six holdout policies; stored terminal scores omit moves-to-target, so tied-win stage-1 decisions are unresolved. Current targets are applied to older-bot scores.
+MAP-ELITES mutants=120 bins=5x5 stage1_survivors=61 stage2_survivors=1 stage3_nominees=0 recheck_refused=0 archive_entrants=0
+MAP stage games_per_candidate mean_cpu_seconds_per_candidate candidates
+stage1 72 145.666 120
+stage2 600 1723.166 1
+stage3 3000 6567.726 1
+MAP representative policy_id cell screen72_net screen72_moves screen3000_net screen3000_moves fresh_net fresh_moves holdout_net holdout_moves holdout_lift_pct t stronger_rule
+MAP stronger-policy rule positive holdout lift and t > 3 held=false
+DOMAIN OUTCOME=FALSIFIED (no policy adopted)

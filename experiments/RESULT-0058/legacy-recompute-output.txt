@@ -1,0 +1,11 @@
+RECOMPUTE item8 screened=108 definite_stage1_cuts=66 definite_advances=23 unresolved_moves=19
+RECOMPUTE item8 policy_id screen_score_rank stage1 win_net screen_score_proxy_pct holdout_score_pct
+fa270112bcbf 60 UNRESOLVED_MOVES 0 0.000000000 0.000000000
+63ecd3201e3b 1 ADVANCE 2 4.849041905 0.780959388
+c3729baee2ee 10 CUT -2 2.702997660 0.109631493
+9913d4c0b2e6 12 CUT -2 2.702997660 0.078639366
+0117a2758919 2 ADVANCE 2 4.338325681 0.695947923
+e32656c25399 6 CUT -2 2.895687083 0.252576660
+SMOKE TEST ONLY: only six holdout points exist; stored terminal scores do not contain moves-to-target.
+LEGACY_CORPUS_SHA256=e062df7b0b64f7c4de10754ada6c0410016bc5bd013f0896685bd835f0d82560
+MATCH LEGACY

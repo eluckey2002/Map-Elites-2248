@@ -1,0 +1,1 @@
+QUALIFICATION_FIXTURE SYNTHETIC_NUMERIC_ONLY source=RESULT-0049 levels=12 seeds=6 rows=5616 paired_moves=1.0140845070422535 two_axis_se=0.1685166685065137 expected_confirmation_verdict=DIFF

@@ -1,0 +1,907 @@
+full test suite (informational until the three known failures are retired)	Set up job	﻿2026-10-02T15:22:00.2855488Z Current runner version: '2.337.0'
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2880559Z ##[group]Runner Image Provisioner
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2881441Z Hosted Compute Agent
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2882123Z Version: 20260901.588
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2882793Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2883571Z Build Date: 2026-09-01T19:56:44Z
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2884330Z Worker ID: {779e0e8e-5307-44de-b713-7375dea75d59}
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2885053Z Azure Region: eastus2
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2885674Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2887985Z ##[group]Operating System
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2888735Z Ubuntu
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2889274Z 24.04.5
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2889804Z LTS
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2890377Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2890951Z ##[group]Runner Image
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2891582Z Image: ubuntu-24.04
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2892164Z Version: 20260927.320.1
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2893240Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2895105Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2896142Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2897764Z ##[group]GITHUB_TOKEN Permissions
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2900261Z Contents: read
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2900935Z Metadata: read
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2901491Z Packages: read
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2902147Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2904191Z Secret source: Actions
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2905706Z Cache mode: write
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.2906484Z Prepare workflow directory
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.3230723Z Prepare all required actions
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.3279815Z Getting action download info
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.5675590Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.6807098Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+full test suite (informational until the three known failures are retired)	Set up job	2026-10-02T15:22:00.8701498Z Complete job name: full test suite (informational until the three known failures are retired)
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	﻿2026-10-02T15:22:00.9460204Z ##[group]Run actions/checkout@v4
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9461094Z with:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9461537Z   fetch-depth: 0
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9462014Z   repository: eluckey2002/Map-Elites-2248
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9465783Z   token: ***
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9466219Z   ssh-strict: true
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9466660Z   ssh-user: git
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9467120Z   persist-credentials: true
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9467831Z   clean: true
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9468284Z   sparse-checkout-cone-mode: true
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9468815Z   fetch-tags: false
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9469262Z   show-progress: true
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9469785Z   lfs: false
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9470200Z   submodules: false
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9470652Z   set-safe-directory: true
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9471187Z   allow-unsafe-pr-checkout: false
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:00.9471966Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0445451Z Syncing repository: eluckey2002/Map-Elites-2248
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0448395Z ##[group]Getting Git version info
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0449750Z Working directory is '/home/runner/work/Map-Elites-2248/Map-Elites-2248'
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0451614Z [command]/usr/bin/git version
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0534008Z git version 2.55.0
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0557894Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0575309Z Temporarily overriding HOME='/home/runner/work/_temp/9c4bf90a-8890-4640-8daa-3bdbc215dd74' before making global git config changes
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0577751Z Adding repository directory to the temporary git global config as a safe directory
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0581859Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Map-Elites-2248/Map-Elites-2248
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0631323Z Deleting the contents of '/home/runner/work/Map-Elites-2248/Map-Elites-2248'
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0637032Z ##[group]Initializing the repository
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0642305Z [command]/usr/bin/git init /home/runner/work/Map-Elites-2248/Map-Elites-2248
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0740831Z hint: Using 'master' as the name for the initial branch. This default branch name
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0742765Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0743792Z hint: to use in all of your new repositories, which will suppress this warning,
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0744600Z hint: call:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0745071Z hint:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0745632Z hint: 	git config --global init.defaultBranch <name>
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0746289Z hint:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0746889Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0748325Z hint: 'development'. The just-created branch can be renamed via this command:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0749147Z hint:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0749600Z hint: 	git branch -m <name>
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0750106Z hint:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0750768Z hint: Disable this message with "git config set advice.defaultBranchName false"
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0756778Z Initialized empty Git repository in /home/runner/work/Map-Elites-2248/Map-Elites-2248/.git/
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0766931Z [command]/usr/bin/git remote add origin https://github.com/eluckey2002/Map-Elites-2248
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0814271Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0815916Z ##[group]Disabling automatic garbage collection
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0839320Z [command]/usr/bin/git config --local gc.auto 0
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0875173Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0876086Z ##[group]Setting up auth
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0882802Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.0914870Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.1282135Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.1320895Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.1547817Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.1583460Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.1804993Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.1844667Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.1845733Z ##[group]Fetching the repository
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:01.1855202Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +71e8abfd5c5e869da1ba15299e9ed9af1b8ef175:refs/remotes/pull/61/merge
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6633706Z From https://github.com/eluckey2002/Map-Elites-2248
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6635821Z  * [new branch]      archive/worktree-ticket-records-20260908 -> origin/archive/worktree-ticket-records-20260908
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6638605Z  * [new branch]      blackboard/shared-board                  -> origin/blackboard/shared-board
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6640702Z  * [new branch]      codex/authoring-ideation-20260916        -> origin/codex/authoring-ideation-20260916
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6643723Z  * [new branch]      codex/lc0013-target-gap-arithmetic       -> origin/codex/lc0013-target-gap-arithmetic
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6646268Z  * [new branch]      codex/trustworthy-ruler-20261002         -> origin/codex/trustworthy-ruler-20261002
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6649089Z  * [new branch]      evidence/result-0018-6a07294             -> origin/evidence/result-0018-6a07294
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6651721Z  * [new branch]      feat/board-map-elites-20260917           -> origin/feat/board-map-elites-20260917
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6653989Z  * [new branch]      feat/evaluator-foundation                -> origin/feat/evaluator-foundation
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6656714Z  * [new branch]      feat/family-board-map-elites-20260919    -> origin/feat/family-board-map-elites-20260919
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6660515Z  * [new branch]      feat/player-playtest-feedback            -> origin/feat/player-playtest-feedback
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6663038Z  * [new branch]      ledger/status-index                      -> origin/ledger/status-index
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6665221Z  * [new branch]      main                                     -> origin/main
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6668271Z  * [new branch]      port/family-board-map-elites             -> origin/port/family-board-map-elites
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6672466Z  * [new branch]      recovery/mac/codex-failed-run-ledger-2026-09-22-20260930 -> origin/recovery/mac/codex-failed-run-ledger-2026-09-22-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6678127Z  * [new branch]      recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930 -> origin/recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6683342Z  * [new branch]      recovery/mac/codex-lc0013-target-gap-arithmetic-20260930 -> origin/recovery/mac/codex-lc0013-target-gap-arithmetic-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6688552Z  * [new branch]      recovery/mac/codex-nightly-reverify-36579791639-20260930 -> origin/recovery/mac/codex-nightly-reverify-36579791639-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6693417Z  * [new branch]      recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930 -> origin/recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6697946Z  * [new branch]      recovery/mac/main-root-dirty-20260930    -> origin/recovery/mac/main-root-dirty-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6701698Z  * [new branch]      recovery/mac/map-elites-qa-dirty-20260930 -> origin/recovery/mac/map-elites-qa-dirty-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6706514Z  * [new branch]      recovery/mac/review-unbuilt-map-candidates-dirty-20260930 -> origin/recovery/mac/review-unbuilt-map-candidates-dirty-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6712314Z  * [new branch]      recovery/windows/backup-pre-collector-drop-20260930 -> origin/recovery/windows/backup-pre-collector-drop-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6719287Z  * [new branch]      recovery/windows/claude-mac-project-sync-ee1d99-20260930 -> origin/recovery/windows/claude-mac-project-sync-ee1d99-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6724867Z  * [new branch]      recovery/windows/codex-level-map-elites-authoring-20260930 -> origin/recovery/windows/codex-level-map-elites-authoring-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6730082Z  * [new branch]      recovery/windows/codex-u1-asset-contract-20260930 -> origin/recovery/windows/codex-u1-asset-contract-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6734305Z  * [new branch]      recovery/windows/codex-u1-eol-path-20260930 -> origin/recovery/windows/codex-u1-eol-path-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6738534Z  * [new branch]      recovery/windows/recheck-loop-dirty-20260930 -> origin/recovery/windows/recheck-loop-dirty-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6742946Z  * [new branch]      recovery/windows/recovery-local-work-20260926-20260930 -> origin/recovery/windows/recovery-local-work-20260926-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6747459Z  * [new branch]      recovery/windows/stash-20260926-20260930 -> origin/recovery/windows/stash-20260926-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6752247Z  * [new branch]      recovery/windows/tmp-44-20260930         -> origin/recovery/windows/tmp-44-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6756261Z  * [new branch]      recovery/windows/u1-combined-dirty-20260930 -> origin/recovery/windows/u1-combined-dirty-20260930
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6760737Z  * [new branch]      work/policy-measurement-records-2026-09-05 -> origin/work/policy-measurement-records-2026-09-05
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6764439Z  * [new branch]      worktree-archify-diagrams                -> origin/worktree-archify-diagrams
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6768153Z  * [new branch]      worktree-deterministic-2048-solver       -> origin/worktree-deterministic-2048-solver
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6772227Z  * [new tag]         archive/claim-evidence-verdict-2026-09-01-snapshot -> archive/claim-evidence-verdict-2026-09-01-snapshot
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6776894Z  * [new tag]         archive/codex/2026-08-29T10-29-19Z-adhoc-session-workspace -> archive/codex/2026-08-29T10-29-19Z-adhoc-session-workspace
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6781917Z  * [new tag]         archive/codex/git-baseline-stabilization -> archive/codex/git-baseline-stabilization
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6785692Z  * [new tag]         archive/codex/human-pilot-evidence       -> archive/codex/human-pilot-evidence
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6789436Z  * [new tag]         archive/codex/level-authoring-tracer     -> archive/codex/level-authoring-tracer
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6793321Z  * [new tag]         archive/codex/map-elites-measurement-controls -> archive/codex/map-elites-measurement-controls
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6797725Z  * [new tag]         archive/codex/openevolve-2248-matched-control-spec -> archive/codex/openevolve-2248-matched-control-spec
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6801611Z  * [new tag]         archive/codex/player-style-cross-eval    -> archive/codex/player-style-cross-eval
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6805105Z  * [new tag]         archive/codex/premise-discovery-readiness -> archive/codex/premise-discovery-readiness
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6809559Z  * [new tag]         archive/codex/preserve-pre-promotion-untracked-2026-08-30 -> archive/codex/preserve-pre-promotion-untracked-2026-08-30
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6813652Z  * [new tag]         archive/codex/research-session-2026-08-28 -> archive/codex/research-session-2026-08-28
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6817023Z  * [new tag]         archive/codex/seed-variance-challenge    -> archive/codex/seed-variance-challenge
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6821354Z  * [new tag]         archive/codex/target-aware-promotion-rehearsal-2026-08-30 -> archive/codex/target-aware-promotion-rehearsal-2026-08-30
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6825361Z  * [new tag]         archive/codex/targeted-chain-generator   -> archive/codex/targeted-chain-generator
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6828581Z  * [new tag]         archive/codex/universe-map-v1            -> archive/codex/universe-map-v1
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6831641Z  * [new tag]         archive/fix/engine-mirrors-game-test     -> archive/fix/engine-mirrors-game-test
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6835497Z  * [new tag]         archive/fix/experiment-guard-reads-registration-commit -> archive/fix/experiment-guard-reads-registration-commit
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6839577Z  * [new tag]         archive/level-curve-retune               -> archive/level-curve-retune
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6842357Z  * [new tag]         archive/map-elites-learning              -> archive/map-elites-learning
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6845448Z  * [new tag]         archive/review/experiment-gate-hardening -> archive/review/experiment-gate-hardening
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6849002Z  * [new tag]         archive/safety/2026-08-28-level-curve-retune -> archive/safety/2026-08-28-level-curve-retune
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6852487Z  * [new tag]         archive/safety/2026-08-28-map-elites-learning -> archive/safety/2026-08-28-map-elites-learning
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6856445Z  * [new tag]         archive/safety/2026-08-28-map-elites-measurement-controls -> archive/safety/2026-08-28-map-elites-measurement-controls
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6860449Z  * [new tag]         archive/worktree-archify-diagrams        -> archive/worktree-archify-diagrams
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6863752Z  * [new tag]         archive/worktree-deterministic-2048-solver -> archive/worktree-deterministic-2048-solver
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6867503Z  * [new tag]         archive/worktree-resolution-complete-20260908 -> archive/worktree-resolution-complete-20260908
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6870661Z  * [new tag]         pre-cleanup-2026-08-12                   -> pre-cleanup-2026-08-12
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6873118Z  * [new tag]         pre-merge-safety                         -> pre-merge-safety
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6875482Z  * [new ref]         71e8abfd5c5e869da1ba15299e9ed9af1b8ef175 -> pull/61/merge
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6880252Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6882213Z ##[group]Determining the checkout info
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6884359Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6885616Z [command]/usr/bin/git sparse-checkout disable
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6889335Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6893716Z ##[group]Checking out the ref
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:03.6895598Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/61/merge
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1776139Z Note: switching to 'refs/remotes/pull/61/merge'.
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1778213Z 
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1778608Z You are in 'detached HEAD' state. You can look around, make experimental
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1779345Z changes and commit them, and you can discard any commits you make in this
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1780051Z state without impacting any branches by switching back to a branch.
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1780444Z 
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1780729Z If you want to create a new branch to retain commits you create, you may
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1781381Z do so (now or later) by using -c with the switch command. Example:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1781767Z 
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1781934Z   git switch -c <new-branch-name>
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1782195Z 
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1782352Z Or undo this operation with:
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1782653Z 
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1782801Z   git switch -
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1783007Z 
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1783401Z Turn off this advice by setting config variable advice.detachedHead to false
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1783847Z 
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1784358Z HEAD is now at 71e8abf Merge e8d9ef1daa4e8b69478c62db941b2c4ac7b43876 into fced429c4afc2b62312e32fdb202f8c0457c53d2
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1805555Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1853390Z [command]/usr/bin/git log -1 --format=%H
+full test suite (informational until the three known failures are retired)	Run actions/checkout@v4	2026-10-02T15:22:04.1879865Z 71e8abfd5c5e869da1ba15299e9ed9af1b8ef175
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	﻿2026-10-02T15:22:04.2211668Z ##[group]Run actions/setup-node@v4
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.2212036Z with:
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.2212311Z   node-version: 24
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.2212584Z   always-auth: false
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.2212854Z   check-latest: false
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.2215338Z   token: ***
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.2215593Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.3576590Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.3581229Z (node:2294) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.3582142Z (Use `node --trace-deprecation ...` to show where the warning was created)
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.3583630Z ##[group]Environment details
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.7623838Z node: v24.21.0
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.7624352Z npm: 11.19.0
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.7624664Z yarn: 1.22.22
+full test suite (informational until the three known failures are retired)	Run actions/setup-node@v4	2026-10-02T15:22:04.7625524Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	node --test	﻿2026-10-02T15:22:04.7770351Z ##[group]Run node --test solver/tests/*.test.js
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.7770864Z [36;1mnode --test solver/tests/*.test.js[0m
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.8035196Z shell: /usr/bin/bash -e {0}
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.8035487Z ##[endgroup]
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9466193Z ✔ with no --out, output still lands on the historical filenames (1.820155ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9468284Z ✔ --out names both files from one basename (0.393398ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9469403Z ✔ --out refuses anything that is not a bare basename (0.892685ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9470922Z ✔ writing over an existing candidate is refused, and the refusal says how to proceed (0.735349ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9472348Z ✔ --force is the deliberate escape and does not throw (0.326663ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9473526Z ✔ a basename nothing occupies is writable without --force (1.91828ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9508818Z ✔ a free store but an occupied receipt is still refused (0.55419ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9511616Z ✔ the historical three-argument form still parses unchanged (1.125772ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9513313Z ✔ --out and --force parse in either order (0.871465ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:04.9515119Z ✔ a malformed write invocation falls through to usage rather than guessing (0.705554ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.0724877Z ✔ serves only the game assets and exposes the bound candidate (146.889236ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.1089403Z ✔ writes a schema-valid recording and treats an exact duplicate as idempotent (37.519607ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.1355893Z ✔ fails closed for traversal and unknown candidates (20.614038ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.1669213Z ✔ rejects malformed, oversized, and schema-invalid recording bodies (37.24448ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.1758601Z ✔ refuses to overwrite conflicting bytes at a recording identity (11.707045ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.1818623Z ✔ a fixed-seed authoring server refuses recordings from any other seed (8.082035ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7409772Z ✔ reproduces the known seed-316 bot result through the seed screener (230.361117ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7454196Z ✔ launcher keeps validation roles separate in ports and recording paths (2.080804ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7486551Z ✔ launcher turns a port collision into one actionable startup error (13.662694ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7496263Z ✔ selects setup-favorable, neutral, and hypothesis-hostile seeds by declared rules (0.756259ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7528849Z ✔ never assigns the same seed to two validation roles (0.544722ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7545687Z ✔ rejects a neutral role that would reuse the setup-favorable seed (0.331773ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7546920Z ✔ frozen playable challenges reproduce their declared bot and baseline references (547.121483ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7549253Z ﹣ frozen roles still win their declared 512-seed population selection (0.198963ms) # set BANK_BREAK_FULL_SCREEN=1 to run the 512-seed verification
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7688702Z ✔ beam witness returns a deterministic legal lower-bound result (5.957638ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7695842Z ✔ the real post-move seam distinguishes an open subject from its one-stone twin (14.152964ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7728674Z ✔ the post-move seam observes temporary blockers after they tick (2.403449ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7758563Z ✔ stranded-cell pressure uses the tile-scale lattice, not raw powers of two (0.309691ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7760276Z ✔ half-score move distinguishes early, steady, and late cash-in games (0.239329ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7762825Z ✔ greed ratio averages per-move opportunity capture and bounds a denominator miss (0.446869ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:05.7764645Z ✔ policy evaluation can collect the registered per-game measures through real play (1.319867ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:13.9970704Z ✔ chooseMove: public chooser cashes out the Level 51 teaching board on move 13 (2606.552082ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:13.9981624Z ✔ chooseMove: immediate winner follows deterministic untrimmed order and parameter overrides (2329.391419ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:13.9990299Z ✔ chooseMove: target-aware public seam does not mutate input and falls back after target (2661.421364ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:13.9992385Z ✔ chooseMove: with no bombs, takes the highest-scoring valid chain (0.675057ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:13.9994753Z ✔ chooseMove: prioritizes defusing a reachable bomb over a higher-scoring non-bomb chain (0.445556ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0000948Z ✔ chooseMove: falls back to the best chain when the bomb is unreachable this turn (1.547162ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0019452Z ✔ chooseMove: returns null when no valid chain exists anywhere (0.225032ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0051060Z ✔ chooseMove: with lookahead, prefers a small immediate chain that sets up a much bigger follow-up over a bigger immediate chain that does not (1.463907ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0069549Z ✔ chooseMove: with lookahead, prefers the chain that clears more of the board even when it scores less right now (469.63596ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0072100Z ✔ chooseMove: considers candidates ranked below the top few on immediate points (667.542377ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0093728Z ✔ chooseMove: multi-path search never abandons equal tiles for a double (0.984377ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0095596Z ✔ chooseMove: low-value multi-path search keeps an alternate long route (36.435853ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0097054Z ✔ remnantPlacementValue: evaluates the survivor after gravity moves it (0.28809ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0098834Z ✔ remnantPlacementValue: rewards a survivor that can begin a future chain (0.294783ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0100620Z ✔ chooseMove: placement signal breaks an ordinary-candidate tie toward a chainable survivor (1.931094ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0102195Z ✔ harvestValue: a tile the game deals is not something the bot built (0.221936ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0128592Z ✔ harvestValue: a built tile with only HALF-value company still counts (0.160531ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0138717Z ✔ harvestValue: equal company beats half, which beats double (0.254217ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0139809Z ✔ harvestValue: company nearby is worth more than the same company far away (0.18626ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0141034Z ✔ harvestValue: an unrelated value is not company at all (0.129032ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:14.0142036Z ✔ harvestValue: what counts as built follows the level tile scale (0.189224ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:16.4810320Z ✔ analyzeMove preserves the production chooser across representative level shapes (4758.082116ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:16.4826854Z ✔ the known short Level 52 session remains exact and deterministic (2779.328783ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:16.4829325Z ✔ a real Bot Vision session reconstructs every transition and score component (2597.570648ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:16.4831037Z ✔ the arithmetic assertion rejects a controlled broken contribution twin (1037.078735ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6069100Z ✔ Bot Vision server returns the exact session and rejects malformed identities (1165.63348ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6380954Z ✔ the frozen ruler preserves its historical parameter snapshot independently of the live bot (2.027945ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6382490Z ✔ calibration identity covers the engine and versioned evaluator but not the live bot (1.707914ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6383866Z ✔ calibration exports are frozen and evaluation has no ambient-state dependency (1.877563ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6385567Z ✔ the stamp carries the exact frozen version, parameters, and solver identity (1.069116ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6387018Z ✔ viable-start fraction distinguishes an open board from isolated pairs (2.491084ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6388610Z ✔ uniform scale preserves the choice and recovery proxies (41.176517ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6389578Z ✔ bounded misses remain UNKNOWN (0.845787ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6390745Z ✔ a calibrated move-slack control increases bounded recovery witnesses (4889.184871ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6392293Z ✔ candidate and seed parsing is strict and does not change shipped level query behavior (2.46214ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6394009Z ✔ seeded candidate initialization is repeatable and arbitrary-level validation fails closed (1.789988ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6395699Z ✔ authoring capture records each legal chain as ordered coordinates and values (0.390302ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6397564Z ✔ authoring capture emits one terminal payload and ignores later terminal paths (0.381856ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6399510Z ✔ candidate undo restores capture length and seeded RNG state (0.913554ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6400679Z ✔ makeRng: same seed produces the same sequence (3.61893ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6408386Z ✔ createLevelState: grid has levelData dimensions (0.475091ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6438484Z ✔ createLevelState: places a bomb blocker at the configured position (1.173962ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6461745Z ✔ canExtendChain: first extension requires equal value to the start tile (0.265358ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6463448Z ✔ canExtendChain: later extensions allow equal or double the last tile (0.321133ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6488160Z ✔ isValidChain: false when shorter than minChain (0.203102ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6518229Z ✔ isValidChain: false when the first two tiles do not match (0.234691ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6548220Z ✔ isValidChain: true for a same-value chain meeting minChain (0.174287ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6549423Z ✔ chainValue: sums the tile values (0.505238ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6578162Z ✔ chainMultiplier: steps at 3/5/7/9 tiles (2.54183ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6600205Z ✔ executeChain: removes non-final tiles, sets final tile to the chain sum, scores points, spends a move (0.655019ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6638180Z ✔ executeChain: defuses the final tile if it was a bomb (0.320211ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6639741Z ✔ executeChain: applies the length multiplier (>=3 tiles = 1.5x) (0.169548ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6643415Z ✔ off-lattice tiles can be deliberately recombined to reclaim occupied cells (0.217268ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6656334Z ✔ applyGravity: a tile falls through holes to the bottom of its column (0.211407ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6658106Z ✔ applyGravity: a stone blocks tiles above it from falling past (0.148438ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6659537Z ✔ spawnNewTiles: fills every null cell using the weighted spawn rng (0.216826ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6661030Z ✔ spawnNewTiles: spawn weight thresholds match game.js (0.6/0.9 for 2/4/8) (0.277551ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6662359Z ✔ tickBlockers: ice counts down and clears at zero (0.18131ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6663685Z ✔ tickBlockers: bomb timer counts down but blocker stays until checkBombs (0.119333ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6665067Z ✔ checkBombs: true when any bomb timer has reached zero (0.143789ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6666327Z ✔ checkBombs: false when all bomb timers are still positive (0.11172ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6667833Z ✔ findBestChain: picks the highest-scoring reachable chain (0.504917ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6669228Z ✔ findBestChain: returns null when no chain of minChain length exists (0.138159ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6670755Z ✔ findBestChain: mustEndAt restricts the result to chains ending at that tile (0.183544ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6672349Z ✔ findBestChain: mustEndAt returns null when the target tile is unreachable (0.344917ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6673899Z ✔ findBestChain: maxLength stops the search from extending past that many tiles (1.579263ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6675520Z ✔ findBestChain: mustStartAt restricts the search to chains starting at that tile (0.232176ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6677419Z ✔ cloneState: deep-copies the grid so mutating the clone leaves the original untouched (0.223009ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6679133Z ✔ findTopChains: sorted best-first and covers moves from every reachable cluster (0.347903ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6680348Z ✔ findTopChains: respects the limit (0.196379ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6681876Z ✔ findBestChain: a stone tile cannot be part of a chain (1.464467ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6683492Z ✔ buildGreedyChain: walks the connected same-or-double run from a start tile, no backtracking (0.488096ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6685475Z ✔ buildGreedyChain: at each step prefers the lower-value valid neighbor (keeps the walk alive longer) (0.183113ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6687774Z ✔ buildGreedyChain: returns null when the start alone cannot reach minChain (3.794009ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6689090Z ✔ buildGreedyChain: respects maxLength (0.197691ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6690573Z ✔ buildGreedyChain: a stone tile cannot be part of the chain (0.144261ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6692778Z ✔ buildGreedyChain: preferMergeableSum stops at the prefix whose sum is a power of two (0.272451ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6702426Z ✔ buildGreedyChain: preferMergeableSum falls back to the full walk when no prefix sums to a power of two (0.175951ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6704304Z ✔ buildGreedyChain: the plain walk strands a tile it could have used (0.254087ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6705896Z ✔ buildGreedyChain: the degree tie-break takes the nearly-cut-off tile first (0.329348ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6707947Z ✔ buildGreedyChain: the degree tie-break never overrides the lower-value preference (0.17548ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6709663Z ✔ findGreedyChains: applies the mergeable-sum preference by default (0.613591ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6711489Z ✔ findGreedyChains: preferMergeableSum:false restores the plain longest-walk behavior (1.444109ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6713374Z ✔ findGreedyChains: tries every non-blocked tile as a start, sorted best-first (0.257613ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6715133Z ✔ production authoring imports the versioned evaluator and not the live bot (2.387109ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6716829Z ✔ production authoring passes the complete frozen calibration parameters (0.370856ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6718637Z ✔ live bot parameter changes cannot move frozen evaluator output (85.779262ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6720162Z ✔ position-aware exact search matches a hand-enumerated four-tile fixture (3.264375ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6721894Z ✔ position-aware enumerator keeps distinct survivor actions with equal scores (0.302057ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6723958Z ✔ position-aware enumerator keeps visited cells distinct above the 32-bit boundary (0.483287ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6725679Z ✔ position-aware enumerator stops at a deterministic path-state cap (0.655971ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6727457Z ✔ value-relaxed action enumerator includes the hand-enumerated maximum (2.032714ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6728999Z ✔ Level 26 seed-0 values match the durable certifier frozen hash (2.174009ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6730854Z ✔ child-process exact denominator finds the hand-enumerated maximum within a deterministic work cap (62.759301ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:17.6732706Z ✔ child-process work cap fails closed deterministically as UNKNOWN (153.716875ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1451493Z ✔ a result claiming only direct evidence needs no protocol (4.251477ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1478281Z ✔ a result claiming generalization is detected as needing one (0.262593ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1508117Z ✔ a heading between records ends the record (0.193112ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1509552Z ✔ declared checks are parsed by name, primes and em-dashes included (1.05004ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1537448Z ✔ frontmatter parses nested version freeze entries (0.481934ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1568408Z ✔ a reported protocol cannot remain in the registered lifecycle state (0.260859ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1598520Z ✔ LIVE: every generalizing result in this ledger has a protocol or a grandfather entry (9995.752079ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1607040Z ✔ a commit is never a strict ancestor of itself — same-commit backfill fails (17.76968ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1619558Z ✔ addedIn returns the OLDEST add, so delete-and-re-add cannot reset the clock (16.222277ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1621043Z ✔ an unregistered run is refused before any compute (0.942108ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1622276Z ✔ exploratory runs are allowed but stamped as such (0.371316ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1623503Z ✔ a malformed or unregistered protocol id is refused (0.393418ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1624853Z ✔ a real registration stamps the protocol commit into the artifact (0.194846ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1626526Z ✔ the registration stamp rides outside the hashed body, so old artifacts still verify (226.448083ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1650498Z ✔ an exploratory artifact cannot back a generalizing claim (0.47417ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1671383Z ✔ LIVE: tampering with one cell of the real holdout breaks its identity (196.497162ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1673618Z ✔ LIVE: RESULT-0049 Markdown-linked evidence cannot disappear or change silently (250.262538ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1675438Z ✔ LIVE: RESULT-0049 closure must agree with its pinned contract and fresh recomputation (586.63899ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1677127Z ✔ LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit (278.231649ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1678966Z ✔ LIVE: every RESULT-0049 cited JSON artifact is closing-commit bound (358.398811ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1680559Z ✔ LIVE: a citation that resolves to nothing fails; a filename in prose does not (22.669766ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1682153Z ✔ LIVE: a forged, unreachable, or out-of-order protocolCommit is caught (238.752423ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1683640Z ✔ LIVE: a report that names a check without answering it is caught (1.191665ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1685384Z ✔ LIVE: version freeze is enforced while registered, and against what the artifact recorded (42.546285ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1708649Z ✔ Git object paths use repository separators when callers supply Windows separators (31.120945ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1738479Z ✔ an honest registration passes and stamps its own commit (47.184111ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1759876Z ✔ a freeze rewritten after registration is refused, uncommitted or committed (119.678376ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1798251Z ✔ a protocol registered with placeholders or an empty freeze is refused (93.680496ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1799150Z ✔ a finished protocol cannot mint new evidence (28.870095ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1818605Z ✔ the ledger gate reads the freeze from the registration commit too (28.493483ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1820445Z ✔ a protocol body rewritten after registration is refused, uncommitted or committed (143.617699ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1822007Z ✔ an empty placeholder registered first and filled in later is refused by the guard (90.336854ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1823360Z ✔ a completed protocol reopened on disk cannot mint new evidence (95.437086ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1824837Z ✔ a protocol once committed as complete stays finished even with no report in history (78.877419ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1828425Z ✔ the ledger gate refuses a registered protocol that freezes nothing (0.260037ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1829839Z ✔ LIVE: every protocol in experiments/ matches its registration commit apart from status (312.203566ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1830992Z ✔ the real ledger passes the structure check (5.12857ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1831854Z ✔ a well-formed planted record passes (4.547891ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1832666Z ✔ an empty ledger fails (0.170149ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1833572Z ✔ structure check rejects: duplicate ID (4.912825ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1834564Z ✔ structure check rejects: invalid status (4.434668ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1835632Z ✔ structure check rejects: invalid proof class (4.560233ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1836662Z ✔ structure check rejects: proof class naming no class (4.436281ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1839882Z ✔ structure check rejects: missing as_of (4.61189ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1840824Z ✔ structure check rejects: missing evidence (5.588743ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1841887Z ✔ structure check rejects: type not matching prefix (5.259335ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1842889Z ✔ structure check rejects: unknown prefix (4.09986ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1843780Z ✔ structure check rejects: h2 heading (4.12631ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1844661Z ✔ structure check rejects: h4 heading (4.443184ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1845620Z ✔ structure check rejects: lowercase heading (4.268807ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1846651Z ✔ structure check rejects: heading without space (7.422864ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1848076Z ✔ structure check rejects: heading with a colon instead of a dash (6.163732ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1849386Z ✔ structure check rejects: heading indented one space (3.925864ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1850592Z ✔ structure check rejects: heading indented three spaces (3.958625ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1851606Z ✔ structure check rejects: heading with no title (3.946863ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1852546Z ✔ structure check rejects: short ID (3.938618ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1853726Z ✔ structure check rejects: empty evidence (3.967192ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1854709Z ✔ structure check rejects: status written twice (3.973985ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1907748Z ✔ structure check rejects: superseded without link (4.353076ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1925085Z ✔ structure check rejects: free-text as_of (4.218532ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1926414Z ✔ the real ledger cites only paths and commits that exist (355.772329ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1927654Z ✔ an existing path and commit pass (361.936571ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1928905Z ✔ RESULT-NNNN shorthand resolves under experiments/ (358.914734ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1932677Z ✔ a known gap stops being excused when its correction is missing (350.905681ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1933710Z ✔ a missing path in notes is not flagged (353.62933ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1934759Z ✔ citation check rejects: missing evidence path (390.037334ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1935904Z ✔ citation check rejects: missing path with line range (350.737383ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1937060Z ✔ citation check rejects: missing reverify path (357.063762ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1938308Z ✔ citation check rejects: unknown commit (358.74214ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1939374Z ✔ citation check rejects: unknown commit, plural label (360.670066ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1940422Z ✔ citation check rejects: path inside a command (356.001649ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1941472Z ✔ citation check rejects: top-level file without slash (360.222998ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1942599Z ✔ citation check rejects: commit with colon label (364.096252ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1943674Z ✔ citation check rejects: commit with equals label (368.649983ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1945362Z ✔ citation check rejects: commit only on an unmerged branch (520.921996ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1946413Z ✔ citation check rejects: absolute path (506.899665ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1947690Z ✔ citation check rejects: list-form continuation line (505.799565ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1949089Z ✔ citation check rejects parent traversal even when the external path exists (8.892528ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1950543Z ✔ citation check rejects a missing Markdown-linked evidence path (10.894405ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1951591Z ✔ the real ledger has two-way supersede links (3.324854ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1952536Z ✔ an unchanged ledger passes the history check (4.673409ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1953485Z ✔ a status change and added links and notes pass (5.921215ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1954418Z ✔ history check rejects a rewritten statement (5.028614ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1955982Z ✔ history check rejects a promoted proof class (4.926624ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1957531Z ✔ history check rejects a rewritten evidence field (5.183694ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1979981Z ✔ history check rejects a changed as_of (4.545259ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1981199Z ✔ history check rejects a dropped supersede link (4.711601ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1982299Z ✔ history check rejects rewritten notes (4.803963ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1983324Z ✔ history check rejects notes with text prepended (4.952451ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1984445Z ✔ history check rejects a changed heading title (4.729424ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1991518Z ✔ history check rejects a rewritten ad hoc bold line (4.965676ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1992660Z ✔ history check rejects a capitalised override field (4.94624ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1993861Z ✔ history check rejects a superseded record revived as accepted (4.925381ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1995135Z ✔ history check rejects a status change with no new correction (4.782032ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1996275Z ✔ a removed record is left to the authorship gate (4.963853ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1997730Z ✔ adding written_by and checked_by to an existing record passes (5.076374ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.1998941Z ✔ history check rejects a rewritten continuation line (0.172243ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2000045Z ✔ history check rejects a deleted continuation line (0.178454ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2001114Z ✔ history check accepts an unchanged wrapped field (0.13342ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2002136Z ✔ link check rejects a one-way supersede link (2.798219ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2003657Z ✔ link check rejects a record that supersedes itself in both directions (0.215713ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2022472Z ✔ sample-size check rejects: a bare heading (0.787995ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2023809Z ✔ sample-size check rejects: template placeholders left in (0.545862ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2025144Z ✔ sample-size check rejects: a missing margin item (0.33652ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2026435Z ✔ sample-size check rejects: an empty downstream item (0.282338ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2027981Z ✔ the real experiments pass the sample-size check (3.110634ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2029200Z ✔ an old protocol without the section passes (0.32531ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2030284Z ✔ a new protocol with the section passes (0.299621ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2031918Z ✔ a frozen companion protocol with explicit denominator, margin, and adoption boundary passes (0.680654ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2033706Z ✔ the frozen companion form fails when its quantitative margin is removed (0.692086ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2035255Z ✔ an unfrozen companion cannot satisfy the sample-size check (0.441407ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2036520Z ✔ sample-size check rejects: new, no section (0.355035ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2037909Z ✔ sample-size check rejects: quoted date (0.286907ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2038981Z ✔ sample-size check rejects: blank date (0.277439ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2039997Z ✔ sample-size check rejects: missing date (0.283571ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2041025Z ✔ the real runs pass the outcome check (456.159357ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2042498Z ✔ a run naming an existing record passes (1.103716ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2044089Z ✔ a stopped run marked not reportable with a reason passes (0.531585ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2045361Z ✔ trailing blank lines after the ledger line pass (0.510445ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2046474Z ✔ an older run needs no ledger line (0.39499ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2047881Z ✔ outcome check rejects: no outcome file (0.446145ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2049126Z ✔ outcome check rejects: outcome file without a ledger line (0.452597ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2052862Z ✔ outcome check rejects: a ledger line naming a missing record (0.351167ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2055132Z ✔ outcome check rejects: not reportable with no reason (0.355306ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2056436Z ✔ outcome check rejects: a ledger line with no ID (0.332533ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2058101Z ✔ outcome check rejects: a ledger line followed by later output (0.352971ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2059239Z ✔ close-out passes when no record is added (0.209753ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2060423Z ✔ close-out passes when a record is added and CURRENT.md changes (0.120777ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2061726Z ✔ close-out rejects a new record with CURRENT.md unchanged (0.114905ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2062996Z ✔ reverify plan includes commands on continuation lines (1.138962ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2064618Z ✔ reverify plan reports a runnable command followed by prose-only flags as manual (0.180739ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2066019Z ✔ reverify plan keeps a complete runnable command automatic (0.154039ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2067701Z ✔ reverify plan reports a pipeline as manual regardless of pipe spacing (0.160871ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2069326Z ✔ automatic reverify commands fail on an earlier semicolon-separated error (42.505806ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2070112Z ✔ LIVE: RESULT-0049 mixed reverify instructions are reported as manual (2.240164ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2070779Z ✔ RESULT-0031 recompute finds no cap mismatches on its corpus (65.288062ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2071384Z ✔ a prose-only reverify is listed as manual, not dropped (0.232555ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2071928Z ✔ a real revision and checkout label pass (536.731508ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2072424Z ✔ every SHA in a real plural commit list passes (549.06208ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2073087Z ✔ citation check rejects a bad later SHA in: commits `be84336`, `deadbeef1234` (469.545762ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2073972Z ✔ citation check rejects a bad later SHA in: commits `be84336` (X), `1e5311e` (Y), and `deadbeef1234` (Z) (392.505043ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2074928Z ✔ history check rejects a rewrite below an H4 inside a field (0.225463ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2075581Z ✔ citation check rejects a missing path below an H4 inside evidence (361.235484ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2076203Z ✔ reverify plan keeps commands below an H4 inside the field (0.24547ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2076863Z ✔ citation check rejects unknown SHA: runner revision `deadbeef1234` (482.815184ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2079199Z ✔ citation check rejects unknown SHA: isolated checkout `deadbeef1234` (381.652619ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2080587Z ✔ citation check rejects unknown SHA: checkout at `deadbeef1234` (360.55148ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2605826Z ✔ CSV parser preserves quoted commas and doubled quotes (2.775979ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2609369Z ✔ LIVE: scanner reads the real retained failed closures (3.288921ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2610519Z ✔ a real UNVERIFIED closure fails when its ledger row is absent (1.527977ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2611679Z ✔ two failed closures cannot share one run_id and one ledger row (2.100932ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2612861Z ✔ a ledger row cannot claim prevention through missing files (2.698894ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2614218Z ✔ an intentional failing control inside a CLOSED run is not a failed run (0.72463ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2615437Z ✔ calendar dates and legacy evidence identities are exact (1.136602ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2616605Z ✔ a retained legacy incident fails when its CSV row is removed (0.665769ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2618165Z ✔ LIVE: every retained failed closure has one complete prevention record (1.944899ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2619769Z ✔ a fixed-board shape must name the seed that fixes the board (2.312668ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2620824Z ✔ target and tileScale remain forbidden shape controls (1.943487ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2621778Z ✔ fitting and holdout use disjoint player variants (0.262281ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2622743Z ✔ adjacent variants map to far-apart lookahead seeds (0.209241ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2623888Z ✔ the target is the fitted median times demand, rounded down (1.826187ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2634246Z ✔ the candidate carries the seed, so the board is part of the level (0.765793ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2635726Z ✔ a freshly derived candidate verifies against its own receipt (1.350226ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2637133Z ✔ the receipt is rejected when the candidate is edited underneath it (3.913813ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2638680Z ✔ swapping the board invalidates the receipt (1.009379ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2639932Z ✔ a receipt from the random-board pipeline is refused outright (0.56689ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2641370Z ✔ a correctly signed receipt that fitted across boards is still refused (0.840433ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2642849Z ✔ the same fixed board yields a real spread of scores across players (16386.593569ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2644216Z ✔ the same board and the same player replay identically (2436.031027ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2645513Z ✔ a level that names a seed deals the same board every time (1.890707ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2646613Z ✔ different seeds are different boards (0.295945ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2647977Z ✔ a level with no seed still draws a fresh board each time (0.369393ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2649307Z ✔ every shipped level is currently unseeded, so none of them changed (0.172394ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2650608Z ✔ an unusable seed is rejected rather than silently ignored (0.597891ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2651877Z ✔ linear and branching controls separate both bounded proxies (10.157609ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2653127Z ✔ bounded misses remain UNKNOWN at the consumer boundary (0.35176ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2654500Z ✔ game.js exports LEVELS for headless use, unchanged from the shipped data (2.080774ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2655895Z ✔ every sampled shape is legal input to the authoring pipeline (8.206067ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2657372Z ✔ sampled shapes stay inside the declared sampling space (1.469086ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2658548Z ✔ the sampler is reproducible from its seed (1.265925ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2659658Z ✔ the signature ignores name and blocker order (0.263975ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2661134Z ✔ the signature separates shapes that differ in any knob (0.22897ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2662397Z ✔ the screen drops a board that locks up and keeps a clean one (0.302647ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2663582Z ✔ the gate verdict matches the pipeline thresholds (0.335469ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2664763Z ✔ the shortlist puts the hardest level for the bot first (0.280486ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2666092Z ✔ the shortlist drops anything that failed a gate, however hard it was (0.717677ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2667880Z ✔ registered summary can support a complete predictive independent pair (10.923856ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2669374Z ✔ registered summary falsifies a collapsed timing axis (1.133819ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2670842Z ✔ percentile player chooses the chain nearest its fixed share of the best points (1.010095ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2672436Z ✔ the frozen 3x3 descriptor bins name early, steady, late and low, mid, high (0.764063ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2674064Z ✔ same-or-edge-adjacent stability does not let a center cell cover the corners (0.261511ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2675581Z ✔ screen stops when a descriptor merely tracks score and occupies one row (2.34503ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2676931Z ✔ screen fails closed when score correlation is undefined (0.639771ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2678826Z ✔ exact play propagates the deterministic path-state cap to every denominator observation (943.124409ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2680568Z ✔ harvest policy favors mutually harvestable mass without mutating state (2.654491ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:22:36.2682456Z ✔ deterministic work cap stops search without claiming impossibility (14.968825ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5520506Z ✔ every recorded session resolves to a board and is paired (107062.153962ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5540702Z ✔ an ordinary play capture resolves to the shipped board and pairs on its seed (1427.876589ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5542533Z ✔ an invalid ordinary capture is reported without crashing on its null identity (43.361467ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5544397Z ✔ board trace renders an ordinary play capture through the documented CLI (167.151063ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5546011Z ✔ each pair compares the same board and the same seed for both players (0.793057ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5547666Z ✔ the bot arm is deterministic for a given board and seed (1880.202242ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5549151Z ✔ a shifted seed is a different game, so the pairing is doing real work (1849.670565ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5810637Z ✔ pilot artifacts bind the exact candidate, seed, batch, base, authority, and non-claims (5.514139ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5812572Z ✔ focused inspection reads the durable pilot artifacts and refuses candidate drift (17.899844ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5814509Z ✔ focused inspection refuses a controlled changed runtime file supplied beside the tree (15.960109ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5816397Z ✔ challenge receipt is a fresh real recording PASS and same-predicate broken-twin FAIL (18.91608ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5818779Z ✔ challenge refuses replay-compatible candidate content with the wrong identity (3.409472ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5820661Z ✔ execution verifier invalidates candidate, recording, checker, and challenge identities (67.114957ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5822424Z ✔ the real subject binds one candidate, one seed, and one content-named recording (4.898864ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5823955Z ✔ the real recording replays exactly: 140,544 points in 20 moves (3.063523ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5825486Z ✔ a broken twin fails through the same predicate, and so does a tampered move (2.716533ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5827051Z ✔ committed challenge and execution receipt reproduce and verify PASS (11.026451ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5829130Z ✔ the receipt is invalidated by a changed recording, a changed checker identity, or a forged verdict (25.576968ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5830803Z ✔ an untouched record needs no authorship, even without the fields (2.478116ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5832073Z ✔ a new provisional record needs a writer only (0.534652ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5835684Z ✔ a new accepted record needs a checker who is not the writer (0.456506ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5837378Z ✔ status values are normalized, so a backticked or capitalized accepted still needs a checker (0.260829ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5838844Z ✔ changing an accepted record's statement needs a writer and a checker (0.282951ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5840082Z ✔ changing an accepted record's evidence needs a writer and a checker (0.22401ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5840770Z ✔ changing an accepted record's updated needs a writer and a checker (0.326462ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5841468Z ✔ changing an accepted record's as_of needs a writer and a checker (0.251481ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5842240Z ✔ retiring accepted evidence needs an independent check, whatever correction it cites (0.451857ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5842906Z ✔ an accepted record newly narrowed needs a checker (0.414978ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5843523Z ✔ removing any record fails, including one added after the gate landed (0.348713ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5844170Z ✔ a duplicated ID fails and neither copy counts as untouched (0.21322ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5844824Z ✔ a heading written with a plain hyphen is still a record the gate sees (0.229911ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5845416Z ✔ the live ledger passes the gate against its base (64.217092ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5846055Z ✔ a sign-off recorded for an earlier version cannot authorize a later rewrite (0.283281ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5846846Z ✔ the pre-push hook compares the ledger with the destination remote, not origin/main (0.317965ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5848025Z ✔ records are parsed with their fields and a non-record heading ends one (1.911453ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5848871Z ✔ CRLF ledgers parse the same as LF ledgers (1.148052ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5849331Z ✔ headings with any dash are records (0.247464ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5849788Z ✔ superseded records leave the current table (0.996058ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5850429Z ✔ a narrowed record leads with the correction that narrowed it (BL-0016 F3) (1.395116ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5851027Z ✔ the committed index matches the live ledger (43.669197ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5851599Z ✔ validateShape accepts one named target-free proposal shape (1.769397ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5852235Z ✔ validateShape forbids authored target and tile scale controls (0.705943ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5852944Z ✔ validateShape rejects malformed dimensions, blockers, and proposal labeling (0.529363ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5853821Z ✔ deriveCandidate uses fixed fitting and disjoint holdout seeds with measured target rounding (3.754516ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5854512Z ✔ deriveCandidate refuses an incomplete fitting run (0.649839ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5855352Z ✔ verifyCandidate passes a bound receipt and rejects tampering, invalid data, overlap, and incomplete totals (4.518129ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5856288Z ✔ verifyCandidate remeasures fitting evidence and enforces target and tile-scale derivation (3.512385ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5857007Z ✔ authored receipts carry the exact frozen calibration stamp (0.997631ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5858184Z ✔ verification rejects missing or re-signed mismatched calibration stamps (2.737392ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5858769Z ✔ a level in range is the level you get (1.440671ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5859250Z ✔ the first and last levels are both reachable (0.223169ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5859696Z ✔ no level parameter means no jump (0.194615ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5860203Z ✔ a level past the end is refused rather than clamped (0.353623ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5860701Z ✔ zero and negative levels are refused (0.251351ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5861249Z ✔ a value that is not a whole number is refused, not truncated (0.221976ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5861784Z ✔ the jump survives other query parameters (0.20864ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5862330Z ✔ a shipped-level seed accepts the full unsigned 32-bit range (0.232787ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5862983Z ✔ an absent or malformed shipped-level seed leaves ordinary play random (0.401593ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5863686Z ✔ loading and retrying a fixed shipped-level seed reproduces the board RNG (1.622201ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5864679Z ✔ measurement-control CLI keeps legacy defaults and parses explicit starts and axes source (1.464114ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5865424Z ✔ evaluation seed ranges must be safe, non-negative, and disjoint (1.762486ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5866162Z ✔ a source archive freezes exact bin axes while retaining current pilot diagnostics (2.137617ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5866903Z ✔ MAP-Elites keeps the best policy independently inside each behavior cell (0.23983ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5868096Z ✔ behavior descriptors land in understandable numeric chain-style and patience bins (0.383098ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5868917Z ✔ a pilot must demonstrate real range on both descriptors before axes exist (0.334016ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5869537Z ✔ policy identity is stable across object key order (0.460363ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5870204Z ✔ the static map explains axes, empty cells, elite identity, selection, and holdout (0.655248ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5871020Z ✔ artifact verification refuses seed overlap and missing representative holdout evidence (1.089382ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5871769Z ✔ artifact verification binds frozen axes to their recorded identity (0.996929ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5872432Z ✔ merge-depth control distinguishes a two-generation dependency (2.476062ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5873097Z ✔ spatial-spread control distinguishes compact and board-wide chains (0.302858ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5873759Z ✔ uniform scale preserves merge-depth and spatial-spread proxies (22.830398ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5874395Z ✔ bounded misses remain UNKNOWN and planted witnesses fail replay (1.3869ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5875127Z ✔ the fixed axes assign all four intended cells (1.958943ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5875862Z ✔ archive admission requires cross-width cell agreement and spread stability (0.467106ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5896357Z ✔ each cell retains the four most reproducible identities deterministically (0.436778ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5897821Z ✔ a planted complete 128-row map supports all registered claims (10.315588ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5898582Z ✔ a two-cell collapse is falsified rather than called inconclusive (1.034148ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5899225Z ✔ makeRng and makeSeededRng produce identical sequences (2.676477ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5899896Z ✔ createLevelState builds the same opening board as createInitialGrid (5.624384ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5900584Z ✔ canExtendChain agrees for every value relationship, including 0 (1.25354ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5901223Z ✔ isBlockedTile agrees with Tile.isBlocked for every blocker type (0.289813ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5901855Z ✔ isValidChain agrees across lengths and first-pair values (0.538199ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5902388Z ✔ chain multiplier agrees for lengths 0-30 (0.731591ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5902972Z ✔ merges agree at every multiplier tier, on board and on score (261.633838ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5903614Z ✔ a bomb in the FINAL position is defused and survives, in both (260.702261ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5904237Z ✔ a bomb in a NON-final position is deleted outright, in both (261.24156ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5904845Z ✔ applyGravity agrees across columns, stones, ice and bombs (1.652057ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5905504Z ✔ spawnNewTiles agrees on values, positions, and how many draws it takes (0.750647ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5906129Z ✔ tickBlockers agrees on ice thawing and bomb countdown (0.943869ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5906622Z ✔ checkBombs agrees in BOTH directions (0.382647ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:11.5907087Z ✔ the list of uncompared behaviour is accurate (0.17091ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0501879Z ✔ oracle corpus reads and replays all real recordings, groups exact repeats, retains best wins (104.814592ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0504072Z ✔ full-rule oracle transition replays every real capture including bombs, ice, stones and scale (35.303491ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0509339Z ✔ verifier rejects a planted illegal chain through its public witness seam (2.332974ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0516225Z ✔ verifier rejects planted wrong spawn and blocker timer in real post-move boards (5.999627ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0521731Z ✔ verifier rejects continuation after the actual target crossing (1.171366ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0523523Z ✔ real report verifier accepts the known legal calibration witnesses (65429.849924ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0529823Z ✔ report verifier rejects missing rows, duplicate rows and invented comparison results (21227.678232ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0532264Z ✔ coherent corpus substitution is rejected against identity pinned outside the report (31.479167ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0538073Z ✔ bounded search supplies a independently replayable solution and does not mutate the input (0.960141ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0541905Z ✔ candidate generation preserves legal setup prefixes and off-lattice choices (0.738656ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:19.0543612Z ✔ CLI reads real report files: positive passes and resigned false comparison fails (17076.010341ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.8864802Z ✔ actual process deadline retains UNKNOWN without inventing impossibility (13.418176ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.8866505Z ✔ a real slower bot witness remains a valid domain failure (16821.479777ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.8870030Z ✔ replay display renders every verified move as a spatial board (9.031989ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.8877224Z ✔ oracle source identities cover the harvest ranking module search depends on (0.545272ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9193854Z ✔ a failing verdict cannot erase the complete paired result (2.136085ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9195247Z ✔ the write is immutable and validation happens before publication (0.627967ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9196923Z captured level 54 seed 3310936729: win 129472 in 16 moves -> ffffffffffff
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9198250Z captured level 54 seed 3310936729: win 129472 in 16 moves -> ffffffffffff
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9199719Z ✔ an identical fixed-seed play remains one stored session and one benchmark row (2497.776984ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9201264Z ✔ nemesis labels a race to the target: fewer moves beats, equal ties, no win loses (0.451746ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9202455Z captured level 54 seed 3310936729: lose 15360 in 3 moves -> 8abba4c08811
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9203879Z ✔ nemesis serves shipped boards with the bot result and counts a new capture (2193.548108ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9205242Z ✔ naive SE is returned unchanged when no layout is supplied (1.860265ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9206399Z ✔ a layout that does not match the cell count is rejected (0.675245ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9208487Z ✔ level-clustered SE does not shrink when seeds are added to the same levels (5.360794ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9209911Z ✔ level-clustered SE does shrink when genuinely new levels are added (1.848774ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9211235Z ✔ seed-clustered SE catches variation that is common across levels (0.497081ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9212388Z ✔ the correction is an inflation, never a discount (0.322735ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9213725Z ✔ behavior summary means chain size and the share of score earned in the final third (1.073181ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9215129Z ✔ patience counts score only from moves in the final third of the budget (0.297627ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9216569Z ✔ policy evaluation exposes aggregate behavior beside uncensored scores (4215.157049ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9218572Z ✔ single-cell policy evaluation aggregates the same post-move descriptor as its real play trace (8213.299891ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9219940Z ✔ a flat game is neither back- nor front-loaded (1.348917ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9221177Z ✔ backload rises when the score arrives late and falls when it arrives early (0.32003ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9222363Z ✔ an odd move count biases backload down, never up (0.253755ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9223474Z ✔ spike is the largest single move as a share of the score (0.217037ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9224631Z ✔ a scoreless or empty game reports no curve at all (0.224811ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9225875Z ✔ the human gen-0010 playthrough reads as strongly back-loaded and spiky (0.228238ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9227090Z ✔ analyzes the real six-move max-chain relay play (2505.547456ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9228783Z ✔ rejects a recording that is not bound to the supplied board (1.0564ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9230098Z ✔ rejects a recording whose declared move count does not match its chains (0.767659ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9231410Z ✔ rejects a claimed win that continued after a bomb exploded (122.00897ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9232702Z ✔ the collector inspects every prototype session currently on disk (7083.165772ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9233889Z ✔ scaled frozen spawns preserve the level tile scale (1.13116ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9235224Z ✔ successful bounded analysis publishes upper bounds, not exact descriptors (20.13858ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9236722Z ✔ the public replay seam rejects a planted unavailable witness tile (2.679162ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9238242Z ✔ a bounded miss remains UNKNOWN rather than becoming unreachable (0.83749ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9239431Z ✔ actionsPerState caps the combined candidate families (22.948918ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9240738Z ✔ the representative panel uses real 5x8, 5x7, 6x5, and 4x8 configurations (0.338455ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9242453Z ✔ exact envelope turns reachability into budget tightness and a solver-independent chain cap (150.132607ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9244009Z ✔ descriptor witnesses replay through the real frozen transition seam (266.316815ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9245305Z ✔ the real verifier seam rejects a planted bad descriptor (239.154707ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9246628Z ✔ a node cap stays UNKNOWN instead of becoming evidence of unreachability (3.742546ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9248090Z ✔ the shipped candidate corpus is not empty (1.390777ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9249668Z ✖ candidate-levels-52.json has a receipt that verifies against the current bot (4.001762ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9251133Z ✖ candidate-levels-54.json has a receipt that verifies against the current bot (1.439368ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9252541Z ✔ candidate-levels.json has a receipt that verifies against the current bot (7029.640535ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9253551Z ✔ the walk inspected the whole corpus (1.136441ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9254607Z ✔ every file the measurement depends on is one of the hashed inputs (1.522194ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9255678Z ✔ a tampered receipt is refused rather than verified (1.017958ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9256817Z ✔ a candidate store with no receipt is a failure, not an absence (0.476364ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9258358Z ✔ an empty corpus fails the floor instead of reading as clean (0.380082ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9259548Z ✔ a receipt whose code has drifted is refused, not verified (1.09354ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9260690Z ✔ a new unhashed require in the measurement path is detected (0.61907ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9261949Z ✔ the closure detector does not see computed or templated requires (0.333685ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9263176Z ✔ the live corpus matches the committed manifest exactly (0.51177ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9264415Z ✔ a store vanishing from the corpus is detected, not silently tolerated (0.270057ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9265496Z ✔ the exemption is computed, never declared (0.121559ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9266317Z ✔ shipping alone does not exempt (0.197109ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9267116Z ✔ a human win alone does not exempt (0.162485ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9268288Z ✔ both halves together exempt, and only then (0.163467ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9269191Z ✔ every stale receipt fails, exempt or not (0.257583ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9270129Z ✔ a losing recording does not license an exemption (0.399579ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9271174Z ✔ the real exemption facts hold for the shipped corpus (5.548493ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9272088Z ✔ at least one recording is replayable (1.223595ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9273356Z ✔ the reusable replay predicate passes a real recording and refuses its broken twin (2.310011ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9274699Z ✔ recording 1352aa7a02cd (level 53, win) replays exactly (1.046121ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9275787Z ✔ recording 1c87356748ee (level 51, win) replays exactly (0.791464ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9276876Z ✔ recording 3d3ba1f05b08 (level 54, win) replays exactly (0.658715ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9278579Z ✔ recording 44d3802d5512 (level 52, win) replays exactly (0.571081ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9279729Z ✔ recording 7061bbf0132f (level 53, win) replays exactly (0.437019ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9280855Z ✔ recording 78749fc07834 (level 51, win) replays exactly (0.290033ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9281983Z ✔ recording 7ad0978f9619 (level 53, win) replays exactly (0.37852ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9283132Z ✔ recording 8ac6c9d4c533 (level 51, lose) replays exactly (0.435296ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9284292Z ✔ recording d36e875d0839 (level 52, win) replays exactly (0.441678ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9285464Z ✔ recording f0ae3e75fe38 (level 52, win) replays exactly (0.499416ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9286774Z ✔ recordings whose candidate is gone are named, and their count cannot grow (0.207449ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9288391Z ✔ a recording claiming a score it did not reach is refused (0.489829ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9289537Z ✔ a recording whose moves were altered is refused (0.725219ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9290884Z ✔ a chain that revisits a tile is refused as illegal, not merely as mis-scored (0.787727ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9292213Z ✔ a recording claiming a win it did not achieve is refused (0.248336ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9293585Z ✔ a recording added after this file was written is picked up without editing it (1.073984ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9295054Z ✔ an unresolvable recording is classed as an orphan, not quietly dropped (0.352711ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9296504Z ✔ a candidate held only inside a generated batch file is found by the index (0.713227ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9298391Z ✔ widening the index to batch files still leaves an unknown identity an orphan (0.42141ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9299740Z ✔ a batch entry without a candidate identity is skipped, not indexed as undefined (0.361078ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9301091Z ✔ a clean canonical checkout with protected recovery refs passes (1.657678ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9302319Z ✔ a dirty consequential checkout fails closed and names its paths (0.269125ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9303475Z ✔ a dirty linked worktree fails closed (0.181911ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9304500Z ✔ a discovered but unregistered worktree fails closed (1.031915ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9305606Z ✔ a missing or moved remote safety ref fails closed (0.277631ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9306700Z ✔ a checkout outside the declared ancestry fails closed (0.188243ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9308153Z ✔ canonical mode requires main and exact remote equality (0.226054ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9309447Z ✔ candidate mode permits a non-main branch but keeps every safety check (0.158577ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9310869Z ✔ porcelain parsing preserves a leading dot on the first unstaged path (0.336881ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9312345Z ✔ discovery distinguishes linked worktree pointers from standalone repositories (2.31477ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9313768Z ✔ LIVE: no durable .orch state is left uncommitted in this checkout (501.649246ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9315011Z ✔ LIVE: no linked worktree is holding uncommitted .orch state (237.525051ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9316537Z ✔ ruler A/A has zero wins gained, zero lost and exactly zero moves saved (2.261291ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9317881Z ✔ ruler compares wins before mutual-win moves (0.585017ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9319065Z ✔ two-axis SE catches seed-wide variation when level means are equal (1.346776ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9320289Z ✔ ruler rejects a missing or reordered paired cell (0.723376ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9321478Z ✔ admission refuses synthetic entrant with screen +3% and fresh -3% (1.099742ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9322809Z ✔ admission accepts synthetic entrant positive on screen and fresh block (0.20232ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9324120Z ✔ admission ranks same-cell entrants on fresh number only (0.218881ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9324792Z ✔ winner-curse panel has 30 unique one-gene champion variants (1.793533ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9326052Z ✔ declared seed blocks are disjoint and worst-case measured games stay below 60,000 (0.379932ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9327847Z ✔ holdout rule uses unrounded t just above 3 even when display rounds to 3 (1.215479ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9328794Z ✔ holdout rule refuses t exactly 3 (0.198762ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9329806Z ✔ holdout rule refuses net win regression despite positive lift and t above 3 (0.182352ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9331359Z ✔ a bounded artifact measured through real playMeasured reaches PASS and its broken twin reaches FAIL (1129.671766ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9332857Z ✔ variance comparison uses single-game between-candidate and within-level components (1.226049ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9334363Z ✔ artifacts and issuance require a protocol committed before measurement (2.3145ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9335554Z ✔ standalone, failed, malformed, and identity-stale materials fail closed (2.865112ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9336819Z ✔ a frozen calibration identity mutation invalidates the entitlement (1.260012ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9338430Z ✔ the production CLI selects only from a verified bundle bound to the exact batch (237.125936ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9339923Z ✔ the production CLI can generate an unselected batch before a challenge bundle exists (57.729118ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9341531Z ✔ receipt verifier cross-binds claim, subjects, protocol, execution path, and actual selections (22.039965ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9343074Z ✔ challenge writes only a verified bundle and verifier replays the real consumer (358.746457ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9344229Z ✔ playLevel: wins as soon as score reaches target (5.057723ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9345386Z ✔ playLevel: loses out of moves when the target is unreachable in the budget (0.579426ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9346693Z ✔ playLevel: loses with no valid moves when the board has no legal chain (0.290225ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9348059Z ✔ playLevel: loses when a bomb timer reaches zero unattended (0.656701ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9349325Z ✔ target-aware challenger is identical before an untrimmed route can win now (4927.172573ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9350703Z ✔ target-aware challenger cashes out the Level 51 teaching board on move 13 (4746.126965ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9352129Z ✔ immediate winner selection uses the existing deterministic untrimmed order (2288.478739ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9353565Z ✔ target-aware challenger falls back after target and never mutates its input (468.388151ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9354669Z ✔ any bomb leaves the champion in full control (4.208324ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9355454Z ✔ null/no-move behavior is preserved (0.440336ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9356417Z ✔ the challenger never routes through the promoted champion (2812.125333ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9357784Z ✔ CLI exposes only fixed diagnostic, screen, and holdout protocols (2.628992ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9358964Z ✔ registration flags parse instead of dying as unknown arguments (0.30901ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9360175Z ✔ the champion arm is the pre-promotion chooser, not the promoted bot (4893.145827ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9361433Z ✔ screen and holdout identities are frozen and exclude diagnostic seed 1 (0.320827ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9362657Z ✔ paired evaluation is level-major, complete, and deterministic (1.348693ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9363966Z ✔ worker evaluation preserves the same level-major paired cells (4283.486166ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9364660Z ✔ artifact identity covers complete ordered cells and rejects tampering (3.636467ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9365202Z ✔ artifact output refuses overwrite (1.492829ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9365819Z ✔ four compacted owner sessions replay through the real engine to exact outcomes (5.415753ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9367338Z ✔ targeted generation dedupes real legal actions and can finish a small search (18.788773ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9368749Z ✔ the real opening search recovers the missed 24-tile, sum-3456 action (382.117837ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9369866Z ✔ caller node caps fail closed and are deterministic (0.875401ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9370712Z ✔ candidate-limit telemetry only reports actual outward truncation (24.895771ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9371478Z ✔ the real-state coverage seam beats production and recovers both named anchors (10472.265187ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9372254Z ✔ present numeric CLI flags without values fail closed before coverage runs (161.17426ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9372935Z ✔ a controlled broken cap fails the coverage CLI acceptance seam (2035.12898ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9373612Z ✔ a real recordSession artifact is independently replayed and verified (1417.79403ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9374298Z ✔ self-rehashed tampering and invalid intake remain unresolved (6672.009368ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9374977Z ✔ bounded search finds a replayed move-B win and reports explicit limits (1.332168ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9375964Z ✔ search keeps transition-distinct actions that coarse endpoint/length/score dedup drops (0.492083ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9376761Z ✔ bomb-before-target makes a crossing invalid and exhaustive no-win is NONE (0.748944ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9377872Z ✔ node and injected-time limits fail closed as UNKNOWN (0.446798ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9378653Z ✔ search leaves the supplied state and RNG descriptor unchanged (0.47992ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9379385Z ✔ attribution uses offered action identity and preserves ambiguous control flow (0.339958ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9380136Z ✔ a different exhaustive witness is not a miss when production already wins (4.014039ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9380885Z ✔ initial and final clock faults stay UNKNOWN through search and public consumer (3.598359ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9381664Z ✔ a real producer-created zero-move session is unresolved, not vacuously complete (1.720397ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9382538Z ✔ public consumer admits only verified sessions and retains complete/capped/invalid denominators (7.961534ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9383325Z ✔ the local report-only check card declares its scope and blind spots (0.445455ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9384049Z ✔ the contract has exactly the five load-bearing cards and no copied claim fields (2.723329ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9384874Z ✔ the selected ledger parser resolves one record without pretending to parse the whole ledger (2.492315ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9385719Z ✔ one resolved model keeps admitted evidence separate from the later verified artifact (8.064798ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9386519Z ✔ the stale-navigation warning fires when CURRENT.md ages past the contract limit (18.639182ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9387610Z ✖ the builder is byte-stable and the committed generated views are current (12.769442ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9388369Z ✔ generated Markdown exposes the load-bearing distinctions in one screen (0.668143ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9389015Z ✔ the static HTML uses real headings for all five card titles (0.270688ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9389741Z ✔ CURRENT links the generated control panel without erasing its historical milestone (0.469541ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9390399Z ✔ verification fails closed for a missing card (8.234937ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9390980Z ✔ verification fails closed for an unresolved ledger record (10.267039ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9391659Z ✔ verification fails closed when selected current evidence is not accepted (11.660212ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9392479Z ✔ verification fails closed for receipt hash mismatch (10.712003ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9393125Z ✔ verification fails closed when the artifact verification evidence drifts (9.507944ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9393934Z ✔ verification observations derive from rebound evidence instead of copied metrics in code (20.723593ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9394710Z ✔ verification reports the map stale exactly one day past its maximum age (14.570601ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9395545Z ✔ verification fails closed for protected champion identity mismatch even with a rebound hash (12.737492ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9396268Z ✔ verification fails closed when a generated view drifts (10.43894ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9396862Z ✔ mass-cursor relaxation bounds the exact four-tile maximum (3.74288ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9398138Z ✔ mass-cursor relaxation bounds a distinct five-tile multiplier fixture (0.433563ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9399197Z ✔ negative control rejects an intentionally lowered fixture bound (1.251848ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9399915Z ✔ Level 26 seed-0 calculation is complete and bound to the certifier inputs (182.65785ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9400353Z ℹ tests 602
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9400551Z ℹ suites 0
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9400749Z ℹ pass 598
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9400947Z ℹ fail 3
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9401144Z ℹ cancelled 0
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9401349Z ℹ skipped 1
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9401542Z ℹ todo 0
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9401771Z ℹ duration_ms 151080.764901
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9401923Z 
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9402031Z ✖ failing tests:
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9402319Z 
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9402520Z test at solver/tests/receiptGate.test.js:165:3
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9403176Z ✖ candidate-levels-52.json has a receipt that verifies against the current bot (4.001762ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9403836Z   AssertionError [ERR_ASSERTION]: candidate-levels-52.json: calibration stamp mismatch
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9404263Z   
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9404577Z   THIS FAILURE IS KNOWN AND DECIDED. It is not a new bug and it is not
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9405058Z   yours to fix. This level ships, a human has completed it, and on
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9405539Z   2026-08-21 the owner decided its target stays where it is. Refreshing
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9406038Z   the receipt would re-derive the target from a stronger bot and raise it
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9406543Z   4.9%, making a live level harder for players, while the bot's win rate
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9406979Z   on it moved one seed in three hundred (ticket T-003).
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9407581Z   
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9407926Z   Do NOT clear this by re-authoring, archiving, or exempting it. It fails
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9408443Z   because the receipt genuinely predates the current bot, which is true.
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9409187Z       at TestContext.<anonymous> (/home/runner/work/Map-Elites-2248/Map-Elites-2248/solver/tests/receiptGate.test.js:170:12)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9409821Z       at Test.runInAsyncScope (node:async_hooks:227:14)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9410207Z       at Test.run (node:internal/test_runner/test:1402:25)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9410682Z       at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9411157Z       at Test.postRun (node:internal/test_runner/test:1542:19)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9411554Z       at Test.run (node:internal/test_runner/test:1467:12)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9412042Z       at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9412468Z     generatedMessage: false,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9412716Z     code: 'ERR_ASSERTION',
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9412940Z     actual: undefined,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9413162Z     expected: undefined,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9413380Z     operator: 'fail',
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9413589Z     diff: 'simple'
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9413780Z   }
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9413882Z 
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9414072Z test at solver/tests/receiptGate.test.js:165:3
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9414725Z ✖ candidate-levels-54.json has a receipt that verifies against the current bot (1.439368ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9415517Z   AssertionError [ERR_ASSERTION]: candidate-levels-54.json: calibration stamp mismatch
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9415929Z   
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9416220Z   Not exempt (ships=true, human win recorded=false). This receipt
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9416698Z   was measured against different code. Re-author it against the current
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9417456Z   bot, or archive it and stop quoting its numbers. Do not weaken this
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9417837Z   check to clear it.
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9418411Z       at TestContext.<anonymous> (/home/runner/work/Map-Elites-2248/Map-Elites-2248/solver/tests/receiptGate.test.js:170:12)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9419560Z       at Test.runInAsyncScope (node:async_hooks:227:14)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9420244Z       at Test.run (node:internal/test_runner/test:1402:25)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9420881Z       at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9421366Z       at Test.postRun (node:internal/test_runner/test:1542:19)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9421852Z       at Test.run (node:internal/test_runner/test:1467:12)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9422349Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9422782Z     generatedMessage: false,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9423031Z     code: 'ERR_ASSERTION',
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9423261Z     actual: undefined,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9423485Z     expected: undefined,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9423709Z     operator: 'fail',
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9423955Z     diff: 'simple'
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9424150Z   }
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9424253Z 
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9424602Z test at solver/tests/universeMap.test.js:138:1
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9425245Z ✖ the builder is byte-stable and the committed generated views are current (12.769442ms)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9425829Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9426187Z   
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9426358Z   4 !== 0
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9426528Z   
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9427059Z       at TestContext.<anonymous> (/home/runner/work/Map-Elites-2248/Map-Elites-2248/solver/tests/universeMap.test.js:143:10)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9428026Z       at Test.runInAsyncScope (node:async_hooks:227:14)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9428433Z       at Test.run (node:internal/test_runner/test:1402:25)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9428895Z       at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9429371Z       at Test.postRun (node:internal/test_runner/test:1542:19)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9429770Z       at Test.run (node:internal/test_runner/test:1467:12)
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9430248Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9430672Z     generatedMessage: true,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9430910Z     code: 'ERR_ASSERTION',
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9431129Z     actual: 4,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9431326Z     expected: 0,
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9431538Z     operator: 'strictEqual',
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9431770Z     diff: 'simple'
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9431961Z   }
+full test suite (informational until the three known failures are retired)	node --test	2026-10-02T15:24:35.9444820Z ##[error]Process completed with exit code 1.
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	﻿2026-10-02T15:24:35.9588041Z Post job cleanup.
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0469695Z [command]/usr/bin/git version
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0517450Z git version 2.55.0
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0561551Z Temporarily overriding HOME='/home/runner/work/_temp/3f2bb9e6-5afd-4d40-944b-82dda9f036af' before making global git config changes
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0563293Z Adding repository directory to the temporary git global config as a safe directory
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0568168Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Map-Elites-2248/Map-Elites-2248
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0605412Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0638904Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0897396Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0923510Z http.https://github.com/.extraheader
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0934939Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.0971761Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.1241442Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+full test suite (informational until the three known failures are retired)	Post Run actions/checkout@v4	2026-10-02T15:24:36.1289850Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+full test suite (informational until the three known failures are retired)	Complete job	﻿2026-10-02T15:24:36.1692551Z Cleaning up orphan processes
+full test suite (informational until the three known failures are retired)	Complete job	2026-10-02T15:24:36.1996776Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

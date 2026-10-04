@@ -1,0 +1,40 @@
+RECOMPUTE item3 cells=1000 gained=0 lost=0 moves=0
+RECOMPUTE item4 cells=3000 gained=2 lost=0 moves=1.2594576498158687 interval95=[0.9092254524687481,1.6096898471629895] sign=50/50
+RECOMPUTE item5 eliminated=stage1 cells=72 gained=0 lost=26 moves=-5.369565217391305
+RECOMPUTE item7 wRoll-0.75 screen_gained=0 screen_lost=1 screen_moves=-1.0140845070422535 fresh_gained=0 fresh_lost=2 fresh_moves=-1.0571428571428572 screen_pct=-7.072691552062868 fresh_pct=-7.407407407407407 gap_pct=-0.3347158553445393
+RECOMPUTE item7 wRoll-0.3 screen_gained=0 screen_lost=0 screen_moves=-0.3055555555555556 fresh_gained=0 fresh_lost=1 fresh_moves=-0.23943661971830985 screen_pct=-2.1113243761996165 fresh_pct=-1.6699410609037328 gap_pct=0.4413833152958837
+RECOMPUTE item7 wRoll+0.3 screen_gained=0 screen_lost=0 screen_moves=-0.19444444444444445 fresh_gained=0 fresh_lost=0 fresh_moves=-0.3888888888888889 screen_pct=-1.343570057581574 fresh_pct=-2.694898941289702 gap_pct=-1.3513288837081279
+RECOMPUTE item7 wRoll+0.75 screen_gained=0 screen_lost=1 screen_moves=-1.1830985915492958 fresh_gained=0 fresh_lost=2 fresh_moves=-0.6 screen_pct=-8.25147347740668 fresh_pct=-4.204204204204204 gap_pct=4.047269273202477
+RECOMPUTE item7 wRoll+1.5 screen_gained=0 screen_lost=6 screen_moves=-1.2575757575757576 fresh_gained=0 fresh_lost=2 fresh_moves=-0.9714285714285714 screen_pct=-8.96328293736501 fresh_pct=-6.786427145708582 gap_pct=2.176855791656428
+RECOMPUTE item7 wPlace-0.75 screen_gained=0 screen_lost=0 screen_moves=0.06944444444444445 fresh_gained=0 fresh_lost=0 fresh_moves=-0.08333333333333333 screen_pct=0.47984644913627644 fresh_pct=-0.5774783445620788 gap_pct=-1.0573247936983552
+RECOMPUTE item7 wPlace-0.3 screen_gained=0 screen_lost=0 screen_moves=0.013888888888888888 fresh_gained=0 fresh_lost=0 fresh_moves=-0.09722222222222222 screen_pct=0.09596928982725528 fresh_pct=-0.6737247353224255 gap_pct=-0.7696940251496808
+RECOMPUTE item7 wPlace+0.3 screen_gained=0 screen_lost=0 screen_moves=-0.013888888888888888 fresh_gained=0 fresh_lost=0 fresh_moves=0.2777777777777778 screen_pct=-0.09596928982725528 fresh_pct=1.9249278152069298 gap_pct=2.020897105034185
+RECOMPUTE item7 wPlace+0.75 screen_gained=0 screen_lost=0 screen_moves=0 fresh_gained=0 fresh_lost=0 fresh_moves=0.1527777777777778 screen_pct=0 fresh_pct=1.0587102983638115 gap_pct=1.0587102983638115
+RECOMPUTE item7 wPlace+1.5 screen_gained=0 screen_lost=0 screen_moves=0.06944444444444445 fresh_gained=0 fresh_lost=0 fresh_moves=-0.18055555555555555 screen_pct=0.47984644913627644 fresh_pct=-1.2512030798845042 gap_pct=-1.7310495290207806
+RECOMPUTE item7 turnover-30 screen_gained=0 screen_lost=0 screen_moves=-0.1527777777777778 fresh_gained=0 fresh_lost=0 fresh_moves=0.06944444444444445 screen_pct=-1.0556621880998083 fresh_pct=0.48123195380173245 gap_pct=1.5368941419015407
+RECOMPUTE item7 turnover-15 screen_gained=0 screen_lost=0 screen_moves=0.1388888888888889 fresh_gained=0 fresh_lost=1 fresh_moves=0.07042253521126761 screen_pct=0.9596928982725529 fresh_pct=0.4930966469428008 gap_pct=-0.4665962513297521
+RECOMPUTE item7 turnover+15 screen_gained=0 screen_lost=0 screen_moves=0.041666666666666664 fresh_gained=0 fresh_lost=1 fresh_moves=0.04225352112676056 screen_pct=0.28790786948176583 fresh_pct=0.29239766081871343 gap_pct=0.004489791336947602
+RECOMPUTE item7 turnover+30 screen_gained=0 screen_lost=0 screen_moves=-0.013888888888888888 fresh_gained=0 fresh_lost=0 fresh_moves=0.2916666666666667 screen_pct=-0.09596928982725528 fresh_pct=2.0211742059672764 gap_pct=2.1171434957945316
+RECOMPUTE item7 turnover+60 screen_gained=0 screen_lost=0 screen_moves=-0.25 fresh_gained=0 fresh_lost=0 fresh_moves=0.20833333333333334 screen_pct=-1.727447216890595 fresh_pct=1.4436958614051976 gap_pct=3.171143078295793
+RECOMPUTE item7 bombMax-3 screen_gained=0 screen_lost=0 screen_moves=-0.027777777777777776 fresh_gained=0 fresh_lost=0 fresh_moves=-0.027777777777777776 screen_pct=-0.19193857965451055 fresh_pct=-0.19249278152069296 gap_pct=-0.0005542018661824077
+RECOMPUTE item7 bombMax-2 screen_gained=0 screen_lost=1 screen_moves=-0.19718309859154928 fresh_gained=0 fresh_lost=0 fresh_moves=-0.013888888888888888 screen_pct=-1.3671874999999998 fresh_pct=-0.09624639076034648 gap_pct=1.2709411092396532
+RECOMPUTE item7 bombMax-1 screen_gained=0 screen_lost=0 screen_moves=0.2361111111111111 fresh_gained=0 fresh_lost=0 fresh_moves=0.4583333333333333 screen_pct=1.6314779270633397 fresh_pct=3.176130895091434 gap_pct=1.5446529680280943
+RECOMPUTE item7 bombMax+1 screen_gained=0 screen_lost=1 screen_moves=0.14084507042253522 fresh_gained=0 fresh_lost=0 fresh_moves=0.125 screen_pct=0.9823182711198429 fresh_pct=0.8662175168431184 gap_pct=-0.1161007542767245
+RECOMPUTE item7 bombMax+2 screen_gained=0 screen_lost=0 screen_moves=0.08333333333333333 fresh_gained=0 fresh_lost=0 fresh_moves=0.3333333333333333 screen_pct=0.5758157389635317 fresh_pct=2.309913378248315 gap_pct=1.7340976392847836
+RECOMPUTE item7 wHarvest-1.5 screen_gained=0 screen_lost=2 screen_moves=-0.24285714285714285 fresh_gained=0 fresh_lost=1 fresh_moves=-0.23943661971830985 screen_pct=-1.7137096774193548 fresh_pct=-1.6765285996055226 gap_pct=0.037181077813832175
+RECOMPUTE item7 wHarvest-0.75 screen_gained=0 screen_lost=0 screen_moves=-0.013888888888888888 fresh_gained=0 fresh_lost=1 fresh_moves=-0.11267605633802817 screen_pct=-0.09596928982725528 fresh_pct=-0.7889546351084814 gap_pct=-0.6929853452812261
+RECOMPUTE item7 wHarvest-0.25 screen_gained=0 screen_lost=0 screen_moves=0 fresh_gained=0 fresh_lost=0 fresh_moves=0.1527777777777778 screen_pct=0 fresh_pct=1.0587102983638115 gap_pct=1.0587102983638115
+RECOMPUTE item7 wHarvest+0.5 screen_gained=0 screen_lost=0 screen_moves=0.25 fresh_gained=0 fresh_lost=0 fresh_moves=0.20833333333333334 screen_pct=1.727447216890595 fresh_pct=1.4436958614051976 gap_pct=-0.2837513554853974
+RECOMPUTE item7 wHarvest+1.5 screen_gained=0 screen_lost=0 screen_moves=0.4444444444444444 fresh_gained=0 fresh_lost=0 fresh_moves=0.25 screen_pct=3.071017274472169 fresh_pct=1.7324350336862369 gap_pct=-1.338582240785932
+RECOMPUTE item7 pathWidth-4 screen_gained=0 screen_lost=0 screen_moves=0.1527777777777778 fresh_gained=0 fresh_lost=0 fresh_moves=-0.08333333333333333 screen_pct=1.0556621880998083 fresh_pct=-0.5774783445620788 gap_pct=-1.633140532661887
+RECOMPUTE item7 pathWidth-2 screen_gained=0 screen_lost=0 screen_moves=0.5833333333333334 fresh_gained=0 fresh_lost=0 fresh_moves=0 screen_pct=4.030710172744722 fresh_pct=0 gap_pct=-4.030710172744722
+RECOMPUTE item7 pathWidth-1 screen_gained=0 screen_lost=0 screen_moves=0.06944444444444445 fresh_gained=0 fresh_lost=0 fresh_moves=0.18055555555555555 screen_pct=0.47984644913627644 fresh_pct=1.2512030798845042 gap_pct=0.7713566307482278
+RECOMPUTE item7 pathWidth+1 screen_gained=0 screen_lost=0 screen_moves=0.125 fresh_gained=0 fresh_lost=1 fresh_moves=0.11267605633802817 screen_pct=0.8637236084452975 fresh_pct=0.7858546168958743 gap_pct=-0.07786899154942317
+RECOMPUTE item7 pathWidth+2 screen_gained=0 screen_lost=0 screen_moves=0.19444444444444445 fresh_gained=0 fresh_lost=0 fresh_moves=-0.1527777777777778 screen_pct=1.343570057581574 fresh_pct=-1.0587102983638115 gap_pct=-2.4022803559453854
+RECOMPUTE item7 variants=30 mean_fresh_minus_screen_pct=0.22350142418372956
+RECOMPUTE item9 stage1 candidates=120 games_per_candidate=72 mean_summed_worker_elapsed_seconds=145.66564821749986
+RECOMPUTE item9 stage2 candidates=1 games_per_candidate=600 mean_summed_worker_elapsed_seconds=1723.166245700001
+RECOMPUTE item9 stage3 candidates=1 games_per_candidate=3000 mean_summed_worker_elapsed_seconds=6567.725782300001
+RECOMPUTE item9 mutants=120 stage1_survivors=61 stage2_survivors=1 nominees=0 refused=0 archive=0 representatives=0 stronger=false domain=FALSIFIED raw_games=35720
+RECOMPUTE deterministic_replays=6
+MATCH item3 item4 item5 item7 item9

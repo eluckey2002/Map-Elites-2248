@@ -1,0 +1,142 @@
+"""Read-only: where is the board, and is anything wrong with it?  Commands: where, audit."""
+from __future__ import annotations
+
+import argparse
+import re
+import sqlite3
+import sys
+from pathlib import Path
+
+import leases
+import locate
+
+KIND_TEXT = {
+    "shared": "shared by every worktree of this repository",
+    "env": f"set by the {locate.ENV_RUNTIME} environment variable",
+    "local": "private to this checkout (not inside a git repository)",
+    "unavailable": "UNKNOWN: git could not be run, so the shared board cannot be located",
+}
+
+
+def written_after_marker(private: Path) -> bool:
+    """Has something written to a private board after it was migrated or set aside?  An older tool on a branch from
+    before boards were shared would, and it leaves the marker alone.  The marker records a fingerprint of the
+    database's contents and a digest of the files beside it as they were when it was written; any difference since means
+    a write, however soon after.  An incomplete marker cannot say, so it counts as a change rather than as all clear."""
+    fields = marker_fields(private)
+    if fields is None:
+        return True
+    # the files beside the database count too: an artifact or snapshot an older tool saves changes no row
+    return locate.db_fingerprint(private) != fields[0] or locate.files_digest(locate.folder_files(private)) != fields[1]
+
+
+def marker_fields(private: Path) -> tuple[str, str] | None:
+    """The (contents fingerprint, files digest) a COMPLETE marker records, or None.  An interrupted or out-of-space
+    write can leave a marker cut short, and require_migrated() trusts a marker's mere existence."""
+    try:
+        text = (private / locate.MIGRATED_MARKER).read_text(encoding="utf-8")
+    except OSError:
+        return None
+    fingerprint = re.search(r"^fingerprint: (\S+)$", text, re.M)
+    files = re.search(r"^files: ([0-9a-f]{16})$", text, re.M)
+    return (fingerprint.group(1), files.group(1)) if fingerprint and files else None
+
+
+def legacy_state() -> tuple[str, str]:
+    """("none" | "unmigrated" | "settled", one-line description) for this checkout's private board."""
+    legacy = locate.legacy_runtime()
+    kind = locate.location()[0]
+    if kind == "local" or not (legacy / "board.sqlite").is_file():  # in local mode that folder IS the board
+        return "none", "none"
+    if kind != "shared":
+        return "ignored", f"present at {legacy}, but not used because the board location is {kind}"
+    if (legacy / locate.MIGRATED_MARKER).exists():
+        if marker_fields(legacy) is None:
+            return "diverged", (f"has an INCOMPLETE marker ({legacy / locate.MIGRATED_MARKER}, left by an interrupted write), so later "
+                                f"writes cannot be told from earlier ones; delete the marker and run migrate again")
+        if written_after_marker(legacy):
+            return "diverged", (f"CHANGED after it was set aside, at {legacy}: something kept writing to it, so tasks or "
+                                f"claims may now exist outside the shared board")
+        return "settled", f"set aside, see {legacy / locate.MIGRATED_MARKER}"
+    return "unmigrated", f"UNMIGRATED at {legacy} (ignored until you run migrate)"
+
+
+def where() -> int:
+    kind, folder = locate.location()
+    database = folder / "board.sqlite"
+    who = locate.identity()
+    print(f"board:      {folder}  ({KIND_TEXT[kind]})")
+    if database.is_file():
+        with locate.readonly(database) as connection:
+            tasks = connection.execute("SELECT COUNT(*) FROM tasks").fetchone()[0]
+        print(f"database:   {database}  ({tasks} tasks)")
+    else:
+        print(f"database:   {database}  (not created yet: run `python .blackboard/board.py init`)")
+    print(f"artifacts:  save a result as {folder / '<task-id>.md'} (or .json / .txt), then submit it")
+    print(f"you:        {('worktree ' + who['worktree'] + ', branch ' + who['branch']) if who['worktree'] else 'not inside this repository'}")
+    print(f"old board:  {legacy_state()[1]}")
+    return 0
+
+
+def problems() -> list[str]:
+    if locate.location()[0] == "unavailable":
+        # Not "no problems": nothing was looked at.
+        return ["git could not be run here, so the shared board cannot be located and nothing was audited"]
+    found: list[str] = []
+    state, text = legacy_state()
+    if state in ("unmigrated", "diverged"):
+        found.append(f"this checkout's own board is {text}")
+    if locate.location()[0] == "shared":
+        # A worktree on a branch from before boards were shared keeps writing to its own private board; nothing
+        # can stop that, but it can be seen here.
+        here = locate.norm(locate.TOOL_ROOT.parent)
+        for path in locate.worktree_paths() or []:
+            private = Path(path) / ".blackboard" / "runtime"
+            if locate.norm(path) == here or not (private / "board.sqlite").is_file():
+                continue
+            if not (private / locate.MIGRATED_MARKER).exists():
+                found.append(f"worktree {path} has its own private board at {private}; update its .blackboard from a branch that has "
+                             f"shared boards, then run migrate there (only one board can be migrated; the others are set aside with --abandon)")
+            elif written_after_marker(private):
+                found.append(f"worktree {path}: its private board at {private} changed after it was set aside (or its marker is "
+                             f"incomplete, so that cannot be ruled out); an older tool may still be writing to it. Update that "
+                             f"worktree's .blackboard from a branch that has shared boards")
+    database = locate.runtime_dir() / "board.sqlite"
+    if not database.is_file():
+        return found
+    with locate.readonly(database) as connection:
+        rows = connection.execute("SELECT * FROM tasks WHERE state='claimed' ORDER BY id").fetchall()
+    at, live = leases.now(), locate.live_worktrees()
+    for row in rows:
+        status, why = leases.claim_status(row, at, live)
+        if status != "held":
+            found.append(f"task {row['id']} is claimed by {row['assignee']} but the claim is {status}: {why}")
+    return found
+
+
+def audit() -> int:
+    found = problems()
+    for line in found:
+        print(f"problem: {line}")
+    if found:
+        print(f"{len(found)} problem(s). `python .blackboard/board.py reap --actor <you>` returns lapsed claims to the queue.")
+        return 1
+    print("no problems")
+    return 0
+
+
+def main() -> int:
+    root = argparse.ArgumentParser(description=__doc__)
+    commands = root.add_subparsers(dest="command", required=True)
+    commands.add_parser("where", help="Show where the board lives and where to save artifacts")
+    commands.add_parser("audit", help="Report lapsed claims and an ignored private board; exit 1 if any")
+    args = root.parse_args()
+    try:
+        return where() if args.command == "where" else audit()
+    except (locate.BoardError, sqlite3.Error) as error:
+        print(f"error: {error}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

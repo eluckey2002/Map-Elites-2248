@@ -10,12 +10,15 @@ def main() -> int:
     args = sys.argv[1:]
     if not args or args[0] in {"-h", "--help"}:
         print("Blackboard: serve [--port 8766] | query summary|tasks|task ID | snapshot capture NAME")
-        print("Writer: init | create | claim | progress | submit | review | defect | dispose-defect | self-test")
-        print("Add --help after any command for its options. Artifacts go in .blackboard/runtime/.")
+        print("Checks: where | audit      Writer: init | create | claim | progress | submit | review | defect | dispose-defect | reap | migrate | self-test")
+        print("Add --help after any command for its options. The board is shared by every worktree of the repository;")
+        print("`where` prints its folder, which is where artifacts go.")
         return 0
-    scripts = {"serve": "server.py", "query": "query_liveboard.py", "snapshot": "snapshot_liveboard.py"}
+    scripts = {"serve": "server.py", "query": "query_liveboard.py", "snapshot": "snapshot_liveboard.py",
+               "where": "audit.py", "audit": "audit.py", "migrate": "migrate.py"}
     script = scripts.get(args[0], "runtime.py")
-    forwarded = args[1:] if args[0] in scripts else args
+    # where/audit are subcommands of audit.py itself, so they keep their name; the others hand over only their options.
+    forwarded = args[1:] if args[0] in scripts and args[0] not in {"where", "audit"} else args
     if args[0] == "serve":
         try:
             import flask  # noqa: F401
