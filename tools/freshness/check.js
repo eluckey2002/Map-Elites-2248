@@ -112,16 +112,21 @@ function check(repoArg) {
   const stale = upstreamEvidence > 0 || mainEvidence > 0;
   const q = JSON.stringify(cwd);
   const cmds = [];
-  if (upstreamBehind > 0) cmds.push(`git -C ${q} merge --ff-only ${upstreamName}`);
+  const mainCmd = [];
   if (mainEvidence > 0) {
-    if (!branch) cmds.push(`git -C ${q} switch --detach ${MAIN_REF}`);
-    else if (merged) cmds.push(`git -C ${q} switch main && git -C ${q} merge --ff-only ${MAIN_REF}`);
-    else cmds.push(`git -C ${q} merge --ff-only ${MAIN_REF}   # or rebase onto ${MAIN_REF} if the branch has its own commits`);
+    if (!branch) mainCmd.push(`git -C ${q} switch --detach ${MAIN_REF}`);
+    // Merged: HEAD is an ancestor of origin/main, so ff-ing the CURRENT branch is
+    // valid and never switches branches (a linked worktree cannot switch to main
+    // while the primary clone has it checked out).
+    else if (merged) mainCmd.push(`git -C ${q} merge --ff-only ${MAIN_REF}`);
+    else mainCmd.push(`git -C ${q} merge --ff-only ${MAIN_REF}   # or rebase onto ${MAIN_REF} if the branch has its own commits`);
   }
+  if (upstreamBehind > 0 && !(upstreamName === MAIN_REF && mainCmd.length)) cmds.push(`git -C ${q} merge --ff-only ${upstreamName}`);
+  cmds.push(...mainCmd);
   if (stale) {
     say('STALE: this checkout is missing newer evidence. Do not read its ledger as current.');
     say('To bring it current (NOT run by this script), run:');
-    cmds.forEach((c) => say(`  ${c}`));
+    [...new Set(cmds)].forEach((c) => say(`  ${c}`));
   } else if (fetchFailed) {
     say('UNVERIFIED: fetch failed, so freshness could not be confirmed.');
   } else if (hasMain || upstreamName) {
