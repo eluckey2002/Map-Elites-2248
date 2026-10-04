@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "path": "registered-protocol.md",
+    "sha256": "6de995a072d80b4782ef82df1dbf8b859d460d48ed65d818da1695f9c137b07e"
+  },
+  "final_subject_identity": "c475648e8d9778208f8b92c1fbee16a4fc8a589efbcba239494d30d337a62d3f",
+  "required_claims": [
+    "C1",
+    "C2",
+    "C3"
+  ],
+  "required_artifacts": [
+    "raw-pairs",
+    "verdict",
+    "report",
+    "primary-recomputation"
+  ],
+  "requires_primary_outcome": true,
+  "recomputation": {
+    "argv": [
+      "node",
+      "../../solver/policy-lab/resume-proposal-recompute.js",
+      "--confirmation",
+      "--json"
+    ],
+    "cwd": ".",
+    "expected_exit_code": 0,
+    "output_artifact_id": "primary-recomputation"
+  }
+}

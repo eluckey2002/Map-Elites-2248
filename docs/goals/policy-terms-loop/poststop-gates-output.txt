@@ -1,0 +1,5 @@
+EXPERIMENT GATE PASS
+LEDGER AUTHORSHIP GATE PASS (base cd83127f)
+LEDGER INDEX CURRENT
+FAILED-RUN LEDGER PASS (6 retained failed closures and 1 legacy incident(s) covered)
+RETAINED_POST_STOP_CLOSEOUT {"pending":false,"failedReceipt":true,"scientificComplete":false,"result":"RESULT-0081","path":"NONE","closure_status":"UNVERIFIED","approvedInventoryException":{"path":"solver/tests/failedRunLedger.test.js","beforeSha256":"80afa8e3680554080c24630112db129a1a83f5f5a9a6903c9dd855804f66700e","afterSha256":"01f3aed52f402832d14f88cd1c7e8d3c780b9ce50201f733caa1560f397cf41f"}}

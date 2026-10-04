@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: policy lab occupancy agrees with the project classifier, including recoverable values and stones
+ok 1 - policy lab occupancy agrees with the project classifier, including recoverable values and stones
+  ---
+  duration_ms: 1.272751
+  type: 'test'
+  ...
+# Subtest: policy lab acceptance rejects a win regression, a zero lower bound and a gate-only gain
+ok 2 - policy lab acceptance rejects a win regression, a zero lower bound and a gate-only gain
+  ---
+  duration_ms: 0.455845
+  type: 'test'
+  ...
+# Subtest: board build potential excludes tiles in the dealt range and blocked company
+ok 3 - board build potential excludes tiles in the dealt range and blocked company
+  ---
+  duration_ms: 0.384718
+  type: 'test'
+  ...
+# Subtest: policy lab rejects a fifth worker before launching any workers
+ok 4 - policy lab rejects a fifth worker before launching any workers
+  ---
+  duration_ms: 13.73339
+  type: 'test'
+  ...
+# Subtest: completion fence refuses dispatched but unretained games even with a claimed verdict
+ok 5 - completion fence refuses dispatched but unretained games even with a claimed verdict
+  ---
+  duration_ms: 10.94603
+  type: 'test'
+  ...
+# Subtest: completion fence cannot certify a two-block interruption or duplicated reference
+ok 6 - completion fence cannot certify a two-block interruption or duplicated reference
+  ---
+  duration_ms: 4.15318
+  type: 'test'
+  ...
+# Subtest: policy panel audit rejects incomplete late levels and repeated cells
+ok 7 - policy panel audit rejects incomplete late levels and repeated cells
+  ---
+  duration_ms: 25.663677
+  type: 'test'
+  ...
+# Subtest: policy panel audit rejects reused ranges, out-of-allocation seeds and recording reads
+ok 8 - policy panel audit rejects reused ranges, out-of-allocation seeds and recording reads
+  ---
+  duration_ms: 0.597815
+  type: 'test'
+  ...
+# Subtest: policy panel audit reports unused blocks as not run without fabricating failures
+ok 9 - policy panel audit reports unused blocks as not run without fabricating failures
+  ---
+  duration_ms: 0.236951
+  type: 'test'
+  ...
+# Subtest: journal retains a completed job when a later job fails and refuses replay
+ok 10 - journal retains a completed job when a later job fails and refuses replay
+  ---
+  duration_ms: 8.478071
+  type: 'test'
+  ...
+# Subtest: journal survives actual controller termination while another job is in flight
+ok 11 - journal survives actual controller termination while another job is in flight
+  ---
+  duration_ms: 163.657186
+  type: 'test'
+  ...
+# Subtest: independent arithmetic retains the level uncertainty when seed columns tie
+ok 12 - independent arithmetic retains the level uncertainty when seed columns tie
+  ---
+  duration_ms: 5.105051
+  type: 'test'
+  ...
+# Subtest: independent arithmetic cannot turn missing mutual wins into zero-effect observations
+ok 13 - independent arithmetic cannot turn missing mutual wins into zero-effect observations
+  ---
+  duration_ms: 0.756112
+  type: 'test'
+  ...
+# Subtest: independent accounting counts both parity games and refuses duplicate panels
+ok 14 - independent accounting counts both parity games and refuses duplicate panels
+  ---
+  duration_ms: 0.571619
+  type: 'test'
+  ...
+# Subtest: independent paired arithmetic refuses null winning move counts
+ok 15 - independent paired arithmetic refuses null winning move counts
+  ---
+  duration_ms: 20.255254
+  type: 'test'
+  ...
+# Subtest: registration check rejects a sibling retained in the object store and accepts reachable registration
+ok 16 - registration check rejects a sibling retained in the object store and accepts reachable registration
+  ---
+  duration_ms: 196.91272
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 888.304804

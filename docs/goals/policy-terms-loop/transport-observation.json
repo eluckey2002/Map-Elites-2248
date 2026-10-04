@@ -1,0 +1,14 @@
+{
+  "observedAtUtc": "2026-10-03 06:53:35 UTC",
+  "failedReadCommand": "compact control status read",
+  "execError": "exec_command failed: CreateProcess { message: \"Rejected(\\\"Failed to create unified exec process: exec-server transport disconnected\\\")\" }",
+  "resumeSession": 75215,
+  "resumeError": "write_stdin failed: Unified exec process failed: exec-server transport disconnected: pong_timeout; failed to resume exec-server session: exec-server rejected request (-32600): unknown session id 66da66f9-effb-43be-a8c6-846ce3a46f98",
+  "environmentStatus": "running, connected, observations_current=true",
+  "subsequentShellAccess": "recovered",
+  "processPid": 7892,
+  "subsequentProcessState": "Z",
+  "processExitCodeRaw": 0,
+  "terminationMechanism": "UNVERIFIED: process termination coincided with lost exec transport; no child error or complete aggregate verdict was retained",
+  "action": "No restart, no burned seed reuse, no additional scientific games"
+}

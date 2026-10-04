@@ -1,0 +1,4603 @@
+TAP version 13
+# Subtest: with no --out, output still lands on the historical filenames
+ok 1 - with no --out, output still lands on the historical filenames
+  ---
+  duration_ms: 0.910748
+  type: 'test'
+  ...
+# Subtest: --out names both files from one basename
+ok 2 - --out names both files from one basename
+  ---
+  duration_ms: 0.180144
+  type: 'test'
+  ...
+# Subtest: --out refuses anything that is not a bare basename
+ok 3 - --out refuses anything that is not a bare basename
+  ---
+  duration_ms: 0.548816
+  type: 'test'
+  ...
+# Subtest: writing over an existing candidate is refused, and the refusal says how to proceed
+ok 4 - writing over an existing candidate is refused, and the refusal says how to proceed
+  ---
+  duration_ms: 0.38927
+  type: 'test'
+  ...
+# Subtest: --force is the deliberate escape and does not throw
+ok 5 - --force is the deliberate escape and does not throw
+  ---
+  duration_ms: 0.264138
+  type: 'test'
+  ...
+# Subtest: a basename nothing occupies is writable without --force
+ok 6 - a basename nothing occupies is writable without --force
+  ---
+  duration_ms: 0.253164
+  type: 'test'
+  ...
+# Subtest: a free store but an occupied receipt is still refused
+ok 7 - a free store but an occupied receipt is still refused
+  ---
+  duration_ms: 0.35733
+  type: 'test'
+  ...
+# Subtest: the historical three-argument form still parses unchanged
+ok 8 - the historical three-argument form still parses unchanged
+  ---
+  duration_ms: 0.939811
+  type: 'test'
+  ...
+# Subtest: --out and --force parse in either order
+ok 9 - --out and --force parse in either order
+  ---
+  duration_ms: 0.454934
+  type: 'test'
+  ...
+# Subtest: a malformed write invocation falls through to usage rather than guessing
+ok 10 - a malformed write invocation falls through to usage rather than guessing
+  ---
+  duration_ms: 0.347174
+  type: 'test'
+  ...
+# Subtest: serves only the game assets and exposes the bound candidate
+ok 11 - serves only the game assets and exposes the bound candidate
+  ---
+  duration_ms: 150.085551
+  type: 'test'
+  ...
+# Subtest: writes a schema-valid recording and treats an exact duplicate as idempotent
+ok 12 - writes a schema-valid recording and treats an exact duplicate as idempotent
+  ---
+  duration_ms: 18.91514
+  type: 'test'
+  ...
+# Subtest: fails closed for traversal and unknown candidates
+ok 13 - fails closed for traversal and unknown candidates
+  ---
+  duration_ms: 5.063466
+  type: 'test'
+  ...
+# Subtest: rejects malformed, oversized, and schema-invalid recording bodies
+ok 14 - rejects malformed, oversized, and schema-invalid recording bodies
+  ---
+  duration_ms: 9.709647
+  type: 'test'
+  ...
+# Subtest: refuses to overwrite conflicting bytes at a recording identity
+ok 15 - refuses to overwrite conflicting bytes at a recording identity
+  ---
+  duration_ms: 3.547848
+  type: 'test'
+  ...
+# Subtest: a fixed-seed authoring server refuses recordings from any other seed
+ok 16 - a fixed-seed authoring server refuses recordings from any other seed
+  ---
+  duration_ms: 5.252031
+  type: 'test'
+  ...
+# Subtest: reproduces the known seed-316 bot result through the seed screener
+ok 17 - reproduces the known seed-316 bot result through the seed screener
+  ---
+  duration_ms: 100.066856
+  type: 'test'
+  ...
+# Subtest: launcher keeps validation roles separate in ports and recording paths
+ok 18 - launcher keeps validation roles separate in ports and recording paths
+  ---
+  duration_ms: 1.366916
+  type: 'test'
+  ...
+# Subtest: launcher turns a port collision into one actionable startup error
+ok 19 - launcher turns a port collision into one actionable startup error
+  ---
+  duration_ms: 10.82113
+  type: 'test'
+  ...
+# Subtest: selects setup-favorable, neutral, and hypothesis-hostile seeds by declared rules
+ok 20 - selects setup-favorable, neutral, and hypothesis-hostile seeds by declared rules
+  ---
+  duration_ms: 0.514056
+  type: 'test'
+  ...
+# Subtest: never assigns the same seed to two validation roles
+ok 21 - never assigns the same seed to two validation roles
+  ---
+  duration_ms: 0.203261
+  type: 'test'
+  ...
+# Subtest: rejects a neutral role that would reuse the setup-favorable seed
+ok 22 - rejects a neutral role that would reuse the setup-favorable seed
+  ---
+  duration_ms: 0.192841
+  type: 'test'
+  ...
+# Subtest: frozen playable challenges reproduce their declared bot and baseline references
+ok 23 - frozen playable challenges reproduce their declared bot and baseline references
+  ---
+  duration_ms: 327.370025
+  type: 'test'
+  ...
+# Subtest: frozen roles still win their declared 512-seed population selection
+ok 24 - frozen roles still win their declared 512-seed population selection # SKIP set BANK_BREAK_FULL_SCREEN=1 to run the 512-seed verification
+  ---
+  duration_ms: 0.094627
+  type: 'test'
+  ...
+# Subtest: beam witness returns a deterministic legal lower-bound result
+ok 25 - beam witness returns a deterministic legal lower-bound result
+  ---
+  duration_ms: 3.810153
+  type: 'test'
+  ...
+# Subtest: the real post-move seam distinguishes an open subject from its one-stone twin
+ok 26 - the real post-move seam distinguishes an open subject from its one-stone twin
+  ---
+  duration_ms: 7.849909
+  type: 'test'
+  ...
+# Subtest: the post-move seam observes temporary blockers after they tick
+ok 27 - the post-move seam observes temporary blockers after they tick
+  ---
+  duration_ms: 2.56109
+  type: 'test'
+  ...
+# Subtest: stranded-cell pressure uses the tile-scale lattice, not raw powers of two
+ok 28 - stranded-cell pressure uses the tile-scale lattice, not raw powers of two
+  ---
+  duration_ms: 0.244524
+  type: 'test'
+  ...
+# Subtest: half-score move distinguishes early, steady, and late cash-in games
+ok 29 - half-score move distinguishes early, steady, and late cash-in games
+  ---
+  duration_ms: 0.245142
+  type: 'test'
+  ...
+# Subtest: greed ratio averages per-move opportunity capture and bounds a denominator miss
+ok 30 - greed ratio averages per-move opportunity capture and bounds a denominator miss
+  ---
+  duration_ms: 0.306588
+  type: 'test'
+  ...
+# Subtest: policy evaluation can collect the registered per-game measures through real play
+ok 31 - policy evaluation can collect the registered per-game measures through real play
+  ---
+  duration_ms: 0.872945
+  type: 'test'
+  ...
+# Subtest: chooseMove: public chooser cashes out the Level 51 teaching board on move 13
+ok 32 - chooseMove: public chooser cashes out the Level 51 teaching board on move 13
+  ---
+  duration_ms: 2287.693765
+  type: 'test'
+  ...
+# Subtest: chooseMove: immediate winner follows deterministic untrimmed order and parameter overrides
+ok 33 - chooseMove: immediate winner follows deterministic untrimmed order and parameter overrides
+  ---
+  duration_ms: 2169.906101
+  type: 'test'
+  ...
+# Subtest: chooseMove: target-aware public seam does not mutate input and falls back after target
+ok 34 - chooseMove: target-aware public seam does not mutate input and falls back after target
+  ---
+  duration_ms: 1752.568161
+  type: 'test'
+  ...
+# Subtest: chooseMove: with no bombs, takes the highest-scoring valid chain
+ok 35 - chooseMove: with no bombs, takes the highest-scoring valid chain
+  ---
+  duration_ms: 0.678695
+  type: 'test'
+  ...
+# Subtest: chooseMove: prioritizes defusing a reachable bomb over a higher-scoring non-bomb chain
+ok 36 - chooseMove: prioritizes defusing a reachable bomb over a higher-scoring non-bomb chain
+  ---
+  duration_ms: 0.459609
+  type: 'test'
+  ...
+# Subtest: chooseMove: falls back to the best chain when the bomb is unreachable this turn
+ok 37 - chooseMove: falls back to the best chain when the bomb is unreachable this turn
+  ---
+  duration_ms: 0.376587
+  type: 'test'
+  ...
+# Subtest: chooseMove: returns null when no valid chain exists anywhere
+ok 38 - chooseMove: returns null when no valid chain exists anywhere
+  ---
+  duration_ms: 0.227089
+  type: 'test'
+  ...
+# Subtest: chooseMove: with lookahead, prefers a small immediate chain that sets up a much bigger follow-up over a bigger immediate chain that does not
+ok 39 - chooseMove: with lookahead, prefers a small immediate chain that sets up a much bigger follow-up over a bigger immediate chain that does not
+  ---
+  duration_ms: 0.870193
+  type: 'test'
+  ...
+# Subtest: chooseMove: with lookahead, prefers the chain that clears more of the board even when it scores less right now
+ok 40 - chooseMove: with lookahead, prefers the chain that clears more of the board even when it scores less right now
+  ---
+  duration_ms: 273.63946
+  type: 'test'
+  ...
+# Subtest: chooseMove: considers candidates ranked below the top few on immediate points
+ok 41 - chooseMove: considers candidates ranked below the top few on immediate points
+  ---
+  duration_ms: 481.998699
+  type: 'test'
+  ...
+# Subtest: chooseMove: multi-path search never abandons equal tiles for a double
+ok 42 - chooseMove: multi-path search never abandons equal tiles for a double
+  ---
+  duration_ms: 1.027994
+  type: 'test'
+  ...
+# Subtest: chooseMove: low-value multi-path search keeps an alternate long route
+ok 43 - chooseMove: low-value multi-path search keeps an alternate long route
+  ---
+  duration_ms: 32.231233
+  type: 'test'
+  ...
+# Subtest: remnantPlacementValue: evaluates the survivor after gravity moves it
+ok 44 - remnantPlacementValue: evaluates the survivor after gravity moves it
+  ---
+  duration_ms: 0.227741
+  type: 'test'
+  ...
+# Subtest: remnantPlacementValue: rewards a survivor that can begin a future chain
+ok 45 - remnantPlacementValue: rewards a survivor that can begin a future chain
+  ---
+  duration_ms: 0.24921
+  type: 'test'
+  ...
+# Subtest: chooseMove: placement signal breaks an ordinary-candidate tie toward a chainable survivor
+ok 46 - chooseMove: placement signal breaks an ordinary-candidate tie toward a chainable survivor
+  ---
+  duration_ms: 1.605315
+  type: 'test'
+  ...
+# Subtest: harvestValue: a tile the game deals is not something the bot built
+ok 47 - harvestValue: a tile the game deals is not something the bot built
+  ---
+  duration_ms: 0.22302
+  type: 'test'
+  ...
+# Subtest: harvestValue: a built tile with only HALF-value company still counts
+ok 48 - harvestValue: a built tile with only HALF-value company still counts
+  ---
+  duration_ms: 0.097575
+  type: 'test'
+  ...
+# Subtest: harvestValue: equal company beats half, which beats double
+ok 49 - harvestValue: equal company beats half, which beats double
+  ---
+  duration_ms: 0.155987
+  type: 'test'
+  ...
+# Subtest: harvestValue: company nearby is worth more than the same company far away
+ok 50 - harvestValue: company nearby is worth more than the same company far away
+  ---
+  duration_ms: 0.205004
+  type: 'test'
+  ...
+# Subtest: harvestValue: an unrelated value is not company at all
+ok 51 - harvestValue: an unrelated value is not company at all
+  ---
+  duration_ms: 0.098555
+  type: 'test'
+  ...
+# Subtest: harvestValue: what counts as built follows the level tile scale
+ok 52 - harvestValue: what counts as built follows the level tile scale
+  ---
+  duration_ms: 0.077878
+  type: 'test'
+  ...
+# Subtest: analyzeMove preserves the production chooser across representative level shapes
+ok 53 - analyzeMove preserves the production chooser across representative level shapes
+  ---
+  duration_ms: 3344.623753
+  type: 'test'
+  ...
+# Subtest: the known short Level 52 session remains exact and deterministic
+ok 54 - the known short Level 52 session remains exact and deterministic
+  ---
+  duration_ms: 1742.609134
+  type: 'test'
+  ...
+# Subtest: a real Bot Vision session reconstructs every transition and score component
+ok 55 - a real Bot Vision session reconstructs every transition and score component
+  ---
+  duration_ms: 2072.507738
+  type: 'test'
+  ...
+# Subtest: the arithmetic assertion rejects a controlled broken contribution twin
+ok 56 - the arithmetic assertion rejects a controlled broken contribution twin
+  ---
+  duration_ms: 1101.452411
+  type: 'test'
+  ...
+# Subtest: Bot Vision server returns the exact session and rejects malformed identities
+ok 57 - Bot Vision server returns the exact session and rejects malformed identities
+  ---
+  duration_ms: 1149.325625
+  type: 'test'
+  ...
+# Subtest: the frozen ruler preserves its historical parameter snapshot independently of the live bot
+ok 58 - the frozen ruler preserves its historical parameter snapshot independently of the live bot
+  ---
+  duration_ms: 1.163861
+  type: 'test'
+  ...
+# Subtest: calibration identity covers the engine and versioned evaluator but not the live bot
+ok 59 - calibration identity covers the engine and versioned evaluator but not the live bot
+  ---
+  duration_ms: 0.938141
+  type: 'test'
+  ...
+# Subtest: calibration exports are frozen and evaluation has no ambient-state dependency
+ok 60 - calibration exports are frozen and evaluation has no ambient-state dependency
+  ---
+  duration_ms: 1.115566
+  type: 'test'
+  ...
+# Subtest: the stamp carries the exact frozen version, parameters, and solver identity
+ok 61 - the stamp carries the exact frozen version, parameters, and solver identity
+  ---
+  duration_ms: 0.69331
+  type: 'test'
+  ...
+# Subtest: viable-start fraction distinguishes an open board from isolated pairs
+ok 62 - viable-start fraction distinguishes an open board from isolated pairs
+  ---
+  duration_ms: 2.113954
+  type: 'test'
+  ...
+# Subtest: uniform scale preserves the choice and recovery proxies
+ok 63 - uniform scale preserves the choice and recovery proxies
+  ---
+  duration_ms: 22.561106
+  type: 'test'
+  ...
+# Subtest: bounded misses remain UNKNOWN
+ok 64 - bounded misses remain UNKNOWN
+  ---
+  duration_ms: 0.949526
+  type: 'test'
+  ...
+# Subtest: a calibrated move-slack control increases bounded recovery witnesses
+ok 65 - a calibrated move-slack control increases bounded recovery witnesses
+  ---
+  duration_ms: 4509.948878
+  type: 'test'
+  ...
+# captured level 54 seed 3310936729: win 129472 in 16 moves -> 8cd213676099
+# Subtest: real served browser model and separate authoritative capture agree; forged/stale saves do not write
+ok 66 - real served browser model and separate authoritative capture agree; forged/stale saves do not write
+  ---
+  duration_ms: 141.650845
+  type: 'test'
+  ...
+# Subtest: actual page shows live arithmetic and free preview/cancel without spending
+ok 67 - actual page shows live arithmetic and free preview/cancel without spending
+  ---
+  duration_ms: 30.804192
+  type: 'test'
+  ...
+# Subtest: actual controls earn/remove, finish all goals, undo the result and retry identically
+ok 68 - actual controls earn/remove, finish all goals, undo the result and retry identically
+  ---
+  duration_ms: 21.295566
+  type: 'test'
+  ...
+# Subtest: actual controller resumes by replay into a new attempt and retains full undo state
+ok 69 - actual controller resumes by replay into a new attempt and retains full undo state
+  ---
+  duration_ms: 4.492306
+  type: 'test'
+  ...
+# Subtest: arithmetic aid covers actual targets without giving board paths
+ok 70 - arithmetic aid covers actual targets without giving board paths
+  ---
+  duration_ms: 1.32053
+  type: 'test'
+  ...
+# Subtest: actual catalog has three distinct puzzles, three separated goals, independent inventory
+ok 71 - actual catalog has three distinct puzzles, three separated goals, independent inventory
+  ---
+  duration_ms: 2.612133
+  type: 'test'
+  ...
+# Subtest: actual whole-level witnesses win, including useful earned removal before completion
+ok 72 - actual whole-level witnesses win, including useful earned removal before completion
+  ---
+  duration_ms: 7.254144
+  type: 'test'
+  ...
+# Subtest: qualification rejects absent catalog, absent witnesses and a genuinely corrupted route
+ok 73 - qualification rejects absent catalog, absent witnesses and a genuinely corrupted route
+  ---
+  duration_ms: 40.841765
+  type: 'test'
+  ...
+# Subtest: bounded shortcut reports declare scope and unknowns rather than proving difficulty
+ok 74 - bounded shortcut reports declare scope and unknowns rather than proving difficulty
+  ---
+  duration_ms: 16.927395
+  type: 'test'
+  ...
+# Subtest: Keep a Line decision scene reads the real board and distinguishes equal-sum placements
+ok 75 - Keep a Line decision scene reads the real board and distinguishes equal-sum placements
+  ---
+  duration_ms: 1.160648
+  type: 'test'
+  ...
+# Subtest: real retained transitions keep chain, gravity, refill and scoring behavior
+ok 76 - real retained transitions keep chain, gravity, refill and scoring behavior
+  ---
+  duration_ms: 49.302837
+  type: 'test'
+  ...
+# Subtest: ordinary growth stays legal; only exact endpoint and sum matches advance
+ok 77 - ordinary growth stays legal; only exact endpoint and sum matches advance
+  ---
+  duration_ms: 0.740515
+  type: 'test'
+  ...
+# Subtest: committed 2048-or-higher merges earn one credit, capped at three
+ok 78 - committed 2048-or-higher merges earn one credit, capped at three
+  ---
+  duration_ms: 0.892603
+  type: 'test'
+  ...
+# Subtest: removal uses one move and charge, normal refill, no score or goal credit
+ok 79 - removal uses one move and charge, normal refill, no score or goal credit
+  ---
+  duration_ms: 0.733557
+  type: 'test'
+  ...
+# Subtest: no-chain rescue survives with earned credit; exhaustion loses; final goal wins first
+ok 80 - no-chain rescue survives with earned credit; exhaustion loses; final goal wins first
+  ---
+  duration_ms: 0.557073
+  type: 'test'
+  ...
+# Subtest: replay and undo restore budget, goal, board, RNG, charges and outcome; retry is exact
+ok 81 - replay and undo restore budget, goal, board, RNG, charges and outcome; retry is exact
+  ---
+  duration_ms: 1.823084
+  type: 'test'
+  ...
+# Subtest: finite state rejects invalid definitions and invalid chain commitments
+ok 82 - finite state rejects invalid definitions and invalid chain commitments
+  ---
+  duration_ms: 0.449197
+  type: 'test'
+  ...
+# Subtest: candidate and seed parsing is strict and does not change shipped level query behavior
+ok 83 - candidate and seed parsing is strict and does not change shipped level query behavior
+  ---
+  duration_ms: 2.889195
+  type: 'test'
+  ...
+# Subtest: seeded candidate initialization is repeatable and arbitrary-level validation fails closed
+ok 84 - seeded candidate initialization is repeatable and arbitrary-level validation fails closed
+  ---
+  duration_ms: 1.495397
+  type: 'test'
+  ...
+# Subtest: authoring capture records each legal chain as ordered coordinates and values
+ok 85 - authoring capture records each legal chain as ordered coordinates and values
+  ---
+  duration_ms: 0.328668
+  type: 'test'
+  ...
+# Subtest: authoring capture emits one terminal payload and ignores later terminal paths
+ok 86 - authoring capture emits one terminal payload and ignores later terminal paths
+  ---
+  duration_ms: 0.337852
+  type: 'test'
+  ...
+# Subtest: candidate undo restores capture length and seeded RNG state
+ok 87 - candidate undo restores capture length and seeded RNG state
+  ---
+  duration_ms: 0.767479
+  type: 'test'
+  ...
+# Subtest: makeRng: same seed produces the same sequence
+ok 88 - makeRng: same seed produces the same sequence
+  ---
+  duration_ms: 2.028736
+  type: 'test'
+  ...
+# Subtest: createLevelState: grid has levelData dimensions
+ok 89 - createLevelState: grid has levelData dimensions
+  ---
+  duration_ms: 0.26655
+  type: 'test'
+  ...
+# Subtest: createLevelState: places a bomb blocker at the configured position
+ok 90 - createLevelState: places a bomb blocker at the configured position
+  ---
+  duration_ms: 0.208009
+  type: 'test'
+  ...
+# Subtest: canExtendChain: first extension requires equal value to the start tile
+ok 91 - canExtendChain: first extension requires equal value to the start tile
+  ---
+  duration_ms: 0.145833
+  type: 'test'
+  ...
+# Subtest: canExtendChain: later extensions allow equal or double the last tile
+ok 92 - canExtendChain: later extensions allow equal or double the last tile
+  ---
+  duration_ms: 0.119704
+  type: 'test'
+  ...
+# Subtest: isValidChain: false when shorter than minChain
+ok 93 - isValidChain: false when shorter than minChain
+  ---
+  duration_ms: 0.096937
+  type: 'test'
+  ...
+# Subtest: isValidChain: false when the first two tiles do not match
+ok 94 - isValidChain: false when the first two tiles do not match
+  ---
+  duration_ms: 0.114864
+  type: 'test'
+  ...
+# Subtest: isValidChain: true for a same-value chain meeting minChain
+ok 95 - isValidChain: true for a same-value chain meeting minChain
+  ---
+  duration_ms: 0.110955
+  type: 'test'
+  ...
+# Subtest: chainValue: sums the tile values
+ok 96 - chainValue: sums the tile values
+  ---
+  duration_ms: 1.109166
+  type: 'test'
+  ...
+# Subtest: chainMultiplier: steps at 3/5/7/9 tiles
+ok 97 - chainMultiplier: steps at 3/5/7/9 tiles
+  ---
+  duration_ms: 0.359909
+  type: 'test'
+  ...
+# Subtest: executeChain: removes non-final tiles, sets final tile to the chain sum, scores points, spends a move
+ok 98 - executeChain: removes non-final tiles, sets final tile to the chain sum, scores points, spends a move
+  ---
+  duration_ms: 0.353282
+  type: 'test'
+  ...
+# Subtest: executeChain: defuses the final tile if it was a bomb
+ok 99 - executeChain: defuses the final tile if it was a bomb
+  ---
+  duration_ms: 0.15323
+  type: 'test'
+  ...
+# Subtest: executeChain: applies the length multiplier (>=3 tiles = 1.5x)
+ok 100 - executeChain: applies the length multiplier (>=3 tiles = 1.5x)
+  ---
+  duration_ms: 0.104369
+  type: 'test'
+  ...
+# Subtest: off-lattice tiles can be deliberately recombined to reclaim occupied cells
+ok 101 - off-lattice tiles can be deliberately recombined to reclaim occupied cells
+  ---
+  duration_ms: 0.125819
+  type: 'test'
+  ...
+# Subtest: applyGravity: a tile falls through holes to the bottom of its column
+ok 102 - applyGravity: a tile falls through holes to the bottom of its column
+  ---
+  duration_ms: 0.106347
+  type: 'test'
+  ...
+# Subtest: applyGravity: a stone blocks tiles above it from falling past
+ok 103 - applyGravity: a stone blocks tiles above it from falling past
+  ---
+  duration_ms: 0.051149
+  type: 'test'
+  ...
+# Subtest: spawnNewTiles: fills every null cell using the weighted spawn rng
+ok 104 - spawnNewTiles: fills every null cell using the weighted spawn rng
+  ---
+  duration_ms: 0.087715
+  type: 'test'
+  ...
+# Subtest: spawnNewTiles: spawn weight thresholds match game.js (0.6/0.9 for 2/4/8)
+ok 105 - spawnNewTiles: spawn weight thresholds match game.js (0.6/0.9 for 2/4/8)
+  ---
+  duration_ms: 0.100057
+  type: 'test'
+  ...
+# Subtest: tickBlockers: ice counts down and clears at zero
+ok 106 - tickBlockers: ice counts down and clears at zero
+  ---
+  duration_ms: 0.077664
+  type: 'test'
+  ...
+# Subtest: tickBlockers: bomb timer counts down but blocker stays until checkBombs
+ok 107 - tickBlockers: bomb timer counts down but blocker stays until checkBombs
+  ---
+  duration_ms: 0.040714
+  type: 'test'
+  ...
+# Subtest: checkBombs: true when any bomb timer has reached zero
+ok 108 - checkBombs: true when any bomb timer has reached zero
+  ---
+  duration_ms: 0.053591
+  type: 'test'
+  ...
+# Subtest: checkBombs: false when all bomb timers are still positive
+ok 109 - checkBombs: false when all bomb timers are still positive
+  ---
+  duration_ms: 0.035898
+  type: 'test'
+  ...
+# Subtest: findBestChain: picks the highest-scoring reachable chain
+ok 110 - findBestChain: picks the highest-scoring reachable chain
+  ---
+  duration_ms: 0.279785
+  type: 'test'
+  ...
+# Subtest: findBestChain: returns null when no chain of minChain length exists
+ok 111 - findBestChain: returns null when no chain of minChain length exists
+  ---
+  duration_ms: 0.063093
+  type: 'test'
+  ...
+# Subtest: findBestChain: mustEndAt restricts the result to chains ending at that tile
+ok 112 - findBestChain: mustEndAt restricts the result to chains ending at that tile
+  ---
+  duration_ms: 0.068636
+  type: 'test'
+  ...
+# Subtest: findBestChain: mustEndAt returns null when the target tile is unreachable
+ok 113 - findBestChain: mustEndAt returns null when the target tile is unreachable
+  ---
+  duration_ms: 0.075605
+  type: 'test'
+  ...
+# Subtest: findBestChain: maxLength stops the search from extending past that many tiles
+ok 114 - findBestChain: maxLength stops the search from extending past that many tiles
+  ---
+  duration_ms: 0.189966
+  type: 'test'
+  ...
+# Subtest: findBestChain: mustStartAt restricts the search to chains starting at that tile
+ok 115 - findBestChain: mustStartAt restricts the search to chains starting at that tile
+  ---
+  duration_ms: 0.094406
+  type: 'test'
+  ...
+# Subtest: cloneState: deep-copies the grid so mutating the clone leaves the original untouched
+ok 116 - cloneState: deep-copies the grid so mutating the clone leaves the original untouched
+  ---
+  duration_ms: 0.101934
+  type: 'test'
+  ...
+# Subtest: findTopChains: sorted best-first and covers moves from every reachable cluster
+ok 117 - findTopChains: sorted best-first and covers moves from every reachable cluster
+  ---
+  duration_ms: 0.15343
+  type: 'test'
+  ...
+# Subtest: findTopChains: respects the limit
+ok 118 - findTopChains: respects the limit
+  ---
+  duration_ms: 0.057391
+  type: 'test'
+  ...
+# Subtest: findBestChain: a stone tile cannot be part of a chain
+ok 119 - findBestChain: a stone tile cannot be part of a chain
+  ---
+  duration_ms: 0.10063
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: walks the connected same-or-double run from a start tile, no backtracking
+ok 120 - buildGreedyChain: walks the connected same-or-double run from a start tile, no backtracking
+  ---
+  duration_ms: 0.309396
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: at each step prefers the lower-value valid neighbor (keeps the walk alive longer)
+ok 121 - buildGreedyChain: at each step prefers the lower-value valid neighbor (keeps the walk alive longer)
+  ---
+  duration_ms: 0.098264
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: returns null when the start alone cannot reach minChain
+ok 122 - buildGreedyChain: returns null when the start alone cannot reach minChain
+  ---
+  duration_ms: 0.085911
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: respects maxLength
+ok 123 - buildGreedyChain: respects maxLength
+  ---
+  duration_ms: 0.088417
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: a stone tile cannot be part of the chain
+ok 124 - buildGreedyChain: a stone tile cannot be part of the chain
+  ---
+  duration_ms: 0.054368
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: preferMergeableSum stops at the prefix whose sum is a power of two
+ok 125 - buildGreedyChain: preferMergeableSum stops at the prefix whose sum is a power of two
+  ---
+  duration_ms: 0.145966
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: preferMergeableSum falls back to the full walk when no prefix sums to a power of two
+ok 126 - buildGreedyChain: preferMergeableSum falls back to the full walk when no prefix sums to a power of two
+  ---
+  duration_ms: 0.104758
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: the plain walk strands a tile it could have used
+ok 127 - buildGreedyChain: the plain walk strands a tile it could have used
+  ---
+  duration_ms: 0.080971
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: the degree tie-break takes the nearly-cut-off tile first
+ok 128 - buildGreedyChain: the degree tie-break takes the nearly-cut-off tile first
+  ---
+  duration_ms: 0.086539
+  type: 'test'
+  ...
+# Subtest: buildGreedyChain: the degree tie-break never overrides the lower-value preference
+ok 129 - buildGreedyChain: the degree tie-break never overrides the lower-value preference
+  ---
+  duration_ms: 0.05909
+  type: 'test'
+  ...
+# Subtest: findGreedyChains: applies the mergeable-sum preference by default
+ok 130 - findGreedyChains: applies the mergeable-sum preference by default
+  ---
+  duration_ms: 0.307599
+  type: 'test'
+  ...
+# Subtest: findGreedyChains: preferMergeableSum:false restores the plain longest-walk behavior
+ok 131 - findGreedyChains: preferMergeableSum:false restores the plain longest-walk behavior
+  ---
+  duration_ms: 0.157292
+  type: 'test'
+  ...
+# Subtest: findGreedyChains: tries every non-blocked tile as a start, sorted best-first
+ok 132 - findGreedyChains: tries every non-blocked tile as a start, sorted best-first
+  ---
+  duration_ms: 0.123196
+  type: 'test'
+  ...
+# Subtest: production authoring imports the versioned evaluator and not the live bot
+ok 133 - production authoring imports the versioned evaluator and not the live bot
+  ---
+  duration_ms: 2.205404
+  type: 'test'
+  ...
+# Subtest: production authoring passes the complete frozen calibration parameters
+ok 134 - production authoring passes the complete frozen calibration parameters
+  ---
+  duration_ms: 0.371014
+  type: 'test'
+  ...
+# Subtest: live bot parameter changes cannot move frozen evaluator output
+ok 135 - live bot parameter changes cannot move frozen evaluator output
+  ---
+  duration_ms: 40.206668
+  type: 'test'
+  ...
+# Subtest: position-aware exact search matches a hand-enumerated four-tile fixture
+ok 136 - position-aware exact search matches a hand-enumerated four-tile fixture
+  ---
+  duration_ms: 1.889551
+  type: 'test'
+  ...
+# Subtest: position-aware enumerator keeps distinct survivor actions with equal scores
+ok 137 - position-aware enumerator keeps distinct survivor actions with equal scores
+  ---
+  duration_ms: 1.139204
+  type: 'test'
+  ...
+# Subtest: position-aware enumerator keeps visited cells distinct above the 32-bit boundary
+ok 138 - position-aware enumerator keeps visited cells distinct above the 32-bit boundary
+  ---
+  duration_ms: 0.416014
+  type: 'test'
+  ...
+# Subtest: position-aware enumerator stops at a deterministic path-state cap
+ok 139 - position-aware enumerator stops at a deterministic path-state cap
+  ---
+  duration_ms: 0.411691
+  type: 'test'
+  ...
+# Subtest: value-relaxed action enumerator includes the hand-enumerated maximum
+ok 140 - value-relaxed action enumerator includes the hand-enumerated maximum
+  ---
+  duration_ms: 0.382507
+  type: 'test'
+  ...
+# Subtest: Level 26 seed-0 values match the durable certifier frozen hash
+ok 141 - Level 26 seed-0 values match the durable certifier frozen hash
+  ---
+  duration_ms: 1.276687
+  type: 'test'
+  ...
+# Subtest: child-process exact denominator finds the hand-enumerated maximum within a deterministic work cap
+ok 142 - child-process exact denominator finds the hand-enumerated maximum within a deterministic work cap
+  ---
+  duration_ms: 46.887591
+  type: 'test'
+  ...
+# Subtest: child-process work cap fails closed deterministically as UNKNOWN
+ok 143 - child-process work cap fails closed deterministically as UNKNOWN
+  ---
+  duration_ms: 119.630575
+  type: 'test'
+  ...
+# Subtest: a result claiming only direct evidence needs no protocol
+ok 144 - a result claiming only direct evidence needs no protocol
+  ---
+  duration_ms: 2.820792
+  type: 'test'
+  ...
+# Subtest: a result claiming generalization is detected as needing one
+ok 145 - a result claiming generalization is detected as needing one
+  ---
+  duration_ms: 0.253226
+  type: 'test'
+  ...
+# Subtest: a heading between records ends the record
+ok 146 - a heading between records ends the record
+  ---
+  duration_ms: 0.25536
+  type: 'test'
+  ...
+# Subtest: declared checks are parsed by name, primes and em-dashes included
+ok 147 - declared checks are parsed by name, primes and em-dashes included
+  ---
+  duration_ms: 1.128418
+  type: 'test'
+  ...
+# Subtest: frontmatter parses nested version freeze entries
+ok 148 - frontmatter parses nested version freeze entries
+  ---
+  duration_ms: 0.569712
+  type: 'test'
+  ...
+# Subtest: a reported protocol cannot remain in the registered lifecycle state
+ok 149 - a reported protocol cannot remain in the registered lifecycle state
+  ---
+  duration_ms: 0.213555
+  type: 'test'
+  ...
+# Subtest: LIVE: every generalizing result in this ledger has a protocol or a grandfather entry
+ok 150 - LIVE: every generalizing result in this ledger has a protocol or a grandfather entry
+  ---
+  duration_ms: 8912.846636
+  type: 'test'
+  ...
+# Subtest: a commit is never a strict ancestor of itself — same-commit backfill fails
+ok 151 - a commit is never a strict ancestor of itself — same-commit backfill fails
+  ---
+  duration_ms: 21.223622
+  type: 'test'
+  ...
+# Subtest: addedIn returns the OLDEST add, so delete-and-re-add cannot reset the clock
+ok 152 - addedIn returns the OLDEST add, so delete-and-re-add cannot reset the clock
+  ---
+  duration_ms: 15.877659
+  type: 'test'
+  ...
+# Subtest: an unregistered run is refused before any compute
+ok 153 - an unregistered run is refused before any compute
+  ---
+  duration_ms: 0.88454
+  type: 'test'
+  ...
+# Subtest: exploratory runs are allowed but stamped as such
+ok 154 - exploratory runs are allowed but stamped as such
+  ---
+  duration_ms: 0.320907
+  type: 'test'
+  ...
+# Subtest: a malformed or unregistered protocol id is refused
+ok 155 - a malformed or unregistered protocol id is refused
+  ---
+  duration_ms: 0.273321
+  type: 'test'
+  ...
+# Subtest: a real registration stamps the protocol commit into the artifact
+ok 156 - a real registration stamps the protocol commit into the artifact
+  ---
+  duration_ms: 0.172109
+  type: 'test'
+  ...
+# Subtest: the registration stamp rides outside the hashed body, so old artifacts still verify
+ok 157 - the registration stamp rides outside the hashed body, so old artifacts still verify
+  ---
+  duration_ms: 207.544861
+  type: 'test'
+  ...
+# Subtest: an exploratory artifact cannot back a generalizing claim
+ok 158 - an exploratory artifact cannot back a generalizing claim
+  ---
+  duration_ms: 0.457822
+  type: 'test'
+  ...
+# Subtest: LIVE: tampering with one cell of the real holdout breaks its identity
+ok 159 - LIVE: tampering with one cell of the real holdout breaks its identity
+  ---
+  duration_ms: 200.747536
+  type: 'test'
+  ...
+# Subtest: LIVE: RESULT-0049 Markdown-linked evidence cannot disappear or change silently
+ok 160 - LIVE: RESULT-0049 Markdown-linked evidence cannot disappear or change silently
+  ---
+  duration_ms: 235.384639
+  type: 'test'
+  ...
+# Subtest: LIVE: RESULT-0049 closure must agree with its pinned contract and fresh recomputation
+ok 161 - LIVE: RESULT-0049 closure must agree with its pinned contract and fresh recomputation
+  ---
+  duration_ms: 704.656644
+  type: 'test'
+  ...
+# Subtest: LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit
+ok 162 - LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit
+  ---
+  duration_ms: 310.854914
+  type: 'test'
+  ...
+# Subtest: LIVE: every RESULT-0049 cited JSON artifact is closing-commit bound
+ok 163 - LIVE: every RESULT-0049 cited JSON artifact is closing-commit bound
+  ---
+  duration_ms: 486.321081
+  type: 'test'
+  ...
+# Subtest: LIVE: a citation that resolves to nothing fails; a filename in prose does not
+ok 164 - LIVE: a citation that resolves to nothing fails; a filename in prose does not
+  ---
+  duration_ms: 20.584568
+  type: 'test'
+  ...
+# Subtest: LIVE: a forged, unreachable, or out-of-order protocolCommit is caught
+ok 165 - LIVE: a forged, unreachable, or out-of-order protocolCommit is caught
+  ---
+  duration_ms: 222.969431
+  type: 'test'
+  ...
+# Subtest: LIVE: a report that names a check without answering it is caught
+ok 166 - LIVE: a report that names a check without answering it is caught
+  ---
+  duration_ms: 1.120737
+  type: 'test'
+  ...
+# Subtest: LIVE: version freeze is enforced while registered, and against what the artifact recorded
+ok 167 - LIVE: version freeze is enforced while registered, and against what the artifact recorded
+  ---
+  duration_ms: 41.672584
+  type: 'test'
+  ...
+# Subtest: Git object paths use repository separators when callers supply Windows separators
+ok 168 - Git object paths use repository separators when callers supply Windows separators
+  ---
+  duration_ms: 30.510146
+  type: 'test'
+  ...
+# Subtest: an honest registration passes and stamps its own commit
+ok 169 - an honest registration passes and stamps its own commit
+  ---
+  duration_ms: 54.299565
+  type: 'test'
+  ...
+# Subtest: a freeze rewritten after registration is refused, uncommitted or committed
+ok 170 - a freeze rewritten after registration is refused, uncommitted or committed
+  ---
+  duration_ms: 146.507701
+  type: 'test'
+  ...
+# Subtest: a protocol registered with placeholders or an empty freeze is refused
+ok 171 - a protocol registered with placeholders or an empty freeze is refused
+  ---
+  duration_ms: 108.037743
+  type: 'test'
+  ...
+# Subtest: a finished protocol cannot mint new evidence
+ok 172 - a finished protocol cannot mint new evidence
+  ---
+  duration_ms: 30.769827
+  type: 'test'
+  ...
+# Subtest: the ledger gate reads the freeze from the registration commit too
+ok 173 - the ledger gate reads the freeze from the registration commit too
+  ---
+  duration_ms: 28.583017
+  type: 'test'
+  ...
+# Subtest: a protocol body rewritten after registration is refused, uncommitted or committed
+ok 174 - a protocol body rewritten after registration is refused, uncommitted or committed
+  ---
+  duration_ms: 168.02517
+  type: 'test'
+  ...
+# Subtest: an empty placeholder registered first and filled in later is refused by the guard
+ok 175 - an empty placeholder registered first and filled in later is refused by the guard
+  ---
+  duration_ms: 112.779849
+  type: 'test'
+  ...
+# Subtest: a completed protocol reopened on disk cannot mint new evidence
+ok 176 - a completed protocol reopened on disk cannot mint new evidence
+  ---
+  duration_ms: 106.641775
+  type: 'test'
+  ...
+# Subtest: a protocol once committed as complete stays finished even with no report in history
+ok 177 - a protocol once committed as complete stays finished even with no report in history
+  ---
+  duration_ms: 88.549002
+  type: 'test'
+  ...
+# Subtest: the ledger gate refuses a registered protocol that freezes nothing
+ok 178 - the ledger gate refuses a registered protocol that freezes nothing
+  ---
+  duration_ms: 0.307467
+  type: 'test'
+  ...
+# Subtest: LIVE: every protocol in experiments/ matches its registration commit apart from status
+ok 179 - LIVE: every protocol in experiments/ matches its registration commit apart from status
+  ---
+  duration_ms: 416.906749
+  type: 'test'
+  ...
+# Subtest: the real ledger passes the structure check
+ok 180 - the real ledger passes the structure check
+  ---
+  duration_ms: 5.819606
+  type: 'test'
+  ...
+# Subtest: a well-formed planted record passes
+ok 181 - a well-formed planted record passes
+  ---
+  duration_ms: 6.080801
+  type: 'test'
+  ...
+# Subtest: an empty ledger fails
+ok 182 - an empty ledger fails
+  ---
+  duration_ms: 0.146738
+  type: 'test'
+  ...
+# Subtest: structure check rejects: duplicate ID
+ok 183 - structure check rejects: duplicate ID
+  ---
+  duration_ms: 5.544648
+  type: 'test'
+  ...
+# Subtest: structure check rejects: invalid status
+ok 184 - structure check rejects: invalid status
+  ---
+  duration_ms: 5.686762
+  type: 'test'
+  ...
+# Subtest: structure check rejects: invalid proof class
+ok 185 - structure check rejects: invalid proof class
+  ---
+  duration_ms: 6.086013
+  type: 'test'
+  ...
+# Subtest: structure check rejects: proof class naming no class
+ok 186 - structure check rejects: proof class naming no class
+  ---
+  duration_ms: 5.312231
+  type: 'test'
+  ...
+# Subtest: structure check rejects: missing as_of
+ok 187 - structure check rejects: missing as_of
+  ---
+  duration_ms: 5.374251
+  type: 'test'
+  ...
+# Subtest: structure check rejects: missing evidence
+ok 188 - structure check rejects: missing evidence
+  ---
+  duration_ms: 5.932247
+  type: 'test'
+  ...
+# Subtest: structure check rejects: type not matching prefix
+ok 189 - structure check rejects: type not matching prefix
+  ---
+  duration_ms: 5.873287
+  type: 'test'
+  ...
+# Subtest: structure check rejects: unknown prefix
+ok 190 - structure check rejects: unknown prefix
+  ---
+  duration_ms: 5.390983
+  type: 'test'
+  ...
+# Subtest: structure check rejects: h2 heading
+ok 191 - structure check rejects: h2 heading
+  ---
+  duration_ms: 4.692996
+  type: 'test'
+  ...
+# Subtest: structure check rejects: h4 heading
+ok 192 - structure check rejects: h4 heading
+  ---
+  duration_ms: 5.853158
+  type: 'test'
+  ...
+# Subtest: structure check rejects: lowercase heading
+ok 193 - structure check rejects: lowercase heading
+  ---
+  duration_ms: 5.264162
+  type: 'test'
+  ...
+# Subtest: structure check rejects: heading without space
+ok 194 - structure check rejects: heading without space
+  ---
+  duration_ms: 6.466343
+  type: 'test'
+  ...
+# Subtest: structure check rejects: heading with a colon instead of a dash
+ok 195 - structure check rejects: heading with a colon instead of a dash
+  ---
+  duration_ms: 5.082649
+  type: 'test'
+  ...
+# Subtest: structure check rejects: heading indented one space
+ok 196 - structure check rejects: heading indented one space
+  ---
+  duration_ms: 6.406993
+  type: 'test'
+  ...
+# Subtest: structure check rejects: heading indented three spaces
+ok 197 - structure check rejects: heading indented three spaces
+  ---
+  duration_ms: 4.295741
+  type: 'test'
+  ...
+# Subtest: structure check rejects: heading with no title
+ok 198 - structure check rejects: heading with no title
+  ---
+  duration_ms: 8.359087
+  type: 'test'
+  ...
+# Subtest: structure check rejects: short ID
+ok 199 - structure check rejects: short ID
+  ---
+  duration_ms: 4.796452
+  type: 'test'
+  ...
+# Subtest: structure check rejects: empty evidence
+ok 200 - structure check rejects: empty evidence
+  ---
+  duration_ms: 4.346464
+  type: 'test'
+  ...
+# Subtest: structure check rejects: status written twice
+ok 201 - structure check rejects: status written twice
+  ---
+  duration_ms: 4.992965
+  type: 'test'
+  ...
+# Subtest: structure check rejects: superseded without link
+ok 202 - structure check rejects: superseded without link
+  ---
+  duration_ms: 5.521181
+  type: 'test'
+  ...
+# Subtest: structure check rejects: free-text as_of
+ok 203 - structure check rejects: free-text as_of
+  ---
+  duration_ms: 6.195449
+  type: 'test'
+  ...
+# Subtest: the real ledger cites only paths and commits that exist
+ok 204 - the real ledger cites only paths and commits that exist
+  ---
+  duration_ms: 337.496807
+  type: 'test'
+  ...
+# Subtest: an existing path and commit pass
+ok 205 - an existing path and commit pass
+  ---
+  duration_ms: 336.061345
+  type: 'test'
+  ...
+# Subtest: RESULT-NNNN shorthand resolves under experiments/
+ok 206 - RESULT-NNNN shorthand resolves under experiments/
+  ---
+  duration_ms: 312.91407
+  type: 'test'
+  ...
+# Subtest: a known gap stops being excused when its correction is missing
+ok 207 - a known gap stops being excused when its correction is missing
+  ---
+  duration_ms: 327.712889
+  type: 'test'
+  ...
+# Subtest: a missing path in notes is not flagged
+ok 208 - a missing path in notes is not flagged
+  ---
+  duration_ms: 328.672498
+  type: 'test'
+  ...
+# Subtest: citation check rejects: missing evidence path
+ok 209 - citation check rejects: missing evidence path
+  ---
+  duration_ms: 311.208595
+  type: 'test'
+  ...
+# Subtest: citation check rejects: missing path with line range
+ok 210 - citation check rejects: missing path with line range
+  ---
+  duration_ms: 306.405289
+  type: 'test'
+  ...
+# Subtest: citation check rejects: missing reverify path
+ok 211 - citation check rejects: missing reverify path
+  ---
+  duration_ms: 313.189196
+  type: 'test'
+  ...
+# Subtest: citation check rejects: unknown commit
+ok 212 - citation check rejects: unknown commit
+  ---
+  duration_ms: 333.413211
+  type: 'test'
+  ...
+# Subtest: citation check rejects: unknown commit, plural label
+ok 213 - citation check rejects: unknown commit, plural label
+  ---
+  duration_ms: 355.170555
+  type: 'test'
+  ...
+# Subtest: citation check rejects: path inside a command
+ok 214 - citation check rejects: path inside a command
+  ---
+  duration_ms: 311.022135
+  type: 'test'
+  ...
+# Subtest: citation check rejects: top-level file without slash
+ok 215 - citation check rejects: top-level file without slash
+  ---
+  duration_ms: 313.577737
+  type: 'test'
+  ...
+# Subtest: citation check rejects: commit with colon label
+ok 216 - citation check rejects: commit with colon label
+  ---
+  duration_ms: 313.887427
+  type: 'test'
+  ...
+# Subtest: citation check rejects: commit with equals label
+ok 217 - citation check rejects: commit with equals label
+  ---
+  duration_ms: 312.946982
+  type: 'test'
+  ...
+# Subtest: citation check rejects: commit only on an unmerged branch
+ok 218 - citation check rejects: commit only on an unmerged branch
+  ---
+  duration_ms: 311.55213
+  type: 'test'
+  ...
+# Subtest: citation check rejects: absolute path
+ok 219 - citation check rejects: absolute path
+  ---
+  duration_ms: 310.920455
+  type: 'test'
+  ...
+# Subtest: citation check rejects: list-form continuation line
+ok 220 - citation check rejects: list-form continuation line
+  ---
+  duration_ms: 280.306462
+  type: 'test'
+  ...
+# Subtest: citation check rejects parent traversal even when the external path exists
+ok 221 - citation check rejects parent traversal even when the external path exists
+  ---
+  duration_ms: 4.774992
+  type: 'test'
+  ...
+# Subtest: citation check rejects a missing Markdown-linked evidence path
+ok 222 - citation check rejects a missing Markdown-linked evidence path
+  ---
+  duration_ms: 5.32117
+  type: 'test'
+  ...
+# Subtest: the real ledger has two-way supersede links
+ok 223 - the real ledger has two-way supersede links
+  ---
+  duration_ms: 2.350139
+  type: 'test'
+  ...
+# Subtest: an unchanged ledger passes the history check
+ok 224 - an unchanged ledger passes the history check
+  ---
+  duration_ms: 3.426874
+  type: 'test'
+  ...
+# Subtest: a status change and added links and notes pass
+ok 225 - a status change and added links and notes pass
+  ---
+  duration_ms: 3.404932
+  type: 'test'
+  ...
+# Subtest: history check rejects a rewritten statement
+ok 226 - history check rejects a rewritten statement
+  ---
+  duration_ms: 3.172275
+  type: 'test'
+  ...
+# Subtest: history check rejects a promoted proof class
+ok 227 - history check rejects a promoted proof class
+  ---
+  duration_ms: 2.841742
+  type: 'test'
+  ...
+# Subtest: history check rejects a rewritten evidence field
+ok 228 - history check rejects a rewritten evidence field
+  ---
+  duration_ms: 3.673347
+  type: 'test'
+  ...
+# Subtest: history check rejects a changed as_of
+ok 229 - history check rejects a changed as_of
+  ---
+  duration_ms: 2.667195
+  type: 'test'
+  ...
+# Subtest: history check rejects a dropped supersede link
+ok 230 - history check rejects a dropped supersede link
+  ---
+  duration_ms: 4.11455
+  type: 'test'
+  ...
+# Subtest: history check rejects rewritten notes
+ok 231 - history check rejects rewritten notes
+  ---
+  duration_ms: 2.769716
+  type: 'test'
+  ...
+# Subtest: history check rejects notes with text prepended
+ok 232 - history check rejects notes with text prepended
+  ---
+  duration_ms: 2.684917
+  type: 'test'
+  ...
+# Subtest: history check rejects a changed heading title
+ok 233 - history check rejects a changed heading title
+  ---
+  duration_ms: 2.577444
+  type: 'test'
+  ...
+# Subtest: history check rejects a rewritten ad hoc bold line
+ok 234 - history check rejects a rewritten ad hoc bold line
+  ---
+  duration_ms: 2.481728
+  type: 'test'
+  ...
+# Subtest: history check rejects a capitalised override field
+ok 235 - history check rejects a capitalised override field
+  ---
+  duration_ms: 2.74923
+  type: 'test'
+  ...
+# Subtest: history check rejects a superseded record revived as accepted
+ok 236 - history check rejects a superseded record revived as accepted
+  ---
+  duration_ms: 2.613986
+  type: 'test'
+  ...
+# Subtest: history check rejects a status change with no new correction
+ok 237 - history check rejects a status change with no new correction
+  ---
+  duration_ms: 2.523762
+  type: 'test'
+  ...
+# Subtest: a removed record is left to the authorship gate
+ok 238 - a removed record is left to the authorship gate
+  ---
+  duration_ms: 3.70845
+  type: 'test'
+  ...
+# Subtest: adding written_by and checked_by to an existing record passes
+ok 239 - adding written_by and checked_by to an existing record passes
+  ---
+  duration_ms: 4.32571
+  type: 'test'
+  ...
+# Subtest: history check rejects a rewritten continuation line
+ok 240 - history check rejects a rewritten continuation line
+  ---
+  duration_ms: 0.174274
+  type: 'test'
+  ...
+# Subtest: history check rejects a deleted continuation line
+ok 241 - history check rejects a deleted continuation line
+  ---
+  duration_ms: 0.108713
+  type: 'test'
+  ...
+# Subtest: history check accepts an unchanged wrapped field
+ok 242 - history check accepts an unchanged wrapped field
+  ---
+  duration_ms: 0.134527
+  type: 'test'
+  ...
+# Subtest: link check rejects a one-way supersede link
+ok 243 - link check rejects a one-way supersede link
+  ---
+  duration_ms: 2.122323
+  type: 'test'
+  ...
+# Subtest: link check rejects a record that supersedes itself in both directions
+ok 244 - link check rejects a record that supersedes itself in both directions
+  ---
+  duration_ms: 0.157476
+  type: 'test'
+  ...
+# Subtest: sample-size check rejects: a bare heading
+ok 245 - sample-size check rejects: a bare heading
+  ---
+  duration_ms: 0.429275
+  type: 'test'
+  ...
+# Subtest: sample-size check rejects: template placeholders left in
+ok 246 - sample-size check rejects: template placeholders left in
+  ---
+  duration_ms: 0.224022
+  type: 'test'
+  ...
+# Subtest: sample-size check rejects: a missing margin item
+ok 247 - sample-size check rejects: a missing margin item
+  ---
+  duration_ms: 0.098781
+  type: 'test'
+  ...
+# Subtest: sample-size check rejects: an empty downstream item
+ok 248 - sample-size check rejects: an empty downstream item
+  ---
+  duration_ms: 0.065584
+  type: 'test'
+  ...
+# Subtest: the real experiments pass the sample-size check
+ok 249 - the real experiments pass the sample-size check
+  ---
+  duration_ms: 2.082265
+  type: 'test'
+  ...
+# Subtest: an old protocol without the section passes
+ok 250 - an old protocol without the section passes
+  ---
+  duration_ms: 0.193227
+  type: 'test'
+  ...
+# Subtest: a new protocol with the section passes
+ok 251 - a new protocol with the section passes
+  ---
+  duration_ms: 0.101636
+  type: 'test'
+  ...
+# Subtest: a frozen companion protocol with explicit denominator, margin, and adoption boundary passes
+ok 252 - a frozen companion protocol with explicit denominator, margin, and adoption boundary passes
+  ---
+  duration_ms: 0.383236
+  type: 'test'
+  ...
+# Subtest: the frozen companion form fails when its quantitative margin is removed
+ok 253 - the frozen companion form fails when its quantitative margin is removed
+  ---
+  duration_ms: 0.311254
+  type: 'test'
+  ...
+# Subtest: an unfrozen companion cannot satisfy the sample-size check
+ok 254 - an unfrozen companion cannot satisfy the sample-size check
+  ---
+  duration_ms: 0.150095
+  type: 'test'
+  ...
+# Subtest: sample-size check rejects: new, no section
+ok 255 - sample-size check rejects: new, no section
+  ---
+  duration_ms: 0.109867
+  type: 'test'
+  ...
+# Subtest: sample-size check rejects: quoted date
+ok 256 - sample-size check rejects: quoted date
+  ---
+  duration_ms: 0.062526
+  type: 'test'
+  ...
+# Subtest: sample-size check rejects: blank date
+ok 257 - sample-size check rejects: blank date
+  ---
+  duration_ms: 0.057197
+  type: 'test'
+  ...
+# Subtest: sample-size check rejects: missing date
+ok 258 - sample-size check rejects: missing date
+  ---
+  duration_ms: 0.063065
+  type: 'test'
+  ...
+# Subtest: the real runs pass the outcome check
+ok 259 - the real runs pass the outcome check
+  ---
+  duration_ms: 293.44046
+  type: 'test'
+  ...
+# Subtest: a run naming an existing record passes
+ok 260 - a run naming an existing record passes
+  ---
+  duration_ms: 0.649588
+  type: 'test'
+  ...
+# Subtest: a stopped run marked not reportable with a reason passes
+ok 261 - a stopped run marked not reportable with a reason passes
+  ---
+  duration_ms: 0.268767
+  type: 'test'
+  ...
+# Subtest: trailing blank lines after the ledger line pass
+ok 262 - trailing blank lines after the ledger line pass
+  ---
+  duration_ms: 0.210521
+  type: 'test'
+  ...
+# Subtest: an older run needs no ledger line
+ok 263 - an older run needs no ledger line
+  ---
+  duration_ms: 0.137703
+  type: 'test'
+  ...
+# Subtest: outcome check rejects: no outcome file
+ok 264 - outcome check rejects: no outcome file
+  ---
+  duration_ms: 0.295942
+  type: 'test'
+  ...
+# Subtest: outcome check rejects: outcome file without a ledger line
+ok 265 - outcome check rejects: outcome file without a ledger line
+  ---
+  duration_ms: 0.25882
+  type: 'test'
+  ...
+# Subtest: outcome check rejects: a ledger line naming a missing record
+ok 266 - outcome check rejects: a ledger line naming a missing record
+  ---
+  duration_ms: 0.15506
+  type: 'test'
+  ...
+# Subtest: outcome check rejects: not reportable with no reason
+ok 267 - outcome check rejects: not reportable with no reason
+  ---
+  duration_ms: 0.088704
+  type: 'test'
+  ...
+# Subtest: outcome check rejects: a ledger line with no ID
+ok 268 - outcome check rejects: a ledger line with no ID
+  ---
+  duration_ms: 0.073888
+  type: 'test'
+  ...
+# Subtest: outcome check rejects: a ledger line followed by later output
+ok 269 - outcome check rejects: a ledger line followed by later output
+  ---
+  duration_ms: 0.068118
+  type: 'test'
+  ...
+# Subtest: close-out passes when no record is added
+ok 270 - close-out passes when no record is added
+  ---
+  duration_ms: 0.220896
+  type: 'test'
+  ...
+# Subtest: close-out passes when a record is added and CURRENT.md changes
+ok 271 - close-out passes when a record is added and CURRENT.md changes
+  ---
+  duration_ms: 0.057256
+  type: 'test'
+  ...
+# Subtest: close-out rejects a new record with CURRENT.md unchanged
+ok 272 - close-out rejects a new record with CURRENT.md unchanged
+  ---
+  duration_ms: 0.039483
+  type: 'test'
+  ...
+# Subtest: reverify plan includes commands on continuation lines
+ok 273 - reverify plan includes commands on continuation lines
+  ---
+  duration_ms: 0.702896
+  type: 'test'
+  ...
+# Subtest: reverify plan reports a runnable command followed by prose-only flags as manual
+ok 274 - reverify plan reports a runnable command followed by prose-only flags as manual
+  ---
+  duration_ms: 0.271492
+  type: 'test'
+  ...
+# Subtest: reverify plan keeps a complete runnable command automatic
+ok 275 - reverify plan keeps a complete runnable command automatic
+  ---
+  duration_ms: 0.133285
+  type: 'test'
+  ...
+# Subtest: reverify plan reports a pipeline as manual regardless of pipe spacing
+ok 276 - reverify plan reports a pipeline as manual regardless of pipe spacing
+  ---
+  duration_ms: 0.080835
+  type: 'test'
+  ...
+# Subtest: automatic reverify commands fail on an earlier semicolon-separated error
+ok 277 - automatic reverify commands fail on an earlier semicolon-separated error
+  ---
+  duration_ms: 30.46813
+  type: 'test'
+  ...
+# Subtest: LIVE: RESULT-0049 mixed reverify instructions are reported as manual
+ok 278 - LIVE: RESULT-0049 mixed reverify instructions are reported as manual
+  ---
+  duration_ms: 2.083789
+  type: 'test'
+  ...
+# Subtest: RESULT-0031 recompute finds no cap mismatches on its corpus
+ok 279 - RESULT-0031 recompute finds no cap mismatches on its corpus
+  ---
+  duration_ms: 42.28533
+  type: 'test'
+  ...
+# Subtest: a prose-only reverify is listed as manual, not dropped
+ok 280 - a prose-only reverify is listed as manual, not dropped
+  ---
+  duration_ms: 0.137709
+  type: 'test'
+  ...
+# Subtest: a real revision and checkout label pass
+ok 281 - a real revision and checkout label pass
+  ---
+  duration_ms: 311.194856
+  type: 'test'
+  ...
+# Subtest: every SHA in a real plural commit list passes
+ok 282 - every SHA in a real plural commit list passes
+  ---
+  duration_ms: 332.317985
+  type: 'test'
+  ...
+# Subtest: citation check rejects a bad later SHA in: commits `be84336`, `deadbeef1234`
+ok 283 - citation check rejects a bad later SHA in: commits `be84336`, `deadbeef1234`
+  ---
+  duration_ms: 299.385834
+  type: 'test'
+  ...
+# Subtest: citation check rejects a bad later SHA in: commits `be84336` (X), `1e5311e` (Y), and `deadbeef1234` (Z)
+ok 284 - citation check rejects a bad later SHA in: commits `be84336` (X), `1e5311e` (Y), and `deadbeef1234` (Z)
+  ---
+  duration_ms: 301.717668
+  type: 'test'
+  ...
+# Subtest: history check rejects a rewrite below an H4 inside a field
+ok 285 - history check rejects a rewrite below an H4 inside a field
+  ---
+  duration_ms: 0.182654
+  type: 'test'
+  ...
+# Subtest: citation check rejects a missing path below an H4 inside evidence
+ok 286 - citation check rejects a missing path below an H4 inside evidence
+  ---
+  duration_ms: 274.711758
+  type: 'test'
+  ...
+# Subtest: reverify plan keeps commands below an H4 inside the field
+ok 287 - reverify plan keeps commands below an H4 inside the field
+  ---
+  duration_ms: 0.204936
+  type: 'test'
+  ...
+# Subtest: citation check rejects unknown SHA: runner revision `deadbeef1234`
+ok 288 - citation check rejects unknown SHA: runner revision `deadbeef1234`
+  ---
+  duration_ms: 283.924661
+  type: 'test'
+  ...
+# Subtest: citation check rejects unknown SHA: isolated checkout `deadbeef1234`
+ok 289 - citation check rejects unknown SHA: isolated checkout `deadbeef1234`
+  ---
+  duration_ms: 291.2174
+  type: 'test'
+  ...
+# Subtest: citation check rejects unknown SHA: checkout at `deadbeef1234`
+ok 290 - citation check rejects unknown SHA: checkout at `deadbeef1234`
+  ---
+  duration_ms: 286.782293
+  type: 'test'
+  ...
+# Subtest: CSV parser preserves quoted commas and doubled quotes
+ok 291 - CSV parser preserves quoted commas and doubled quotes
+  ---
+  duration_ms: 2.421758
+  type: 'test'
+  ...
+# Subtest: LIVE: scanner reads the real retained failed closures
+ok 292 - LIVE: scanner reads the real retained failed closures
+  ---
+  duration_ms: 3.560892
+  type: 'test'
+  ...
+# Subtest: a real UNVERIFIED closure fails when its ledger row is absent
+ok 293 - a real UNVERIFIED closure fails when its ledger row is absent
+  ---
+  duration_ms: 1.208665
+  type: 'test'
+  ...
+# Subtest: two failed closures cannot share one run_id and one ledger row
+ok 294 - two failed closures cannot share one run_id and one ledger row
+  ---
+  duration_ms: 1.529619
+  type: 'test'
+  ...
+# Subtest: a ledger row cannot claim prevention through missing files
+ok 295 - a ledger row cannot claim prevention through missing files
+  ---
+  duration_ms: 1.288929
+  type: 'test'
+  ...
+# Subtest: an intentional failing control inside a CLOSED run is not a failed run
+ok 296 - an intentional failing control inside a CLOSED run is not a failed run
+  ---
+  duration_ms: 0.54788
+  type: 'test'
+  ...
+# Subtest: calendar dates and legacy evidence identities are exact
+ok 297 - calendar dates and legacy evidence identities are exact
+  ---
+  duration_ms: 0.80457
+  type: 'test'
+  ...
+# Subtest: a retained legacy incident fails when its CSV row is removed
+ok 298 - a retained legacy incident fails when its CSV row is removed
+  ---
+  duration_ms: 0.477365
+  type: 'test'
+  ...
+# Subtest: LIVE: every retained failed closure has one complete prevention record
+ok 299 - LIVE: every retained failed closure has one complete prevention record
+  ---
+  duration_ms: 1.600658
+  type: 'test'
+  ...
+# Subtest: a fixed-board shape must name the seed that fixes the board
+ok 300 - a fixed-board shape must name the seed that fixes the board
+  ---
+  duration_ms: 2.221583
+  type: 'test'
+  ...
+# Subtest: target and tileScale remain forbidden shape controls
+ok 301 - target and tileScale remain forbidden shape controls
+  ---
+  duration_ms: 1.100867
+  type: 'test'
+  ...
+# Subtest: fitting and holdout use disjoint player variants
+ok 302 - fitting and holdout use disjoint player variants
+  ---
+  duration_ms: 0.234652
+  type: 'test'
+  ...
+# Subtest: adjacent variants map to far-apart lookahead seeds
+ok 303 - adjacent variants map to far-apart lookahead seeds
+  ---
+  duration_ms: 0.152658
+  type: 'test'
+  ...
+# Subtest: the target is the fitted median times demand, rounded down
+ok 304 - the target is the fitted median times demand, rounded down
+  ---
+  duration_ms: 1.388926
+  type: 'test'
+  ...
+# Subtest: the candidate carries the seed, so the board is part of the level
+ok 305 - the candidate carries the seed, so the board is part of the level
+  ---
+  duration_ms: 0.233071
+  type: 'test'
+  ...
+# Subtest: a freshly derived candidate verifies against its own receipt
+ok 306 - a freshly derived candidate verifies against its own receipt
+  ---
+  duration_ms: 0.648691
+  type: 'test'
+  ...
+# Subtest: the receipt is rejected when the candidate is edited underneath it
+ok 307 - the receipt is rejected when the candidate is edited underneath it
+  ---
+  duration_ms: 0.389577
+  type: 'test'
+  ...
+# Subtest: swapping the board invalidates the receipt
+ok 308 - swapping the board invalidates the receipt
+  ---
+  duration_ms: 0.648972
+  type: 'test'
+  ...
+# Subtest: a receipt from the random-board pipeline is refused outright
+ok 309 - a receipt from the random-board pipeline is refused outright
+  ---
+  duration_ms: 0.450134
+  type: 'test'
+  ...
+# Subtest: a correctly signed receipt that fitted across boards is still refused
+ok 310 - a correctly signed receipt that fitted across boards is still refused
+  ---
+  duration_ms: 0.466677
+  type: 'test'
+  ...
+# Subtest: the same fixed board yields a real spread of scores across players
+ok 311 - the same fixed board yields a real spread of scores across players
+  ---
+  duration_ms: 12378.497535
+  type: 'test'
+  ...
+# Subtest: the same board and the same player replay identically
+ok 312 - the same board and the same player replay identically
+  ---
+  duration_ms: 2326.300497
+  type: 'test'
+  ...
+# Subtest: a level that names a seed deals the same board every time
+ok 313 - a level that names a seed deals the same board every time
+  ---
+  duration_ms: 2.970239
+  type: 'test'
+  ...
+# Subtest: different seeds are different boards
+ok 314 - different seeds are different boards
+  ---
+  duration_ms: 0.343226
+  type: 'test'
+  ...
+# Subtest: a level with no seed still draws a fresh board each time
+ok 315 - a level with no seed still draws a fresh board each time
+  ---
+  duration_ms: 0.379992
+  type: 'test'
+  ...
+# Subtest: every shipped level is currently unseeded, so none of them changed
+ok 316 - every shipped level is currently unseeded, so none of them changed
+  ---
+  duration_ms: 0.169485
+  type: 'test'
+  ...
+# Subtest: an unusable seed is rejected rather than silently ignored
+ok 317 - an unusable seed is rejected rather than silently ignored
+  ---
+  duration_ms: 0.747554
+  type: 'test'
+  ...
+# Subtest: linear and branching controls separate both bounded proxies
+ok 318 - linear and branching controls separate both bounded proxies
+  ---
+  duration_ms: 13.866957
+  type: 'test'
+  ...
+# Subtest: bounded misses remain UNKNOWN at the consumer boundary
+ok 319 - bounded misses remain UNKNOWN at the consumer boundary
+  ---
+  duration_ms: 0.38998
+  type: 'test'
+  ...
+# Subtest: a checkout one evidence commit behind origin/main fails and prints the fix command
+ok 320 - a checkout one evidence commit behind origin/main fails and prints the fix command
+  ---
+  duration_ms: 192.91407
+  type: 'test'
+  ...
+# Subtest: an up-to-date checkout passes (baseline)
+ok 321 - an up-to-date checkout passes (baseline)
+  ---
+  duration_ms: 154.819734
+  type: 'test'
+  ...
+# Subtest: a checkout behind only on non-evidence files passes but reports the lag
+ok 322 - a checkout behind only on non-evidence files passes but reports the lag
+  ---
+  duration_ms: 180.546024
+  type: 'test'
+  ...
+# Subtest: a merged branch that looks up to date with its upstream is still caught
+ok 323 - a merged branch that looks up to date with its upstream is still caught
+  ---
+  duration_ms: 202.622568
+  type: 'test'
+  ...
+# Subtest: detached HEAD, no upstream and no origin remote are reported without crashing
+ok 324 - detached HEAD, no upstream and no origin remote are reported without crashing
+  ---
+  duration_ms: 273.605798
+  type: 'test'
+  ...
+# Subtest: a non-git directory exits 2 instead of crashing
+ok 325 - a non-git directory exits 2 instead of crashing
+  ---
+  duration_ms: 47.640083
+  type: 'test'
+  ...
+# Subtest: the check leaves HEAD, branch, refs of the work tree and files unchanged
+ok 326 - the check leaves HEAD, branch, refs of the work tree and files unchanged
+  ---
+  duration_ms: 213.245019
+  type: 'test'
+  ...
+# Subtest: an upstream that is not origin/main and has newer evidence fails even when origin/main is current
+ok 327 - an upstream that is not origin/main and has newer evidence fails even when origin/main is current
+  ---
+  duration_ms: 205.687457
+  type: 'test'
+  ...
+# Subtest: a local-only evidence commit ahead of upstream and origin/main is fresh
+ok 328 - a local-only evidence commit ahead of upstream and origin/main is fresh
+  ---
+  duration_ms: 189.849045
+  type: 'test'
+  ...
+# Subtest: an upstream that is not origin/main and is behind only on a non-evidence file passes
+ok 329 - an upstream that is not origin/main and is behind only on a non-evidence file passes
+  ---
+  duration_ms: 250.500094
+  type: 'test'
+  ...
+# Subtest: each of the three evidence files, touched alone on origin/main, makes the checkout stale
+ok 330 - each of the three evidence files, touched alone on origin/main, makes the checkout stale
+  ---
+  duration_ms: 580.760046
+  type: 'test'
+  ...
+# Subtest: a failed fetch with no known-stale evidence exits 2 and says UNVERIFIED, never FRESH
+ok 331 - a failed fetch with no known-stale evidence exits 2 and says UNVERIFIED, never FRESH
+  ---
+  duration_ms: 161.141928
+  type: 'test'
+  ...
+# Subtest: a failed fetch on a checkout already stale from local refs still exits 1 and warns
+ok 332 - a failed fetch on a checkout already stale from local refs still exits 1 and warns
+  ---
+  duration_ms: 196.906866
+  type: 'test'
+  ...
+# Subtest: a merged topic branch in a LINKED worktree gets a fix that runs there (no switch main) and ends FRESH
+ok 333 - a merged topic branch in a LINKED worktree gets a fix that runs there (no switch main) and ends FRESH
+  ---
+  duration_ms: 227.050805
+  type: 'test'
+  ...
+# Subtest: the main clone behind origin/main prints exactly one fix line and it brings the clone current
+ok 334 - the main clone behind origin/main prints exactly one fix line and it brings the clone current
+  ---
+  duration_ms: 267.288691
+  type: 'test'
+  ...
+# Subtest: a detached HEAD behind origin/main gets a fix that ends FRESH
+ok 335 - a detached HEAD behind origin/main gets a fix that ends FRESH
+  ---
+  duration_ms: 266.923524
+  type: 'test'
+  ...
+# Subtest: an unmerged branch with its own commit behind an evidence commit still fails and keeps the rebase hint
+ok 336 - an unmerged branch with its own commit behind an evidence commit still fails and keeps the rebase hint
+  ---
+  duration_ms: 195.988643
+  type: 'test'
+  ...
+# Subtest: dry-run writes nothing and prints a diff
+ok 337 - dry-run writes nothing and prints a diff
+  ---
+  duration_ms: 49.397651
+  type: 'test'
+  ...
+# Subtest: real run copies both scripts, adds one entry, backs up, preserves everything else
+ok 338 - real run copies both scripts, adds one entry, backs up, preserves everything else
+  ---
+  duration_ms: 43.55652
+  type: 'test'
+  ...
+# Subtest: second run is a no-op: no new entry, no new backup, file bytes unchanged
+ok 339 - second run is a no-op: no new entry, no new backup, file bytes unchanged
+  ---
+  duration_ms: 75.778833
+  type: 'test'
+  ...
+# Subtest: invalid JSON or missing settings refuses and writes nothing
+ok 340 - invalid JSON or missing settings refuses and writes nothing
+  ---
+  duration_ms: 88.505318
+  type: 'test'
+  ...
+# Subtest: launcher: stale checkout -> exit 0 and the WARNING line
+ok 341 - launcher: stale checkout -> exit 0 and the WARNING line
+  ---
+  duration_ms: 235.343877
+  type: 'test'
+  ...
+# Subtest: launcher: non-git directory -> exit 0 and nothing printed
+ok 342 - launcher: non-git directory -> exit 0 and nothing printed
+  ---
+  duration_ms: 40.401222
+  type: 'test'
+  ...
+# Subtest: launcher: a failed git probe in a real checkout -> exit 0 and one UNVERIFIED probe line
+ok 343 - launcher: a failed git probe in a real checkout -> exit 0 and one UNVERIFIED probe line
+  ---
+  duration_ms: 121.739808
+  type: 'test'
+  ...
+# Subtest: launcher: a hanging check.js is killed within the timeout, exit 0, one UNVERIFIED line
+ok 344 - launcher: a hanging check.js is killed within the timeout, exit 0, one UNVERIFIED line
+  ---
+  duration_ms: 934.910155
+  type: 'test'
+  ...
+# Subtest: launcher: a crashing check.js still exits 0 with one UNVERIFIED line
+ok 345 - launcher: a crashing check.js still exits 0 with one UNVERIFIED line
+  ---
+  duration_ms: 165.880537
+  type: 'test'
+  ...
+# Subtest: launcher: on timeout the hung git-fetch grandchild is killed too (no survivor)
+ok 346 - launcher: on timeout the hung git-fetch grandchild is killed too (no survivor)
+  ---
+  duration_ms: 2139.894613
+  type: 'test'
+  ...
+# Subtest: fresh + stale + missing: labels, summary, exit 1, read-only
+ok 347 - fresh + stale + missing: labels, summary, exit 1, read-only
+  ---
+  duration_ms: 510.940488
+  type: 'test'
+  ...
+# Subtest: no stale, one missing: exit 2
+ok 348 - no stale, one missing: exit 2
+  ---
+  duration_ms: 399.231736
+  type: 'test'
+  ...
+# Subtest: all fresh: exit 0
+ok 349 - all fresh: exit 0
+  ---
+  duration_ms: 391.395288
+  type: 'test'
+  ...
+# Subtest: detached HEAD worktree is labelled (detached) and does not crash
+ok 350 - detached HEAD worktree is labelled (detached) and does not crash
+  ---
+  duration_ms: 347.757936
+  type: 'test'
+  ...
+# Subtest: git failure (not a repo): UNVERIFIED, exit 2, no crash
+ok 351 - git failure (not a repo): UNVERIFIED, exit 2, no crash
+  ---
+  duration_ms: 39.241795
+  type: 'test'
+  ...
+# Subtest: no origin remote at all: UNCHECKED worktrees are UNVERIFIED, never FRESH; exit 2
+ok 352 - no origin remote at all: UNCHECKED worktrees are UNVERIFIED, never FRESH; exit 2
+  ---
+  duration_ms: 203.533111
+  type: 'test'
+  ...
+# Subtest: fetch fails (origin URL dead) with no stale evidence: UNVERIFIED, exit 2
+ok 353 - fetch fails (origin URL dead) with no stale evidence: UNVERIFIED, exit 2
+  ---
+  duration_ms: 354.37833
+  type: 'test'
+  ...
+# Subtest: fetch fails but local refs already stale: STALE wins, exit 1
+ok 354 - fetch fails but local refs already stale: STALE wins, exit 1
+  ---
+  duration_ms: 450.683602
+  type: 'test'
+  ...
+# Subtest: check timeout: every checked worktree UNVERIFIED with "timed out", summary printed, exit 2
+ok 355 - check timeout: every checked worktree UNVERIFIED with "timed out", summary printed, exit 2
+  ---
+  duration_ms: 214.022727
+  type: 'test'
+  ...
+# Subtest: game.js exports LEVELS for headless use, unchanged from the shipped data
+ok 356 - game.js exports LEVELS for headless use, unchanged from the shipped data
+  ---
+  duration_ms: 1.164038
+  type: 'test'
+  ...
+# Subtest: legacy queries keep their original meaning; Connections uses stable puzzle IDs
+ok 357 - legacy queries keep their original meaning; Connections uses stable puzzle IDs
+  ---
+  duration_ms: 1.0426
+  type: 'test'
+  ...
+# Subtest: actual app entry and router load only the chosen controller in original order
+ok 358 - actual app entry and router load only the chosen controller in original order
+  ---
+  duration_ms: 4.237298
+  type: 'test'
+  ...
+# Subtest: legacy script-load failure puts its alert in the visible original view
+ok 359 - legacy script-load failure puts its alert in the visible original view
+  ---
+  duration_ms: 0.945073
+  type: 'test'
+  ...
+# Subtest: every sampled shape is legal input to the authoring pipeline
+ok 360 - every sampled shape is legal input to the authoring pipeline
+  ---
+  duration_ms: 6.045741
+  type: 'test'
+  ...
+# Subtest: sampled shapes stay inside the declared sampling space
+ok 361 - sampled shapes stay inside the declared sampling space
+  ---
+  duration_ms: 1.566077
+  type: 'test'
+  ...
+# Subtest: the sampler is reproducible from its seed
+ok 362 - the sampler is reproducible from its seed
+  ---
+  duration_ms: 1.120611
+  type: 'test'
+  ...
+# Subtest: the signature ignores name and blocker order
+ok 363 - the signature ignores name and blocker order
+  ---
+  duration_ms: 0.229178
+  type: 'test'
+  ...
+# Subtest: the signature separates shapes that differ in any knob
+ok 364 - the signature separates shapes that differ in any knob
+  ---
+  duration_ms: 0.154566
+  type: 'test'
+  ...
+# Subtest: the screen drops a board that locks up and keeps a clean one
+ok 365 - the screen drops a board that locks up and keeps a clean one
+  ---
+  duration_ms: 0.307461
+  type: 'test'
+  ...
+# Subtest: the gate verdict matches the pipeline thresholds
+ok 366 - the gate verdict matches the pipeline thresholds
+  ---
+  duration_ms: 0.268026
+  type: 'test'
+  ...
+# Subtest: the shortlist puts the hardest level for the bot first
+ok 367 - the shortlist puts the hardest level for the bot first
+  ---
+  duration_ms: 0.212364
+  type: 'test'
+  ...
+# Subtest: the shortlist drops anything that failed a gate, however hard it was
+ok 368 - the shortlist drops anything that failed a gate, however hard it was
+  ---
+  duration_ms: 0.19387
+  type: 'test'
+  ...
+# Subtest: registered summary can support a complete predictive independent pair
+ok 369 - registered summary can support a complete predictive independent pair
+  ---
+  duration_ms: 14.637673
+  type: 'test'
+  ...
+# Subtest: registered summary falsifies a collapsed timing axis
+ok 370 - registered summary falsifies a collapsed timing axis
+  ---
+  duration_ms: 1.256164
+  type: 'test'
+  ...
+# Subtest: percentile player chooses the chain nearest its fixed share of the best points
+ok 371 - percentile player chooses the chain nearest its fixed share of the best points
+  ---
+  duration_ms: 1.16307
+  type: 'test'
+  ...
+# Subtest: the frozen 3x3 descriptor bins name early, steady, late and low, mid, high
+ok 372 - the frozen 3x3 descriptor bins name early, steady, late and low, mid, high
+  ---
+  duration_ms: 1.208861
+  type: 'test'
+  ...
+# Subtest: same-or-edge-adjacent stability does not let a center cell cover the corners
+ok 373 - same-or-edge-adjacent stability does not let a center cell cover the corners
+  ---
+  duration_ms: 0.294663
+  type: 'test'
+  ...
+# Subtest: screen stops when a descriptor merely tracks score and occupies one row
+ok 374 - screen stops when a descriptor merely tracks score and occupies one row
+  ---
+  duration_ms: 2.801295
+  type: 'test'
+  ...
+# Subtest: screen fails closed when score correlation is undefined
+ok 375 - screen fails closed when score correlation is undefined
+  ---
+  duration_ms: 0.888305
+  type: 'test'
+  ...
+# Subtest: exact play propagates the deterministic path-state cap to every denominator observation
+ok 376 - exact play propagates the deterministic path-state cap to every denominator observation
+  ---
+  duration_ms: 881.946633
+  type: 'test'
+  ...
+# Subtest: harvest policy favors mutually harvestable mass without mutating state
+ok 377 - harvest policy favors mutually harvestable mass without mutating state
+  ---
+  duration_ms: 2.14782
+  type: 'test'
+  ...
+# Subtest: deterministic work cap stops search without claiming impossibility
+ok 378 - deterministic work cap stops search without claiming impossibility
+  ---
+  duration_ms: 7.782445
+  type: 'test'
+  ...
+# Subtest: every recorded session resolves to a board and is paired
+ok 379 - every recorded session resolves to a board and is paired
+  ---
+  duration_ms: 96694.129612
+  type: 'test'
+  ...
+# Subtest: an ordinary play capture resolves to the shipped board and pairs on its seed
+ok 380 - an ordinary play capture resolves to the shipped board and pairs on its seed
+  ---
+  duration_ms: 2355.228146
+  type: 'test'
+  ...
+# Subtest: an invalid ordinary capture is reported without crashing on its null identity
+ok 381 - an invalid ordinary capture is reported without crashing on its null identity
+  ---
+  duration_ms: 53.506358
+  type: 'test'
+  ...
+# Subtest: board trace renders an ordinary play capture through the documented CLI
+ok 382 - board trace renders an ordinary play capture through the documented CLI
+  ---
+  duration_ms: 156.332729
+  type: 'test'
+  ...
+# Subtest: each pair compares the same board and the same seed for both players
+ok 383 - each pair compares the same board and the same seed for both players
+  ---
+  duration_ms: 0.87191
+  type: 'test'
+  ...
+# Subtest: the bot arm is deterministic for a given board and seed
+ok 384 - the bot arm is deterministic for a given board and seed
+  ---
+  duration_ms: 2059.547049
+  type: 'test'
+  ...
+# Subtest: a shifted seed is a different game, so the pairing is doing real work
+ok 385 - a shifted seed is a different game, so the pairing is doing real work
+  ---
+  duration_ms: 1935.37193
+  type: 'test'
+  ...
+# Subtest: pilot artifacts bind the exact candidate, seed, batch, base, authority, and non-claims
+ok 386 - pilot artifacts bind the exact candidate, seed, batch, base, authority, and non-claims
+  ---
+  duration_ms: 4.463837
+  type: 'test'
+  ...
+# Subtest: focused inspection reads the durable pilot artifacts and refuses candidate drift
+ok 387 - focused inspection reads the durable pilot artifacts and refuses candidate drift
+  ---
+  duration_ms: 14.994022
+  type: 'test'
+  ...
+# Subtest: focused inspection refuses a controlled changed runtime file supplied beside the tree
+ok 388 - focused inspection refuses a controlled changed runtime file supplied beside the tree
+  ---
+  duration_ms: 9.227511
+  type: 'test'
+  ...
+# Subtest: challenge receipt is a fresh real recording PASS and same-predicate broken-twin FAIL
+ok 389 - challenge receipt is a fresh real recording PASS and same-predicate broken-twin FAIL
+  ---
+  duration_ms: 13.120377
+  type: 'test'
+  ...
+# Subtest: challenge refuses replay-compatible candidate content with the wrong identity
+ok 390 - challenge refuses replay-compatible candidate content with the wrong identity
+  ---
+  duration_ms: 4.007042
+  type: 'test'
+  ...
+# Subtest: execution verifier invalidates candidate, recording, checker, and challenge identities
+ok 391 - execution verifier invalidates candidate, recording, checker, and challenge identities
+  ---
+  duration_ms: 52.854091
+  type: 'test'
+  ...
+# Subtest: the real subject binds one candidate, one seed, and one content-named recording
+ok 392 - the real subject binds one candidate, one seed, and one content-named recording
+  ---
+  duration_ms: 3.36171
+  type: 'test'
+  ...
+# Subtest: the real recording replays exactly: 140,544 points in 20 moves
+ok 393 - the real recording replays exactly: 140,544 points in 20 moves
+  ---
+  duration_ms: 1.856234
+  type: 'test'
+  ...
+# Subtest: a broken twin fails through the same predicate, and so does a tampered move
+ok 394 - a broken twin fails through the same predicate, and so does a tampered move
+  ---
+  duration_ms: 1.511045
+  type: 'test'
+  ...
+# Subtest: committed challenge and execution receipt reproduce and verify PASS
+ok 395 - committed challenge and execution receipt reproduce and verify PASS
+  ---
+  duration_ms: 7.794592
+  type: 'test'
+  ...
+# Subtest: the receipt is invalidated by a changed recording, a changed checker identity, or a forged verdict
+ok 396 - the receipt is invalidated by a changed recording, a changed checker identity, or a forged verdict
+  ---
+  duration_ms: 10.11517
+  type: 'test'
+  ...
+# Subtest: an untouched record needs no authorship, even without the fields
+ok 397 - an untouched record needs no authorship, even without the fields
+  ---
+  duration_ms: 1.494186
+  type: 'test'
+  ...
+# Subtest: a new provisional record needs a writer only
+ok 398 - a new provisional record needs a writer only
+  ---
+  duration_ms: 1.224464
+  type: 'test'
+  ...
+# Subtest: a new accepted record needs a checker who is not the writer
+ok 399 - a new accepted record needs a checker who is not the writer
+  ---
+  duration_ms: 0.36885
+  type: 'test'
+  ...
+# Subtest: status values are normalized, so a backticked or capitalized accepted still needs a checker
+ok 400 - status values are normalized, so a backticked or capitalized accepted still needs a checker
+  ---
+  duration_ms: 0.15511
+  type: 'test'
+  ...
+# Subtest: changing an accepted record's statement needs a writer and a checker
+ok 401 - changing an accepted record's statement needs a writer and a checker
+  ---
+  duration_ms: 0.147101
+  type: 'test'
+  ...
+# Subtest: changing an accepted record's evidence needs a writer and a checker
+ok 402 - changing an accepted record's evidence needs a writer and a checker
+  ---
+  duration_ms: 0.136699
+  type: 'test'
+  ...
+# Subtest: changing an accepted record's updated needs a writer and a checker
+ok 403 - changing an accepted record's updated needs a writer and a checker
+  ---
+  duration_ms: 0.182083
+  type: 'test'
+  ...
+# Subtest: changing an accepted record's as_of needs a writer and a checker
+ok 404 - changing an accepted record's as_of needs a writer and a checker
+  ---
+  duration_ms: 0.221733
+  type: 'test'
+  ...
+# Subtest: retiring accepted evidence needs an independent check, whatever correction it cites
+ok 405 - retiring accepted evidence needs an independent check, whatever correction it cites
+  ---
+  duration_ms: 0.261445
+  type: 'test'
+  ...
+# Subtest: an accepted record newly narrowed needs a checker
+ok 406 - an accepted record newly narrowed needs a checker
+  ---
+  duration_ms: 0.402936
+  type: 'test'
+  ...
+# Subtest: removing any record fails, including one added after the gate landed
+ok 407 - removing any record fails, including one added after the gate landed
+  ---
+  duration_ms: 0.205995
+  type: 'test'
+  ...
+# Subtest: a duplicated ID fails and neither copy counts as untouched
+ok 408 - a duplicated ID fails and neither copy counts as untouched
+  ---
+  duration_ms: 0.105364
+  type: 'test'
+  ...
+# Subtest: a heading written with a plain hyphen is still a record the gate sees
+ok 409 - a heading written with a plain hyphen is still a record the gate sees
+  ---
+  duration_ms: 0.099561
+  type: 'test'
+  ...
+# Subtest: the live ledger passes the gate against its base
+ok 410 - the live ledger passes the gate against its base
+  ---
+  duration_ms: 63.245172
+  type: 'test'
+  ...
+# Subtest: a sign-off recorded for an earlier version cannot authorize a later rewrite
+ok 411 - a sign-off recorded for an earlier version cannot authorize a later rewrite
+  ---
+  duration_ms: 0.213835
+  type: 'test'
+  ...
+# Subtest: the pre-push hook compares the ledger with the destination remote, not origin/main
+ok 412 - the pre-push hook compares the ledger with the destination remote, not origin/main
+  ---
+  duration_ms: 0.259053
+  type: 'test'
+  ...
+# Subtest: records are parsed with their fields and a non-record heading ends one
+ok 413 - records are parsed with their fields and a non-record heading ends one
+  ---
+  duration_ms: 1.914279
+  type: 'test'
+  ...
+# Subtest: CRLF ledgers parse the same as LF ledgers
+ok 414 - CRLF ledgers parse the same as LF ledgers
+  ---
+  duration_ms: 1.021927
+  type: 'test'
+  ...
+# Subtest: headings with any dash are records
+ok 415 - headings with any dash are records
+  ---
+  duration_ms: 0.224724
+  type: 'test'
+  ...
+# Subtest: superseded records leave the current table
+ok 416 - superseded records leave the current table
+  ---
+  duration_ms: 0.913362
+  type: 'test'
+  ...
+# Subtest: a narrowed record leads with the correction that narrowed it (BL-0016 F3)
+ok 417 - a narrowed record leads with the correction that narrowed it (BL-0016 F3)
+  ---
+  duration_ms: 1.386491
+  type: 'test'
+  ...
+# Subtest: the committed index matches the live ledger
+ok 418 - the committed index matches the live ledger
+  ---
+  duration_ms: 45.41423
+  type: 'test'
+  ...
+# Subtest: validateShape accepts one named target-free proposal shape
+ok 419 - validateShape accepts one named target-free proposal shape
+  ---
+  duration_ms: 1.257638
+  type: 'test'
+  ...
+# Subtest: validateShape forbids authored target and tile scale controls
+ok 420 - validateShape forbids authored target and tile scale controls
+  ---
+  duration_ms: 0.706396
+  type: 'test'
+  ...
+# Subtest: validateShape rejects malformed dimensions, blockers, and proposal labeling
+ok 421 - validateShape rejects malformed dimensions, blockers, and proposal labeling
+  ---
+  duration_ms: 0.4055
+  type: 'test'
+  ...
+# Subtest: deriveCandidate uses fixed fitting and disjoint holdout seeds with measured target rounding
+ok 422 - deriveCandidate uses fixed fitting and disjoint holdout seeds with measured target rounding
+  ---
+  duration_ms: 2.983821
+  type: 'test'
+  ...
+# Subtest: deriveCandidate refuses an incomplete fitting run
+ok 423 - deriveCandidate refuses an incomplete fitting run
+  ---
+  duration_ms: 0.665401
+  type: 'test'
+  ...
+# Subtest: verifyCandidate passes a bound receipt and rejects tampering, invalid data, overlap, and incomplete totals
+ok 424 - verifyCandidate passes a bound receipt and rejects tampering, invalid data, overlap, and incomplete totals
+  ---
+  duration_ms: 3.332745
+  type: 'test'
+  ...
+# Subtest: verifyCandidate remeasures fitting evidence and enforces target and tile-scale derivation
+ok 425 - verifyCandidate remeasures fitting evidence and enforces target and tile-scale derivation
+  ---
+  duration_ms: 2.388579
+  type: 'test'
+  ...
+# Subtest: authored receipts carry the exact frozen calibration stamp
+ok 426 - authored receipts carry the exact frozen calibration stamp
+  ---
+  duration_ms: 0.759158
+  type: 'test'
+  ...
+# Subtest: verification rejects missing or re-signed mismatched calibration stamps
+ok 427 - verification rejects missing or re-signed mismatched calibration stamps
+  ---
+  duration_ms: 2.938377
+  type: 'test'
+  ...
+# Subtest: a level in range is the level you get
+ok 428 - a level in range is the level you get
+  ---
+  duration_ms: 0.76538
+  type: 'test'
+  ...
+# Subtest: the first and last levels are both reachable
+ok 429 - the first and last levels are both reachable
+  ---
+  duration_ms: 0.151824
+  type: 'test'
+  ...
+# Subtest: no level parameter means no jump
+ok 430 - no level parameter means no jump
+  ---
+  duration_ms: 0.096661
+  type: 'test'
+  ...
+# Subtest: a level past the end is refused rather than clamped
+ok 431 - a level past the end is refused rather than clamped
+  ---
+  duration_ms: 0.090603
+  type: 'test'
+  ...
+# Subtest: zero and negative levels are refused
+ok 432 - zero and negative levels are refused
+  ---
+  duration_ms: 0.093048
+  type: 'test'
+  ...
+# Subtest: a value that is not a whole number is refused, not truncated
+ok 433 - a value that is not a whole number is refused, not truncated
+  ---
+  duration_ms: 0.112722
+  type: 'test'
+  ...
+# Subtest: the jump survives other query parameters
+ok 434 - the jump survives other query parameters
+  ---
+  duration_ms: 0.13605
+  type: 'test'
+  ...
+# Subtest: a shipped-level seed accepts the full unsigned 32-bit range
+ok 435 - a shipped-level seed accepts the full unsigned 32-bit range
+  ---
+  duration_ms: 0.181966
+  type: 'test'
+  ...
+# Subtest: an absent or malformed shipped-level seed leaves ordinary play random
+ok 436 - an absent or malformed shipped-level seed leaves ordinary play random
+  ---
+  duration_ms: 0.249452
+  type: 'test'
+  ...
+# Subtest: loading and retrying a fixed shipped-level seed reproduces the board RNG
+ok 437 - loading and retrying a fixed shipped-level seed reproduces the board RNG
+  ---
+  duration_ms: 1.155664
+  type: 'test'
+  ...
+# Subtest: measurement-control CLI keeps legacy defaults and parses explicit starts and axes source
+ok 438 - measurement-control CLI keeps legacy defaults and parses explicit starts and axes source
+  ---
+  duration_ms: 1.178108
+  type: 'test'
+  ...
+# Subtest: evaluation seed ranges must be safe, non-negative, and disjoint
+ok 439 - evaluation seed ranges must be safe, non-negative, and disjoint
+  ---
+  duration_ms: 1.559246
+  type: 'test'
+  ...
+# Subtest: a source archive freezes exact bin axes while retaining current pilot diagnostics
+ok 440 - a source archive freezes exact bin axes while retaining current pilot diagnostics
+  ---
+  duration_ms: 2.540353
+  type: 'test'
+  ...
+# Subtest: MAP-Elites keeps the best policy independently inside each behavior cell
+ok 441 - MAP-Elites keeps the best policy independently inside each behavior cell
+  ---
+  duration_ms: 0.26125
+  type: 'test'
+  ...
+# Subtest: behavior descriptors land in understandable numeric chain-style and patience bins
+ok 442 - behavior descriptors land in understandable numeric chain-style and patience bins
+  ---
+  duration_ms: 0.388952
+  type: 'test'
+  ...
+# Subtest: a pilot must demonstrate real range on both descriptors before axes exist
+ok 443 - a pilot must demonstrate real range on both descriptors before axes exist
+  ---
+  duration_ms: 0.229166
+  type: 'test'
+  ...
+# Subtest: policy identity is stable across object key order
+ok 444 - policy identity is stable across object key order
+  ---
+  duration_ms: 0.300372
+  type: 'test'
+  ...
+# Subtest: the static map explains axes, empty cells, elite identity, selection, and holdout
+ok 445 - the static map explains axes, empty cells, elite identity, selection, and holdout
+  ---
+  duration_ms: 0.440126
+  type: 'test'
+  ...
+# Subtest: artifact verification refuses seed overlap and missing representative holdout evidence
+ok 446 - artifact verification refuses seed overlap and missing representative holdout evidence
+  ---
+  duration_ms: 0.440286
+  type: 'test'
+  ...
+# Subtest: artifact verification binds frozen axes to their recorded identity
+ok 447 - artifact verification binds frozen axes to their recorded identity
+  ---
+  duration_ms: 0.995175
+  type: 'test'
+  ...
+# Subtest: merge-depth control distinguishes a two-generation dependency
+ok 448 - merge-depth control distinguishes a two-generation dependency
+  ---
+  duration_ms: 1.973565
+  type: 'test'
+  ...
+# Subtest: spatial-spread control distinguishes compact and board-wide chains
+ok 449 - spatial-spread control distinguishes compact and board-wide chains
+  ---
+  duration_ms: 0.28349
+  type: 'test'
+  ...
+# Subtest: uniform scale preserves merge-depth and spatial-spread proxies
+ok 450 - uniform scale preserves merge-depth and spatial-spread proxies
+  ---
+  duration_ms: 15.866114
+  type: 'test'
+  ...
+# Subtest: bounded misses remain UNKNOWN and planted witnesses fail replay
+ok 451 - bounded misses remain UNKNOWN and planted witnesses fail replay
+  ---
+  duration_ms: 1.42053
+  type: 'test'
+  ...
+# Subtest: the fixed axes assign all four intended cells
+ok 452 - the fixed axes assign all four intended cells
+  ---
+  duration_ms: 1.767659
+  type: 'test'
+  ...
+# Subtest: archive admission requires cross-width cell agreement and spread stability
+ok 453 - archive admission requires cross-width cell agreement and spread stability
+  ---
+  duration_ms: 0.525708
+  type: 'test'
+  ...
+# Subtest: each cell retains the four most reproducible identities deterministically
+ok 454 - each cell retains the four most reproducible identities deterministically
+  ---
+  duration_ms: 0.627197
+  type: 'test'
+  ...
+# Subtest: a planted complete 128-row map supports all registered claims
+ok 455 - a planted complete 128-row map supports all registered claims
+  ---
+  duration_ms: 10.182625
+  type: 'test'
+  ...
+# Subtest: a two-cell collapse is falsified rather than called inconclusive
+ok 456 - a two-cell collapse is falsified rather than called inconclusive
+  ---
+  duration_ms: 1.214036
+  type: 'test'
+  ...
+# Subtest: makeRng and makeSeededRng produce identical sequences
+ok 457 - makeRng and makeSeededRng produce identical sequences
+  ---
+  duration_ms: 1.670081
+  type: 'test'
+  ...
+# Subtest: createLevelState builds the same opening board as createInitialGrid
+ok 458 - createLevelState builds the same opening board as createInitialGrid
+  ---
+  duration_ms: 2.605994
+  type: 'test'
+  ...
+# Subtest: canExtendChain agrees for every value relationship, including 0
+ok 459 - canExtendChain agrees for every value relationship, including 0
+  ---
+  duration_ms: 0.707619
+  type: 'test'
+  ...
+# Subtest: isBlockedTile agrees with Tile.isBlocked for every blocker type
+ok 460 - isBlockedTile agrees with Tile.isBlocked for every blocker type
+  ---
+  duration_ms: 0.18701
+  type: 'test'
+  ...
+# Subtest: isValidChain agrees across lengths and first-pair values
+ok 461 - isValidChain agrees across lengths and first-pair values
+  ---
+  duration_ms: 0.294581
+  type: 'test'
+  ...
+# Subtest: chain multiplier agrees for lengths 0-30
+ok 462 - chain multiplier agrees for lengths 0-30
+  ---
+  duration_ms: 0.261094
+  type: 'test'
+  ...
+# Subtest: merges agree at every multiplier tier, on board and on score
+ok 463 - merges agree at every multiplier tier, on board and on score
+  ---
+  duration_ms: 262.313274
+  type: 'test'
+  ...
+# Subtest: a bomb in the FINAL position is defused and survives, in both
+ok 464 - a bomb in the FINAL position is defused and survives, in both
+  ---
+  duration_ms: 260.523226
+  type: 'test'
+  ...
+# Subtest: a bomb in a NON-final position is deleted outright, in both
+ok 465 - a bomb in a NON-final position is deleted outright, in both
+  ---
+  duration_ms: 263.223442
+  type: 'test'
+  ...
+# Subtest: applyGravity agrees across columns, stones, ice and bombs
+ok 466 - applyGravity agrees across columns, stones, ice and bombs
+  ---
+  duration_ms: 1.18504
+  type: 'test'
+  ...
+# Subtest: spawnNewTiles agrees on values, positions, and how many draws it takes
+ok 467 - spawnNewTiles agrees on values, positions, and how many draws it takes
+  ---
+  duration_ms: 0.746298
+  type: 'test'
+  ...
+# Subtest: tickBlockers agrees on ice thawing and bomb countdown
+ok 468 - tickBlockers agrees on ice thawing and bomb countdown
+  ---
+  duration_ms: 0.672604
+  type: 'test'
+  ...
+# Subtest: checkBombs agrees in BOTH directions
+ok 469 - checkBombs agrees in BOTH directions
+  ---
+  duration_ms: 0.351217
+  type: 'test'
+  ...
+# Subtest: the list of uncompared behaviour is accurate
+ok 470 - the list of uncompared behaviour is accurate
+  ---
+  duration_ms: 0.14879
+  type: 'test'
+  ...
+# Subtest: oracle corpus reads and replays all real recordings, groups exact repeats, retains best wins
+ok 471 - oracle corpus reads and replays all real recordings, groups exact repeats, retains best wins
+  ---
+  duration_ms: 104.725321
+  type: 'test'
+  ...
+# Subtest: full-rule oracle transition replays every real capture including bombs, ice, stones and scale
+ok 472 - full-rule oracle transition replays every real capture including bombs, ice, stones and scale
+  ---
+  duration_ms: 24.644312
+  type: 'test'
+  ...
+# Subtest: verifier rejects a planted illegal chain through its public witness seam
+ok 473 - verifier rejects a planted illegal chain through its public witness seam
+  ---
+  duration_ms: 2.224014
+  type: 'test'
+  ...
+# Subtest: verifier rejects planted wrong spawn and blocker timer in real post-move boards
+ok 474 - verifier rejects planted wrong spawn and blocker timer in real post-move boards
+  ---
+  duration_ms: 4.243728
+  type: 'test'
+  ...
+# Subtest: verifier rejects continuation after the actual target crossing
+ok 475 - verifier rejects continuation after the actual target crossing
+  ---
+  duration_ms: 1.033782
+  type: 'test'
+  ...
+# Subtest: real report verifier accepts the known legal calibration witnesses
+ok 476 - real report verifier accepts the known legal calibration witnesses
+  ---
+  duration_ms: 67472.282232
+  type: 'test'
+  ...
+# Subtest: report verifier rejects missing rows, duplicate rows and invented comparison results
+ok 477 - report verifier rejects missing rows, duplicate rows and invented comparison results
+  ---
+  duration_ms: 18561.931101
+  type: 'test'
+  ...
+# Subtest: coherent corpus substitution is rejected against identity pinned outside the report
+ok 478 - coherent corpus substitution is rejected against identity pinned outside the report
+  ---
+  duration_ms: 27.434055
+  type: 'test'
+  ...
+# Subtest: bounded search supplies a independently replayable solution and does not mutate the input
+ok 479 - bounded search supplies a independently replayable solution and does not mutate the input
+  ---
+  duration_ms: 0.985512
+  type: 'test'
+  ...
+# Subtest: candidate generation preserves legal setup prefixes and off-lattice choices
+ok 480 - candidate generation preserves legal setup prefixes and off-lattice choices
+  ---
+  duration_ms: 0.74848
+  type: 'test'
+  ...
+# Subtest: CLI reads real report files: positive passes and resigned false comparison fails
+ok 481 - CLI reads real report files: positive passes and resigned false comparison fails
+  ---
+  duration_ms: 21415.74229
+  type: 'test'
+  ...
+# Subtest: actual process deadline retains UNKNOWN without inventing impossibility
+ok 482 - actual process deadline retains UNKNOWN without inventing impossibility
+  ---
+  duration_ms: 10.739711
+  type: 'test'
+  ...
+# Subtest: a real slower bot witness remains a valid domain failure
+ok 483 - a real slower bot witness remains a valid domain failure
+  ---
+  duration_ms: 17340.439516
+  type: 'test'
+  ...
+# Subtest: replay display renders every verified move as a spatial board
+ok 484 - replay display renders every verified move as a spatial board
+  ---
+  duration_ms: 7.889415
+  type: 'test'
+  ...
+# Subtest: oracle source identities cover the harvest ranking module search depends on
+ok 485 - oracle source identities cover the harvest ranking module search depends on
+  ---
+  duration_ms: 0.662052
+  type: 'test'
+  ...
+# Subtest: a failing verdict cannot erase the complete paired result
+ok 486 - a failing verdict cannot erase the complete paired result
+  ---
+  duration_ms: 1.841995
+  type: 'test'
+  ...
+# Subtest: the write is immutable and validation happens before publication
+ok 487 - the write is immutable and validation happens before publication
+  ---
+  duration_ms: 0.420307
+  type: 'test'
+  ...
+# captured level 54 seed 3310936729: win 129472 in 16 moves -> ffffffffffff
+# captured level 54 seed 3310936729: win 129472 in 16 moves -> ffffffffffff
+# Subtest: an identical fixed-seed play remains one stored session and one benchmark row
+ok 488 - an identical fixed-seed play remains one stored session and one benchmark row
+  ---
+  duration_ms: 1604.412138
+  type: 'test'
+  ...
+# Subtest: nemesis labels a race to the target: fewer moves beats, equal ties, no win loses
+ok 489 - nemesis labels a race to the target: fewer moves beats, equal ties, no win loses
+  ---
+  duration_ms: 0.473482
+  type: 'test'
+  ...
+# captured level 54 seed 3310936729: lose 15360 in 3 moves -> 8abba4c08811
+# Subtest: nemesis serves shipped boards with the bot result and counts a new capture
+ok 490 - nemesis serves shipped boards with the bot result and counts a new capture
+  ---
+  duration_ms: 1437.438349
+  type: 'test'
+  ...
+# Subtest: naive SE is returned unchanged when no layout is supplied
+ok 491 - naive SE is returned unchanged when no layout is supplied
+  ---
+  duration_ms: 1.089236
+  type: 'test'
+  ...
+# Subtest: a layout that does not match the cell count is rejected
+ok 492 - a layout that does not match the cell count is rejected
+  ---
+  duration_ms: 0.435809
+  type: 'test'
+  ...
+# Subtest: level-clustered SE does not shrink when seeds are added to the same levels
+ok 493 - level-clustered SE does not shrink when seeds are added to the same levels
+  ---
+  duration_ms: 3.323557
+  type: 'test'
+  ...
+# Subtest: level-clustered SE does shrink when genuinely new levels are added
+ok 494 - level-clustered SE does shrink when genuinely new levels are added
+  ---
+  duration_ms: 0.558177
+  type: 'test'
+  ...
+# Subtest: seed-clustered SE catches variation that is common across levels
+ok 495 - seed-clustered SE catches variation that is common across levels
+  ---
+  duration_ms: 0.314664
+  type: 'test'
+  ...
+# Subtest: the correction is an inflation, never a discount
+ok 496 - the correction is an inflation, never a discount
+  ---
+  duration_ms: 0.34419
+  type: 'test'
+  ...
+# Subtest: behavior summary means chain size and the share of score earned in the final third
+ok 497 - behavior summary means chain size and the share of score earned in the final third
+  ---
+  duration_ms: 0.89463
+  type: 'test'
+  ...
+# Subtest: patience counts score only from moves in the final third of the budget
+ok 498 - patience counts score only from moves in the final third of the budget
+  ---
+  duration_ms: 0.261322
+  type: 'test'
+  ...
+# Subtest: policy evaluation exposes aggregate behavior beside uncensored scores
+ok 499 - policy evaluation exposes aggregate behavior beside uncensored scores
+  ---
+  duration_ms: 3358.804893
+  type: 'test'
+  ...
+# Subtest: single-cell policy evaluation aggregates the same post-move descriptor as its real play trace
+ok 500 - single-cell policy evaluation aggregates the same post-move descriptor as its real play trace
+  ---
+  duration_ms: 8330.084884
+  type: 'test'
+  ...
+# Subtest: policy lab occupancy agrees with the project classifier, including recoverable values and stones
+ok 501 - policy lab occupancy agrees with the project classifier, including recoverable values and stones
+  ---
+  duration_ms: 1.012947
+  type: 'test'
+  ...
+# Subtest: policy lab acceptance rejects a win regression, a zero lower bound and a gate-only gain
+ok 502 - policy lab acceptance rejects a win regression, a zero lower bound and a gate-only gain
+  ---
+  duration_ms: 0.23651
+  type: 'test'
+  ...
+# Subtest: board build potential excludes tiles in the dealt range and blocked company
+ok 503 - board build potential excludes tiles in the dealt range and blocked company
+  ---
+  duration_ms: 0.221427
+  type: 'test'
+  ...
+# Subtest: policy lab rejects a fifth worker before launching any workers
+ok 504 - policy lab rejects a fifth worker before launching any workers
+  ---
+  duration_ms: 0.720072
+  type: 'test'
+  ...
+# Subtest: completion fence refuses dispatched but unretained games even with a claimed verdict
+ok 505 - completion fence refuses dispatched but unretained games even with a claimed verdict
+  ---
+  duration_ms: 5.933183
+  type: 'test'
+  ...
+# Subtest: completion fence cannot certify a two-block interruption or duplicated reference
+ok 506 - completion fence cannot certify a two-block interruption or duplicated reference
+  ---
+  duration_ms: 1.39408
+  type: 'test'
+  ...
+# Subtest: confirmation requires positive overall interval without net win regressions
+ok 507 - confirmation requires positive overall interval without net win regressions
+  ---
+  duration_ms: 1.183752
+  type: 'test'
+  ...
+# Subtest: confirmation journals ten-seed jobs without substituting the 150-seed denominator
+ok 508 - confirmation journals ten-seed jobs without substituting the 150-seed denominator
+  ---
+  duration_ms: 20.438714
+  type: 'test'
+  ...
+# Subtest: unregistered confirmation is refused before any game or run marker
+ok 509 - unregistered confirmation is refused before any game or run marker
+  ---
+  duration_ms: 1.118412
+  type: 'test'
+  ...
+# Subtest: candidate format guard rejects nonliteral modules without executing their code
+ok 510 - candidate format guard rejects nonliteral modules without executing their code
+  ---
+  duration_ms: 0.788216
+  type: 'test'
+  ...
+# Subtest: operational reporting failure cannot reject a durably completed scientific job
+ok 511 - operational reporting failure cannot reject a durably completed scientific job
+  ---
+  duration_ms: 77.658646
+  type: 'test'
+  ...
+# Subtest: confirmation preflight rejects drift in extra protocol-frozen selection data
+ok 512 - confirmation preflight rejects drift in extra protocol-frozen selection data
+  ---
+  duration_ms: 1.758973
+  type: 'test'
+  ...
+# Subtest: policy panel audit rejects incomplete late levels and repeated cells
+ok 513 - policy panel audit rejects incomplete late levels and repeated cells
+  ---
+  duration_ms: 4.157023
+  type: 'test'
+  ...
+# Subtest: policy panel audit rejects reused ranges, out-of-allocation seeds and recording reads
+ok 514 - policy panel audit rejects reused ranges, out-of-allocation seeds and recording reads
+  ---
+  duration_ms: 0.559785
+  type: 'test'
+  ...
+# Subtest: policy panel audit reports unused blocks as not run without fabricating failures
+ok 515 - policy panel audit reports unused blocks as not run without fabricating failures
+  ---
+  duration_ms: 0.18163
+  type: 'test'
+  ...
+# Subtest: parity audit rejects repeated, incomplete and undeclared cells even with 200 matching traces
+ok 516 - parity audit rejects repeated, incomplete and undeclared cells even with 200 matching traces
+  ---
+  duration_ms: 1.836042
+  type: 'test'
+  ...
+# Subtest: partial durable results cannot become a completed control verdict or erase charged jobs
+ok 517 - partial durable results cannot become a completed control verdict or erase charged jobs
+  ---
+  duration_ms: 8.27492
+  type: 'test'
+  ...
+# Subtest: committed evidence identities support raw artifacts larger than the child-process default buffer
+ok 518 - committed evidence identities support raw artifacts larger than the child-process default buffer
+  ---
+  duration_ms: 249.979441
+  type: 'test'
+  ...
+# Subtest: Windows directory-sync branch avoids the unavailable directory open while POSIX still syncs
+ok 519 - Windows directory-sync branch avoids the unavailable directory open while POSIX still syncs
+  ---
+  duration_ms: 5.10129
+  type: 'test'
+  ...
+# Subtest: journal retains a completed job when a later job fails and refuses replay
+ok 520 - journal retains a completed job when a later job fails and refuses replay
+  ---
+  duration_ms: 10.365473
+  type: 'test'
+  ...
+# Subtest: journal survives actual controller termination while another job is in flight
+ok 521 - journal survives actual controller termination while another job is in flight
+  ---
+  duration_ms: 107.368531
+  type: 'test'
+  ...
+# Subtest: current closeout rejects a new failing test added after a successful saved suite receipt
+ok 522 - current closeout rejects a new failing test added after a successful saved suite receipt
+  ---
+  duration_ms: 719.9371
+  type: 'test'
+  ...
+# Subtest: post-stop exception permits exactly RESULT-0081 and preserves every other inventory byte
+ok 523 - post-stop exception permits exactly RESULT-0081 and preserves every other inventory byte
+  ---
+  duration_ms: 0.995285
+  type: 'test'
+  ...
+# Subtest: registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
+ok 524 - registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses
+  ---
+  duration_ms: 2.005536
+  type: 'test'
+  ...
+# Subtest: joint search varies accepted coordinates together and caps complete candidates at thirty-one
+ok 525 - joint search varies accepted coordinates together and caps complete candidates at thirty-one
+  ---
+  duration_ms: 3.109475
+  type: 'test'
+  ...
+# Subtest: candidate freeze chooses fresh recheck speed and fewer changes on ties
+ok 526 - candidate freeze chooses fresh recheck speed and fewer changes on ties
+  ---
+  duration_ms: 2.60341
+  type: 'test'
+  ...
+# Subtest: paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
+ok 527 - paired-panel preflight cannot spend a reference when its fresh candidate cannot fit
+  ---
+  duration_ms: 0.414749
+  type: 'test'
+  ...
+# Subtest: proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
+ok 528 - proposal CSV identifies fresh recheck as the primary result and preserves unreached stages
+  ---
+  duration_ms: 0.51171
+  type: 'test'
+  ...
+# Subtest: independent proposal arithmetic reproduces a hand-calculated four-cell grid
+ok 529 - independent proposal arithmetic reproduces a hand-calculated four-cell grid
+  ---
+  duration_ms: 0.479841
+  type: 'test'
+  ...
+# Subtest: independent verdict refuses gate-only success, fresh uncertainty and win regressions
+ok 530 - independent verdict refuses gate-only success, fresh uncertainty and win regressions
+  ---
+  duration_ms: 0.192827
+  type: 'test'
+  ...
+# Subtest: planning preserves three distinct eligible historical boards and refuses candidate overwrite
+ok 531 - planning preserves three distinct eligible historical boards and refuses candidate overwrite
+  ---
+  duration_ms: 2.718026
+  type: 'test'
+  ...
+# Subtest: phase admission pins the committed audit and rejects uncommitted drift before execution
+ok 532 - phase admission pins the committed audit and rejects uncommitted drift before execution
+  ---
+  duration_ms: 93.371691
+  type: 'test'
+  ...
+# Subtest: independent arithmetic retains the level uncertainty when seed columns tie
+ok 533 - independent arithmetic retains the level uncertainty when seed columns tie
+  ---
+  duration_ms: 8.201027
+  type: 'test'
+  ...
+# Subtest: independent arithmetic cannot turn missing mutual wins into zero-effect observations
+ok 534 - independent arithmetic cannot turn missing mutual wins into zero-effect observations
+  ---
+  duration_ms: 0.775072
+  type: 'test'
+  ...
+# Subtest: independent accounting counts both parity games and refuses duplicate panels
+ok 535 - independent accounting counts both parity games and refuses duplicate panels
+  ---
+  duration_ms: 0.639172
+  type: 'test'
+  ...
+# Subtest: independent paired arithmetic refuses null winning move counts
+ok 536 - independent paired arithmetic refuses null winning move counts
+  ---
+  duration_ms: 3.372057
+  type: 'test'
+  ...
+# Subtest: independent parity audit rejects 200 duplicate identities and cells outside the frozen recipe
+ok 537 - independent parity audit rejects 200 duplicate identities and cells outside the frozen recipe
+  ---
+  duration_ms: 1.347547
+  type: 'test'
+  ...
+# Subtest: recovery excludes partial C3 while retaining all burned-game charges and completed controls
+ok 538 - recovery excludes partial C3 while retaining all burned-game charges and completed controls
+  ---
+  duration_ms: 26.001199
+  type: 'test'
+  ...
+# Subtest: carried accounting reaches 29580 and cannot exceed the unchanged control cap
+ok 539 - carried accounting reaches 29580 and cannot exceed the unchanged control cap
+  ---
+  duration_ms: 0.661066
+  type: 'test'
+  ...
+# Subtest: fresh C3 validation refuses the old burned C3, duplicated addresses, and missing rows
+ok 540 - fresh C3 validation refuses the old burned C3, duplicated addresses, and missing rows
+  ---
+  duration_ms: 5.337509
+  type: 'test'
+  ...
+# Subtest: recovery completion refuses a missing arm, lost-game discount, or weakened aggregate bar
+ok 541 - recovery completion refuses a missing arm, lost-game discount, or weakened aggregate bar
+  ---
+  duration_ms: 353.882513
+  type: 'test'
+  ...
+# Subtest: independent arithmetic gives the hand-calculated level and seed errors
+ok 542 - independent arithmetic gives the hand-calculated level and seed errors
+  ---
+  duration_ms: 1.451864
+  type: 'test'
+  ...
+# Subtest: independent arithmetic keeps win regressions and single mutual-win uncertainty
+ok 543 - independent arithmetic keeps win regressions and single mutual-win uncertainty
+  ---
+  duration_ms: 0.969059
+  type: 'test'
+  ...
+# Subtest: independent audit matches inherited real panels and rejects discounted charges or burned C3 substitution
+ok 544 - independent audit matches inherited real panels and rejects discounted charges or burned C3 substitution
+  ---
+  duration_ms: 662.947975
+  type: 'test'
+  ...
+# Subtest: closeout refuses a running recovery or absent named closure
+ok 545 - closeout refuses a running recovery or absent named closure
+  ---
+  duration_ms: 1.609168
+  type: 'test'
+  ...
+# Subtest: no-confirmation audit pin rejects uncommitted changes, missing auditors and post-pin drift
+ok 546 - no-confirmation audit pin rejects uncommitted changes, missing auditors and post-pin drift
+  ---
+  duration_ms: 89.485736
+  type: 'test'
+  ...
+# Subtest: no-candidate and confirmed closeouts require their actual phase audits
+ok 547 - no-candidate and confirmed closeouts require their actual phase audits
+  ---
+  duration_ms: 1.148267
+  type: 'test'
+  ...
+# Subtest: successful command exit with partial arithmetic cannot qualify closeout
+ok 548 - successful command exit with partial arithmetic cannot qualify closeout
+  ---
+  duration_ms: 0.582012
+  type: 'test'
+  ...
+# Subtest: direct-source closure binds its result, registration, raw hashes and consumed charges
+ok 549 - direct-source closure binds its result, registration, raw hashes and consumed charges
+  ---
+  duration_ms: 0.936207
+  type: 'test'
+  ...
+# Subtest: rendered protocol retains the template pre-registration identity through amend
+ok 550 - rendered protocol retains the template pre-registration identity through amend
+  ---
+  duration_ms: 0.415002
+  type: 'test'
+  ...
+# Subtest: confirmed closure binds the actual verdict and pins both raw evidence and closure bytes
+ok 551 - confirmed closure binds the actual verdict and pins both raw evidence and closure bytes
+  ---
+  duration_ms: 0.657771
+  type: 'test'
+  ...
+# Subtest: recurring final-tree suite revalidates every retained closeout and committed audit pin
+ok 552 - recurring final-tree suite revalidates every retained closeout and committed audit pin
+  ---
+  duration_ms: 1838.2056
+  type: 'test'
+  ...
+# Subtest: replacing committed evidence and regenerating its pin cannot replace the first-added receipt
+ok 553 - replacing committed evidence and regenerating its pin cannot replace the first-added receipt
+  ---
+  duration_ms: 117.759286
+  type: 'test'
+  ...
+# Subtest: merge history cannot hide a competing evidence and receipt addition
+ok 554 - merge history cannot hide a competing evidence and receipt addition
+  ---
+  duration_ms: 121.249576
+  type: 'test'
+  ...
+# Subtest: registration check rejects a sibling retained in the object store and accepts reachable registration
+ok 555 - registration check rejects a sibling retained in the object store and accepts reachable registration
+  ---
+  duration_ms: 77.516733
+  type: 'test'
+  ...
+# Subtest: continuation retains eleven controls and every unknown-game charge without replaying a cell
+ok 556 - continuation retains eleven controls and every unknown-game charge without replaying a cell
+  ---
+  duration_ms: 238.330002
+  type: 'test'
+  ...
+# Subtest: minimum budget increase funds exactly one whole replacement while preserving other funded phases
+ok 557 - minimum budget increase funds exactly one whole replacement while preserving other funded phases
+  ---
+  duration_ms: 0.596717
+  type: 'test'
+  ...
+# Subtest: completion refuses lost-game discounts, old C12 seeds, missing arms and weakened bars
+ok 558 - completion refuses lost-game discounts, old C12 seeds, missing arms and weakened bars
+  ---
+  duration_ms: 537.474897
+  type: 'test'
+  ...
+# Subtest: independent CLI refuses erased charges and inherited-panel mutations without playing new games
+ok 559 - independent CLI refuses erased charges and inherited-panel mutations without playing new games
+  ---
+  duration_ms: 1139.322244
+  type: 'test'
+  ...
+# Subtest: resumed closeout cannot turn a running phase or unconfirmed candidate into a named finish
+ok 560 - resumed closeout cannot turn a running phase or unconfirmed candidate into a named finish
+  ---
+  duration_ms: 1.530379
+  type: 'test'
+  ...
+# Subtest: resumed closure binds all three registrations, charges and every measurement input identity
+ok 561 - resumed closure binds all three registrations, charges and every measurement input identity
+  ---
+  duration_ms: 0.900782
+  type: 'test'
+  ...
+# Subtest: closeout rejects successful exits with incomplete numeric audits and keeps the active run pending
+ok 562 - closeout rejects successful exits with incomplete numeric audits and keeps the active run pending
+  ---
+  duration_ms: 1.015596
+  type: 'test'
+  ...
+# Subtest: full-history guard rejects an independently added replacement hidden by a merge
+ok 563 - full-history guard rejects an independently added replacement hidden by a merge
+  ---
+  duration_ms: 77.257203
+  type: 'test'
+  ...
+# Subtest: additional trust audit rejects validator/baseline drift even after bytes are restored
+ok 564 - additional trust audit rejects validator/baseline drift even after bytes are restored
+  ---
+  duration_ms: 57.977161
+  type: 'test'
+  ...
+# Subtest: recurring completion runs pinned numeric audits and refuses unsuccessful or incomplete output
+ok 565 - recurring completion runs pinned numeric audits and refuses unsuccessful or incomplete output
+  ---
+  duration_ms: 0.57226
+  type: 'test'
+  ...
+# Subtest: reviewed coordinator refuses a real pre-staged protected change, source drift and a verdict-only collision
+ok 566 - reviewed coordinator refuses a real pre-staged protected change, source drift and a verdict-only collision
+  ---
+  duration_ms: 75.444513
+  type: 'test'
+  ...
+# Subtest: resumed completion requires report, provisional ledger, index, CURRENT and both backlog histories
+ok 567 - resumed completion requires report, provisional ledger, index, CURRENT and both backlog histories
+  ---
+  duration_ms: 3.685903
+  type: 'test'
+  ...
+# Subtest: a flat game is neither back- nor front-loaded
+ok 568 - a flat game is neither back- nor front-loaded
+  ---
+  duration_ms: 1.053849
+  type: 'test'
+  ...
+# Subtest: backload rises when the score arrives late and falls when it arrives early
+ok 569 - backload rises when the score arrives late and falls when it arrives early
+  ---
+  duration_ms: 0.309889
+  type: 'test'
+  ...
+# Subtest: an odd move count biases backload down, never up
+ok 570 - an odd move count biases backload down, never up
+  ---
+  duration_ms: 1.058219
+  type: 'test'
+  ...
+# Subtest: spike is the largest single move as a share of the score
+ok 571 - spike is the largest single move as a share of the score
+  ---
+  duration_ms: 0.330005
+  type: 'test'
+  ...
+# Subtest: a scoreless or empty game reports no curve at all
+ok 572 - a scoreless or empty game reports no curve at all
+  ---
+  duration_ms: 0.195005
+  type: 'test'
+  ...
+# Subtest: the human gen-0010 playthrough reads as strongly back-loaded and spiky
+ok 573 - the human gen-0010 playthrough reads as strongly back-loaded and spiky
+  ---
+  duration_ms: 0.161492
+  type: 'test'
+  ...
+# Subtest: analyzes the real six-move max-chain relay play
+ok 574 - analyzes the real six-move max-chain relay play
+  ---
+  duration_ms: 2175.563642
+  type: 'test'
+  ...
+# Subtest: rejects a recording that is not bound to the supplied board
+ok 575 - rejects a recording that is not bound to the supplied board
+  ---
+  duration_ms: 1.130633
+  type: 'test'
+  ...
+# Subtest: rejects a recording whose declared move count does not match its chains
+ok 576 - rejects a recording whose declared move count does not match its chains
+  ---
+  duration_ms: 0.766949
+  type: 'test'
+  ...
+# Subtest: rejects a claimed win that continued after a bomb exploded
+ok 577 - rejects a claimed win that continued after a bomb exploded
+  ---
+  duration_ms: 95.806765
+  type: 'test'
+  ...
+# Subtest: the collector inspects every prototype session currently on disk
+ok 578 - the collector inspects every prototype session currently on disk
+  ---
+  duration_ms: 9416.081607
+  type: 'test'
+  ...
+# Subtest: scaled frozen spawns preserve the level tile scale
+ok 579 - scaled frozen spawns preserve the level tile scale
+  ---
+  duration_ms: 0.927458
+  type: 'test'
+  ...
+# Subtest: successful bounded analysis publishes upper bounds, not exact descriptors
+ok 580 - successful bounded analysis publishes upper bounds, not exact descriptors
+  ---
+  duration_ms: 22.577621
+  type: 'test'
+  ...
+# Subtest: the public replay seam rejects a planted unavailable witness tile
+ok 581 - the public replay seam rejects a planted unavailable witness tile
+  ---
+  duration_ms: 1.843021
+  type: 'test'
+  ...
+# Subtest: a bounded miss remains UNKNOWN rather than becoming unreachable
+ok 582 - a bounded miss remains UNKNOWN rather than becoming unreachable
+  ---
+  duration_ms: 0.627137
+  type: 'test'
+  ...
+# Subtest: actionsPerState caps the combined candidate families
+ok 583 - actionsPerState caps the combined candidate families
+  ---
+  duration_ms: 19.913267
+  type: 'test'
+  ...
+# Subtest: the representative panel uses real 5x8, 5x7, 6x5, and 4x8 configurations
+ok 584 - the representative panel uses real 5x8, 5x7, 6x5, and 4x8 configurations
+  ---
+  duration_ms: 0.278212
+  type: 'test'
+  ...
+# Subtest: exact envelope turns reachability into budget tightness and a solver-independent chain cap
+ok 585 - exact envelope turns reachability into budget tightness and a solver-independent chain cap
+  ---
+  duration_ms: 131.502011
+  type: 'test'
+  ...
+# Subtest: descriptor witnesses replay through the real frozen transition seam
+ok 586 - descriptor witnesses replay through the real frozen transition seam
+  ---
+  duration_ms: 215.583041
+  type: 'test'
+  ...
+# Subtest: the real verifier seam rejects a planted bad descriptor
+ok 587 - the real verifier seam rejects a planted bad descriptor
+  ---
+  duration_ms: 205.935762
+  type: 'test'
+  ...
+# Subtest: a node cap stays UNKNOWN instead of becoming evidence of unreachability
+ok 588 - a node cap stays UNKNOWN instead of becoming evidence of unreachability
+  ---
+  duration_ms: 2.90187
+  type: 'test'
+  ...
+# Subtest: the shipped candidate corpus is not empty
+ok 589 - the shipped candidate corpus is not empty
+  ---
+  duration_ms: 1.141725
+  type: 'test'
+  ...
+# Subtest: candidate-levels-52.json has a receipt that verifies against the current bot
+not ok 590 - candidate-levels-52.json has a receipt that verifies against the current bot
+  ---
+  duration_ms: 3.84672
+  type: 'test'
+  location: '/workspace/wt/latest-main-20261002/solver/tests/receiptGate.test.js:165:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    candidate-levels-52.json: calibration stamp mismatch
+    
+    THIS FAILURE IS KNOWN AND DECIDED. It is not a new bug and it is not
+    yours to fix. This level ships, a human has completed it, and on
+    2026-08-21 the owner decided its target stays where it is. Refreshing
+    the receipt would re-derive the target from a stronger bot and raise it
+    4.9%, making a live level harder for players, while the bot's win rate
+    on it moved one seed in three hundred (ticket T-003).
+    
+    Do NOT clear this by re-authoring, archiving, or exempting it. It fails
+    because the receipt genuinely predates the current bot, which is true.
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    TestContext.<anonymous> (/workspace/wt/latest-main-20261002/solver/tests/receiptGate.test.js:170:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: candidate-levels-54.json has a receipt that verifies against the current bot
+not ok 591 - candidate-levels-54.json has a receipt that verifies against the current bot
+  ---
+  duration_ms: 1.378281
+  type: 'test'
+  location: '/workspace/wt/latest-main-20261002/solver/tests/receiptGate.test.js:165:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    candidate-levels-54.json: calibration stamp mismatch
+    
+    Not exempt (ships=true, human win recorded=false). This receipt
+    was measured against different code. Re-author it against the current
+    bot, or archive it and stop quoting its numbers. Do not weaken this
+    check to clear it.
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  operator: 'fail'
+  stack: |-
+    TestContext.<anonymous> (/workspace/wt/latest-main-20261002/solver/tests/receiptGate.test.js:170:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: candidate-levels.json has a receipt that verifies against the current bot
+ok 592 - candidate-levels.json has a receipt that verifies against the current bot
+  ---
+  duration_ms: 7504.058981
+  type: 'test'
+  ...
+# Subtest: the walk inspected the whole corpus
+ok 593 - the walk inspected the whole corpus
+  ---
+  duration_ms: 1.087277
+  type: 'test'
+  ...
+# Subtest: every file the measurement depends on is one of the hashed inputs
+ok 594 - every file the measurement depends on is one of the hashed inputs
+  ---
+  duration_ms: 1.410805
+  type: 'test'
+  ...
+# Subtest: a tampered receipt is refused rather than verified
+ok 595 - a tampered receipt is refused rather than verified
+  ---
+  duration_ms: 0.816411
+  type: 'test'
+  ...
+# Subtest: a candidate store with no receipt is a failure, not an absence
+ok 596 - a candidate store with no receipt is a failure, not an absence
+  ---
+  duration_ms: 0.550775
+  type: 'test'
+  ...
+# Subtest: an empty corpus fails the floor instead of reading as clean
+ok 597 - an empty corpus fails the floor instead of reading as clean
+  ---
+  duration_ms: 0.23446
+  type: 'test'
+  ...
+# Subtest: a receipt whose code has drifted is refused, not verified
+ok 598 - a receipt whose code has drifted is refused, not verified
+  ---
+  duration_ms: 1.015083
+  type: 'test'
+  ...
+# Subtest: a new unhashed require in the measurement path is detected
+ok 599 - a new unhashed require in the measurement path is detected
+  ---
+  duration_ms: 0.461355
+  type: 'test'
+  ...
+# Subtest: the closure detector does not see computed or templated requires
+ok 600 - the closure detector does not see computed or templated requires
+  ---
+  duration_ms: 0.249286
+  type: 'test'
+  ...
+# Subtest: the live corpus matches the committed manifest exactly
+ok 601 - the live corpus matches the committed manifest exactly
+  ---
+  duration_ms: 0.372261
+  type: 'test'
+  ...
+# Subtest: a store vanishing from the corpus is detected, not silently tolerated
+ok 602 - a store vanishing from the corpus is detected, not silently tolerated
+  ---
+  duration_ms: 0.145866
+  type: 'test'
+  ...
+# Subtest: the exemption is computed, never declared
+ok 603 - the exemption is computed, never declared
+  ---
+  duration_ms: 0.135146
+  type: 'test'
+  ...
+# Subtest: shipping alone does not exempt
+ok 604 - shipping alone does not exempt
+  ---
+  duration_ms: 0.133846
+  type: 'test'
+  ...
+# Subtest: a human win alone does not exempt
+ok 605 - a human win alone does not exempt
+  ---
+  duration_ms: 0.131213
+  type: 'test'
+  ...
+# Subtest: both halves together exempt, and only then
+ok 606 - both halves together exempt, and only then
+  ---
+  duration_ms: 0.074247
+  type: 'test'
+  ...
+# Subtest: every stale receipt fails, exempt or not
+ok 607 - every stale receipt fails, exempt or not
+  ---
+  duration_ms: 0.158947
+  type: 'test'
+  ...
+# Subtest: a losing recording does not license an exemption
+ok 608 - a losing recording does not license an exemption
+  ---
+  duration_ms: 0.407197
+  type: 'test'
+  ...
+# Subtest: the real exemption facts hold for the shipped corpus
+ok 609 - the real exemption facts hold for the shipped corpus
+  ---
+  duration_ms: 3.916395
+  type: 'test'
+  ...
+# Subtest: at least one recording is replayable
+ok 610 - at least one recording is replayable
+  ---
+  duration_ms: 0.878699
+  type: 'test'
+  ...
+# Subtest: the reusable replay predicate passes a real recording and refuses its broken twin
+ok 611 - the reusable replay predicate passes a real recording and refuses its broken twin
+  ---
+  duration_ms: 1.746405
+  type: 'test'
+  ...
+# Subtest: recording 1352aa7a02cd (level 53, win) replays exactly
+ok 612 - recording 1352aa7a02cd (level 53, win) replays exactly
+  ---
+  duration_ms: 0.832835
+  type: 'test'
+  ...
+# Subtest: recording 1c87356748ee (level 51, win) replays exactly
+ok 613 - recording 1c87356748ee (level 51, win) replays exactly
+  ---
+  duration_ms: 0.630044
+  type: 'test'
+  ...
+# Subtest: recording 3d3ba1f05b08 (level 54, win) replays exactly
+ok 614 - recording 3d3ba1f05b08 (level 54, win) replays exactly
+  ---
+  duration_ms: 0.451579
+  type: 'test'
+  ...
+# Subtest: recording 44d3802d5512 (level 52, win) replays exactly
+ok 615 - recording 44d3802d5512 (level 52, win) replays exactly
+  ---
+  duration_ms: 0.461705
+  type: 'test'
+  ...
+# Subtest: recording 7061bbf0132f (level 53, win) replays exactly
+ok 616 - recording 7061bbf0132f (level 53, win) replays exactly
+  ---
+  duration_ms: 0.206659
+  type: 'test'
+  ...
+# Subtest: recording 78749fc07834 (level 51, win) replays exactly
+ok 617 - recording 78749fc07834 (level 51, win) replays exactly
+  ---
+  duration_ms: 0.19162
+  type: 'test'
+  ...
+# Subtest: recording 7ad0978f9619 (level 53, win) replays exactly
+ok 618 - recording 7ad0978f9619 (level 53, win) replays exactly
+  ---
+  duration_ms: 0.281006
+  type: 'test'
+  ...
+# Subtest: recording 8ac6c9d4c533 (level 51, lose) replays exactly
+ok 619 - recording 8ac6c9d4c533 (level 51, lose) replays exactly
+  ---
+  duration_ms: 0.321797
+  type: 'test'
+  ...
+# Subtest: recording d36e875d0839 (level 52, win) replays exactly
+ok 620 - recording d36e875d0839 (level 52, win) replays exactly
+  ---
+  duration_ms: 0.46638
+  type: 'test'
+  ...
+# Subtest: recording f0ae3e75fe38 (level 52, win) replays exactly
+ok 621 - recording f0ae3e75fe38 (level 52, win) replays exactly
+  ---
+  duration_ms: 0.279465
+  type: 'test'
+  ...
+# Subtest: recordings whose candidate is gone are named, and their count cannot grow
+ok 622 - recordings whose candidate is gone are named, and their count cannot grow
+  ---
+  duration_ms: 0.134358
+  type: 'test'
+  ...
+# Subtest: a recording claiming a score it did not reach is refused
+ok 623 - a recording claiming a score it did not reach is refused
+  ---
+  duration_ms: 0.355131
+  type: 'test'
+  ...
+# Subtest: a recording whose moves were altered is refused
+ok 624 - a recording whose moves were altered is refused
+  ---
+  duration_ms: 0.425768
+  type: 'test'
+  ...
+# Subtest: a chain that revisits a tile is refused as illegal, not merely as mis-scored
+ok 625 - a chain that revisits a tile is refused as illegal, not merely as mis-scored
+  ---
+  duration_ms: 0.585334
+  type: 'test'
+  ...
+# Subtest: a recording claiming a win it did not achieve is refused
+ok 626 - a recording claiming a win it did not achieve is refused
+  ---
+  duration_ms: 0.177964
+  type: 'test'
+  ...
+# Subtest: a recording added after this file was written is picked up without editing it
+ok 627 - a recording added after this file was written is picked up without editing it
+  ---
+  duration_ms: 1.11339
+  type: 'test'
+  ...
+# Subtest: an unresolvable recording is classed as an orphan, not quietly dropped
+ok 628 - an unresolvable recording is classed as an orphan, not quietly dropped
+  ---
+  duration_ms: 0.313164
+  type: 'test'
+  ...
+# Subtest: a candidate held only inside a generated batch file is found by the index
+ok 629 - a candidate held only inside a generated batch file is found by the index
+  ---
+  duration_ms: 0.781087
+  type: 'test'
+  ...
+# Subtest: widening the index to batch files still leaves an unknown identity an orphan
+ok 630 - widening the index to batch files still leaves an unknown identity an orphan
+  ---
+  duration_ms: 0.387608
+  type: 'test'
+  ...
+# Subtest: a batch entry without a candidate identity is skipped, not indexed as undefined
+ok 631 - a batch entry without a candidate identity is skipped, not indexed as undefined
+  ---
+  duration_ms: 0.205843
+  type: 'test'
+  ...
+# Subtest: a clean canonical checkout with protected recovery refs passes
+ok 632 - a clean canonical checkout with protected recovery refs passes
+  ---
+  duration_ms: 1.295596
+  type: 'test'
+  ...
+# Subtest: a dirty consequential checkout fails closed and names its paths
+ok 633 - a dirty consequential checkout fails closed and names its paths
+  ---
+  duration_ms: 0.253613
+  type: 'test'
+  ...
+# Subtest: a dirty linked worktree fails closed
+ok 634 - a dirty linked worktree fails closed
+  ---
+  duration_ms: 0.181415
+  type: 'test'
+  ...
+# Subtest: a discovered but unregistered worktree fails closed
+ok 635 - a discovered but unregistered worktree fails closed
+  ---
+  duration_ms: 0.173464
+  type: 'test'
+  ...
+# Subtest: a missing or moved remote safety ref fails closed
+ok 636 - a missing or moved remote safety ref fails closed
+  ---
+  duration_ms: 0.233993
+  type: 'test'
+  ...
+# Subtest: a checkout outside the declared ancestry fails closed
+ok 637 - a checkout outside the declared ancestry fails closed
+  ---
+  duration_ms: 0.114648
+  type: 'test'
+  ...
+# Subtest: canonical mode requires main and exact remote equality
+ok 638 - canonical mode requires main and exact remote equality
+  ---
+  duration_ms: 0.181255
+  type: 'test'
+  ...
+# Subtest: candidate mode permits a non-main branch but keeps every safety check
+ok 639 - candidate mode permits a non-main branch but keeps every safety check
+  ---
+  duration_ms: 0.212175
+  type: 'test'
+  ...
+# Subtest: porcelain parsing preserves a leading dot on the first unstaged path
+ok 640 - porcelain parsing preserves a leading dot on the first unstaged path
+  ---
+  duration_ms: 0.262958
+  type: 'test'
+  ...
+# Subtest: discovery distinguishes linked worktree pointers from standalone repositories
+ok 641 - discovery distinguishes linked worktree pointers from standalone repositories
+  ---
+  duration_ms: 1.510571
+  type: 'test'
+  ...
+# Subtest: LIVE: no durable .orch state is left uncommitted in this checkout
+ok 642 - LIVE: no durable .orch state is left uncommitted in this checkout
+  ---
+  duration_ms: 678.186534
+  type: 'test'
+  ...
+# Subtest: LIVE: no linked worktree is holding uncommitted .orch state
+ok 643 - LIVE: no linked worktree is holding uncommitted .orch state
+  ---
+  duration_ms: 495.204356
+  type: 'test'
+  ...
+# Subtest: recheck counts accepted same-cell replacements as admissions, not refusals
+ok 644 - recheck counts accepted same-cell replacements as admissions, not refusals
+  ---
+  duration_ms: 0.857624
+  type: 'test'
+  ...
+# Subtest: recheck counts only actual fresh-block admission refusals
+ok 645 - recheck counts only actual fresh-block admission refusals
+  ---
+  duration_ms: 0.224579
+  type: 'test'
+  ...
+# Subtest: stronger-policy t retains negative Infinity and labels zero over zero UNKNOWN
+ok 646 - stronger-policy t retains negative Infinity and labels zero over zero UNKNOWN
+  ---
+  duration_ms: 0.263754
+  type: 'test'
+  ...
+# Subtest: independent recompute rejects a canonically rekeyed out-of-range cut mutant
+ok 647 - independent recompute rejects a canonically rekeyed out-of-range cut mutant
+  ---
+  duration_ms: 338.303338
+  type: 'test'
+  ...
+# Subtest: independent recompute rejects a 599-row stage-2 panel with matching self-reported counts
+ok 648 - independent recompute rejects a 599-row stage-2 panel with matching self-reported counts
+  ---
+  duration_ms: 255.011935
+  type: 'test'
+  ...
+# Subtest: current synthetic qualification fixture traverses every recompute path and is refused as confirmation evidence
+ok 649 - current synthetic qualification fixture traverses every recompute path and is refused as confirmation evidence
+  ---
+  duration_ms: 99.102063
+  type: 'test'
+  ...
+# Subtest: ruler A/A has zero wins gained, zero lost and exactly zero moves saved
+ok 650 - ruler A/A has zero wins gained, zero lost and exactly zero moves saved
+  ---
+  duration_ms: 1.420219
+  type: 'test'
+  ...
+# Subtest: ruler compares wins before mutual-win moves
+ok 651 - ruler compares wins before mutual-win moves
+  ---
+  duration_ms: 0.511933
+  type: 'test'
+  ...
+# Subtest: two-axis SE catches seed-wide variation when level means are equal
+ok 652 - two-axis SE catches seed-wide variation when level means are equal
+  ---
+  duration_ms: 1.214818
+  type: 'test'
+  ...
+# Subtest: ruler rejects a missing or reordered paired cell
+ok 653 - ruler rejects a missing or reordered paired cell
+  ---
+  duration_ms: 0.472015
+  type: 'test'
+  ...
+# Subtest: admission refuses synthetic entrant with screen +3% and fresh -3%
+ok 654 - admission refuses synthetic entrant with screen +3% and fresh -3%
+  ---
+  duration_ms: 0.836676
+  type: 'test'
+  ...
+# Subtest: admission accepts synthetic entrant positive on screen and fresh block
+ok 655 - admission accepts synthetic entrant positive on screen and fresh block
+  ---
+  duration_ms: 0.169463
+  type: 'test'
+  ...
+# Subtest: admission ranks same-cell entrants on fresh number only
+ok 656 - admission ranks same-cell entrants on fresh number only
+  ---
+  duration_ms: 0.106718
+  type: 'test'
+  ...
+# Subtest: winner-curse panel has 30 unique one-gene champion variants
+ok 657 - winner-curse panel has 30 unique one-gene champion variants
+  ---
+  duration_ms: 1.325412
+  type: 'test'
+  ...
+# Subtest: declared seed blocks are disjoint and worst-case measured games stay below 60,000
+ok 658 - declared seed blocks are disjoint and worst-case measured games stay below 60,000
+  ---
+  duration_ms: 0.227095
+  type: 'test'
+  ...
+# Subtest: holdout rule uses unrounded t just above 3 even when display rounds to 3
+ok 659 - holdout rule uses unrounded t just above 3 even when display rounds to 3
+  ---
+  duration_ms: 0.688617
+  type: 'test'
+  ...
+# Subtest: holdout rule refuses t exactly 3
+ok 660 - holdout rule refuses t exactly 3
+  ---
+  duration_ms: 0.134201
+  type: 'test'
+  ...
+# Subtest: holdout rule refuses net win regression despite positive lift and t above 3
+ok 661 - holdout rule refuses net win regression despite positive lift and t above 3
+  ---
+  duration_ms: 0.098518
+  type: 'test'
+  ...
+# Subtest: a bounded artifact measured through real playMeasured reaches PASS and its broken twin reaches FAIL
+ok 662 - a bounded artifact measured through real playMeasured reaches PASS and its broken twin reaches FAIL
+  ---
+  duration_ms: 697.092172
+  type: 'test'
+  ...
+# Subtest: variance comparison uses single-game between-candidate and within-level components
+ok 663 - variance comparison uses single-game between-candidate and within-level components
+  ---
+  duration_ms: 1.138594
+  type: 'test'
+  ...
+# Subtest: artifacts and issuance require a protocol committed before measurement
+ok 664 - artifacts and issuance require a protocol committed before measurement
+  ---
+  duration_ms: 1.462078
+  type: 'test'
+  ...
+# Subtest: standalone, failed, malformed, and identity-stale materials fail closed
+ok 665 - standalone, failed, malformed, and identity-stale materials fail closed
+  ---
+  duration_ms: 1.600656
+  type: 'test'
+  ...
+# Subtest: a frozen calibration identity mutation invalidates the entitlement
+ok 666 - a frozen calibration identity mutation invalidates the entitlement
+  ---
+  duration_ms: 0.942705
+  type: 'test'
+  ...
+# Subtest: the production CLI selects only from a verified bundle bound to the exact batch
+ok 667 - the production CLI selects only from a verified bundle bound to the exact batch
+  ---
+  duration_ms: 206.730629
+  type: 'test'
+  ...
+# Subtest: the production CLI can generate an unselected batch before a challenge bundle exists
+ok 668 - the production CLI can generate an unselected batch before a challenge bundle exists
+  ---
+  duration_ms: 41.133943
+  type: 'test'
+  ...
+# Subtest: receipt verifier cross-binds claim, subjects, protocol, execution path, and actual selections
+ok 669 - receipt verifier cross-binds claim, subjects, protocol, execution path, and actual selections
+  ---
+  duration_ms: 11.40381
+  type: 'test'
+  ...
+# Subtest: challenge writes only a verified bundle and verifier replays the real consumer
+ok 670 - challenge writes only a verified bundle and verifier replays the real consumer
+  ---
+  duration_ms: 297.846661
+  type: 'test'
+  ...
+# Subtest: playLevel: wins as soon as score reaches target
+ok 671 - playLevel: wins as soon as score reaches target
+  ---
+  duration_ms: 2.610928
+  type: 'test'
+  ...
+# Subtest: playLevel: loses out of moves when the target is unreachable in the budget
+ok 672 - playLevel: loses out of moves when the target is unreachable in the budget
+  ---
+  duration_ms: 1.591144
+  type: 'test'
+  ...
+# Subtest: playLevel: loses with no valid moves when the board has no legal chain
+ok 673 - playLevel: loses with no valid moves when the board has no legal chain
+  ---
+  duration_ms: 0.291782
+  type: 'test'
+  ...
+# Subtest: playLevel: loses when a bomb timer reaches zero unattended
+ok 674 - playLevel: loses when a bomb timer reaches zero unattended
+  ---
+  duration_ms: 0.7544
+  type: 'test'
+  ...
+# Subtest: target-aware challenger is identical before an untrimmed route can win now
+ok 675 - target-aware challenger is identical before an untrimmed route can win now
+  ---
+  duration_ms: 2966.643323
+  type: 'test'
+  ...
+# Subtest: target-aware challenger cashes out the Level 51 teaching board on move 13
+ok 676 - target-aware challenger cashes out the Level 51 teaching board on move 13
+  ---
+  duration_ms: 2825.573817
+  type: 'test'
+  ...
+# Subtest: immediate winner selection uses the existing deterministic untrimmed order
+ok 677 - immediate winner selection uses the existing deterministic untrimmed order
+  ---
+  duration_ms: 1356.245294
+  type: 'test'
+  ...
+# Subtest: target-aware challenger falls back after target and never mutates its input
+ok 678 - target-aware challenger falls back after target and never mutates its input
+  ---
+  duration_ms: 282.830969
+  type: 'test'
+  ...
+# Subtest: any bomb leaves the champion in full control
+ok 679 - any bomb leaves the champion in full control
+  ---
+  duration_ms: 2.430914
+  type: 'test'
+  ...
+# Subtest: null/no-move behavior is preserved
+ok 680 - null/no-move behavior is preserved
+  ---
+  duration_ms: 0.428952
+  type: 'test'
+  ...
+# Subtest: the challenger never routes through the promoted champion
+ok 681 - the challenger never routes through the promoted champion
+  ---
+  duration_ms: 1628.983371
+  type: 'test'
+  ...
+# Subtest: CLI exposes only fixed diagnostic, screen, and holdout protocols
+ok 682 - CLI exposes only fixed diagnostic, screen, and holdout protocols
+  ---
+  duration_ms: 1.562906
+  type: 'test'
+  ...
+# Subtest: registration flags parse instead of dying as unknown arguments
+ok 683 - registration flags parse instead of dying as unknown arguments
+  ---
+  duration_ms: 0.197111
+  type: 'test'
+  ...
+# Subtest: the champion arm is the pre-promotion chooser, not the promoted bot
+ok 684 - the champion arm is the pre-promotion chooser, not the promoted bot
+  ---
+  duration_ms: 2957.515499
+  type: 'test'
+  ...
+# Subtest: screen and holdout identities are frozen and exclude diagnostic seed 1
+ok 685 - screen and holdout identities are frozen and exclude diagnostic seed 1
+  ---
+  duration_ms: 0.212137
+  type: 'test'
+  ...
+# Subtest: paired evaluation is level-major, complete, and deterministic
+ok 686 - paired evaluation is level-major, complete, and deterministic
+  ---
+  duration_ms: 0.877669
+  type: 'test'
+  ...
+# Subtest: worker evaluation preserves the same level-major paired cells
+ok 687 - worker evaluation preserves the same level-major paired cells
+  ---
+  duration_ms: 2609.121759
+  type: 'test'
+  ...
+# Subtest: artifact identity covers complete ordered cells and rejects tampering
+ok 688 - artifact identity covers complete ordered cells and rejects tampering
+  ---
+  duration_ms: 2.635391
+  type: 'test'
+  ...
+# Subtest: artifact output refuses overwrite
+ok 689 - artifact output refuses overwrite
+  ---
+  duration_ms: 1.387786
+  type: 'test'
+  ...
+# Subtest: four compacted owner sessions replay through the real engine to exact outcomes
+ok 690 - four compacted owner sessions replay through the real engine to exact outcomes
+  ---
+  duration_ms: 3.714945
+  type: 'test'
+  ...
+# Subtest: targeted generation dedupes real legal actions and can finish a small search
+ok 691 - targeted generation dedupes real legal actions and can finish a small search
+  ---
+  duration_ms: 10.296126
+  type: 'test'
+  ...
+# Subtest: the real opening search recovers the missed 24-tile, sum-3456 action
+ok 692 - the real opening search recovers the missed 24-tile, sum-3456 action
+  ---
+  duration_ms: 217.128589
+  type: 'test'
+  ...
+# Subtest: caller node caps fail closed and are deterministic
+ok 693 - caller node caps fail closed and are deterministic
+  ---
+  duration_ms: 0.705244
+  type: 'test'
+  ...
+# Subtest: candidate-limit telemetry only reports actual outward truncation
+ok 694 - candidate-limit telemetry only reports actual outward truncation
+  ---
+  duration_ms: 14.746985
+  type: 'test'
+  ...
+# Subtest: the real-state coverage seam beats production and recovers both named anchors
+ok 695 - the real-state coverage seam beats production and recovers both named anchors
+  ---
+  duration_ms: 10503.38374
+  type: 'test'
+  ...
+# Subtest: present numeric CLI flags without values fail closed before coverage runs
+ok 696 - present numeric CLI flags without values fail closed before coverage runs
+  ---
+  duration_ms: 135.183039
+  type: 'test'
+  ...
+# Subtest: a controlled broken cap fails the coverage CLI acceptance seam
+ok 697 - a controlled broken cap fails the coverage CLI acceptance seam
+  ---
+  duration_ms: 1270.288732
+  type: 'test'
+  ...
+# Subtest: a real recordSession artifact is independently replayed and verified
+ok 698 - a real recordSession artifact is independently replayed and verified
+  ---
+  duration_ms: 860.261357
+  type: 'test'
+  ...
+# Subtest: self-rehashed tampering and invalid intake remain unresolved
+ok 699 - self-rehashed tampering and invalid intake remain unresolved
+  ---
+  duration_ms: 4021.821003
+  type: 'test'
+  ...
+# Subtest: bounded search finds a replayed move-B win and reports explicit limits
+ok 700 - bounded search finds a replayed move-B win and reports explicit limits
+  ---
+  duration_ms: 0.725452
+  type: 'test'
+  ...
+# Subtest: search keeps transition-distinct actions that coarse endpoint/length/score dedup drops
+ok 701 - search keeps transition-distinct actions that coarse endpoint/length/score dedup drops
+  ---
+  duration_ms: 0.328813
+  type: 'test'
+  ...
+# Subtest: bomb-before-target makes a crossing invalid and exhaustive no-win is NONE
+ok 702 - bomb-before-target makes a crossing invalid and exhaustive no-win is NONE
+  ---
+  duration_ms: 0.324053
+  type: 'test'
+  ...
+# Subtest: node and injected-time limits fail closed as UNKNOWN
+ok 703 - node and injected-time limits fail closed as UNKNOWN
+  ---
+  duration_ms: 0.395491
+  type: 'test'
+  ...
+# Subtest: search leaves the supplied state and RNG descriptor unchanged
+ok 704 - search leaves the supplied state and RNG descriptor unchanged
+  ---
+  duration_ms: 0.310195
+  type: 'test'
+  ...
+# Subtest: attribution uses offered action identity and preserves ambiguous control flow
+ok 705 - attribution uses offered action identity and preserves ambiguous control flow
+  ---
+  duration_ms: 0.197561
+  type: 'test'
+  ...
+# Subtest: a different exhaustive witness is not a miss when production already wins
+ok 706 - a different exhaustive witness is not a miss when production already wins
+  ---
+  duration_ms: 3.229512
+  type: 'test'
+  ...
+# Subtest: initial and final clock faults stay UNKNOWN through search and public consumer
+ok 707 - initial and final clock faults stay UNKNOWN through search and public consumer
+  ---
+  duration_ms: 2.127659
+  type: 'test'
+  ...
+# Subtest: a real producer-created zero-move session is unresolved, not vacuously complete
+ok 708 - a real producer-created zero-move session is unresolved, not vacuously complete
+  ---
+  duration_ms: 1.335439
+  type: 'test'
+  ...
+# Subtest: public consumer admits only verified sessions and retains complete/capped/invalid denominators
+ok 709 - public consumer admits only verified sessions and retains complete/capped/invalid denominators
+  ---
+  duration_ms: 4.477986
+  type: 'test'
+  ...
+# Subtest: the local report-only check card declares its scope and blind spots
+ok 710 - the local report-only check card declares its scope and blind spots
+  ---
+  duration_ms: 0.317579
+  type: 'test'
+  ...
+# Subtest: the contract has exactly the five load-bearing cards and no copied claim fields
+ok 711 - the contract has exactly the five load-bearing cards and no copied claim fields
+  ---
+  duration_ms: 1.531513
+  type: 'test'
+  ...
+# Subtest: the selected ledger parser resolves one record without pretending to parse the whole ledger
+ok 712 - the selected ledger parser resolves one record without pretending to parse the whole ledger
+  ---
+  duration_ms: 2.108618
+  type: 'test'
+  ...
+# Subtest: one resolved model keeps admitted evidence separate from the later verified artifact
+ok 713 - one resolved model keeps admitted evidence separate from the later verified artifact
+  ---
+  duration_ms: 6.209143
+  type: 'test'
+  ...
+# Subtest: the stale-navigation warning fires when CURRENT.md ages past the contract limit
+ok 714 - the stale-navigation warning fires when CURRENT.md ages past the contract limit
+  ---
+  duration_ms: 13.135726
+  type: 'test'
+  ...
+# Subtest: the builder is byte-stable and the committed generated views are current
+not ok 715 - the builder is byte-stable and the committed generated views are current
+  ---
+  duration_ms: 10.964648
+  type: 'test'
+  location: '/workspace/wt/latest-main-20261002/solver/tests/universeMap.test.js:138:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    4 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 4
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (/workspace/wt/latest-main-20261002/solver/tests/universeMap.test.js:143:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: generated Markdown exposes the load-bearing distinctions in one screen
+ok 716 - generated Markdown exposes the load-bearing distinctions in one screen
+  ---
+  duration_ms: 0.374799
+  type: 'test'
+  ...
+# Subtest: the static HTML uses real headings for all five card titles
+ok 717 - the static HTML uses real headings for all five card titles
+  ---
+  duration_ms: 0.209356
+  type: 'test'
+  ...
+# Subtest: CURRENT links the generated control panel without erasing its historical milestone
+ok 718 - CURRENT links the generated control panel without erasing its historical milestone
+  ---
+  duration_ms: 0.305726
+  type: 'test'
+  ...
+# Subtest: verification fails closed for a missing card
+ok 719 - verification fails closed for a missing card
+  ---
+  duration_ms: 4.403395
+  type: 'test'
+  ...
+# Subtest: verification fails closed for an unresolved ledger record
+ok 720 - verification fails closed for an unresolved ledger record
+  ---
+  duration_ms: 10.255415
+  type: 'test'
+  ...
+# Subtest: verification fails closed when selected current evidence is not accepted
+ok 721 - verification fails closed when selected current evidence is not accepted
+  ---
+  duration_ms: 7.985485
+  type: 'test'
+  ...
+# Subtest: verification fails closed for receipt hash mismatch
+ok 722 - verification fails closed for receipt hash mismatch
+  ---
+  duration_ms: 5.682208
+  type: 'test'
+  ...
+# Subtest: verification fails closed when the artifact verification evidence drifts
+ok 723 - verification fails closed when the artifact verification evidence drifts
+  ---
+  duration_ms: 5.933885
+  type: 'test'
+  ...
+# Subtest: verification observations derive from rebound evidence instead of copied metrics in code
+ok 724 - verification observations derive from rebound evidence instead of copied metrics in code
+  ---
+  duration_ms: 14.723346
+  type: 'test'
+  ...
+# Subtest: verification reports the map stale exactly one day past its maximum age
+ok 725 - verification reports the map stale exactly one day past its maximum age
+  ---
+  duration_ms: 10.635316
+  type: 'test'
+  ...
+# Subtest: verification fails closed for protected champion identity mismatch even with a rebound hash
+ok 726 - verification fails closed for protected champion identity mismatch even with a rebound hash
+  ---
+  duration_ms: 7.668235
+  type: 'test'
+  ...
+# Subtest: verification fails closed when a generated view drifts
+ok 727 - verification fails closed when a generated view drifts
+  ---
+  duration_ms: 8.075901
+  type: 'test'
+  ...
+# Subtest: mass-cursor relaxation bounds the exact four-tile maximum
+ok 728 - mass-cursor relaxation bounds the exact four-tile maximum
+  ---
+  duration_ms: 1.806065
+  type: 'test'
+  ...
+# Subtest: mass-cursor relaxation bounds a distinct five-tile multiplier fixture
+ok 729 - mass-cursor relaxation bounds a distinct five-tile multiplier fixture
+  ---
+  duration_ms: 1.375035
+  type: 'test'
+  ...
+# Subtest: negative control rejects an intentionally lowered fixture bound
+ok 730 - negative control rejects an intentionally lowered fixture bound
+  ---
+  duration_ms: 1.023396
+  type: 'test'
+  ...
+# Subtest: Level 26 seed-0 calculation is complete and bound to the certifier inputs
+ok 731 - Level 26 seed-0 calculation is complete and bound to the certifier inputs
+  ---
+  duration_ms: 91.696058
+  type: 'test'
+  ...
+# Subtest: live lease (fresh heartbeat): reported live, not a candidate
+ok 732 - live lease (fresh heartbeat): reported live, not a candidate
+  ---
+  duration_ms: 158.534154
+  type: 'test'
+  ...
+# Subtest: live lease via alive pid despite old heartbeat
+ok 733 - live lease via alive pid despite old heartbeat
+  ---
+  duration_ms: 143.256772
+  type: 'test'
+  ...
+# Subtest: stale lease + dead pid + merged + clean: candidate (reported only)
+ok 734 - stale lease + dead pid + merged + clean: candidate (reported only)
+  ---
+  duration_ms: 168.34864
+  type: 'test'
+  ...
+# Subtest: absent lease: report-only, never a candidate
+ok 735 - absent lease: report-only, never a candidate
+  ---
+  duration_ms: 143.453992
+  type: 'test'
+  ...
+# Subtest: foreign-host lease: report-only
+ok 736 - foreign-host lease: report-only
+  ---
+  duration_ms: 169.332653
+  type: 'test'
+  ...
+# Subtest: dirty tree with stale dead-pid lease: not a candidate
+ok 737 - dirty tree with stale dead-pid lease: not a candidate
+  ---
+  duration_ms: 164.860842
+  type: 'test'
+  ...
+# Subtest: unpushed commits with stale dead-pid lease: not a candidate
+ok 738 - unpushed commits with stale dead-pid lease: not a candidate
+  ---
+  duration_ms: 177.236211
+  type: 'test'
+  ...
+# Subtest: merged-and-clean but live lease: reported, not candidate
+ok 739 - merged-and-clean but live lease: reported, not candidate
+  ---
+  duration_ms: 143.829726
+  type: 'test'
+  ...
+# Subtest: merged-and-clean branch with NO worktree: survives, never removed
+ok 740 - merged-and-clean branch with NO worktree: survives, never removed
+  ---
+  duration_ms: 114.896819
+  type: 'test'
+  ...
+# Subtest: real clone (.git is a directory) is skipped
+ok 741 - real clone (.git is a directory) is skipped
+  ---
+  duration_ms: 109.051813
+  type: 'test'
+  ...
+# Subtest: fresh heartbeat + dead pid + merged + clean: live, not a candidate
+ok 742 - fresh heartbeat + dead pid + merged + clean: live, not a candidate
+  ---
+  duration_ms: 168.229417
+  type: 'test'
+  ...
+# Subtest: unparseable lease text: absent, not a candidate, no crash
+ok 743 - unparseable lease text: absent, not a candidate, no crash
+  ---
+  duration_ms: 144.807633
+  type: 'test'
+  ...
+# Subtest: malformed lease (null): absent, not a candidate, no crash
+ok 744 - malformed lease (null): absent, not a candidate, no crash
+  ---
+  duration_ms: 144.92188
+  type: 'test'
+  ...
+# Subtest: malformed lease (empty array): absent, not a candidate, no crash
+ok 745 - malformed lease (empty array): absent, not a candidate, no crash
+  ---
+  duration_ms: 145.536065
+  type: 'test'
+  ...
+# Subtest: malformed lease (number): absent, not a candidate, no crash
+ok 746 - malformed lease (number): absent, not a candidate, no crash
+  ---
+  duration_ms: 139.357862
+  type: 'test'
+  ...
+# Subtest: malformed lease (string): absent, not a candidate, no crash
+ok 747 - malformed lease (string): absent, not a candidate, no crash
+  ---
+  duration_ms: 143.971214
+  type: 'test'
+  ...
+# Subtest: malformed lease (missing host): absent, not a candidate, no crash
+ok 748 - malformed lease (missing host): absent, not a candidate, no crash
+  ---
+  duration_ms: 144.456566
+  type: 'test'
+  ...
+# Subtest: failed git status (corrupt index) on merged, stale, dead-pid worktree: tree=unknown, not a candidate, exit 0
+ok 749 - failed git status (corrupt index) on merged, stale, dead-pid worktree: tree=unknown, not a candidate, exit 0
+  ---
+  duration_ms: 172.218603
+  type: 'test'
+  ...
+# Subtest: lease with non-positive-integer pid (0) + stale heartbeat: absent, not a candidate, no crash
+ok 750 - lease with non-positive-integer pid (0) + stale heartbeat: absent, not a candidate, no crash
+  ---
+  duration_ms: 141.547549
+  type: 'test'
+  ...
+# Subtest: lease with non-positive-integer pid (negative) + stale heartbeat: absent, not a candidate, no crash
+ok 751 - lease with non-positive-integer pid (negative) + stale heartbeat: absent, not a candidate, no crash
+  ---
+  duration_ms: 139.979982
+  type: 'test'
+  ...
+# Subtest: lease with non-positive-integer pid (string) + stale heartbeat: absent, not a candidate, no crash
+ok 752 - lease with non-positive-integer pid (string) + stale heartbeat: absent, not a candidate, no crash
+  ---
+  duration_ms: 144.866039
+  type: 'test'
+  ...
+# Subtest: lease with non-positive-integer pid (missing) + stale heartbeat: absent, not a candidate, no crash
+ok 753 - lease with non-positive-integer pid (missing) + stale heartbeat: absent, not a candidate, no crash
+  ---
+  duration_ms: 141.386677
+  type: 'test'
+  ...
+# Subtest: failed rev-list (broken remote ref) on merged, stale, dead-pid worktree: tree=unknown, not a candidate, exit 0
+ok 754 - failed rev-list (broken remote ref) on merged, stale, dead-pid worktree: tree=unknown, not a candidate, exit 0
+  ---
+  duration_ms: 176.344338
+  type: 'test'
+  ...
+1..754
+# tests 754
+# suites 0
+# pass 750
+# fail 3
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 149055.448846

@@ -1,0 +1,49 @@
+$ node docs/goals/policy-terms-loop/check-closeout.js
+PASS allowed paths and no existing test modification 52
+PASS append-only seed declarations
+PASS History-only backlog updates
+PASS registered harness and protected source identities
+BASELINE FAILURE NAMES ["candidate-levels-52.json has a receipt that verifies against the current bot","candidate-levels-54.json has a receipt that verifies against the current bot","the builder is byte-stable and the committed generated views are current"]
+CLOSE-OUT FAILURE NAMES ["LIVE: scanner reads the real retained failed closures","candidate-levels-52.json has a receipt that verifies against the current bot","candidate-levels-54.json has a receipt that verifies against the current bot","the builder is byte-stable and the committed generated views are current"]
+# tests 621
+# pass 616
+# fail 4
+# skipped 1
+/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/check-closeout.js:47
+if (JSON.stringify(failures(baseline)) !== JSON.stringify(failures(final))) throw new Error('test failure names differ from baseline');
+                                                                            ^
+
+Error: test failure names differ from baseline
+    at Object.<anonymous> (/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/check-closeout.js:47:83)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.19.0
+exit_code 1
+$ node tools/verify-experiments.js
+EXPERIMENT GATE PASS
+exit_code 0
+$ node tools/verify-ledger-authorship.js
+LEDGER AUTHORSHIP GATE PASS (base cd83127f)
+exit_code 0
+$ node tools/ledger-index.js --check
+LEDGER INDEX CURRENT
+exit_code 0
+$ node tools/failed-run-ledger.js
+FAILED-RUN LEDGER PASS (5 retained failed closures and 1 legacy incident(s) covered)
+exit_code 0
+$ node --test --test-reporter=tap solver/tests/*.test.js (saved completed run)
+not ok 275 - LIVE: scanner reads the real retained failed closures
+not ok 480 - candidate-levels-52.json has a receipt that verifies against the current bot
+not ok 481 - candidate-levels-54.json has a receipt that verifies against the current bot
+not ok 605 - the builder is byte-stable and the committed generated views are current
+# tests 621
+# pass 616
+# fail 4
+# skipped 1
+GOAL CLOSE-OUT REQUIREMENT UNMET: strict baseline-only failure check refused

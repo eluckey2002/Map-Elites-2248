@@ -1,0 +1,70 @@
+{
+  "kind": "owner-authorized-prospective-budget-amendment",
+  "ownerInstruction": "Well, just increase the budget",
+  "interpretation": "Increase controls and total cap by the minimum 160 games required to fund one fresh complete replacement control block.",
+  "recordedAt": "2026-10-03T23:36:52-05:00",
+  "timezone": "America/Chicago",
+  "before": {
+    "budgets": {
+      "controls": 30000,
+      "proposals": 25000,
+      "jointSearch": 20000,
+      "confirmation": 20000,
+      "replays": 5000,
+      "buffer": 20000
+    },
+    "maxGames": 120000,
+    "maxProposalRounds": 20
+  },
+  "after": {
+    "budgets": {
+      "controls": 30160,
+      "proposals": 25000,
+      "jointSearch": 20000,
+      "confirmation": 20000,
+      "replays": 5000,
+      "buffer": 20000
+    },
+    "maxGames": 120160,
+    "maxProposalRounds": 20
+  },
+  "carriedCharges": {
+    "controls": 27840,
+    "proposals": 580,
+    "jointSearch": 0,
+    "confirmation": 0,
+    "replays": 1380,
+    "buffer": 0
+  },
+  "carriedTotal": 29800,
+  "nextCompleteControlBlock": {
+    "levels": 58,
+    "seedsPerLevel": 10,
+    "arms": 4,
+    "games": 2320,
+    "controlsAfterDispatch": 30160,
+    "totalAfterDispatch": 32120
+  },
+  "historicalSources": {
+    "docs/goals/policy-terms-loop/GOAL.txt": "eb1ab4968afdc6d782dc18ae5ba2f1479eecbc1d631e4159db773ece90145241",
+    "docs/goals/policy-terms-loop/EXPLORATION_PLAN.md": "2cca4f44105f3ae9b4e0b2199a33fb56b2c7d1876b10f1d363e8d5076bdb5ce7",
+    "docs/goals/policy-terms-loop/RECOVERY_PLAN.md": "bc97fadad85044d40f914a32ca5800e4829208ccd4a32d458ddebcc740f6b2cf",
+    "solver/policy-lab/runs/recovery/controls-raw.json": "05b7a71b2a4324314cc84954d68473fee563250518f83366580a82ce0f89be8a",
+    "experiments/RESULT-0080/closure.json": "b65e04ac5db1c26fae9aefaccc3878a119a3c758dd7ceceaf32daba9d252796c",
+    "experiments/RESULT-0081/closure.json": "82847825c7589a84b1872c2bce9c26607eb1456ea7d1c5fcba9de4cd7b2f2e85",
+    "docs/goals/policy-terms-loop/recovery-interruption-audits.json": "448353b78967902a6c590904c1bd0ef7c22dca46abd2616b9c8cbfda3382e95c",
+    "docs/goals/policy-terms-loop/poststop-exception-audits.json": "82a30a8d8467d5d97a2bde97b297a6c9c12ea4af080e683f350de05679b94e14"
+  },
+  "effectiveFor": "A fresh continuation registered and committed before any new game; original interrupted runs retain their historical budgets and dispositions.",
+  "experimentPreregistration": false,
+  "newScientificGamesDispatched": 0,
+  "scientificComplete": false,
+  "unchangedRequirements": [
+    "All prior charges including unknown outcomes remain charged",
+    "No replay of burned seeds or relaunch of either stopped controller",
+    "Fresh disjoint seed range declared before use",
+    "Unchanged ruler, thresholds, control design and 20-round bound",
+    "At most four measurement workers; no subagents",
+    "At most one conditional confirmation; no merge or adoption"
+  ]
+}

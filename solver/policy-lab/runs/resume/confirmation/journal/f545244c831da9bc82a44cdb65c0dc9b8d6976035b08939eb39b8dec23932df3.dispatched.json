@@ -1,0 +1,1 @@
+{"id":"f545244c831da9bc82a44cdb65c0dc9b8d6976035b08939eb39b8dec23932df3","runId":"RESULT-0082-one-shot-F","job":{"levelData":{"level":53,"target":101000,"tileScale":32,"moves":16,"minChain":3,"gridW":6,"gridH":5,"blockers":[]},"seeds":[60100060,60100061,60100062,60100063,60100064,60100065,60100066,60100067,60100068,60100069],"policy":{"kind":"lab","params":{"width":48}}}}

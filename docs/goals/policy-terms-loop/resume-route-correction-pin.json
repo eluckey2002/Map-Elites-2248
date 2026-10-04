@@ -1,0 +1,23 @@
+{
+  "kind": "committed-closeout-audit-identities",
+  "sourceCommit": "08528f0ce5b8c70f4867c263d8a634acc745afc5",
+  "sourceHashes": {
+    "CURRENT.md": "d8459aa0b060305319844625e7c3308e285b8133eacb8d9b0486ce52c56c9baf",
+    "EVIDENCE_LEDGER.md": "697779183a44f57e256ea43ecc99f15ef90d673428666a291d3fa72790f3c131",
+    "LEDGER-INDEX.md": "fc459cfeacecd27db6427a0a101bdb2db7fa94b9da72f3129f745314868f8d49",
+    "docs/goals/policy-terms-loop/RESUME_ROUTE_CORRECTION.md": "446f02e699a14ce76aa8127bfe00e96ff0a375619963054399ec3ef286234824",
+    "docs/goals/policy-terms-loop/audit-source-pin.js": "4bb2b21648afa5a7a5802c5cae7005ebc4889049f0aa5ed0fa81291e818c0fdd",
+    "docs/goals/policy-terms-loop/resume-closeout-audits.json": "f60c915096452a85e8c9e447390e23fdf161e23b65976bc27143ba6d3938d86d",
+    "docs/goals/policy-terms-loop/resume-reviewed-closeout-pin.json": "d1a13a85800b710fe5abe446b6b29965bdfdf596eb0d07a5c3f04a8b37ca7953",
+    "docs/goals/policy-terms-loop/resume-reviewed-proof.js": "70130f74dd85b9d61143bf53c04c4910b8c4ffddf7bd053e50bc1cbea4032834",
+    "docs/goals/policy-terms-loop/resume-route-correction-tests.txt": "8456cb9d7a296ac5e7c181c332794bfbc4b1dfb1b108ae99abd1ba356cdd618e",
+    "docs/goals/policy-terms-loop/resume-route-correction.js": "2a7432d743d88206eafac78fe2df4ca59cc371282fd72c3ae94f908fbea45f60",
+    "docs/goals/policy-terms-loop/resume-terminal-buffer-pin.json": "ab5db17f85d6a74423c72cf2e709b8a3c38838cd6b8f71799cdf41bec2648b17",
+    "solver/tests/policyLabResumeRouteCorrection.test.js": "3a49625778a97e3a6778150c0aca449e50a021ca6d5bc68489b7ee1ce66d8687",
+    "tools/ledger-index.js": "0d0fb95195c78a9fa7f3bf54e605e0804b06448b504a0471a332f5dbf3f67c49"
+  },
+  "result": "RESULT-0082",
+  "operation": "exact authoritative reverify routing correction",
+  "previousAdapterSha256": "9b86b3b21d71ca033b35dac58efd315337320e32c59cef71325e6ab648f68f17",
+  "navigationBase": "d9b5475fd5faaadc7ca6d6b296030592e31d6294"
+}

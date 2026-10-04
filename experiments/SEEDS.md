@@ -78,3 +78,37 @@ file and the repository before declaring a range fresh.
 | 50,502,000–50,502,249 | RESULT-0058 MAP-Elites 3,000-game stage; reserved if no candidate advances | 2026-10-02 | experiments/RESULT-0058/protocol.md |
 | 50,503,000–50,503,005 | RESULT-0058 MAP-Elites independent fresh admission recheck; reserved if no nominee | 2026-10-02 | experiments/RESULT-0058/protocol.md |
 | 50,504,000–50,504,249 | RESULT-0058 MAP-Elites final holdout; reserved if archive empty | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+
+| 60,000,000–60,000,009 | RESULT-0080 reserved G; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,010,000–60,010,009 | RESULT-0080 reserved S; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,020,000–60,020,009 | RESULT-0080 reserved R1; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,021,000–60,021,009 | RESULT-0080 reserved R2; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,022,000–60,022,009 | RESULT-0080 reserved R3; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,023,000–60,023,009 | RESULT-0080 reserved R4; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,024,000–60,024,009 | RESULT-0080 reserved R5; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,025,000–60,025,009 | RESULT-0080 reserved R6; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,026,000–60,026,009 | RESULT-0080 reserved R7; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,027,000–60,027,009 | RESULT-0080 reserved R8; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,028,000–60,028,009 | RESULT-0080 reserved R9; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,029,000–60,029,009 | RESULT-0080 reserved R10; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,030,000–60,030,009 | RESULT-0080 reserved R11; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,040,000–60,040,009 | RESULT-0080 reserved C1; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,041,000–60,041,009 | RESULT-0080 reserved C2; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,042,000–60,042,009 | RESULT-0080 reserved C3; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,043,000–60,043,009 | RESULT-0080 reserved C4; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,044,000–60,044,009 | RESULT-0080 reserved C5; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,045,000–60,045,009 | RESULT-0080 reserved C6; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,046,000–60,046,009 | RESULT-0080 reserved C7; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,047,000–60,047,009 | RESULT-0080 reserved C8; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,048,000–60,048,009 | RESULT-0080 reserved C9; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,049,000–60,049,009 | RESULT-0080 reserved C10; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,050,000–60,050,009 | RESULT-0080 reserved C11; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,051,000–60,051,009 | RESULT-0080 reserved C12; 58 x 10 experimental panel; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+| 60,100,000–60,100,149 | RESULT-0080 reserved F; one-shot confirmation, 58 x 150; never reused even if not run | 2026-10-03 | docs/goals/policy-terms-loop/EXPLORATION_PLAN.md |
+
+| 60,052,000–60,052,009 | RESULT-0080 approved journaled recovery replacement C3; 58 x 10, four arms; old C3 remains burned | 2026-10-03 | docs/goals/policy-terms-loop/RECOVERY_PLAN.md; RECOVERY_APPROVAL.txt |
+
+| 60,052,000–60,052,009; original reserved C4–C12, G/S/R/F ranges above | RESULT-0081 continuation of RESULT-0080 under original assigned-ID collision fallback; only C3 is replaced; existing G/C1/C2 results are retained, not replayed; other ranges keep their original purposes and are never dispatched twice | 2026-10-03 | docs/goals/policy-terms-loop/RECOVERY_PLAN.md; recovery-result-id-check.json |
+
+| 60,053,000–60,053,009 | RESULT-0082 resumed goal replacement C12; all58levels x10seeds, four arms; old C12 remains burned | 2026-10-04 | docs/goals/policy-terms-loop/RESUME_PLAN.md; RESUME_GOAL.txt |
+| Original G/S/R1–R11/F and complete C1–C11 reservations above | RESULT-0082 carries unchanged original purposes and retained results from RESULT-0080/0081; no played cell replay, no reassignment | 2026-10-04 | docs/goals/policy-terms-loop/RESUME_PLAN.md |

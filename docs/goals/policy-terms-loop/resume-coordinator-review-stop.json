@@ -1,0 +1,16 @@
+{
+  "result": "RESULT-0082",
+  "whenUtc": "2026-10-04T09:00:06.598103+00:00",
+  "stoppedPid": 31609,
+  "launch": {
+    "pid": 31609,
+    "sourceSha256": "a8c248e0a4fe12c0c7b2ef68109aa43c59224e1ce00f1c7faf042bd52c903d03",
+    "relaunchAllowed": false,
+    "startedUtc": "2026-10-04T08:04:22.312358+00:00"
+  },
+  "reason": "Proactive repair of actual PR review findings before selection/registration/confirmation. Stop only the non-measuring poller; frozen scientific pipeline PID26038 continues.",
+  "scientificInterruption": false,
+  "confirmationGames": 0,
+  "oldCoordinatorRelaunchAllowed": false,
+  "next": "New reviewed coordinator source and fresh operational marker, committed/qualified before its first use; same unused one-shot F and frozen measurements."
+}

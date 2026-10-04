@@ -1,0 +1,16 @@
+/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/recovery-closure-state.js:4
+  if(!closure||closure.closure_status!=='CLOSED'||!['A','B','C','D'].includes(closure.path))throw new Error('completed named closure required');
+                                                                                            ^
+
+Error: completed named closure required
+    at requiredAudits (/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/recovery-closure-state.js:4:99)
+    at Object.<anonymous> (/workspace/wt/latest-main-20261002/docs/goals/policy-terms-loop/recovery-closeout.js:17:14)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v24.19.0

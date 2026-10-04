@@ -101,3 +101,32 @@ the whole space. Not one term at a time.
   remain open.
 - 2026-10-02 — CORRECTION-0018 records the reviewer-driven ruler audit and
   reporting repair; the proposed vocabulary and adoption remain open.
+- 2026-10-03 — RESULT-0080 records the inert-by-default lab harness and its
+  retained parity checks. An execution interruption left the controls
+  incomplete and closure UNVERIFIED; vocabulary effects and adoption
+  remain open, and no idea was judged.
+- 2026-10-03 — Owner-approved RESULT-0081 continuation preserves the historical
+  RESULT-0080 evidence and starts the journaled controls. Conditional proposal
+  and confirmation orchestration is prepared; effects and adoption remain
+  unresolved and no new vocabulary result is claimed.
+- 2026-10-03 — RESULT-0081 stops UNVERIFIED after an environment replacement
+  during the final control block. Durable partial jobs and all charges are
+  retained; no idea was judged, neither stopped controller may be restarted,
+  and the proposed changes and adoption remain unresolved.
+- 2026-10-04 — Owner-approved RESULT-0081 inventory exception and public
+  failure-evidence publication are recorded separately from the unchanged
+  scientific registrations and receipts. Both runs remain UNVERIFIED, and
+  policy effects and adoption remain open.
+- 2026-10-03 (America/Chicago) — Owner said "Well, just increase the budget" after the replacement-control shortfall was explained. BUDGET_APPROVAL.txt and BUDGET_AMENDMENT.json record the prospective increase; historical RESULT-0080/0081 registrations, evidence and charges remain intact. Fresh continuation registration is still required before new games.
+- 2026-10-04 (America/Chicago) — Owner requested resumption and a new goal statement. RESUME_GOAL.txt and prospective RESUME_PLAN.md define RESULT-0082, retained RESULT-0080/0081 evidence and charges, the fresh C12 reservation and unchanged scientific bars. No new result is claimed at registration.
+- 2026-10-04 (America/Chicago) — Fresh RESULT-0082 pipeline launched once after committed preregistration and current checks. Durable completed-job receipts confirm execution; the goal remains active with no named closure, policy verdict or adoption. Follow RESUME_GOAL.txt and CURRENT.md for its boundary.
+
+- 2026-10-04 (America/Chicago) — Owner said proceed. Added qualified conditional confirmation handoff and read-only closeout fences for RESULT-0082; completed exploration must be independently audited and actual selection preregistered before F. Live work remains open; no confirmation verdict, ledger promotion or adoption.
+
+- 2026-10-04 (America/Chicago) — Continued live search on owner instruction. Added read-only raw-output report for RESULT-0082 and corrected CURRENT.md temporal wording around the earlier budget/publication steps. Active proposals remain exploratory; confirmation and closure are pending.
+
+- 2026-10-04 (America/Chicago) — Owner instructed completion of all remaining work. Actual PR review found staged-index, running-source identity, existing verdict and absent-handoff gaps. Stopped only the old non-measuring poller before any F output; preserved its source/marker. Added a distinct reviewed poller and actual-index/source/output/presence negatives while frozen scientific PID26038 continued. No games replayed, confirmation dispatched or scientific outcome inferred.
+
+- 2026-10-04 (America/Chicago) — Actual exploration completed and P09 width48 was frozen; sole F registered at f301e192 before dispatch. Further review identified full-history, executed-audit and suite trust-input proof gaps. Added mandatory read-only closeout guards and actual Git negatives, preserving every frozen scientific/registration/coordinator input. Original F freeze omission is disclosed; new audit checks actual pre-F helper/baseline custody and does not reconstruct preregistration.
+
+- 2026-10-04 (UTC) — RESULT-0082 completes the sole registered confirmation on Path A, provisionally SUPPORTED under the sampled net-win and move-gain bars; see experiments/RESULT-0082/report.md and its ledger record. Independent arithmetic and complete-panel/journal/disjointness checks match. Earlier failed runs and charges remain unchanged. Individual win regressions, added CPU cost and the original validator-freeze omission are disclosed. No scientific acceptance, policy adoption or PR merge; this backlog remains open.

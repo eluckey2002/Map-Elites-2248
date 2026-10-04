@@ -1,0 +1,39 @@
+{
+  "result": "RESULT-0082",
+  "scientificComplete": false,
+  "measurementSourcesEdited": false,
+  "checks": {
+    "coordinatorSyntax": "PASS",
+    "refuseRunningOrMissingSelection": "PASS",
+    "refuseIncompleteIndependentAudit": "PASS",
+    "pipelineLiveReadOnly": "PASS",
+    "closeoutNegativeTests": "PASS 3/3",
+    "activeCloseoutFence": "pending; scientificComplete=false",
+    "experimentGate": "PASS",
+    "authorshipGate": "PASS",
+    "failedRunLedger": "PASS",
+    "ledgerIndex": "CURRENT",
+    "registrationWithoutCurrentPreFReceipt": "REFUSED before writes as expected",
+    "registrationContractFixture": "PASS JSON/schema identities; frozen snapshot, contract, coordinator; reject burned F before writes",
+    "currentFullSuite": {
+      "tests": 670,
+      "pass": 666,
+      "fail": 3,
+      "skipped": 1,
+      "originalFailureNamesPreserved": true
+    },
+    "registeredMeasurementSourceIdentity": "PASS cd7741d87ae722206b0d70f388fd5602e76d6215",
+    "previousInterruptionReceiptIdentity": "PASS immutable RESULT-0081 failed receipt; scientificComplete=false"
+  },
+  "sourceSha256": {
+    "docs/goals/policy-terms-loop/advance-resume.py": "a8c248e0a4fe12c0c7b2ef68109aa43c59224e1ce00f1c7faf042bd52c903d03",
+    "docs/goals/policy-terms-loop/prepare-resume-registration.js": "e0f048f60e3b8dd650cb0858c54f082d2a5c566b39d471976a8c8868c17e3fe7",
+    "docs/goals/policy-terms-loop/pin-resume-closeout.js": "a6ff621ee62ccea359b029450e00adabaf902f36a3aa0979ff7dbfc27f59b840",
+    "docs/goals/policy-terms-loop/resume-closeout.js": "ce1a6791803a93cfa2445becd6fce14788fed19f52b33ff7d14d65487ca7663f",
+    "docs/goals/policy-terms-loop/resume-closure-inputs.js": "11a5b1a86d871cc4ae2f46d3a936f6a5feff9d7f9d96a1a4c82420bc1c1f20e2",
+    "docs/goals/policy-terms-loop/resume-closure-state.js": "10cb84b6a6fcc03d2446ad36ba1d4c6245e2b8d0c07fa8270301a2fcd9f8d0da",
+    "docs/goals/policy-terms-loop/verify-resume-closeout.js": "9c2ed8cb27908eafed4ab22f19fc0168d293611d3804694ca937ac850d1ae6ed"
+  },
+  "fullSuiteTranscript": "docs/goals/policy-terms-loop/resume-handoff-tests.txt",
+  "boundary": "Same-author qualification. No F started, registered protocol written, scientific acceptance or adoption."
+}

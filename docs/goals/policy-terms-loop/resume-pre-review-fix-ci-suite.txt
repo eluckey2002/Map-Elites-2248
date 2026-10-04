@@ -1,0 +1,1086 @@
+﻿2026-10-04T12:30:48.3164921Z Current runner version: '2.337.0'
+2026-10-04T12:30:48.3189809Z ##[group]Runner Image Provisioner
+2026-10-04T12:30:48.3191215Z Hosted Compute Agent
+2026-10-04T12:30:48.3191925Z Version: 20260901.588
+2026-10-04T12:30:48.3192607Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-04T12:30:48.3193331Z Build Date: 2026-09-01T19:56:44Z
+2026-10-04T12:30:48.3194072Z Worker ID: {2f4dadf6-8376-4d15-ac4f-151e45c562b0}
+2026-10-04T12:30:48.3194775Z Azure Region: eastus2
+2026-10-04T12:30:48.3195376Z ##[endgroup]
+2026-10-04T12:30:48.3196904Z ##[group]Operating System
+2026-10-04T12:30:48.3197538Z Ubuntu
+2026-10-04T12:30:48.3198206Z 24.04.5
+2026-10-04T12:30:48.3198709Z LTS
+2026-10-04T12:30:48.3199255Z ##[endgroup]
+2026-10-04T12:30:48.3199849Z ##[group]Runner Image
+2026-10-04T12:30:48.3200457Z Image: ubuntu-24.04
+2026-10-04T12:30:48.3201275Z Version: 20260927.320.1
+2026-10-04T12:30:48.3202535Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-04T12:30:48.3204171Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+2026-10-04T12:30:48.3205120Z ##[endgroup]
+2026-10-04T12:30:48.3206350Z ##[group]GITHUB_TOKEN Permissions
+2026-10-04T12:30:48.3208462Z Contents: read
+2026-10-04T12:30:48.3209201Z Metadata: read
+2026-10-04T12:30:48.3209765Z Packages: read
+2026-10-04T12:30:48.3210308Z ##[endgroup]
+2026-10-04T12:30:48.3212674Z Secret source: Actions
+2026-10-04T12:30:48.3213881Z Cache mode: write
+2026-10-04T12:30:48.3215486Z Prepare workflow directory
+2026-10-04T12:30:48.3540116Z Prepare all required actions
+2026-10-04T12:30:48.3588003Z Getting action download info
+2026-10-04T12:30:48.5703267Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-04T12:30:48.6786774Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-04T12:30:48.8742158Z Complete job name: full test suite (informational until the three known failures are retired)
+2026-10-04T12:30:48.9500549Z ##[group]Run actions/checkout@v4
+2026-10-04T12:30:48.9501664Z with:
+2026-10-04T12:30:48.9502102Z   fetch-depth: 0
+2026-10-04T12:30:48.9502593Z   repository: eluckey2002/Map-Elites-2248
+2026-10-04T12:30:48.9506418Z   token: ***
+2026-10-04T12:30:48.9506860Z   ssh-strict: true
+2026-10-04T12:30:48.9507305Z   ssh-user: git
+2026-10-04T12:30:48.9507764Z   persist-credentials: true
+2026-10-04T12:30:48.9508289Z   clean: true
+2026-10-04T12:30:48.9508846Z   sparse-checkout-cone-mode: true
+2026-10-04T12:30:48.9509381Z   fetch-tags: false
+2026-10-04T12:30:48.9509825Z   show-progress: true
+2026-10-04T12:30:48.9510289Z   lfs: false
+2026-10-04T12:30:48.9510713Z   submodules: false
+2026-10-04T12:30:48.9511334Z   set-safe-directory: true
+2026-10-04T12:30:48.9511848Z   allow-unsafe-pr-checkout: false
+2026-10-04T12:30:48.9512638Z ##[endgroup]
+2026-10-04T12:30:49.0551791Z Syncing repository: eluckey2002/Map-Elites-2248
+2026-10-04T12:30:49.0554391Z ##[group]Getting Git version info
+2026-10-04T12:30:49.0555319Z Working directory is '/home/runner/work/Map-Elites-2248/Map-Elites-2248'
+2026-10-04T12:30:49.0556449Z [command]/usr/bin/git version
+2026-10-04T12:30:49.0673217Z git version 2.55.0
+2026-10-04T12:30:49.0698474Z ##[endgroup]
+2026-10-04T12:30:49.0713750Z Temporarily overriding HOME='/home/runner/work/_temp/b818bb5c-39a0-4eef-9d54-0a9194bbfeb3' before making global git config changes
+2026-10-04T12:30:49.0719877Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-04T12:30:49.0721810Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Map-Elites-2248/Map-Elites-2248
+2026-10-04T12:30:49.0780389Z Deleting the contents of '/home/runner/work/Map-Elites-2248/Map-Elites-2248'
+2026-10-04T12:30:49.0785411Z ##[group]Initializing the repository
+2026-10-04T12:30:49.0789111Z [command]/usr/bin/git init /home/runner/work/Map-Elites-2248/Map-Elites-2248
+2026-10-04T12:30:49.0934796Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-04T12:30:49.0936903Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-04T12:30:49.0937990Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-04T12:30:49.0938824Z hint: call:
+2026-10-04T12:30:49.0939284Z hint:
+2026-10-04T12:30:49.0939855Z hint: 	git config --global init.defaultBranch <name>
+2026-10-04T12:30:49.0940542Z hint:
+2026-10-04T12:30:49.0941445Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-04T12:30:49.0942472Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-04T12:30:49.0943300Z hint:
+2026-10-04T12:30:49.0943807Z hint: 	git branch -m <name>
+2026-10-04T12:30:49.0944340Z hint:
+2026-10-04T12:30:49.0945039Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-04T12:30:49.0949813Z Initialized empty Git repository in /home/runner/work/Map-Elites-2248/Map-Elites-2248/.git/
+2026-10-04T12:30:49.0963508Z [command]/usr/bin/git remote add origin https://github.com/eluckey2002/Map-Elites-2248
+2026-10-04T12:30:49.1056011Z ##[endgroup]
+2026-10-04T12:30:49.1057463Z ##[group]Disabling automatic garbage collection
+2026-10-04T12:30:49.1059371Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-04T12:30:49.1098645Z ##[endgroup]
+2026-10-04T12:30:49.1099873Z ##[group]Setting up auth
+2026-10-04T12:30:49.1107276Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-04T12:30:49.1152398Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-04T12:30:49.1573095Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-04T12:30:49.1609776Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-04T12:30:49.1832308Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-04T12:30:49.1869217Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-04T12:30:49.2091634Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-04T12:30:49.2162103Z ##[endgroup]
+2026-10-04T12:30:49.2163637Z ##[group]Fetching the repository
+2026-10-04T12:30:49.2173885Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +3f162fc42a230f1ff3a9093da89f72811f3dd39f:refs/remotes/pull/62/merge
+2026-10-04T12:30:52.9657936Z From https://github.com/eluckey2002/Map-Elites-2248
+2026-10-04T12:30:52.9660164Z  * [new branch]        archive/worktree-ticket-records-20260908 -> origin/archive/worktree-ticket-records-20260908
+2026-10-04T12:30:52.9663049Z  * [new branch]        codex/authoring-ideation-20260916        -> origin/codex/authoring-ideation-20260916
+2026-10-04T12:30:52.9665304Z  * [new branch]        codex/champion-research-queue-20261002   -> origin/codex/champion-research-queue-20261002
+2026-10-04T12:30:52.9667749Z  * [new branch]        codex/latest-main-20261002               -> origin/codex/latest-main-20261002
+2026-10-04T12:30:52.9670348Z  * [new branch]        codex/lc0013-target-gap-arithmetic       -> origin/codex/lc0013-target-gap-arithmetic
+2026-10-04T12:30:52.9673590Z  * [new branch]        codex/policy-learned-judge-r5            -> origin/codex/policy-learned-judge-r5
+2026-10-04T12:30:52.9676138Z  * [new branch]        evidence/result-0018-6a07294             -> origin/evidence/result-0018-6a07294
+2026-10-04T12:30:52.9678631Z  * [new branch]        feat/board-map-elites-20260917           -> origin/feat/board-map-elites-20260917
+2026-10-04T12:30:52.9682406Z  * [new branch]        feat/evaluator-foundation                -> origin/feat/evaluator-foundation
+2026-10-04T12:30:52.9685950Z  * [new branch]        feat/family-board-map-elites-20260919    -> origin/feat/family-board-map-elites-20260919
+2026-10-04T12:30:52.9689165Z  * [new branch]        feat/player-playtest-feedback            -> origin/feat/player-playtest-feedback
+2026-10-04T12:30:52.9692505Z  * [new branch]        ledger/status-index                      -> origin/ledger/status-index
+2026-10-04T12:30:52.9695362Z  * [new branch]        main                                     -> origin/main
+2026-10-04T12:30:52.9699684Z  * [new branch]        port/family-board-map-elites             -> origin/port/family-board-map-elites
+2026-10-04T12:30:52.9705829Z  * [new branch]        recovery/mac/codex-failed-run-ledger-2026-09-22-20260930 -> origin/recovery/mac/codex-failed-run-ledger-2026-09-22-20260930
+2026-10-04T12:30:52.9711415Z  * [new branch]        recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930 -> origin/recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930
+2026-10-04T12:30:52.9716566Z  * [new branch]        recovery/mac/codex-lc0013-target-gap-arithmetic-20260930 -> origin/recovery/mac/codex-lc0013-target-gap-arithmetic-20260930
+2026-10-04T12:30:52.9721660Z  * [new branch]        recovery/mac/codex-nightly-reverify-36579791639-20260930 -> origin/recovery/mac/codex-nightly-reverify-36579791639-20260930
+2026-10-04T12:30:52.9726513Z  * [new branch]        recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930 -> origin/recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930
+2026-10-04T12:30:52.9730651Z  * [new branch]        recovery/mac/main-root-dirty-20260930    -> origin/recovery/mac/main-root-dirty-20260930
+2026-10-04T12:30:52.9734910Z  * [new branch]        recovery/mac/map-elites-qa-dirty-20260930 -> origin/recovery/mac/map-elites-qa-dirty-20260930
+2026-10-04T12:30:52.9739614Z  * [new branch]        recovery/mac/review-unbuilt-map-candidates-dirty-20260930 -> origin/recovery/mac/review-unbuilt-map-candidates-dirty-20260930
+2026-10-04T12:30:52.9745536Z  * [new branch]        recovery/windows/backup-pre-collector-drop-20260930 -> origin/recovery/windows/backup-pre-collector-drop-20260930
+2026-10-04T12:30:52.9751524Z  * [new branch]        recovery/windows/claude-mac-project-sync-ee1d99-20260930 -> origin/recovery/windows/claude-mac-project-sync-ee1d99-20260930
+2026-10-04T12:30:52.9757483Z  * [new branch]        recovery/windows/codex-level-map-elites-authoring-20260930 -> origin/recovery/windows/codex-level-map-elites-authoring-20260930
+2026-10-04T12:30:52.9762572Z  * [new branch]        recovery/windows/codex-u1-asset-contract-20260930 -> origin/recovery/windows/codex-u1-asset-contract-20260930
+2026-10-04T12:30:52.9766714Z  * [new branch]        recovery/windows/codex-u1-eol-path-20260930 -> origin/recovery/windows/codex-u1-eol-path-20260930
+2026-10-04T12:30:52.9770678Z  * [new branch]        recovery/windows/recheck-loop-dirty-20260930 -> origin/recovery/windows/recheck-loop-dirty-20260930
+2026-10-04T12:30:52.9775545Z  * [new branch]        recovery/windows/recovery-local-work-20260926-20260930 -> origin/recovery/windows/recovery-local-work-20260926-20260930
+2026-10-04T12:30:52.9780144Z  * [new branch]        recovery/windows/stash-20260926-20260930 -> origin/recovery/windows/stash-20260926-20260930
+2026-10-04T12:30:52.9784748Z  * [new branch]        recovery/windows/tmp-44-20260930         -> origin/recovery/windows/tmp-44-20260930
+2026-10-04T12:30:52.9788960Z  * [new branch]        recovery/windows/u1-combined-dirty-20260930 -> origin/recovery/windows/u1-combined-dirty-20260930
+2026-10-04T12:30:52.9793399Z  * [new branch]        work/policy-measurement-records-2026-09-05 -> origin/work/policy-measurement-records-2026-09-05
+2026-10-04T12:30:52.9797124Z  * [new branch]        worktree-archify-diagrams                -> origin/worktree-archify-diagrams
+2026-10-04T12:30:52.9800905Z  * [new branch]        worktree-deterministic-2048-solver       -> origin/worktree-deterministic-2048-solver
+2026-10-04T12:30:52.9805116Z  * [new tag]           archive/claim-evidence-verdict-2026-09-01-snapshot -> archive/claim-evidence-verdict-2026-09-01-snapshot
+2026-10-04T12:30:52.9809748Z  * [new tag]           archive/codex/2026-08-29T10-29-19Z-adhoc-session-workspace -> archive/codex/2026-08-29T10-29-19Z-adhoc-session-workspace
+2026-10-04T12:30:52.9814021Z  * [new tag]           archive/codex/git-baseline-stabilization -> archive/codex/git-baseline-stabilization
+2026-10-04T12:30:52.9817413Z  * [new tag]           archive/codex/human-pilot-evidence       -> archive/codex/human-pilot-evidence
+2026-10-04T12:30:52.9820667Z  * [new tag]           archive/codex/level-authoring-tracer     -> archive/codex/level-authoring-tracer
+2026-10-04T12:30:52.9824430Z  * [new tag]           archive/codex/map-elites-measurement-controls -> archive/codex/map-elites-measurement-controls
+2026-10-04T12:30:52.9828477Z  * [new tag]           archive/codex/openevolve-2248-matched-control-spec -> archive/codex/openevolve-2248-matched-control-spec
+2026-10-04T12:30:52.9832320Z  * [new tag]           archive/codex/player-style-cross-eval    -> archive/codex/player-style-cross-eval
+2026-10-04T12:30:52.9835703Z  * [new tag]           archive/codex/premise-discovery-readiness -> archive/codex/premise-discovery-readiness
+2026-10-04T12:30:52.9839753Z  * [new tag]           archive/codex/preserve-pre-promotion-untracked-2026-08-30 -> archive/codex/preserve-pre-promotion-untracked-2026-08-30
+2026-10-04T12:30:52.9843970Z  * [new tag]           archive/codex/research-session-2026-08-28 -> archive/codex/research-session-2026-08-28
+2026-10-04T12:30:52.9847282Z  * [new tag]           archive/codex/seed-variance-challenge    -> archive/codex/seed-variance-challenge
+2026-10-04T12:30:52.9851427Z  * [new tag]           archive/codex/target-aware-promotion-rehearsal-2026-08-30 -> archive/codex/target-aware-promotion-rehearsal-2026-08-30
+2026-10-04T12:30:52.9855349Z  * [new tag]           archive/codex/targeted-chain-generator   -> archive/codex/targeted-chain-generator
+2026-10-04T12:30:52.9858582Z  * [new tag]           archive/codex/universe-map-v1            -> archive/codex/universe-map-v1
+2026-10-04T12:30:52.9861751Z  * [new tag]           archive/fix/engine-mirrors-game-test     -> archive/fix/engine-mirrors-game-test
+2026-10-04T12:30:52.9865500Z  * [new tag]           archive/fix/experiment-guard-reads-registration-commit -> archive/fix/experiment-guard-reads-registration-commit
+2026-10-04T12:30:52.9869054Z  * [new tag]           archive/level-curve-retune               -> archive/level-curve-retune
+2026-10-04T12:30:52.9871956Z  * [new tag]           archive/map-elites-learning              -> archive/map-elites-learning
+2026-10-04T12:30:52.9874987Z  * [new tag]           archive/review/experiment-gate-hardening -> archive/review/experiment-gate-hardening
+2026-10-04T12:30:52.9878363Z  * [new tag]           archive/safety/2026-08-28-level-curve-retune -> archive/safety/2026-08-28-level-curve-retune
+2026-10-04T12:30:52.9882077Z  * [new tag]           archive/safety/2026-08-28-map-elites-learning -> archive/safety/2026-08-28-map-elites-learning
+2026-10-04T12:30:52.9886015Z  * [new tag]           archive/safety/2026-08-28-map-elites-measurement-controls -> archive/safety/2026-08-28-map-elites-measurement-controls
+2026-10-04T12:30:52.9889647Z  * [new tag]           archive/worktree-archify-diagrams        -> archive/worktree-archify-diagrams
+2026-10-04T12:30:52.9893112Z  * [new tag]           archive/worktree-deterministic-2048-solver -> archive/worktree-deterministic-2048-solver
+2026-10-04T12:30:52.9896738Z  * [new tag]           archive/worktree-resolution-complete-20260908 -> archive/worktree-resolution-complete-20260908
+2026-10-04T12:30:52.9899809Z  * [new tag]           pre-cleanup-2026-08-12                   -> pre-cleanup-2026-08-12
+2026-10-04T12:30:52.9902399Z  * [new tag]           pre-merge-safety                         -> pre-merge-safety
+2026-10-04T12:30:52.9904710Z  * [new ref]           3f162fc42a230f1ff3a9093da89f72811f3dd39f -> pull/62/merge
+2026-10-04T12:30:52.9909518Z ##[endgroup]
+2026-10-04T12:30:52.9911847Z ##[group]Determining the checkout info
+2026-10-04T12:30:52.9914029Z ##[endgroup]
+2026-10-04T12:30:52.9915169Z [command]/usr/bin/git sparse-checkout disable
+2026-10-04T12:30:52.9918722Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-04T12:30:52.9923392Z ##[group]Checking out the ref
+2026-10-04T12:30:52.9925139Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/62/merge
+2026-10-04T12:30:53.9989798Z Updating files:  80% (11036/13719)
+2026-10-04T12:30:54.0051546Z Updating files:  81% (11113/13719)
+2026-10-04T12:30:54.0109481Z Updating files:  82% (11250/13719)
+2026-10-04T12:30:54.0166891Z Updating files:  83% (11387/13719)
+2026-10-04T12:30:54.0226872Z Updating files:  84% (11524/13719)
+2026-10-04T12:30:54.0284009Z Updating files:  85% (11662/13719)
+2026-10-04T12:30:54.0342121Z Updating files:  86% (11799/13719)
+2026-10-04T12:30:54.0399310Z Updating files:  87% (11936/13719)
+2026-10-04T12:30:54.0458439Z Updating files:  88% (12073/13719)
+2026-10-04T12:30:54.0517353Z Updating files:  89% (12210/13719)
+2026-10-04T12:30:54.0574287Z Updating files:  90% (12348/13719)
+2026-10-04T12:30:54.0633094Z Updating files:  91% (12485/13719)
+2026-10-04T12:30:54.0693093Z Updating files:  92% (12622/13719)
+2026-10-04T12:30:54.0752511Z Updating files:  93% (12759/13719)
+2026-10-04T12:30:54.0810556Z Updating files:  94% (12896/13719)
+2026-10-04T12:30:54.0869302Z Updating files:  95% (13034/13719)
+2026-10-04T12:30:54.0925580Z Updating files:  96% (13171/13719)
+2026-10-04T12:30:54.0981397Z Updating files:  97% (13308/13719)
+2026-10-04T12:30:54.1218664Z Updating files:  98% (13445/13719)
+2026-10-04T12:30:54.1712887Z Updating files:  99% (13582/13719)
+2026-10-04T12:30:54.1713468Z Updating files: 100% (13719/13719)
+2026-10-04T12:30:54.1713962Z Updating files: 100% (13719/13719), done.
+2026-10-04T12:30:54.1873607Z Note: switching to 'refs/remotes/pull/62/merge'.
+2026-10-04T12:30:54.1874143Z 
+2026-10-04T12:30:54.1874962Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-04T12:30:54.1875701Z changes and commit them, and you can discard any commits you make in this
+2026-10-04T12:30:54.1876366Z state without impacting any branches by switching back to a branch.
+2026-10-04T12:30:54.1876733Z 
+2026-10-04T12:30:54.1877010Z If you want to create a new branch to retain commits you create, you may
+2026-10-04T12:30:54.1877745Z do so (now or later) by using -c with the switch command. Example:
+2026-10-04T12:30:54.1878186Z 
+2026-10-04T12:30:54.1878356Z   git switch -c <new-branch-name>
+2026-10-04T12:30:54.1878655Z 
+2026-10-04T12:30:54.1878814Z Or undo this operation with:
+2026-10-04T12:30:54.1879124Z 
+2026-10-04T12:30:54.1879264Z   git switch -
+2026-10-04T12:30:54.1879449Z 
+2026-10-04T12:30:54.1879760Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-04T12:30:54.1880182Z 
+2026-10-04T12:30:54.1880670Z HEAD is now at 3f162fc4 Merge 9784ec89664d358547bc9862c68776542a4d6d02 into 77d23d7f0efe3c582abbe51a0f0cba4fe854f170
+2026-10-04T12:30:54.1961647Z ##[endgroup]
+2026-10-04T12:30:54.1965211Z [command]/usr/bin/git log -1 --format=%H
+2026-10-04T12:30:54.1991928Z 3f162fc42a230f1ff3a9093da89f72811f3dd39f
+2026-10-04T12:30:54.2317673Z ##[group]Run actions/setup-node@v4
+2026-10-04T12:30:54.2318033Z with:
+2026-10-04T12:30:54.2318303Z   node-version: 24
+2026-10-04T12:30:54.2318584Z   always-auth: false
+2026-10-04T12:30:54.2318874Z   check-latest: false
+2026-10-04T12:30:54.2321807Z   token: ***
+2026-10-04T12:30:54.2322081Z ##[endgroup]
+2026-10-04T12:30:54.3725685Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-04T12:30:54.3730955Z (node:2234) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T12:30:54.3731868Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T12:30:54.3733721Z ##[group]Environment details
+2026-10-04T12:30:54.9597217Z node: v24.21.0
+2026-10-04T12:30:54.9597643Z npm: 11.19.0
+2026-10-04T12:30:54.9598191Z yarn: 1.22.22
+2026-10-04T12:30:54.9599626Z ##[endgroup]
+2026-10-04T12:30:54.9744023Z ##[group]Run node --test solver/tests/*.test.js
+2026-10-04T12:30:54.9744433Z [36;1mnode --test solver/tests/*.test.js[0m
+2026-10-04T12:30:55.0058571Z shell: /usr/bin/bash -e {0}
+2026-10-04T12:30:55.0058914Z ##[endgroup]
+2026-10-04T12:30:55.1392787Z ✔ with no --out, output still lands on the historical filenames (1.295142ms)
+2026-10-04T12:30:55.1394846Z ✔ --out names both files from one basename (0.223163ms)
+2026-10-04T12:30:55.1396742Z ✔ --out refuses anything that is not a bare basename (0.731524ms)
+2026-10-04T12:30:55.1398675Z ✔ writing over an existing candidate is refused, and the refusal says how to proceed (0.505314ms)
+2026-10-04T12:30:55.1400446Z ✔ --force is the deliberate escape and does not throw (0.30208ms)
+2026-10-04T12:30:55.1402423Z ✔ a basename nothing occupies is writable without --force (0.345386ms)
+2026-10-04T12:30:55.1404971Z ✔ a free store but an occupied receipt is still refused (0.387017ms)
+2026-10-04T12:30:55.1433735Z ✔ the historical three-argument form still parses unchanged (0.77044ms)
+2026-10-04T12:30:55.1444700Z ✔ --out and --force parse in either order (0.468358ms)
+2026-10-04T12:30:55.1447592Z ✔ a malformed write invocation falls through to usage rather than guessing (0.339056ms)
+2026-10-04T12:30:55.2843107Z ✔ serves only the game assets and exposes the bound candidate (142.722585ms)
+2026-10-04T12:30:55.3054494Z ✔ writes a schema-valid recording and treats an exact duplicate as idempotent (25.32732ms)
+2026-10-04T12:30:55.3132198Z ✔ fails closed for traversal and unknown candidates (8.657197ms)
+2026-10-04T12:30:55.3389649Z ✔ rejects malformed, oversized, and schema-invalid recording bodies (22.149056ms)
+2026-10-04T12:30:55.3441666Z ✔ refuses to overwrite conflicting bytes at a recording identity (7.116217ms)
+2026-10-04T12:30:55.3497888Z ✔ a fixed-seed authoring server refuses recordings from any other seed (6.649651ms)
+2026-10-04T12:30:55.9869735Z ✔ reproduces the known seed-316 bot result through the seed screener (262.881253ms)
+2026-10-04T12:30:55.9881761Z ✔ launcher keeps validation roles separate in ports and recording paths (5.324964ms)
+2026-10-04T12:30:55.9883562Z ✔ launcher turns a port collision into one actionable startup error (22.198419ms)
+2026-10-04T12:30:55.9885274Z ✔ selects setup-favorable, neutral, and hypothesis-hostile seeds by declared rules (0.969725ms)
+2026-10-04T12:30:55.9886800Z ✔ never assigns the same seed to two validation roles (0.559227ms)
+2026-10-04T12:30:55.9889081Z ✔ rejects a neutral role that would reuse the setup-favorable seed (0.400128ms)
+2026-10-04T12:30:55.9890995Z ✔ frozen playable challenges reproduce their declared bot and baseline references (547.261338ms)
+2026-10-04T12:30:55.9893621Z ﹣ frozen roles still win their declared 512-seed population selection (0.164868ms) # set BANK_BREAK_FULL_SCREEN=1 to run the 512-seed verification
+2026-10-04T12:30:56.0021024Z ✔ beam witness returns a deterministic legal lower-bound result (6.639646ms)
+2026-10-04T12:30:56.0022887Z ✔ the real post-move seam distinguishes an open subject from its one-stone twin (14.378092ms)
+2026-10-04T12:30:56.0024665Z ✔ the post-move seam observes temporary blockers after they tick (1.819604ms)
+2026-10-04T12:30:56.0026378Z ✔ stranded-cell pressure uses the tile-scale lattice, not raw powers of two (0.269612ms)
+2026-10-04T12:30:56.0028051Z ✔ half-score move distinguishes early, steady, and late cash-in games (0.236934ms)
+2026-10-04T12:30:56.0029879Z ✔ greed ratio averages per-move opportunity capture and bounds a denominator miss (0.463842ms)
+2026-10-04T12:30:56.0031937Z ✔ policy evaluation can collect the registered per-game measures through real play (1.212048ms)
+2026-10-04T12:31:02.0512967Z ✔ chooseMove: public chooser cashes out the Level 51 teaching board on move 13 (2007.376526ms)
+2026-10-04T12:31:02.0527101Z ✔ chooseMove: immediate winner follows deterministic untrimmed order and parameter overrides (1628.764859ms)
+2026-10-04T12:31:02.0533527Z ✔ chooseMove: target-aware public seam does not mutate input and falls back after target (2150.046895ms)
+2026-10-04T12:31:02.0536455Z ✔ chooseMove: with no bombs, takes the highest-scoring valid chain (0.711992ms)
+2026-10-04T12:31:02.0538468Z ✔ chooseMove: prioritizes defusing a reachable bomb over a higher-scoring non-bomb chain (0.420968ms)
+2026-10-04T12:31:02.0540491Z ✔ chooseMove: falls back to the best chain when the bomb is unreachable this turn (0.406771ms)
+2026-10-04T12:31:02.0545436Z ✔ chooseMove: returns null when no valid chain exists anywhere (0.224079ms)
+2026-10-04T12:31:02.0562987Z ✔ chooseMove: with lookahead, prefers a small immediate chain that sets up a much bigger follow-up over a bigger immediate chain that does not (2.395011ms)
+2026-10-04T12:31:02.0565514Z ✔ chooseMove: with lookahead, prefers the chain that clears more of the board even when it scores less right now (288.274839ms)
+2026-10-04T12:31:02.0568989Z ✔ chooseMove: considers candidates ranked below the top few on immediate points (505.757334ms)
+2026-10-04T12:31:02.0600249Z ✔ chooseMove: multi-path search never abandons equal tiles for a double (0.703015ms)
+2026-10-04T12:31:02.0627378Z ✔ chooseMove: low-value multi-path search keeps an alternate long route (25.707058ms)
+2026-10-04T12:31:02.0629200Z ✔ remnantPlacementValue: evaluates the survivor after gravity moves it (0.288229ms)
+2026-10-04T12:31:02.0630761Z ✔ remnantPlacementValue: rewards a survivor that can begin a future chain (0.338504ms)
+2026-10-04T12:31:02.0632938Z ✔ chooseMove: placement signal breaks an ordinary-candidate tie toward a chainable survivor (2.059444ms)
+2026-10-04T12:31:02.0634543Z ✔ harvestValue: a tile the game deals is not something the bot built (0.191398ms)
+2026-10-04T12:31:02.0636023Z ✔ harvestValue: a built tile with only HALF-value company still counts (0.162674ms)
+2026-10-04T12:31:02.0637453Z ✔ harvestValue: equal company beats half, which beats double (0.247964ms)
+2026-10-04T12:31:02.0638901Z ✔ harvestValue: company nearby is worth more than the same company far away (0.212207ms)
+2026-10-04T12:31:02.0640312Z ✔ harvestValue: an unrelated value is not company at all (0.145832ms)
+2026-10-04T12:31:02.0650643Z ✔ harvestValue: what counts as built follows the level tile scale (0.174657ms)
+2026-10-04T12:31:06.2213571Z ✔ analyzeMove preserves the production chooser across representative level shapes (4825.828293ms)
+2026-10-04T12:31:06.2232198Z ✔ the known short Level 52 session remains exact and deterministic (2249.531795ms)
+2026-10-04T12:31:06.2233515Z ✔ a real Bot Vision session reconstructs every transition and score component (2492.970551ms)
+2026-10-04T12:31:06.2234806Z ✔ the arithmetic assertion rejects a controlled broken contribution twin (1155.661752ms)
+2026-10-04T12:31:07.9192843Z ✔ Bot Vision server returns the exact session and rejects malformed identities (1738.288398ms)
+2026-10-04T12:31:07.9726565Z ✔ the frozen ruler preserves its historical parameter snapshot independently of the live bot (2.193254ms)
+2026-10-04T12:31:07.9782609Z ✔ calibration identity covers the engine and versioned evaluator but not the live bot (1.492212ms)
+2026-10-04T12:31:07.9812322Z ✔ calibration exports are frozen and evaluation has no ambient-state dependency (1.676727ms)
+2026-10-04T12:31:07.9842307Z ✔ the stamp carries the exact frozen version, parameters, and solver identity (0.821717ms)
+2026-10-04T12:31:07.9872627Z ✔ viable-start fraction distinguishes an open board from isolated pairs (2.625132ms)
+2026-10-04T12:31:07.9901936Z ✔ uniform scale preserves the choice and recovery proxies (40.072797ms)
+2026-10-04T12:31:07.9941814Z ✔ bounded misses remain UNKNOWN (0.938607ms)
+2026-10-04T12:31:07.9982006Z ✔ a calibrated move-slack control increases bounded recovery witnesses (4380.762174ms)
+2026-10-04T12:31:08.0011680Z captured level 54 seed 3310936729: win 129472 in 16 moves -> 8cd213676099
+2026-10-04T12:31:08.0042318Z ✔ real served browser model and separate authoritative capture agree; forged/stale saves do not write (538.570887ms)
+2026-10-04T12:31:08.0072030Z ✔ actual page shows live arithmetic and free preview/cancel without spending (206.725471ms)
+2026-10-04T12:31:08.0102420Z ✔ actual controls earn/remove, finish all goals, undo the result and retry identically (32.828203ms)
+2026-10-04T12:31:08.0142053Z ✔ actual controller resumes by replay into a new attempt and retains full undo state (7.228915ms)
+2026-10-04T12:31:08.0181965Z ✔ arithmetic aid covers actual targets without giving board paths (2.098326ms)
+2026-10-04T12:31:08.0208154Z ✔ actual catalog has three distinct puzzles, three separated goals, independent inventory (3.490441ms)
+2026-10-04T12:31:08.0232098Z ✔ actual whole-level witnesses win, including useful earned removal before completion (6.00701ms)
+2026-10-04T12:31:08.0262176Z ✔ qualification rejects absent catalog, absent witnesses and a genuinely corrupted route (49.990506ms)
+2026-10-04T12:31:08.0292133Z ✔ bounded shortcut reports declare scope and unknowns rather than proving difficulty (30.135885ms)
+2026-10-04T12:31:08.0322239Z ✔ Keep a Line decision scene reads the real board and distinguishes equal-sum placements (1.850051ms)
+2026-10-04T12:31:08.0376974Z ✔ real retained transitions keep chain, gravity, refill and scoring behavior (67.918384ms)
+2026-10-04T12:31:08.0402053Z ✔ ordinary growth stays legal; only exact endpoint and sum matches advance (0.954627ms)
+2026-10-04T12:31:08.0431970Z ✔ committed 2048-or-higher merges earn one credit, capped at three (1.88163ms)
+2026-10-04T12:31:08.0441748Z ✔ removal uses one move and charge, normal refill, no score or goal credit (0.873565ms)
+2026-10-04T12:31:08.0472285Z ✔ no-chain rescue survives with earned credit; exhaustion loses; final goal wins first (0.599161ms)
+2026-10-04T12:31:08.0502470Z ✔ replay and undo restore budget, goal, board, RNG, charges and outcome; retry is exact (1.734716ms)
+2026-10-04T12:31:08.0532111Z ✔ finite state rejects invalid definitions and invalid chain commitments (0.606805ms)
+2026-10-04T12:31:08.0534242Z ✔ candidate and seed parsing is strict and does not change shipped level query behavior (2.489488ms)
+2026-10-04T12:31:08.0562323Z ✔ seeded candidate initialization is repeatable and arbitrary-level validation fails closed (1.697306ms)
+2026-10-04T12:31:08.0563924Z ✔ authoring capture records each legal chain as ordered coordinates and values (0.407433ms)
+2026-10-04T12:31:08.0565407Z ✔ authoring capture emits one terminal payload and ignores later terminal paths (0.387325ms)
+2026-10-04T12:31:08.0566691Z ✔ candidate undo restores capture length and seeded RNG state (0.765482ms)
+2026-10-04T12:31:08.0567736Z ✔ makeRng: same seed produces the same sequence (3.173949ms)
+2026-10-04T12:31:08.0568706Z ✔ createLevelState: grid has levelData dimensions (0.464609ms)
+2026-10-04T12:31:08.0569895Z ✔ createLevelState: places a bomb blocker at the configured position (1.268634ms)
+2026-10-04T12:31:08.0571427Z ✔ canExtendChain: first extension requires equal value to the start tile (0.243345ms)
+2026-10-04T12:31:08.0572781Z ✔ canExtendChain: later extensions allow equal or double the last tile (0.329537ms)
+2026-10-04T12:31:08.0573906Z ✔ isValidChain: false when shorter than minChain (0.236723ms)
+2026-10-04T12:31:08.0575010Z ✔ isValidChain: false when the first two tiles do not match (0.338233ms)
+2026-10-04T12:31:08.0576125Z ✔ isValidChain: true for a same-value chain meeting minChain (0.173204ms)
+2026-10-04T12:31:08.0577054Z ✔ chainValue: sums the tile values (1.542426ms)
+2026-10-04T12:31:08.0577869Z ✔ chainMultiplier: steps at 3/5/7/9 tiles (0.975905ms)
+2026-10-04T12:31:08.0579266Z ✔ executeChain: removes non-final tiles, sets final tile to the chain sum, scores points, spends a move (0.457236ms)
+2026-10-04T12:31:08.0580607Z ✔ executeChain: defuses the final tile if it was a bomb (0.191538ms)
+2026-10-04T12:31:08.0582070Z ✔ executeChain: applies the length multiplier (>=3 tiles = 1.5x) (0.157334ms)
+2026-10-04T12:31:08.0583375Z ✔ off-lattice tiles can be deliberately recombined to reclaim occupied cells (0.179065ms)
+2026-10-04T12:31:08.0584697Z ✔ applyGravity: a tile falls through holes to the bottom of its column (0.19796ms)
+2026-10-04T12:31:08.0585909Z ✔ applyGravity: a stone blocks tiles above it from falling past (0.181389ms)
+2026-10-04T12:31:08.0587720Z ✔ spawnNewTiles: fills every null cell using the weighted spawn rng (0.209653ms)
+2026-10-04T12:31:08.0592097Z ✔ spawnNewTiles: spawn weight thresholds match game.js (0.6/0.9 for 2/4/8) (0.210965ms)
+2026-10-04T12:31:08.0621800Z ✔ tickBlockers: ice counts down and clears at zero (0.174757ms)
+2026-10-04T12:31:08.0623298Z ✔ tickBlockers: bomb timer counts down but blocker stays until checkBombs (0.143629ms)
+2026-10-04T12:31:08.0662447Z ✔ checkBombs: true when any bomb timer has reached zero (0.149089ms)
+2026-10-04T12:31:08.0684907Z ✔ checkBombs: false when all bomb timers are still positive (0.110217ms)
+2026-10-04T12:31:08.0686269Z ✔ findBestChain: picks the highest-scoring reachable chain (0.488503ms)
+2026-10-04T12:31:08.0687802Z ✔ findBestChain: returns null when no chain of minChain length exists (0.172774ms)
+2026-10-04T12:31:08.0689473Z ✔ findBestChain: mustEndAt restricts the result to chains ending at that tile (0.179826ms)
+2026-10-04T12:31:08.0691472Z ✔ findBestChain: mustEndAt returns null when the target tile is unreachable (0.269604ms)
+2026-10-04T12:31:08.0693213Z ✔ findBestChain: maxLength stops the search from extending past that many tiles (0.375513ms)
+2026-10-04T12:31:08.0694980Z ✔ findBestChain: mustStartAt restricts the search to chains starting at that tile (0.290634ms)
+2026-10-04T12:31:08.0696815Z ✔ cloneState: deep-copies the grid so mutating the clone leaves the original untouched (0.202599ms)
+2026-10-04T12:31:08.0698630Z ✔ findTopChains: sorted best-first and covers moves from every reachable cluster (0.329116ms)
+2026-10-04T12:31:08.0700023Z ✔ findTopChains: respects the limit (0.162323ms)
+2026-10-04T12:31:08.0701469Z ✔ findBestChain: a stone tile cannot be part of a chain (0.297326ms)
+2026-10-04T12:31:08.0703197Z ✔ buildGreedyChain: walks the connected same-or-double run from a start tile, no backtracking (0.469498ms)
+2026-10-04T12:31:08.0705266Z ✔ buildGreedyChain: at each step prefers the lower-value valid neighbor (keeps the walk alive longer) (0.176841ms)
+2026-10-04T12:31:08.0732291Z ✔ buildGreedyChain: returns null when the start alone cannot reach minChain (0.160049ms)
+2026-10-04T12:31:08.0734049Z ✔ buildGreedyChain: respects maxLength (0.205785ms)
+2026-10-04T12:31:08.0762035Z ✔ buildGreedyChain: a stone tile cannot be part of the chain (0.13383ms)
+2026-10-04T12:31:08.0792239Z ✔ buildGreedyChain: preferMergeableSum stops at the prefix whose sum is a power of two (0.377466ms)
+2026-10-04T12:31:08.0822665Z ✔ buildGreedyChain: preferMergeableSum falls back to the full walk when no prefix sums to a power of two (0.167763ms)
+2026-10-04T12:31:08.0824543Z ✔ buildGreedyChain: the plain walk strands a tile it could have used (0.182972ms)
+2026-10-04T12:31:08.0852225Z ✔ buildGreedyChain: the degree tie-break takes the nearly-cut-off tile first (0.210293ms)
+2026-10-04T12:31:08.0881978Z ✔ buildGreedyChain: the degree tie-break never overrides the lower-value preference (0.179566ms)
+2026-10-04T12:31:08.0911885Z ✔ findGreedyChains: applies the mergeable-sum preference by default (0.599592ms)
+2026-10-04T12:31:08.0941982Z ✔ findGreedyChains: preferMergeableSum:false restores the plain longest-walk behavior (0.283421ms)
+2026-10-04T12:31:08.0943538Z ✔ findGreedyChains: tries every non-blocked tile as a start, sorted best-first (0.253545ms)
+2026-10-04T12:31:08.0971815Z ✔ production authoring imports the versioned evaluator and not the live bot (2.466304ms)
+2026-10-04T12:31:08.1002063Z ✔ production authoring passes the complete frozen calibration parameters (0.436367ms)
+2026-10-04T12:31:08.1003552Z ✔ live bot parameter changes cannot move frozen evaluator output (64.224286ms)
+2026-10-04T12:31:08.1031997Z ✔ position-aware exact search matches a hand-enumerated four-tile fixture (3.28699ms)
+2026-10-04T12:31:08.1062094Z ✔ position-aware enumerator keeps distinct survivor actions with equal scores (0.208339ms)
+2026-10-04T12:31:08.1092129Z ✔ position-aware enumerator keeps visited cells distinct above the 32-bit boundary (0.391052ms)
+2026-10-04T12:31:08.1094499Z ✔ position-aware enumerator stops at a deterministic path-state cap (0.492641ms)
+2026-10-04T12:31:08.1110611Z ✔ value-relaxed action enumerator includes the hand-enumerated maximum (0.505004ms)
+2026-10-04T12:31:08.1112271Z ✔ Level 26 seed-0 values match the durable certifier frozen hash (1.817401ms)
+2026-10-04T12:31:08.1113904Z ✔ child-process exact denominator finds the hand-enumerated maximum within a deterministic work cap (37.557251ms)
+2026-10-04T12:31:08.1115464Z ✔ child-process work cap fails closed deterministically as UNKNOWN (94.104652ms)
+2026-10-04T12:31:31.4801254Z ✔ a result claiming only direct evidence needs no protocol (4.372351ms)
+2026-10-04T12:31:31.4862053Z ✔ a result claiming generalization is detected as needing one (0.27833ms)
+2026-10-04T12:31:31.4892043Z ✔ a heading between records ends the record (0.243175ms)
+2026-10-04T12:31:31.4932265Z ✔ declared checks are parsed by name, primes and em-dashes included (1.201197ms)
+2026-10-04T12:31:31.4954251Z ✔ frontmatter parses nested version freeze entries (0.597808ms)
+2026-10-04T12:31:31.5011623Z ✔ a reported protocol cannot remain in the registered lifecycle state (0.254857ms)
+2026-10-04T12:31:31.5013339Z ✔ LIVE: every generalizing result in this ledger has a protocol or a grandfather entry (12081.964375ms)
+2026-10-04T12:31:31.5042634Z ✔ a commit is never a strict ancestor of itself — same-commit backfill fails (19.380122ms)
+2026-10-04T12:31:31.5143329Z ✔ addedIn returns the OLDEST add, so delete-and-re-add cannot reset the clock (17.14103ms)
+2026-10-04T12:31:31.5152134Z ✔ an unregistered run is refused before any compute (0.92346ms)
+2026-10-04T12:31:31.5153295Z ✔ exploratory runs are allowed but stamped as such (0.31134ms)
+2026-10-04T12:31:31.5154485Z ✔ a malformed or unregistered protocol id is refused (0.407679ms)
+2026-10-04T12:31:31.5156073Z ✔ a real registration stamps the protocol commit into the artifact (0.239557ms)
+2026-10-04T12:31:31.5158353Z ✔ the registration stamp rides outside the hashed body, so old artifacts still verify (208.998871ms)
+2026-10-04T12:31:31.5159764Z ✔ an exploratory artifact cannot back a generalizing claim (0.486586ms)
+2026-10-04T12:31:31.5161258Z ✔ LIVE: tampering with one cell of the real holdout breaks its identity (248.97556ms)
+2026-10-04T12:31:31.5162765Z ✔ LIVE: RESULT-0049 Markdown-linked evidence cannot disappear or change silently (309.947929ms)
+2026-10-04T12:31:31.5164658Z ✔ LIVE: RESULT-0049 closure must agree with its pinned contract and fresh recomputation (561.940809ms)
+2026-10-04T12:31:31.5172275Z ✔ LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit (275.372321ms)
+2026-10-04T12:31:31.5173725Z ✔ LIVE: every RESULT-0049 cited JSON artifact is closing-commit bound (356.881796ms)
+2026-10-04T12:31:31.5175206Z ✔ LIVE: a citation that resolves to nothing fails; a filename in prose does not (22.272409ms)
+2026-10-04T12:31:31.5176744Z ✔ LIVE: a forged, unreachable, or out-of-order protocolCommit is caught (265.099436ms)
+2026-10-04T12:31:31.5178245Z ✔ LIVE: a report that names a check without answering it is caught (1.3847ms)
+2026-10-04T12:31:31.5180012Z ✔ LIVE: version freeze is enforced while registered, and against what the artifact recorded (47.294811ms)
+2026-10-04T12:31:31.5181961Z ✔ Git object paths use repository separators when callers supply Windows separators (51.94833ms)
+2026-10-04T12:31:31.5183442Z ✔ an honest registration passes and stamps its own commit (50.886113ms)
+2026-10-04T12:31:31.5184875Z ✔ a freeze rewritten after registration is refused, uncommitted or committed (123.86378ms)
+2026-10-04T12:31:31.5186317Z ✔ a protocol registered with placeholders or an empty freeze is refused (94.195968ms)
+2026-10-04T12:31:31.5187588Z ✔ a finished protocol cannot mint new evidence (34.998706ms)
+2026-10-04T12:31:31.5188876Z ✔ the ledger gate reads the freeze from the registration commit too (29.442212ms)
+2026-10-04T12:31:31.5190452Z ✔ a protocol body rewritten after registration is refused, uncommitted or committed (174.526939ms)
+2026-10-04T12:31:31.5195573Z ✔ an empty placeholder registered first and filled in later is refused by the guard (116.100229ms)
+2026-10-04T12:31:31.5197432Z ✔ a completed protocol reopened on disk cannot mint new evidence (125.48366ms)
+2026-10-04T12:31:31.5198919Z ✔ a protocol once committed as complete stays finished even with no report in history (106.385789ms)
+2026-10-04T12:31:31.5200333Z ✔ the ledger gate refuses a registered protocol that freezes nothing (0.25747ms)
+2026-10-04T12:31:31.5202042Z ✔ LIVE: every protocol in experiments/ matches its registration commit apart from status (460.186437ms)
+2026-10-04T12:31:31.5203287Z ✔ the real ledger passes the structure check (8.625066ms)
+2026-10-04T12:31:31.5204150Z ✔ a well-formed planted record passes (7.997107ms)
+2026-10-04T12:31:31.5204870Z ✔ an empty ledger fails (0.261317ms)
+2026-10-04T12:31:31.5205620Z ✔ structure check rejects: duplicate ID (8.730603ms)
+2026-10-04T12:31:31.5206474Z ✔ structure check rejects: invalid status (7.738646ms)
+2026-10-04T12:31:31.5207373Z ✔ structure check rejects: invalid proof class (8.037673ms)
+2026-10-04T12:31:31.5208429Z ✔ structure check rejects: proof class naming no class (8.005703ms)
+2026-10-04T12:31:31.5209354Z ✔ structure check rejects: missing as_of (7.964867ms)
+2026-10-04T12:31:31.5210215Z ✔ structure check rejects: missing evidence (7.697469ms)
+2026-10-04T12:31:31.5211408Z ✔ structure check rejects: type not matching prefix (7.17706ms)
+2026-10-04T12:31:31.5212345Z ✔ structure check rejects: unknown prefix (7.174745ms)
+2026-10-04T12:31:31.5213163Z ✔ structure check rejects: h2 heading (7.373766ms)
+2026-10-04T12:31:31.5213968Z ✔ structure check rejects: h4 heading (8.500044ms)
+2026-10-04T12:31:31.5214840Z ✔ structure check rejects: lowercase heading (10.419088ms)
+2026-10-04T12:31:31.5215796Z ✔ structure check rejects: heading without space (7.596952ms)
+2026-10-04T12:31:31.5216925Z ✔ structure check rejects: heading with a colon instead of a dash (6.951981ms)
+2026-10-04T12:31:31.5218048Z ✔ structure check rejects: heading indented one space (7.04841ms)
+2026-10-04T12:31:31.5219141Z ✔ structure check rejects: heading indented three spaces (6.74242ms)
+2026-10-04T12:31:31.5220172Z ✔ structure check rejects: heading with no title (6.773067ms)
+2026-10-04T12:31:31.5251322Z ✔ structure check rejects: short ID (6.803834ms)
+2026-10-04T12:31:31.5252230Z ✔ structure check rejects: empty evidence (7.2039ms)
+2026-10-04T12:31:31.5253156Z ✔ structure check rejects: status written twice (6.832007ms)
+2026-10-04T12:31:31.5254146Z ✔ structure check rejects: superseded without link (7.856156ms)
+2026-10-04T12:31:31.5255074Z ✔ structure check rejects: free-text as_of (7.693321ms)
+2026-10-04T12:31:31.5256097Z ✔ the real ledger cites only paths and commits that exist (518.845919ms)
+2026-10-04T12:31:31.5257042Z ✔ an existing path and commit pass (537.29551ms)
+2026-10-04T12:31:31.5257989Z ✔ RESULT-NNNN shorthand resolves under experiments/ (507.31809ms)
+2026-10-04T12:31:31.5259166Z ✔ a known gap stops being excused when its correction is missing (529.474701ms)
+2026-10-04T12:31:31.5260173Z ✔ a missing path in notes is not flagged (532.534386ms)
+2026-10-04T12:31:31.5261351Z ✔ citation check rejects: missing evidence path (531.054867ms)
+2026-10-04T12:31:31.5262421Z ✔ citation check rejects: missing path with line range (502.172986ms)
+2026-10-04T12:31:31.5263463Z ✔ citation check rejects: missing reverify path (516.54018ms)
+2026-10-04T12:31:31.5264374Z ✔ citation check rejects: unknown commit (423.105671ms)
+2026-10-04T12:31:31.5265351Z ✔ citation check rejects: unknown commit, plural label (421.927595ms)
+2026-10-04T12:31:31.5266376Z ✔ citation check rejects: path inside a command (613.949041ms)
+2026-10-04T12:31:31.5267410Z ✔ citation check rejects: top-level file without slash (594.190619ms)
+2026-10-04T12:31:31.5268451Z ✔ citation check rejects: commit with colon label (596.719963ms)
+2026-10-04T12:31:31.5269471Z ✔ citation check rejects: commit with equals label (605.653558ms)
+2026-10-04T12:31:31.5270556Z ✔ citation check rejects: commit only on an unmerged branch (606.4993ms)
+2026-10-04T12:31:31.5271737Z ✔ citation check rejects: absolute path (604.554086ms)
+2026-10-04T12:31:31.5273311Z ✔ citation check rejects: list-form continuation line (603.752222ms)
+2026-10-04T12:31:31.5274604Z ✔ citation check rejects parent traversal even when the external path exists (9.164986ms)
+2026-10-04T12:31:31.5275927Z ✔ citation check rejects a missing Markdown-linked evidence path (11.271149ms)
+2026-10-04T12:31:31.5302203Z ✔ the real ledger has two-way supersede links (3.485645ms)
+2026-10-04T12:31:31.5303024Z ✔ an unchanged ledger passes the history check (5.065009ms)
+2026-10-04T12:31:31.5303804Z ✔ a status change and added links and notes pass (6.334748ms)
+2026-10-04T12:31:31.5304554Z ✔ history check rejects a rewritten statement (5.563215ms)
+2026-10-04T12:31:31.5305308Z ✔ history check rejects a promoted proof class (5.388841ms)
+2026-10-04T12:31:31.5306295Z ✔ history check rejects a rewritten evidence field (5.687806ms)
+2026-10-04T12:31:31.5307255Z ✔ history check rejects a changed as_of (5.060752ms)
+2026-10-04T12:31:31.5308206Z ✔ history check rejects a dropped supersede link (5.324932ms)
+2026-10-04T12:31:31.5309174Z ✔ history check rejects rewritten notes (5.454293ms)
+2026-10-04T12:31:31.5310137Z ✔ history check rejects notes with text prepended (5.704638ms)
+2026-10-04T12:31:31.5311446Z ✔ history check rejects a changed heading title (5.278636ms)
+2026-10-04T12:31:31.5312537Z ✔ history check rejects a rewritten ad hoc bold line (5.656217ms)
+2026-10-04T12:31:31.5313602Z ✔ history check rejects a capitalised override field (5.503293ms)
+2026-10-04T12:31:31.5314757Z ✔ history check rejects a superseded record revived as accepted (5.315455ms)
+2026-10-04T12:31:31.5315887Z ✔ history check rejects a status change with no new correction (7.329827ms)
+2026-10-04T12:31:31.5316967Z ✔ a removed record is left to the authorship gate (5.470983ms)
+2026-10-04T12:31:31.5318008Z ✔ adding written_by and checked_by to an existing record passes (5.512791ms)
+2026-10-04T12:31:31.5319129Z ✔ history check rejects a rewritten continuation line (0.206383ms)
+2026-10-04T12:31:31.5320191Z ✔ history check rejects a deleted continuation line (0.13957ms)
+2026-10-04T12:31:31.5321392Z ✔ history check accepts an unchanged wrapped field (0.124491ms)
+2026-10-04T12:31:31.5322328Z ✔ link check rejects a one-way supersede link (2.882925ms)
+2026-10-04T12:31:31.5323426Z ✔ link check rejects a record that supersedes itself in both directions (0.20455ms)
+2026-10-04T12:31:31.5324473Z ✔ sample-size check rejects: a bare heading (0.794076ms)
+2026-10-04T12:31:31.5325444Z ✔ sample-size check rejects: template placeholders left in (0.441801ms)
+2026-10-04T12:31:31.5326512Z ✔ sample-size check rejects: a missing margin item (0.331156ms)
+2026-10-04T12:31:31.5327546Z ✔ sample-size check rejects: an empty downstream item (0.303083ms)
+2026-10-04T12:31:31.5328610Z ✔ the real experiments pass the sample-size check (3.334274ms)
+2026-10-04T12:31:31.5329593Z ✔ an old protocol without the section passes (0.370558ms)
+2026-10-04T12:31:31.5330494Z ✔ a new protocol with the section passes (0.302402ms)
+2026-10-04T12:31:31.5332153Z ✔ a frozen companion protocol with explicit denominator, margin, and adoption boundary passes (0.706823ms)
+2026-10-04T12:31:31.5333796Z ✔ the frozen companion form fails when its quantitative margin is removed (0.648295ms)
+2026-10-04T12:31:31.5335059Z ✔ an unfrozen companion cannot satisfy the sample-size check (0.426763ms)
+2026-10-04T12:31:31.5336075Z ✔ sample-size check rejects: new, no section (0.377251ms)
+2026-10-04T12:31:31.5336975Z ✔ sample-size check rejects: quoted date (0.304396ms)
+2026-10-04T12:31:31.5337826Z ✔ sample-size check rejects: blank date (0.293115ms)
+2026-10-04T12:31:31.5338684Z ✔ sample-size check rejects: missing date (0.313022ms)
+2026-10-04T12:31:31.5339566Z ✔ the real runs pass the outcome check (346.379989ms)
+2026-10-04T12:31:31.5340412Z ✔ a run naming an existing record passes (0.873733ms)
+2026-10-04T12:31:31.5341669Z ✔ a stopped run marked not reportable with a reason passes (0.405523ms)
+2026-10-04T12:31:31.5342748Z ✔ trailing blank lines after the ledger line pass (0.401997ms)
+2026-10-04T12:31:31.5344457Z ✔ an older run needs no ledger line (0.281443ms)
+2026-10-04T12:31:31.5345363Z ✔ outcome check rejects: no outcome file (0.332187ms)
+2026-10-04T12:31:31.5346434Z ✔ outcome check rejects: outcome file without a ledger line (0.577954ms)
+2026-10-04T12:31:31.5347605Z ✔ outcome check rejects: a ledger line naming a missing record (0.284559ms)
+2026-10-04T12:31:31.5348712Z ✔ outcome check rejects: not reportable with no reason (0.301379ms)
+2026-10-04T12:31:31.5349707Z ✔ outcome check rejects: a ledger line with no ID (0.252529ms)
+2026-10-04T12:31:31.5351116Z ✔ outcome check rejects: a ledger line followed by later output (0.24186ms)
+2026-10-04T12:31:31.5352182Z ✔ close-out passes when no record is added (0.169395ms)
+2026-10-04T12:31:31.5353265Z ✔ close-out passes when a record is added and CURRENT.md changes (0.090689ms)
+2026-10-04T12:31:31.5354449Z ✔ close-out rejects a new record with CURRENT.md unchanged (0.096098ms)
+2026-10-04T12:31:31.5355565Z ✔ reverify plan includes commands on continuation lines (0.791601ms)
+2026-10-04T12:31:31.5357106Z ✔ reverify plan reports a runnable command followed by prose-only flags as manual (0.163013ms)
+2026-10-04T12:31:31.5358427Z ✔ reverify plan keeps a complete runnable command automatic (0.11822ms)
+2026-10-04T12:31:31.5359721Z ✔ reverify plan reports a pipeline as manual regardless of pipe spacing (0.114653ms)
+2026-10-04T12:31:31.5361322Z ✔ automatic reverify commands fail on an earlier semicolon-separated error (27.515283ms)
+2026-10-04T12:31:31.5362750Z ✔ LIVE: RESULT-0049 mixed reverify instructions are reported as manual (1.501379ms)
+2026-10-04T12:31:31.5364024Z ✔ RESULT-0031 recompute finds no cap mismatches on its corpus (43.074733ms)
+2026-10-04T12:31:31.5365171Z ✔ a prose-only reverify is listed as manual, not dropped (0.195383ms)
+2026-10-04T12:31:31.5366194Z ✔ a real revision and checkout label pass (424.199161ms)
+2026-10-04T12:31:31.5367182Z ✔ every SHA in a real plural commit list passes (433.882201ms)
+2026-10-04T12:31:31.5368480Z ✔ citation check rejects a bad later SHA in: commits `be84336`, `deadbeef1234` (421.549109ms)
+2026-10-04T12:31:31.5370186Z ✔ citation check rejects a bad later SHA in: commits `be84336` (X), `1e5311e` (Y), and `deadbeef1234` (Z) (458.549215ms)
+2026-10-04T12:31:31.5377938Z ✔ history check rejects a rewrite below an H4 inside a field (0.223716ms)
+2026-10-04T12:31:31.5379251Z ✔ citation check rejects a missing path below an H4 inside evidence (412.222563ms)
+2026-10-04T12:31:31.5380468Z ✔ reverify plan keeps commands below an H4 inside the field (0.27476ms)
+2026-10-04T12:31:31.5382244Z ✔ citation check rejects unknown SHA: runner revision `deadbeef1234` (415.979425ms)
+2026-10-04T12:31:31.5383779Z ✔ citation check rejects unknown SHA: isolated checkout `deadbeef1234` (410.454209ms)
+2026-10-04T12:31:31.5385066Z ✔ citation check rejects unknown SHA: checkout at `deadbeef1234` (414.397822ms)
+2026-10-04T12:31:31.5824022Z ✔ CSV parser preserves quoted commas and doubled quotes (2.879221ms)
+2026-10-04T12:31:31.5824789Z ✔ LIVE: scanner reads the real retained failed closures (3.491831ms)
+2026-10-04T12:31:31.5825478Z ✔ a real UNVERIFIED closure fails when its ledger row is absent (1.57573ms)
+2026-10-04T12:31:31.5826712Z ✔ two failed closures cannot share one run_id and one ledger row (2.05102ms)
+2026-10-04T12:31:31.5828178Z ✔ a ledger row cannot claim prevention through missing files (1.813831ms)
+2026-10-04T12:31:31.5829212Z ✔ an intentional failing control inside a CLOSED run is not a failed run (0.692812ms)
+2026-10-04T12:31:31.5830181Z ✔ calendar dates and legacy evidence identities are exact (2.416098ms)
+2026-10-04T12:31:31.5831694Z ✔ a retained legacy incident fails when its CSV row is removed (0.767304ms)
+2026-10-04T12:31:31.5832966Z ✔ LIVE: every retained failed closure has one complete prevention record (2.387402ms)
+2026-10-04T12:31:31.5834262Z ✔ a fixed-board shape must name the seed that fixes the board (2.066967ms)
+2026-10-04T12:31:31.5835336Z ✔ target and tileScale remain forbidden shape controls (1.45645ms)
+2026-10-04T12:31:31.5837163Z ✔ fitting and holdout use disjoint player variants (0.26643ms)
+2026-10-04T12:31:31.5838119Z ✔ adjacent variants map to far-apart lookahead seeds (0.195956ms)
+2026-10-04T12:31:31.5838756Z ✔ the target is the fitted median times demand, rounded down (1.775263ms)
+2026-10-04T12:31:31.5839448Z ✔ the candidate carries the seed, so the board is part of the level (0.434276ms)
+2026-10-04T12:31:31.5840147Z ✔ a freshly derived candidate verifies against its own receipt (1.100052ms)
+2026-10-04T12:31:31.5841170Z ✔ the receipt is rejected when the candidate is edited underneath it (0.594689ms)
+2026-10-04T12:31:31.5841821Z ✔ swapping the board invalidates the receipt (1.121706ms)
+2026-10-04T12:31:31.5842407Z ✔ a receipt from the random-board pipeline is refused outright (0.614534ms)
+2026-10-04T12:31:31.5843105Z ✔ a correctly signed receipt that fitted across boards is still refused (0.574313ms)
+2026-10-04T12:31:31.5843807Z ✔ the same fixed board yields a real spread of scores across players (14626.63773ms)
+2026-10-04T12:31:31.5844468Z ✔ the same board and the same player replay identically (2756.000336ms)
+2026-10-04T12:31:31.5845056Z ✔ a level that names a seed deals the same board every time (9.006731ms)
+2026-10-04T12:31:31.5845564Z ✔ different seeds are different boards (0.381805ms)
+2026-10-04T12:31:31.5846091Z ✔ a level with no seed still draws a fresh board each time (0.484236ms)
+2026-10-04T12:31:31.5846718Z ✔ every shipped level is currently unseeded, so none of them changed (0.2349ms)
+2026-10-04T12:31:31.5847344Z ✔ an unusable seed is rejected rather than silently ignored (0.818611ms)
+2026-10-04T12:31:31.5847952Z ✔ linear and branching controls separate both bounded proxies (17.77733ms)
+2026-10-04T12:31:31.5848553Z ✔ bounded misses remain UNKNOWN at the consumer boundary (0.488484ms)
+2026-10-04T12:31:31.5849284Z ✔ a checkout one evidence commit behind origin/main fails and prints the fix command (252.892048ms)
+2026-10-04T12:31:31.5849944Z ✔ an up-to-date checkout passes (baseline) (176.916322ms)
+2026-10-04T12:31:31.5850590Z ✔ a checkout behind only on non-evidence files passes but reports the lag (228.291014ms)
+2026-10-04T12:31:31.5852063Z ✔ a merged branch that looks up to date with its upstream is still caught (276.281185ms)
+2026-10-04T12:31:31.5853563Z ✔ detached HEAD, no upstream and no origin remote are reported without crashing (355.271014ms)
+2026-10-04T12:31:31.5854803Z ✔ a non-git directory exits 2 instead of crashing (51.355486ms)
+2026-10-04T12:31:31.5855970Z ✔ the check leaves HEAD, branch, refs of the work tree and files unchanged (263.205424ms)
+2026-10-04T12:31:31.5857553Z ✔ an upstream that is not origin/main and has newer evidence fails even when origin/main is current (268.006392ms)
+2026-10-04T12:31:31.5859049Z ✔ a local-only evidence commit ahead of upstream and origin/main is fresh (236.435098ms)
+2026-10-04T12:31:31.5860519Z ✔ an upstream that is not origin/main and is behind only on a non-evidence file passes (255.916709ms)
+2026-10-04T12:31:31.5862329Z ✔ each of the three evidence files, touched alone on origin/main, makes the checkout stale (876.406029ms)
+2026-10-04T12:31:31.5863780Z ✔ a failed fetch with no known-stale evidence exits 2 and says UNVERIFIED, never FRESH (178.587083ms)
+2026-10-04T12:31:31.5865239Z ✔ a failed fetch on a checkout already stale from local refs still exits 1 and warns (254.822048ms)
+2026-10-04T12:31:31.5866913Z ✔ a merged topic branch in a LINKED worktree gets a fix that runs there (no switch main) and ends FRESH (325.654745ms)
+2026-10-04T12:31:31.5868536Z ✔ the main clone behind origin/main prints exactly one fix line and it brings the clone current (329.945961ms)
+2026-10-04T12:31:31.5869853Z ✔ a detached HEAD behind origin/main gets a fix that ends FRESH (305.205126ms)
+2026-10-04T12:31:31.5871998Z ✔ an unmerged branch with its own commit behind an evidence commit still fails and keeps the rebase hint (183.957393ms)
+2026-10-04T12:31:31.5873245Z ✔ dry-run writes nothing and prints a diff (40.306623ms)
+2026-10-04T12:31:31.5874589Z ✔ real run copies both scripts, adds one entry, backs up, preserves everything else (38.282092ms)
+2026-10-04T12:31:31.5876080Z ✔ second run is a no-op: no new entry, no new backup, file bytes unchanged (65.933871ms)
+2026-10-04T12:31:31.5877253Z ✔ invalid JSON or missing settings refuses and writes nothing (67.783908ms)
+2026-10-04T12:31:31.5878343Z ✔ launcher: stale checkout -> exit 0 and the WARNING line (226.229449ms)
+2026-10-04T12:31:31.5879459Z ✔ launcher: non-git directory -> exit 0 and nothing printed (41.27692ms)
+2026-10-04T12:31:31.5881173Z ✔ launcher: a failed git probe in a real checkout -> exit 0 and one UNVERIFIED probe line (139.598301ms)
+2026-10-04T12:31:31.5882791Z ✔ launcher: a hanging check.js is killed within the timeout, exit 0, one UNVERIFIED line (951.624801ms)
+2026-10-04T12:31:31.5884231Z ✔ launcher: a crashing check.js still exits 0 with one UNVERIFIED line (179.821113ms)
+2026-10-04T12:31:31.5885617Z ✔ launcher: on timeout the hung git-fetch grandchild is killed too (no survivor) (2156.711651ms)
+2026-10-04T12:31:31.5886884Z ✔ fresh + stale + missing: labels, summary, exit 1, read-only (512.410284ms)
+2026-10-04T12:31:31.5887750Z ✔ no stale, one missing: exit 2 (387.75096ms)
+2026-10-04T12:31:31.5888359Z ✔ all fresh: exit 0 (357.170109ms)
+2026-10-04T12:31:31.5889301Z ✔ detached HEAD worktree is labelled (detached) and does not crash (365.526764ms)
+2026-10-04T12:31:31.5890434Z ✔ git failure (not a repo): UNVERIFIED, exit 2, no crash (44.018262ms)
+2026-10-04T12:31:31.5891955Z ✔ no origin remote at all: UNCHECKED worktrees are UNVERIFIED, never FRESH; exit 2 (234.334422ms)
+2026-10-04T12:31:31.5893340Z ✔ fetch fails (origin URL dead) with no stale evidence: UNVERIFIED, exit 2 (376.999079ms)
+2026-10-04T12:31:31.5894593Z ✔ fetch fails but local refs already stale: STALE wins, exit 1 (478.315419ms)
+2026-10-04T12:31:31.5896077Z ✔ check timeout: every checked worktree UNVERIFIED with "timed out", summary printed, exit 2 (226.9484ms)
+2026-10-04T12:31:31.5897494Z ✔ game.js exports LEVELS for headless use, unchanged from the shipped data (2.676072ms)
+2026-10-04T12:31:31.5898879Z ✔ legacy queries keep their original meaning; Connections uses stable puzzle IDs (1.758537ms)
+2026-10-04T12:31:31.5900181Z ✔ actual app entry and router load only the chosen controller in original order (6.494807ms)
+2026-10-04T12:31:31.5901666Z ✔ legacy script-load failure puts its alert in the visible original view (1.301798ms)
+2026-10-04T12:31:31.5902894Z ✔ every sampled shape is legal input to the authoring pipeline (7.493773ms)
+2026-10-04T12:31:31.5903980Z ✔ sampled shapes stay inside the declared sampling space (1.615502ms)
+2026-10-04T12:31:31.5905021Z ✔ the sampler is reproducible from its seed (1.511648ms)
+2026-10-04T12:31:31.5905890Z ✔ the signature ignores name and blocker order (0.396346ms)
+2026-10-04T12:31:31.5906899Z ✔ the signature separates shapes that differ in any knob (0.338279ms)
+2026-10-04T12:31:31.5908031Z ✔ the screen drops a board that locks up and keeps a clean one (0.318231ms)
+2026-10-04T12:31:31.5909081Z ✔ the gate verdict matches the pipeline thresholds (0.339931ms)
+2026-10-04T12:31:31.5910097Z ✔ the shortlist puts the hardest level for the bot first (0.237661ms)
+2026-10-04T12:31:31.5912213Z ✔ the shortlist drops anything that failed a gate, however hard it was (0.330614ms)
+2026-10-04T12:31:31.5913603Z ✔ registered summary can support a complete predictive independent pair (12.677775ms)
+2026-10-04T12:31:31.5914819Z ✔ registered summary falsifies a collapsed timing axis (1.159815ms)
+2026-10-04T12:31:31.5916071Z ✔ percentile player chooses the chain nearest its fixed share of the best points (1.255483ms)
+2026-10-04T12:31:31.5917413Z ✔ the frozen 3x3 descriptor bins name early, steady, late and low, mid, high (1.050992ms)
+2026-10-04T12:31:31.5918787Z ✔ same-or-edge-adjacent stability does not let a center cell cover the corners (0.325915ms)
+2026-10-04T12:31:31.5920129Z ✔ screen stops when a descriptor merely tracks score and occupies one row (2.663889ms)
+2026-10-04T12:31:31.5921515Z ✔ screen fails closed when score correlation is undefined (0.865168ms)
+2026-10-04T12:31:31.5923394Z ✔ exact play propagates the deterministic path-state cap to every denominator observation (1032.341607ms)
+2026-10-04T12:31:31.5924886Z ✔ harvest policy favors mutually harvestable mass without mutating state (2.290275ms)
+2026-10-04T12:31:31.5926189Z ✔ deterministic work cap stops search without claiming impossibility (16.271439ms)
+2026-10-04T12:33:15.4426046Z ✔ every recorded session resolves to a board and is paired (109694.465384ms)
+2026-10-04T12:33:15.4431632Z ✔ an ordinary play capture resolves to the shipped board and pairs on its seed (1417.867173ms)
+2026-10-04T12:33:15.4441491Z ✔ an invalid ordinary capture is reported without crashing on its null identity (43.216542ms)
+2026-10-04T12:33:15.4445751Z ✔ board trace renders an ordinary play capture through the documented CLI (166.822818ms)
+2026-10-04T12:33:15.4452904Z ✔ each pair compares the same board and the same seed for both players (0.581571ms)
+2026-10-04T12:33:15.4463185Z ✔ the bot arm is deterministic for a given board and seed (1880.928639ms)
+2026-10-04T12:33:15.4464794Z ✔ a shifted seed is a different game, so the pairing is doing real work (1857.591357ms)
+2026-10-04T12:33:15.4721497Z ✔ pilot artifacts bind the exact candidate, seed, batch, base, authority, and non-claims (6.161559ms)
+2026-10-04T12:33:15.4723220Z ✔ focused inspection reads the durable pilot artifacts and refuses candidate drift (19.571102ms)
+2026-10-04T12:33:15.4726924Z ✔ focused inspection refuses a controlled changed runtime file supplied beside the tree (9.946892ms)
+2026-10-04T12:33:15.4728688Z ✔ challenge receipt is a fresh real recording PASS and same-predicate broken-twin FAIL (14.702237ms)
+2026-10-04T12:33:15.4730325Z ✔ challenge refuses replay-compatible candidate content with the wrong identity (4.86556ms)
+2026-10-04T12:33:15.4740173Z ✔ execution verifier invalidates candidate, recording, checker, and challenge identities (63.661303ms)
+2026-10-04T12:33:15.4741460Z ✔ the real subject binds one candidate, one seed, and one content-named recording (5.688359ms)
+2026-10-04T12:33:15.4742340Z ✔ the real recording replays exactly: 140,544 points in 20 moves (3.005354ms)
+2026-10-04T12:33:15.4743089Z ✔ a broken twin fails through the same predicate, and so does a tampered move (4.023785ms)
+2026-10-04T12:33:15.4743824Z ✔ committed challenge and execution receipt reproduce and verify PASS (11.80322ms)
+2026-10-04T12:33:15.4744661Z ✔ the receipt is invalidated by a changed recording, a changed checker identity, or a forged verdict (25.415481ms)
+2026-10-04T12:33:15.4745432Z ✔ an untouched record needs no authorship, even without the fields (3.244157ms)
+2026-10-04T12:33:15.4746003Z ✔ a new provisional record needs a writer only (0.614993ms)
+2026-10-04T12:33:15.4746584Z ✔ a new accepted record needs a checker who is not the writer (0.501241ms)
+2026-10-04T12:33:15.4747372Z ✔ status values are normalized, so a backticked or capitalized accepted still needs a checker (0.252179ms)
+2026-10-04T12:33:15.4748376Z ✔ changing an accepted record's statement needs a writer and a checker (0.287123ms)
+2026-10-04T12:33:15.4749171Z ✔ changing an accepted record's evidence needs a writer and a checker (0.223094ms)
+2026-10-04T12:33:15.4750092Z ✔ changing an accepted record's updated needs a writer and a checker (0.259972ms)
+2026-10-04T12:33:15.4752256Z ✔ changing an accepted record's as_of needs a writer and a checker (0.228044ms)
+2026-10-04T12:33:15.4753908Z ✔ retiring accepted evidence needs an independent check, whatever correction it cites (0.420061ms)
+2026-10-04T12:33:15.4755000Z ✔ an accepted record newly narrowed needs a checker (0.389774ms)
+2026-10-04T12:33:15.4755718Z ✔ removing any record fails, including one added after the gate landed (0.38244ms)
+2026-10-04T12:33:15.4756503Z ✔ a duplicated ID fails and neither copy counts as untouched (0.219819ms)
+2026-10-04T12:33:15.4757253Z ✔ a heading written with a plain hyphen is still a record the gate sees (0.199701ms)
+2026-10-04T12:33:15.4757919Z ✔ the live ledger passes the gate against its base (60.874733ms)
+2026-10-04T12:33:15.4759813Z ✔ a sign-off recorded for an earlier version cannot authorize a later rewrite (0.363796ms)
+2026-10-04T12:33:15.4761582Z ✔ the pre-push hook compares the ledger with the destination remote, not origin/main (0.359868ms)
+2026-10-04T12:33:15.4762975Z ✔ records are parsed with their fields and a non-record heading ends one (1.934043ms)
+2026-10-04T12:33:15.4764011Z ✔ CRLF ledgers parse the same as LF ledgers (1.189731ms)
+2026-10-04T12:33:15.4764710Z ✔ headings with any dash are records (0.254442ms)
+2026-10-04T12:33:15.4765191Z ✔ superseded records leave the current table (1.009275ms)
+2026-10-04T12:33:15.4765853Z ✔ a narrowed record leads with the correction that narrowed it (BL-0016 F3) (1.854348ms)
+2026-10-04T12:33:15.4766457Z ✔ the committed index matches the live ledger (41.325601ms)
+2026-10-04T12:33:15.4767040Z ✔ validateShape accepts one named target-free proposal shape (2.002029ms)
+2026-10-04T12:33:15.4767678Z ✔ validateShape forbids authored target and tile scale controls (0.76959ms)
+2026-10-04T12:33:15.4768432Z ✔ validateShape rejects malformed dimensions, blockers, and proposal labeling (0.557746ms)
+2026-10-04T12:33:15.4769282Z ✔ deriveCandidate uses fixed fitting and disjoint holdout seeds with measured target rounding (4.427957ms)
+2026-10-04T12:33:15.4769979Z ✔ deriveCandidate refuses an incomplete fitting run (0.797912ms)
+2026-10-04T12:33:15.4771042Z ✔ verifyCandidate passes a bound receipt and rejects tampering, invalid data, overlap, and incomplete totals (5.332487ms)
+2026-10-04T12:33:15.4772092Z ✔ verifyCandidate remeasures fitting evidence and enforces target and tile-scale derivation (3.592946ms)
+2026-10-04T12:33:15.4772842Z ✔ authored receipts carry the exact frozen calibration stamp (0.918507ms)
+2026-10-04T12:33:15.4773529Z ✔ verification rejects missing or re-signed mismatched calibration stamps (2.768334ms)
+2026-10-04T12:33:15.4774098Z ✔ a level in range is the level you get (1.294385ms)
+2026-10-04T12:33:15.4774579Z ✔ the first and last levels are both reachable (0.232201ms)
+2026-10-04T12:33:15.4775068Z ✔ no level parameter means no jump (0.201845ms)
+2026-10-04T12:33:15.4775575Z ✔ a level past the end is refused rather than clamped (0.255766ms)
+2026-10-04T12:33:15.4776065Z ✔ zero and negative levels are refused (0.25267ms)
+2026-10-04T12:33:15.4776604Z ✔ a value that is not a whole number is refused, not truncated (0.219749ms)
+2026-10-04T12:33:15.4777141Z ✔ the jump survives other query parameters (0.207866ms)
+2026-10-04T12:33:15.4777700Z ✔ a shipped-level seed accepts the full unsigned 32-bit range (0.232642ms)
+2026-10-04T12:33:15.4778389Z ✔ an absent or malformed shipped-level seed leaves ordinary play random (0.280191ms)
+2026-10-04T12:33:15.4779130Z ✔ loading and retrying a fixed shipped-level seed reproduces the board RNG (1.620861ms)
+2026-10-04T12:33:15.4779953Z ✔ measurement-control CLI keeps legacy defaults and parses explicit starts and axes source (1.134999ms)
+2026-10-04T12:33:15.4780708Z ✔ evaluation seed ranges must be safe, non-negative, and disjoint (1.322518ms)
+2026-10-04T12:33:15.4781696Z ✔ a source archive freezes exact bin axes while retaining current pilot diagnostics (2.649733ms)
+2026-10-04T12:33:15.4782469Z ✔ MAP-Elites keeps the best policy independently inside each behavior cell (0.28006ms)
+2026-10-04T12:33:15.4783264Z ✔ behavior descriptors land in understandable numeric chain-style and patience bins (0.407277ms)
+2026-10-04T12:33:15.4784039Z ✔ a pilot must demonstrate real range on both descriptors before axes exist (0.330624ms)
+2026-10-04T12:33:15.4784666Z ✔ policy identity is stable across object key order (0.462499ms)
+2026-10-04T12:33:15.4785355Z ✔ the static map explains axes, empty cells, elite identity, selection, and holdout (0.627326ms)
+2026-10-04T12:33:15.4786193Z ✔ artifact verification refuses seed overlap and missing representative holdout evidence (0.722913ms)
+2026-10-04T12:33:15.4786964Z ✔ artifact verification binds frozen axes to their recorded identity (0.972848ms)
+2026-10-04T12:33:15.4787644Z ✔ merge-depth control distinguishes a two-generation dependency (2.920767ms)
+2026-10-04T12:33:15.4788652Z ✔ spatial-spread control distinguishes compact and board-wide chains (0.427845ms)
+2026-10-04T12:33:15.4789354Z ✔ uniform scale preserves merge-depth and spatial-spread proxies (19.404885ms)
+2026-10-04T12:33:15.4790019Z ✔ bounded misses remain UNKNOWN and planted witnesses fail replay (1.466224ms)
+2026-10-04T12:33:15.4790596Z ✔ the fixed axes assign all four intended cells (1.991139ms)
+2026-10-04T12:33:15.4791463Z ✔ archive admission requires cross-width cell agreement and spread stability (0.578154ms)
+2026-10-04T12:33:15.4792213Z ✔ each cell retains the four most reproducible identities deterministically (0.491373ms)
+2026-10-04T12:33:15.4792909Z ✔ a planted complete 128-row map supports all registered claims (13.580181ms)
+2026-10-04T12:33:15.4793571Z ✔ a two-cell collapse is falsified rather than called inconclusive (0.877871ms)
+2026-10-04T12:33:15.4794194Z ✔ makeRng and makeSeededRng produce identical sequences (2.767321ms)
+2026-10-04T12:33:15.4794854Z ✔ createLevelState builds the same opening board as createInitialGrid (4.51054ms)
+2026-10-04T12:33:15.4795536Z ✔ canExtendChain agrees for every value relationship, including 0 (1.114121ms)
+2026-10-04T12:33:15.4796208Z ✔ isBlockedTile agrees with Tile.isBlocked for every blocker type (0.287695ms)
+2026-10-04T12:33:15.4796845Z ✔ isValidChain agrees across lengths and first-pair values (0.66756ms)
+2026-10-04T12:33:15.4797375Z ✔ chain multiplier agrees for lengths 0-30 (0.903919ms)
+2026-10-04T12:33:15.4797947Z ✔ merges agree at every multiplier tier, on board and on score (261.182992ms)
+2026-10-04T12:33:15.4798575Z ✔ a bomb in the FINAL position is defused and survives, in both (260.495224ms)
+2026-10-04T12:33:15.4799201Z ✔ a bomb in a NON-final position is deleted outright, in both (261.245423ms)
+2026-10-04T12:33:15.4799825Z ✔ applyGravity agrees across columns, stones, ice and bombs (1.542917ms)
+2026-10-04T12:33:15.4800502Z ✔ spawnNewTiles agrees on values, positions, and how many draws it takes (0.687498ms)
+2026-10-04T12:33:15.4801388Z ✔ tickBlockers agrees on ice thawing and bomb countdown (0.679844ms)
+2026-10-04T12:33:15.4801895Z ✔ checkBombs agrees in BOTH directions (0.377712ms)
+2026-10-04T12:33:15.4802377Z ✔ the list of uncompared behaviour is accurate (0.227042ms)
+2026-10-04T12:33:16.8573285Z ✔ oracle corpus reads and replays all real recordings, groups exact repeats, retains best wins (104.672437ms)
+2026-10-04T12:33:16.8575115Z ✔ full-rule oracle transition replays every real capture including bombs, ice, stones and scale (30.788874ms)
+2026-10-04T12:33:16.8577377Z ✔ verifier rejects a planted illegal chain through its public witness seam (2.574556ms)
+2026-10-04T12:33:16.8581494Z ✔ verifier rejects planted wrong spawn and blocker timer in real post-move boards (5.816506ms)
+2026-10-04T12:33:16.8586956Z ✔ verifier rejects continuation after the actual target crossing (1.253299ms)
+2026-10-04T12:33:16.8591433Z ✔ real report verifier accepts the known legal calibration witnesses (68915.608129ms)
+2026-10-04T12:33:16.8596328Z ✔ report verifier rejects missing rows, duplicate rows and invented comparison results (25054.749544ms)
+2026-10-04T12:33:16.8601552Z ✔ coherent corpus substitution is rejected against identity pinned outside the report (36.382618ms)
+2026-10-04T12:33:16.8603605Z ✔ bounded search supplies a independently replayable solution and does not mutate the input (0.971085ms)
+2026-10-04T12:33:16.8607209Z ✔ candidate generation preserves legal setup prefixes and off-lattice choices (0.831185ms)
+2026-10-04T12:33:16.8609091Z ✔ CLI reads real report files: positive passes and resigned false comparison fails (19287.796591ms)
+2026-10-04T12:33:33.8056361Z ✔ actual process deadline retains UNKNOWN without inventing impossibility (13.353497ms)
+2026-10-04T12:33:33.8058416Z ✔ a real slower bot witness remains a valid domain failure (16933.607962ms)
+2026-10-04T12:33:33.8060497Z ✔ replay display renders every verified move as a spatial board (9.201502ms)
+2026-10-04T12:33:33.8066992Z ✔ oracle source identities cover the harvest ranking module search depends on (0.606356ms)
+2026-10-04T12:33:33.8394297Z ✔ a failing verdict cannot erase the complete paired result (2.096284ms)
+2026-10-04T12:33:33.8395326Z ✔ the write is immutable and validation happens before publication (0.569057ms)
+2026-10-04T12:33:33.8395977Z captured level 54 seed 3310936729: win 129472 in 16 moves -> ffffffffffff
+2026-10-04T12:33:33.8396761Z captured level 54 seed 3310936729: win 129472 in 16 moves -> ffffffffffff
+2026-10-04T12:33:33.8398105Z ✔ an identical fixed-seed play remains one stored session and one benchmark row (1786.430946ms)
+2026-10-04T12:33:33.8399648Z ✔ nemesis labels a race to the target: fewer moves beats, equal ties, no win loses (0.396566ms)
+2026-10-04T12:33:33.8414090Z captured level 54 seed 3310936729: lose 15360 in 3 moves -> 8abba4c08811
+2026-10-04T12:33:33.8414981Z ✔ nemesis serves shipped boards with the bot result and counts a new capture (1913.341415ms)
+2026-10-04T12:33:33.8415931Z ✔ naive SE is returned unchanged when no layout is supplied (1.851607ms)
+2026-10-04T12:33:33.8416932Z ✔ a layout that does not match the cell count is rejected (0.635239ms)
+2026-10-04T12:33:33.8417789Z ✔ level-clustered SE does not shrink when seeds are added to the same levels (5.38752ms)
+2026-10-04T12:33:33.8419149Z ✔ level-clustered SE does shrink when genuinely new levels are added (0.65208ms)
+2026-10-04T12:33:33.8420462Z ✔ seed-clustered SE catches variation that is common across levels (0.347565ms)
+2026-10-04T12:33:33.8422529Z ✔ the correction is an inflation, never a discount (0.284658ms)
+2026-10-04T12:33:33.8423872Z ✔ behavior summary means chain size and the share of score earned in the final third (1.081297ms)
+2026-10-04T12:33:33.8425317Z ✔ patience counts score only from moves in the final third of the budget (0.25283ms)
+2026-10-04T12:33:33.8426781Z ✔ policy evaluation exposes aggregate behavior beside uncensored scores (4242.288777ms)
+2026-10-04T12:33:33.8442519Z ✔ single-cell policy evaluation aggregates the same post-move descriptor as its real play trace (7975.592938ms)
+2026-10-04T12:33:33.8455655Z ✔ policy lab occupancy agrees with the project classifier, including recoverable values and stones (1.470061ms)
+2026-10-04T12:33:33.8457015Z ✔ policy lab acceptance rejects a win regression, a zero lower bound and a gate-only gain (0.463431ms)
+2026-10-04T12:33:33.8457837Z ✔ board build potential excludes tiles in the dealt range and blocked company (0.421233ms)
+2026-10-04T12:33:33.8458569Z ✔ policy lab rejects a fifth worker before launching any workers (0.645649ms)
+2026-10-04T12:33:33.8459353Z ✔ completion fence refuses dispatched but unretained games even with a claimed verdict (4.700253ms)
+2026-10-04T12:33:33.8460198Z ✔ completion fence cannot certify a two-block interruption or duplicated reference (2.370644ms)
+2026-10-04T12:33:33.8461921Z ✔ confirmation requires positive overall interval without net win regressions (1.333498ms)
+2026-10-04T12:33:33.8462764Z ✔ confirmation journals ten-seed jobs without substituting the 150-seed denominator (1.666235ms)
+2026-10-04T12:33:33.8463529Z ✔ unregistered confirmation is refused before any game or run marker (1.166517ms)
+2026-10-04T12:33:33.8464445Z ✔ candidate format guard rejects nonliteral modules without executing their code (0.696494ms)
+2026-10-04T12:33:33.8465796Z ✔ operational reporting failure cannot reject a durably completed scientific job (0.512873ms)
+2026-10-04T12:33:33.8466615Z ✔ confirmation preflight rejects drift in extra protocol-frozen selection data (2.114779ms)
+2026-10-04T12:33:33.8467376Z ✔ policy panel audit rejects incomplete late levels and repeated cells (5.20468ms)
+2026-10-04T12:33:33.8468174Z ✔ policy panel audit rejects reused ranges, out-of-allocation seeds and recording reads (0.666468ms)
+2026-10-04T12:33:33.8469003Z ✔ policy panel audit reports unused blocks as not run without fabricating failures (0.283567ms)
+2026-10-04T12:33:33.8469860Z ✔ parity audit rejects repeated, incomplete and undeclared cells even with 200 matching traces (2.013181ms)
+2026-10-04T12:33:33.8471230Z ✔ partial durable results cannot become a completed control verdict or erase charged jobs (2.082719ms)
+2026-10-04T12:33:33.8472838Z ✔ committed evidence identities support raw artifacts larger than the child-process default buffer (117.172529ms)
+2026-10-04T12:33:33.8473804Z ✔ Windows directory-sync branch avoids the unavailable directory open while POSIX still syncs (2.549877ms)
+2026-10-04T12:33:33.8474627Z ✔ journal retains a completed job when a later job fails and refuses replay (10.476385ms)
+2026-10-04T12:33:33.8475396Z ✔ journal survives actual controller termination while another job is in flight (60.497902ms)
+2026-10-04T12:33:33.8476242Z ✔ current closeout rejects a new failing test added after a successful saved suite receipt (302.665705ms)
+2026-10-04T12:33:33.8477118Z ✔ post-stop exception permits exactly RESULT-0081 and preserves every other inventory byte (1.052555ms)
+2026-10-04T12:33:33.8478064Z ✔ registered proposal sequence has fifteen distinct generation changes and near-zero/large untrimmed doses (3.12133ms)
+2026-10-04T12:33:33.8479102Z ✔ joint search varies accepted coordinates together and caps complete candidates at thirty-one (5.787042ms)
+2026-10-04T12:33:33.8479886Z ✔ candidate freeze chooses fresh recheck speed and fewer changes on ties (0.39281ms)
+2026-10-04T12:33:33.8480677Z ✔ paired-panel preflight cannot spend a reference when its fresh candidate cannot fit (0.503666ms)
+2026-10-04T12:33:33.8481867Z ✔ proposal CSV identifies fresh recheck as the primary result and preserves unreached stages (0.750424ms)
+2026-10-04T12:33:33.8482699Z ✔ independent proposal arithmetic reproduces a hand-calculated four-cell grid (0.919718ms)
+2026-10-04T12:33:33.8483532Z ✔ independent verdict refuses gate-only success, fresh uncertainty and win regressions (0.370368ms)
+2026-10-04T12:33:33.8484418Z ✔ planning preserves three distinct eligible historical boards and refuses candidate overwrite (5.79126ms)
+2026-10-04T12:33:33.8485305Z ✔ phase admission pins the committed audit and rejects uncommitted drift before execution (64.245577ms)
+2026-10-04T12:33:33.8486511Z ✔ independent arithmetic retains the level uncertainty when seed columns tie (2.323196ms)
+2026-10-04T12:33:33.8488130Z ✔ independent arithmetic cannot turn missing mutual wins into zero-effect observations (0.955114ms)
+2026-10-04T12:33:33.8489604Z ✔ independent accounting counts both parity games and refuses duplicate panels (0.642062ms)
+2026-10-04T12:33:33.8490356Z ✔ independent paired arithmetic refuses null winning move counts (3.954207ms)
+2026-10-04T12:33:33.8491710Z ✔ independent parity audit rejects 200 duplicate identities and cells outside the frozen recipe (1.194459ms)
+2026-10-04T12:33:33.8492799Z ✔ recovery excludes partial C3 while retaining all burned-game charges and completed controls (33.440822ms)
+2026-10-04T12:33:33.8493630Z ✔ carried accounting reaches 29580 and cannot exceed the unchanged control cap (0.760513ms)
+2026-10-04T12:33:33.8494438Z ✔ fresh C3 validation refuses the old burned C3, duplicated addresses, and missing rows (6.400442ms)
+2026-10-04T12:33:33.8496988Z ✔ recovery completion refuses a missing arm, lost-game discount, or weakened aggregate bar (471.796022ms)
+2026-10-04T12:33:33.8498816Z ✔ independent arithmetic gives the hand-calculated level and seed errors (1.992653ms)
+2026-10-04T12:33:33.8499990Z ✔ independent arithmetic keeps win regressions and single mutual-win uncertainty (1.643043ms)
+2026-10-04T12:33:33.8501217Z ✔ independent audit matches inherited real panels and rejects discounted charges or burned C3 substitution (907.924974ms)
+2026-10-04T12:33:33.8502105Z ✔ closeout refuses a running recovery or absent named closure (1.933241ms)
+2026-10-04T12:33:33.8502992Z ✔ no-confirmation audit pin rejects uncommitted changes, missing auditors and post-pin drift (118.961826ms)
+2026-10-04T12:33:33.8503885Z ✔ no-candidate and confirmed closeouts require their actual phase audits (1.487363ms)
+2026-10-04T12:33:33.8504680Z ✔ successful command exit with partial arithmetic cannot qualify closeout (0.570099ms)
+2026-10-04T12:33:33.8505550Z ✔ direct-source closure binds its result, registration, raw hashes and consumed charges (1.040943ms)
+2026-10-04T12:33:33.8506480Z ✔ rendered protocol retains the template pre-registration identity through amend (0.509476ms)
+2026-10-04T12:33:33.8507396Z ✔ confirmed closure binds the actual verdict and pins both raw evidence and closure bytes (0.764701ms)
+2026-10-04T12:33:33.8508355Z ✔ recurring final-tree suite revalidates every retained closeout and committed audit pin (2299.669295ms)
+2026-10-04T12:33:33.8509349Z ✔ replacing committed evidence and regenerating its pin cannot replace the first-added receipt (152.73481ms)
+2026-10-04T12:33:33.8510197Z ✔ merge history cannot hide a competing evidence and receipt addition (168.880044ms)
+2026-10-04T12:33:33.8511478Z ✔ registration check rejects a sibling retained in the object store and accepts reachable registration (97.399548ms)
+2026-10-04T12:33:33.8513207Z ✔ continuation retains eleven controls and every unknown-game charge without replaying a cell (331.445066ms)
+2026-10-04T12:33:33.8515184Z ✔ minimum budget increase funds exactly one whole replacement while preserving other funded phases (0.743842ms)
+2026-10-04T12:33:33.8516850Z ✔ completion refuses lost-game discounts, old C12 seeds, missing arms and weakened bars (723.98334ms)
+2026-10-04T12:33:33.8518389Z ✔ independent CLI refuses erased charges and inherited-panel mutations without playing new games (1682.158249ms)
+2026-10-04T12:33:33.8519915Z ✔ resumed closeout cannot turn a running phase or unconfirmed candidate into a named finish (1.284777ms)
+2026-10-04T12:33:33.8521690Z ✔ resumed closure binds all three registrations, charges and every measurement input identity (0.669013ms)
+2026-10-04T12:33:33.8523271Z ✔ closeout rejects successful exits with incomplete numeric audits and keeps the active run pending (2527.25068ms)
+2026-10-04T12:33:33.8524811Z ✔ full-history guard rejects an independently added replacement hidden by a merge (80.613046ms)
+2026-10-04T12:33:33.8526390Z ✔ additional trust audit rejects validator/baseline drift even after bytes are restored (58.436802ms)
+2026-10-04T12:33:33.8528121Z ✔ recurring completion runs pinned numeric audits and refuses unsuccessful or incomplete output (0.529184ms)
+2026-10-04T12:33:33.8529990Z ✔ reviewed coordinator refuses a real pre-staged protected change, source drift and a verdict-only collision (65.030835ms)
+2026-10-04T12:33:33.8532093Z ✔ resumed completion requires report, provisional ledger, index, CURRENT and both backlog histories (4.698699ms)
+2026-10-04T12:33:33.8533797Z ✔ real Git inventory exceeding the default buffer retains every path and the forbidden tail (316.789ms)
+2026-10-04T12:33:33.8535276Z ✔ Git errors propagate and the original function is restored after refusal (33.3936ms)
+2026-10-04T12:33:33.8536392Z ✔ a flat game is neither back- nor front-loaded (0.953732ms)
+2026-10-04T12:33:33.8537589Z ✔ backload rises when the score arrives late and falls when it arrives early (0.240817ms)
+2026-10-04T12:33:33.8538728Z ✔ an odd move count biases backload down, never up (0.185595ms)
+2026-10-04T12:33:33.8540165Z ✔ spike is the largest single move as a share of the score (0.153746ms)
+2026-10-04T12:33:33.8541400Z ✔ a scoreless or empty game reports no curve at all (0.144058ms)
+2026-10-04T12:33:33.8542585Z ✔ the human gen-0010 playthrough reads as strongly back-loaded and spiky (0.184873ms)
+2026-10-04T12:33:33.8543723Z ✔ analyzes the real six-move max-chain relay play (1534.78921ms)
+2026-10-04T12:33:33.8544803Z ✔ rejects a recording that is not bound to the supplied board (0.778506ms)
+2026-10-04T12:33:33.8546063Z ✔ rejects a recording whose declared move count does not match its chains (0.618329ms)
+2026-10-04T12:33:33.8547297Z ✔ rejects a claimed win that continued after a bomb exploded (63.033201ms)
+2026-10-04T12:33:33.8548436Z ✔ the collector inspects every prototype session currently on disk (5778.030102ms)
+2026-10-04T12:33:33.8549528Z ✔ scaled frozen spawns preserve the level tile scale (1.13055ms)
+2026-10-04T12:33:33.8550973Z ✔ successful bounded analysis publishes upper bounds, not exact descriptors (20.300134ms)
+2026-10-04T12:33:33.8552189Z ✔ the public replay seam rejects a planted unavailable witness tile (3.292958ms)
+2026-10-04T12:33:33.8552895Z ✔ a bounded miss remains UNKNOWN rather than becoming unreachable (0.761044ms)
+2026-10-04T12:33:33.8553522Z ✔ actionsPerState caps the combined candidate families (22.543973ms)
+2026-10-04T12:33:33.8554205Z ✔ the representative panel uses real 5x8, 5x7, 6x5, and 4x8 configurations (0.310777ms)
+2026-10-04T12:33:33.8555736Z ✔ exact envelope turns reachability into budget tightness and a solver-independent chain cap (140.612674ms)
+2026-10-04T12:33:33.8557294Z ✔ descriptor witnesses replay through the real frozen transition seam (275.85592ms)
+2026-10-04T12:33:33.8558458Z ✔ the real verifier seam rejects a planted bad descriptor (242.405327ms)
+2026-10-04T12:33:33.8559152Z ✔ a node cap stays UNKNOWN instead of becoming evidence of unreachability (4.04247ms)
+2026-10-04T12:33:33.8559735Z ✔ the shipped candidate corpus is not empty (1.403317ms)
+2026-10-04T12:33:33.8560412Z ✖ candidate-levels-52.json has a receipt that verifies against the current bot (4.065583ms)
+2026-10-04T12:33:33.8561503Z ✖ candidate-levels-54.json has a receipt that verifies against the current bot (1.462518ms)
+2026-10-04T12:33:33.8562325Z ✔ candidate-levels.json has a receipt that verifies against the current bot (7423.648339ms)
+2026-10-04T12:33:33.8562923Z ✔ the walk inspected the whole corpus (1.155276ms)
+2026-10-04T12:33:33.8563502Z ✔ every file the measurement depends on is one of the hashed inputs (1.517389ms)
+2026-10-04T12:33:33.8564116Z ✔ a tampered receipt is refused rather than verified (1.044981ms)
+2026-10-04T12:33:33.8564726Z ✔ a candidate store with no receipt is a failure, not an absence (0.428056ms)
+2026-10-04T12:33:33.8565349Z ✔ an empty corpus fails the floor instead of reading as clean (0.363886ms)
+2026-10-04T12:33:33.8565969Z ✔ a receipt whose code has drifted is refused, not verified (1.079766ms)
+2026-10-04T12:33:33.8566571Z ✔ a new unhashed require in the measurement path is detected (0.623889ms)
+2026-10-04T12:33:33.8567230Z ✔ the closure detector does not see computed or templated requires (0.338849ms)
+2026-10-04T12:33:33.8567842Z ✔ the live corpus matches the committed manifest exactly (0.388732ms)
+2026-10-04T12:33:33.8568483Z ✔ a store vanishing from the corpus is detected, not silently tolerated (0.27425ms)
+2026-10-04T12:33:33.8569062Z ✔ the exemption is computed, never declared (0.161149ms)
+2026-10-04T12:33:33.8569505Z ✔ shipping alone does not exempt (0.191316ms)
+2026-10-04T12:33:33.8569933Z ✔ a human win alone does not exempt (0.146883ms)
+2026-10-04T12:33:33.8570389Z ✔ both halves together exempt, and only then (0.13478ms)
+2026-10-04T12:33:33.8571169Z ✔ every stale receipt fails, exempt or not (0.234185ms)
+2026-10-04T12:33:33.8571844Z ✔ a losing recording does not license an exemption (0.353858ms)
+2026-10-04T12:33:33.8572407Z ✔ the real exemption facts hold for the shipped corpus (6.105483ms)
+2026-10-04T12:33:33.8572907Z ✔ at least one recording is replayable (1.242939ms)
+2026-10-04T12:33:33.8573880Z ✔ the reusable replay predicate passes a real recording and refuses its broken twin (2.271921ms)
+2026-10-04T12:33:33.8574578Z ✔ recording 1352aa7a02cd (level 53, win) replays exactly (1.052676ms)
+2026-10-04T12:33:33.8575161Z ✔ recording 1c87356748ee (level 51, win) replays exactly (0.78038ms)
+2026-10-04T12:33:33.8575738Z ✔ recording 3d3ba1f05b08 (level 54, win) replays exactly (0.720528ms)
+2026-10-04T12:33:33.8576298Z ✔ recording 44d3802d5512 (level 52, win) replays exactly (0.49503ms)
+2026-10-04T12:33:33.8576857Z ✔ recording 7061bbf0132f (level 53, win) replays exactly (0.393431ms)
+2026-10-04T12:33:33.8577413Z ✔ recording 78749fc07834 (level 51, win) replays exactly (0.271033ms)
+2026-10-04T12:33:33.8577969Z ✔ recording 7ad0978f9619 (level 53, win) replays exactly (0.352244ms)
+2026-10-04T12:33:33.8578547Z ✔ recording 8ac6c9d4c533 (level 51, lose) replays exactly (0.437643ms)
+2026-10-04T12:33:33.8579117Z ✔ recording d36e875d0839 (level 52, win) replays exactly (0.417625ms)
+2026-10-04T12:33:33.8579701Z ✔ recording f0ae3e75fe38 (level 52, win) replays exactly (0.536987ms)
+2026-10-04T12:33:33.8580359Z ✔ recordings whose candidate is gone are named, and their count cannot grow (0.212455ms)
+2026-10-04T12:33:33.8581263Z ✔ a recording claiming a score it did not reach is refused (0.483939ms)
+2026-10-04T12:33:33.8581834Z ✔ a recording whose moves were altered is refused (0.713145ms)
+2026-10-04T12:33:33.8582480Z ✔ a chain that revisits a tile is refused as illegal, not merely as mis-scored (0.676366ms)
+2026-10-04T12:33:33.8583155Z ✔ a recording claiming a win it did not achieve is refused (0.252319ms)
+2026-10-04T12:33:33.8583851Z ✔ a recording added after this file was written is picked up without editing it (1.105153ms)
+2026-10-04T12:33:33.8584582Z ✔ an unresolvable recording is classed as an orphan, not quietly dropped (0.388933ms)
+2026-10-04T12:33:33.8585300Z ✔ a candidate held only inside a generated batch file is found by the index (0.76394ms)
+2026-10-04T12:33:33.8586049Z ✔ widening the index to batch files still leaves an unknown identity an orphan (0.39303ms)
+2026-10-04T12:33:33.8586810Z ✔ a batch entry without a candidate identity is skipped, not indexed as undefined (0.308263ms)
+2026-10-04T12:33:33.8587513Z ✔ a clean canonical checkout with protected recovery refs passes (1.730685ms)
+2026-10-04T12:33:33.8588185Z ✔ a dirty consequential checkout fails closed and names its paths (0.270673ms)
+2026-10-04T12:33:33.8588720Z ✔ a dirty linked worktree fails closed (0.176107ms)
+2026-10-04T12:33:33.8589239Z ✔ a discovered but unregistered worktree fails closed (3.842198ms)
+2026-10-04T12:33:33.8589787Z ✔ a missing or moved remote safety ref fails closed (0.206103ms)
+2026-10-04T12:33:33.8590360Z ✔ a checkout outside the declared ancestry fails closed (0.185194ms)
+2026-10-04T12:33:33.8591131Z ✔ canonical mode requires main and exact remote equality (0.246047ms)
+2026-10-04T12:33:33.8591803Z ✔ candidate mode permits a non-main branch but keeps every safety check (0.157543ms)
+2026-10-04T12:33:33.8592535Z ✔ porcelain parsing preserves a leading dot on the first unstaged path (0.325404ms)
+2026-10-04T12:33:33.8593290Z ✔ discovery distinguishes linked worktree pointers from standalone repositories (2.445574ms)
+2026-10-04T12:33:33.8594025Z ✔ LIVE: no durable .orch state is left uncommitted in this checkout (543.026532ms)
+2026-10-04T12:33:33.8594670Z ✔ LIVE: no linked worktree is holding uncommitted .orch state (318.521181ms)
+2026-10-04T12:33:33.8595370Z ✔ recheck counts accepted same-cell replacements as admissions, not refusals (1.541323ms)
+2026-10-04T12:33:33.8596049Z ✔ recheck counts only actual fresh-block admission refusals (0.348597ms)
+2026-10-04T12:33:33.8596755Z ✔ stronger-policy t retains negative Infinity and labels zero over zero UNKNOWN (0.299497ms)
+2026-10-04T12:33:33.8597542Z ✔ independent recompute rejects a canonically rekeyed out-of-range cut mutant (469.062212ms)
+2026-10-04T12:33:33.8598384Z ✔ independent recompute rejects a 599-row stage-2 panel with matching self-reported counts (443.719818ms)
+2026-10-04T12:33:33.8599644Z ✔ current synthetic qualification fixture traverses every recompute path and is refused as confirmation evidence (115.01547ms)
+2026-10-04T12:33:33.8600520Z ✔ ruler A/A has zero wins gained, zero lost and exactly zero moves saved (2.367589ms)
+2026-10-04T12:33:33.8601533Z ✔ ruler compares wins before mutual-win moves (0.578735ms)
+2026-10-04T12:33:33.8602152Z ✔ two-axis SE catches seed-wide variation when level means are equal (0.365088ms)
+2026-10-04T12:33:33.8602758Z ✔ ruler rejects a missing or reordered paired cell (0.676476ms)
+2026-10-04T12:33:33.8603381Z ✔ admission refuses synthetic entrant with screen +3% and fresh -3% (1.0984ms)
+2026-10-04T12:33:33.8604103Z ✔ admission accepts synthetic entrant positive on screen and fresh block (0.202597ms)
+2026-10-04T12:33:33.8604768Z ✔ admission ranks same-cell entrants on fresh number only (0.180846ms)
+2026-10-04T12:33:33.8605381Z ✔ winner-curse panel has 30 unique one-gene champion variants (1.770359ms)
+2026-10-04T12:33:33.8606138Z ✔ declared seed blocks are disjoint and worst-case measured games stay below 60,000 (0.395715ms)
+2026-10-04T12:33:33.8606884Z ✔ holdout rule uses unrounded t just above 3 even when display rounds to 3 (1.252647ms)
+2026-10-04T12:33:33.8607433Z ✔ holdout rule refuses t exactly 3 (0.210532ms)
+2026-10-04T12:33:33.8608047Z ✔ holdout rule refuses net win regression despite positive lift and t above 3 (0.187318ms)
+2026-10-04T12:33:33.8608936Z ✔ a bounded artifact measured through real playMeasured reaches PASS and its broken twin reaches FAIL (1138.497133ms)
+2026-10-04T12:33:33.8609836Z ✔ variance comparison uses single-game between-candidate and within-level components (1.156098ms)
+2026-10-04T12:33:33.8610604Z ✔ artifacts and issuance require a protocol committed before measurement (2.274886ms)
+2026-10-04T12:33:33.8611576Z ✔ standalone, failed, malformed, and identity-stale materials fail closed (2.456624ms)
+2026-10-04T12:33:33.8612285Z ✔ a frozen calibration identity mutation invalidates the entitlement (1.377449ms)
+2026-10-04T12:33:33.8613058Z ✔ the production CLI selects only from a verified bundle bound to the exact batch (244.116919ms)
+2026-10-04T12:33:33.8613869Z ✔ the production CLI can generate an unselected batch before a challenge bundle exists (57.438201ms)
+2026-10-04T12:33:33.8614750Z ✔ receipt verifier cross-binds claim, subjects, protocol, execution path, and actual selections (18.876899ms)
+2026-10-04T12:33:33.8615596Z ✔ challenge writes only a verified bundle and verifier replays the real consumer (391.936216ms)
+2026-10-04T12:33:33.8616238Z ✔ playLevel: wins as soon as score reaches target (5.017742ms)
+2026-10-04T12:33:33.8616885Z ✔ playLevel: loses out of moves when the target is unreachable in the budget (0.554761ms)
+2026-10-04T12:33:33.8617595Z ✔ playLevel: loses with no valid moves when the board has no legal chain (0.337677ms)
+2026-10-04T12:33:33.8618237Z ✔ playLevel: loses when a bomb timer reaches zero unattended (0.577232ms)
+2026-10-04T12:33:33.8618954Z ✔ target-aware challenger is identical before an untrimmed route can win now (4903.260459ms)
+2026-10-04T12:33:33.8619726Z ✔ target-aware challenger cashes out the Level 51 teaching board on move 13 (4746.879894ms)
+2026-10-04T12:33:33.8620481Z ✔ immediate winner selection uses the existing deterministic untrimmed order (2294.17628ms)
+2026-10-04T12:33:33.8621514Z ✔ target-aware challenger falls back after target and never mutates its input (468.924896ms)
+2026-10-04T12:33:33.8622132Z ✔ any bomb leaves the champion in full control (5.27993ms)
+2026-10-04T12:33:33.8622595Z ✔ null/no-move behavior is preserved (0.385777ms)
+2026-10-04T12:33:33.8623143Z ✔ the challenger never routes through the promoted champion (2472.598666ms)
+2026-10-04T12:33:33.8623789Z ✔ CLI exposes only fixed diagnostic, screen, and holdout protocols (2.650094ms)
+2026-10-04T12:33:33.8624442Z ✔ registration flags parse instead of dying as unknown arguments (0.315375ms)
+2026-10-04T12:33:33.8625126Z ✔ the champion arm is the pre-promotion chooser, not the promoted bot (3287.928384ms)
+2026-10-04T12:33:33.8626114Z ✔ screen and holdout identities are frozen and exclude diagnostic seed 1 (0.294568ms)
+2026-10-04T12:33:33.8626798Z ✔ paired evaluation is level-major, complete, and deterministic (0.990721ms)
+2026-10-04T12:33:33.8627464Z ✔ worker evaluation preserves the same level-major paired cells (2575.200532ms)
+2026-10-04T12:33:33.8628153Z ✔ artifact identity covers complete ordered cells and rejects tampering (2.966602ms)
+2026-10-04T12:33:33.8628701Z ✔ artifact output refuses overwrite (1.571039ms)
+2026-10-04T12:33:33.8629325Z ✔ four compacted owner sessions replay through the real engine to exact outcomes (6.59282ms)
+2026-10-04T12:33:33.8630094Z ✔ targeted generation dedupes real legal actions and can finish a small search (19.455439ms)
+2026-10-04T12:33:33.8630984Z ✔ the real opening search recovers the missed 24-tile, sum-3456 action (374.528904ms)
+2026-10-04T12:33:33.8631624Z ✔ caller node caps fail closed and are deterministic (0.885064ms)
+2026-10-04T12:33:33.8632269Z ✔ candidate-limit telemetry only reports actual outward truncation (26.229426ms)
+2026-10-04T12:33:33.8633042Z ✔ the real-state coverage seam beats production and recovers both named anchors (11457.062201ms)
+2026-10-04T12:33:33.8633817Z ✔ present numeric CLI flags without values fail closed before coverage runs (116.374054ms)
+2026-10-04T12:33:33.8634521Z ✔ a controlled broken cap fails the coverage CLI acceptance seam (1349.407229ms)
+2026-10-04T12:33:33.8635212Z ✔ a real recordSession artifact is independently replayed and verified (904.006608ms)
+2026-10-04T12:33:33.8635901Z ✔ self-rehashed tampering and invalid intake remain unresolved (5726.811164ms)
+2026-10-04T12:33:33.8636593Z ✔ bounded search finds a replayed move-B win and reports explicit limits (1.325062ms)
+2026-10-04T12:33:33.8637393Z ✔ search keeps transition-distinct actions that coarse endpoint/length/score dedup drops (0.539983ms)
+2026-10-04T12:33:33.8638191Z ✔ bomb-before-target makes a crossing invalid and exhaustive no-win is NONE (0.569057ms)
+2026-10-04T12:33:33.8638857Z ✔ node and injected-time limits fail closed as UNKNOWN (0.447712ms)
+2026-10-04T12:33:33.8639465Z ✔ search leaves the supplied state and RNG descriptor unchanged (0.478519ms)
+2026-10-04T12:33:33.8640184Z ✔ attribution uses offered action identity and preserves ambiguous control flow (0.349259ms)
+2026-10-04T12:33:33.8641082Z ✔ a different exhaustive witness is not a miss when production already wins (4.049022ms)
+2026-10-04T12:33:33.8641843Z ✔ initial and final clock faults stay UNKNOWN through search and public consumer (3.652706ms)
+2026-10-04T12:33:33.8642631Z ✔ a real producer-created zero-move session is unresolved, not vacuously complete (1.723091ms)
+2026-10-04T12:33:33.8643502Z ✔ public consumer admits only verified sessions and retains complete/capped/invalid denominators (7.877535ms)
+2026-10-04T12:33:33.8644296Z ✔ the local report-only check card declares its scope and blind spots (0.480051ms)
+2026-10-04T12:33:33.8645040Z ✔ the contract has exactly the five load-bearing cards and no copied claim fields (2.747354ms)
+2026-10-04T12:33:33.8645900Z ✔ the selected ledger parser resolves one record without pretending to parse the whole ledger (2.830349ms)
+2026-10-04T12:33:33.8646743Z ✔ one resolved model keeps admitted evidence separate from the later verified artifact (8.82239ms)
+2026-10-04T12:33:33.8647549Z ✔ the stale-navigation warning fires when CURRENT.md ages past the contract limit (20.683805ms)
+2026-10-04T12:33:33.8648302Z ✖ the builder is byte-stable and the committed generated views are current (13.658874ms)
+2026-10-04T12:33:33.8649020Z ✔ generated Markdown exposes the load-bearing distinctions in one screen (0.57068ms)
+2026-10-04T12:33:33.8649677Z ✔ the static HTML uses real headings for all five card titles (0.328471ms)
+2026-10-04T12:33:33.8650394Z ✔ CURRENT links the generated control panel without erasing its historical milestone (0.3983ms)
+2026-10-04T12:33:33.8651167Z ✔ verification fails closed for a missing card (10.19543ms)
+2026-10-04T12:33:33.8651742Z ✔ verification fails closed for an unresolved ledger record (10.494836ms)
+2026-10-04T12:33:33.8652739Z ✔ verification fails closed when selected current evidence is not accepted (13.725107ms)
+2026-10-04T12:33:33.8653390Z ✔ verification fails closed for receipt hash mismatch (12.327901ms)
+2026-10-04T12:33:33.8654052Z ✔ verification fails closed when the artifact verification evidence drifts (10.541483ms)
+2026-10-04T12:33:33.8654867Z ✔ verification observations derive from rebound evidence instead of copied metrics in code (23.04445ms)
+2026-10-04T12:33:33.8655649Z ✔ verification reports the map stale exactly one day past its maximum age (17.029296ms)
+2026-10-04T12:33:33.8656478Z ✔ verification fails closed for protected champion identity mismatch even with a rebound hash (12.514188ms)
+2026-10-04T12:33:33.8657201Z ✔ verification fails closed when a generated view drifts (11.198534ms)
+2026-10-04T12:33:33.8657822Z ✔ mass-cursor relaxation bounds the exact four-tile maximum (3.000023ms)
+2026-10-04T12:33:33.8658500Z ✔ mass-cursor relaxation bounds a distinct five-tile multiplier fixture (0.44117ms)
+2026-10-04T12:33:33.8659186Z ✔ negative control rejects an intentionally lowered fixture bound (1.386175ms)
+2026-10-04T12:33:33.8659900Z ✔ Level 26 seed-0 calculation is complete and bound to the certifier inputs (183.503337ms)
+2026-10-04T12:33:33.8660587Z ✔ live lease (fresh heartbeat): reported live, not a candidate (222.548622ms)
+2026-10-04T12:33:33.8661334Z ✔ live lease via alive pid despite old heartbeat (208.220324ms)
+2026-10-04T12:33:33.8662013Z ✔ stale lease + dead pid + merged + clean: candidate (reported only) (254.333257ms)
+2026-10-04T12:33:33.8662603Z ✔ absent lease: report-only, never a candidate (207.507482ms)
+2026-10-04T12:33:33.8663081Z ✔ foreign-host lease: report-only (254.811628ms)
+2026-10-04T12:33:33.8663601Z ✔ dirty tree with stale dead-pid lease: not a candidate (244.156073ms)
+2026-10-04T12:33:33.8664216Z ✔ unpushed commits with stale dead-pid lease: not a candidate (278.894187ms)
+2026-10-04T12:33:33.8664847Z ✔ merged-and-clean but live lease: reported, not candidate (208.891349ms)
+2026-10-04T12:33:33.8665536Z ✔ merged-and-clean branch with NO worktree: survives, never removed (164.818868ms)
+2026-10-04T12:33:33.8666135Z ✔ real clone (.git is a directory) is skipped (162.487965ms)
+2026-10-04T12:33:33.8666733Z ✔ fresh heartbeat + dead pid + merged + clean: live, not a candidate (248.53189ms)
+2026-10-04T12:33:33.8667381Z ✔ unparseable lease text: absent, not a candidate, no crash (205.840382ms)
+2026-10-04T12:33:33.8667999Z ✔ malformed lease (null): absent, not a candidate, no crash (219.618976ms)
+2026-10-04T12:33:33.8668636Z ✔ malformed lease (empty array): absent, not a candidate, no crash (214.275168ms)
+2026-10-04T12:33:33.8669276Z ✔ malformed lease (number): absent, not a candidate, no crash (208.170422ms)
+2026-10-04T12:33:33.8669905Z ✔ malformed lease (string): absent, not a candidate, no crash (211.434578ms)
+2026-10-04T12:33:33.8670564Z ✔ malformed lease (missing host): absent, not a candidate, no crash (211.149517ms)
+2026-10-04T12:33:33.8671622Z ✔ failed git status (corrupt index) on merged, stale, dead-pid worktree: tree=unknown, not a candidate, exit 0 (249.193868ms)
+2026-10-04T12:33:33.8672590Z ✔ lease with non-positive-integer pid (0) + stale heartbeat: absent, not a candidate, no crash (210.139521ms)
+2026-10-04T12:33:33.8673547Z ✔ lease with non-positive-integer pid (negative) + stale heartbeat: absent, not a candidate, no crash (212.104662ms)
+2026-10-04T12:33:33.8674504Z ✔ lease with non-positive-integer pid (string) + stale heartbeat: absent, not a candidate, no crash (206.969189ms)
+2026-10-04T12:33:33.8675458Z ✔ lease with non-positive-integer pid (missing) + stale heartbeat: absent, not a candidate, no crash (211.800946ms)
+2026-10-04T12:33:33.8676467Z ✔ failed rev-list (broken remote ref) on merged, stale, dead-pid worktree: tree=unknown, not a candidate, exit 0 (255.034827ms)
+2026-10-04T12:33:33.8677040Z ℹ tests 756
+2026-10-04T12:33:33.8677260Z ℹ suites 0
+2026-10-04T12:33:33.8677473Z ℹ pass 752
+2026-10-04T12:33:33.8677679Z ℹ fail 3
+2026-10-04T12:33:33.8678037Z ℹ cancelled 0
+2026-10-04T12:33:33.8678372Z ℹ skipped 1
+2026-10-04T12:33:33.8678586Z ℹ todo 0
+2026-10-04T12:33:33.8678831Z ℹ duration_ms 158798.037991
+2026-10-04T12:33:33.8679008Z 
+2026-10-04T12:33:33.8679126Z ✖ failing tests:
+2026-10-04T12:33:33.8679250Z 
+2026-10-04T12:33:33.8679453Z test at solver/tests/receiptGate.test.js:165:3
+2026-10-04T12:33:33.8680111Z ✖ candidate-levels-52.json has a receipt that verifies against the current bot (4.065583ms)
+2026-10-04T12:33:33.8680917Z   AssertionError [ERR_ASSERTION]: candidate-levels-52.json: calibration stamp mismatch
+2026-10-04T12:33:33.8681359Z   
+2026-10-04T12:33:33.8681690Z   THIS FAILURE IS KNOWN AND DECIDED. It is not a new bug and it is not
+2026-10-04T12:33:33.8682177Z   yours to fix. This level ships, a human has completed it, and on
+2026-10-04T12:33:33.8682668Z   2026-08-21 the owner decided its target stays where it is. Refreshing
+2026-10-04T12:33:33.8683175Z   the receipt would re-derive the target from a stronger bot and raise it
+2026-10-04T12:33:33.8683710Z   4.9%, making a live level harder for players, while the bot's win rate
+2026-10-04T12:33:33.8684163Z   on it moved one seed in three hundred (ticket T-003).
+2026-10-04T12:33:33.8684465Z   
+2026-10-04T12:33:33.8684793Z   Do NOT clear this by re-authoring, archiving, or exempting it. It fails
+2026-10-04T12:33:33.8685307Z   because the receipt genuinely predates the current bot, which is true.
+2026-10-04T12:33:33.8686072Z       at TestContext.<anonymous> (/home/runner/work/Map-Elites-2248/Map-Elites-2248/solver/tests/receiptGate.test.js:170:12)
+2026-10-04T12:33:33.8686725Z       at Test.runInAsyncScope (node:async_hooks:227:14)
+2026-10-04T12:33:33.8687124Z       at Test.run (node:internal/test_runner/test:1402:25)
+2026-10-04T12:33:33.8687601Z       at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+2026-10-04T12:33:33.8688090Z       at Test.postRun (node:internal/test_runner/test:1542:19)
+2026-10-04T12:33:33.8688500Z       at Test.run (node:internal/test_runner/test:1467:12)
+2026-10-04T12:33:33.8689017Z       at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+2026-10-04T12:33:33.8689456Z     generatedMessage: false,
+2026-10-04T12:33:33.8689715Z     code: 'ERR_ASSERTION',
+2026-10-04T12:33:33.8689951Z     actual: undefined,
+2026-10-04T12:33:33.8690182Z     expected: undefined,
+2026-10-04T12:33:33.8690415Z     operator: 'fail',
+2026-10-04T12:33:33.8690641Z     diff: 'simple'
+2026-10-04T12:33:33.8690963Z   }
+2026-10-04T12:33:33.8691070Z 
+2026-10-04T12:33:33.8691266Z test at solver/tests/receiptGate.test.js:165:3
+2026-10-04T12:33:33.8691920Z ✖ candidate-levels-54.json has a receipt that verifies against the current bot (1.462518ms)
+2026-10-04T12:33:33.8692580Z   AssertionError [ERR_ASSERTION]: candidate-levels-54.json: calibration stamp mismatch
+2026-10-04T12:33:33.8693005Z   
+2026-10-04T12:33:33.8693315Z   Not exempt (ships=true, human win recorded=false). This receipt
+2026-10-04T12:33:33.8693804Z   was measured against different code. Re-author it against the current
+2026-10-04T12:33:33.8694315Z   bot, or archive it and stop quoting its numbers. Do not weaken this
+2026-10-04T12:33:33.8694669Z   check to clear it.
+2026-10-04T12:33:33.8695240Z       at TestContext.<anonymous> (/home/runner/work/Map-Elites-2248/Map-Elites-2248/solver/tests/receiptGate.test.js:170:12)
+2026-10-04T12:33:33.8695880Z       at Test.runInAsyncScope (node:async_hooks:227:14)
+2026-10-04T12:33:33.8696276Z       at Test.run (node:internal/test_runner/test:1402:25)
+2026-10-04T12:33:33.8696754Z       at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+2026-10-04T12:33:33.8697237Z       at Test.postRun (node:internal/test_runner/test:1542:19)
+2026-10-04T12:33:33.8697644Z       at Test.run (node:internal/test_runner/test:1467:12)
+2026-10-04T12:33:33.8698148Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+2026-10-04T12:33:33.8698581Z     generatedMessage: false,
+2026-10-04T12:33:33.8698838Z     code: 'ERR_ASSERTION',
+2026-10-04T12:33:33.8699307Z     actual: undefined,
+2026-10-04T12:33:33.8699541Z     expected: undefined,
+2026-10-04T12:33:33.8699774Z     operator: 'fail',
+2026-10-04T12:33:33.8699997Z     diff: 'simple'
+2026-10-04T12:33:33.8700198Z   }
+2026-10-04T12:33:33.8700300Z 
+2026-10-04T12:33:33.8700490Z test at solver/tests/universeMap.test.js:138:1
+2026-10-04T12:33:33.8701235Z ✖ the builder is byte-stable and the committed generated views are current (13.658874ms)
+2026-10-04T12:33:33.8701815Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+2026-10-04T12:33:33.8702195Z   
+2026-10-04T12:33:33.8702375Z   4 !== 0
+2026-10-04T12:33:33.8702560Z   
+2026-10-04T12:33:33.8703098Z       at TestContext.<anonymous> (/home/runner/work/Map-Elites-2248/Map-Elites-2248/solver/tests/universeMap.test.js:143:10)
+2026-10-04T12:33:33.8703736Z       at Test.runInAsyncScope (node:async_hooks:227:14)
+2026-10-04T12:33:33.8704129Z       at Test.run (node:internal/test_runner/test:1402:25)
+2026-10-04T12:33:33.8704622Z       at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+2026-10-04T12:33:33.8705110Z       at Test.postRun (node:internal/test_runner/test:1542:19)
+2026-10-04T12:33:33.8705517Z       at Test.run (node:internal/test_runner/test:1467:12)
+2026-10-04T12:33:33.8706011Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+2026-10-04T12:33:33.8706439Z     generatedMessage: true,
+2026-10-04T12:33:33.8706689Z     code: 'ERR_ASSERTION',
+2026-10-04T12:33:33.8706923Z     actual: 4,
+2026-10-04T12:33:33.8707123Z     expected: 0,
+2026-10-04T12:33:33.8707349Z     operator: 'strictEqual',
+2026-10-04T12:33:33.8707595Z     diff: 'simple'
+2026-10-04T12:33:33.8707795Z   }
+2026-10-04T12:33:33.8721368Z ##[error]Process completed with exit code 1.
+2026-10-04T12:33:33.8869995Z Post job cleanup.
+2026-10-04T12:33:33.9757005Z [command]/usr/bin/git version
+2026-10-04T12:33:33.9802732Z git version 2.55.0
+2026-10-04T12:33:33.9840952Z Temporarily overriding HOME='/home/runner/work/_temp/6d9262d0-e318-4cf3-bcf7-40052e100fd6' before making global git config changes
+2026-10-04T12:33:33.9842572Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-04T12:33:33.9847121Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Map-Elites-2248/Map-Elites-2248
+2026-10-04T12:33:33.9892106Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-04T12:33:33.9922258Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-04T12:33:34.0177830Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-04T12:33:34.0203782Z http.https://github.com/.extraheader
+2026-10-04T12:33:34.0215552Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-04T12:33:34.0255666Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-04T12:33:34.0524207Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-04T12:33:34.0582279Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-04T12:33:34.1009770Z Cleaning up orphan processes
+2026-10-04T12:33:34.1366889Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

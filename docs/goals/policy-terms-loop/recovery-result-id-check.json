@@ -1,0 +1,189 @@
+{
+  "kind": "pre-game result collision check",
+  "scannedRemoteRefs": [
+    {
+      "ref": "refs/remotes/origin/HEAD",
+      "maxResultId": 58,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/archive/worktree-ticket-records-20260908",
+      "maxResultId": 15,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/authoring-ideation-20260916",
+      "maxResultId": 39,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/champion-research-queue-20261002",
+      "maxResultId": 58,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/latest-main-20261002",
+      "maxResultId": 80,
+      "holds80": true
+    },
+    {
+      "ref": "refs/remotes/origin/codex/lc0013-target-gap-arithmetic",
+      "maxResultId": 78,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/evidence/result-0018-6a07294",
+      "maxResultId": 18,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/bl-0022-stale-checkout-check",
+      "maxResultId": 58,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/board-map-elites-20260917",
+      "maxResultId": 47,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/evaluator-foundation",
+      "maxResultId": 15,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/family-board-map-elites-20260919",
+      "maxResultId": 47,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/player-playtest-feedback",
+      "maxResultId": 17,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/ledger/status-index",
+      "maxResultId": 43,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/main",
+      "maxResultId": 58,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/port/family-board-map-elites",
+      "maxResultId": 55,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-failed-run-ledger-2026-09-22-20260930",
+      "maxResultId": 48,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930",
+      "maxResultId": 64,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-lc0013-target-gap-arithmetic-20260930",
+      "maxResultId": 77,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-nightly-reverify-36579791639-20260930",
+      "maxResultId": 56,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930",
+      "maxResultId": 77,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/main-root-dirty-20260930",
+      "maxResultId": 56,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/map-elites-qa-dirty-20260930",
+      "maxResultId": 51,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/review-unbuilt-map-candidates-dirty-20260930",
+      "maxResultId": 49,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/backup-pre-collector-drop-20260930",
+      "maxResultId": 43,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/claude-mac-project-sync-ee1d99-20260930",
+      "maxResultId": 56,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-level-map-elites-authoring-20260930",
+      "maxResultId": 48,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-u1-asset-contract-20260930",
+      "maxResultId": 48,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-u1-eol-path-20260930",
+      "maxResultId": 48,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/recheck-loop-dirty-20260930",
+      "maxResultId": 48,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/recovery-local-work-20260926-20260930",
+      "maxResultId": 43,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/stash-20260926-20260930",
+      "maxResultId": 43,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/tmp-44-20260930",
+      "maxResultId": 48,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/u1-combined-dirty-20260930",
+      "maxResultId": 48,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/work/policy-measurement-records-2026-09-05",
+      "maxResultId": 28,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/worktree-archify-diagrams",
+      "maxResultId": 20,
+      "holds80": false
+    },
+    {
+      "ref": "refs/remotes/origin/worktree-deterministic-2048-solver",
+      "maxResultId": 8,
+      "holds80": false
+    }
+  ],
+  "maxUsed": 80,
+  "assigned": "RESULT-0081",
+  "original80Occupied": true,
+  "scope": "Actual experiment directories and ledger result headings across freshly fetched remote branches; excludes synthetic IDs in unit tests."
+}

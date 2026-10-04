@@ -1,0 +1,192 @@
+{
+  "kind": "pre-game result and replacement seed collision check",
+  "scannedRemoteRefs": [
+    {
+      "ref": "refs/remotes/origin/HEAD",
+      "maxResultId": 58,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/archive/worktree-ticket-records-20260908",
+      "maxResultId": 0,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/authoring-ideation-20260916",
+      "maxResultId": 38,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/champion-research-queue-20261002",
+      "maxResultId": 58,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/latest-main-20261002",
+      "maxResultId": 81,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/codex/lc0013-target-gap-arithmetic",
+      "maxResultId": 78,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/evidence/result-0018-6a07294",
+      "maxResultId": 0,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/bl-0022-stale-checkout-check",
+      "maxResultId": 58,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/board-map-elites-20260917",
+      "maxResultId": 46,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/evaluator-foundation",
+      "maxResultId": 0,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/family-board-map-elites-20260919",
+      "maxResultId": 46,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/feat/player-playtest-feedback",
+      "maxResultId": 0,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/ledger/status-index",
+      "maxResultId": 43,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/main",
+      "maxResultId": 58,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/port/family-board-map-elites",
+      "maxResultId": 54,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-failed-run-ledger-2026-09-22-20260930",
+      "maxResultId": 48,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930",
+      "maxResultId": 57,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-lc0013-target-gap-arithmetic-20260930",
+      "maxResultId": 57,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-nightly-reverify-36579791639-20260930",
+      "maxResultId": 49,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930",
+      "maxResultId": 57,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/main-root-dirty-20260930",
+      "maxResultId": 49,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/map-elites-qa-dirty-20260930",
+      "maxResultId": 48,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/review-unbuilt-map-candidates-dirty-20260930",
+      "maxResultId": 49,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/backup-pre-collector-drop-20260930",
+      "maxResultId": 43,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/claude-mac-project-sync-ee1d99-20260930",
+      "maxResultId": 49,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-level-map-elites-authoring-20260930",
+      "maxResultId": 48,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-u1-asset-contract-20260930",
+      "maxResultId": 48,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-u1-eol-path-20260930",
+      "maxResultId": 48,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/recheck-loop-dirty-20260930",
+      "maxResultId": 48,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/recovery-local-work-20260926-20260930",
+      "maxResultId": 43,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/stash-20260926-20260930",
+      "maxResultId": 43,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/tmp-44-20260930",
+      "maxResultId": 48,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/u1-combined-dirty-20260930",
+      "maxResultId": 48,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/work/policy-measurement-records-2026-09-05",
+      "maxResultId": 26,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/worktree-archify-diagrams",
+      "maxResultId": 20,
+      "containsProposedC12": false
+    },
+    {
+      "ref": "refs/remotes/origin/worktree-deterministic-2048-solver",
+      "maxResultId": 0,
+      "containsProposedC12": false
+    }
+  ],
+  "maximumUsedResultId": 81,
+  "assignedResult": "RESULT-0082",
+  "replacementC12": {
+    "start": 60053000,
+    "count": 10
+  },
+  "method": "All fetched remote tree paths for RESULT identity; every remote SEEDS.md checked for proposed C12 range. Exact original reserved ranges carried for their original purposes, no replay."
+}

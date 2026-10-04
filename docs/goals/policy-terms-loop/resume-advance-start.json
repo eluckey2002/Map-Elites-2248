@@ -1,0 +1,13 @@
+{
+  "pid": 31609,
+  "sourceSha256": "a8c248e0a4fe12c0c7b2ef68109aa43c59224e1ce00f1c7faf042bd52c903d03",
+  "relaunchAllowed": false,
+  "startedUtc": "2026-10-04T08:04:22.312358+00:00",
+  "result": "RESULT-0082",
+  "status": "WAITING_FOR_COMPLETE_AUDITED_EXPLORATION",
+  "sourceCommit": "e1997122921a19b07574bd49f030445a0e462b33",
+  "entrypoint": "docs/goals/policy-terms-loop/advance-resume.py",
+  "marker": "solver/policy-lab/runs/resume-advance-launch.log",
+  "log": "solver/policy-lab/runs/resume-advance.log",
+  "scientificComplete": false
+}

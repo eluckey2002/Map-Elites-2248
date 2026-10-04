@@ -1,0 +1,15 @@
+{
+  "pid": 36736,
+  "sourceSha256": "644b67471a92d7e8a4183972b787592ecdab553f09fddca0f4602fab68a7f5f0",
+  "relaunchAllowed": false,
+  "startedUtc": "2026-10-04T09:12:46.328036+00:00",
+  "entrypoint": "docs/goals/policy-terms-loop/advance-resume-reviewed.py",
+  "sourceCommit": "97f31665b20e8bd64f117dd7b1697d2c30c7582b",
+  "result": "RESULT-0082",
+  "supersedesOperationalPollerPid": 31609,
+  "scientificPipelinePid": 26038,
+  "scientificPipelineRestarted": false,
+  "confirmationStarted": false,
+  "marker": "solver/policy-lab/runs/resume-reviewed-advance-launch.log",
+  "log": "solver/policy-lab/runs/resume-reviewed-advance.log"
+}
