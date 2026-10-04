@@ -1,0 +1,1 @@
+{"id":"378484e0cd7a2b0a3105cfffa550fbc3cbb2bd558865454e7f968acb03c0420d","runId":"RESULT-0082-resumed-controls","job":{"levelData":{"level":4,"target":1850,"tileScale":1,"moves":25,"minChain":2,"gridW":5,"gridH":8,"blockers":[]},"seeds":[60053000,60053001,60053002,60053003,60053004,60053005,60053006,60053007,60053008,60053009],"policy":{"kind":"zero","lookaheadBase":997654321}}}
