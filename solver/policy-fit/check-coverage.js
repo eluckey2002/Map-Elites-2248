@@ -14,6 +14,8 @@ for(const [name,b]of Object.entries(blocks)) {
  console.log('PASS '+name+' declared range inside authorized interval and disjoint');
 }
 const ceiling=JSON.parse(fs.readFileSync(path.join(goal,'ceiling.json'),'utf8'));
+const budget=JSON.parse(fs.readFileSync(path.join(goal,'budget.json'),'utf8'));
+if(budget.freshGames!==0||['training','rounds','controls','confirmation'].some(k=>budget[k]!==0))throw Error('FAIL: unexpected fresh games in Path E artifact');
 if(ceiling.path!=='E')throw Error('FAIL: this closure requires Path E');
 for(const name of Object.keys(blocks))console.log(name+': not run');
 console.log('PASS Path E: no fresh panel or confirmation was run; coverage assertions apply to no unrun block');

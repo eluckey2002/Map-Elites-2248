@@ -1,0 +1,12 @@
+✔ generation ceiling does not stop an undersized all-missing subset (1.0632ms)
+✔ generation ceiling stops exactly at the frozen minimum and half threshold (0.2387ms)
+✔ generation ceiling excludes bot-faster boards and tied owner points (0.1494ms)
+✔ unresolved recording prevents a generation prerequisite verdict (0.1459ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 131.8688

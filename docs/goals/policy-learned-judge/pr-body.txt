@@ -1,0 +1,7 @@
+Goal 3 revision 5 closes on Path E when its frozen recorded-board generation diagnostic triggers the coverage prerequisite. The learned judge is not trained or evaluated, and the finding applies only to the specified diagnostic subset. RESULT-0083 remains provisional with no checked_by; no policy is promoted and this PR must remain unmerged for the owner.
+
+The change adds the selected brief and committed exploration plan, historical noise and generation diagnostics, every measured position, separate arithmetic recomputation, stop-boundary tests, seed reservations, and the direct_source closure report. No protected solver/game source or existing test is changed. All future panels and confirmation are recorded as not run.
+
+Validation: recompute prints MATCH CROSS-CHECK, MATCH NOISE and MATCH GENERATION; four new boundary tests pass; the full suite has exactly the five captured baseline failure names and one existing skip; experiment, ledger authorship and index gates pass. Raw evidence is in docs/goals/policy-learned-judge/RAW-REPORT.txt and experiments/RESULT-0083/report.md.
+
+Review focus: all-recording corpus resolution, the owner-faster mutual-win subset, immediate-point pool coverage, N_MIN and majority boundaries, historical two-axis uncertainty projection, and the restriction of the direct_source claim to measured diagnostics.

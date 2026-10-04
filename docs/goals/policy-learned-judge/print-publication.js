@@ -1,0 +1,18 @@
+'use strict';
+const {execFileSync}=require('node:child_process');
+const repo='eluckey2002/Map-Elites-2248';
+function gh(...args){return JSON.parse(execFileSync('gh',args,{encoding:'utf8'}));}
+const pr=gh('pr','view','codex/policy-learned-judge-r5','--repo',repo,'--json','number,url,state,headRefOid,statusCheckRollup');
+const headCommit=gh('api',`repos/${repo}/commits/${pr.headRefOid}`);
+const headTime=headCommit.commit.committer.date;
+const reviews=gh('api',`repos/${repo}/pulls/${pr.number}/reviews`);
+const reactions=gh('api',`repos/${repo}/issues/${pr.number}/reactions`);
+const comments=gh('api',`repos/${repo}/pulls/${pr.number}/comments`);
+const threads=gh('api','graphql','-f',`query={ repository(owner: "eluckey2002", name: "Map-Elites-2248") { pullRequest(number: ${pr.number}) { reviewThreads(first: 100) { nodes { id isResolved comments(first: 100) { nodes { author { login } body url } } } } } } }`).data.repository.pullRequest.reviewThreads.nodes;
+const codex=u=>/chatgpt-codex-connector/.test(u||'');
+const headReviews=reviews.filter(r=>codex(r.user.login)&&r.commit_id===pr.headRefOid);
+const approvals=reactions.filter(r=>codex(r.user.login)&&r.content==='+1'&&r.created_at>=headTime);
+const openFindings=threads.filter(t=>!t.isResolved&&t.comments.nodes.some(c=>codex(c.author?.login)));
+const gate=pr.statusCheckRollup.filter(c=>c.name==='experiment gate');
+const gateGreen=gate.length>0&&gate.every(c=>c.status==='COMPLETED'&&c.conclusion==='SUCCESS');
+console.log(JSON.stringify({pr,headReviews:headReviews.map(r=>({id:r.id,state:r.state,body:r.body,commit:r.commit_id,submitted_at:r.submitted_at})),codexThumbsUp:approvals.map(r=>({id:r.id,user:r.user.login,created_at:r.created_at,headCommitTime:headTime})),inlineComments:comments.filter(c=>codex(c.user.login)).map(c=>({id:c.id,body:c.body,path:c.path,line:c.line,original_line:c.original_line,commit_id:c.commit_id,url:c.html_url})),openFindings,gateGreen,reviewComplete:headReviews.length>0||approvals.length>0,finishReady:pr.state==='OPEN'&&gateGreen&&(headReviews.length>0||approvals.length>0)&&openFindings.length===0},null,2));

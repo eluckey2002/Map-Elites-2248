@@ -1,0 +1,48 @@
+PASS declared level set: 1 to 58
+PASS T1 declared range inside authorized interval and disjoint
+PASS T2 declared range inside authorized interval and disjoint
+PASS T3 declared range inside authorized interval and disjoint
+PASS T4 declared range inside authorized interval and disjoint
+PASS T5 declared range inside authorized interval and disjoint
+PASS T6 declared range inside authorized interval and disjoint
+PASS G declared range inside authorized interval and disjoint
+PASS R1 declared range inside authorized interval and disjoint
+PASS R2 declared range inside authorized interval and disjoint
+PASS R3 declared range inside authorized interval and disjoint
+PASS R4 declared range inside authorized interval and disjoint
+PASS R5 declared range inside authorized interval and disjoint
+PASS R6 declared range inside authorized interval and disjoint
+PASS C1 declared range inside authorized interval and disjoint
+PASS C2 declared range inside authorized interval and disjoint
+PASS C3 declared range inside authorized interval and disjoint
+PASS C4 declared range inside authorized interval and disjoint
+PASS C5 declared range inside authorized interval and disjoint
+PASS C6 declared range inside authorized interval and disjoint
+PASS C7 declared range inside authorized interval and disjoint
+PASS C8 declared range inside authorized interval and disjoint
+PASS O declared range inside authorized interval and disjoint
+PASS F declared range inside authorized interval and disjoint
+T1: not run
+T2: not run
+T3: not run
+T4: not run
+T5: not run
+T6: not run
+G: not run
+R1: not run
+R2: not run
+R3: not run
+R4: not run
+R5: not run
+R6: not run
+C1: not run
+C2: not run
+C3: not run
+C4: not run
+C5: not run
+C6: not run
+C7: not run
+C8: not run
+O: not run
+F: not run
+PASS Path E: no fresh panel or confirmation was run; coverage assertions apply to no unrun block
