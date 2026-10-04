@@ -62,10 +62,13 @@ function print(){
   show('CURRENT REVIEWED COMPLETION REQUIREMENTS',GOAL+'RESUME_FINAL_REVIEW_ADDENDUM.md');
   show('AUTHORITATIVE VERIFICATION ROUTING CORRECTION',GOAL+'RESUME_ROUTE_CORRECTION.md');
   show('EXACT ROUTING CORRECTION QUALIFICATION',GOAL+'resume-route-correction-tests.txt');
+  show('SEPARATE EXACT ROUTING CORRECTION PIN',GOAL+'resume-route-correction-pin.json');
   show('REVIEWED FULL-HISTORY CUSTODY QUALIFICATION',GOAL+'resume-reviewed-proof-tests.txt');
   show('ACTUAL REVIEWED FULL-HISTORY CUSTODY PROOF',GOAL+'resume-reviewed-proof-output.txt');
   show('CURRENT REVIEWED TERMINAL CLOSEOUT',GOAL+'resume-reviewed-closeout-output.txt');
   show('CURRENT REVIEWED EXECUTED RETAINED AUDIT',GOAL+'resume-reviewed-recurring-output.txt');
+  show('CURRENT AUTHORITATIVE ROUTE TERMINAL CHECK',GOAL+'resume-route-closeout-output.txt');
+  show('CURRENT AUTHORITATIVE ROUTE RETAINED CHECK',GOAL+'resume-route-recurring-output.txt');
   show('ACTUAL FINAL PR REVIEW RECEIPT',GOAL+'resume-final-review.json');
   show('ACTUAL FINAL CI RECEIPT',GOAL+'resume-final-ci.json');
   console.log('Any pending or interrupted phase stays pending/UNVERIFIED. Only a retained, independently audited budget or effort stop can be Path D.');
