@@ -124,3 +124,5 @@ the whole space. Not one term at a time.
 - 2026-10-04 (America/Chicago) — Owner said proceed. Added qualified conditional confirmation handoff and read-only closeout fences for RESULT-0082; completed exploration must be independently audited and actual selection preregistered before F. Live work remains open; no confirmation verdict, ledger promotion or adoption.
 
 - 2026-10-04 (America/Chicago) — Continued live search on owner instruction. Added read-only raw-output report for RESULT-0082 and corrected CURRENT.md temporal wording around the earlier budget/publication steps. Active proposals remain exploratory; confirmation and closure are pending.
+
+- 2026-10-04 (America/Chicago) — Owner instructed completion of all remaining work. Actual PR review found staged-index, running-source identity, existing verdict and absent-handoff gaps. Stopped only the old non-measuring poller before any F output; preserved its source/marker. Added a distinct reviewed poller and actual-index/source/output/presence negatives while frozen scientific PID26038 continued. No games replayed, confirmation dispatched or scientific outcome inferred.

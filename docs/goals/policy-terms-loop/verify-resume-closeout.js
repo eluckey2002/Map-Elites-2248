@@ -4,6 +4,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const {loadInputs,assertBindings,evidencePaths}=require('./resume-closure-inputs');
 const {requiredAudits}=require('./resume-closure-state');
+const {requireHandoff}=require('./resume-handoff-presence');
 const {verifyPin,readAnchoredPin}=require('./audit-source-pin');
 const DIR='docs/goals/policy-terms-loop/';
 function verify(root){
@@ -12,6 +13,7 @@ function verify(root){
   const file=`experiments/${config.result}/closure.json`,receipt=DIR+'resume-closeout-audits.json';
   if(!fs.existsSync(path.join(root,file))&&!fs.existsSync(path.join(root,receipt)))return{pending:true,scientificComplete:false,result:config.result};
   if(!fs.existsSync(path.join(root,file))||!fs.existsSync(path.join(root,receipt)))throw new Error('retained completed closure and committed audit pin must both exist');
+  requireHandoff(root,config.result);
   const closure=JSON.parse(fs.readFileSync(path.join(root,file),'utf8'));
   const inputs=loadInputs(root,config.result);assertBindings(closure,inputs);
   const audits=requiredAudits({...inputs,closure});

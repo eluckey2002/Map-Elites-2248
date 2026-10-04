@@ -9,7 +9,7 @@ const ROOT=path.resolve(__dirname,'../../..');
 const DIR='experiments/RESULT-0082/';
 const sha=text=>crypto.createHash('sha256').update(text).digest('hex');
 function prepare(){
-  if(fs.existsSync(path.join(ROOT,DIR+'raw-pairs.json'))||fs.existsSync(path.join(ROOT,'solver/policy-lab/runs/resume/confirmation')))throw new Error('F already burned; registration cannot be rewritten');
+  if(['raw-pairs.json','verdict.json','closure.json','report.md'].some(f=>fs.existsSync(path.join(ROOT,DIR+f)))||fs.existsSync(path.join(ROOT,'solver/policy-lab/runs/resume/confirmation')))throw new Error('F output already exists; registration cannot be rewritten');
   const suite=fs.readFileSync(path.join(ROOT,'docs/goals/policy-terms-loop/resume-before-confirmation-tests.txt'),'utf8');
   const baseline=fs.readFileSync(path.join(ROOT,'docs/goals/policy-terms-loop/baseline-output.txt'),'utf8');
   const totals=validateSuite(suite,baseline,1);
@@ -27,7 +27,7 @@ function prepare(){
   const extra={
     [DIR+'registered-protocol.md']:sha(body).slice(0,16),[DIR+'closeout-contract.json']:sha(contractBody).slice(0,16),
     'docs/goals/policy-terms-loop/prepare-resume-registration.js':sha(fs.readFileSync(__filename)).slice(0,16),
-    'docs/goals/policy-terms-loop/advance-resume.py':sha(fs.readFileSync(path.join(ROOT,'docs/goals/policy-terms-loop/advance-resume.py'))).slice(0,16),
+    'docs/goals/policy-terms-loop/advance-resume-reviewed.py':sha(fs.readFileSync(path.join(ROOT,'docs/goals/policy-terms-loop/advance-resume-reviewed.py'))).slice(0,16),
     'docs/goals/policy-terms-loop/resume-before-confirmation-tests.txt':sha(suite).slice(0,16),
   };
   const entries=Object.entries(extra).map(([f,h])=>`  ${f}: ${h}\n`).join('');

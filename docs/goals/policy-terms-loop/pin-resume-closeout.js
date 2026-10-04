@@ -6,6 +6,7 @@ const path=require('node:path');
 const {createPin}=require('./audit-source-pin');
 const {requiredAudits}=require('./resume-closure-state');
 const {loadInputs,assertBindings,evidencePaths}=require('./resume-closure-inputs');
+const {requireHandoff}=require('./resume-handoff-presence');
 const ROOT=path.resolve(__dirname,'../../..');
 const read=file=>JSON.parse(fs.readFileSync(path.join(ROOT,file),'utf8'));
 const optional=file=>fs.existsSync(path.join(ROOT,file))?read(file):null;
@@ -13,6 +14,7 @@ const dir='docs/goals/policy-terms-loop/';
 function pin() {
   const plan=fs.readFileSync(path.join(ROOT,dir+'RESUME_PLAN.md'),'utf8');
   const {result}=JSON.parse(/```json\n([\s\S]*?)\n```/.exec(plan)[1]);
+  requireHandoff(ROOT,result);
   const closure=read(`experiments/${result}/closure.json`);
   const inputs=loadInputs(ROOT,result);assertBindings(closure,inputs);
   const audits=requiredAudits({closure,controls:optional('solver/policy-lab/runs/resume/controls-raw.json'),

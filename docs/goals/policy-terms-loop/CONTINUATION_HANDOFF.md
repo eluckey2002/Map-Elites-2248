@@ -30,3 +30,20 @@ Six older untracked preparation transcripts were preserved outside the checkout
 with hashes and reversible locations in `preparation-archive.json`. No retained
 scientific input was moved. The running raw evidence remains uncommitted until
 its measurement phase has closed and its independent audit succeeds.
+
+## Review repair before F
+
+The first non-measuring poller was stopped proactively after four actual Codex
+review findings, before any protocol or confirmation output. Its source and
+launch marker remain unchanged. The scientific pipeline stayed live.
+`advance-resume-reviewed.py` is a distinct committed coordinator with a fresh
+operational marker: it rejects any pre-staged index entry and unknown worktree
+change before writes, commits only owned pathspecs, checks its launch-time and
+committed source identity, and rejects an existing verdict before registration
+and immediately before F. The still-unregistered wrapper freezes the reviewed
+source instead of the stopped source. No scientific runner is restarted.
+
+Completion now additionally requires the actual report, provisional ledger and
+index record, CURRENT ledger citation and the closing History citations in both
+backlogs; these identities are included in the closeout pin. Actual negative
+checks are retained in `resume-review-guard-tests.txt`.

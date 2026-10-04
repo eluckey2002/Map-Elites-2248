@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: resumed closeout cannot turn a running phase or unconfirmed candidate into a named finish
+ok 1 - resumed closeout cannot turn a running phase or unconfirmed candidate into a named finish
+  ---
+  duration_ms: 5.548935
+  type: 'test'
+  ...
+# Subtest: resumed closure binds all three registrations, charges and every measurement input identity
+ok 2 - resumed closure binds all three registrations, charges and every measurement input identity
+  ---
+  duration_ms: 0.884879
+  type: 'test'
+  ...
+# Subtest: closeout rejects successful exits with incomplete numeric audits and keeps the active run pending
+ok 3 - closeout rejects successful exits with incomplete numeric audits and keeps the active run pending
+  ---
+  duration_ms: 1.020553
+  type: 'test'
+  ...
+# Subtest: reviewed coordinator refuses a real pre-staged protected change, source drift and a verdict-only collision
+ok 4 - reviewed coordinator refuses a real pre-staged protected change, source drift and a verdict-only collision
+  ---
+  duration_ms: 156.778141
+  type: 'test'
+  ...
+# Subtest: resumed completion requires report, provisional ledger, index, CURRENT and both backlog histories
+ok 5 - resumed completion requires report, provisional ledger, index, CURRENT and both backlog histories
+  ---
+  duration_ms: 3.934149
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 326.147028
