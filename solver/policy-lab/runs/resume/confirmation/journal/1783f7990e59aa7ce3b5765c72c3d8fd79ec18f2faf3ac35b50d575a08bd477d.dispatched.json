@@ -1,0 +1,1 @@
+{"id":"1783f7990e59aa7ce3b5765c72c3d8fd79ec18f2faf3ac35b50d575a08bd477d","runId":"RESULT-0082-one-shot-F","job":{"levelData":{"level":16,"target":8300,"tileScale":2,"moves":27,"minChain":3,"gridW":5,"gridH":8,"blockers":[{"type":"stone","x":1,"y":4}]},"seeds":[60100100,60100101,60100102,60100103,60100104,60100105,60100106,60100107,60100108,60100109],"policy":{"kind":"champion"}}}
