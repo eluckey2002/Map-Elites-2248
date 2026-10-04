@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {validHeadThumbs,isCodexLogin,isSubmittedCodexReview,isCodexGraphqlAuthor,openCodexFindings}=require('../policy-fit/review-evidence');
+const {validHeadThumbs,isCodexLogin,isSubmittedCodexReview,isCodexGraphqlAuthor,openCodexFindings,collectPages,flattenSlurped}=require('../policy-fit/review-evidence');
 const user={login:'chatgpt-codex-connector[bot]'};
 const summary=(head,status='completed')=>({user,updated_at:'2026-10-04T10:00:00Z',body:'<!-- codex-security-review:v1 '+JSON.stringify({headSha:head,status})+' -->\n**Code Review** | \u2705 **Completed**'});
 const reaction=time=>({user,content:'+1',created_at:time});
@@ -50,4 +50,25 @@ test('a resolved Codex finding is cleared only when someone else answered in the
  assert.equal(openCodexFindings([thread(true,finding,{author:owner,body:'Fixed in abc123'},{author:codexAuthor,body:'still insufficient'})]).length,1,'an answer to an earlier comment does not answer a later Codex comment');
  assert.equal(openCodexFindings([thread(true,finding,{author:owner,body:'Fixed in abc123'},{author:codexAuthor,body:'still insufficient'},{author:owner,body:'Now also fixed in def456'})]).length,0,'a reply after the latest Codex comment clears it');
  assert.equal(openCodexFindings([thread(false,{author:owner,body:'human-only thread'})]).length,0,'threads Codex did not start are not Codex findings');
+});
+test('lists are read to the end, and anything incomplete fails closed',()=>{
+ const pages={null:{nodes:[1,2],pageInfo:{hasNextPage:true,endCursor:'a'}},a:{nodes:[3],pageInfo:{hasNextPage:true,endCursor:'b'}},b:{nodes:[4],pageInfo:{hasNextPage:false,endCursor:null}}};
+ const seen=[];
+ assert.deepEqual(collectPages(after=>{seen.push(after);return pages[after];}),[1,2,3,4],'every page is read');
+ assert.deepEqual(seen,[null,'a','b']);
+ assert.deepEqual(collectPages(after=>pages[after],{after:'a'}),[3,4],'resumes from a given cursor');
+ assert.throws(()=>collectPages(()=>({nodes:[1]})),/incomplete page/,'no pageInfo');
+ assert.throws(()=>collectPages(()=>({pageInfo:{hasNextPage:false}})),/incomplete page/,'no nodes');
+ assert.throws(()=>collectPages(()=>null),/incomplete page/,'no page');
+ assert.throws(()=>collectPages(()=>({nodes:[1],pageInfo:{hasNextPage:true,endCursor:null}})),/without a cursor/,'more pages but no cursor');
+ assert.throws(()=>collectPages(()=>({nodes:[1],pageInfo:{hasNextPage:true,endCursor:'x'}}),{maxPages:3}),/more than 3 pages/,'a runaway list does not loop forever');
+ assert.deepEqual(flattenSlurped([[1,2],[3],[]]),[1,2,3]);
+ assert.throws(()=>flattenSlurped({a:1}),/not a list of pages/);
+ assert.throws(()=>flattenSlurped([[1],{b:2}]),/not a list of pages/);
+ // A real finding past the first 100 threads must still be seen.
+ const first=Array.from({length:100},(_,i)=>({id:'b'+i,isResolved:true,comments:{nodes:[{author:{__typename:'User',login:'someone'},body:'benign'}]}}));
+ const late={id:'late',isResolved:false,comments:{nodes:[{author:{__typename:'Bot',login:'chatgpt-codex-connector'},body:'P1'}]}};
+ const threadPages={null:{nodes:first,pageInfo:{hasNextPage:true,endCursor:'c'}},c:{nodes:[late],pageInfo:{hasNextPage:false,endCursor:null}}};
+ assert.deepEqual(openCodexFindings(collectPages(after=>threadPages[after])).map(t=>t.id),['late'],'a finding on page 2 is not dropped');
+ assert.deepEqual(openCodexFindings(first),[], 'the first page alone would have missed it');
 });

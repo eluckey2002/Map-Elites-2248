@@ -32,4 +32,25 @@ const openCodexFindings=threads=>threads.filter(t=>{
  if(!t.isResolved)return true;
  return !nodes.slice(lastCodex+1).some(c=>c.author&&!codexGraphqlAuthor(c.author)&&String(c.body||'').trim().length>0);
 });
-module.exports={validHeadThumbs,isCodexLogin:codex,isSubmittedCodexReview:submittedCodexReview,isCodexGraphqlAuthor:codexGraphqlAuthor,openCodexFindings};
+// GitHub caps GraphQL connections at 100 items and REST lists at 30 per page by
+// default. Reading only the first page lets a commenter push a real finding off
+// it, so every list is read to the end, and anything that looks incomplete
+// throws: a readiness check must fail closed, never report ready on a guess.
+function collectPages(fetchPage,{maxPages=100,after=null}={}){
+ const nodes=[];
+ for(let i=0;i<maxPages;i++){
+  const page=fetchPage(after);
+  if(!page||!Array.isArray(page.nodes)||!page.pageInfo||typeof page.pageInfo.hasNextPage!=='boolean')throw new Error('incomplete page: failing closed');
+  nodes.push(...page.nodes);
+  if(!page.pageInfo.hasNextPage)return nodes;
+  if(!page.pageInfo.endCursor)throw new Error('next page without a cursor: failing closed');
+  after=page.pageInfo.endCursor;
+ }
+ throw new Error(`more than ${maxPages} pages: failing closed`);
+}
+// `gh api --paginate --slurp` yields one array per page.
+function flattenSlurped(pages){
+ if(!Array.isArray(pages)||!pages.every(Array.isArray))throw new Error('paginated REST result is not a list of pages: failing closed');
+ return pages.flat();
+}
+module.exports={validHeadThumbs,isCodexLogin:codex,isSubmittedCodexReview:submittedCodexReview,isCodexGraphqlAuthor:codexGraphqlAuthor,openCodexFindings,collectPages,flattenSlurped};
