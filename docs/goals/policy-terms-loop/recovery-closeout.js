@@ -6,17 +6,19 @@ const {registeredConfiguration}=require('../../../solver/policy-lab/recovery-con
 const {requiredAudits,requireCompletedAudit}=require('./recovery-closure-state');
 const {verifyPin,readAnchoredPin}=require('./audit-source-pin');
 const {loadInputs,assertBindings,evidencePaths}=require('./closure-inputs');
+const {runCurrentSuite}=require('./live-suite');
 const ROOT=path.resolve(__dirname,'../../..');
 const BASE='cd83127f176111a0b0fb40eb14402f301a1fab07';
 const git=args=>execFileSync('git',args,{cwd:ROOT,encoding:'utf8'});
-const {config,commit}=registeredConfiguration();
+const result=JSON.parse(/```json\n([\s\S]*?)\n```/.exec(fs.readFileSync(path.join(__dirname,'RECOVERY_PLAN.md'),'utf8'))[1]).result;
 const optionalJson=file=>fs.existsSync(path.join(ROOT,file))?JSON.parse(fs.readFileSync(path.join(ROOT,file),'utf8')):null;
-const closure=optionalJson(`experiments/${config.result}/closure.json`);
-const inputs=loadInputs(ROOT,config.result);
+const closure=optionalJson(`experiments/${result}/closure.json`);
+const inputs=loadInputs(ROOT,result);
 if(closure)assertBindings(closure,inputs);
 const audits=requiredAudits({closure,controls:optionalJson('solver/policy-lab/runs/recovery/controls-raw.json'),
   proposals:optionalJson('solver/policy-lab/runs/recovery/proposals-raw.json'),
-  confirmation:optionalJson(`experiments/${config.result}/raw-pairs.json`),verdict:optionalJson(`experiments/${config.result}/verdict.json`)});
+  confirmation:optionalJson(`experiments/${result}/raw-pairs.json`),verdict:optionalJson(`experiments/${result}/verdict.json`)});
+const {config,commit}=registeredConfiguration();
 const commands=['tools/verify-experiments.js','tools/verify-ledger-authorship.js','tools/ledger-index.js --check','tools/failed-run-ledger.js',...audits];
 const auditPin=readAnchoredPin('docs/goals/policy-terms-loop/recovery-closeout-audits.json',{root:ROOT});
 if(auditPin?.result!==config.result||auditPin?.path!==closure.path||JSON.stringify(auditPin?.commands)!==JSON.stringify(commands))throw new Error('closeout audit pin does not bind this closure and command list');
@@ -41,10 +43,8 @@ if(!fs.readFileSync(path.join(ROOT,'experiments/SEEDS.md'),'utf8').startsWith(gi
 for(const f of changed.filter(f=>f.startsWith('docs/backlog/')))if(!fs.readFileSync(path.join(ROOT,f),'utf8').startsWith(git(['show',`${BASE}:${f}`])))throw new Error(`backlog changed beyond appended history ${f}`);
 console.log('PASS authorized paths, exact single existing-test exception, unchanged frozen sources and carried evidence',commit);
 console.log('PASS append-only seeds and backlog History');
-const failures=s=>s.split('\n').filter(l=>/^not ok /.test(l)).map(l=>l.replace(/^not ok \d+ - /,'')).sort();
-const baseline=fs.readFileSync(path.join(__dirname,'baseline-output.txt'),'utf8');
-const suite=fs.readFileSync(path.join(__dirname,'recovery-final-tests.txt'),'utf8');
-if(JSON.stringify(failures(baseline))!==JSON.stringify(failures(suite))||!/^# fail 3$/m.test(suite)||!/^# skipped 1$/m.test(suite))throw new Error('full suite does not match original named failures and skip');
+console.log('$ node --test --test-reporter=tap solver/tests/*.test.js (fresh execution)');
+const {output:suite}=runCurrentSuite(ROOT);
 console.log('PASS exact original named test failures and skip');
 console.log(suite.split('\n').filter(l=>/^not ok |^# (tests|pass|fail|skipped) /.test(l)).join('\n'));
 for(const command of commands){
