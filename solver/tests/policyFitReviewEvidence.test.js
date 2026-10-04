@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {validHeadThumbs,isCodexLogin,isSubmittedCodexReview,isCodexGraphqlAuthor}=require('../policy-fit/review-evidence');
+const {validHeadThumbs,isCodexLogin,isSubmittedCodexReview,isCodexGraphqlAuthor,openCodexFindings}=require('../policy-fit/review-evidence');
 const user={login:'chatgpt-codex-connector[bot]'};
 const summary=(head,status='completed')=>({user,updated_at:'2026-10-04T10:00:00Z',body:'<!-- codex-security-review:v1 '+JSON.stringify({headSha:head,status})+' -->\n**Code Review** | \u2705 **Completed**'});
 const reaction=time=>({user,content:'+1',created_at:time});
@@ -35,4 +35,17 @@ test('a Codex review counts only once submitted and not dismissed',()=>{
 test('GraphQL review-thread authors are matched as the exact Bot, not by substring',()=>{
  assert.equal(isCodexGraphqlAuthor({__typename:'Bot',login:'chatgpt-codex-connector'}),true);
  for(const forged of [{__typename:'User',login:'chatgpt-codex-connector'},{__typename:'Bot',login:'chatgpt-codex-connector-evil'},{__typename:'Bot',login:'chatgpt-codex-connector[bot]'},{login:'chatgpt-codex-connector'},null,undefined])assert.equal(isCodexGraphqlAuthor(forged),false,JSON.stringify(forged));
+});
+test('a resolved Codex finding is cleared only when someone else answered in the thread',()=>{
+ const codexAuthor={__typename:'Bot',login:'chatgpt-codex-connector'},owner={__typename:'User',login:'eluckey2002'};
+ const thread=(isResolved,...nodes)=>({id:'t',isResolved,comments:{nodes}});
+ const finding={author:codexAuthor,body:'P1 finding'};
+ assert.equal(openCodexFindings([thread(false,finding)]).length,1,'unresolved stays open');
+ assert.equal(openCodexFindings([thread(true,finding)]).length,1,'resolved with no reply stays open');
+ assert.equal(openCodexFindings([thread(true,finding,{author:codexAuthor,body:'follow-up'})]).length,1,'a second Codex comment is not an answer');
+ assert.equal(openCodexFindings([thread(true,finding,{author:null,body:'x'})]).length,1,'a deleted-author comment is not an answer');
+ assert.equal(openCodexFindings([thread(true,finding,{author:owner,body:'   '})]).length,1,'an empty reply is not an answer');
+ assert.equal(openCodexFindings([thread(true,finding,{author:owner,body:'Fixed in abc123'})]).length,0,'resolved with a written reply is cleared');
+ assert.equal(openCodexFindings([thread(false,finding,{author:owner,body:'Fixed in abc123'})]).length,1,'replied but unresolved stays open');
+ assert.equal(openCodexFindings([thread(false,{author:owner,body:'human-only thread'})]).length,0,'threads Codex did not start are not Codex findings');
 });

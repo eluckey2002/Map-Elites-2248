@@ -18,4 +18,14 @@ function validHeadThumbs(head,reactions,comments){
 // GraphQL reports a bot author as {__typename:'Bot', login:'chatgpt-codex-connector'}
 // (no '[bot]' suffix, unlike REST), so review threads need their own exact check.
 const codexGraphqlAuthor=a=>a?.__typename==='Bot'&&a.login==='chatgpt-codex-connector';
-module.exports={validHeadThumbs,isCodexLogin:codex,isSubmittedCodexReview:submittedCodexReview,isCodexGraphqlAuthor:codexGraphqlAuthor};
+// A thread holds a Codex finding when Codex authored one of its comments. It
+// stays open while unresolved, and a resolved one is cleared only when someone
+// other than Codex answered in it (a written rebuttal or fix note): resolving
+// alone, with no reply, does not show the finding was addressed.
+const openCodexFindings=threads=>threads.filter(t=>{
+ const nodes=t.comments?.nodes||[];
+ if(!nodes.some(c=>codexGraphqlAuthor(c.author)))return false;
+ if(!t.isResolved)return true;
+ return !nodes.some(c=>c.author&&!codexGraphqlAuthor(c.author)&&String(c.body||'').trim().length>0);
+});
+module.exports={validHeadThumbs,isCodexLogin:codex,isSubmittedCodexReview:submittedCodexReview,isCodexGraphqlAuthor:codexGraphqlAuthor,openCodexFindings};
