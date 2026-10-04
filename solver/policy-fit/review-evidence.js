@@ -20,12 +20,16 @@ function validHeadThumbs(head,reactions,comments){
 const codexGraphqlAuthor=a=>a?.__typename==='Bot'&&a.login==='chatgpt-codex-connector';
 // A thread holds a Codex finding when Codex authored one of its comments. It
 // stays open while unresolved, and a resolved one is cleared only when someone
-// other than Codex answered in it (a written rebuttal or fix note): resolving
-// alone, with no reply, does not show the finding was addressed.
+// other than Codex answered AFTER Codex's latest comment (a written rebuttal or
+// fix note): resolving alone does not show the finding was addressed, and an
+// answer to an earlier comment does not answer a later "still insufficient".
+// Thread comments arrive oldest first.
 const openCodexFindings=threads=>threads.filter(t=>{
  const nodes=t.comments?.nodes||[];
- if(!nodes.some(c=>codexGraphqlAuthor(c.author)))return false;
+ let lastCodex=-1;
+ nodes.forEach((c,i)=>{if(codexGraphqlAuthor(c.author))lastCodex=i;});
+ if(lastCodex<0)return false;
  if(!t.isResolved)return true;
- return !nodes.some(c=>c.author&&!codexGraphqlAuthor(c.author)&&String(c.body||'').trim().length>0);
+ return !nodes.slice(lastCodex+1).some(c=>c.author&&!codexGraphqlAuthor(c.author)&&String(c.body||'').trim().length>0);
 });
 module.exports={validHeadThumbs,isCodexLogin:codex,isSubmittedCodexReview:submittedCodexReview,isCodexGraphqlAuthor:codexGraphqlAuthor,openCodexFindings};

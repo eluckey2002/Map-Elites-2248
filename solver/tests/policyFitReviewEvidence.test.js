@@ -47,5 +47,7 @@ test('a resolved Codex finding is cleared only when someone else answered in the
  assert.equal(openCodexFindings([thread(true,finding,{author:owner,body:'   '})]).length,1,'an empty reply is not an answer');
  assert.equal(openCodexFindings([thread(true,finding,{author:owner,body:'Fixed in abc123'})]).length,0,'resolved with a written reply is cleared');
  assert.equal(openCodexFindings([thread(false,finding,{author:owner,body:'Fixed in abc123'})]).length,1,'replied but unresolved stays open');
+ assert.equal(openCodexFindings([thread(true,finding,{author:owner,body:'Fixed in abc123'},{author:codexAuthor,body:'still insufficient'})]).length,1,'an answer to an earlier comment does not answer a later Codex comment');
+ assert.equal(openCodexFindings([thread(true,finding,{author:owner,body:'Fixed in abc123'},{author:codexAuthor,body:'still insufficient'},{author:owner,body:'Now also fixed in def456'})]).length,0,'a reply after the latest Codex comment clears it');
  assert.equal(openCodexFindings([thread(false,{author:owner,body:'human-only thread'})]).length,0,'threads Codex did not start are not Codex findings');
 });
