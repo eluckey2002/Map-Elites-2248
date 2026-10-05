@@ -1,0 +1,358 @@
+{
+  "assigned": "RESULT-0083",
+  "checkedRefs": 70,
+  "matches": [],
+  "maximumOtherExperimentDirectory": 82,
+  "rows": [
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/chore-lf-line-endings",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/chore-orch-ticket-records",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/docs-worktree-rules",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/experiment-harvest-policy-corpus",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/fix-44",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/fix-windows-git-object-paths",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/ledger-status-index-v2",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/level-curve-retune",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/process-pr-ownership-fixes",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/work-next-2026-09-08",
+      "maxExperimentDirectory": 26,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/cleanup-20260929/wt-metri",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/u1-20260930/level-map-elites-authoring",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/u1-20260930/u1-asset-contract",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/u1-20260930/u1-eol-path",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/archive/worktree-ticket-records-20260908",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/backup/pre-collector-drop",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/claude/mac-project-sync-ee1d99",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/codex/level-map-elites-authoring",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/codex/trustworthy-ruler-20261002",
+      "maxExperimentDirectory": 58,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/codex/u1-asset-contract",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/codex/u1-eol-path",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/eluckey2002/abalone",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/experiment/result-0044-board-2-rerun",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/experiment/result-0044-fresh-run",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/feat/evaluator-foundation",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/feat/player-playtest-feedback",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/ledger/recheck-loop",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/ledger/status-index",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/main",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/recovery/local-work-20260926",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/recovery/windows/recheck-loop-dirty-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/recovery/windows/stash-20260926-20260930",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/recovery/windows/u1-combined-dirty-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/heads/tmp-44",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/HEAD",
+      "maxExperimentDirectory": 58,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/archive/worktree-ticket-records-20260908",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/codex/authoring-ideation-20260916",
+      "maxExperimentDirectory": 38,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/codex/champion-research-queue-20261002",
+      "maxExperimentDirectory": 58,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/codex/latest-main-20261002",
+      "maxExperimentDirectory": 82,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/codex/lc0013-target-gap-arithmetic",
+      "maxExperimentDirectory": 78,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/docs/bl-0022-hook-applied",
+      "maxExperimentDirectory": 58,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/evidence/result-0018-6a07294",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/board-map-elites-20260917",
+      "maxExperimentDirectory": 46,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/evaluator-foundation",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/family-board-map-elites-20260919",
+      "maxExperimentDirectory": 46,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/feat/player-playtest-feedback",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/ledger/status-index",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/main",
+      "maxExperimentDirectory": 58,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/port/family-board-map-elites",
+      "maxExperimentDirectory": 54,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-failed-run-ledger-2026-09-22-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-game51-learning-cycle-2026-09-27-20260930",
+      "maxExperimentDirectory": 57,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-lc0013-target-gap-arithmetic-20260930",
+      "maxExperimentDirectory": 57,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/codex-nightly-reverify-36579791639-20260930",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/lc0013-target-gap-arithmetic-dirty-20260930",
+      "maxExperimentDirectory": 57,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/main-root-dirty-20260930",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/map-elites-qa-dirty-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/mac/review-unbuilt-map-candidates-dirty-20260930",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/backup-pre-collector-drop-20260930",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/claude-mac-project-sync-ee1d99-20260930",
+      "maxExperimentDirectory": 49,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-level-map-elites-authoring-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-u1-asset-contract-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/codex-u1-eol-path-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/recheck-loop-dirty-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/recovery-local-work-20260926-20260930",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/stash-20260926-20260930",
+      "maxExperimentDirectory": 43,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/tmp-44-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/recovery/windows/u1-combined-dirty-20260930",
+      "maxExperimentDirectory": 48,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/work/policy-measurement-records-2026-09-05",
+      "maxExperimentDirectory": 26,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/worktree-archify-diagrams",
+      "maxExperimentDirectory": 20,
+      "assignedIdHits": []
+    },
+    {
+      "ref": "refs/remotes/origin/worktree-deterministic-2048-solver",
+      "maxExperimentDirectory": 0,
+      "assignedIdHits": []
+    }
+  ]
+}

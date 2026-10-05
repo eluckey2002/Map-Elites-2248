@@ -1,0 +1,316 @@
+$ Goal 3 revision 5 / RESULT-0083 / PATH E raw report
+$ git rev-parse HEAD; git branch --show-current (captured start)
+6fea334c2f5fd61a86cce4a1842cb9b03f709ee1
+codex/policy-learned-judge-r5
+$ remote result-ID scan (captured start)
+{
+  "assigned": "RESULT-0083",
+  "checkedRemoteRefs": 35,
+  "conflictingAssignedIdRefs": [
+    {
+      "ref": "refs/remotes/origin/codex/latest-main-20261002",
+      "matchingPathCount": 4336
+    }
+  ],
+  "maximumExperimentDirectory": 82,
+  "possibleSeedOverlapRows": []
+}
+$ node --test solver/tests/*.test.js (captured baseline)
+✖ launcher keeps validation roles separate in ports and recording paths (13.5214ms)
+✖ candidate-levels-52.json has a receipt that verifies against the current bot (12.0856ms)
+✖ candidate-levels-54.json has a receipt that verifies against the current bot (32.6212ms)
+✖ LIVE: no linked worktree is holding uncommitted .orch state (6768.1414ms)
+✖ the builder is byte-stable and the committed generated views are current (40.5734ms)
+ℹ tests 628
+ℹ suites 0
+ℹ pass 622
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 268711.6104
+✖ failing tests:
+✖ launcher keeps validation roles separate in ports and recording paths (13.5214ms)
+✖ candidate-levels-52.json has a receipt that verifies against the current bot (12.0856ms)
+✖ candidate-levels-54.json has a receipt that verifies against the current bot (32.6212ms)
+✖ LIVE: no linked worktree is holding uncommitted .orch state (6768.1414ms)
+✖ the builder is byte-stable and the committed generated views are current (40.5734ms)
+$ experiments/SEEDS.md read at start
+SEEDS.md:
+# Burned seeds
+
+Every seed range this game has used for a measurement, screen, pilot,
+confirmation, control, or play session. Burned means never reusable as fresh
+holdout evidence. The convention was stated in comments at the top of
+`solver/routing-ablation.js` and `solver/chain-offer-ablation.js` and scattered
+through protocols; this file is the one place. The ladder game keeps its own
+file (`2248-ladder/EXPOSED.md`); nothing here touched the ladder engine.
+
+Add the row when you run, not after. A registered protocol must search this
+file and the repository before declaring a range fresh.
+
+| Seeds | Used for | Date | Source |
+|---|---|---|---|
+| 0–499 | the historical 500-seed Level 26 sample (RESULT-0005) through `solver/sweep.js`, which like `solver/game-tester.js` counts from seed 0, so any `--seeds N` run exposes 0–N-1; board search screened and measured 400 boards on seeds 0–399; target calibration and move-budget measurements (RESULT-0005, RESULT-0006, RESULT-0007) iterate 0–199; candidate fitting uses 0–149; policy-search screen uses 0–39 | 2026-08 | `solver/sweep.js`, `EVIDENCE_LEDGER.md` RESULT-0005, `solver/board-search-01.json`, `solver/target-calibration.js`, `solver/move-budget.js`, `solver/level-author.js`, `.orch/policy-search-02.cells.json` |
+| 1–40 and 10,001–10,060 | board-search per-board variant fitting and holdout ranges | 2026-08-20 | `solver/board-search-01.json` (`receipt.fitting.variantRange`, `receipt.holdout.variantRange`) |
+| 100,000–100,299 | candidate verification holdout | 2026-08 | `solver/level-author.js` |
+| 200,000–200,039 | shape profiling, 40 seeds | 2026-08 | `solver/profile-shapes.js`, `solver/README.md`, `HANDOFF.md` |
+| 200,000–200,119 | Levels 54–58 check at their shipped targets (derived for 55–58; Level 54 at its owner-set 126,000, DECISION-0007), 120 seeds per level; **reuses** 200,000–200,039 from shape profiling above | 2026-09-05 | commit `3bcb5a6`, `src/game.js` Levels 54–58 comments |
+| 500,000–500,023 | generator screen | 2026-08-20 | `solver/generate-levels.js` |
+| 1,000,000–1,000,249 | policy-search holdout, 250 seeds (`--holdout-seeds` default) | 2026-08 | `solver/policy-search.js`, `.orch/policy-search-02.cells.json` |
+| 2,000,000–2,000,299 | width ablation, third disjoint set; 2,000,000–2,000,011 also the MAP-Elites transition-round screen (RESULT-0017) | 2026-08-20, 2026-08-22 | `solver/policy-ablation.js`, `.orch/policy-ablation-01.json`, `solver/map-elites-output/archive.json` |
+| 2,000,000 | Level 52 owner-game replay corpus, 4 sessions | 2026-09-02 | `solver/test-fixtures/level52-seed2000000-human-games.json` |
+| 3,000,000–3,000,299 | routing-ablation confirmation (default `--first`); 3,000,000–3,000,023 also the MAP-Elites transition-round holdout (RESULT-0017) | 2026-08-20, 2026-08-22 | `solver/routing-ablation.js`, `.orch/routing-ablation-01.json`, `solver/map-elites-output/archive.json` |
+| 4,000,000–4,000,299 | routing-ablation pilot; 4,000,000–4,000,011 also the MAP-Elites independent-round screen (RESULT-0019) | 2026-08-20, 2026-08-28 | `solver/routing-ablation.js`, `.orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json` |
+| 5,000,000–5,000,099 | chain-offer ablation pilot; registered, never claimed by a result; 5,000,000–5,000,023 also the MAP-Elites independent-round holdout (RESULT-0019) | 2026-08-21, 2026-08-28 | `.orch/runs/chain-offer-2026-08-21`, `-23`, `.orch/runs/2026-08-28-map-elites-independent-round/evidence/archive.json` |
+| 6,000,000–6,000,299 | chain-offer ablation confirmation default; 6,000,000–6,000,024 also a RESULT-0026 sandbox | 2026-08-21, 2026-09-02 | `solver/chain-offer-ablation.js`, `experiments/RESULT-0026/protocol.md` |
+| 7,000,000–7,000,024 | RESULT-0026 qualification (seed 7,000,000, levels 5 and 50) and sandbox | 2026-09-02 | `experiments/RESULT-0026/protocol.md` |
+| 8,000,000–8,000,024 | hand-made bot back-off floor, levels 5 through 50. Owner-reported 2026-09-03; no artifact in the repository, so it backs no claim | 2026-09 | owner statement |
+| 9,000,000–9,000,039 | multipath-ablation screen (RESULT-0015, RESULT-0016); 9,000,000–9,000,009 also the chain-offer C1/C2 opening-board diagnostic | 2026-08-21 | `solver/multipath-ablation.js` |
+| 10,000,000–10,000,299 | multipath-ablation confirmation (RESULT-0015, RESULT-0016) | 2026-08-21 | `solver/multipath-ablation.js` |
+| 11,000,000–11,000,039 | heaviest-first-past-the-cap ablation screen, rejected; code only on tag `archive/codex/2026-08-29T10-29-19Z-adhoc-session-workspace` | 2026-08-28 | that tag's `solver/heavy-after-ablation.js` |
+| 12,000,000–12,000,039 | target-aware screen | 2026-08-30 | `solver/target-aware-evaluation.js` |
+| 13,000,000–13,000,299 | target-aware holdout (RESULT-0018, RESULT-0020) | 2026-08-30 | `solver/target-aware-evaluation.js` |
+| 14,000,000–14,000,299 | Level 53 champion baseline for the invalidated promotion rehearsal | 2026-08-30 | tag `archive/codex/target-aware-promotion-rehearsal-2026-08-30` |
+| 20,000,000–20,000,011 and 21,000,000–21,000,199 | player-style topology cross-eval (RESULT-0023, retained failed study): 12 development-check seeds and 200 confirmation seeds | 2026-09-02 | `.orch/runs/2026-09-02T05-30-18Z-player-style-topology-cross-eval/evidence/` |
+| 20,000,000–22,999,999 (reserved) | generated-corpus protocol on tag `archive/codex/research-session-2026-08-28`, never executed; its reservation now collides with the rows above and below | 2026-08-29 | that tag's `.orch/runs/2026-08-29-generated-level-corpus-preregistration/preregistration.md` |
+| 22,000,000–22,000,011 | RESULT-0024 topology controls, executed twice | 2026-09-02 | `experiments/RESULT-0024/protocol.md` |
+| 23,000,000–23,000,199 | RESULT-0024 confirmation, executed and reported | 2026-09-02 | `experiments/RESULT-0024/protocol.md`, `report.md` |
+| 24,000,000–24,000,024 | RESULT-0026 confirmation | 2026-09-02 | `experiments/RESULT-0026/protocol.md` |
+| 29,000,000–29,000,047; 29,000,100–29,000,147; 29,000,200–29,000,247; 29,000,300–29,000,347 | RESULT-0029 exact puzzle-descriptor corpus; each disjoint block searches one predeclared structural region and stops after four qualifying boards | 2026-09-16 | `experiments/RESULT-0029/protocol.md` |
+| 30,000,000–30,000,059 | RESULT-0021 sample A | 2026-09-01 | `experiments/RESULT-0021/protocol.md` |
+| 31,000,000–31,000,059 | RESULT-0021 sample B | 2026-09-01 | `experiments/RESULT-0021/protocol.md` |
+| 32,000,000; 32,100,000–32,100,001 | RESULT-0030 diagnostic runtime calibration (excluded) and paired representative-board confirmation across Levels 10, 31, 53, and 54 | 2026-09-16 | `experiments/RESULT-0030/protocol.md` |
+| 32,200,000–32,200,001 | RESULT-0031 corrected-cap paired representative-board confirmation across Levels 10, 31, 53, and 54 | 2026-09-16 | `experiments/RESULT-0031/protocol.md` |
+| 32,300,000 | choice-density × recovery runtime and positive-control calibration; excluded from confirmation | 2026-09-16 | `solver/choice-recovery-descriptors.js` development calibration |
+| 32,400,000–32,400,007 | RESULT-0032 choice-density × recovery confirmation across four static/no-blocker board profiles | 2026-09-16 | `experiments/RESULT-0032/protocol.md` |
+| 32,500,000 | merge-depth × spatial-spread runtime and range calibration; excluded from confirmation | 2026-09-16 | `solver/merge-spread-descriptors.js` development calibration |
+| 32,600,000–32,600,007 | RESULT-0033 merge-depth × spatial-spread confirmation across four static/no-blocker board profiles | 2026-09-16 | `experiments/RESULT-0033/protocol.md` |
+| 32,700,000 | forced-prefix × bounded-diversity runtime and range calibration; excluded from confirmation | 2026-09-16 | `solver/forced-diversity-descriptors.js` development calibration |
+| 32,800,000–32,800,007 | RESULT-0034 forced-prefix × bounded-diversity confirmation across four static/no-blocker board profiles | 2026-09-16 | `experiments/RESULT-0034/protocol.md` |
+| 33,000,000–33,000,031 | RESULT-0035 merge-depth × spatial-spread MAP-corpus confirmation across four representative board profiles | 2026-09-16 | `experiments/RESULT-0035/protocol.md` |
+| 33,100,000–33,100,063 | exploratory half-score-move × greed-ratio scripted-percentile screen across Levels 10, 31, 53, and 54; not confirmation evidence | 2026-09-16 | `solver/greed-descriptor-screen.js` |
+| 33,200,000–33,200,007 | RESULT-0036 exact-denominator half-score-move × greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0036/protocol.md` |
+| 33,300,000 | RESULT-0037 deterministic work-limit qualification control on Level 54; excluded from confirmation | 2026-09-16 | `experiments/RESULT-0037/run.test.js` |
+| 33,400,000–33,400,007 | RESULT-0037 deterministic exact greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0037/protocol.md` |
+| 33,500,000–33,500,007 | RESULT-0038 deterministic exact greed-ratio closure replication across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0038/protocol.md` |
+| 33,800,000–33,800,007 | RESULT-0041 bound-receipt exact greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0041/protocol.md` |
+| 33,900,000–33,900,007 | RESULT-0042 calibrated-watchdog exact greed-ratio confirmation across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0042/protocol.md` |
+| 34,000,000–34,000,007 | RESULT-0043 executable-closeout exact greed-ratio replication across Levels 10, 31, 53, and 54 and four scripted percentile policies | 2026-09-16 | `experiments/RESULT-0043/protocol.md` |
+| 41,000,000–41,000,001 | RESULT-0044 fresh-board owner-versus-oracle challenge (registered, not run): Level 56 uses 41,000,000; Level 58 uses 41,000,001 | 2026-09-22 | `experiments/RESULT-0044/protocol.md` |
+| 42,000,000–42,000,001 | RESULT-0044 fresh run (protocol option 1), committed before owner play: Level 56 uses 42,000,000; Level 58 uses 42,000,001 | 2026-09-28 | `experiments/RESULT-0044/fresh-boards.json` |
+| 43,999,999; 44,000,000–44,004,095 | RESULT-0048 family-island qualification fixture and paired island/refill confirmation panel | 2026-09-19 | `experiments/RESULT-0048/registered-protocol.md` |
+| 44,999,999; 45,000,000–45,000,299 | RESULT-0049 excluded harness qualification and fresh paired current-champion confirmation across all 58 shipped levels | 2026-09-27 | `experiments/RESULT-0049/registered-protocol.md` |
+| 424242 | HUMAN-PILOT-0001 and HUMAN-PILOT-0002 fixed play seed | 2026-09-01, 2026-09-02 | `pilots/` |
+| 1, 2, 10, 777 | owner play recordings on levels 51–54 (ten recordings in `recordings/`; seed 777 twice on level 52) | 2026-08 | `recordings/*.json` |
+| 9,100,000–9,100,001 and 9,200,004–9,200,005 | seed-variance bounded test, real control through the production `playMeasured` seam | 2026-09-01 | `solver/tests/seedVariance.test.js`, `experiments/RESULT-0021/protocol.md` |
+
+| 50,000,000–50,000,099 | RESULT-0058 champion/champion null control, 10 levels × 100 seeds | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,100,000–50,100,249 | RESULT-0058 champion/chooseBaseMove 3,000-cell positive control | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,200,000–50,200,299 | RESULT-0058 positive-control 50 disjoint six-seed blocks, 72 cells per block | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,300,000–50,300,005 | RESULT-0058 short-myopic stage-1 control | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,301,000–50,301,049 | RESULT-0058 short-myopic stage-2 contingency; reserved even if stage 1 cuts | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,400,000–50,400,005 | RESULT-0058 one-gene winner-curse screens | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,401,000–50,401,005 | RESULT-0058 one-gene winner-curse fresh checks | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,500,000–50,500,005 | RESULT-0058 MAP-Elites 72-game screens | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,501,000–50,501,049 | RESULT-0058 MAP-Elites 600-game stage; reserved if no candidate advances | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,502,000–50,502,249 | RESULT-0058 MAP-Elites 3,000-game stage; reserved if no candidate advances | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,503,000–50,503,005 | RESULT-0058 MAP-Elites independent fresh admission recheck; reserved if no nominee | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+| 50,504,000–50,504,249 | RESULT-0058 MAP-Elites final holdout; reserved if archive empty | 2026-10-02 | experiments/RESULT-0058/protocol.md |
+$ node solver/policy-fit/preflight.js (retained historical output)
+{"level":1,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":0.3508918617614268,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":2,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":0.510323299888517,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":3,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":0.868450390189519,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":4,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.3408584169453768,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":5,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.6351727982162747,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":6,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.947056856187289,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":7,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.7098662207357838,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":8,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":3.4478818283166133,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":9,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":4.37301003344482,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":10,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":299,"pairedVariance":5.431976835536807,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":11,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.669018952062433,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":12,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.5516610925306624,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":13,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.7369453734671065,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":14,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.818049052396877,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":15,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.072196209587508,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":16,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.1339018952062454,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":17,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":3.4066778149386874,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":18,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.2394537346711267,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":19,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.0668450390189506,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":20,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.1234671125975444,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":21,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.7825975473801527,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":22,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.439063545150493,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":23,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.2240802675585325,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":24,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.2788851727982173,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":25,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":4.016677814938679,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":26,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.795986622073574,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":27,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.772296544035683,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":28,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.826878483835017,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":29,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.9473244147157167,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":30,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.709654403567442,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":31,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.1186622073578607,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":32,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.5016610925306628,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":33,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.444816053511702,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":34,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.373467112597548,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":35,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":0.9887513935340038,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":36,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.6207246376811564,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":37,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":0.9821627647714596,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":38,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.2129319955406908,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":39,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":298,"pairedVariance":1.1290195015027291,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":40,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":299,"pairedVariance":1.8435500886624316,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":41,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":0.9595875139353371,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":42,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.8039130434782562,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":43,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":297,"pairedVariance":1.1721949221949266,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":44,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.7323968784838393,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":45,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.0981493868450432,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":46,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.4671125975473829,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":47,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":298,"pairedVariance":0.93635459742842,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":48,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":296,"pairedVariance":1.2169949610627626,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":49,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":296,"pairedVariance":0.8436097114063222,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":50,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":281,"pairedVariance":1.0158617183528211,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":51,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":2.25814938684504,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":52,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.3048383500557386,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":53,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":298,"pairedVariance":1.006541929360718,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":54,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":267,"pairedVariance":0.6621046999521283,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":55,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.0253734671125962,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":56,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.0260423634336688,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":57,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.1422965440356747,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+{"level":58,"source":"RESULT-0049 champion-vs-base","cells":300,"mutualWins":300,"pairedVariance":1.1422965440356758,"crossCheckSource":"not covered","crossCheckCells":0,"crossCheckVariance":null,"uncovered":false}
+NOISE TABLE [{"levels":58,"seeds":10,"permitted":true,"seLevel":0.06848636817685169,"seSeed":0.08377344024891897,"se":0.08377344024891897,"halfWidth95":0.1641959428878812,"detectableGain80":0.23456563269697311},{"levels":58,"seeds":150,"role":"confirmation","seLevel":0.06848636817685169,"seSeed":0.02163020926257102,"se":0.06848636817685169,"halfWidth95":0.1342332816266293,"detectableGain80":0.19176183089518473},{"levels":12,"seeds":6,"permitted":false,"role":"information only","seLevel":0.15056620700741763,"seSeed":0.10815104631285512,"se":0.15056620700741763,"halfWidth95":0.29510976573453856,"detectableGain80":0.42158537962076936}]
+5% significance, 80% target power; detectable gain = 2.8 x standard error, conditional on historical champion-vs-base variance. Adding seeds does not shrink the level-axis error. Neither historical source holds challenger-vs-champion pairs; champion-vs-itself is not a variability estimate.
+{"label":"overall","n":502,"poolBelowOwner":97,"botBelowOwner":147,"fraction":0.19322709163346613}
+{"label":"levels 56 to 58","n":104,"poolBelowOwner":24,"botBelowOwner":30,"fraction":0.23076923076923078}
+{"label":"DIAGNOSTIC SUBSET: owner faster mutual-win boards and owner chain scores above bot choice","n":50,"poolBelowOwner":37,"botBelowOwner":50,"fraction":0.74}
+BOMB-PRIORITY EXCLUDED 17
+SESSIONS 36; unresolved 0
+Candidate coverage failed the prerequisite for this ranking experiment; stop and report a generation bottleneck.
+Same-seed recorded-board rows retained in human-benchmark.json
+$ git rev-parse HEAD (plan commit, before any fresh game)
+3186ddff36598b0328c31f46ebbbfd1eaca81b60
+$ node solver/policy-fit/recompute-preflight.js
+MATCH CROSS-CHECK: all twelve RESULT-0058 positive3000 level variances
+MATCH NOISE: all 58 historical level variances, both axes, interval widths and detectable gains
+MATCH GENERATION: exact subset counts, comparison counts and unchanged N_MIN / majority stop
+[{"label":"overall","n":502,"poolBelowOwner":97,"botBelowOwner":147,"fraction":0.19322709163346613},{"label":"levels 56 to 58","n":104,"poolBelowOwner":24,"botBelowOwner":30,"fraction":0.23076923076923078},{"label":"DIAGNOSTIC SUBSET: owner faster mutual-win boards and owner chain scores above bot choice","n":50,"poolBelowOwner":37,"botBelowOwner":50,"fraction":0.74}]
+Arithmetic reimplementation only; distinct reviewer acceptance is still required.
+$ node --test solver/tests/policyFitGeneration.test.js
+✔ generation ceiling does not stop an undersized all-missing subset (1.0632ms)
+✔ generation ceiling stops exactly at the frozen minimum and half threshold (0.2387ms)
+✔ generation ceiling excludes bot-faster boards and tied owner points (0.1494ms)
+✔ unresolved recording prevents a generation prerequisite verdict (0.1459ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 131.8688
+$ node solver/policy-fit/check-coverage.js
+PASS declared level set: 1 to 58
+PASS T1 declared range inside authorized interval and disjoint
+PASS T2 declared range inside authorized interval and disjoint
+PASS T3 declared range inside authorized interval and disjoint
+PASS T4 declared range inside authorized interval and disjoint
+PASS T5 declared range inside authorized interval and disjoint
+PASS T6 declared range inside authorized interval and disjoint
+PASS G declared range inside authorized interval and disjoint
+PASS R1 declared range inside authorized interval and disjoint
+PASS R2 declared range inside authorized interval and disjoint
+PASS R3 declared range inside authorized interval and disjoint
+PASS R4 declared range inside authorized interval and disjoint
+PASS R5 declared range inside authorized interval and disjoint
+PASS R6 declared range inside authorized interval and disjoint
+PASS C1 declared range inside authorized interval and disjoint
+PASS C2 declared range inside authorized interval and disjoint
+PASS C3 declared range inside authorized interval and disjoint
+PASS C4 declared range inside authorized interval and disjoint
+PASS C5 declared range inside authorized interval and disjoint
+PASS C6 declared range inside authorized interval and disjoint
+PASS C7 declared range inside authorized interval and disjoint
+PASS C8 declared range inside authorized interval and disjoint
+PASS O declared range inside authorized interval and disjoint
+PASS F declared range inside authorized interval and disjoint
+T1: not run
+T2: not run
+T3: not run
+T4: not run
+T5: not run
+T6: not run
+G: not run
+R1: not run
+R2: not run
+R3: not run
+R4: not run
+R5: not run
+R6: not run
+C1: not run
+C2: not run
+C3: not run
+C4: not run
+C5: not run
+C6: not run
+C7: not run
+C8: not run
+O: not run
+F: not run
+PASS Path E: no fresh panel or confirmation was run; coverage assertions apply to no unrun block
+$ game accounting
+{
+  "result": "RESULT-0083",
+  "closurePath": "E",
+  "freshGames": 0,
+  "training": 0,
+  "rounds": 0,
+  "controls": 0,
+  "confirmation": 0,
+  "overhead": 288,
+  "buffer": 0,
+  "totalChargedGames": 288,
+  "roundsRun": 0,
+  "confirmationReserve": 20000,
+  "historicalSessions": 36,
+  "accounting": "Conservative: first benchmark 3N plays + second benchmark 3N + validation replay N + diagnostic replay N; no fresh panel games."
+}
+PATH E: items 1–4 complete. Items 5–11: not run / UNVERIFIED_NOT_RUN. No claim about moves outside the diagnostic subset.
+$ closeout checks
+PASS baseline failure names exactly unchanged
+[
+  "LIVE: no linked worktree is holding uncommitted .orch state",
+  "candidate-levels-52.json has a receipt that verifies against the current bot",
+  "candidate-levels-54.json has a receipt that verifies against the current bot",
+  "launcher keeps validation roles separate in ports and recording paths",
+  "the builder is byte-stable and the committed generated views are current"
+]
+PASS protected files unchanged
+PASS existing tests unchanged; new boundary tests only
+PASS allowed tracked write scope
+PASS seed log append-only
+PASS historical input hashes unchanged
+No backlog touched; no History update required
+✖ launcher keeps validation roles separate in ports and recording paths (7.6623ms)
+✖ candidate-levels-52.json has a receipt that verifies against the current bot (13.8649ms)
+✖ candidate-levels-54.json has a receipt that verifies against the current bot (9.6287ms)
+✖ LIVE: no linked worktree is holding uncommitted .orch state (7556.9206ms)
+✖ the builder is byte-stable and the committed generated views are current (47.7014ms)
+ℹ tests 632
+ℹ suites 0
+ℹ pass 626
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 198771.3495
+✖ failing tests:
+✖ launcher keeps validation roles separate in ports and recording paths (7.6623ms)
+✖ candidate-levels-52.json has a receipt that verifies against the current bot (13.8649ms)
+✖ candidate-levels-54.json has a receipt that verifies against the current bot (9.6287ms)
+✖ LIVE: no linked worktree is holding uncommitted .orch state (7556.9206ms)
+✖ the builder is byte-stable and the committed generated views are current (47.7014ms)
+$ node tools/verify-experiments.js
+EXPERIMENT GATE PASS
+$ node tools/verify-ledger-authorship.js
+LEDGER AUTHORSHIP GATE PASS (base 6fea334c)
+$ node tools/ledger-index.js --check
+LEDGER INDEX CURRENT
+UNVERIFIED: publication and actual Codex review not yet collected

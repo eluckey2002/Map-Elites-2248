@@ -1,0 +1,16 @@
+{
+  "result": "RESULT-0083",
+  "closurePath": "E",
+  "freshGames": 0,
+  "training": 0,
+  "rounds": 0,
+  "controls": 0,
+  "confirmation": 0,
+  "overhead": 288,
+  "buffer": 0,
+  "totalChargedGames": 288,
+  "roundsRun": 0,
+  "confirmationReserve": 20000,
+  "historicalSessions": 36,
+  "accounting": "Conservative: first benchmark 3N plays + second benchmark 3N + validation replay N + diagnostic replay N; no fresh panel games."
+}

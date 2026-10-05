@@ -1,0 +1,47 @@
+✔ CSV parser preserves quoted commas and doubled quotes (2.3272ms)
+✖ LIVE: scanner reads the real retained failed closures (9.4951ms)
+✔ a real UNVERIFIED closure fails when its ledger row is absent (5.2687ms)
+✔ two failed closures cannot share one run_id and one ledger row (10.0183ms)
+✔ a ledger row cannot claim prevention through missing files (11.863ms)
+✔ an intentional failing control inside a CLOSED run is not a failed run (5.0659ms)
+✔ calendar dates and legacy evidence identities are exact (7.6142ms)
+✔ a retained legacy incident fails when its CSV row is removed (3.6503ms)
+✔ LIVE: every retained failed closure has one complete prevention record (11.9574ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196.6457
+
+✖ failing tests:
+
+test at solver\tests\failedRunLedger.test.js:59:1
+✖ LIVE: scanner reads the real retained failed closures (9.4951ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'RESULT-0036',
+      'RESULT-0037',
+      'RESULT-0041',
+      'RESULT-0042',
+  +   'RESULT-0083'
+    ]
+  
+      at TestContext.<anonymous> (C:\OOO\wt\policy-learned-judge-r5\solver\tests\failedRunLedger.test.js:62:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042', 'RESULT-0083' ],
+    expected: [ 'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
