@@ -4,7 +4,7 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Selectable Nemesis opponents — 2026-10-04
 
-DECISION-0012 records the owner-authorized additional Wider-search bot from RESULT-0082. Nemesis now selects either opponent on the same board and seed, retaining that selection for result checks. The shipped bot remains the default. See [implementation and verification](docs/game-design/levels/receipts/NEMESIS-POLICY-1.md). Task NEMESIS-POLICY-1 awaits owner review; independent Codex PR review and merge remain open.
+DECISION-0012 records the owner-authorized additional Wider-search bot from RESULT-0082. Nemesis now selects either opponent on the same board and seed, retaining that selection for result checks. The shipped bot remains the default. See [implementation and verification](docs/game-design/levels/receipts/NEMESIS-POLICY-1.md). Task NEMESIS-POLICY-1 awaits owner review. The 2026-10-08 [technical review and correction](docs/game-design/levels/receipts/NEMESIS-PR68-REVIEW.md) isolates and bounds cold simulations, rejects incomplete board identities, and adds cache/race regressions. Fresh independent Codex runtime review passed; final-head GitHub review, native mobile QA and owner review remain open. PR #68 stays draft.
 
 ## Experiment gate: frozen-tree recompute — current as of 2026-10-04
 
