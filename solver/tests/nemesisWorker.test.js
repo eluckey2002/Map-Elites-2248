@@ -37,7 +37,7 @@ test('cold wider-search computation leaves static HTTP requests responsive and s
   assert.deepEqual((await first).challenge.bot,result.body.challenge.bot);
 });
 
-test('execution and queue deadlines reject stalled work; overload and close produce no fake bot result', async t => {
+test('each active deadline rejects stalled work; overload and close produce no fake bot result', async t => {
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nemesis-worker-stall-'));
   const workerFile=path.join(dir,'stall.cjs');
   fs.writeFileSync(workerFile,"require('node:worker_threads').parentPort.on('message',()=>{while(true){}});");
@@ -80,4 +80,23 @@ test('closing the play server cancels active Nemesis work before waiting for HTT
   await closed;
   assert.equal(response.status,503);
   assert.match(body.error,/runner closed/);
+});
+
+test('a queued policy receives its full execution deadline after prior work completes', async t => {
+  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nemesis-worker-queue-'));
+  const workerFile=path.join(dir,'delayed.cjs');
+  fs.writeFileSync(workerFile,`const {parentPort}=require('node:worker_threads');
+parentPort.on('message',({id,query})=>{
+  const end=Date.now()+(query.seed===0?0:650);
+  while(Date.now()<end){}
+  parentPort.postMessage({id,result:{policy:query.policy}});
+});`);
+  const runner=createNemesisRunner({workerFile,timeoutMs:1000,maxPending:2});
+  t.after(()=>{runner.close();fs.rmSync(dir,{recursive:true,force:true});});
+  await runner.run({policy:'shipped',level:54,seed:0});
+  const obsolete=runner.run({policy:'shipped',level:null,seed:1});
+  const selected=runner.run({policy:'wider-search',level:null,seed:2});
+  const [first,second]=await Promise.all([obsolete,selected]);
+  assert.equal(first.policy,'shipped');
+  assert.equal(second.policy,'wider-search');
 });

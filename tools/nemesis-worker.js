@@ -63,6 +63,10 @@ function createNemesisRunner({ sources, timeoutMs = 120000, maxPending = 4, cach
       }
     }
     active = queue.shift();
+    // Queue slots are bounded; each active calculation gets its own CPU allowance.
+    active.timer = setTimeout(() => {
+      discardWorker(new Error('Nemesis calculation timed out; retry shortly'));
+    }, timeoutMs);
     worker.postMessage({ id: active.id, query: active.query });
   }
   return {
@@ -73,12 +77,7 @@ function createNemesisRunner({ sources, timeoutMs = 120000, maxPending = 4, cach
       if (pending.size >= maxPending) return Promise.reject(new Error('Nemesis is busy; retry shortly'));
       const job = { id: ++nextId, key, query };
       job.promise = new Promise((resolve, reject) => { job.resolve = resolve; job.reject = reject; });
-      // Includes queue time, so an abandoned request cannot wait indefinitely.
-      job.timer = setTimeout(() => {
-        const error = new Error('Nemesis calculation timed out; retry shortly');
-        if (active === job) discardWorker(error);
-        else { queue.splice(queue.indexOf(job), 1); finish(job, error); }
-      }, timeoutMs);
+
       pending.set(key, job);
       queue.push(job);
       drain();

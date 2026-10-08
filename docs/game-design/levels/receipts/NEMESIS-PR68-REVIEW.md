@@ -61,3 +61,17 @@ The new active-request regression failed before repair (HTTP 200 instead of canc
 The repaired suite passes 12 focused tests, including the new shutdown test and the related Connections capture check. These tests retain the original API/default/frozen-runner checks. A fresh independent recheck and a final-head GitHub re-review are required after this repair; owner review and native mobile QA remain open. The full-suite counts above are retained snapshots of the earlier heads, not a green claim for the repair.
 
 Fresh independent recheck of the repaired runtime passed: 11/11 focused Nemesis tests, an active-plus-two-queued shutdown probe returning three HTTP 503 cancellations, unchanged close callback/return semantics, both evidence gates, and a refreshed clean diff check. The reviewer confirmed exact runtime and test blobs; a stale whitespace observation was superseded by its refreshed PASS. Connections capture additionally passes in the parent 12/12 run. This closes the technical shutdown finding locally; final published-head GitHub review remains separate.
+
+## Queued-policy deadline correction
+
+Final-head GitHub Codex review of 01716ccf raised P1 comment 4216185731. In its 26-board probe, isolated Shipped and Wider-search lists completed in 48.4s and 83.3s, but queuing the selected policy behind the obsolete initial list returned 503 at 120.1s. This establishes the previously hypothetical corpus/deadline failure. A deterministic two-job regression also failed before correction: two 650ms calculations individually fit a 1000ms limit, but the queued second job exhausted its allowance while waiting.
+
+The deadline now starts when a job becomes active. One worker, four total pending jobs, duplicate coalescing and the 128-entry exact-result cache remain unchanged. Each calculation retains a 120-second execution allowance and active timeout terminates the worker before starting queued work. Total wait is bounded by the finite queue and per-active-job limits, apart from worker startup/termination scheduling overhead; a selected job can still wait behind earlier work. This is not cancellation of obsolete client work or an incremental list design.
+
+The repaired parent suite passes 13/13 focused checks, including queued policy success, active timeout/restart, overload, cache identity, request ordering, shutdown and Connections capture. Independent recheck and published-head review evidence are tracked separately.
+
+## Owner workflow corrections
+
+The owner clarified that PRs are not drafts and mobile QA is not part of this repository workflow. Earlier draft/mobile-QA requirements in this receipt are superseded; neither is an outstanding requirement. The owner assigned PR lifecycle responsibility to this agent. The original gameplay task's owner review remains separate from technical PR review: no owner acceptance, scientific standing promotion or shipped-default replacement is recorded by this lifecycle work.
+
+Independent fresh Codex recheck passed for exact worker blob 68ba072a5b8eda97cfdb46f6e4966359d58b064f and test blob 0c7bdbdb93a62e43cb2261d66d7b4f99aff806af: 13/13 focused checks, queue allowance, active stall termination, overload/slot release, duplicate coalescing, shutdown, cache, diff check and both evidence gates. The fourth distinct request may wait through three prior active allowances; that finite tradeoff is explicit. No protected scientific source changed and no owner gameplay acceptance was supplied.
