@@ -98,3 +98,32 @@ test('nemesis serves shipped boards with the bot result and counts a new capture
 
   assert.equal((await fetch(`${base}/api/nemesis?level=999&seed=1`)).status, 400);
 });
+
+
+test('Nemesis keeps shipped and wider-search results separate on the same seed', async (t) => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'nemesis-policy-'));
+  const server = createPlayServer({ store: directory, challengeSources: [directory] });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => { server.close(); fs.rmSync(directory, { recursive: true, force: true }); });
+  const base = `http://127.0.0.1:${server.address().port}/api/nemesis`;
+  const query = '?level=54&seed=3310936729';
+  const shipped = await (await fetch(base + query)).json();
+  const wider = await (await fetch(base + query + '&policy=wider-search')).json();
+  assert.equal(wider.challenge.policy.id, 'wider-search');
+  assert.equal(shipped.challenge.policy.id, 'shipped');
+  const { play } = require('../policy-lab/play');
+  const { chooserFor } = require('../policy-lab/chooser');
+  const candidate = require('../policy-lab/resume-frozen-candidate');
+  const level = require('../../src/game').LEVELS.find(l => l.level === 54);
+  const expected = play(level, 3310936729, chooserFor(candidate));
+  assert.deepEqual(wider.challenge.bot, {
+    score: expected.score, moves: expected.movesUsed, outcome: expected.win ? 'win' : 'lose',
+  });
+  assert.deepEqual(shipped.challenge.bot, { score: 126464, moves: 15, outcome: 'win' });
+  assert.deepEqual((await (await fetch(base + query)).json()).challenge, shipped.challenge);
+  assert.deepEqual((await (await fetch(base + query + '&policy=wider-search')).json()).challenge, wider.challenge);
+  const list = await (await fetch(base + '?policy=wider-search')).json();
+  assert.deepEqual(list.policies.map(p => p.id), ['shipped', 'wider-search']);
+  assert.equal(list.policy.id, 'wider-search');
+  assert.equal((await fetch(base + query + '&policy=missing')).status, 400);
+});

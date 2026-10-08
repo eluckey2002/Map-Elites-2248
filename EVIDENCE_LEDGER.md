@@ -1777,6 +1777,22 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 
   Verification-routing correction, 2026-10-04: the original recipe at d9b5475fd5faaadc7ca6d6b296030592e31d6294 is retained by the immutable original closeout pin. The two executable commands above now use the reviewed full-history entry point. This changes navigation only; the statement, proof class, standing, author, measurements, subject, artifacts and original receipts remain unchanged. The separate routing-correction pin binds the exact new navigation and adapter bytes.
 
+### DECISION-0012 — Offer the wider-search candidate as a selectable Nemesis opponent
+
+- **type:** decision
+- **status:** provisional
+- **scope:** additional opponent selection in Nemesis; no shipped-default replacement or scientific acceptance
+- **statement:** The owner authorized adding a selectable Wider-search bot alongside the shipped bot after discussing how to play against the candidate from PR #62. Nemesis uses the frozen candidate identified by RESULT-0082 on the same shipped level and seed, displays its target-stop result before human play, and retains that selection while checking the human result. The existing shipped policy remains the default.
+- **evidence:** owner conversation in docs/game-design/levels/receipts/NEMESIS-POLICY-1.md; implementation tools/nemesis.js, tools/play-server.js, src/nemesis.html; real API integration solver/tests/playServer.test.js; frozen subject solver/policy-lab/resume-frozen-candidate.js
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-10-04
+- **reverify:** Run node --test solver/tests/playServer.test.js; start node tools/play-server.js and select Wider-search bot in /nemesis.html. Same-level/seed challenges retain the selected opponent while the human iframe retains its seeded board.
+- **updated:** 2026-10-04
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** codex-nemesis, NEMESIS-POLICY-1 session, branch codex/nemesis-policy-selector
+- **notes:** Owner authorization is recorded with its implementation. This provisional record has no checked_by and assigns no scientific acceptance or default-policy promotion. RESULT-0082 retains its existing standing and limitations.
+
 ## Assembly cut log
 
 - Omitted draft labels and repeated draft identities because the root ledger is the assembled authority surface.

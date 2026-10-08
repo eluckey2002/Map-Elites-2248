@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 94 (38 accepted, 24 narrowed, 3 open, 14 provisional, 4 stale, 11 superseded).
+Records: 95 (38 accepted, 24 narrowed, 3 open, 15 provisional, 4 stale, 11 superseded).
 
 ## Current records
 
@@ -28,6 +28,7 @@ Records: 94 (38 accepted, 24 narrowed, 3 open, 14 provisional, 4 stale, 11 super
 | DECISION-0009 | Keep Level 53 as shipped at 101,000 | provisional | owner_decision | The owner keeps Level 53 in the game as shipped: 6x5, 16 moves, minChain 3, target 101,000, with its 0.95 demand accepted. | 1304 |
 | DECISION-0010 | Land the selected finite Connections variant in the original game | provisional | owner_decision | The owner authorizes landing the existing Connections work in the main project through its protected pull-request process. | 1321 |
 | DECISION-0011 | Recompute a closed result at its admission commit when its frozen files are meant to keep growing | provisional | owner_decision | The owner grants a recorded exception to the rule that a red gate is fixed in the ledger or the protocol and never by editing the gate (`AGENTS.md`, Landing changes on `main`). | 1338 |
+| DECISION-0012 | Offer the wider-search candidate as a selectable Nemesis opponent | provisional | owner_decision | The owner authorized adding a selectable Wider-search bot alongside the shipped bot after discussing how to play against the candidate from PR #62. | 1780 |
 | RESULT-0001 | Accepted 12,336 score | narrowed | replayed_lower_bound | **Corrected by CORRECTION-0010 (RESULT-0001 and RESULT-0004 verifiers were deleted from the tree); the wording below may no longer hold.** A 32-move witness replays to 12,336 at spawn cursor 520. | 373 |
 | RESULT-0002 | Mass/cursor upper bound | accepted | proven_upper_bound | Complete enumeration of the mass/cursor relaxation proves a 326,390 upper bound. | 389 |
 | RESULT-0003 | Exact move-one envelope | accepted | exact_result | Complete position-aware enumeration finds 1,868,975 physical first moves and an exact move-one maximum of 430. | 403 |
@@ -90,7 +91,7 @@ Records: 94 (38 accepted, 24 narrowed, 3 open, 14 provisional, 4 stale, 11 super
 | CORRECTION-0016 | Four results' reverify runs the whole test suite, which fails for reasons outside their claims | accepted | direct_source | Narrows those four records. | 1674 |
 | CORRECTION-0017 | FACT-0007's check count and RESULT-0011's effect size, measured on today's tree | accepted | direct_source, heuristic_observation | Narrows `FACT-0007` and `RESULT-0011`. | 1691 |
 | CORRECTION-0018 | RESULT-0058 gains complete win uncertainty and a stricter independent input audit | provisional | direct_source | The six findings in Codex review 5393741165 identified missing win-uncertainty output and weaknesses in mutation provenance, grid completeness, refusal counting, the synthetic qualification fixture and a zero-variance n… | 1708 |
-| CORRECTION-0019 | Learned-judge historical cross-check required real reference-arm coverage | provisional | direct_source | Narrows RESULT-0083's claim that its first arithmetic receipt reproduced the RESULT-0058 cross-check. | 1797 |
+| CORRECTION-0019 | Learned-judge historical cross-check required real reference-arm coverage | provisional | direct_source | Narrows RESULT-0083's claim that its first arithmetic receipt reproduced the RESULT-0058 cross-check. | 1813 |
 | HYPOTHESIS-0001 | Compact state may guide an approximate search | provisional | hypothesis | A state retaining score, moves remaining, spawn cursor, value histogram, and compact connectivity/survivor-position information may compress the search usefully. | 1357 |
 | HYPOTHESIS-0002 | A partitioned frontier may enable decisive proof | provisional | hypothesis | A streaming or partitioned physical frontier with a materially tighter complete tail abstraction, or another exact formulation, may produce a replayed target witness or decisive bound without exhausting memory. | 1371 |
 | QUESTION-0001 | Is 13,000 reachable? | open | unresolved | Does any legal 32-move sequence score at least 13,000? | 1387 |

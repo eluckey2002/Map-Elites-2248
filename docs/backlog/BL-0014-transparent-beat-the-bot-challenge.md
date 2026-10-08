@@ -93,3 +93,11 @@ their pre-game benchmark display without changing level rules or targets.
   The target-aware bot remained deterministic at 126,464 in 15 moves on that
   same seed. These two captures update the owner-observation history; they do
   not establish an owner minimum or a bot optimum.
+
+- 2026-10-04 — DECISION-0012 records owner authorization for a selectable Wider-search opponent from RESULT-0082. Nemesis retains the chosen opponent in benchmark display and result polling; the shipped default and human seed/capture format remain unchanged. NEMESIS-POLICY-1 holds verification and review boundaries.
+
+- 2026-10-08 — PR #68 technical review reproduced cold-search HTTP blocking and incomplete-seed substitution. NEMESIS-PR68-REVIEW records bounded worker execution, policy-specific LRU caching, focused request-race tests and fresh independent Codex runtime approval. The frozen candidate/default and RESULT-0082 standing remain unchanged; final-head GitHub review, owner review and native mobile QA remain open.
+
+- 2026-10-08 — GitHub Codex P2 comment 4215937353 found delayed worker disposal during server shutdown. An active-request test reproduced the defect before correction; shutdown initiation now cancels Nemesis work before HTTP drain, with 12 focused/capture tests passing. NEMESIS-PR68-REVIEW retains the finding and re-review boundary.
+
+- 2026-10-08 — Owner clarified that PRs are not drafts, mobile QA is not a repository requirement, and the agent owns the technical PR lifecycle. The earlier history entry listing those requirements is superseded. PR #68 is ready for review; CURRENT now reflects this. The original owner gameplay task and RESULT-0082 acceptance remain separate. Codex P1 comment 4216185731 is repaired by granting each queued policy its full active execution deadline; 13 focused checks and independent verification pass.
