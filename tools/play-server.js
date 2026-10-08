@@ -189,6 +189,12 @@ function createPlayServer({ store = STORE, connectionsStore, now = () => new Dat
 
     json(response, 404, { error: 'not found' });
   });
+  // The close event waits for HTTP requests to drain; cancel CPU work first.
+  const close = server.close;
+  server.close = function (...args) {
+    nemesis.close();
+    return close.apply(this, args);
+  };
   server.on('close', () => nemesis.close());
   return server;
 }

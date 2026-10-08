@@ -97,3 +97,5 @@ their pre-game benchmark display without changing level rules or targets.
 - 2026-10-04 — DECISION-0012 records owner authorization for a selectable Wider-search opponent from RESULT-0082. Nemesis retains the chosen opponent in benchmark display and result polling; the shipped default and human seed/capture format remain unchanged. NEMESIS-POLICY-1 holds verification and review boundaries.
 
 - 2026-10-08 — PR #68 technical review reproduced cold-search HTTP blocking and incomplete-seed substitution. NEMESIS-PR68-REVIEW records bounded worker execution, policy-specific LRU caching, focused request-race tests and fresh independent Codex runtime approval. The frozen candidate/default and RESULT-0082 standing remain unchanged; final-head GitHub review, owner review and native mobile QA remain open.
+
+- 2026-10-08 — GitHub Codex P2 comment 4215937353 found delayed worker disposal during server shutdown. An active-request test reproduced the defect before correction; shutdown initiation now cancels Nemesis work before HTTP drain, with 12 focused/capture tests passing. NEMESIS-PR68-REVIEW retains the finding and re-review boundary.

@@ -65,3 +65,19 @@ test('Nemesis rejects a partial board identity rather than silently substituting
     assert.equal((await fetch(base+query)).status,400,query);
   }
 });
+
+test('closing the play server cancels active Nemesis work before waiting for HTTP drain', async t => {
+  const store=fs.mkdtempSync(path.join(os.tmpdir(),'nemesis-shutdown-'));
+  const server=createPlayServer({store,connectionsStore:path.join(store,'connections'),challengeSources:[]});
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  t.after(()=>{server.close();fs.rmSync(store,{recursive:true,force:true});});
+  const requested=new Promise(resolve=>server.once('request',resolve));
+  const request=fetch(`http://127.0.0.1:${server.address().port}/api/nemesis?level=54&seed=3310936729&policy=wider-search`);
+  await requested;
+  const closed=new Promise(resolve=>server.close(resolve));
+  const response=await request;
+  const body=await response.json();
+  await closed;
+  assert.equal(response.status,503);
+  assert.match(body.error,/runner closed/);
+});
