@@ -1,0 +1,7 @@
+Owner exception received 2026-10-04 in this chat.
+
+Question: May I apply the prepared one-line patch to solver/tests/failedRunLedger.test.js, adding RESULT-0083 to its expected failed-closure inventory? Revision 5 currently forbids existing-test edits, but its mandatory failed-run receipt makes this hardcoded inventory test fail. The patch preserves all older entries and the exact check.
+
+Owner answer: Allow this one-line exception and finish
+
+Authority: add only RESULT-0083 to that existing expected inventory. Every other existing test and all checks, thresholds, source protections, budgets, no-merge and no-promotion boundaries remain unchanged.

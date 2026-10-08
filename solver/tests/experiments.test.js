@@ -238,6 +238,129 @@ test('LIVE: RESULT-0049 closure must agree with its pinned contract and fresh re
   assert.ok(problems.some((problem) => /contradicts recomputation "SUPPORTS_CURRENT_CHAMPION"/.test(problem)));
 });
 
+test('frozen-tree recompute entries must cite a real decision and a reason', () => {
+  const { frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
+  const ledger = [
+    '### DECISION-0011 — x', '- **scope:** RESULT-0082 in the FROZEN_TREE_POLICY table',
+    '- **proof_class:** `owner_decision`', '', '### DECISION-0002 — Level 26 tuning', '- **proof_class:** `owner_decision`', '',
+  ].join('\n');
+  const reason = 'the live tree cannot be recomputed because a frozen file grows';
+  assert.deepEqual(frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason }, ledger), []);
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0049', { decision: 'DECISION-0011', reason }, ledger)[0],
+    /not an owner decision naming RESULT-0049/,
+    'a decision that does not name the result cannot authorize it',
+  );
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0002', reason }, ledger)[0],
+    /not an owner decision naming RESULT-0082/,
+    'an unrelated decision that merely exists cannot authorize the entry',
+  );
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, append_only: 'SEEDS.md' }, ledger)[0],
+    /append_only must be a list/,
+  );
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, live_files: ['package.json'] }, ledger)[0],
+    /lists package\.json \(live_files\), which DECISION-0011 does not name/,
+    'a policy edit alone cannot add an exemption',
+  );
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, extra_immutable: ['solver/other'] }, ledger)[0],
+    /lists solver\/other \(extra_immutable\), which DECISION-0011 does not name/,
+    'a policy edit alone cannot swap the pinned journal path for another',
+  );
+  const named = ledger.replace('- **proof_class:**', '- **statement:** exempts `tools/live-check.js` and `experiments/SEEDS.md`, pins `solver/journals`\n- **proof_class:**');
+  assert.deepEqual(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, live_files: ['tools/live-check.js'], append_only: ['experiments/SEEDS.md'], extra_immutable: ['solver/journals'] }, named),
+    [],
+  );
+  const namedMagic = named.replace('pins `solver/journals`', 'pins `solver/journals`, `:(exclude)EVIDENCE_LEDGER.md`, `:(exclude,glob)**`, `../outside`, `/abs`, `a/*`, `a//b`');
+  for (const magic of [':(exclude)EVIDENCE_LEDGER.md', ':(exclude,glob)**', '../outside', '/abs', 'a/*', 'a//b', '']) {
+    assert.match(
+      frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason, extra_immutable: ['EVIDENCE_LEDGER.md', magic] }, namedMagic).join('\n'),
+      /extra_immutable has .*which is not a plain relative path/,
+      `${JSON.stringify(magic)} must not reach git as a pathspec`,
+    );
+  }
+  assert.match(frozenTreeEntryProblems('RESULT-0082', { reason }, ledger)[0], /must cite a ledger decision/);
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0099', reason }, ledger)[0],
+    /not in the ledger/,
+  );
+  assert.match(
+    frozenTreeEntryProblems('RESULT-0082', { decision: 'DECISION-0011', reason: 'short' }, ledger)[0],
+    /must say why/,
+  );
+  assert.match(frozenTreeEntryProblems('RESULT-0082', null, ledger)[0], /not an object/);
+});
+
+test('LIVE: every input the RESULT-0082 recomputation reads stays bound to its admission commit', () => {
+  const { FROZEN_TREE_POLICY, frozenInputProblems, frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
+  const entry = FROZEN_TREE_POLICY['RESULT-0082'];
+  const admission = 'd9b5475fd5faaadc7ca6d6b296030592e31d6294';
+  // The mandatory set is pinned in code and in the decision text. Any change to
+  // it must change this test and DECISION-0011 together, in a reviewed edit.
+  assert.deepEqual(
+    { append_only: entry.append_only, live_files: entry.live_files, extra_immutable: entry.extra_immutable, decision: entry.decision },
+    {
+      append_only: ['experiments/SEEDS.md'],
+      live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js'],
+      extra_immutable: ['solver/policy-lab/runs/resume'],
+      decision: 'DECISION-0011',
+    },
+  );
+  assert.deepEqual(
+    frozenTreeEntryProblems('RESULT-0082', entry, fsx.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8')),
+    [],
+    'the live ledger decision must name the result, the table and every pinned or exempt path',
+  );
+  assert.deepEqual(frozenInputProblems('RESULT-0082', admission, entry), [], 'the live policy must hold today');
+
+  // Negative controls against real history: tools/verify-experiments.js,
+  // EVIDENCE_LEDGER.md and CURRENT.md all changed after admission (DECISION-0011
+  // edits them), so listing any as immutable or append-only must be refused.
+  const gate = frozenInputProblems('RESULT-0082', admission, { ...entry, live_files: [] });
+  assert.match(gate.join('\n'), /inputs differ from admission commit d9b5475f: .*verify-experiments\.js/);
+  const ledger = frozenInputProblems('RESULT-0082', admission, { ...entry, extra_immutable: ['EVIDENCE_LEDGER.md'] });
+  assert.match(ledger.join('\n'), /inputs differ from admission commit d9b5475f: .*EVIDENCE_LEDGER\.md/);
+  // The exact control Codex ran: exclude-magic combined with a changed file
+  // must not turn a detected mismatch into silence, even if a registry edit
+  // bypassed entry validation and reached the comparison directly.
+  const magic = frozenInputProblems('RESULT-0082', admission, { ...entry, extra_immutable: ['EVIDENCE_LEDGER.md', ':(exclude)EVIDENCE_LEDGER.md'] });
+  assert.ok(magic.length > 0, 'pathspec magic must not hide a changed input');
+  assert.match(magic.join('\n'), /not a plain relative path/);
+  const prefix = frozenInputProblems('RESULT-0082', admission, { ...entry, live_files: [], append_only: ['tools/verify-experiments.js'] });
+  assert.match(prefix.join('\n'), /append-only input tools\/verify-experiments\.js no longer begins with its admitted bytes/);
+
+  // An exemption must be one exact file the protocol froze. Hiding the result
+  // directory, the journals or an unrelated path behind live_files is refused.
+  for (const hidden of ['experiments/RESULT-0082', 'solver/policy-lab/runs/resume', 'package.json']) {
+    assert.match(
+      frozenInputProblems('RESULT-0082', admission, { ...entry, live_files: [...entry.live_files, hidden] }).join('\n'),
+      new RegExp(`exemption ${hidden.replaceAll('/', '\\/')} is not a version_freeze file`),
+      `${hidden} must not be exemptable`,
+    );
+  }
+});
+
+test('LIVE: RESULT-0082 recomputes at its admission commit, so appending to SEEDS.md cannot break it', () => {
+  const { FROZEN_TREE_POLICY } = require('../../tools/verify-experiments.js');
+  assert.ok(FROZEN_TREE_POLICY['RESULT-0082'], 'RESULT-0082 must be listed, or this test inspects the live-tree path');
+  const result = liveResult('RESULT-0082');
+  const opened = openCitedArtifacts(result);
+  const protocol = fsx.readFileSync(path.join(ROOT, 'experiments', 'RESULT-0082', 'protocol.md'), 'utf8');
+  assert.deepEqual(assessClosureReceipt(result, protocol, opened), [], 'the real closure must verify at its admission commit');
+
+  const closureEntry = opened.find((entry) => entry.rel === 'experiments/RESULT-0082/closure.json');
+  assert.ok(closureEntry && closureEntry.artifact, 'the live gate must open the cited closure receipt');
+  closureEntry.artifact.primary_outcome = 'FALSIFIED';
+  assert.ok(
+    assessClosureReceipt(result, protocol, opened).some((problem) => /contradicts recomputation "SUPPORTED"/.test(problem)),
+    'a forged verdict must still be caught on the frozen-tree path',
+  );
+});
+
 test('LIVE: RESULT-0049 evidence cannot be rewritten after its closing commit', () => {
   const result = liveResult('RESULT-0049');
   const opened = openCitedArtifacts(result);

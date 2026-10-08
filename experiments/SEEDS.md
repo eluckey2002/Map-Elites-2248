@@ -112,3 +112,27 @@ file and the repository before declaring a range fresh.
 
 | 60,053,000–60,053,009 | RESULT-0082 resumed goal replacement C12; all58levels x10seeds, four arms; old C12 remains burned | 2026-10-04 | docs/goals/policy-terms-loop/RESUME_PLAN.md; RESUME_GOAL.txt |
 | Original G/S/R1–R11/F and complete C1–C11 reservations above | RESULT-0082 carries unchanged original purposes and retained results from RESULT-0080/0081; no played cell replay, no reassignment | 2026-10-04 | docs/goals/policy-terms-loop/RESUME_PLAN.md |
+<!-- Goal 3 revision 5: RESULT-0083; reserved before use, including unrun blocks. -->
+| 70,000,000–70,000,005 | RESULT-0083 T1 training, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,001,000–70,001,005 | RESULT-0083 T2 training, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,002,000–70,002,005 | RESULT-0083 T3 training, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,003,000–70,003,005 | RESULT-0083 T4 training, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,004,000–70,004,005 | RESULT-0083 T5 training, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,005,000–70,005,005 | RESULT-0083 T6 training, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,100,000–70,100,009 | RESULT-0083 G gate, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,200,000–70,200,009 | RESULT-0083 R1 recheck, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,201,000–70,201,009 | RESULT-0083 R2 recheck, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,202,000–70,202,009 | RESULT-0083 R3 recheck, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,203,000–70,203,009 | RESULT-0083 R4 recheck, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,204,000–70,204,009 | RESULT-0083 R5 recheck, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,205,000–70,205,009 | RESULT-0083 R6 recheck, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,300,000–70,300,009 | RESULT-0083 C1 control, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,301,000–70,301,009 | RESULT-0083 C2 control, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,302,000–70,302,009 | RESULT-0083 C3 control, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,303,000–70,303,009 | RESULT-0083 C4 control, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,304,000–70,304,009 | RESULT-0083 C5 control, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,305,000–70,305,009 | RESULT-0083 C6 control, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,306,000–70,306,009 | RESULT-0083 C7 control, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,307,000–70,307,009 | RESULT-0083 C8 control, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,400,000–70,400,019 | RESULT-0083 O overhead, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |
+| 70,900,000–70,900,149 | RESULT-0083 F confirmation, reserved, all 58 levels; unused blocks remain reserved | 2026-10-04 | docs/goals/policy-learned-judge/EXPLORATION_PLAN.md |

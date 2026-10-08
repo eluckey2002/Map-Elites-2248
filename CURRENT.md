@@ -6,6 +6,14 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 DECISION-0012 records the owner-authorized additional Wider-search bot from RESULT-0082. Nemesis now selects either opponent on the same board and seed, retaining that selection for result checks. The shipped bot remains the default. See [implementation and verification](docs/game-design/levels/receipts/NEMESIS-POLICY-1.md). Task NEMESIS-POLICY-1 awaits owner review; independent Codex PR review and merge remain open.
 
+## Experiment gate: frozen-tree recompute — current as of 2026-10-04
+
+DECISION-0011 (provisional, check pending) lets the gate recompute a listed
+closed result at the commit that admitted its closure, so append-only
+`experiments/SEEDS.md` can grow without turning `RESULT-0082` red. The list is
+the code-owned `FROZEN_TREE_POLICY` table in `tools/verify-experiments.js`; PR #66
+(`RESULT-0083`) is the first reservation that needs it.
+
 ## Level archetype design — current as of 2026-10-04
 
 **2026-10-04 main integration authorized:** DECISION-0010 and PDL-035 record
@@ -285,6 +293,10 @@ The [completed-path verifier](docs/goals/policy-terms-loop/resume-reviewed-close
 
 The append-only audit and reporting repair is [CORRECTION-0018](EVIDENCE_LEDGER.md#correction-0018--result-0058-gains-complete-win-uncertainty-and-a-stricter-independent-input-audit). It preserves RESULT-0058's sealed data and outcome while adding complete uncertainty output and stricter independent checks. Both records remain provisional. PR #61 is merged in the origin/main base used for RESULT-0080; merge status does not change either record's scientific standing.
 
+## Learned-judge prerequisite — 2026-10-04
+
+Owner-selected Goal 3 revision 5 closes on Path E in [RESULT-0083](EVIDENCE_LEDGER.md#result-0083--learned-judge-revision-5-stops-at-its-generation-prerequisite). The frozen recorded-board diagnostic triggers its generation prerequisite. No judge was trained, no fresh evaluation or confirmation ran, and no policy was adopted. The result applies only to the specified diagnostic subset; it says nothing about ranking improvements on other moves. See the [closure report](experiments/RESULT-0083/report.md), selected [intent brief](docs/goals/policy-learned-judge/INTENT_BRIEF.md) and frozen [plan](docs/goals/policy-learned-judge/EXPLORATION_PLAN.md). RESULT-0083 is superseded by [CORRECTION-0019](EVIDENCE_LEDGER.md#correction-0019--learned-judge-historical-cross-check-required-real-reference-arm-coverage), which corrects its first historical cross-check and carries the current Path E reduction; read that record for active status. CORRECTION-0019 remains provisional and the pull request must remain unmerged for the owner. All future seed blocks remain reserved and unrun. No backlog item was changed.
+
 ## Evidence-capture hardening — 2026-09-26
 
 [BL-0016](docs/backlog/BL-0016-harden-cross-session-evidence-capture.md) changed how sessions record and check findings. Read [LEDGER-INDEX.md](LEDGER-INDEX.md) first; the experiment gate now checks every record's structure, citations and append-only history, and every new run must name its ledger record. [RESULT-0049](EVIDENCE_LEDGER.md) is the preregistered confirmation supporting the current target-aware champion. The lost 2026-08-28 MAP-Elites archives are [RESULT-0050](EVIDENCE_LEDGER.md) and [RESULT-0051](EVIDENCE_LEDGER.md), neither replacing the then-champion `52f500c`; they were renumbered from PR #46's original RESULT-0049/0050 labels when PR #49 landed first. CORRECTION-0010 to CORRECTION-0017 repair stale evidence pointers and reverify commands. Open: the nightly reverify report still awaits RESULT-0016's confirmation run; two solver bugs found by it are listed in BL-0016.
@@ -431,3 +443,11 @@ node solver/routing-ablation.js                         # what that is worth in 
 ```
 
 Last reviewed: 2026-09-28
+
+2026-10-04: [CORRECTION-0019](EVIDENCE_LEDGER.md) narrows RESULT-0083's first historical cross-check receipt, corrects the reference-arm lookup with mandatory complete coverage, and records the retained initial invalid closure in FR-0010. The corrected Path E stop uses the unchanged generation artifact and no fresh games. Scientific standing stays unaccepted; read both records together.
+
+2026-10-04 standing correction: the initial RESULT-0083 record is superseded because its first historical cross-check was incomplete. CORRECTION-0019 remains provisional and carries the corrected no-new-game Path E reduction. Neither is accepted; checked_by stays absent.
+
+2026-10-04 review follow-up: CORRECTION-0019 replay inputs now pin the archived candidate stores and receipts; its prior record uses one append-only notes field. PR #66 preserves preregistration and correction history and remains unmerged.
+
+2026-10-04 latest review: CORRECTION-0019 retains the explicitly frozen all-session descriptive prerequisite; publication review evidence now requires the exact reviewed head. No fresh games or standing promotion.

@@ -61,6 +61,7 @@ test('LIVE: scanner reads the real retained failed closures', () => {
   assert.deepEqual(problems, []);
   assert.deepEqual(failures.map(({ resultId }) => resultId), [
     'RESULT-0036', 'RESULT-0037', 'RESULT-0041', 'RESULT-0042', 'RESULT-0080', 'RESULT-0081',
+    'RESULT-0083',
   ]);
   assert.deepEqual(scanLegacyFailures(ROOT), [{
     failureId: 'FR-0005',

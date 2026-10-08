@@ -1,0 +1,16 @@
+✔ generation ceiling does not stop an undersized all-missing subset (0.9714ms)
+✔ generation ceiling stops exactly at the frozen minimum and half threshold (0.2017ms)
+✔ generation ceiling excludes bot-faster boards and tied owner points (0.1403ms)
+✔ unresolved recording prevents a generation prerequisite verdict (0.1415ms)
+✔ historical recompute rejects the retained zero-coverage cross-check receipt (227.3391ms)
+✔ historical recompute requires and reduces both real twelve-level arms (262.495ms)
+✔ historical manifest pins all archive stores and receipts with unchanged hashes (55.183ms)
+✔ historical manifest rejects an omitted archived candidate input (1.1865ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 634.7103

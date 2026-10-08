@@ -1,0 +1,10 @@
+✔ old-head thumbs up cannot qualify a newer unpublished local commit (1.7701ms)
+✔ thumbs up requires exact-head completed review evidence and follows its timestamp (0.271ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.5312

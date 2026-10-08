@@ -1,0 +1,5 @@
+MATCH CROSS-CHECK: all twelve RESULT-0058 positive3000 level variances
+MATCH NOISE: all 58 historical level variances, both axes, interval widths and detectable gains
+MATCH GENERATION: exact subset counts, comparison counts and unchanged N_MIN / majority stop
+[{"label":"overall","n":502,"poolBelowOwner":97,"botBelowOwner":147,"fraction":0.19322709163346613},{"label":"levels 56 to 58","n":104,"poolBelowOwner":24,"botBelowOwner":30,"fraction":0.23076923076923078},{"label":"DIAGNOSTIC SUBSET: owner faster mutual-win boards and owner chain scores above bot choice","n":50,"poolBelowOwner":37,"botBelowOwner":50,"fraction":0.74}]
+Arithmetic reimplementation only; distinct reviewer acceptance is still required.
