@@ -14,7 +14,9 @@ const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { POLICIES, listChallenges, oneChallenge } = require('./nemesis');
+const { POLICIES } = require('./nemesis');
+const { createNemesisRunner } = require('./nemesis-worker');
+const { LEVELS } = require('../src/game');
 const { createConnectionCapture } = require('./connection-capture');
 
 const ROOT = path.join(__dirname, '..');
@@ -99,9 +101,8 @@ function storedSessionId(store, session) {
 function createPlayServer({ store = STORE, connectionsStore, now = () => new Date().toISOString(), challengeSources = null } = {}) {
   fs.mkdirSync(store, { recursive: true });
   const connections = createConnectionCapture({ store: connectionsStore });
-  const botCache = new Map();
-  const nemesisOptions = () => ({ cache: botCache, ...(challengeSources ? { sources: challengeSources } : {}) });
-  return http.createServer(async (request, response) => {
+  const nemesis = createNemesisRunner({ sources: challengeSources });
+  const server = http.createServer(async (request, response) => {
     const url = new URL(request.url || '/', 'http://localhost');
     const { pathname } = url;
 
@@ -126,13 +127,21 @@ function createPlayServer({ store = STORE, connectionsStore, now = () => new Dat
     if (request.method === 'GET' && pathname === '/api/nemesis') {
       const policy = POLICIES.find(p => p.id === (url.searchParams.get('policy') || 'shipped'));
       if (!policy) { json(response, 400, { error: 'unknown bot policy' }); return; }
-      const options = { ...nemesisOptions(), policy };
-      const level = url.searchParams.get('level');
-      const seed = url.searchParams.get('seed');
-      if (level === null && seed === null) { json(response, 200, { challenges: listChallenges(options), policies: POLICIES, policy }); return; }
-      const challenge = oneChallenge(Number(level), Number(seed), options);
-      if (!challenge) { json(response, 400, { error: 'unknown level or seed' }); return; }
-      json(response, 200, { challenge });
+      const levelText = url.searchParams.get('level');
+      const seedText = url.searchParams.get('seed');
+      const isList = levelText === null && seedText === null;
+      const level = isList ? null : Number(levelText);
+      const seed = isList ? null : Number(seedText);
+      if (!isList && (levelText === null || seedText === null || !levelText.trim() || !seedText.trim()
+        || !LEVELS.some(entry => entry.level === level) || !Number.isInteger(seed) || seed < 0 || seed > 0xffffffff)) {
+        json(response, 400, { error: 'unknown level or seed' }); return;
+      }
+      try {
+        const result = await nemesis.run({ policy: policy.id, level, seed });
+        json(response, 200, result);
+      } catch (error) {
+        json(response, 503, { error: error.message });
+      }
       return;
     }
 
@@ -180,6 +189,8 @@ function createPlayServer({ store = STORE, connectionsStore, now = () => new Dat
 
     json(response, 404, { error: 'not found' });
   });
+  server.on('close', () => nemesis.close());
+  return server;
 }
 
 if (require.main === module) {
