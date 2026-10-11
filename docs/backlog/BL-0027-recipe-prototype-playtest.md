@@ -1,7 +1,7 @@
 ---
 id: BL-0027
 title: Owner plays the Recipe prototype and decides whether it is its own level kind
-status: active
+status: done
 milestone: level-archetypes
 depends_on: []
 updated: 2026-10-11
@@ -31,15 +31,17 @@ which chain looks best, or does it feel like counting?
 
 ## Current evidence
 
-None yet. The boards are screened (a beam-solver win in budget; the
-largest-sum proxy loses), which is not owner evidence.
+PDL-037: the owner played all four boards (three wins, one board left
+unfinished) and said it felt different. Decision KEEP.
 
 ## Next action
 
-Wait for owner play, then read the Artifact's `runs` and `answers` and write
-the PDL entry.
+None for this task. Authoring more Recipe boards is follow-up work in the
+level-archetypes milestone.
 
 ## History
 
 - 2026-10-11 — Prototype built with four boards and published as a private
   Artifact (PR #77). Owner play pending.
+- 2026-10-11 — Owner played all four boards and reported "yes it different".
+  Recorded as PDL-037, KEEP. Done.

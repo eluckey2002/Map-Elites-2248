@@ -1014,3 +1014,42 @@ design result:
 - **Scope:** A finite pack of the three owner-played Delivery boards, unchanged: Pair Drop (PDL-011), Staggered (PDL-019), Landing (PDL-021), in that teaching order. Reached from Level Select at `?mode=delivery`. This narrows PDL-035's "do not integrate Delivery into the app" for Delivery only; its other boundaries stand.
 - **Baseline:** Build-and-harvest (PDL-008). The decision scenes are the ones already named in the prototype READMEs; no new board or claim is added.
 - **Standing:** Built and browser-checked, not owner-played in the app. Ledger: DECISION-0013. Task: DELIVERY-PACK-1; reviewer: owner.
+
+### PDL-037 — Recipe: "only this ingredient" felt different from build-and-harvest
+
+- **Played:** 2026-10-11, 12:48–12:59 UTC, on the private Recipe Artifact
+  (study `recipe-prototype-v1`). **Captured play:** four saved runs, one per
+  board, in the Artifact's `runs` collection.
+- **Design question:** Does winning by one chain made only of the ingredient
+  (for example 512 = 4 × 128) change which chain looks best, compared with the
+  owner's build-and-harvest baseline (PDL-008)?
+- **Normal strategy expected to fail:** Build big tiles, then join them in one
+  long mixed chain. On board 2 that chain (128+128+128+256) spends three of the
+  128s the order needs. The largest-sum proxy loses all four boards.
+- **Human result:**
+
+  | Board | Result | Moves | Solver witness |
+  |---|---|---:|---:|
+  | 1 Four of a Kind | left unfinished, order not filled | 4 of 6 | 4 |
+  | 2 Leave the 256 | won | 3 of 5 | 3 |
+  | 3 Three Quarters | won | 5 of 6 | 4 |
+  | 4 Two Orders | won, both orders | 5 of 7 | 5 |
+
+  No undos and one preview in total. No chain in any run included a 128 or a
+  256 except the final order chains, so the owner never spent an ingredient in
+  a mixed chain and left the board-2 256s alone.
+- **Owner reaction, verbatim:** "done - and yes it different". The board-1
+  answer saved in the Artifact is `different: yes`; "More boards like this?"
+  was not answered.
+- **Decision:** **KEEP**. Recipe is the first candidate kind since PDL-008 that
+  the owner reports as different from the usual plan, and the captured chains
+  match the intended decision, not the baseline.
+- **Limits:** One owner session on four boards; no matched baseline play on the
+  same boards. Board 1 was left after four moves without a recorded reason. The
+  solver witnesses are existence checks, not par. This is screening, not
+  evidence-ledger evidence.
+- **Next recommendation:** Treat Recipe as a level kind in the archetype set
+  and author more boards for it, including a reason to leave an unfinished
+  board like board 1.
+- **Sources:** Owner message in the Level archetypes thread; Artifact `runs`
+  and `answers`; [Recipe README](recipe/README.md). Task: BL-0027.
