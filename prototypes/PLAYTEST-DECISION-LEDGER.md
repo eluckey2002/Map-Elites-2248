@@ -1159,9 +1159,15 @@ design result:
   - See It Coming: no verdict; not played.
   - Dry Well: REVISE into a "Drought" boss level: no refills, announced before
     the first move, a normal goal instead of "leave 1 tile", powers of two only.
-  - Through the Gate: KEEP the idea; REVISE the board (gate opens on 48 or
-    more, wider rooms, show upcoming tiles, enough chains at the start).
-  - Rust: REVISE the target to a power of two.
+  - Through the Gate: KEEP the idea; REVISE the board (wider rooms, show
+    upcoming tiles as the owner suggested, enough chains at the start).
+    Proposed, not owner-approved: the gate opens on a chain of at least the
+    gate value instead of exactly it; to be confirmed in owner play of the
+    second version.
+  - Rust: REVISE or RETIRE. A power-of-two target alone is not enough: the
+    owner's long-chain habit won it ("my long chain will solve this easily!").
+    Carry it into the second version only if a board is found where the rust
+    defeats that one-long-chain baseline; otherwise retire it.
 - **Owner-stated rules from this session:** refills stay the same on normal
   levels ("one of the few things that is steady with the game"); a boss level
   may change them ("the boss changes the refill"). The spawn he asked for in
