@@ -98,6 +98,23 @@ function storedSessionId(store, session) {
   return identity;
 }
 
+// The server binds to loopback, but a web page open in the same browser can
+// still send it requests. Its API answers only this machine's own pages: the
+// Host must be a loopback name (this also stops DNS rebinding), and a browser
+// request must come from the same origin. Requests without browser headers,
+// such as curl or the tests, carry neither Origin nor Sec-Fetch-Site.
+const LOOPBACK_HOSTS = new Set(['127.0.0.1', 'localhost', '[::1]']);
+
+function isLocalRequest(request) {
+  let host;
+  try { host = new URL(`http://${request.headers.host || ''}`); } catch { return false; }
+  if (!LOOPBACK_HOSTS.has(host.hostname)) return false;
+  const site = request.headers['sec-fetch-site'];
+  if (site !== undefined && site !== 'same-origin' && site !== 'none') return false;
+  const origin = request.headers.origin;
+  return origin === undefined || origin === `http://${host.host}`;
+}
+
 function createPlayServer({ store = STORE, connectionsStore, now = () => new Date().toISOString(), challengeSources = null } = {}) {
   fs.mkdirSync(store, { recursive: true });
   const connections = createConnectionCapture({ store: connectionsStore });
@@ -105,6 +122,15 @@ function createPlayServer({ store = STORE, connectionsStore, now = () => new Dat
   const server = http.createServer(async (request, response) => {
     const url = new URL(request.url || '/', 'http://localhost');
     const { pathname } = url;
+
+    if (pathname.startsWith('/api/') && !isLocalRequest(request)) {
+      json(response, 403, { error: 'requests must come from this play server' }); return;
+    }
+    // A cross-site form cannot send JSON, so this also covers older browsers
+    // that send neither Origin nor Sec-Fetch-Site on a form post.
+    if (request.method === 'POST' && !/^application\/json\s*(;|$)/i.test(request.headers['content-type'] || '')) {
+      json(response, 415, { error: 'send JSON' }); return;
+    }
 
     if (request.method === 'GET' && pathname === '/api/connection-identity') {
       json(response, 200, { identity: connections.identity, schemaVersion: 1 }); return;
@@ -205,4 +231,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { createPlayServer, sessionIdentity, storedSessionId, validateSession };
+module.exports = { createPlayServer, isLocalRequest, sessionIdentity, storedSessionId, validateSession };

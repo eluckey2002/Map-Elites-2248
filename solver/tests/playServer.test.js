@@ -127,3 +127,44 @@ test('Nemesis keeps shipped and wider-search results separate on the same seed',
   assert.equal(list.policy.id, 'wider-search');
   assert.equal((await fetch(base + query + '&policy=missing')).status, 400);
 });
+
+test('the play server API refuses requests from other web pages', async (t) => {
+  const http = require('node:http');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'play-server-'));
+  const server = createPlayServer({ store: directory, connectionsStore: directory });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  t.after(() => {
+    server.close();
+    fs.rmSync(directory, { recursive: true, force: true });
+  });
+  const port = server.address().port;
+  const send = (method, pathname, headers = {}) => new Promise((resolve, reject) => {
+    const request = http.request({ host: '127.0.0.1', port, method, path: pathname, headers }, (response) => {
+      response.resume();
+      response.on('end', () => resolve(response.statusCode));
+    });
+    request.on('error', reject);
+    request.end(method === 'POST' ? '{}' : undefined);
+  });
+  const self = `http://127.0.0.1:${port}`;
+
+  // Another site posting a session, a form post from a sandboxed page, and a
+  // cross-site image tag starting a bot run are all refused.
+  assert.equal(await send('POST', '/api/play-sessions', { origin: 'https://evil.example' }), 403);
+  assert.equal(await send('POST', '/api/connection-attempts', { origin: 'null' }), 403);
+  assert.equal(await send('GET', '/api/nemesis?level=1&seed=1', { 'sec-fetch-site': 'cross-site' }), 403);
+  assert.equal(await send('GET', '/api/connection-identity', { 'sec-fetch-site': 'same-site' }), 403);
+  // DNS rebinding: a page on another name that resolves to this machine.
+  assert.equal(await send('GET', '/api/connection-identity', { host: `evil.example:${port}` }), 403);
+
+  // The server's own pages, local tools without browser headers, and the
+  // game's static files still work.
+  assert.equal(await send('GET', '/api/connection-identity', { origin: self, 'sec-fetch-site': 'same-origin' }), 200);
+  assert.equal(await send('GET', '/api/connection-identity', { host: `localhost:${port}` }), 200);
+  assert.equal(await send('GET', '/api/connection-identity'), 200);
+  assert.equal(await send('POST', '/api/play-sessions', { origin: self, 'content-type': 'application/json' }), 400);
+  // An old browser's form post carries no provenance headers but cannot be JSON.
+  assert.equal(await send('POST', '/api/play-sessions', { 'content-type': 'application/x-www-form-urlencoded' }), 415);
+  assert.equal(await send('POST', '/api/connection-attempts', { 'content-type': 'text/plain' }), 415);
+  assert.equal(await send('GET', '/index.html', { 'sec-fetch-site': 'cross-site' }), 200);
+});

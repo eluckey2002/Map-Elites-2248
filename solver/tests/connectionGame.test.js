@@ -7,20 +7,20 @@ const root=path.resolve(__dirname,'../..');
 const witnesses=require('../../docs/game-design/levels/connection-pack/witnesses.json');
 const rules=require('../../src/connection-rules');
 const levels=require('../../src/connection-levels');
-async function openGame(id,{saved=null}={}){
+async function openGame(id,{saved=null,offline=false,confirm=()=>true}={}){
   const element=()=>({textContent:'',value:'',dataset:{},style:{},children:[],listeners:{},attributes:{},classList:{add(){},remove(){},toggle(){}},append(...nodes){this.children.push(...nodes);},replaceChildren(...nodes){this.children=nodes;},setAttribute(k,v){this.attributes[k]=v;},addEventListener(k,fn){this.listeners[k]=fn;},closest(){return this;},focus(){},querySelector(){return null;}});
   const html=fs.readFileSync(path.join(root,'src/index.html'),'utf8');
   const nodes=Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(([,id])=>[id,element()]));
   const saves=[],storage=new Map([['unlockedLevel','42']]);
   const context={URLSearchParams,URL,crypto:{randomUUID:()=> 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa'},
     document:{getElementById:id=>nodes[id],createElement:element,createElementNS:element,createTextNode:value=>({textContent:String(value)}),body:element()},
-    location:{search:`?mode=connections&puzzle=${id}${saved?'&attempt='+saved.attemptId:''}`},history:{replaceState(){}},addEventListener(){},
+    location:{search:`?mode=connections&puzzle=${id}${saved?'&attempt='+saved.attemptId:''}`},history:{replaceState(state,title,url){context.location.search=url;}},addEventListener(){},confirm,
     localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},
-    fetch:async(url,options)=>{if(options)saves.push(JSON.parse(options.body));return {ok:true,json:async()=>url.startsWith('/api/connection-attempts/')?saved:({identity:'f'.repeat(64)})};}};
+    fetch:async(url,options)=>{if(offline)return {ok:false,json:async()=>{throw new Error('not json');}};if(options)saves.push(JSON.parse(options.body));return {ok:true,json:async()=>url.startsWith('/api/connection-attempts/')?saved:({identity:'f'.repeat(64)})};}};
   context.window=context;vm.createContext(context);
   context.ChainCore=require('../engine');
   for(const file of ['connection-levels.js','connection-rules.js','connection-math.js','connection-game.js'])await vm.runInContext(fs.readFileSync(path.join(root,'src',file),'utf8'),context);
-  return {nodes,saves,storage,select(chain){for(const[x,y]of chain){const cell=nodes['cx-board'].children.find(node=>+node.dataset.x===x&&+node.dataset.y===y);assert.ok(cell);nodes['cx-board'].listeners.click({target:cell,detail:0});}},async flush(){await new Promise(resolve=>setImmediate(resolve));}};
+  return {nodes,saves,storage,location:()=>context.location,select(chain){for(const[x,y]of chain){const cell=nodes['cx-board'].children.find(node=>+node.dataset.x===x&&+node.dataset.y===y);assert.ok(cell);nodes['cx-board'].listeners.click({target:cell,detail:0});}},async flush(){await new Promise(resolve=>setImmediate(resolve));}};
 }
 
 test('actual page shows live arithmetic and free preview/cancel without spending',async()=>{
@@ -88,4 +88,45 @@ test('arithmetic aid covers actual targets without giving board paths',()=>{
       assert.ok(values.slice(2).every((value,index)=>value===values[index+1]||value===2*values[index+1]));
     }
   }
+});
+
+test('opening a puzzle saves nothing until the player acts',async()=>{
+  const app=await openGame('crosscurrent');await app.flush();
+  assert.equal(app.saves.length,0);
+  assert.doesNotMatch(app.location().search,/attempt=/);
+  app.select(witnesses[0].actions[0].chain);app.nodes['cx-merge'].onclick();await app.flush();
+  assert.equal(app.saves.length,1);
+  assert.match(app.location().search,/attempt=aaaaaaaa-/);
+});
+
+test('preview cannot spend a move: Merge is off until Back to board',async()=>{
+  const app=await openGame('crosscurrent'),{nodes}=app;
+  app.select(witnesses[0].actions[0].chain);
+  assert.equal(nodes['cx-merge'].disabled,false);
+  nodes['cx-preview'].onclick();
+  assert.equal(nodes['cx-merge'].disabled,true);
+  nodes['cx-preview'].onclick();
+  assert.equal(nodes['cx-merge'].disabled,false);
+});
+
+test('Retry asks first once moves are made, and keeps the board if declined',async()=>{
+  const asked=[];let answer=false;
+  const app=await openGame('crosscurrent',{confirm:message=>{asked.push(message);return answer;}}),{nodes}=app;
+  nodes['cx-retry'].onclick();assert.equal(asked.length,0,'nothing to lose yet');
+  app.select(witnesses[0].actions[0].chain);nodes['cx-merge'].onclick();
+  nodes['cx-retry'].onclick();
+  assert.equal(asked.length,1);
+  assert.equal(nodes['cx-moves'].textContent,'8');assert.equal(nodes['cx-undo'].disabled,false);
+  answer=true;nodes['cx-retry'].onclick();
+  assert.equal(nodes['cx-moves'].textContent,'9');
+});
+
+test('without the play server the puzzle still plays and says it is not saving',async()=>{
+  const app=await openGame('crosscurrent',{offline:true}),{nodes}=app;
+  assert.equal(nodes['cx-error'].hidden,undefined,'no blocking error');
+  assert.equal(nodes['cx-play'].hidden,false);
+  app.select(witnesses[0].actions[0].chain);nodes['cx-merge'].onclick();await app.flush();
+  assert.equal(nodes['cx-moves'].textContent,'8');
+  assert.equal(app.saves.length,0);
+  assert.match(nodes['cx-save'].textContent,/Not saved/);
 });
