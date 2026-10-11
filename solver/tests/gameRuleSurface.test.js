@@ -90,6 +90,55 @@ test('removing or renaming rule code is a rule change', () => {
   assert.notEqual(gameRuleSurface(edited('    hasValidMoves() {', '    hasAnyMoves() {')), surface);
 });
 
+test('every browser declaration in game.js today is free to change', () => {
+  // Appending a harmless statement to each body leaves the surface alone only
+  // while that body passes the browser-only check.
+  const { BROWSER_METHODS } = require('../game-rule-surface');
+  for (const name of BROWSER_METHODS) {
+    const head = source.match(new RegExp(`\\n    ${name}\\([^)]*\\) \\{\\n`));
+    assert.ok(head, `missing ${name}`);
+    assert.equal(gameRuleSurface(source.replace(head[0], `${head[0]}        const unusedForTest = 1;\n`)), surface, name);
+  }
+  assert.equal(gameRuleSurface(edited('    return String(value);', '    const unusedForTest = 1;\n    return String(value);')), surface);
+});
+
+test('a browser declaration that writes game state or calls rule code is bound like rule code', () => {
+  const into = (method, line) => {
+    const head = source.match(new RegExp(`\\n    ${method}\\([^)]*\\) \\{\\n`))[0];
+    return source.replace(head, `${head}        ${line}\n`);
+  };
+  for (const [method, line] of [
+    ['setupEventListeners', 'this.checkWinLose = () => {};'],
+    ['setupEventListeners', 'this.score += 100;'],
+    ['setupEventListeners', 'this.grid[0][0] = null;'],
+    ['setupEventListeners', '[this.moves] = [0];'],
+    ['setupEventListeners', 'delete this.chain;'],
+    ['setupEventListeners', '++this.moves;'],
+    ['setupEventListeners', 'this.history.length = 0;'],
+    ['updateUI', 'this.chain.push(this.grid[0][0]);'],
+    ['updateUI', 'this.grid[0][0].tickBlocker();'],
+    ['updateUI', 'this.executeChain();'],
+    ['updateUI', 'this.undo();'],
+    ['render', 'this.handleTileClick(0, 0);'],
+    ['drawTile', 'tile.value = 2048;'],
+    ['drawTile', 'tile.setBlocker(null);'],
+    ['updateUI', 'const self = this; self.score = 0;'],
+    ['updateUI', 'Object.assign(this, { score: 0 });'],
+    ['updateUI', 'Game.prototype.checkWinLose = () => {};'],
+    ['updateUI', 'window.game.score = 0;'],
+    ['updateUI', 'document.defaultView.game.score = 0;'],
+    ['updateUI', 'this[\'score\'] = 0;'],
+    ['updateUI', 'score = 0;'],
+    ['updateUI', 'const document = this.grid; document.x = 0;'],
+    ['updateUI', 'let el = document.body; el = this.grid[0]; el[0] = null;'],
+    ['updateUI', 'createInitialGrid(LEVELS[0], Math.random);'],
+  ]) {
+    assert.ok(gameRuleSurface(into(method, line)) !== surface, `${method}: ${line}`);
+  }
+  assert.notEqual(gameRuleSurface(edited("2: '#EEE4DA',", "get 2() { return '#EEE4DA'; },")), surface);
+  assert.notEqual(gameRuleSurface(edited('    return String(value);', '    value.x = 1;\n    return String(value);')), surface);
+});
+
 test('only the named browser declarations are free to change', () => {
   const { BROWSER_TOP_LEVEL, BROWSER_METHODS } = require('../game-rule-surface');
   assert.deepEqual(BROWSER_TOP_LEVEL, ['TILE_COLORS', 'formatTileValue']);

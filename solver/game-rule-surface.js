@@ -6,8 +6,13 @@
 // bookkeeping. Everything else, including any code added later (a method, a
 // class field, a prototype patch, a helper), is part of the surface. Two
 // versions of game.js play by the same rules only if their surfaces are equal.
-// Edits inside a browser-only declaration are not checked, so those
-// declarations must only draw, lay out, map input or show messages.
+// A browser-only declaration is left out only while it passes browserOnly():
+// it may read game state and call the input actions named in INPUT_ACTIONS,
+// but it may not write game state, call other rule code, or reach the game
+// through reflection or a global. If it fails, it stays in the surface like
+// any other code. The check reads tokens, so it does not try to follow code
+// built from strings at run time (HTML handlers, computed property names) or
+// game objects handed through several local variables; reviewers own those.
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 
@@ -17,6 +22,26 @@ const BROWSER_METHODS = [
   'showLevelComplete', 'showGameOver', 'showLevelSelect', 'showModal', 'hideModal', 'render', 'drawTile',
   'roundRect', 'gameLoop', 'updateAuthoringStatus',
 ];
+// Fields that only drawing reads. Browser-only code may write them.
+const BROWSER_STATE = new Set(['canvas', 'ctx', 'tileSize']);
+// Pure readers of game state that browser-only code may call.
+const READERS = new Set(['calculateChainValue', 'getChainMultiplier', 'isValidChain', 'calculateStars']);
+// Rule entry points that stand for a player's input, and where they may be called.
+const INPUT_ACTIONS = {
+  setupEventListeners: ['handleTileClick', 'submitChain', 'clearChain', 'undo', 'reloadCurrentLevel', 'nextLevel'],
+  showLevelSelect: ['loadLevel'],
+};
+// Names that reach the game object, its prototypes or code built at run time:
+// as a variable, or also as a property.
+const GLOBAL_ESCAPES = new Set(['Reflect', 'Object', 'Function', 'globalThis', 'self', 'frames', 'parent', 'top',
+  'opener', 'import', 'require', 'super', 'arguments', 'with']);
+const MEMBER_ESCAPES = new Set(['prototype', '__proto__', 'constructor', 'defineProperty', 'defineProperties',
+  'setPrototypeOf', 'eval', 'Game', 'game', 'defaultView', 'ownerDocument', 'view']);
+const WINDOW_MEMBERS = new Set(['innerWidth', 'innerHeight', 'devicePixelRatio', 'addEventListener', 'removeEventListener']);
+const ARRAY_MUTATORS = new Set(['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse', 'fill', 'copyWithin',
+  'set', 'add', 'delete', 'clear']);
+const WRITES = new Set(['=', '+=', '-=', '*=', '/=', '%=', '**=', '<<=', '>>=', '>>>=', '&=', '|=', '^=', '&&=',
+  '||=', '??=', '++', '--']);
 // A beginLevel that only wraps initializeLevel with the bookkeeping below and a
 // dead-board message reads as a direct initializeLevel call. Any other
 // beginLevel is itself part of the surface.
@@ -187,6 +212,109 @@ function declarations(tokens, depth, name, level, from, to) {
   return found;
 }
 
+// Index of the token that opens the bracket closed at `close`.
+function matchOpen(tokens, close) {
+  let depth = 0;
+  for (let i = close; i >= 0; i--) {
+    if (closes(tokens[i])) depth++;
+    else if (opens(tokens[i]) && --depth === 0) return i;
+  }
+  throw new Error('game rule surface: unbalanced brackets');
+}
+
+// Names of every method of every class, and of every top-level function,
+// outside the browser-only declarations.
+function ruleNames(tokens, depth) {
+  const methods = new Set(ARRAY_MUTATORS);
+  const functions = new Set();
+  tokens.forEach((token, i) => {
+    if (token.kind !== 'identifier' || tokens[i + 1]?.t !== '(') return;
+    if (depth[i] === 0 && tokens[i - 1]?.t === 'function') functions.add(token.t);
+    if (depth[i] > 0 && tokens[i - 1]?.t !== '.' && tokens[matchClose(tokens, i + 1) + 1]?.t === '{') methods.add(token.t);
+  });
+  for (const name of BROWSER_TOP_LEVEL) functions.delete(name);
+  for (const name of BROWSER_METHODS) methods.delete(name);
+  for (const name of READERS) methods.delete(name);
+  return { methods, functions };
+}
+
+// Whether the declaration in [start, end] only reads game state, calls its
+// readers and the input actions allowed to `name`, and writes nothing but
+// its own variables, the page and BROWSER_STATE.
+function browserOnly(tokens, [start, end], name, rules) {
+  const t = (i) => tokens[i] && tokens[i].t;
+  const id = (i) => tokens[i] && tokens[i].kind === 'identifier';
+  const actions = new Set(INPUT_ACTIONS[name] || []);
+  const locals = new Map(); // name -> true when a const holding a page or canvas object
+  const isDocument = (i) => t(i) === 'document' && !locals.has('document');
+  const page = (i) => isDocument(i) || (t(i) === 'this' && t(i + 1) === '.' && BROWSER_STATE.has(t(i + 2)))
+    || locals.get(t(i)) === true;
+  let params = start;
+  while (params <= end && t(params) !== '(') params++;
+  for (let i = params + 1; i < matchClose(tokens, params); i++) if (id(i) && t(i - 1) !== '=') locals.set(t(i), false);
+  for (let i = start; i <= end; i++) {
+    if (['const', 'let', 'var'].includes(t(i)) && id(i + 1)) locals.set(t(i + 1), t(i) === 'const' && t(i + 2) === '=' && page(i + 3));
+    if (id(i) && t(i + 1) === '=>') locals.set(t(i), false);
+    if (t(i) === '(' && t(matchClose(tokens, i) + 1) === '=>') {
+      for (let k = i + 1; k < matchClose(tokens, i); k++) if (id(k) && t(k - 1) !== '=') locals.set(t(k), false);
+    }
+  }
+  // Root of the member chain ending at `i`, and whether the chain has members.
+  const rootBefore = (i) => {
+    let k = i;
+    let members = false;
+    for (;;) {
+      if (t(k) === ']' || t(k) === ')') { k = matchOpen(tokens, k) - 1; members = true; continue; }
+      if (!id(k)) return null;
+      if (t(k - 1) === '.' || t(k - 1) === '?.') { k -= 2; members = true; continue; }
+      return { root: k, members };
+    }
+  };
+  const writable = (target) => {
+    if (!target) return false;
+    const { root, members } = target;
+    if (t(root) === 'this') return false; // writes to BROWSER_STATE are allowed below
+    if (members) return isDocument(root) || locals.get(t(root)) === true;
+    return locals.has(t(root));
+  };
+  for (let i = start; i <= end; i++) {
+    const token = tokens[i];
+    if (token.kind === 'identifier' && (MEMBER_ESCAPES.has(token.t)
+      || (GLOBAL_ESCAPES.has(token.t) && t(i - 1) !== '.' && t(i - 1) !== '?.'))) return false;
+    if (token.t === 'window' && !(t(i + 1) === '.' && WINDOW_MEMBERS.has(t(i + 2)))) return false;
+    if (token.t === 'this') {
+      if (t(i + 1) !== '.' || !id(i + 2)) return false;
+      const member = t(i + 2);
+      if (BROWSER_STATE.has(member)) continue;
+      if (t(i + 3) === '(' && !(BROWSER_METHODS.includes(member) || READERS.has(member) || actions.has(member))) return false;
+      if (WRITES.has(t(i + 3)) || ['++', '--', 'delete'].includes(t(i - 1))) return false;
+    }
+    if (WRITES.has(token.t) && token.kind === 'punctuator') {
+      const prefix = (token.t === '++' || token.t === '--') && !(id(i - 1) || [']', ')'].includes(t(i - 1)));
+      if (prefix) continue; // checked as the chain it precedes, below
+      const target = rootBefore(i - 1);
+      if (target && t(target.root) === 'this' && BROWSER_STATE.has(t(target.root + 2))) continue;
+      if (!writable(target)) return false;
+    }
+    if (['++', '--', 'delete'].includes(token.t) && (id(i + 1) || t(i + 1) === '(')) {
+      let k = i + 1;
+      while (t(k + 1) === '.' || t(k + 1) === '?.' || t(k + 1) === '[') k = t(k + 1) === '[' ? matchClose(tokens, k + 1) : k + 2;
+      const target = rootBefore(k);
+      if (!(target && t(target.root) === 'this' && BROWSER_STATE.has(t(target.root + 2))) && !writable(target)) return false;
+    }
+    if (token.kind === 'identifier' && t(i + 1) === '(') {
+      if (t(i - 1) === '.' || t(i - 1) === '?.') {
+        const target = rootBefore(i);
+        const direct = target && t(target.root) === 'this' && target.root + 2 === i; // checked above
+        if (rules.methods.has(token.t) && !direct && !(target && page(target.root))) return false;
+      } else if (rules.functions.has(token.t)) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 function render(tokens) {
   let out = '';
   tokens.forEach((token, i) => {
@@ -205,6 +333,19 @@ function replaceAll(text, pairs) {
   return out.slice(1, -1);
 }
 
+// Whether a `const X = {...}` declaration is plain data: keys and values that
+// are only strings, numbers and names, with no getters or calls.
+function literal(tokens, [start, end]) {
+  for (let i = start + 3; i <= end; i++) {
+    const { t, kind } = tokens[i];
+    if (kind === 'string' || kind === 'number') continue;
+    if (['{', '}', ':', ','].includes(t)) continue;
+    if (kind === 'identifier' && [':', ','].includes(tokens[i + 1].t) && !['get', 'set'].includes(t)) continue;
+    return false;
+  }
+  return true;
+}
+
 function gameRuleSurface(source) {
   const text = Buffer.isBuffer(source) ? source.toString('utf8') : source;
   const tokens = tokenize(text);
@@ -212,8 +353,11 @@ function gameRuleSurface(source) {
   const drop = new Set();
   const dropRange = ([start, end]) => { for (let i = start; i <= end; i++) drop.add(i); };
 
+  const rules = ruleNames(tokens, depth);
   for (const name of BROWSER_TOP_LEVEL) {
-    declarations(tokens, depth, name, 0, 0, tokens.length).forEach(dropRange);
+    declarations(tokens, depth, name, 0, 0, tokens.length)
+      .filter((range) => (tokens[range[0]].t === 'const' ? literal(tokens, range) : browserOnly(tokens, range, name, rules)))
+      .forEach(dropRange);
     // Its shorthand entry in an object literal, such as module.exports.
     tokens.forEach((token, i) => {
       if (token.t !== name || drop.has(i) || !['{', ','].includes(tokens[i - 1]?.t) || ![',', '}'].includes(tokens[i + 1]?.t)) return;
@@ -236,7 +380,11 @@ function gameRuleSurface(source) {
   let open = games[0][0];
   while (tokens[open].t !== '{') open++;
   const end = games[0][1];
-  for (const name of BROWSER_METHODS) declarations(tokens, depth, name, depth[open] + 1, open + 1, end).forEach(dropRange);
+  for (const name of BROWSER_METHODS) {
+    declarations(tokens, depth, name, depth[open] + 1, open + 1, end)
+      .filter((range) => browserOnly(tokens, range, name, rules))
+      .forEach(dropRange);
+  }
   const [wrapper, wrapperText, wrapperCall, directCall] = PASSTHROUGH;
   const wrappers = declarations(tokens, depth, wrapper, depth[open] + 1, open + 1, end);
   const passthrough = wrappers.length === 1
