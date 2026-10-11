@@ -4,7 +4,7 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Kinds sampler — 2026-10-11
 
-[`prototypes/sampler/`](prototypes/sampler/README.md) has eight screened boards on a private Artifact, not in the app. Each pairs one level kind with a layer that makes its steps depend on each other, following PDL-038; one is a control. Owner play recorded as PDL-039, REVISE (BL-0029 stays active until See It Coming is played): the dependency layers add planning, but the 3-family numbers got in the way; next version's refills are powers of two only. A MAP-Elites search over Shared Material boards is proposed as BL-0030. A separate mixed-family daily puzzle game is parked as BL-0031.
+[`prototypes/sampler/`](prototypes/sampler/README.md) has version 2: nine screened boards on the same private Artifact, not in the app (version 1 had eight). Each pairs one level kind with a layer that makes its steps depend on each other, following PDL-038; one is a control. Owner play recorded as PDL-039, REVISE (BL-0029 stays active until See It Coming is played): the dependency layers add planning, but the 3-family numbers got in the way. Version 2 refills 2 to 64 on every normal board and adds the parts rule, The Drought boss, a wider gate board and green 3s for Shared Material; owner play of version 2 is pending. A MAP-Elites search over Shared Material boards is proposed as BL-0030. A separate mixed-family daily puzzle game is parked as BL-0031.
 
 ## Recipe prototype — 2026-10-11
 

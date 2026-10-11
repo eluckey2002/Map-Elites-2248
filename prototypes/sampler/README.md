@@ -100,6 +100,26 @@ obvious proxy fills order A on its first move with the first four 3s it finds an
 never fills B within the budget. These are design
 claims; owner play decides.
 
+### The exact state where each baseline goes wrong
+
+The first move where each proxy leaves the solver's witness line, from the
+opening board unless a move number is given. Rows count from the top, columns
+from the left. Produced by a scratch script that plays each proxy and the
+witness side by side; a proxy standing in for the owner is still a design
+claim, not his behaviour.
+
+| Board | Baseline move that loses | Witness move instead |
+|---|---|---|
+| Make It Here | Obvious fills A at once with four 16s on A's spot (4th row, col 2); harvest takes a 264 chain | A mixed 2+2+4+8+16+16+16 = 64 ending in the 5th row, col 4, beside B's spot, before filling A |
+| Feed the Next | Move 3: obvious and harvest both take the biggest 64 chain (512) instead of filling B | 8+8+16+32+64+64+64 = 256 through the part, filling B |
+| Feed the Next — Advanced | Move 2: obvious spends the 24 in a 108 chain | a second clean 8+8+8 = 24 |
+| Shared Material | Harvest, move 1: a 4s-to-32 chain of 84. Obvious fills A on move 1 like the witness, then takes that 84 chain on move 2 | Move 1 fills A with four 3s ending in the 4th row, col 4; move 2 is a small 4+4+8 = 16 in the top row |
+| Three Separate | Control board: obvious fills the 512 order with different 128s than the witness and runs out of moves later | (control, no dependency) |
+| See It Coming | Move 2: obvious takes a 62 chain of 2s and 4s, using up the small tiles the forecast says are needed | 2+2+4+4+4+8+8 = 32 ending in the 2nd row, col 4 |
+| The Drought | Move 1: one long 320 chain; with no refills the board has no chains left after move 2 | 32+32+64 = 128 ending in the 3rd row, col 3 |
+| Through the Gate | Move 1: harvest takes 64+64+64 = 192 in the bottom-right corner; obvious opens the gate at once with a 96 in the left room and later runs out of moves | 4+4+8+16 = 32 ending in the 5th row, col 5, in the right room |
+| Rust | Move 1: one long 248 chain that ignores the rust. The scrape-then-long-chain proxy makes the same first scrape as the witness and is stuck with no chains by move 8 | 8+8+8+8+16+16 = 64 ending in the 3rd row, col 2 |
+
 ## Screening
 
 `search.js`: a beam solver, the three proxies, and twist checks. Proxies are

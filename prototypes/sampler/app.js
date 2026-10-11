@@ -205,7 +205,7 @@
     delete doc.savedRev;delete doc.savedReason;
     pending['runs/'+r.id]={collection:'runs',id:r.id,doc,statusEl:$('run-status'),done:()=>{if(doc.rev>=(r.savedRev||0)){r.savedRev=doc.rev;r.savedReason=reason;}}};flush();
   }
-  function saveAnswer(a){pending['answers/'+a.board]={collection:'answers',id:a.board,doc:JSON.parse(JSON.stringify(a)),statusEl:$('q-status')};flush();}
+  function saveAnswer(a){const id=`${STUDY}--${a.board}`;pending['answers/'+id]={collection:'answers',id,doc:JSON.parse(JSON.stringify(a)),statusEl:$('q-status')};flush();}
   async function flush(){
     if(flushing){again=true;return;}flushing=true;
     try{
@@ -259,8 +259,8 @@
     saveAnswer(a);render();
   });
   window.addEventListener('pagehide',()=>{if(run&&run.actions.length)saveRun(state.outcome==='playing'?'closed':'finished');});
-  // Stored answers load in the background; a board answered locally in the meantime keeps its newer copy.
+  // Stored answers (this study only; v1 docs are keyed by bare board id) load in the background; a board answered locally in the meantime keeps its newer copy.
   (async()=>{try{const db=await database();if(!db)return;const snap=await db.collection('answers').get();
-    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(v&&v.board&&(!answers[v.board]||(answers[v.board].savedAt||'')<(v.savedAt||'')))answers[v.board]=v;if(v&&v.board&&v.runId&&!local.played[v.board])local.played[v.board]=v.runId;});render();}catch(e){/* offline is fine */}})();
+    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(!v||v.study!==STUDY)return;/* other versions' answers stay out */if(v.board&&(!answers[v.board]||(answers[v.board].savedAt||'')<(v.savedAt||'')))answers[v.board]=v;if(v.board&&v.runId&&!local.played[v.board])local.played[v.board]=v.runId;});render();}catch(e){/* offline is fine */}})();
   begin();
 })();

@@ -44,3 +44,5 @@ The owner plays See It Coming, the one board without a run or verdict, in the se
 - 2026-10-11 — Created after PDL-038. Eight boards published to a new private
   Artifact; owner play pending.
 - 2026-10-11 — Owner played all boards except See It Coming; recorded as PDL-039. Stays active until See It Coming has a verdict.
+- 2026-10-11 — Version 2 (nine boards, PDL-039 revisions) published to the same
+  Artifact under study `kinds-sampler-v2`; owner play pending, See It Coming included.
