@@ -11,7 +11,9 @@
   if(!(local.current in levels))local.current=0;
   let level,state,history,selection,previewing,run,answers={};
   let dbPromise=null;
-  const database=()=>(dbPromise||=(window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null)));
+  // Only a database handle that was actually acquired is cached; a rejection or null is retried on the next save.
+  const database=()=>(dbPromise||=(window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null))
+    .then(db=>{if(!db)dbPromise=null;return db;},e=>{dbPromise=null;throw e;}));
 
   const valueAt=(s,[x,y])=>s.grid[y][x].value;
   const fmt=n=>n.toLocaleString('en-US');
@@ -84,7 +86,7 @@
     }else{const d=describeSelection();line.textContent=d.text;line.dataset.tone=d.tone;}
     // board strip
     $('boards').replaceChildren(...levels.map((l,i)=>{const b=document.createElement('button');b.type='button';b.textContent=i+1;b.title=l.name;
-      b.className=(i===local.current?'on ':'')+(answers[l.id]?'answered':'');b.setAttribute('aria-label',`Board ${i+1}: ${l.name}`);b.onclick=()=>switchBoard(i);return b;}));
+      b.className=(i===local.current?'on ':'')+(answers[l.id]&&answers[l.id].different&&answers[l.id].wantMore?'answered':'');b.setAttribute('aria-label',`Board ${i+1}: ${l.name}`);b.onclick=()=>switchBoard(i);return b;}));
     $('title').textContent=`${local.current+1}. ${level.name}`;$('focus').textContent=level.focus;
     // result + questions
     const over=state.outcome!=='playing';
@@ -174,7 +176,8 @@
     saveDoc('answers',level.id,a,$('q-status'));render();
   });
   window.addEventListener('pagehide',()=>{if(run&&run.actions.length)saveRun(state.outcome==='playing'?'closed':'finished');});
+  // Stored answers load in the background; a board answered locally in the meantime keeps its newer copy.
   (async()=>{try{const db=await database();if(!db)return;const snap=await db.collection('answers').get();
-    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(v&&v.board)answers[v.board]=v;});render();}catch(e){/* offline is fine */}})();
+    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(v&&v.board&&(!answers[v.board]||(answers[v.board].savedAt||'')<(v.savedAt||'')))answers[v.board]=v;});render();}catch(e){/* offline is fine */}})();
   begin();
 })();
