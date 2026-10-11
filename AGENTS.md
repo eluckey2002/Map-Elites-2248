@@ -177,8 +177,10 @@ owner for approval (owner decision, 2026-10-11).
    into a pull request another agent opened: two writers on one branch is the
    concurrent writer problem again.
 7. **A pull request is done, and gets merged, when all of these hold:** the
-   `experiment gate` check is green; the full test suite shows no failures
-   beyond the documented deliberate ones (see "Before you edit anything");
+   `experiment gate` check is green; the full test suite fails nothing that
+   passes on `main` (the documented deliberate failures in "Before you edit
+   anything", and anything already red on `main`, do not block, but say which
+   in the pull request);
    Codex has finished per rules 4 and 5 and every review thread is resolved;
    there is no merge conflict. Then merge it, remove its worktree, and tell
    the owner in one line that it merged.

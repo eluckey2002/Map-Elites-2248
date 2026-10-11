@@ -13,7 +13,7 @@
 ## Checks
 
 - [ ] `experiment gate` green
-- [ ] Full test suite: no failures beyond the documented deliberate ones (levels 52 and 54 receipts, Universe Map)
+- [ ] Full test suite: nothing fails that passes on `main` (deliberate failures: levels 52 and 54 receipts, Universe Map)
 - [ ] Codex review finished (at most three rounds; see AGENTS.md, "Landing changes on `main`")
 
 ## Follow-ups
