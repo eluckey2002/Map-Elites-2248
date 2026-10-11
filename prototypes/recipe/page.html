@@ -1,6 +1,6 @@
 <title>Recipe Prototype</title>
 <style>
-:root{--bg:#f3f2ec;--ink:#203b34;--muted:#5f6f66;--line:#dcded6;--panel:#e6eadc;--shell:#d4dcce;--primary:#285941;--warn:#9a5a12;--good:#2f6b3f;--sel:#ed9757;--a:#d9822b;--b:#3d7fb8}
+:root{--bg:#f3f2ec;--ink:#203b34;--muted:#5f6f66;--line:#dcded6;--panel:#e6eadc;--shell:#d4dcce;--primary:#285941;--warn:#9a5a12;--good:#2f6b3f;--sel:#ed9757;--a:#d9822b;--b:#3d7fb8;--g:#3f8f5a}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17201c;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#212c27;--shell:#2a3731;--primary:#4f9a74;--warn:#e0a35a;--good:#7cc290}}
 :root[data-theme="dark"]{--bg:#17201c;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#212c27;--shell:#2a3731;--primary:#4f9a74;--warn:#e0a35a;--good:#7cc290}
 *{box-sizing:border-box;margin:0}
@@ -17,7 +17,7 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 .intro h1{font-size:28px;letter-spacing:-1px}.intro p{color:var(--muted);font-size:14px;margin-top:2px}
 .stats{display:flex;justify-content:space-between;gap:10px;align-items:flex-end;margin:12px 0 10px}
 .stats span.k{display:block;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-bottom:5px}
-.stats strong{font-size:18px;font-variant-numeric:tabular-nums}
+.stats strong{font-size:18px;font-variant-numeric:tabular-nums}#ingredients{white-space:pre;line-height:1.25}#moves{white-space:nowrap}
 #orders{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:inline-block;padding:6px 10px;border-radius:999px;border:2px solid var(--c);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
 .chip.done{background:var(--c);color:#fff}
@@ -33,6 +33,7 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 .t1{background:#eef0e2}.t2{background:#dfe7c6}.t3{background:#c4d9a4}.t4{background:#9fc48d}.t5{background:#6f9f80;color:#fff}.t6{background:#3f6f57;color:#fff}.t7{background:#2a5442;color:#fff}.t8{background:#1d3d31;color:#fff}.t9{background:#122a21;color:#fff}
 .ing-a{box-shadow:inset 0 0 0 3px var(--a),0 2px 0 #0002}.ing-a::before{content:'';position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--a)}
 .ing-b{box-shadow:inset 0 0 0 3px var(--b),0 2px 0 #0002}.ing-b::before{content:'';position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--b);clip-path:polygon(0 0,100% 0,100% 100%)}
+.ing-c{box-shadow:inset 0 0 0 3px var(--g),0 2px 0 #0002}.ing-c::before{content:'';position:absolute;bottom:4px;left:4px;width:8px;height:8px;background:var(--g);clip-path:polygon(0 100%,0 0,100% 100%)}
 .sel{outline:3px solid var(--sel);outline-offset:-3px;transform:scale(.93)}
 .ord{position:absolute;top:3px;left:5px;font-size:10px;font-weight:700;color:#8c4b1a;background:#fff3dc;padding:0 4px;border-radius:4px}
 .landed{outline:3px dashed var(--sel);outline-offset:-3px}
@@ -53,6 +54,7 @@ aside h3{font-size:13px;margin-top:16px}
   .actions{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:8px 0;order:5}
   .play{display:flex;flex-direction:column}.play .shell{order:3}.play #status{order:2}.play .minor{order:4}
   header .mark small{display:none}
+  #boards{gap:4px}#boards button{width:32px;height:32px;min-height:32px}
 }
 </style>
 <div class="app">

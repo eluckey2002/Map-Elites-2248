@@ -57,6 +57,16 @@ and the proxy loses.
 | 2 | Leave the 256 | 512 from 128s | 5 | 3 moves |
 | 3 | Three Quarters | 384 from 128s | 6 | 4 moves |
 | 4 | Two Orders | 512 from 128s, 256 from 64s | 7 | 5 moves |
+| 5 | The Big One | 1024 from 256s | 6 | 4 moves |
+| 6 | Both Ways | 128 from 32s, 256 from 64s | 6 | 4 moves |
+| 7 | Leave the 128s | 256 from 64s | 6 | 4 moves |
+| 8 | Three Courses | 128 from 32s, 256 from 64s, 512 from 128s | 7 | 5 moves |
+
+Boards 5–8 (second batch, after PDL-037) vary the ingredient and the conflict:
+a bigger ingredient, two orders where one ingredient builds the other, a board
+crowded with the tile one step above the ingredient, and a three-order ladder.
+They were picked from seeded candidates by how many ingredient tiles the
+largest-sum proxy wastes in chains that fill no order.
 
 Boards were picked from seeded random grids (seeds in `levels.js`), not hand
 authored. The witnesses show that building each 128 is itself an exact-sum
@@ -67,4 +77,5 @@ existence checks, not optimal or unique solutions.
 
 - Does "only 128s" change which chain looks best, or does it feel like counting?
 - Is board 4's shared ingredient (64s build 128s and fill order B) a real conflict?
+- Do boards 5–8 feel like new decisions, or like the first four with different numbers?
 - Recipe and Connections are both exact-sum goals. Do they feel like different kinds?
