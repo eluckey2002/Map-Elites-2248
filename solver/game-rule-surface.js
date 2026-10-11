@@ -13,13 +13,13 @@ const TOP_LEVEL = [
   'playableTileScale', 'validatePlayableLevel', 'createInitialGrid',
 ];
 const GAME_METHODS = [
-  'isAdjacent', 'canExtendChain', 'isValidChain', 'calculateChainValue', 'getChainMultiplier',
+  'initializeLevel', 'isAdjacent', 'canExtendChain', 'isValidChain', 'calculateChainValue', 'getChainMultiplier',
   'executeChain', 'applyGravity', 'spawnNewTiles', 'tickBlockers', 'checkBombs', 'checkWinLose',
   'hasValidMoves', 'canFormValidChain',
 ];
 // Bookkeeping that lets a level reload cancel a pending merge. It decides
 // whether the callback runs on the board it belongs to, not what the callback does.
-const BOOKKEEPING = [['this.mergeTimer = setTimeout(() => { this.mergeTimer = null;', 'setTimeout(() => {']];
+const BOOKKEEPING = [['this.mergeTimer = setTimeout(()=>{this.mergeTimer = null;', 'setTimeout(()=>{']];
 
 // Index just past the bracket that closes the one at `open`, skipping strings and comments.
 function matchClose(source, open) {
@@ -51,7 +51,8 @@ function declaration(source, pattern, name) {
 }
 
 function normalize(text) {
-  let out = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`])\/\/.*$/gm, '$1').replace(/\s+/g, ' ').trim();
+  let out = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`])\/\/.*$/gm, '$1').replace(/\s+/g, ' ')
+    .replace(/ ?([(){}[\];,]) ?/g, '$1').trim();
   for (const [from, to] of BOOKKEEPING) out = out.split(from).join(to);
   return out;
 }
@@ -59,12 +60,12 @@ function normalize(text) {
 function gameRuleSurface(source) {
   const text = Buffer.isBuffer(source) ? source.toString('utf8') : source;
   const parts = TOP_LEVEL.map((name) => declaration(
-    text, new RegExp(`^(?:const ${name} = [\\[{]|function ${name}\\([^)]*\\) \\{|class ${name} \\{)`, 'm'), name));
-  const gameStart = text.search(/^class Game \{/m);
+    text, new RegExp(`^[ \\t]*(?:const\\s+${name}\\s*=\\s*[\\[{]|function\\s+${name}\\s*\\([^)]*\\)\\s*\\{|class\\s+${name}\\s*\\{)`, 'm'), name));
+  const gameStart = text.search(/^[ \t]*class\s+Game\s*\{/m);
   if (gameStart < 0) throw new Error('game rule surface: class Game not found in src/game.js');
   const game = text.slice(gameStart);
   for (const name of GAME_METHODS) {
-    parts.push(declaration(game, new RegExp(`^    ${name}\\([^)]*\\) \\{`, 'm'), name));
+    parts.push(declaration(game, new RegExp(`^[ \\t]*${name}\\s*\\([^)]*\\)\\s*\\{`, 'm'), name));
   }
   return parts.map(normalize).join('\n');
 }

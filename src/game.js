@@ -797,6 +797,18 @@ class Game {
     // LEVEL MANAGEMENT
     // ========================================================================
 
+    // Session plumbing around initializeLevel, which holds the level's rules.
+    // A move still animating belongs to the board being replaced: its pending
+    // callback must not tick blockers or score on the new one. A dealt board
+    // with no legal chain gets a message instead of a silent dead end; it
+    // records no outcome, exactly as before.
+    beginLevel(levelData, rng, authoringCapture = null) {
+        clearTimeout(this.mergeTimer);
+        this.mergeTimer = null;
+        this.initializeLevel(levelData, rng, authoringCapture);
+        if (!this.hasValidMoves()) this.showGameOver('No valid moves!');
+    }
+
     initializeLevel(levelData, rng, authoringCapture = null) {
         validatePlayableLevel(levelData);
 
@@ -821,10 +833,6 @@ class Game {
         this.history = [];
         this.gameOver = false;
         this.levelComplete = false;
-        // A move still animating belongs to the board being replaced; its
-        // pending callback must not tick blockers or score on this one.
-        clearTimeout(this.mergeTimer);
-        this.mergeTimer = null;
         this.animating = false;
 
         // Update canvas size for grid
@@ -848,14 +856,6 @@ class Game {
 
         this.updateUI();
         this.render();
-
-        // A dealt board with no legal chain would otherwise leave the player
-        // stuck with no message; end it the same way a dead board mid-game ends.
-        if (!this.hasValidMoves()) {
-            this.gameOver = true;
-            this.finishAuthoring('lose', 'no valid moves');
-            this.showGameOver('No valid moves!');
-        }
     }
 
     // Ordinary play used to draw from Math.random and record nothing, so a
@@ -887,7 +887,7 @@ class Game {
             seed,
             submit: (payload) => this.submitPlaySession(payload),
         });
-        this.initializeLevel(levelData, makeSeededRng(seed), capture);
+        this.beginLevel(levelData, makeSeededRng(seed), capture);
         const seedEl = document.getElementById('seedValue');
         if (seedEl) seedEl.textContent = String(seed);
     }
@@ -900,7 +900,7 @@ class Game {
             seed: session.seed,
             submit: (payload) => this.submitRecording(payload),
         });
-        this.initializeLevel(session.levelData, makeSeededRng(session.seed), capture);
+        this.beginLevel(session.levelData, makeSeededRng(session.seed), capture);
         this.updateAuthoringStatus(`Candidate ${session.levelData.level} · seed ${session.seed} · ready`);
     }
 

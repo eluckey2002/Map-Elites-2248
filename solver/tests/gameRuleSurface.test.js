@@ -22,6 +22,7 @@ test('comments, whitespace and browser-only code are not game rules', () => {
   assert.equal(gameRuleSurface(edited('// Check lose (out of moves)', '// out of moves')), surface);
   assert.equal(gameRuleSurface(edited("const textColor = tile.value >= 8 ? '#fff' : '#776e65';", "const textColor = '#fff';")), surface);
   assert.equal(gameRuleSurface(edited('this.mergeTimer = setTimeout(() => {\n            this.mergeTimer = null;', 'setTimeout(() => {')), surface);
+  assert.equal(gameRuleSurface(edited("if (!this.hasValidMoves()) this.showGameOver('No valid moves!');", '')), surface);
 });
 
 test('a changed win/lose check, chain rule, level or spawn weight is a rule change', () => {
@@ -31,9 +32,16 @@ test('a changed win/lose check, chain rule, level or spawn weight is a rule chan
     ['{ level: 1, target: 520,', '{ level: 1, target: 521,'],
     ['if (rand < 0.5) value = 2;', 'if (rand < 0.6) value = 2;'],
     ['this.tickBlockers();\n            this.checkBombs();', 'this.checkBombs();\n            this.tickBlockers();'],
+    ['this.minChain = levelData.minChain;', 'this.minChain = 2;'],
+    ['this.targetScore = levelData.target;', 'this.targetScore = levelData.target - 1;'],
   ]) {
     assert.notEqual(gameRuleSurface(edited(from, to)), surface, `not detected: ${to}`);
   }
+});
+
+test('reformatting a declaration signature is not a rule change', () => {
+  assert.equal(gameRuleSurface(edited('    checkWinLose() {', '  checkWinLose ( )\n  {')), surface);
+  assert.equal(gameRuleSurface(edited('function createInitialGrid(levelData, rng) {', 'function  createInitialGrid(levelData, rng)\n{')), surface);
 });
 
 test('a rule declaration that disappears is refused, not skipped', () => {

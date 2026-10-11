@@ -157,7 +157,7 @@ test('Enter with nothing focused still submits the chain', () => {
   });
 });
 
-test('a dealt board with no legal chain ends at once with a message', () => {
+test('a dealt board with no legal chain says so at once, without recording an outcome', () => {
   withDom(() => {
     const game = headlessGame();
     // 2/4 over 8/16 in 2x2 blocks: no tile touches an equal value, diagonals included.
@@ -170,9 +170,12 @@ test('a dealt board with no legal chain ends at once with a message', () => {
       i++;
       return draws[row % 2][col % 2];
     };
-    game.initializeLevel(LEVELS[0], rng);
-    assert.equal(game.gameOver, true);
+    let finished = 0;
+    game.beginLevel(LEVELS[0], rng, { chains: [], finish: () => { finished++; } });
     assert.equal(game.gameOverMessage, 'No valid moves!');
+    // The message is browser-only: no rule changed, so no outcome is recorded.
+    assert.equal(game.gameOver, false);
+    assert.equal(finished, 0);
   });
 });
 
