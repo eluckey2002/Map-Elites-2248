@@ -94,6 +94,26 @@ function obvious(level){
   return {outcome:state.outcome,moves:state.moves,path};
 }
 
+// "Scrape, then one long chain" proxy (owner's v1 Rust play, 2026-10-11): if a chain can scrape rust (sum at least
+// `scrape`, ending beside rust), take the largest-sum one; otherwise take the largest-sum chain that does not overshoot
+// an exact target (any largest-sum chain if none fits).
+function scrapeHarvest(level){
+  let state=rules.create(level);const path=[];
+  const cap=level.goal.type==='exact'?level.goal.make:Infinity;
+  const besideRust=(s,[x,y])=>{for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const t=(dx||dy)&&s.grid[y+dy]&&s.grid[y+dy][x+dx];if(t&&t.rust)return true;}return false;};
+  while(state.outcome==='playing'){
+    let scrape=null,scrapeSum=-1,fit=null,fitSum=-1,any=null,anySum=-1;
+    rules.eachChain(state,state.gridWidth*state.gridHeight,(chain,tiles)=>{
+      const sum=tiles.reduce((s,t)=>s+t.value,0);
+      if(level.rust&&rules.scrapes(level,sum)&&besideRust(state,chain.at(-1))&&sum>scrapeSum){scrape=chain.map(p=>[...p]);scrapeSum=sum;}
+      if(sum<=cap&&sum>fitSum){fit=chain.map(p=>[...p]);fitSum=sum;}
+      if(sum>anySum){any=chain.map(p=>[...p]);anySum=sum;}
+    });
+    const pick=scrape||fit||any;path.push(pick);state=rules.move(level,state,pick);
+  }
+  return {outcome:state.outcome,moves:state.moves,path};
+}
+
 const play=(level,path)=>{let s=rules.create(level);for(const c of path){if(s.outcome!=='playing'||!rules.valid(s,c))return s;s=rules.move(level,s,c);}return s;};
 
 // Twist-necessity checks (research F12: if the board can be won without the twist, it is not that kind yet).
@@ -118,4 +138,4 @@ function necessity(level,opts={}){
   return out;
 }
 
-module.exports={solve,harvest,obvious,heuristic,necessity,play};
+module.exports={solve,harvest,obvious,scrapeHarvest,heuristic,necessity,play};

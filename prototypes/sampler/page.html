@@ -1,6 +1,6 @@
 <title>Kinds Sampler</title>
 <style>
-:root{--bg:#f3f2ec;--ink:#203b34;--muted:#5f6f66;--line:#dcded6;--panel:#e6eadc;--shell:#d4dcce;--primary:#285941;--warn:#9a5a12;--good:#2f6b3f;--sel:#ed9757;--a:#d9822b;--b:#3d7fb8;--g:#3f8f5a}
+:root{--bg:#f3f2ec;--ink:#203b34;--muted:#5f6f66;--line:#dcded6;--panel:#e6eadc;--shell:#d4dcce;--primary:#285941;--warn:#9a5a12;--good:#2f6b3f;--sel:#ed9757;--a:#c03a7a;--b:#3d7fb8;--g:#7a4fc0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17201c;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#212c27;--shell:#2a3731;--primary:#4f9a74;--warn:#e0a35a;--good:#7cc290}}
 :root[data-theme="dark"]{--bg:#17201c;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#212c27;--shell:#2a3731;--primary:#4f9a74;--warn:#e0a35a;--good:#7cc290}
 *{box-sizing:border-box;margin:0}
@@ -25,12 +25,19 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 #merge{flex:1;background:var(--primary);border-color:var(--primary);color:#fff}
 #status{min-height:2.9em;margin:9px 2px;font-size:13px;line-height:1.45;color:var(--muted)}
 #status[data-tone="good"]{color:var(--good);font-weight:600}#status[data-tone="warn"]{color:var(--warn)}
-.shell{position:relative;background:var(--shell);border-radius:16px;padding:8px;width:min(100%,calc((100vh - 400px) / 1.2));min-width:260px}
+.shell{position:relative;background:var(--shell);border-radius:16px;padding:8px;width:min(100%,calc((100vh - 400px) / var(--aspect,1.2)));min-width:260px}
 #board{display:grid;gap:6px;user-select:none}
 .grid-wrap{position:relative}#path{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .tile{aspect-ratio:1;min-height:0;border-radius:9px;border:0;position:relative;font-weight:750;font-size:clamp(14px,3.6vw,21px);color:#253a2e;box-shadow:0 2px 0 #0002;font-variant-numeric:tabular-nums}
 .tile:disabled{opacity:1}
-.t1{background:#eef0e2}.t2{background:#dfe7c6}.t3{background:#c4d9a4}.t4{background:#9fc48d}.t5{background:#6f9f80;color:#fff}.t6{background:#3f6f57;color:#fff}.t7{background:#2a5442;color:#fff}.t8{background:#1d3d31;color:#fff}.t9{background:#122a21;color:#fff}
+/* 2 line (2, 4, 8 ...): warm sand to brown. 3 line (3, 6, 12 ...): green, only ever placed on the starting board. */
+.t1{background:#f4ecd8}.t2{background:#ecdcb4}.t3{background:#e3c68a}.t4{background:#d8a960}.t5{background:#c4873a;color:#fff}.t6{background:#a3672a;color:#fff}.t7{background:#7f4c1f;color:#fff}.t8{background:#5c3517;color:#fff}.t9{background:#3e2410;color:#fff}
+.g1{background:#d6f2d0;color:#14532d}.g2{background:#a9e3a0;color:#14532d}.g3{background:#6fcf6a;color:#0b3d1c}.g4{background:#2fa84a;color:#fff}.g5{background:#1f8a3a;color:#fff}.g6{background:#17722e;color:#fff}.g7{background:#0f5523;color:#fff}.g8{background:#0a3d19;color:#fff}.g9{background:#062a11;color:#fff}
+.tile:is(.g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8,.g9){box-shadow:inset 0 0 0 2px #0b5d2a,0 2px 0 #0002}
+.mini{display:inline-block;min-width:26px;padding:1px 5px;margin:0 2px;border-radius:5px;font-size:13px;line-height:20px;text-align:center;color:#253a2e;box-shadow:0 1px 0 #0003;vertical-align:1px}
+.mini.t5,.mini.t6,.mini.t7,.mini.t8,.mini.t9,.mini.g4,.mini.g5,.mini.g6,.mini.g7,.mini.g8,.mini.g9{color:#fff}
+#boss{background:#3b1d12;color:#ffe9d6;border-radius:10px;padding:10px 14px;margin:0 0 10px;border-left:6px solid #e0a35a}#boss strong{display:block;font-size:15px}#boss span{font-size:13px}
+#boss[hidden]{display:none}
 .ing-a{box-shadow:inset 0 0 0 3px var(--a),0 2px 0 #0002}.ing-a::before{content:'';position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--a)}
 .ing-b{box-shadow:inset 0 0 0 3px var(--b),0 2px 0 #0002}.ing-b::after{content:'';position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--b);clip-path:polygon(0 0,100% 0,100% 100%)}
 .ing-c{box-shadow:inset 0 0 0 3px var(--g),0 2px 0 #0002}
@@ -44,8 +51,8 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 .tile.rust{background:#a5592f !important;color:#fff3e6 !important;opacity:.95}.tile.rust::after{content:'rust';position:absolute;bottom:2px;left:0;right:0;font-size:9px;font-style:normal;letter-spacing:1px}
 .tile.spot{outline:3px dashed var(--a);outline-offset:-5px}.tile.spot::after{content:'◎';position:absolute;bottom:1px;right:5px;font-size:12px;color:var(--a)}
 .tile.ice{background:#bfe0ef !important;color:#24526a !important}.tile.ice::after{content:'ice';position:absolute;bottom:2px;left:0;right:0;font-size:9px;font-style:normal;letter-spacing:1px}
-.tile.gate{color:#fff;font-size:13px}.tile.gate::before{content:'GATE';position:absolute;top:3px;left:0;right:0;font-size:8px;letter-spacing:1px;font-style:normal}
-.tile.made::before{content:'●';position:absolute;top:2px;left:5px;bottom:auto;right:auto;width:auto;height:auto;background:none;clip-path:none;font-size:10px;color:var(--a)}
+.tile.gate{color:#fff;font-size:12px}.tile.gate::before{content:'GATE';position:absolute;top:3px;left:0;right:0;font-size:8px;letter-spacing:1px;font-style:normal}
+.tile.made::before{content:'●';position:absolute;top:2px;left:4px;bottom:auto;right:auto;width:16px;height:16px;line-height:16px;border-radius:50%;background:#fff;clip-path:none;font-size:13px;color:var(--a);box-shadow:0 0 0 1px var(--a)}
 .ing-a.ing-b{box-shadow:inset 0 0 0 3px var(--a),inset 0 0 0 6px var(--b),0 2px 0 #0002}.ing-a.ing-b::before{right:auto;left:5px}
 .tile.mark::after{content:'★';position:absolute;top:2px;right:5px;font-size:12px;color:var(--b)}.tile.mark{box-shadow:inset 0 0 0 3px var(--b),0 2px 0 #0002}
 .sel{outline:3px solid var(--sel);outline-offset:-3px;transform:scale(.93)}
@@ -69,7 +76,7 @@ aside h3{font-size:13px;margin-top:16px}
   .actions{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:8px 0;order:5}
   .play{display:flex;flex-direction:column}.play .shell{order:3}.play #status{order:2}.play .minor{order:4}
   header .mark small{display:none}
-  #boards{display:grid;grid-template-columns:repeat(4,44px);gap:6px}#boards button{width:44px;height:44px;min-height:44px}
+  #boards{display:grid;grid-template-columns:repeat(5,44px);gap:6px}#boards button{width:44px;height:44px;min-height:44px}
 }
 </style>
 <div class="app">
@@ -84,7 +91,8 @@ aside h3{font-size:13px;margin-top:16px}
       </div>
       <div class="actions"><button id="merge">Merge chain</button><button id="preview">Preview result</button><button id="clear">Clear</button></div>
       <p id="status" role="status" aria-live="polite"></p>
-      <div class="shell"><div id="forecast" hidden aria-label="Next tile for each column"></div><div class="grid-wrap"><div id="board" aria-label="Tile board"></div><svg id="path" aria-hidden="true"></svg></div></div>
+      <div id="boss" role="note" hidden><strong id="boss-title"></strong><span id="boss-text"></span></div>
+      <div class="shell" id="shell"><div id="forecast" hidden aria-label="Next tile for each column"></div><div class="grid-wrap"><div id="board" aria-label="Tile board"></div><svg id="path" aria-hidden="true"></svg></div></div>
       <div class="minor"><button id="undo">↶ Undo</button><button id="retry">↻ Same board again</button></div>
     </section>
     <aside>
