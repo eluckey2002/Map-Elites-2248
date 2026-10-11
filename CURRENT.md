@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Board MAP-Elites, fresh run — 2026-10-11
+
+The family-board search is back on `main` as a fresh run rather than a port of the dropped RESULT-0044..0047. The owner chose the axes: successful plan breadth across, baseline regret (moves the shipped bot gives away against the cheapest replayed plan) up. [RESULT-0084](EVIDENCE_LEDGER.md#result-0084--fresh-board-map-elites-fills-12-cells-on-breadth--baseline-regret) closed `SUPPORTED_AT_BOUNDED_SCOPE` with 12 cells, 5 bins on each axis and a passing verifier; regret and harvest correlate at ρ 0.63. It is provisional and ships no board. Next is the owner playing up to five elites through `tools/board-elite-server.js` ([report](experiments/RESULT-0084/report.md) lists them).
+
 ## Selectable Nemesis opponents — 2026-10-04
 
 DECISION-0012 records the owner-authorized additional Wider-search bot from RESULT-0082. Nemesis now selects either opponent on the same board and seed, retaining that selection for result checks. The shipped bot remains the default. See [implementation and verification](docs/game-design/levels/receipts/NEMESIS-POLICY-1.md). Task NEMESIS-POLICY-1 awaits owner review. The 2026-10-08 [technical review and correction](docs/game-design/levels/receipts/NEMESIS-PR68-REVIEW.md) isolates and bounds cold simulations, rejects incomplete board identities, and adds cache/race regressions. Fresh independent Codex runtime review passed, including shutdown cancellation and queued-policy deadlines. GitHub reviewed runtime head 599e7c7b; its remaining navigation-status finding is corrected here. PR #68 is ready for review, with final published-head re-review pending. Task NEMESIS-POLICY-1 still awaits owner gameplay review; technical PR review does not accept that task or RESULT-0082. Mobile QA is not a requirement.

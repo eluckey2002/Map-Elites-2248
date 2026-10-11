@@ -1825,3 +1825,19 @@ The proof track is parked, not closed. It resumes from the unresolved **12,336�
 - **superseded_by:** []
 - **written_by:** codex-policy-fit-r5, owner-selected Goal 3 revision 5 session, branch codex/policy-learned-judge-r5
 - **notes:** Provisional, not self-accepted, and checked_by remains absent. The corrected cross-check is arithmetic on sealed historical data. A distinct Codex review remains required for the revised pull-request head.
+
+### RESULT-0084 — Fresh board MAP-Elites fills 12 cells on breadth × baseline regret
+
+- **type:** result
+- **status:** provisional
+- **scope:** one registered run of the ported board MAP-Elites search with its Y axis switched to baseline regret; Level 56; generator seed 20,261,011; 48 sampled shapes, first 24 screen survivors evaluated, 21 eligible; descriptor seeds 71,000,000–71,000,002; frozen sources per `experiments/RESULT-0084/protocol.md`
+- **statement:** The run closed `SUPPORTED_AT_BOUNDED_SCOPE`: 12 occupied cells (bar 5), 5 breadth bins (bar 2), 5 baseline-regret bins (bar 2), and the independent verifier passed the exact artifact and map, including a re-play of the shipped bot on every seed. The regret/harvest redundancy control is Spearman ρ 0.627 over the 21 eligible boards, below the registered 0.9 line. The shipped bot won all 63 descriptor games, so every regret value comes from a cheaper replayed oracle witness. Regret is a replayed lower bound against a bot proxy on three seeds per board; it is not a measure of the owner's play, and no board is shipped by this result.
+- **evidence:** registered protocol `experiments/RESULT-0084/protocol.md`, registration commit `9abcd88fa37cc6939e3b4f5a59be7bee34b720f8`; artifact `experiments/RESULT-0084/output/archive.json` (SHA-256 `1a82dca12be1ab9ebe58a21c845d5b0a9dcd39ed1f345c49a08c05059ae06c0a`, artifact identity `12dab1784f92ff434391f7efa4dcf117004fac62ff6037bae8f513523ed5eadf`); map `experiments/RESULT-0084/output/map.html` (SHA-256 `40ab3f2267a96acd06b462474bdb3642229dd5124fcd4e4785cf15e26834b9e4`); counts and limits in `experiments/RESULT-0084/report.md`
+- **proof_class:** `direct_source` for frozen identities, panel completeness, replayed witnesses and archive integrity; `heuristic_observation` for board variety over the registered seeded panel
+- **as_of:** 2026-10-11
+- **reverify:** With the frozen sources unchanged (at or after `9abcd88f` until `src/game.js` or another frozen file moves), run `node solver/verify-board-map-elites.js experiments/RESULT-0084/output/archive.json experiments/RESULT-0084/output/map.html`; expect `PASS`, artifact identity `12dab178…`, 12 occupied cells, 5 breadth bins, 5 regret bins, ρ 0.626545 and `SUPPORTED_AT_BOUNDED_SCOPE`.
+- **updated:** 2026-10-11
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude, project thread "repo review", branch claude/project-thread-4qfp1a-level-search
+- **notes:** Provisional, not self-accepted; checked_by is absent until a different agent, a script run by someone else, or the owner checks it. This is the fresh run the owner chose on 2026-10-11 in place of renumbering the dropped RESULT-0044..0047 (BL-0023 criterion 4). The owner-versus-bot calibration playtest on up to five elites is a separate, later record.
