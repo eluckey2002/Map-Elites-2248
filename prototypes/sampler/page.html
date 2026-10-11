@@ -1,6 +1,6 @@
 <title>Kinds Sampler</title>
 <style>
-:root{--bg:#f3f2ec;--ink:#203b34;--muted:#5f6f66;--line:#dcded6;--panel:#e6eadc;--shell:#d4dcce;--primary:#285941;--warn:#9a5a12;--good:#2f6b3f;--sel:#ed9757;--a:#c03a7a;--b:#3d7fb8;--g:#7a4fc0}
+:root{--bg:#f3f2ec;--ink:#203b34;--muted:#5f6f66;--line:#dcded6;--panel:#e6eadc;--shell:#d4dcce;--primary:#285941;--warn:#9a5a12;--good:#2f6b3f;--sel:#ed9757;--a:#c03a7a;--b:#3d7fb8;--g:#7a4fc0;--d:#2f7d6b}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17201c;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#212c27;--shell:#2a3731;--primary:#4f9a74;--warn:#e0a35a;--good:#7cc290}}
 :root[data-theme="dark"]{--bg:#17201c;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#212c27;--shell:#2a3731;--primary:#4f9a74;--warn:#e0a35a;--good:#7cc290}
 *{box-sizing:border-box;margin:0}
@@ -21,14 +21,17 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 #orders{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:inline-block;padding:6px 10px;border-radius:999px;border:2px solid var(--c);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
 .chip.done{background:var(--c);color:#fff}
+.chip.later{opacity:.45;font-size:12px;padding:3px 8px;border-width:1px;filter:grayscale(1)}
 .actions{display:flex;gap:8px}.actions button{border-radius:8px;padding:0 14px;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
 #merge{flex:1;background:var(--primary);border-color:var(--primary);color:#fff}
 #status{min-height:2.9em;margin:9px 2px;font-size:13px;line-height:1.45;color:var(--muted)}
 #status[data-tone="good"]{color:var(--good);font-weight:600}#status[data-tone="warn"]{color:var(--warn)}
-.shell{position:relative;background:var(--shell);border-radius:16px;padding:8px;width:min(100%,calc((100vh - 400px) / var(--aspect,1.2)));min-width:260px}
-#board{display:grid;gap:6px;user-select:none}
+/* v3: the board is sized by app.js fitBoard() so it, the order chips and the forecast strip fit the first screen;
+   this is the no-script fallback, about a quarter smaller than v2. */
+.shell{position:relative;background:var(--shell);border-radius:14px;padding:7px;width:min(100%,300px);min-width:0;max-width:100%}
+#board{display:grid;gap:5px;user-select:none}
 .grid-wrap{position:relative}#path{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.tile{aspect-ratio:1;min-height:0;border-radius:9px;border:0;position:relative;font-weight:750;font-size:clamp(14px,3.6vw,21px);color:#253a2e;box-shadow:0 2px 0 #0002;font-variant-numeric:tabular-nums}
+.tile{aspect-ratio:1;min-height:0;border-radius:9px;border:0;position:relative;font-weight:750;font-size:var(--tf,16px);color:#253a2e;box-shadow:0 2px 0 #0002;font-variant-numeric:tabular-nums}
 .tile:disabled{opacity:1}
 /* 2 line (2, 4, 8 ...): warm sand to brown. 3 line (3, 6, 12 ...): green, only ever placed on the starting board. */
 .t1{background:#f4ecd8}.t2{background:#ecdcb4}.t3{background:#e3c68a}.t4{background:#d8a960}.t5{background:#c4873a;color:#fff}.t6{background:#a3672a;color:#fff}.t7{background:#7f4c1f;color:#fff}.t8{background:#5c3517;color:#fff}.t9{background:#3e2410;color:#fff}
@@ -42,15 +45,26 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 .ing-b{box-shadow:inset 0 0 0 3px var(--b),0 2px 0 #0002}.ing-b::after{content:'';position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--b);clip-path:polygon(0 0,100% 0,100% 100%)}
 .ing-c{box-shadow:inset 0 0 0 3px var(--g),0 2px 0 #0002}
 .ing-c::before{content:'';position:absolute;bottom:4px;left:4px;width:8px;height:8px;background:var(--g);clip-path:polygon(0 100%,0 0,100% 100%)}
-#forecast{display:grid;gap:6px;margin-bottom:6px}#forecast .next{text-align:center;font-weight:750;font-size:15px;line-height:1.1;color:var(--ink);background:var(--bg);border-radius:7px;padding:4px 0}
-#forecast .next small{display:block;font-size:10px;font-weight:500;color:var(--muted)}
+.ing-d{box-shadow:inset 0 0 0 3px var(--d),0 2px 0 #0002}
+.ing-d::after{content:'';position:absolute;bottom:4px;right:4px;width:8px;height:8px;background:var(--d);clip-path:polygon(100% 0,100% 100%,0 100%)}
+.ing-a.ing-c{box-shadow:inset 0 0 0 3px var(--a),inset 0 0 0 6px var(--g),0 2px 0 #0002}
+/* Forecast strip (v3): labelled, larger tiles, high contrast, directly above its columns. */
+#forecast{background:#14211b;color:#fff;border-radius:9px;padding:5px 5px 6px;margin-bottom:6px;box-shadow:0 0 0 2px var(--sel)}
+#forecast .flabel{font-size:12px;font-weight:800;letter-spacing:1.5px;margin:0 2px 4px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#forecast .flabel span{font-weight:500;letter-spacing:0;color:#cfe0d6;font-size:11px}
+#forecast-row{display:grid;gap:5px}
+#forecast .next{display:flex;flex-direction:column;align-items:center;gap:3px}
+#forecast .next.wall{visibility:hidden}
+#forecast .ftile{display:block;width:100%;max-width:48px;margin:0;font-size:15px;font-weight:800;line-height:24px;border-radius:6px;box-shadow:none}
+#forecast .ftile:first-child{opacity:.75;line-height:18px;font-size:12px}
 #forecast[hidden]{display:none}
 .tile.stone{background:repeating-linear-gradient(45deg,#5d625c,#5d625c 6px,#4d524c 6px,#4d524c 12px);box-shadow:none}
 .tile.empty{background:transparent;box-shadow:inset 0 0 0 2px #0001}
 .tile.odd{font-style:italic}
-.tile.rust{background:#a5592f !important;color:#fff3e6 !important;opacity:.95}.tile.rust::after{content:'rust';position:absolute;bottom:2px;left:0;right:0;font-size:9px;font-style:normal;letter-spacing:1px}
 .tile.spot{outline:3px dashed var(--a);outline-offset:-5px}.tile.spot::after{content:'◎';position:absolute;bottom:1px;right:5px;font-size:12px;color:var(--a)}
-.tile.ice{background:#bfe0ef !important;color:#24526a !important}.tile.ice::after{content:'ice';position:absolute;bottom:2px;left:0;right:0;font-size:9px;font-style:normal;letter-spacing:1px}
+.tile.spot-b{outline-color:var(--b)}.tile.spot-b::after{color:var(--b)}
+/* A later order's spot (Make It Here): still shown, so A can be planned around it, but quiet until its turn. */
+.tile.spot-later{outline-width:2px;outline-style:dotted}.tile.spot-later::after{opacity:.6}
 .tile.gate{color:#fff;font-size:12px}.tile.gate::before{content:'GATE';position:absolute;top:3px;left:0;right:0;font-size:8px;letter-spacing:1px;font-style:normal}
 .tile.made::before{content:'●';position:absolute;top:2px;left:4px;bottom:auto;right:auto;width:16px;height:16px;line-height:16px;border-radius:50%;background:#fff;clip-path:none;font-size:13px;color:var(--a);box-shadow:0 0 0 1px var(--a)}
 .ing-a.ing-b{box-shadow:inset 0 0 0 3px var(--a),inset 0 0 0 6px var(--b),0 2px 0 #0002}.ing-a.ing-b::before{right:auto;left:5px}
@@ -72,11 +86,11 @@ aside h3{font-size:13px;margin-top:16px}
 .small{font-size:11px;color:var(--muted);margin-top:6px;min-height:1.2em}
 @media (max-width:760px){
   .layout{grid-template-columns:1fr;gap:16px}
-  .shell{width:100%;min-width:0}
   .actions{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:8px 0;order:5}
   .play{display:flex;flex-direction:column}.play .shell{order:3}.play #status{order:2}.play .minor{order:4}
-  header .mark small{display:none}
-  #boards{display:grid;grid-template-columns:repeat(5,44px);gap:6px}#boards button{width:44px;height:44px;min-height:44px}
+  header{padding:6px 0}header .mark{display:none}
+  #boards{display:grid;grid-template-columns:repeat(8,38px);gap:4px}#boards button{width:38px;height:38px;min-height:38px}
+  .intro h1{font-size:22px}.intro p{font-size:13px}.stats{margin:6px 0}#status{min-height:0;margin:4px 2px}
 }
 </style>
 <div class="app">
@@ -89,10 +103,10 @@ aside h3{font-size:13px;margin-top:16px}
         <div><span class="k" id="progress-k">INGREDIENTS</span><strong id="ingredients"></strong></div>
         <div style="text-align:right"><span class="k">MOVES LEFT</span><strong id="moves"></strong></div>
       </div>
-      <div class="actions"><button id="merge">Merge chain</button><button id="preview">Preview result</button><button id="clear">Clear</button></div>
+      <div class="actions" id="actions-bar"><button id="merge">Merge chain</button><button id="preview">Preview result</button><button id="clear">Clear</button></div>
       <p id="status" role="status" aria-live="polite"></p>
       <div id="boss" role="note" hidden><strong id="boss-title"></strong><span id="boss-text"></span></div>
-      <div class="shell" id="shell"><div id="forecast" hidden aria-label="Next tile for each column"></div><div class="grid-wrap"><div id="board" aria-label="Tile board"></div><svg id="path" aria-hidden="true"></svg></div></div>
+      <div class="shell" id="shell"><div id="forecast" hidden role="group" aria-label="Next tiles for each column"><div class="flabel">NEXT TILES<span>drop into each column, nearest at the bottom</span></div><div id="forecast-row"></div></div><div class="grid-wrap"><div id="board" aria-label="Tile board"></div><svg id="path" aria-hidden="true"></svg></div></div>
       <div class="minor"><button id="undo">↶ Undo</button><button id="retry">↻ Same board again</button></div>
     </section>
     <aside>
