@@ -1035,9 +1035,11 @@ design result:
   | 3 Three Quarters | won | 5 of 6 | 4 |
   | 4 Two Orders | won, both orders | 5 of 7 | 5 |
 
-  No undos and one preview in total. No chain in any run included a 128 or a
-  256 except the final order chains, so the owner never spent an ingredient in
-  a mixed chain and left the board-2 256s alone.
+  No undos and one preview in total. No ingredient was spent outside its order
+  chain: no 128 appeared in any other chain, and on board 4 no 64 appeared
+  outside the 64 order chain (its other chains were 32×4 twice and
+  8+8+16+32+32+32). No chain in any run used a 256, so the board-2 256s were
+  left alone.
 - **Owner reaction, verbatim:** "done - and yes it different". The board-1
   answer saved in the Artifact is `different: yes`; "More boards like this?"
   was not answered.

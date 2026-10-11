@@ -31,8 +31,7 @@ which chain looks best, or does it feel like counting?
 
 ## Current evidence
 
-PDL-037: the owner played all four boards (three wins, one board left
-unfinished) and said it felt different. Decision KEEP.
+PDL-037, KEEP.
 
 ## Next action
 
@@ -43,5 +42,4 @@ level-archetypes milestone.
 
 - 2026-10-11 — Prototype built with four boards and published as a private
   Artifact (PR #77). Owner play pending.
-- 2026-10-11 — Owner played all four boards and reported "yes it different".
-  Recorded as PDL-037, KEEP. Done.
+- 2026-10-11 — Owner played the boards; recorded as PDL-037, KEEP. Done.
