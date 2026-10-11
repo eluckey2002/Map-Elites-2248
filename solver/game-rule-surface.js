@@ -288,6 +288,12 @@ function browserOnly(tokens, [start, end], name, rules) {
     const token = tokens[i];
     // A name spelled as a string, as in document['defaultView'], counts as that name.
     if (token.kind === 'string' && named(token.t.slice(1, -1))) return false;
+    // A computed member that is called, or whose key holds a string, can name any method.
+    if (token.t === '[' && (id(i - 1) || [']', ')'].includes(t(i - 1)))) {
+      const close = matchClose(tokens, i);
+      if (['(', '?.', '.'].includes(t(close + 1)) && (t(close + 1) !== '.' || ['call', 'apply', 'bind'].includes(t(close + 2)))) return false;
+      for (let k = i + 1; k < close; k++) if (['string', 'template-head'].includes(tokens[k].kind)) return false;
+    }
     // Escapes can spell any name (tile.t\u0069ckBlocker, 'g\x61me'), so browser-only code has none.
     if (token.t.includes('\\')) return false;
     if (token.kind === 'identifier' && (MEMBER_ESCAPES.has(token.t)
