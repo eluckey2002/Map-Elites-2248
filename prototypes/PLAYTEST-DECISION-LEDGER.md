@@ -1152,9 +1152,9 @@ design result:
   - Feed the Next: KEEP as an advanced tier; add easier tiers. Replace the ●
     rule with "a tile an order makes must go into a later chain", with a small
     cap on how many can be on the board. Order chips show tile × count.
-  - Shared Material: KEEP the kind. Scarcity comes from tiles refills cannot
-    make (a few start-board tiles of another color family), never from
-    changing refills.
+  - Shared Material: KEEP the kind. Scarcity comes from shared tiles refills
+    cannot make (a starred or other-color tile placed at the start), never
+    from changing refills; the owner answered "there ya go!".
   - Three Separate: control only; not a kind.
   - See It Coming: no verdict; not played.
   - Dry Well: REVISE into a "Drought" boss level: no refills, announced before
@@ -1166,10 +1166,10 @@ design result:
   levels ("one of the few things that is steady with the game"); a boss level
   may change them ("the boss changes the refill"). The spawn he asked for in
   PDL-038 is powers of two, "2,4,8,16,32,64".
-- **Working default (inferred, not owner-confirmed):** other number families
-  appear only as tiles placed on the starting board, never from refills. This
-  follows from the two rules above and from the owner's "there ya go!" to
-  protected shared tiles on board 3, but he did not state it as a rule.
+- **Not a rule:** whether other number families may appear anywhere except
+  as placed tiles is open. The Shared Material decision above is scoped to that
+  one board: the owner answered "there ya go!" to a protected shared tile that
+  refills cannot make (a starred or other-color tile).
 - **Limits:** One player, one session, mostly first attempts. Board 5 has no
   run. Boards 2, 6 and 7 were left, so their runs show where he stopped, not
   whether the boards are winnable for him. Board 7's second run is a retry of
