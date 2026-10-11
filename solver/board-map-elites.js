@@ -12,12 +12,14 @@ const { analyzeLandmarkFrontier, initialPuzzle, replayLandmarkRoute } = require(
 const { search } = require('./oracle/search');
 const { rankState: harvestRankState } = require('./oracle/harvest-policy');
 const { verifyWitness } = require('./oracle/verify');
+const { measureRegret } = require('./board-regret');
 const { registrationStamp, requireProtocolOrExit } = require('./experiment-guard');
 const {
   BREADTH_BINS,
   CELL_CAPACITY,
   GRID_SIZE,
   HARVEST_BINS,
+  REGRET_BINS,
   SOURCE_PATHS,
   boardIdentity,
   buildArchive,
@@ -25,6 +27,7 @@ const {
   pairedHarvestAdvantage,
   renderMapHtml,
   summarizeBreadth,
+  summarizeRun,
 } = require('./board-map-elites-core');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -39,6 +42,7 @@ const LANDMARK_OPTIONS = Object.freeze({
 });
 const ORACLE_MAX_EXPANDED_STATES = 600;
 const ORACLE_BUDGET_MS = 30000;
+const REGRET_BASELINE = 'solver/human-benchmark.js playBot: the shipped bot, stopping at the target';
 
 function fileHash(relative) {
   return crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT, relative))).digest('hex');
@@ -54,7 +58,9 @@ function subjectIdentityFor(config, sources = sourceHashes()) {
     config: {
       gridSize: GRID_SIZE,
       cellCapacity: CELL_CAPACITY,
-      axes: { breadth: BREADTH_BINS, harvest: HARVEST_BINS },
+      axes: { breadth: BREADTH_BINS, regret: REGRET_BINS },
+      harvestBins: HARVEST_BINS,
+      regretBaseline: REGRET_BASELINE,
       samplerSeed: config.samplerSeed,
       sampledShapes: config.count,
       fullyEvaluatedLimit: config.full,
@@ -152,6 +158,7 @@ function evaluateShape(shape, seeds = DEFAULT_DESCRIPTOR_SEEDS) {
   }
   const breadth = measureBreadth(candidate, seeds);
   const harvest = measureHarvest(candidate, seeds);
+  const regret = measureRegret(candidate, seeds, harvest);
   return {
     shape,
     candidate,
@@ -165,7 +172,7 @@ function evaluateShape(shape, seeds = DEFAULT_DESCRIPTOR_SEEDS) {
       bombRate: verified.bombRate,
       terminalCounts: verified.terminalCounts,
     },
-    descriptors: { breadth, harvest },
+    descriptors: { breadth, regret, harvest },
   };
 }
 
@@ -192,8 +199,6 @@ function buildRun(config, registration, onProgress = () => {}) {
     evaluations.push(evaluateShape(entry.shape, config.descriptorSeeds));
   }
   const archive = buildArchive(evaluations);
-  const occupiedBreadthBins = new Set(archive.map(({ cell }) => cell.split(',')[0])).size;
-  const occupiedHarvestBins = new Set(archive.map(({ cell }) => cell.split(',')[1])).size;
   const sources = sourceHashes();
   const body = {
     schemaVersion: 1,
@@ -203,7 +208,9 @@ function buildRun(config, registration, onProgress = () => {}) {
     config: {
       gridSize: GRID_SIZE,
       cellCapacity: CELL_CAPACITY,
-      axes: { breadth: BREADTH_BINS, harvest: HARVEST_BINS },
+      axes: { breadth: BREADTH_BINS, regret: REGRET_BINS },
+      harvestBins: HARVEST_BINS,
+      regretBaseline: REGRET_BASELINE,
       samplerSeed: config.samplerSeed,
       sampledShapes: config.count,
       fullyEvaluatedLimit: config.full,
@@ -219,17 +226,7 @@ function buildRun(config, registration, onProgress = () => {}) {
     screened: generated.screened,
     evaluations,
     archive,
-    summary: {
-      screened: generated.screened.length,
-      screenSurvivors: generated.screened.filter(({ rejection }) => !rejection).length,
-      evaluated: evaluations.length,
-      eligible: evaluations.filter(({ eligible }) => eligible).length,
-      occupiedCells: archive.length,
-      occupiedBreadthBins,
-      occupiedHarvestBins,
-      premise: archive.length >= 4 && occupiedBreadthBins >= 2 && occupiedHarvestBins >= 2
-        ? 'SUPPORTED_AT_BOUNDED_SCOPE' : 'DISCONFIRMED_AT_BOUNDED_SCOPE',
-    },
+    summary: summarizeRun(generated.screened, evaluations, archive),
   };
   const { registration: _registration, ...identifiedBody } = body;
   return { ...body, artifactIdentity: identity(identifiedBody) };
@@ -303,6 +300,7 @@ module.exports = {
   LANDMARK_OPTIONS,
   ORACLE_BUDGET_MS,
   ORACLE_MAX_EXPANDED_STATES,
+  REGRET_BASELINE,
   buildRun,
   evaluateShape,
   generateShapes,

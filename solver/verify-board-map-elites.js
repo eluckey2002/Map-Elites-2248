@@ -11,12 +11,15 @@ const { sampleShape, shapeSignature, screen, screenVerdict } = require('./genera
 const { verifyCandidate } = require('./level-author');
 const { initialPuzzle, replayLandmarkRoute } = require('./landmark-frontier');
 const { verifyWitness } = require('./oracle/verify');
+const { measureRegret } = require('./board-regret');
 const { addedIn, parseFrontmatter, showAtCommit } = require('../tools/verify-experiments');
+const { REGRET_BASELINE } = require('./board-map-elites');
 const {
   BREADTH_BINS,
   CELL_CAPACITY,
   GRID_SIZE,
   HARVEST_BINS,
+  REGRET_BINS,
   SOURCE_PATHS,
   boardIdentity,
   buildArchive,
@@ -25,6 +28,7 @@ const {
   pairedHarvestAdvantage,
   renderMapHtml,
   summarizeBreadth,
+  summarizeRun,
 } = require('./board-map-elites-core');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -69,7 +73,9 @@ function verifySourceClosure(artifact, frozen) {
 function verifyConfig(config) {
   assert.equal(config.gridSize, GRID_SIZE);
   assert.equal(config.cellCapacity, CELL_CAPACITY);
-  assert.deepEqual(config.axes, { breadth: BREADTH_BINS, harvest: HARVEST_BINS });
+  assert.deepEqual(config.axes, { breadth: BREADTH_BINS, regret: REGRET_BINS });
+  assert.deepEqual(config.harvestBins, HARVEST_BINS);
+  assert.equal(config.regretBaseline, REGRET_BASELINE);
   assert.equal(config.landmark, 2048);
   assert.equal(config.objective, 'first target crossing for both paired policies');
   assert.equal(config.descriptorSeeds.length, new Set(config.descriptorSeeds).size, 'duplicate descriptor seeds');
@@ -132,6 +138,15 @@ function verifyHarvest(evaluation, config) {
     'harvest summary mismatch');
 }
 
+// Re-plays the shipped-bot baseline on every seed rather than trusting the
+// recorded rows, then recomputes regret against the verified harvest pairs.
+function verifyRegret(evaluation, config) {
+  const regret = evaluation.descriptors?.regret;
+  assert.ok(regret, 'missing regret evidence');
+  const recomputed = measureRegret(evaluation.candidate, config.descriptorSeeds, evaluation.descriptors.harvest);
+  assert.equal(canonicalJson(regret), canonicalJson(recomputed), 'regret mismatch');
+}
+
 function verifyEvaluation(evaluation, config) {
   assert.equal(evaluation.boardIdentity, boardIdentity(evaluation.candidate), 'board identity mismatch');
   let verified;
@@ -148,6 +163,7 @@ function verifyEvaluation(evaluation, config) {
   assert.equal(evaluation.quality.bombRate, verified.bombRate, 'quality bomb rate mismatch');
   verifyBreadth(evaluation, config);
   verifyHarvest(evaluation, config);
+  verifyRegret(evaluation, config);
 }
 
 function verifyArchive(artifact) {
@@ -159,19 +175,7 @@ function verifyArchive(artifact) {
 }
 
 function verifySummary(artifact) {
-  const occupiedBreadthBins = new Set(artifact.archive.map(({ cell }) => cell.split(',')[0])).size;
-  const occupiedHarvestBins = new Set(artifact.archive.map(({ cell }) => cell.split(',')[1])).size;
-  const expected = {
-    screened: artifact.screened.length,
-    screenSurvivors: artifact.screened.filter(({ rejection }) => !rejection).length,
-    evaluated: artifact.evaluations.length,
-    eligible: artifact.evaluations.filter(({ eligible }) => eligible).length,
-    occupiedCells: artifact.archive.length,
-    occupiedBreadthBins,
-    occupiedHarvestBins,
-    premise: artifact.archive.length >= 4 && occupiedBreadthBins >= 2 && occupiedHarvestBins >= 2
-      ? 'SUPPORTED_AT_BOUNDED_SCOPE' : 'DISCONFIRMED_AT_BOUNDED_SCOPE',
-  };
+  const expected = summarizeRun(artifact.screened, artifact.evaluations, artifact.archive);
   assert.deepEqual(artifact.summary, expected, 'summary mismatch');
 }
 
@@ -212,6 +216,7 @@ module.exports = {
   verifyConfig,
   verifyEvaluation,
   verifyHarvest,
+  verifyRegret,
   verifyRegistration,
   verifyScreenPanel,
   verifySourceClosure,

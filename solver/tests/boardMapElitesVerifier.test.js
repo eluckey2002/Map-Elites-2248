@@ -9,6 +9,7 @@ const {
   verifyBreadth,
   verifyEvaluation,
   verifyHarvest,
+  verifyRegret,
   verifySourceClosure,
 } = require('../verify-board-map-elites');
 
@@ -109,4 +110,14 @@ test('a changed source identity is rejected against current bytes and the frozen
   changed.sources[first] = '0'.repeat(64);
   const frozen = Object.fromEntries(Object.entries(artifact.sources).map(([file, hash]) => [file, hash.slice(0, 16)]));
   assert.throws(() => verifySourceClosure(changed, frozen), /source changed/);
+});
+
+test('a recorded regret the shipped bot does not reproduce is rejected', () => {
+  const evaluation = structuredClone(artifact.evaluations.find(({ eligible }) => eligible));
+  assert.doesNotThrow(() => verifyRegret(evaluation, artifact.config));
+  evaluation.descriptors.regret.baselineRows[0].moves += 1;
+  assert.throws(() => verifyRegret(evaluation, artifact.config), /regret mismatch/);
+  const relabelled = structuredClone(artifact.evaluations.find(({ eligible }) => eligible));
+  relabelled.descriptors.regret.bin = (relabelled.descriptors.regret.bin + 1) % 7;
+  assert.throws(() => verifyRegret(relabelled, artifact.config), /regret mismatch/);
 });

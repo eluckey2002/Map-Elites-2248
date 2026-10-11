@@ -1,4 +1,5 @@
 const crypto = require('node:crypto');
+const { REGRET_BINS, regretBin } = require('./board-regret');
 
 const GRID_SIZE = 7;
 const CELL_CAPACITY = 3;
@@ -9,6 +10,9 @@ const SOURCE_PATHS = Object.freeze([
   'solver/verify-board-map-elites.js',
   'solver/landmark-frontier.js',
   'solver/puzzle-descriptor-witness.js',
+  'solver/board-regret.js',
+  'solver/human-benchmark.js',
+  'solver/recording-replay.js',
   'solver/oracle/harvest-policy.js',
   'solver/oracle/search.js',
   'solver/oracle/simulation.js',
@@ -156,11 +160,14 @@ function qualityCompare(a, b) {
     || a.boardIdentity.localeCompare(b.boardIdentity);
 }
 
+// The map is breadth (x) by baseline regret (y), the owner's choice on
+// 2026-10-11. Harvest stays recorded: regret is built from its witnesses and
+// the protocol reports how far the two axes agree.
 function cellFor(evaluation) {
-  if (!evaluation.descriptors?.breadth?.bin || !evaluation.descriptors?.harvest?.bin) {
+  if (!evaluation.descriptors?.breadth?.bin || !Number.isInteger(evaluation.descriptors?.regret?.bin)) {
     throw new Error('eligible evaluation needs both descriptor bins');
   }
-  return `${evaluation.descriptors.breadth.bin.index},${evaluation.descriptors.harvest.bin.index}`;
+  return `${evaluation.descriptors.breadth.bin.index},${evaluation.descriptors.regret.bin}`;
 }
 
 function placeElite(archive, evaluation, capacity = CELL_CAPACITY) {
@@ -202,6 +209,11 @@ function buildArchive(evaluations, capacity = CELL_CAPACITY) {
             value: entry.descriptors.breadth.value,
             bin: entry.descriptors.breadth.bin,
           },
+          regret: {
+            standing: entry.descriptors.regret.standing,
+            value: entry.descriptors.regret.value,
+            bin: entry.descriptors.regret.bin,
+          },
           harvest: {
             standing: entry.descriptors.harvest.standing,
             value: entry.descriptors.harvest.value,
@@ -211,6 +223,58 @@ function buildArchive(evaluations, capacity = CELL_CAPACITY) {
         rank: rank + 1,
       })),
     }));
+}
+
+function ranks(values) {
+  const order = values.map((value, index) => ({ value, index })).sort((a, b) => a.value - b.value);
+  const result = new Array(values.length);
+  for (let start = 0; start < order.length;) {
+    let end = start;
+    while (end + 1 < order.length && order[end + 1].value === order[start].value) end++;
+    for (let k = start; k <= end; k++) result[order[k].index] = (start + end) / 2 + 1;
+    start = end + 1;
+  }
+  return result;
+}
+
+// Spearman rank correlation with average ranks for ties; null when either
+// side is constant or there are fewer than three pairs.
+function spearman(xs, ys) {
+  if (xs.length !== ys.length) throw new Error('spearman needs paired values');
+  if (xs.length < 3) return null;
+  const rx = ranks(xs);
+  const ry = ranks(ys);
+  const mean = (xs.length + 1) / 2;
+  let num = 0; let dx = 0; let dy = 0;
+  for (let i = 0; i < xs.length; i++) {
+    num += (rx[i] - mean) * (ry[i] - mean);
+    dx += (rx[i] - mean) ** 2;
+    dy += (ry[i] - mean) ** 2;
+  }
+  return dx === 0 || dy === 0 ? null : num / Math.sqrt(dx * dy);
+}
+
+// Frozen with the protocol: at least five occupied cells spanning at least
+// two breadth bins and two regret bins. The regret/harvest rank correlation
+// is the redundancy control, reported and never part of the premise.
+function summarizeRun(screened, evaluations, archive) {
+  const eligible = evaluations.filter((entry) => entry.eligible);
+  const occupiedBreadthBins = new Set(archive.map(({ cell }) => cell.split(',')[0])).size;
+  const occupiedRegretBins = new Set(archive.map(({ cell }) => cell.split(',')[1])).size;
+  const rho = spearman(eligible.map(({ descriptors }) => descriptors.regret.value),
+    eligible.map(({ descriptors }) => descriptors.harvest.value));
+  return {
+    screened: screened.length,
+    screenSurvivors: screened.filter(({ rejection }) => !rejection).length,
+    evaluated: evaluations.length,
+    eligible: eligible.length,
+    occupiedCells: archive.length,
+    occupiedBreadthBins,
+    occupiedRegretBins,
+    regretHarvestSpearman: rho === null ? null : Number(rho.toFixed(6)),
+    premise: archive.length >= 5 && occupiedBreadthBins >= 2 && occupiedRegretBins >= 2
+      ? 'SUPPORTED_AT_BOUNDED_SCOPE' : 'DISCONFIRMED_AT_BOUNDED_SCOPE',
+  };
 }
 
 function escapeHtml(value) {
@@ -225,13 +289,13 @@ function renderMapHtml(artifact) {
     for (let x = 0; x < GRID_SIZE; x++) {
       const cell = `${x},${y}`;
       const elites = byCell.get(cell) || [];
-      const cards = elites.map((elite) => `<li><b>#${elite.rank} ${escapeHtml(elite.candidate.name)}</b><span>bot wins ${(elite.quality.winRate * 100).toFixed(1)}%</span><span>breadth ≥${elite.descriptors.breadth.value}</span><span>harvest ${(elite.descriptors.harvest.value * 100).toFixed(1)}%</span><code>${elite.boardIdentity.slice(0, 10)}</code></li>`).join('');
+      const cards = elites.map((elite) => `<li><b>#${elite.rank} ${escapeHtml(elite.candidate.name)}</b><span>bot wins ${(elite.quality.winRate * 100).toFixed(1)}%</span><span>breadth ≥${elite.descriptors.breadth.value}</span><span>bot behind ${(elite.descriptors.regret.value * 100).toFixed(1)}%</span><span>harvest ${(elite.descriptors.harvest.value * 100).toFixed(1)}%</span><code>${elite.boardIdentity.slice(0, 10)}</code></li>`).join('');
       cells.push(`<article class="cell ${elites.length ? 'occupied' : 'empty'}" data-cell="${cell}"><h3>${cell}</h3>${elites.length ? `<ol>${cards}</ol>` : '<p>Empty</p>'}</article>`);
     }
   }
   return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Board MAP-Elites</title><style>
 body{font:14px system-ui;margin:24px;background:#f4f6f8;color:#172033}h1{margin-bottom:6px}.note{max-width:80ch}.grid{display:grid;grid-template-columns:repeat(7,minmax(150px,1fr));gap:8px;min-width:1080px}.wrap{overflow:auto}.cell{min-height:150px;border:1px solid #ccd3dc;border-radius:10px;padding:10px;background:white}.empty{border-style:dashed;color:#7b8491}.cell h3{margin:0 0 8px}.cell ol{margin:0;padding-left:22px}.cell li{margin-bottom:8px}.cell span,.cell code{display:block;font-size:12px}code{color:#53606f}.axis{font-weight:700;margin:14px 0 8px}
-</style></head><body><h1>7×7 Board MAP-Elites</h1><p class="note">Each cell retains up to three distinct viable board designs. X: successful plan breadth (verified 2048-outcome lower bound). Y: harvesting advantage (paired move-cost advantage over immediate scoring). Empty cells are evidence, not errors.</p><p>Archive <code>${escapeHtml(artifact.artifactIdentity)}</code></p><div class="axis">Harvesting advantage ↑</div><div class="wrap"><div class="grid">${cells.join('')}</div></div><div class="axis">Successful plan breadth →</div></body></html>\n`;
+</style></head><body><h1>7×7 Board MAP-Elites</h1><p class="note">Each cell retains up to three distinct viable board designs. X: successful plan breadth (verified 2048-outcome lower bound). Y: baseline regret (moves the shipped bot gives away against the cheapest replayed plan, as a share of the move budget; a lower bound). Empty cells are evidence, not errors.</p><p>Archive <code>${escapeHtml(artifact.artifactIdentity)}</code></p><div class="axis">Baseline regret ↑</div><div class="wrap"><div class="grid">${cells.join('')}</div></div><div class="axis">Successful plan breadth →</div></body></html>\n`;
 }
 
 module.exports = {
@@ -239,6 +303,7 @@ module.exports = {
   CELL_CAPACITY,
   GRID_SIZE,
   HARVEST_BINS,
+  REGRET_BINS,
   SOURCE_PATHS,
   boardDefinition,
   boardIdentity,
@@ -251,6 +316,9 @@ module.exports = {
   pairedHarvestAdvantage,
   placeElite,
   qualityCompare,
+  regretBin,
   renderMapHtml,
+  spearman,
   summarizeBreadth,
+  summarizeRun,
 };
