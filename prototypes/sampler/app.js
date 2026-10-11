@@ -3,8 +3,8 @@
 (function(){
   'use strict';
   const rules=window.SamplerRules,levels=window.SamplerLevels,$=id=>document.getElementById(id);
-  const STUDY='kinds-sampler-v1',LS='kindsSampler.v1';
-  const COLORS=['#d9822b','#3d7fb8','#3f8f5a'],LETTERS='ABC',RINGS=['ing-a','ing-b','ing-c'];
+  const STUDY='kinds-sampler-v2',LS='kindsSampler.v2';
+  const COLORS=['#c03a7a','#3d7fb8','#7a4fc0'],LETTERS='ABC',RINGS=['ing-a','ing-b','ing-c'];
   let local={current:0,played:{}};
   try{Object.assign(local,JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){/* storage unavailable */}
   const keep=()=>{try{localStorage.setItem(LS,JSON.stringify(local));}catch(e){/* fine */}};
@@ -21,6 +21,12 @@
   const goal=()=>level.goal,orders=()=>goal().type==='orders'?goal().orders:[];
   const same=(a,b)=>a&&b&&a[0]===b[0]&&a[1]===b[1];
   function ingredientCount(s,o){let n=0;for(const row of s.grid)for(const t of row)if(t&&!t.rust&&t.value===o.from)n++;return n;}
+  // Colour family: the 2 line (2, 4, 8 ...) uses the main palette; the 3 line (3, 6, 12, 24 ...) is green, so the page
+  // shows how scarce those tiles are (CONTEXT.md: a family is one doubling progression shown by one colour).
+  const family=v=>{let n=v;while(n%2===0)n/=2;return n===1?'two':n===3?'three':'other';};
+  const tierOf=v=>{const green=family(v)==='three';return Math.min(9,Math.max(1,Math.round(Math.log2(green?v/3:v))-(green?0:1)));};
+  function tileClasses(value){const f=family(value);return ['tile',(f==='three'?'g':'t')+tierOf(value)].concat(f==='other'?['odd']:[]);}
+  function miniTile(value){const t=document.createElement('span');t.className='mini '+tileClasses(value).slice(1).join(' ');t.textContent=fmt(value);return t;}
   function rustCount(s){let n=0;for(const row of s.grid)for(const t of row)if(t&&t.rust)n++;return n;}
 
   function begin(fresh){
@@ -31,16 +37,19 @@
   }
 
   function goalChips(shown){
-    const g=goal(),chip=(text,color,done)=>{const c=document.createElement('span');c.className='chip'+(done?' done':'');c.style.setProperty('--c',color);c.textContent=text+(done?' ✓':'');return c;};
-    if(g.type==='orders')return g.orders.map((o,i)=>chip(`${g.orders.length>1?LETTERS[i]+' · ':''}${fmt(o.make)} = ${o.make/o.from} × ${o.from}${o.at?' on ◎':''}${g.feeds&&i?', using ●':''}`,COLORS[i],shown.done[i]));
-    if(g.type==='exact')return [chip(`Make exactly ${fmt(g.make)}`,COLORS[0],shown.done[0])];
-    if(g.type==='relay')return g.stages.map((v,i)=>chip(i?`then ${fmt(v)}, using it`:`Make ${fmt(v)}`,COLORS[i],shown.done[i]));
+    const g=goal(),chip=(parts,color,done)=>{const c=document.createElement('span');c.className='chip'+(done?' done':'');c.style.setProperty('--c',color);
+      c.append(...[].concat(parts).map(p=>typeof p==='number'?miniTile(p):document.createTextNode(p)));if(done)c.append(' ✓');return c;};
+    // An order chip shows the ingredient as a small tile and how many: [32] × 4. The total is never written as a sum.
+    if(g.type==='orders')return g.orders.map((o,i)=>chip([g.orders.length>1?LETTERS[i]+' · ':'',o.from,` × ${o.make/o.from}${o.at?' on ◎':''}${g.feeds&&i?', using ●':''}${g.parts&&i?', with a part':''}`],COLORS[i],shown.done[i]));
+    if(g.type==='exact')return [chip(['Make one ',g.make],COLORS[0],shown.done[0])];
+    if(g.type==='relay')return g.stages.map((v,i)=>chip(i?['then ',v,', using it']:['Make ',v],COLORS[i],shown.done[i]));
     if(g.type==='leftover')return [chip(`Leave ${g.max} tile${g.max>1?'s':''}`,COLORS[0],rules.goalMet(level,shown))];
     return [chip('One chain through both ★',COLORS[0],shown.done[0])];
   }
   function progressText(shown){
     const g=goal();
-    if(g.type==='orders')return g.orders.map(o=>`${o.from}s ${Math.min(ingredientCount(shown,o),o.make/o.from)}/${o.make/o.from}`).join('\n');
+    if(g.type==='orders')return g.orders.map(o=>`${o.from}s ${Math.min(ingredientCount(shown,o),o.make/o.from)}/${o.make/o.from}`)
+      .concat(g.parts?[`parts: ${rules.partCount(shown)}/${rules.MAX_PARTS}`]:[]).join('\n');
     if(g.type==='leftover')return `${rules.tileCount(shown)} tiles`;
     if(level.rust)return `${level.rust.ice?'ice':'rust'} ${rustCount(shown)}`;
     if(level.gate)return shown.gateOpen?'gate open':'gate shut';
@@ -62,7 +71,9 @@
       if(recipe>=0){
         const o=g.orders[recipe],[ex,ey]=selection.at(-1);
         if(o.at&&!(o.at[0]===ex&&o.at[1]===ey))return {text:`Right recipe, wrong spot: the chain has to end on ◎.`,tone:'warn'};
-        if(g.feeds&&state.done.indexOf(false)!==recipe)return {text:`Right recipe, but order ${LETTERS[state.done.indexOf(false)]} comes first.`,tone:'warn'};
+        if((g.feeds||g.parts)&&state.done.indexOf(false)!==recipe)return {text:`Right recipe, but order ${LETTERS[state.done.indexOf(false)]} comes first.`,tone:'warn'};
+        if(g.parts&&recipe>0&&!selection.some(([x,y])=>state.grid[y][x].made))return {text:`Right recipe, but the chain has to include a part (●).`,tone:'warn'};
+        if(g.parts&&rules.partsAfter(state,selection)>rules.MAX_PARTS)return {text:`Not allowed: that would make a third part. At most ${rules.MAX_PARTS} parts at once.`,tone:'warn'};
         return {text:`Right recipe, but it has to include the ${fmt(g.orders[recipe-1].make)} order ${LETTERS[recipe-1]} made (●).`,tone:'warn'};
       }
       for(const [i,o] of g.orders.entries()){
@@ -73,7 +84,7 @@
       }
     }
     if(g.type==='exact'){
-      if(sum===g.make)return {text:`${base} That's exactly ${fmt(g.make)}: wins.`,tone:'good'};
+      if(sum===g.make)return {text:`${base} That makes ${fmt(g.make)}: wins.`,tone:'good'};
       if(sum>g.make)return {text:`${base} Over ${fmt(g.make)}.`,tone:'warn'};
     }
     if(g.type==='relay'){
@@ -82,9 +93,9 @@
       if(i>0&&sum===g.stages[i])return {text:`${base} Right sum, but it has to include the ${fmt(g.stages[i-1])} you made (●).`,tone:'warn'};
       if(sum>g.stages[i])return {text:`${base} Over ${fmt(g.stages[i])}.`,tone:'warn'};
     }
-    if(level.gate&&!state.gateOpen&&sum===level.gate.sum&&Math.max(Math.abs(selection.at(-1)[0]-level.gate.at[0]),Math.abs(selection.at(-1)[1]-level.gate.at[1]))===1)
-      return {text:`${base} Ends beside the gate with exactly ${level.gate.sum}: opens it.`,tone:'good'};
-    if(level.rust&&level.rust.scrape&&sum===level.rust.scrape)return {text:`${base} Exactly ${level.rust.scrape}: scrapes off any ${level.rust.ice?'ice':'rust'} it ends beside.`,tone:''};
+    if(level.gate&&!state.gateOpen&&rules.opensGate(level,sum)&&Math.max(Math.abs(selection.at(-1)[0]-level.gate.at[0]),Math.abs(selection.at(-1)[1]-level.gate.at[1]))===1)
+      return {text:`${base} Ends beside the gate with ${fmt(level.gate.sum)} or more: opens it.`,tone:'good'};
+    if(level.rust&&level.rust.scrape&&rules.scrapes(level,sum))return {text:`${base} ${fmt(level.rust.scrape)} or more: scrapes off any ${level.rust.ice?'ice':'rust'} it ends beside.`,tone:''};
     if(g.type==='connect'){
       if(rules.connects(level,selection))return {text:`${base} Goes through both ★: wins.`,tone:'good'};
       const hit=g.marks.filter(m=>selection.some(p=>same(p,m))).length;
@@ -107,15 +118,17 @@
       fc.replaceChildren(...Array.from({length:shown.gridWidth},(_,x)=>{const d=document.createElement('div');d.className='next';
         const [a,b]=rules.upcoming(level,shown,x,2);d.innerHTML=`<b>${a}</b><small>then ${b}</small>`;return d;}));}
     // board
+    const boss=$('boss');boss.hidden=!(level.boss&&state.moves===0);
+    if(level.boss){$('boss-title').textContent=level.boss.title;$('boss-text').textContent=level.boss.text;}
+    $('shell').style.setProperty('--aspect',String(shown.gridHeight/shown.gridWidth));
     const board=$('board');board.style.gridTemplateColumns=`repeat(${shown.gridWidth},1fr)`;board.replaceChildren();
     const spots=orders().map((o,i)=>o.at?{at:o.at,i,done:shown.done[i]}:null).filter(Boolean),marks=goal().type==='connect'?goal().marks:[];
     for(let y=0;y<shown.gridHeight;y++)for(let x=0;x<shown.gridWidth;x++){
       const tile=shown.grid[y][x],cell=document.createElement('button');cell.type='button';cell.dataset.x=x;cell.dataset.y=y;
-      if(level.gate&&!shown.gateOpen&&same(level.gate.at,[x,y])){cell.className='tile stone gate';cell.disabled=true;cell.textContent=level.gate.sum;cell.setAttribute('aria-label',`Gate: opens with a chain of exactly ${level.gate.sum} ending beside it`);board.append(cell);continue;}
+      if(level.gate&&!shown.gateOpen&&same(level.gate.at,[x,y])){cell.className='tile stone gate';cell.disabled=true;cell.textContent='≥'+fmt(level.gate.sum);cell.setAttribute('aria-label',`Gate: opens with a chain of ${level.gate.sum} or more ending beside it`);board.append(cell);continue;}
       if(rules.isStone(shown,x,y)){cell.className='tile stone';cell.disabled=true;cell.setAttribute('aria-label',`Column ${x+1}, row ${y+1}: wall`);board.append(cell);continue;}
       if(!tile){cell.className='tile empty';cell.disabled=true;cell.setAttribute('aria-label',`Column ${x+1}, row ${y+1}: empty`);board.append(cell);continue;}
-      const tier=Math.min(9,Math.max(1,Math.round(Math.log2(tile.value))-1));cell.className='tile t'+tier;
-      if(Math.log2(tile.value)%1)cell.classList.add('odd');
+      cell.className=tileClasses(tile.value).join(' ');
       cell.textContent=fmt(tile.value);
       orders().forEach((o,i)=>{if(tile.value===o.from&&!shown.done[i])cell.classList.add(RINGS[i]);});
       const spot=spots.find(s=>same(s.at,[x,y]));if(spot&&!spot.done){cell.classList.add('spot');}
@@ -126,7 +139,7 @@
       if(order>=0&&!previewing){cell.classList.add('sel');const tag=document.createElement('span');tag.className='ord';tag.textContent=order+1;cell.append(tag);}
       if(previewing&&predicted&&predicted.last.landing.x===x&&predicted.last.landing.y===y)cell.classList.add('landed');
       cell.disabled=previewing||state.outcome!=='playing'||tile.rust;cell.setAttribute('aria-pressed',String(order>=0&&!previewing));
-      cell.setAttribute('aria-label',`Column ${x+1}, row ${y+1}: ${tile.value}${tile.rust?(level.rust.ice?', frozen':', rusted'):''}${spot?', spot':''}${tile.made?', made':''}`);
+      cell.setAttribute('aria-label',`Column ${x+1}, row ${y+1}: ${tile.value}${tile.rust?(level.rust.ice?', frozen':', rusted'):''}${spot?', spot':''}${tile.made?(goal().parts?', part':', made'):''}${family(tile.value)==='three'?', green':''}`);
       board.append(cell);
     }
     const path=$('path');path.setAttribute('viewBox',`0 0 ${shown.gridWidth*100} ${shown.gridHeight*100}`);path.setAttribute('preserveAspectRatio','none');path.replaceChildren();
@@ -192,7 +205,7 @@
     delete doc.savedRev;delete doc.savedReason;
     pending['runs/'+r.id]={collection:'runs',id:r.id,doc,statusEl:$('run-status'),done:()=>{if(doc.rev>=(r.savedRev||0)){r.savedRev=doc.rev;r.savedReason=reason;}}};flush();
   }
-  function saveAnswer(a){pending['answers/'+a.board]={collection:'answers',id:a.board,doc:JSON.parse(JSON.stringify(a)),statusEl:$('q-status')};flush();}
+  function saveAnswer(a){const id=`${STUDY}--${a.board}`;pending['answers/'+id]={collection:'answers',id,doc:JSON.parse(JSON.stringify(a)),statusEl:$('q-status')};flush();}
   async function flush(){
     if(flushing){again=true;return;}flushing=true;
     try{
@@ -246,8 +259,8 @@
     saveAnswer(a);render();
   });
   window.addEventListener('pagehide',()=>{if(run&&run.actions.length)saveRun(state.outcome==='playing'?'closed':'finished');});
-  // Stored answers load in the background; a board answered locally in the meantime keeps its newer copy.
+  // Stored answers (this study only; v1 docs are keyed by bare board id) load in the background; a board answered locally in the meantime keeps its newer copy.
   (async()=>{try{const db=await database();if(!db)return;const snap=await db.collection('answers').get();
-    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(v&&v.board&&(!answers[v.board]||(answers[v.board].savedAt||'')<(v.savedAt||'')))answers[v.board]=v;if(v&&v.board&&v.runId&&!local.played[v.board])local.played[v.board]=v.runId;});render();}catch(e){/* offline is fine */}})();
+    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(!v||v.study!==STUDY)return;/* other versions' answers stay out */if(v.board&&(!answers[v.board]||(answers[v.board].savedAt||'')<(v.savedAt||'')))answers[v.board]=v;if(v.board&&v.runId&&!local.played[v.board])local.played[v.board]=v.runId;});render();}catch(e){/* offline is fine */}})();
   begin();
 })();

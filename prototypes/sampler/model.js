@@ -1,20 +1,26 @@
 /* Kinds sampler: one rules module for five candidate level kinds from the archetype research
    (level-archetypes files 04, 09, 09b, 10, 11). Chain legality, sum-on-last-tile and gravity follow the Recipe
    prototype (prototypes/recipe/model.js). Each board has one goal and at most one twist:
-     goal.type 'orders'   Recipe orders; an order with `at` counts only if its chain ends on that cell.
+     goal.type 'orders'   Recipe orders; an order with `at` counts only if its chain ends on that cell. With `feeds`
+                          (v1, kept for Feed the Next — Advanced) orders fill in turn and each later order must use the
+                          tile the previous order made. With `parts` (v2) orders fill in turn, the tile each order
+                          makes becomes a part, each later order's chain must include at least one part (any part), and
+                          a fill that would leave more than MAX_PARTS parts on the board is not allowed.
      goal.type 'exact'    make one tile of exactly goal.make (any values).
      goal.type 'leftover' end with at most goal.max tiles on the board.
      goal.type 'connect'  one chain must include every cell in goal.marks.
      goal.type 'relay'    make exactly stages[0], then exactly stages[1], ... in order; each later chain must use the
                           tile the previous stage made.
      forecast: true       each column has its own refill queue; the page shows the next tile above each column.
-     refill: false        no refills (Dry Well); empty cells stay empty.
+     refill: false        no refills (The Drought); empty cells stay empty.
+     boss: {title, text}  a boss board: the page announces it before the first move.
      stone: [[x,y],...]   walls: no tile, nothing falls through, nothing chains across a diagonal between two walls.
      rust: {cells, every, scrape, ice}
                           rusted tiles can't be chained; every `every` moves (0: never) rust spreads to one clean tile
                           beside it (up, down, left, right). A chain that ends touching rust (diagonals included) clears
-                          that rust; with `scrape`, only a chain of exactly that sum does. `ice` only renames it on the page.
-     gate: {at, sum}      a wall cell that opens once a chain of exactly `sum` ends touching it. */
+                          that rust; with `scrape`, only a chain whose sum is at least `scrape` does. `ice` only renames
+                          it on the page.
+     gate: {at, sum}      a wall cell that opens once a chain whose sum is at least `sum` ends touching it. */
 (function(root,factory){
   if(typeof module==='object'&&module.exports)module.exports=factory(require('../../solver/engine'));
   else root.SamplerRules=factory(root.ChainCore);
@@ -22,7 +28,7 @@
   'use strict';
   const copy=value=>JSON.parse(JSON.stringify(value));
   const positive=value=>Number.isSafeInteger(value)&&value>0;
-  const MIN_CHAIN=3;
+  const MIN_CHAIN=3,MAX_PARTS=2;
   const GOALS=['orders','exact','leftover','connect','relay'];
   function checkLevel(level){
     const g=level&&level.goal,h=level&&Array.isArray(level.grid)?level.grid.length:0,w=h&&Array.isArray(level.grid[0])?level.grid[0].length:0;
@@ -78,7 +84,17 @@
     const values=chain.map(([x,y])=>state.grid[y][x].value),sum=values.reduce((a,b)=>a+b,0),[ex,ey]=chain.at(-1);
     const i=level.goal.orders.findIndex((o,i)=>!state.done[i]&&sum===o.make&&values.every(v=>v===o.from)&&
       (!o.at||o.at[0]===ex&&o.at[1]===ey));
-    return i>=0&&feedsOk(level,state,chain,i)?i:-1;
+    return i>=0&&feedsOk(level,state,chain,i)&&partsOk(level,state,chain,i)?i:-1;
+  }
+  const isPart=t=>!!t&&!!t.made;
+  function partCount(state){let n=0;for(const row of state.grid)for(const t of row)if(isPart(t))n++;return n;}
+  // How many parts the board would hold after this chain fills an order: the chain's parts merge away, its last tile
+  // becomes a part.
+  const partsAfter=(state,chain)=>partCount(state)-chain.filter(([x,y])=>isPart(state.grid[y][x])).length+1;
+  // With `parts`, orders fill in turn; each order after the first must include a part; at most MAX_PARTS parts at once.
+  function partsOk(level,state,chain,i){
+    if(!level.goal.parts)return true;
+    return state.done.indexOf(false)===i&&(i===0||chain.some(([x,y])=>isPart(state.grid[y][x])))&&partsAfter(state,chain)<=MAX_PARTS;
   }
   // With `feeds`, orders fill in turn and each order after the first must use the tile the previous order made (●).
   function feedsOk(level,state,chain,i){
@@ -157,6 +173,8 @@
     const options=rustFront(state);
     return options.length?options[Math.floor(core.makeRng(level.seed*31+moves)()*options.length)]:null;
   }
+  const scrapes=(level,sum)=>!!level.rust&&(!level.rust.scrape||sum>=level.rust.scrape);
+  const opensGate=(level,sum)=>!!level.gate&&sum>=level.gate.sum;
   function hasMove(state){
     let found=false;
     eachChain(state,state.minChain,()=>{found=true;return true;});
@@ -172,17 +190,17 @@
     const points=core.executeChain(state,tiles);
     tiles.forEach(t=>{delete t.made;});
     if(stage>=0){state.done[stage]=true;survivor.made=true;}
-    if(order>=0){state.done[order]=true;if(level.goal.feeds)survivor.made=true;}
+    if(order>=0){state.done[order]=true;if(level.goal.feeds||level.goal.parts)survivor.made=true;}
     if(linked)state.done[0]=true;
     if(level.goal.type==='exact'&&survivor.value===level.goal.make)state.done[0]=true;
-    // A chain that ends touching rust scrapes it off (with `scrape`, only a chain of that exact sum).
+    // A chain that ends touching rust scrapes it off (with `scrape`, only a chain whose sum is at least `scrape`).
     const cleared=[],touches=(x,y)=>Math.max(Math.abs(survivor.x-x),Math.abs(survivor.y-y))===1;
-    if(level.rust&&(!level.rust.scrape||sum===level.rust.scrape))for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+    if(level.rust&&scrapes(level,sum))for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
       const x=survivor.x+dx,y=survivor.y+dy,t=inside(state,x,y)?state.grid[y][x]:null;
       if(t&&t.rust&&(dx||dy)){t.rust=false;cleared.push([x,y]);}
     }
     let opened=false;
-    if(level.gate&&!state.gateOpen&&sum===level.gate.sum&&touches(...level.gate.at)){
+    if(level.gate&&!state.gateOpen&&opensGate(level,sum)&&touches(...level.gate.at)){
       state.gateOpen=true;opened=true;state.stone=state.stone.filter(k=>k!==String(level.gate.at));
     }
     settle(state);
@@ -239,5 +257,5 @@
     return out;
   }
   return {create,valid,completes,recipeOnly,relayStage,connects,move,preview,hasMove,replay,eachChain,chains,upcoming,tileCount,goalMet,
-    nextRust,spreadsAfter,isStone,MIN_CHAIN};
+    nextRust,spreadsAfter,isStone,partCount,partsAfter,scrapes,opensGate,MIN_CHAIN,MAX_PARTS};
 });
