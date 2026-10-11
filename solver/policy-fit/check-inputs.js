@@ -1,24 +1,16 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-const {execFileSync}=require('node:child_process');
+const {gameRuleIdentity,historicalBytes}=require('../game-rule-surface');
 const root=path.resolve(__dirname,'../..');
 // DECISION-0013: src/game.js may change for browser-only fixes. Its pinned
-// bytes must still exist in history, so the study's input stays recoverable.
-// A pilot execution receipt is re-derived whenever src/game.js changes, and
-// only its two runtime identity fields move: every other field must still
-// match the pinned bytes exactly.
+// bytes must still exist in history and its game rules must still equal theirs
+// (solver/game-rule-surface.js). A pilot execution receipt is re-derived
+// whenever src/game.js changes, and only its two runtime identity fields move:
+// every other field must still match the pinned bytes exactly.
 const LIVE_GAME='src/game.js';
 const REDERIVED_RECEIPT=/^pilots\/[A-Za-z0-9-]+\/execution-receipt\.json$/;
 const RUNTIME_IDENTITY_FIELDS=['artifactIdentity','runtimeBundleIdentity'];
 const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
-function pinnedHistoricalBytes(input,hash){
- const commits=execFileSync('git',['log','--format=%H','--',input],{cwd:root,encoding:'utf8'}).trim().split('\n').filter(Boolean);
- for(const commit of commits){
-  let bytes; try{bytes=execFileSync('git',['show',`${commit}:${input}`],{cwd:root});}catch{continue;}
-  if(sha(bytes)===hash) return bytes;
- }
- return null;
-}
 function sameApartFromRuntimeIdentity(live,pinned){
  const strip=bytes=>{const value=JSON.parse(bytes.toString('utf8')); for(const field of RUNTIME_IDENTITY_FIELDS) delete value[field]; return JSON.stringify(value);};
  return strip(live)===strip(pinned);
@@ -32,8 +24,9 @@ function checkInputs(manifest){
  for(const [input,hash] of Object.entries(manifest)){
   const live=fs.readFileSync(path.join(root,input));
   if(sha(live)===hash) continue;
-  const pinned=input===LIVE_GAME||REDERIVED_RECEIPT.test(input)?pinnedHistoricalBytes(input,hash):null;
-  if(!pinned||(input!==LIVE_GAME&&!sameApartFromRuntimeIdentity(live,pinned))) throw new Error('Historical input drift: '+input);
+  const pinned=input===LIVE_GAME||REDERIVED_RECEIPT.test(input)?historicalBytes(root,input,hash):null;
+  const accepted=pinned&&(input===LIVE_GAME?gameRuleIdentity(live)===gameRuleIdentity(pinned):sameApartFromRuntimeIdentity(live,pinned));
+  if(!accepted) throw new Error('Historical input drift: '+input);
  }
  return Object.keys(manifest).length;
 }
