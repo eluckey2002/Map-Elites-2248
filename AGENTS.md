@@ -142,24 +142,63 @@ it has been installed (`node tools/hooks/install.js`, once per clone; clones
 installed before 2026-09-25 hold a stale copy and must run it once more) it
 refuses to push a red gate to `main` before the push leaves the machine, and
 it lets a green push through. CI also refuses committed merge-conflict markers.
-Three more rules no mechanism enforces:
+The rules below are not enforced by any mechanism. The agent that opens a
+pull request runs its whole lifecycle, merge included, without asking the
+owner for approval (owner decision, 2026-10-11).
 
-1. **Do not merge until the Codex review has completed.** Codex reviews every
+1. **Check open pull requests before starting.** Run
+   `gh pr list --limit 100 --json number,title,files` and look for any that
+   touch the files you plan to change; a title alone can hide the overlap.
+   On 2026-09-26, PR #41 and PR #46 each built a separate generator for
+   `LEDGER-INDEX.md`. Extend or coordinate with the open work instead of
+   duplicating it.
+2. **One pull request per ask, with related fixes bundled.** Put related fixes
+   from one request in a single pull request instead of several small ones.
+   Fill in `.github/pull_request_template.md`.
+3. **Scope is locked to the opening title.** A pull request does what the
+   title it was opened with says and nothing more; do not broaden the title.
+   A review finding outside that scope goes in the pull request description
+   under "Follow-ups" and is left for later work; it does not become another
+   commit here. On 2026-10-11, PR #70 opened as four game
+   bug fixes and grew seventeen gate-hardening commits chasing Codex findings.
+4. **Do not merge until the Codex review has completed.** Codex reviews every
    pull request when it opens and either leaves inline findings or reacts 👍.
-   Wait for one or the other. On 2026-09-03 PR #3 was merged thirty seconds
+   Wait for one or the other. Codex does not review a draft: mark the draft
+   ready, or comment `@codex review`, before you wait. On 2026-09-03 PR #3 was merged thirty seconds
    before its review landed; the finding was correct and `main` carried a
    mislabelled record until PR #4.
    Codex does not re-review later pushes on its own: after pushing fixes,
    comment `@codex review` on the pull request and wait for its new verdict.
-2. **The agent that opened the pull request owns it to the end.** Address every
-   inline finding with a fix commit or a written rebuttal on the thread,
-   resolve the thread, then merge. Do not ask Codex to push fixes into a pull
-   request another agent opened: two writers on one branch is the concurrent
-   writer problem again.
-3. **Check open pull requests before starting.** Run `gh pr list` and read the
-   titles of anything touching the same files. On 2026-09-26, PR #41 and PR #46
-   each built a separate generator for `LEDGER-INDEX.md`. Extend or coordinate
-   with the open work instead of duplicating it.
+5. **Fix by severity, and stop after three Codex rounds.** Fix P0 and P1
+   findings and any real bug a player or the ledger would see. Answer P2 and
+   lower findings with a one-line reply and resolve the thread without code
+   unless the fix is trivial and in scope. A round is one Codex verdict.
+   After the third round, fix only what is still P0/P1 or a real bug and list
+   everything else under "Follow-ups". If that changed the head, request one
+   final review of it and act only on P0/P1 findings or real bugs; then merge.
+6. **The agent that opened the pull request owns it to the end.** Address
+   every inline finding with a fix commit or a written reply on the thread,
+   resolve the thread, then merge it yourself. Do not ask Codex to push fixes
+   into a pull request another agent opened: two writers on one branch is the
+   concurrent writer problem again.
+7. **A pull request is done, and gets merged, when all of these hold:** the
+   `experiment gate` check is green; the full test suite fails nothing that
+   passes on `main`, and every test the pull request adds or unskips passes
+   (the documented deliberate failures in "Before you edit anything", and
+   anything already red on `main`, do not block, but say which in the pull
+   request); Codex has finished per rules 4 and 5 and every review thread is
+   resolved; there is no merge conflict. Then merge it, remove its worktree,
+   and tell the owner in one line that it merged.
+8. **Do not leave drafts idle.** A pull request with no commits or comments
+   for three days is either finished and merged or closed with a one-line
+   reason by the agent that owns it. If that agent's claim has lapsed, the
+   agent that reclaims the task becomes the owner and does this.
+9. **Do not stop for the owner's OK.** Opening, fixing, re-requesting review,
+   merging and closing pull requests need no approval. Where a choice is
+   unclear, pick the sensible default, state it in the pull request
+   description, and keep going. Stop to ask only for what "How to work here"
+   already reserves to the owner (a game rule or scoring change) or for an
+   action outside this repository that cannot be undone.
 
 A red gate is fixed in the ledger or the protocol, never by editing the gate,
 grandfathering the record, or `--no-verify`.
