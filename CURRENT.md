@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Recipe prototype — 2026-10-11
+
+The owner proposed Recipe goals: win by making an exact tile from one ingredient, such as a 512 from only 128s. [`prototypes/recipe/`](prototypes/recipe/README.md) has four screened boards, playable on a private Artifact. They are not in the app. Open: owner play and a PDL entry (task BL-0027). The README explains why this is not the retired Forge Contracts (PDL-009) or Three Forge Docks (PDL-010).
+
 ## Browser game bug fixes — 2026-10-11
 
 DECISION-0015 (provisional, check pending) lets the browser code in `src/game.js` change without turning the gate red for RESULT-0047, RESULT-0049 and RESULT-0082, while its game rules stay bound (`solver/game-rule-surface.js`): all three now recompute at their admission commits, with `src/game.js` a live file. The fixes under it scope Enter to the board, stop a level reload during the merge animation from ticking blockers on the new board, say at once when a dealt board has no legal chain, and show exact tile values (`solver/tests/gameInputSafety.test.js`). HUMAN-PILOT-0002 was re-derived; only its two identity fields changed. Source review: the 2026-10-11 repo review in the owner's project files.
