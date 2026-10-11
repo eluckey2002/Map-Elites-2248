@@ -288,6 +288,8 @@ function browserOnly(tokens, [start, end], name, rules) {
     const token = tokens[i];
     // A name spelled as a string, as in document['defaultView'], counts as that name.
     if (token.kind === 'string' && named(token.t.slice(1, -1))) return false;
+    // Escapes can spell any name (tile.t\u0069ckBlocker, 'g\x61me'), so browser-only code has none.
+    if (token.t.includes('\\')) return false;
     if (token.kind === 'identifier' && (MEMBER_ESCAPES.has(token.t)
       || (GLOBAL_ESCAPES.has(token.t) && t(i - 1) !== '.' && t(i - 1) !== '?.'))) return false;
     if (token.t === 'window' && !(t(i + 1) === '.' && WINDOW_MEMBERS.has(t(i + 2)))) return false;

@@ -132,6 +132,8 @@ test('a browser declaration that writes game state or calls rule code is bound l
     ['updateUI', 'this.someHelper();'],
     ['updateUI', 'this.setupEventListeners();'],
     ['render', 'this.showLevelSelect();'],
+    ['drawTile', 'tile.t\\u0069ckBlocker();'],
+    ['updateUI', "document['defaultVi\\x65w'].x = 1;"],
     ['setupEventListeners', "document['defaultView']['game']['checkWinLose'] = () => {};"],
     ['setupEventListeners', "document.body[key] = null;"],
     ['updateUI', "const name = 'executeChain';"],
