@@ -1,7 +1,7 @@
 ---
 id: BL-0029
 title: Owner plays the kinds sampler
-status: active
+status: done
 milestone: level-archetypes
 depends_on: [BL-0028]
 updated: 2026-10-11
@@ -33,13 +33,14 @@ three unrelated orders. The owner plays them and says which layers add planning.
 
 ## Current evidence
 
-PDL-038, REVISE. Screening for every board is in `prototypes/sampler/model.test.js`.
+PDL-039, REVISE (per-board decisions). Before that, PDL-038, REVISE. Screening for every board is in `prototypes/sampler/model.test.js`.
 
 ## Next action
 
-Owner play on the private Artifact.
+None. Follow-up: a second sampler version per PDL-039.
 
 ## History
 
 - 2026-10-11 — Created after PDL-038. Eight boards published to a new private
   Artifact; owner play pending.
+- 2026-10-11 — Owner played all boards except See It Coming; recorded as PDL-039.

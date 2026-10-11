@@ -1087,3 +1087,90 @@ design result:
   includes 6, 12 and 24.
 - **Sources:** Owner messages in the Level archetypes thread; Artifact `runs`
   and `answers`; level-archetypes/11-five-kinds-expanded.md. Task: BL-0028.
+
+### PDL-039 — Kinds sampler: dependency layers land, but the numbers get in the way
+
+- **Reported:** 2026-10-11, 16:03–17:24 UTC, in the Level archetypes thread,
+  while the owner played the kinds sampler (private Artifact, study
+  `kinds-sampler-v1`, eight boards). Task: BL-0029.
+- **Captured play (Artifact `runs`):**
+
+  | # | Board | Result | Moves | Undos | Minutes |
+  |---|---|---|---|---|---|
+  | 1 | Make It Here | won | 6 / 7 | 8 | 18 |
+  | 2 | Feed the Next | left, 2 of 3 orders filled | 3 / 7 | 8 | 15 |
+  | 3 | Shared Material | won | 6 / 7 | 3 | 3 |
+  | 4 | Three Separate (control) | won | 4 / 7 | 0 | 6 |
+  | 5 | See It Coming | no run saved | – | – | – |
+  | 6 | Dry Well | left | 2 / 6 | 4 | 7 |
+  | 7 | Through the Gate | left (two tries) | 2 / 8 | 1 | 3 |
+  | 8 | Rust | won | 5 / 7 | 5 | 14 |
+
+  One `answers` row (board 2): different from usual plan "yes", more like this
+  "3", note "a keeper - advanced level! mixing several components - non power
+  of 2's ! I didn't want to think anymore so I pass!".
+- **Owner reaction, verbatim (selected):**
+  - Board 1: "Lesson 1 learned real fast!" then "I need to undo!"
+  - Board 2: "definitely going to have to figure out a way to make it easier to
+    understand"; "humans are finicky - like half of 72.....?"; "I would let any
+    of my merges be allowed to be used" / "not just first one"; then
+    "definitely 3rd tier advanced! which is good!" and "yes as a keeper". Later:
+    "make it a rule - if you make a tile then you have to use it - and maybe
+    only allow a certain number"; on order chips, "remove the multiplication
+    here - make it tile x 3".
+  - Board 3: "Shared material! ohh! that creates a decision!" and "this type of
+    boards would be great for a map elites"; then "not hard because I just
+    clear the board and let more tiles in". On fixing it by changing refills:
+    "careful with changing the refill" and "Changing the refill might seem
+    'unfair' and goes against one of the few things that is steady with the
+    game"; "that could be like a 'boss stage and the boss changes the refill'".
+  - Board 6: "This is a good puzzler - its challenging and not really the same
+    game - different logic"; "It would frustrate me as a user"; "It could be a
+    Drought boss"; after playing, "I don't want to figure out the subtraction
+    and leaving 1 tile - that is a different game. Especially if the tiles are
+    not a power of 2".
+  - Board 7: "I think I lost because I couldnt make a 48"; "this is where you
+    would show the next tile"; "i am skipping it" / "it is a good idea though!"
+  - Board 8: "I don't know multiples of 192"; "my long chain will solve this
+    easily!"; won with a seven-tile chain 12+12+24+24+24+48+48 = 192 after four
+    48 scrapes.
+  - Overall: "Amazing how we are just creating all of these different versions
+    of a game but not really changing the core" / "and thats what I wanted!";
+    "that was a lot of puzzlers!"
+  - Spawn: asked why the boards were multiples of 4, then "I just meant,
+    2,4,8,16,32,64" about his PDL-038 spawn remark.
+- **Interpretation (inferred):** The dependency layers produced the planning
+  PDL-038 asked for: shared tiles "create a decision", feeding orders read as
+  an advanced tier, and no-refill play reads as a different kind of logic.
+  Most friction came from the 3-family values (6, 12, 24, 48 as 12+12+24, 72,
+  192), which were a misreading of the PDL-038 spawn remark: the owner meant a
+  wider band of powers of two. The control (board 4) was the quickest win with
+  no undos, consistent with unrelated orders adding little planning. Shared
+  Material's scarcity dissolved because refills could rebuild the shared tile.
+- **Decision:** **REVISE**, per board:
+  - Make It Here: KEEP.
+  - Feed the Next: KEEP as an advanced tier; add easier tiers. Replace the ●
+    rule with "a tile an order makes must go into a later chain", with a small
+    cap on how many can be on the board. Order chips show tile × count.
+  - Shared Material: KEEP the kind. Scarcity comes from tiles refills cannot
+    make (a few start-board tiles of another color family), never from
+    changing refills.
+  - Three Separate: control only; not a kind.
+  - See It Coming: no verdict; not played.
+  - Dry Well: REVISE into a "Drought" boss level: no refills, announced before
+    the first move, a normal goal instead of "leave 1 tile", powers of two only.
+  - Through the Gate: KEEP the idea; REVISE the board (gate opens on 48 or
+    more, wider rooms, show upcoming tiles, enough chains at the start).
+  - Rust: REVISE the target to a power of two.
+- **Standing rules from this session:** refills are one fixed rule on normal
+  levels; only an announced boss may change them. Spawns are powers of two
+  (2–64); other number families appear only as placed, colored tiles.
+- **Limits:** One player, one session, mostly first attempts. Board 5 has no
+  run. Boards 2, 6 and 7 were left, so their runs show where he stopped, not
+  whether the boards are winnable for him. Board 7's second run is a retry of
+  the same board. Only board 2 has an `answers` row.
+- **Next recommendation:** A second sampler version with spawns 2–64 on every
+  board and the per-board revisions above, then owner play again. The
+  mixed-family idea is parked as a separate game (BL-0031).
+- **Sources:** Owner messages in the Level archetypes thread; Artifact `runs`
+  (8 rows) and `answers` (1 row); prototypes/sampler/README.md. Task: BL-0029.
