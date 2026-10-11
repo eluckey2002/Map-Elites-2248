@@ -46,7 +46,6 @@ test('each sampler board opens without a win, has a solver witness in budget tha
     const nec=necessity(level,{beam:200,maxLength:7});
     assert.notEqual(nec.spotBlindWins,true,level.id+': ignoring the spot still wins');
     assert.notEqual(nec.winsWithoutRefills,true,level.id+': the refills are not needed');
-    assert.notEqual(nec.forecastBlindWins,true,level.id+': a plan made without the shown refills still wins');
     assert.notEqual(nec.rustBlindWins,true,level.id+': ignoring the rust still wins');
   }
 });

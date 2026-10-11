@@ -107,10 +107,6 @@ function necessity(level,opts={}){
   if(level.forecast){
     // With useless refills (one huge value) there must be no win: the falling tiles are needed.
     const sol=solve({...level,spawnValues:[1<<20]},opts);out.winsWithoutRefills=!!sol;
-    // A player who can't see what falls: plans made against other refill sequences (other seeds) must all fail on the
-    // real one. Then knowing the shown refills is what the win depends on.
-    out.forecastBlindWins=[1,2,3].some(k=>{const blind=solve({...level,seed:level.seed+1000*k},opts);
-      return !!blind&&play(level,blind.path).outcome==='won';});
   }
   if(level.rust){
     // Reported, not required: whether the harvest proxy would win with no rust at all.

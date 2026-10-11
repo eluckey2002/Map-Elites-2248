@@ -57,7 +57,7 @@
     const base=`${values.join(' + ')} → ${fmt(sum)} on the last tile.`;
     if(g.type==='orders'){
       const order=rules.completes(level,state,selection);
-      if(order>=0)return {text:`${values.length} × ${g.orders[order].from} → ${fmt(sum)} on the spot. Completes the order${g.orders.length>1?' '+LETTERS[order]:''}.`,tone:'good'};
+      if(order>=0)return {text:`${values.length} × ${g.orders[order].from} → ${fmt(sum)}${g.orders[order].at?' on the spot':''}. Completes the order${g.orders.length>1?' '+LETTERS[order]:''}.`,tone:'good'};
       const recipe=rules.recipeOnly(level,state,selection);
       if(recipe>=0){
         const o=g.orders[recipe],[ex,ey]=selection.at(-1);
@@ -184,11 +184,13 @@
   const pending={};let flushing=false,again=false;
   function saveRun(reason){
     const r=run;
-    if(!r.actions.length||r.savedRev===r.rev)return;
+    // Skip only a repeat of what is already saved: same actions and same reason (an `active` save must not swallow a
+    // later `left-board`, `retried` or `closed`).
+    if(!r.actions.length||r.savedRev===r.rev&&r.savedReason===reason)return;
     const doc=JSON.parse(JSON.stringify(Object.assign({},r,{endedAt:new Date().toISOString(),reason,outcome:state.outcome,movesUsed:state.moves,
       budget:state.maxMoves,done:state.done,finalGrid:state.grid.map(row=>row.map(t=>t?t.value:0))})));
-    delete doc.savedRev;
-    pending['runs/'+r.id]={collection:'runs',id:r.id,doc,statusEl:$('run-status'),done:()=>{r.savedRev=Math.max(r.savedRev||0,doc.rev);}};flush();
+    delete doc.savedRev;delete doc.savedReason;
+    pending['runs/'+r.id]={collection:'runs',id:r.id,doc,statusEl:$('run-status'),done:()=>{if(doc.rev>=(r.savedRev||0)){r.savedRev=doc.rev;r.savedReason=reason;}}};flush();
   }
   function saveAnswer(a){pending['answers/'+a.board]={collection:'answers',id:a.board,doc:JSON.parse(JSON.stringify(a)),statusEl:$('q-status')};flush();}
   async function flush(){
@@ -230,7 +232,7 @@
   $('merge').onclick=()=>{if(state.outcome==='playing'&&rules.valid(state,selection))apply(selection.map(p=>[...p]));};
   $('preview').onclick=()=>{if(rules.valid(state,selection)){previewing=!previewing;if(previewing)run.previews++;render();}};
   $('clear').onclick=()=>{selection=[];previewing=false;render();};
-  $('undo').onclick=()=>{if(!history.length)return;state=history.pop();run.undos++;run.actions.push({type:'undo',at:Date.now()});run.rev++;selection=[];previewing=false;render();};
+  $('undo').onclick=()=>{if(!history.length)return;state=history.pop();run.undos++;run.actions.push({type:'undo',at:Date.now()});run.rev++;selection=[];previewing=false;saveRun('active');render();};
   $('retry').onclick=()=>{if(run.actions.length)saveRun(state.outcome==='playing'?'retried':'finished');begin();};
   $('next').onclick=()=>switchBoard((local.current+1)%levels.length);
   document.querySelectorAll('#questions .chips').forEach(group=>group.addEventListener('click',e=>{

@@ -49,7 +49,7 @@ chain. PDL-037: on Recipe boards the owner filled orders with clean one-value
 chains and never spent an ingredient in a mixed chain.
 
 Exact opening states (column, row, zero-based) where the long mixed chain is the
-wrong move:
+wrong move (Three Separate, the control, is left out):
 
 - **Make It Here:** the longest chain is 7×12 + 4×24 + 48, twelve tiles ending at
   (2,1). It spends the board's only 48 and four of the 24s that make more.
@@ -57,6 +57,14 @@ wrong move:
   8s that order A needs.
 - **Shared Material:** 6×12 + 24 + 24, eight tiles ending at (2,3), spends two
   of the four 24s and six of the 12s that build the missing ones.
+- **See It Coming:** 16+16+16+32+32 = 112, five tiles ending at (3,1), overshoots
+  96 and spends two of the 32s that make it. Played on, build-and-harvest makes
+  its 96 only on move 5 and has no 192 that uses it within 7 moves.
+- **Dry Well:** 6+6+12+24+24+24+48 = 144, seven tiles ending at (0,1). After one
+  more chain (8+8+16+16) no legal chain is left, with 7 tiles on the board.
+- **Through the Gate:** 8+8+8+16+32 = 72, five tiles ending at (1,3), right
+  beside the gate, but 72 is not 48 so the gate stays shut; build-and-harvest
+  never opens it and runs out of chains after 6 moves.
 - **Rust:** 5×12 + 2×24 + 48 = 156, eight tiles ending at (2,5), spends the only
   48, which is also the only rust scraper.
 
@@ -75,8 +83,9 @@ witness with two spare moves that takes at least 4 moves (a witness, not a proof
 that no shorter route exists); both proxies lose; and the twist checks pass:
 
 - spot: the plan that wins with the spots removed fails with them;
-- forecast: the board can't be won with useless refills, and plans made against
-  three other refill sequences all fail on the real one;
+- forecast: the board can't be won with useless refills, so the refills matter.
+  Whether *seeing* them in advance matters is not screened: a player without the
+  forecast still sees each refill land and can adapt. Owner play tells;
 - rust: the plan that wins with no rust fails once it spreads. (Whether harvest
   would win with no rust is reported, not required.)
 
