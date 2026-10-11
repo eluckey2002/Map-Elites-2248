@@ -200,10 +200,11 @@
   function preview(level,state,chain){return valid(state,chain)&&state.outcome==='playing'?move(level,state,chain):null;}
   function replay(level,actions){
     let state=create(level);const history=[];
-    if(!Array.isArray(actions)||actions.length>300)throw new Error('Invalid action list');
+    if(!Array.isArray(actions)||actions.length>1000)throw new Error('Invalid action list');
     for(const action of actions){
       if(action?.type==='move'){history.push(state);state=move(level,state,action.chain);}
       else if(action?.type==='undo'&&history.length)state=history.pop();
+      else if(action?.type==='preview')continue;
       else throw new Error('Invalid replay action');
     }
     return state;

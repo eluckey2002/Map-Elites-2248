@@ -112,7 +112,8 @@ function necessity(level,opts={}){
     // Reported, not required: whether the harvest proxy would win with no rust at all.
     const {rust,...plain}=level;out.harvestWinsWithoutRust=harvest(plain).outcome==='won';
     // A player who plans as if there were no rust: that plan must fail once rust spreads.
-    const sol=solve(plain,opts);out.rustBlindWins=!!sol&&play(level,sol.path).outcome==='won';
+    // null when no rust-free plan was found: then nothing shows the rust matters, and the check fails.
+    const sol=solve(plain,opts);out.rustBlindWins=sol?play(level,sol.path).outcome==='won':null;
   }
   return out;
 }

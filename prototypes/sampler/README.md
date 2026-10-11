@@ -87,7 +87,13 @@ that no shorter route exists); both proxies lose; and the twist checks pass:
   Whether *seeing* them in advance matters is not screened: a player without the
   forecast still sees each refill land and can adapt. Owner play tells;
 - rust: the plan that wins with no rust fails once it spreads. (Whether harvest
-  would win with no rust is reported, not required.)
+  would win with no rust is reported, not required.) A missing no-rust plan
+  counts as a failed check.
+- ice, on Dry Well: **not shown to matter.** The solver's 4-move win works with or
+  without the two frozen tiles, so this board tests No Refills more than ice. A
+  stricter rescreen found Dry Well boards where a no-ice plan fails with ice
+  (seeds 547, 1075, 1179, 1846 in the screening script); one replaces this board
+  in the next version, after the owner's current play.
 
 | # | Board | Kind + layer | Budget | Solver | Harvest / obvious |
 |---|---|---|---|---|---|

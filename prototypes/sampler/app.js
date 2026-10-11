@@ -230,19 +230,19 @@
   }
   $('board').addEventListener('click',e=>{const cell=e.target.closest('button[data-x]');if(cell&&!cell.disabled)select(+cell.dataset.x,+cell.dataset.y);});
   $('merge').onclick=()=>{if(state.outcome==='playing'&&rules.valid(state,selection))apply(selection.map(p=>[...p]));};
-  $('preview').onclick=()=>{if(rules.valid(state,selection)){previewing=!previewing;if(previewing)run.previews++;render();}};
+  $('preview').onclick=()=>{if(rules.valid(state,selection)){previewing=!previewing;if(previewing){run.previews++;run.actions.push({type:'preview',chain:selection.map(p=>[...p]),at:Date.now()});run.rev++;}render();}};
   $('clear').onclick=()=>{selection=[];previewing=false;render();};
   $('undo').onclick=()=>{if(!history.length)return;state=history.pop();run.undos++;run.actions.push({type:'undo',at:Date.now()});run.rev++;selection=[];previewing=false;saveRun('active');render();};
   $('retry').onclick=()=>{if(run.actions.length)saveRun(state.outcome==='playing'?'retried':'finished');begin();};
   $('next').onclick=()=>switchBoard((local.current+1)%levels.length);
   document.querySelectorAll('#questions .chips').forEach(group=>group.addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b||!local.played[level.id])return;
-    const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{[group.dataset.q]:b.dataset.v,runId:local.played[level.id],savedAt:new Date().toISOString()});
+    const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{[group.dataset.q]:b.dataset.v,[group.dataset.q+'Run']:local.played[level.id],runId:local.played[level.id],savedAt:new Date().toISOString()});
     renderQuestions();render();saveAnswer(a);
   }));
   $('note').addEventListener('change',()=>{
     if(!local.played[level.id])return;
-    const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{note:$('note').value.slice(0,500),runId:local.played[level.id],savedAt:new Date().toISOString()});
+    const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{note:$('note').value.slice(0,500),noteRun:local.played[level.id],runId:local.played[level.id],savedAt:new Date().toISOString()});
     saveAnswer(a);render();
   });
   window.addEventListener('pagehide',()=>{if(run&&run.actions.length)saveRun(state.outcome==='playing'?'closed':'finished');});
