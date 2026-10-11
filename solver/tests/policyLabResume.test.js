@@ -7,6 +7,7 @@ const os=require('node:os');
 const {execFileSync,spawnSync}=require('node:child_process');
 const {initialRaw,charge,aggregate,completionProblems}=require('../policy-lab/resume-core');
 const ROOT=path.resolve(__dirname,'../..');
+const {closeoutRoot}=require('./fixtures/policy-closeout-snapshot');
 const read=f=>JSON.parse(fs.readFileSync(path.join(ROOT,f)));
 const previous=read('solver/policy-lab/runs/recovery/controls-raw.json');
 const closure=read('experiments/RESULT-0081/closure.json');
@@ -52,6 +53,7 @@ test('completion refuses lost-game discounts, old C12 seeds, missing arms and we
   assert.ok(completionProblems(weak).some(p=>/aggregate bars/.test(p)));
 });
 test('independent CLI refuses erased charges and inherited-panel mutations without playing new games',()=>{
+  const ROOT=closeoutRoot();
   const plan='docs/goals/policy-terms-loop/RESUME_PLAN.md';
   const commit=execFileSync('git',['log','--diff-filter=A','--format=%H','--',plan],{cwd:ROOT,encoding:'utf8'}).trim().split('\n').at(-1);
   const c=JSON.parse(/```json\n([\s\S]*?)\n```/.exec(fs.readFileSync(path.join(ROOT,plan),'utf8'))[1]);

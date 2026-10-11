@@ -295,19 +295,37 @@ test('frozen-tree recompute entries must cite a real decision and a reason', () 
   assert.match(frozenTreeEntryProblems('RESULT-0082', null, ledger)[0], /not an object/);
 });
 
+test('LIVE: RESULT-0047 and RESULT-0049 exempt only the paths DECISION-0015 names', () => {
+  const { FROZEN_TREE_POLICY, frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
+  const ledger = fsx.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
+  const expectedLive = {
+    'RESULT-0047': ['tools/verify-experiments.js', 'src/game.js', 'solver/oracle/corpus.js'],
+    'RESULT-0049': ['tools/verify-experiments.js', 'src/game.js'],
+  };
+  for (const id of ['RESULT-0047', 'RESULT-0049']) {
+    const entry = FROZEN_TREE_POLICY[id];
+    assert.deepEqual(
+      { append_only: entry.append_only, live_files: entry.live_files, extra_immutable: entry.extra_immutable, decision: entry.decision },
+      { append_only: undefined, live_files: expectedLive[id], extra_immutable: undefined, decision: 'DECISION-0015' },
+    );
+    assert.deepEqual(frozenTreeEntryProblems(id, entry, ledger), [], `${id} must cite a decision naming it and every exempt path`);
+  }
+});
+
 test('LIVE: every input the RESULT-0082 recomputation reads stays bound to its admission commit', () => {
   const { FROZEN_TREE_POLICY, frozenInputProblems, frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
   const entry = FROZEN_TREE_POLICY['RESULT-0082'];
   const admission = 'd9b5475fd5faaadc7ca6d6b296030592e31d6294';
   // The mandatory set is pinned in code and in the decision text. Any change to
-  // it must change this test and DECISION-0011 together, in a reviewed edit.
+  // it must change this test and the cited decision together, in a reviewed
+  // edit. DECISION-0015 extended DECISION-0011's set with src/game.js.
   assert.deepEqual(
     { append_only: entry.append_only, live_files: entry.live_files, extra_immutable: entry.extra_immutable, decision: entry.decision },
     {
       append_only: ['experiments/SEEDS.md'],
-      live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js'],
+      live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js', 'src/game.js'],
       extra_immutable: ['solver/policy-lab/runs/resume'],
-      decision: 'DECISION-0011',
+      decision: 'DECISION-0015',
     },
   );
   assert.deepEqual(

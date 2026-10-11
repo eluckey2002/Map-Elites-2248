@@ -146,9 +146,16 @@ None of the findings changes any number above.
 
 ## Reverify
 
-At or after the registration commit with the frozen sources unchanged:
+In a detached checkout of `9ed39962`, the last commit before PR #70's
+browser-only `src/game.js` change reached this branch (the frozen sources there
+are unchanged since the registration commit):
 `node solver/verify-board-map-elites.js experiments/RESULT-0084/output/archive.json experiments/RESULT-0084/output/map.html`
 — expect `PASS` with artifact identity `12dab178…`, 12 occupied cells,
 5 breadth bins, 5 regret bins, ρ 0.626545, `SUPPORTED_AT_BOUNDED_SCOPE`.
 Then run `node experiments/RESULT-0084/audit.js`; expect `PASS` for 24
 evaluations.
+
+On a later tree the verifier stops at `source changed: src/game.js`. PR #70
+changed only input and display code there: `gameRuleIdentity` from
+`solver/game-rule-surface.js` is `1cd3d49cae2d8223…` both at the registration
+commit and after PR #70, so the game rules this result measured are unchanged.

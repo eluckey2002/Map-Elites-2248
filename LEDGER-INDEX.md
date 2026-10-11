@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 97 (38 accepted, 24 narrowed, 3 open, 17 provisional, 4 stale, 11 superseded).
+Records: 98 (38 accepted, 24 narrowed, 3 open, 18 provisional, 4 stale, 11 superseded).
 
 ## Current records
 
@@ -30,6 +30,7 @@ Records: 97 (38 accepted, 24 narrowed, 3 open, 17 provisional, 4 stale, 11 super
 | DECISION-0011 | Recompute a closed result at its admission commit when its frozen files are meant to keep growing | provisional | owner_decision | The owner grants a recorded exception to the rule that a red gate is fixed in the ledger or the protocol and never by editing the gate (`AGENTS.md`, Landing changes on `main`). | 1338 |
 | DECISION-0012 | Offer the wider-search candidate as a selectable Nemesis opponent | provisional | owner_decision | The owner authorized adding a selectable Wider-search bot alongside the shipped bot after discussing how to play against the candidate from PR #62. | 1780 |
 | DECISION-0013 | Ship the Delivery puzzle family as a finite pack in the original game | provisional | owner_decision | On 2026-10-11 the owner answered "yes" to shipping Delivery as the second puzzle type beside Connections, then approved docs/plans/2026-10-11-delivery-and-level-map-elites-plan.md ("Both fresh run"). | 1829 |
+| DECISION-0015 | Keep src/game.js editable for browser-only fixes while RESULT-0047, RESULT-0049 and RESULT-0082 stay recomputable | provisional | owner_decision | The owner grants a second recorded exception to the rule that a red gate is never fixed by editing the gate (`AGENTS.md`, Landing changes on `main`), extending `DECISION-0011`. | 1845 |
 | RESULT-0001 | Accepted 12,336 score | narrowed | replayed_lower_bound | **Corrected by CORRECTION-0010 (RESULT-0001 and RESULT-0004 verifiers were deleted from the tree); the wording below may no longer hold.** A 32-move witness replays to 12,336 at spawn cursor 520. | 373 |
 | RESULT-0002 | Mass/cursor upper bound | accepted | proven_upper_bound | Complete enumeration of the mass/cursor relaxation proves a 326,390 upper bound. | 389 |
 | RESULT-0003 | Exact move-one envelope | accepted | exact_result | Complete position-aware enumeration finds 1,868,975 physical first moves and an exact move-one maximum of 430. | 403 |
@@ -74,7 +75,7 @@ Records: 97 (38 accepted, 24 narrowed, 3 open, 17 provisional, 4 stale, 11 super
 | RESULT-0080 | Policy terms diagnostic stopped before complete controls after an execution interruption | provisional | direct_source | Start checks found the worktree based on merged ruler origin/main cd83127f176111a0b0fb40eb14402f301a1fab07 and RESULT-0080 unused across 34 remote refs. | 1724 |
 | RESULT-0081 | Journaled policy diagnostic interrupted during the final control block | provisional | direct_source | The continuation preserved RESULT-0080 and all prior charges. | 1742 |
 | RESULT-0082 | Wider candidate search clears the paired move-gain and net-win bars | provisional | heuristic_observation, direct_source | Path A closes CLOSED with the predeclared primary outcome SUPPORTED. | 1762 |
-| RESULT-0084 | Fresh board MAP-Elites fills 12 cells on breadth × baseline regret | provisional | direct_source, heuristic_observation | The run closed `SUPPORTED_AT_BOUNDED_SCOPE`: 12 occupied cells (bar 5), 5 breadth bins (bar 2), 5 baseline-regret bins (bar 2), and the independent verifier passed the exact artifact and map, including a re-play of the… | 1845 |
+| RESULT-0084 | Fresh board MAP-Elites fills 12 cells on breadth × baseline regret | provisional | direct_source, heuristic_observation | The run closed `SUPPORTED_AT_BOUNDED_SCOPE`: 12 occupied cells (bar 5), 5 breadth bins (bar 2), 5 baseline-regret bins (bar 2), and the independent verifier passed the exact artifact and map, including a re-play of the… | 1862 |
 | CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1431 |
 | CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1445 |
 | CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1460 |

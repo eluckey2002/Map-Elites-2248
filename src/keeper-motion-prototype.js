@@ -350,12 +350,8 @@
         if (tile.blocker === BLOCKER_TYPES.STONE) return;
         const ctx = game.ctx;
         const center = cellCenter(game, tile);
-        let displayValue = tile.value.toString();
-        if (tile.value >= 1000000 && !visualStudy) {
-            displayValue = `${Number((tile.value / 1000000).toFixed(1))}m`;
-        } else if (tile.value >= 1000 && tile.value < 1000000) {
-            displayValue = `${Number((tile.value / 1000).toFixed(1))}k`;
-        }
+        // Exact, like game.js: a rounded "12.3k" hid values that will not chain.
+        const displayValue = formatTileValue(tile.value);
 
         let fontSize = game.tileSize * 0.29;
         const maxWidth = game.tileSize * 0.76;
