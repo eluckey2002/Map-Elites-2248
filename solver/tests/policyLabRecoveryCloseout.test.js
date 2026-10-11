@@ -10,6 +10,7 @@ const {createPin,verifyPin,readAnchoredPin}=require('../../docs/goals/policy-ter
 const {assertBindings,evidencePaths}=require('../../docs/goals/policy-terms-loop/closure-inputs');
 const {verify}=require('../../docs/goals/policy-terms-loop/verify-poststop-closeout');
 const {startingState}=require('../../docs/goals/policy-terms-loop/prepare-confirmation-protocol');
+const {CLOSEOUT_COMMIT,closeoutRoot,changedCloseoutFiles}=require('./fixtures/policy-closeout-snapshot');
 const controls={status:'CONTROLS_COMPLETE',headlines:{controls:Array(12).fill({}),path:'CONTROLS_PASSED'}};
 test('closeout refuses a running recovery or absent named closure',()=>{
   assert.throws(()=>requiredAudits({controls}),/named closure/);
@@ -73,9 +74,30 @@ test('confirmed closure binds the actual verdict and pins both raw evidence and 
   for(const file of ['experiments/RESULT-0081/closure.json','controls.json','experiments/RESULT-0081/raw-pairs.json','experiments/RESULT-0081/verdict.json','experiments/RESULT-0081/closeout-contract.json','experiments/RESULT-0081/report.md'])assert.ok(paths.includes(file));
   assert.throws(()=>evidencePaths('RESULT-0081',{...closure,contract:{path:'../../outside.json'}},inputs),/escaping/);
 });
-test('recurring final-tree suite revalidates every retained closeout and committed audit pin',()=>{
-  const result=verify(path.resolve(__dirname,'../..'));
+test('every retained closeout and committed audit pin still verifies at the closeout commit',()=>{
+  const result=verify(closeoutRoot());
   assert.equal(typeof result.pending,'boolean');
+});
+test('the closeout files are unchanged in the live tree since the closeout commit',()=>{
+  assert.deepEqual(changedCloseoutFiles(path.resolve(__dirname,'../..')),[]);
+});
+test('a modified or deleted closeout file is caught, an added file is not',()=>{
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'policy-closeout-drift-'));
+  const git=args=>execFileSync('git',args,{cwd:root,stdio:'pipe',encoding:'utf8'});
+  try{
+    git(['init','-q']);git(['config','user.email','fixture@example.invalid']);git(['config','user.name','Fixture']);
+    fs.mkdirSync(path.join(root,'audit'));
+    fs.writeFileSync(path.join(root,'audit/pin.json'),'{"a":1}\n');fs.writeFileSync(path.join(root,'audit/raw.json'),'{"b":2}\n');
+    git(['add','.']);git(['commit','-qm','closeout']);const commit=git(['rev-parse','HEAD']).trim();
+    assert.deepEqual(changedCloseoutFiles(root,commit,['audit']),[]);
+    fs.writeFileSync(path.join(root,'audit/new.json'),'{}\n');git(['add','.']);git(['commit','-qm','later addition']);
+    assert.deepEqual(changedCloseoutFiles(root,commit,['audit']),[]);
+    fs.writeFileSync(path.join(root,'audit/pin.json'),'{"a":2}\n');
+    assert.deepEqual(changedCloseoutFiles(root,commit,['audit']),['audit/pin.json']);
+    fs.rmSync(path.join(root,'audit/raw.json'));
+    assert.deepEqual(changedCloseoutFiles(root,commit,['audit']),['audit/pin.json','audit/raw.json']);
+  }finally{fs.rmSync(root,{recursive:true,force:true});}
+  assert.equal(CLOSEOUT_COMMIT.length,40);
 });
 test('replacing committed evidence and regenerating its pin cannot replace the first-added receipt',()=>{
   const root=fs.mkdtempSync(path.join(os.tmpdir(),'policy-receipt-anchor-'));
