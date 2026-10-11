@@ -619,8 +619,10 @@
         }
         game.getGridPos = (clientX, clientY) => {
             const rect = game.canvas.getBoundingClientRect();
-            const scaleX = game.canvas.width / rect.width;
-            const scaleY = game.canvas.height / rect.height;
+            // Board coordinates are CSS pixels; the canvas backing store is
+            // larger on high-density screens, so scale by the board's own size.
+            const scaleX = (game.gridWidth * game.tileSize + game.tilePadding * (game.gridWidth + 1)) / rect.width;
+            const scaleY = (game.gridHeight * game.tileSize + game.tilePadding * (game.gridHeight + 1)) / rect.height;
             const x = (clientX - rect.left) * scaleX;
             const y = (clientY - rect.top) * scaleY;
             const col = Math.floor((x - game.tilePadding) / (game.tileSize + game.tilePadding));
