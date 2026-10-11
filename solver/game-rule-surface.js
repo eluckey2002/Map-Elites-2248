@@ -13,15 +13,24 @@ const TOP_LEVEL = [
   'playableTileScale', 'validatePlayableLevel', 'createInitialGrid',
 ];
 // handleTileClick and submitChain decide which chains the player can build and
-// submit, so they are rules even though they also redraw the board.
+// submit, and loadLevel and startCustomLevel decide which seed deals the board,
+// so they are rules even though they also touch the page.
 const GAME_METHODS = [
-  'initializeLevel', 'handleTileClick', 'submitChain', 'isAdjacent', 'canExtendChain', 'isValidChain',
+  'initializeLevel', 'loadLevel', 'startCustomLevel', 'handleTileClick', 'submitChain', 'isAdjacent', 'canExtendChain', 'isValidChain',
   'calculateChainValue', 'getChainMultiplier', 'executeChain', 'applyGravity', 'spawnNewTiles', 'tickBlockers',
   'checkBombs', 'checkWinLose', 'hasValidMoves', 'canFormValidChain', 'saveState', 'undo',
 ];
 // Game fields read by bound rules but set elsewhere (the constructor): every
 // assignment to them anywhere in class Game is bound.
 const GAME_FIELDS = ['maxHistory'];
+// A beginLevel that only wraps initializeLevel with the bookkeeping below and a
+// dead-board message reads as a direct initializeLevel call. Any other
+// beginLevel is itself part of the surface.
+const PASSTHROUGH = ['beginLevel', 'beginLevel(levelData, rng, authoringCapture = null) { clearTimeout(this.mergeTimer); '
+  + "this.mergeTimer = null; this.initializeLevel(levelData, rng, authoringCapture); if (!this.hasValidMoves()) this.showGameOver('No valid moves!'); }",
+'this.beginLevel(', 'this.initializeLevel('];
+// Method modifiers that change what calling the method does.
+const MODIFIERS = new Set(['static', 'async', 'get', 'set', '*']);
 // Bookkeeping that lets a level reload cancel a pending merge. It decides
 // whether the callback runs on the board it belongs to, not what the callback does.
 const BOOKKEEPING = [['this.mergeTimer = setTimeout(() => { this.mergeTimer = null;', 'setTimeout(() => {']];
@@ -178,7 +187,9 @@ function declarations(tokens, depth, name, level, from, to) {
     if (body < 0) continue;
     if (t(body) !== '{' && t(body) !== '[') throw new Error(`game rule surface: ${name} has no body`);
     const end = matchClose(tokens, body);
-    found.push(tokens.slice(i, end + 1));
+    let start = i;
+    if (level > 0) while (start > from && depth[start - 1] === level && MODIFIERS.has(t(start - 1))) start--;
+    found.push(tokens.slice(start, end + 1));
     i = end;
   }
   if (found.length === 0) throw new Error(`game rule surface: ${name} not found in src/game.js`);
@@ -246,8 +257,17 @@ function gameRuleSurface(source) {
   const start = tokens.indexOf(games[0][0]);
   const open = start + games[0].findIndex((token) => token.t === '{');
   const end = matchClose(tokens, open);
+  const [wrapper, wrapperText, wrapperCall, directCall] = PASSTHROUGH;
+  let wrappers = [];
+  try { wrappers = declarations(tokens, depth, wrapper, depth[open] + 1, open + 1, end).map(render); } catch { /* absent */ }
+  const passthrough = wrappers.length === 1 && wrappers[0] === render(tokenize(wrapperText));
+  if (!passthrough) parts.push(...wrappers);
   for (const name of GAME_METHODS) {
-    for (const part of declarations(tokens, depth, name, depth[open] + 1, open + 1, end)) parts.push(withoutBookkeeping(render(part)));
+    for (const part of declarations(tokens, depth, name, depth[open] + 1, open + 1, end)) {
+      let text = withoutBookkeeping(render(part));
+      if (passthrough) text = ` ${text} `.split(` ${render(tokenize(wrapperCall))} `).join(` ${render(tokenize(directCall))} `).slice(1, -1);
+      parts.push(text);
+    }
   }
   for (const field of GAME_FIELDS) {
     for (const part of fieldAssignments(tokens, depth, field, open + 1, end)) parts.push(render(part));

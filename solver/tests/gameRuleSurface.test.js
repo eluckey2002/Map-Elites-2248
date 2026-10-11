@@ -23,7 +23,10 @@ test('comments, whitespace and browser-only code are not game rules', () => {
   assert.equal(gameRuleSurface(edited('intro: "Connect matching numbers!"', 'intro: "Match two equal tiles!"')), surface);
   assert.equal(gameRuleSurface(edited("const textColor = tile.value >= 8 ? '#fff' : '#776e65';", "const textColor = '#fff';")), surface);
   assert.equal(gameRuleSurface(edited('this.mergeTimer = setTimeout(() => {\n            this.mergeTimer = null;', 'setTimeout(() => {')), surface);
-  assert.equal(gameRuleSurface(edited("if (!this.hasValidMoves()) this.showGameOver('No valid moves!');", '')), surface);
+  // Calling initializeLevel directly, as main did before beginLevel existed, is the same rule.
+  const direct = edited('this.beginLevel(levelData, makeSeededRng(seed), capture);', 'this.initializeLevel(levelData, makeSeededRng(seed), capture);')
+    .replace('this.beginLevel(session.levelData, makeSeededRng(session.seed), capture);', 'this.initializeLevel(session.levelData, makeSeededRng(session.seed), capture);');
+  assert.equal(gameRuleSurface(direct), surface);
 });
 
 test('a changed win/lose check, chain rule, level, spawn weight or outcome string is a rule change', () => {
@@ -42,6 +45,13 @@ test('a changed win/lose check, chain rule, level, spawn weight or outcome strin
     ["this.finishAuthoring('win', 'target reached');", "this.finishAuthoring('w/*ignored*/in', 'target reached');"],
     ["this.finishAuthoring('win', 'target reached');", "this.finishAuthoring('w//in', 'target reached');"],
     ['this.maxHistory = 10;', 'this.maxHistory = 0;'],
+    ['this.beginLevel(levelData, makeSeededRng(seed), capture);', 'this.beginLevel(levelData, Math.random, capture);'],
+    ['this.beginLevel(session.levelData, makeSeededRng(session.seed), capture);', 'this.beginLevel(session.levelData, Math.random, capture);'],
+    ['this.initializeLevel(levelData, rng, authoringCapture);', 'this.initializeLevel(levelData, Math.random, authoringCapture);'],
+    ["if (!this.hasValidMoves()) this.showGameOver('No valid moves!');", "if (!this.hasValidMoves()) { this.gameOver = true; }"],
+    ['    checkWinLose() {', '    *checkWinLose() {'],
+    ['    checkWinLose() {', '    async checkWinLose() {'],
+    ['    checkWinLose() {', '    static checkWinLose() {'],
     ['    isAdjacent(tile1, tile2) {', '    isAdjacent() { return true; }\n    isAdjacent(tile1, tile2) {'],
   ]) {
     assert.notEqual(gameRuleSurface(edited(from, to)), surface, `not detected: ${to}`);
