@@ -185,6 +185,12 @@ owner for approval (owner decision, 2026-10-11).
 8. **Do not leave drafts idle.** A pull request with no commits or comments
    for three days is either finished and merged or closed with a one-line
    reason by the agent that owns it.
+9. **Do not stop for the owner's OK.** Opening, fixing, re-requesting review,
+   merging and closing pull requests need no approval. Where a choice is
+   unclear, pick the sensible default, state it in the pull request
+   description, and keep going. Stop to ask only for what "How to work here"
+   already reserves to the owner (a game rule or scoring change) or for an
+   action outside this repository that cannot be undone.
 
 A red gate is fixed in the ledger or the protocol, never by editing the gate,
 grandfathering the record, or `--no-verify`.
