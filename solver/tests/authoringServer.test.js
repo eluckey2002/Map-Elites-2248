@@ -197,3 +197,32 @@ test('a fixed-seed authoring server refuses recordings from any other seed', asy
   });
   assert.equal(right.status, 201);
 });
+
+test('the authoring API refuses requests from other web pages', async () => {
+  const http = require('node:http');
+  const { base } = await start();
+  const port = Number(new URL(base).port);
+  const send = (method, pathname, headers = {}) => new Promise((resolve, reject) => {
+    const request = http.request({ host: '127.0.0.1', port, method, path: pathname, headers }, (response) => {
+      response.resume();
+      response.on('end', () => resolve(response.statusCode));
+    });
+    request.on('error', reject);
+    request.end(method === 'POST' ? '{' : undefined);
+  });
+  const json = { 'content-type': 'application/json' };
+
+  // Another site writing a recording, a sandboxed page, a cross-site read,
+  // DNS rebinding, and an old browser's form post are all refused.
+  assert.equal(await send('POST', '/api/recordings', { ...json, origin: 'https://evil.example' }), 403);
+  assert.equal(await send('POST', '/api/recordings', { ...json, origin: 'null' }), 403);
+  assert.equal(await send('GET', '/api/candidates', { 'sec-fetch-site': 'cross-site' }), 403);
+  assert.equal(await send('GET', '/api/candidates', { host: `evil.example:${port}` }), 403);
+  assert.equal(await send('POST', '/api/recordings', { 'content-type': 'application/x-www-form-urlencoded' }), 403);
+
+  // The server's own page and local tools still reach it; static files are unchanged.
+  assert.equal(await send('POST', '/api/recordings', { ...json, origin: base, 'sec-fetch-site': 'same-origin' }), 400, 'reaches the JSON parser');
+  assert.equal(await send('GET', '/api/candidates', { host: `localhost:${port}` }), 200);
+  assert.equal(await send('GET', '/api/candidates'), 200);
+  assert.equal(await send('GET', '/index.html', { 'sec-fetch-site': 'cross-site' }), 200);
+});

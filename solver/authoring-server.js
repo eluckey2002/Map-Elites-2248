@@ -27,6 +27,24 @@ const STATIC_FILES = new Map([
   staticFile('/assets/keeper-material-8192-v3.png', 'image/png'),
 ]);
 
+// Same rule as tools/play-server.js: the server binds to loopback, but a web
+// page in the same browser can still send it requests. Its API answers only a
+// loopback Host (stopping DNS rebinding) and same-origin browser requests, and
+// a POST must be JSON, which a cross-site form cannot send. Local tools and
+// tests carry no Origin or Sec-Fetch-Site and still work.
+const LOOPBACK_HOSTS = new Set(['127.0.0.1', 'localhost', '[::1]']);
+
+function isLocalRequest(request) {
+  let host;
+  try { host = new URL(`http://${request.headers.host || ''}`); } catch { return false; }
+  if (!LOOPBACK_HOSTS.has(host.hostname)) return false;
+  const site = request.headers['sec-fetch-site'];
+  if (site !== undefined && site !== 'same-origin' && site !== 'none') return false;
+  const origin = request.headers.origin;
+  if (origin !== undefined && origin !== `http://${host.host}`) return false;
+  return request.method !== 'POST' || /^application\/json\s*(;|$)/i.test(request.headers['content-type'] || '');
+}
+
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
@@ -133,6 +151,11 @@ function createAuthoringServer(options = {}) {
     }
     if (pathname.includes('..') || pathname.includes('\0') || pathname.includes('\\')) {
       jsonResponse(response, 400, { error: 'invalid path' });
+      return;
+    }
+
+    if (pathname.startsWith('/api/') && !isLocalRequest(request)) {
+      jsonResponse(response, 403, { error: 'requests must come from this authoring server' });
       return;
     }
 
