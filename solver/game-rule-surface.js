@@ -251,17 +251,19 @@ function browserOnly(tokens, [start, end], name, rules) {
   const named = (word) => MEMBER_ESCAPES.has(word) || GLOBAL_ESCAPES.has(word) || ['window', 'document'].includes(word)
     || (rules.methods.has(word) && !ARRAY_MUTATORS.has(word)) || rules.functions.has(word);
   const locals = new Map(); // name -> true when a const holding a page or canvas object
+  // A name declared twice, in any scopes, is never trusted as a page object.
+  const declare = (local, isPage) => locals.set(local, !locals.has(local) && isPage);
   const isDocument = (i) => t(i) === 'document' && !locals.has('document');
   const page = (i) => isDocument(i) || (t(i) === 'this' && t(i + 1) === '.' && BROWSER_STATE.has(t(i + 2)))
     || locals.get(t(i)) === true;
   let params = start;
   while (params <= end && t(params) !== '(') params++;
-  for (let i = params + 1; i < matchClose(tokens, params); i++) if (id(i) && t(i - 1) !== '=') locals.set(t(i), false);
+  for (let i = params + 1; i < matchClose(tokens, params); i++) if (id(i) && t(i - 1) !== '=') declare(t(i), false);
   for (let i = start; i <= end; i++) {
-    if (['const', 'let', 'var'].includes(t(i)) && id(i + 1)) locals.set(t(i + 1), t(i) === 'const' && t(i + 2) === '=' && page(i + 3));
-    if (id(i) && t(i + 1) === '=>') locals.set(t(i), false);
+    if (['const', 'let', 'var'].includes(t(i)) && id(i + 1)) declare(t(i + 1), t(i) === 'const' && t(i + 2) === '=' && page(i + 3));
+    if (id(i) && t(i + 1) === '=>') declare(t(i), false);
     if (t(i) === '(' && t(matchClose(tokens, i) + 1) === '=>') {
-      for (let k = i + 1; k < matchClose(tokens, i); k++) if (id(k) && t(k - 1) !== '=') locals.set(t(k), false);
+      for (let k = i + 1; k < matchClose(tokens, i); k++) if (id(k) && t(k - 1) !== '=') declare(t(k), false);
     }
   }
   // Root of the member chain ending at `i`, whether the chain has members,
@@ -317,6 +319,13 @@ function browserOnly(tokens, [start, end], name, rules) {
       if (target && t(target.root) === 'this' && BROWSER_STATE.has(t(target.root + 2))) continue;
       if (!writable(target)) return false;
     }
+    // A for...of or for...in loop assigns its target on every pass.
+    if ((token.t === 'of' || token.t === 'in') && token.kind === 'identifier') {
+      const target = rootBefore(i - 1);
+      const declared = target && ['const', 'let', 'var'].includes(t(target.root - 1));
+      const head = target && t(target.root - (declared ? 2 : 1)) === '(' && t(target.root - (declared ? 3 : 2)) === 'for';
+      if (head && !declared && !writable(target)) return false;
+    }
     if (['++', '--', 'delete'].includes(token.t) && (id(i + 1) || t(i + 1) === '(')) {
       let k = i + 1;
       while (t(k + 1) === '.' || t(k + 1) === '?.' || t(k + 1) === '[') k = t(k + 1) === '[' ? matchClose(tokens, k + 1) : k + 2;
@@ -328,9 +337,11 @@ function browserOnly(tokens, [start, end], name, rules) {
         const target = rootBefore(i);
         const direct = target && t(target.root) === 'this' && target.root + 2 === i; // checked above
         if (rules.methods.has(token.t) && !direct && !(target && page(target.root))) return false;
-      } else if (rules.functions.has(token.t)) {
-        return false;
+      } else if (rules.functions.has(token.t) || (rules.methods.has(token.t) && !ARRAY_MUTATORS.has(token.t))) {
+        return false; // also a destructured method, as in ({ tickBlocker }) => ...
       }
+      // Synthetic input runs whatever the page wires to it.
+      if (['click', 'dispatchEvent', 'requestSubmit'].includes(token.t) && ['.', '?.'].includes(t(i - 1))) return false;
     }
   }
   return true;
