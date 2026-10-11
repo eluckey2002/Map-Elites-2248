@@ -4,7 +4,7 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Browser game bug fixes — 2026-10-11
 
-DECISION-0013 (provisional, check pending) lets `src/game.js` change without turning the gate red for RESULT-0047, RESULT-0049 and RESULT-0082: all three now recompute at their admission commits, with `src/game.js` a live file. The first fixes under it scope Enter to the board and stop a level reload during the merge animation from ticking blockers on the new board (`solver/tests/gameInputSafety.test.js`). HUMAN-PILOT-0002 was re-derived; only its two identity fields changed. Source review: the 2026-10-11 repo review in the owner's project files.
+DECISION-0013 (provisional, check pending) lets `src/game.js` change without turning the gate red for RESULT-0047, RESULT-0049 and RESULT-0082: all three now recompute at their admission commits, with `src/game.js` a live file. The fixes under it scope Enter to the board, stop a level reload during the merge animation from ticking blockers on the new board, end a dealt board that has no legal chain, and show exact tile values (`solver/tests/gameInputSafety.test.js`). HUMAN-PILOT-0002 was re-derived; only its two identity fields changed. Source review: the 2026-10-11 repo review in the owner's project files.
 
 ## Selectable Nemesis opponents — 2026-10-04
 

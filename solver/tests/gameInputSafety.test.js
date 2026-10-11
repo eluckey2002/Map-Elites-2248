@@ -1,11 +1,13 @@
 const { test, mock } = require('node:test');
 const assert = require('node:assert/strict');
-const { Game } = require('../../src/game.js');
+const { Game, LEVELS, formatTileValue } = require('../../src/game.js');
 
 /**
- * Two player-facing input bugs from the 2026-10-11 repo review:
- * Enter pressed on any button made a move, and Restart during the 200 ms
- * merge animation let the old move's callback run on the freshly loaded board.
+ * Player-facing bugs from the 2026-10-11 repo review: Enter pressed on any
+ * button made a move; Restart during the 200 ms merge animation let the old
+ * move's callback run on the freshly loaded board; a dealt board with no legal
+ * chain left the player stuck; and big values were rounded to labels that
+ * looked equal but would not chain.
  */
 
 function withDom(run) {
@@ -39,6 +41,7 @@ function headlessGame() {
     updateChainIndicator() {},
     showMultiplierPopup() {},
     showModal() {},
+    showGameOver(message) { this.gameOverMessage = message; },
     hideModal() {},
     submitPlaySession() {},
   });
@@ -152,4 +155,38 @@ test('Enter with nothing focused still submits the chain', () => {
     assert.equal(pressEnter(handlers, body), true);
     assert.equal(submitted, 1);
   });
+});
+
+test('a dealt board with no legal chain ends at once with a message', () => {
+  withDom(() => {
+    const game = headlessGame();
+    // 2/4 over 8/16 in 2x2 blocks: no tile touches an equal value, diagonals included.
+    const draws = [[0.1, 0.6], [0.9, 0.99]];
+    let i = 0;
+    const width = LEVELS[0].gridW;
+    const rng = () => {
+      const row = Math.floor(i / width);
+      const col = i % width;
+      i++;
+      return draws[row % 2][col % 2];
+    };
+    game.initializeLevel(LEVELS[0], rng);
+    assert.equal(game.gameOver, true);
+    assert.equal(game.gameOverMessage, 'No valid moves!');
+  });
+});
+
+test('a playable dealt board is left alone', () => {
+  withDom(() => {
+    const game = headlessGame();
+    game.loadLevel(LEVEL, { seed: SEED });
+    assert.equal(game.gameOver, false);
+    assert.equal(game.gameOverMessage, undefined);
+  });
+});
+
+test('tile labels are exact, so values that do not chain never look equal', () => {
+  assert.equal(formatTileValue(12288), '12288');
+  assert.notEqual(formatTileValue(12288), formatTileValue(12400));
+  assert.equal(formatTileValue(1500000), '1500000');
 });

@@ -207,6 +207,10 @@ class Tile {
     }
 }
 
+function formatTileValue(value) {
+    return String(value);
+}
+
 function makeSeededRng(seed) {
     let state = seed >>> 0;
     const rng = function () {
@@ -844,6 +848,14 @@ class Game {
 
         this.updateUI();
         this.render();
+
+        // A dealt board with no legal chain would otherwise leave the player
+        // stuck with no message; end it the same way a dead board mid-game ends.
+        if (!this.hasValidMoves()) {
+            this.gameOver = true;
+            this.finishAuthoring('lose', 'no valid moves');
+            this.showGameOver('No valid moves!');
+        }
     }
 
     // Ordinary play used to draw from Math.random and record nothing, so a
@@ -1295,11 +1307,13 @@ class Game {
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
 
-            let displayValue = tile.value.toString();
-            if (tile.value >= 1000000) {
-                displayValue = (tile.value / 1000000).toFixed(1) + 'M';
-            } else if (tile.value >= 1000) {
-                displayValue = (tile.value / 1000).toFixed(tile.value >= 10000 ? 0 : 1) + 'K';
+            // Chains match exact values, so the label is exact too: shrink
+            // the font to fit rather than round 12288 and 12400 to one "12K".
+            const displayValue = formatTileValue(tile.value);
+            const maxTextWidth = this.tileSize * 0.86;
+            const textWidth = ctx.measureText(displayValue).width;
+            if (textWidth > maxTextWidth) {
+                ctx.font = `bold ${fontSize * maxTextWidth / textWidth}px sans-serif`;
             }
 
             ctx.fillText(displayValue, x + this.tileSize / 2, y + this.tileSize / 2);
@@ -1418,6 +1432,7 @@ if (typeof module !== 'undefined' && module.exports) {
         Game,
         createInitialGrid,
         customCandidateFromQuery,
+        formatTileValue,
         levelFromQuery,
         makeSeededRng,
         rngForLevel,
