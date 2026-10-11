@@ -20,6 +20,7 @@ function edited(from, to) {
 
 test('comments, whitespace and browser-only code are not game rules', () => {
   assert.equal(gameRuleSurface(edited('// Check lose (out of moves)', '// out of moves')), surface);
+  assert.equal(gameRuleSurface(edited('intro: "Connect matching numbers!"', 'intro: "Match two equal tiles!"')), surface);
   assert.equal(gameRuleSurface(edited("const textColor = tile.value >= 8 ? '#fff' : '#776e65';", "const textColor = '#fff';")), surface);
   assert.equal(gameRuleSurface(edited('this.mergeTimer = setTimeout(() => {\n            this.mergeTimer = null;', 'setTimeout(() => {')), surface);
   assert.equal(gameRuleSurface(edited("if (!this.hasValidMoves()) this.showGameOver('No valid moves!');", '')), surface);
@@ -34,6 +35,8 @@ test('a changed win/lose check, chain rule, level or spawn weight is a rule chan
     ['this.tickBlockers();\n            this.checkBombs();', 'this.checkBombs();\n            this.tickBlockers();'],
     ['this.minChain = levelData.minChain;', 'this.minChain = 2;'],
     ['this.targetScore = levelData.target;', 'this.targetScore = levelData.target - 1;'],
+    ['state.randomState !== null', 'state.randomState === undefined'],
+    ['return newTile.value === lastTile.value || newTile.value === lastTile.value * 2;', 'return\n            newTile.value === lastTile.value || newTile.value === lastTile.value * 2;'],
   ]) {
     assert.notEqual(gameRuleSurface(edited(from, to)), surface, `not detected: ${to}`);
   }

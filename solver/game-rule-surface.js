@@ -15,11 +15,11 @@ const TOP_LEVEL = [
 const GAME_METHODS = [
   'initializeLevel', 'isAdjacent', 'canExtendChain', 'isValidChain', 'calculateChainValue', 'getChainMultiplier',
   'executeChain', 'applyGravity', 'spawnNewTiles', 'tickBlockers', 'checkBombs', 'checkWinLose',
-  'hasValidMoves', 'canFormValidChain',
+  'hasValidMoves', 'canFormValidChain', 'saveState', 'undo',
 ];
 // Bookkeeping that lets a level reload cancel a pending merge. It decides
 // whether the callback runs on the board it belongs to, not what the callback does.
-const BOOKKEEPING = [['this.mergeTimer = setTimeout(()=>{this.mergeTimer = null;', 'setTimeout(()=>{']];
+const BOOKKEEPING = [['this.mergeTimer = setTimeout(() => {this.mergeTimer = null;', 'setTimeout(() => {']];
 
 // Index just past the bracket that closes the one at `open`, skipping strings and comments.
 function matchClose(source, open) {
@@ -50,17 +50,29 @@ function declaration(source, pattern, name) {
   return source.slice(start, matchClose(source, bodyOpen));
 }
 
+// Comments go; each whitespace run becomes one space, or one newline if it held
+// a line break, because a newline can change meaning (`return` then a newline
+// returns undefined). Whitespace after an opening bracket, `;` or `,`, before a
+// closing bracket, `;` or `,`, between `)` and `{`, and a space before `(` never matters to
+// JavaScript and is dropped, so re-indenting or moving a brace is not a change.
 function normalize(text) {
-  let out = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`])\/\/.*$/gm, '$1').replace(/\s+/g, ' ')
-    .replace(/ ?([(){}[\];,]) ?/g, '$1').trim();
+  let out = text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`])\/\/.*$/gm, '$1')
+    .replace(/\s+/g, (run) => (run.includes('\n') ? '\n' : ' '))
+    .replace(/([([{;,])\s/g, '$1').replace(/\s([)\]};,])/g, '$1').replace(/\)\s\{/g, '){').replace(/ \(/g, '(')
+    .trim();
   for (const [from, to] of BOOKKEEPING) out = out.split(from).join(to);
   return out;
 }
 
+// Level intro text is shown to the player and never read by a rule.
+function withoutIntroCopy(levels) {
+  return levels.replace(/,\s*intro\s*:\s*(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, '');
+}
+
 function gameRuleSurface(source) {
   const text = Buffer.isBuffer(source) ? source.toString('utf8') : source;
-  const parts = TOP_LEVEL.map((name) => declaration(
-    text, new RegExp(`^[ \\t]*(?:const\\s+${name}\\s*=\\s*[\\[{]|function\\s+${name}\\s*\\([^)]*\\)\\s*\\{|class\\s+${name}\\s*\\{)`, 'm'), name));
+  const parts = TOP_LEVEL.map((name) => (name === 'LEVELS' ? withoutIntroCopy : (part) => part)(declaration(
+    text, new RegExp(`^[ \\t]*(?:const\\s+${name}\\s*=\\s*[\\[{]|function\\s+${name}\\s*\\([^)]*\\)\\s*\\{|class\\s+${name}\\s*\\{)`, 'm'), name)));
   const gameStart = text.search(/^[ \t]*class\s+Game\s*\{/m);
   if (gameStart < 0) throw new Error('game rule surface: class Game not found in src/game.js');
   const game = text.slice(gameStart);
