@@ -49,6 +49,7 @@ test('a changed win/lose check, chain rule, level, spawn weight or outcome strin
     ['this.beginLevel(session.levelData, makeSeededRng(session.seed), capture);', 'this.beginLevel(session.levelData, Math.random, capture);'],
     ['this.initializeLevel(levelData, rng, authoringCapture);', 'this.initializeLevel(levelData, Math.random, authoringCapture);'],
     ["if (!this.hasValidMoves()) this.showGameOver('No valid moves!');", "if (!this.hasValidMoves()) { this.gameOver = true; }"],
+    ['this.maxHistory = 10;', 'this.maxHistory = 10;\n        this.checkWinLose = () => {};'],
     ['    checkWinLose() {', '    *checkWinLose() {'],
     ['    checkWinLose() {', '    async checkWinLose() {'],
     ['    checkWinLose() {', '    static checkWinLose() {'],
@@ -62,6 +63,16 @@ test('reformatting a declaration signature is not a rule change', () => {
   assert.equal(gameRuleSurface(edited('return newTile.value === lastTile.value || newTile.value', 'return newTile.value === lastTile.value ||\n            newTile.value')), surface);
   assert.equal(gameRuleSurface(edited('    checkWinLose() {', '  checkWinLose ( )\n  {')), surface);
   assert.equal(gameRuleSurface(edited('function createInitialGrid(levelData, rng) {', 'function  createInitialGrid(levelData, rng)\n{')), surface);
+});
+
+test('a bound method replaced from outside the class is a rule change', () => {
+  for (const patch of [
+    'Game.prototype.checkWinLose = function () {};',
+    "Game.prototype['hasValidMoves'] = () => true;",
+    'Game.prototype.beginLevel = function () {};',
+  ]) {
+    assert.notEqual(gameRuleSurface(`${source}\n${patch}\n`), surface, `not detected: ${patch}`);
+  }
 });
 
 test('a rule declaration that disappears is refused, not skipped', () => {

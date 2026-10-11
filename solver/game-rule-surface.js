@@ -212,6 +212,29 @@ function fieldAssignments(tokens, depth, field, from, to) {
   return found;
 }
 
+// Every statement anywhere in the file that assigns a member called `name`
+// (`this.name = ...`, `Game.prototype.name = ...`, `obj['name'] = ...`): an
+// assignment like that replaces a bound method for the instances it reaches.
+function memberAssignments(tokens, depth, name) {
+  const found = [];
+  const quoted = new Set([`'${name}'`, `"${name}"`, `\`${name}\``]);
+  for (let i = 0; i < tokens.length - 2; i++) {
+    let after;
+    if (tokens[i].t === '.' && tokens[i + 1].t === name) after = i + 2;
+    else if (tokens[i].t === '[' && quoted.has(tokens[i + 1].t) && tokens[i + 2] && tokens[i + 2].t === ']') after = i + 3;
+    else continue;
+    if (!tokens[after] || !ASSIGNMENT.has(tokens[after].t)) continue;
+    let start = i;
+    while (start > 0 && depth[start - 1] >= depth[i]
+      && !(depth[start - 1] === depth[i] && [';', '{', '}'].includes(tokens[start - 1].t))) start--;
+    let end = after;
+    while (end < tokens.length && !(depth[end] === depth[i] && (tokens[end].t === ';' || closes(tokens[end])))) end++;
+    found.push(tokens.slice(start, end));
+    i = end;
+  }
+  return found;
+}
+
 function render(tokens) {
   let out = '';
   tokens.forEach((token, i) => {
@@ -271,6 +294,9 @@ function gameRuleSurface(source) {
   }
   for (const field of GAME_FIELDS) {
     for (const part of fieldAssignments(tokens, depth, field, open + 1, end)) parts.push(render(part));
+  }
+  for (const name of [...GAME_METHODS, wrapper]) {
+    for (const part of memberAssignments(tokens, depth, name)) parts.push(render(part));
   }
   return parts.join('\n');
 }
