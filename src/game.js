@@ -418,9 +418,12 @@ class Game {
             this.handleTileClick(touch.clientX, touch.clientY);
         });
 
-        // Enter submits the chain, Escape clears it
+        // Enter submits the chain, Escape clears it. Enter on a focused
+        // button or field belongs to that control, not to the board.
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+                if (e.target && typeof e.target.closest === 'function'
+                    && e.target.closest('button, a, input, select, textarea, [contenteditable]')) return;
                 e.preventDefault();
                 this.submitChain();
             } else if (e.key === 'Escape') {
@@ -619,7 +622,8 @@ class Game {
 
         // Animate and then handle gravity + spawning
         this.animating = true;
-        setTimeout(() => {
+        this.mergeTimer = setTimeout(() => {
+            this.mergeTimer = null;
             finalTile.merging = false;
             this.applyGravity();
             this.spawnNewTiles();
@@ -813,6 +817,10 @@ class Game {
         this.history = [];
         this.gameOver = false;
         this.levelComplete = false;
+        // A move still animating belongs to the board being replaced; its
+        // pending callback must not tick blockers or score on this one.
+        clearTimeout(this.mergeTimer);
+        this.mergeTimer = null;
         this.animating = false;
 
         // Update canvas size for grid
