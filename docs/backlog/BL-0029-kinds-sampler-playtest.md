@@ -1,7 +1,7 @@
 ---
 id: BL-0029
 title: Owner plays the kinds sampler
-status: active
+status: done
 milestone: level-archetypes
 depends_on: [BL-0028]
 updated: 2026-10-11
@@ -33,11 +33,11 @@ three unrelated orders. The owner plays them and says which layers add planning.
 
 ## Current evidence
 
-PDL-039, REVISE (per-board decisions). Before that, PDL-038, REVISE. Screening for every board is in `prototypes/sampler/model.test.js`.
+PDL-040, REVISE (version 2, every board has a verdict). PDL-039, REVISE (per-board decisions). Before that, PDL-038, REVISE. Screening for every board is in `prototypes/sampler/model.test.js`.
 
 ## Next action
 
-The owner plays See It Coming, the one board without a run or verdict, in the second sampler version (PDL-039).
+None. Every board has a verdict (PDL-039, PDL-040). A third sampler version is the follow-up PDL-040 recommends.
 
 ## History
 
@@ -46,3 +46,4 @@ The owner plays See It Coming, the one board without a run or verdict, in the se
 - 2026-10-11 — Owner played all boards except See It Coming; recorded as PDL-039. Stays active until See It Coming has a verdict.
 - 2026-10-11 — Version 2 (nine boards, PDL-039 revisions) published to the same
   Artifact under study `kinds-sampler-v2`; owner play pending, See It Coming included.
+- 2026-10-11 — Owner played all nine version 2 boards, See It Coming included; recorded as PDL-040. Done.

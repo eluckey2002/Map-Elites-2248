@@ -1185,3 +1185,75 @@ design result:
   mixed-family idea is parked as a separate game (BL-0031).
 - **Sources:** Owner messages in the Level archetypes thread; Artifact `runs`
   (8 rows) and `answers` (1 row); prototypes/sampler/README.md. Task: BL-0029.
+
+### PDL-040 — Kinds sampler v2: powers of two fix the math; Rust retires, moves too tight
+
+- **Reported:** 2026-10-11, 18:48–19:16 UTC, in the Level archetypes thread. The
+  owner played the second sampler version (same private Artifact, study
+  `kinds-sampler-v2`, nine boards, PR #84) and said "done with comments".
+  Task: BL-0029.
+- **Captured play (Artifact `runs`):**
+
+  | # | Board | Result | Moves | Undos | Minutes |
+  |---|---|---|---|---|---|
+  | 1 | Make It Here | won | 7 / 7 | 6 | 6 |
+  | 2 | Feed the Next (parts) | won | 4 / 6 | 0 | 2 |
+  | 3 | Feed the Next — Advanced | won | 5 / 7 | 0 | 1 |
+  | 4 | Shared Material | won | 6 / 6 | 0 | 3 |
+  | 5 | Three Separate (control) | left, 1 of 3 orders filled | 2 / 7 | 6 | 4 |
+  | 6 | See It Coming | won | 4 / 6 | 1 | 2 |
+  | 7 | The Drought (boss) | won | 4 / 8 | 0 | 2 |
+  | 8 | Through the Gate | won | 5 / 7 | 0 | 1 |
+  | 9 | Rust | won | 3 / 9 | 0 | 1 |
+
+- **Owner notes, verbatim (Artifact `answers`, one per board; Shared Material
+  has none):**
+  - Make It Here: "there is alot going on - and its a little overwhelming - the
+    concept itself is not but. the design is"
+  - Feed the Next (parts): "This was good. had objective. not too hard.
+    mutiple paths to victory."
+  - Feed the Next — Advanced: "this was the exact same as previous board - how
+    was this advanced?"
+  - Three Separate: "need to loosen up the number of moves - these are all very
+    tight and creates too much pressure"
+  - See It Coming: "this was good. i didnt even notice the preview though!"
+  - The Drought: "this was good"
+  - Through the Gate: "this was fun"
+  - Rust: "rust wasnt even a factor"
+- **Observed:** Rust was won in 3 moves: a 64 scrape, then
+  32+32+32+32+64+64 = 256, then 64+64+128+256 = 512. The screen's beam-solver
+  witness took 7 moves, so the screen missed a much shorter line; a witness is
+  not a lower bound. Previews were never used (0 on every board).
+- **Interpretation (inferred):** With powers of two the math complaints are
+  gone: eight of nine boards won, most in one to three minutes with no undos.
+  The parts rule gives the easier Feed the Next tier the owner asked for, but
+  after it the v1 board no longer reads as harder; he solved it in one minute.
+  The forecast on See It Coming went unseen, so that board was won without the
+  forecast doing work. Move budgets of solver line plus two felt too tight.
+- **Decision:** **REVISE**, per board:
+  - Make It Here: KEEP the concept; REVISE the presentation (too much on screen
+    at once).
+  - Feed the Next (parts): KEEP as the entry tier.
+  - Feed the Next — Advanced: REVISE. It must be clearly harder than the parts
+    tier, or it is dropped.
+  - Shared Material: won, no note; no new verdict (PDL-039 KEEP stands).
+  - Three Separate: control only; its tight budget is part of the moves
+    complaint.
+  - See It Coming: KEEP the kind; REVISE so the forecast is visible and needed.
+  - The Drought: KEEP as a boss level.
+  - Through the Gate: KEEP. The "at least the gate value" rule was played
+    without objection; still not explicitly approved.
+  - Rust: RETIRE, per PDL-039's condition: the rust did not bind ("rust wasnt
+    even a factor").
+  - All boards: loosen move budgets (owner: "need to loosen up the number of
+    moves").
+- **Limits:** One player, one session, first attempts; answers are free-text
+  notes only (no rating buttons used). Three Separate was left, so its run
+  shows where he stopped. Timing is from run start and end stamps.
+- **Next recommendation:** A third sampler version with looser budgets, a
+  calmer Make It Here, a visible and binding forecast, and an Advanced Feed the
+  Next that is clearly harder, without Rust. BL-0029 is done (every board now
+  has a verdict).
+- **Sources:** Artifact `runs` (9 rows) and `answers` (8 rows), study
+  `kinds-sampler-v2`; owner message "done with comments"; prototypes/sampler/
+  README.md. Task: BL-0029.
