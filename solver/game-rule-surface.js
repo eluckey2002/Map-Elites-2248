@@ -19,6 +19,9 @@ const GAME_METHODS = [
   'calculateChainValue', 'getChainMultiplier', 'executeChain', 'applyGravity', 'spawnNewTiles', 'tickBlockers',
   'checkBombs', 'checkWinLose', 'hasValidMoves', 'canFormValidChain', 'saveState', 'undo',
 ];
+// Game fields read by bound rules but set elsewhere (the constructor): every
+// assignment to them anywhere in class Game is bound.
+const GAME_FIELDS = ['maxHistory'];
 // Bookkeeping that lets a level reload cancel a pending merge. It decides
 // whether the callback runs on the board it belongs to, not what the callback does.
 const BOOKKEEPING = [['this.mergeTimer = setTimeout(() => { this.mergeTimer = null;', 'setTimeout(() => {']];
@@ -35,6 +38,8 @@ const BEFORE_EXPRESSION = new Set(['return', 'typeof', 'instanceof', 'in', 'of',
 // a semicolon at it mattered, the same text without the break would not parse.
 const RESTRICTED = new Set(['return', 'throw', 'break', 'continue', 'yield', 'async']);
 const LINE_BREAK = new RegExp('[\\n\\r\\u2028\\u2029]');
+const ASSIGNMENT = new Set(['=', '+=', '-=', '*=', '/=', '%=', '**=', '<<=', '>>=', '>>>=', '&=', '|=', '^=',
+  '&&=', '||=', '??=', '++', '--']);
 const OPEN = new Set(['{', '[', '(']);
 const CLOSE = new Set(['}', ']', ')']);
 const IDENTIFIER = new RegExp('[A-Za-z_$#\\u0080-\\uffff][\\w$\\u0080-\\uffff]*', 'y');
@@ -180,6 +185,22 @@ function declarations(tokens, depth, name, level, from, to) {
   return found;
 }
 
+// Every statement in [from, to) that assigns this.<field>, through its `;`.
+function fieldAssignments(tokens, depth, field, from, to) {
+  const found = [];
+  for (let i = from; i < to - 3; i++) {
+    if (tokens[i].t !== 'this' || tokens[i + 1].t !== '.' || tokens[i + 2].t !== field) continue;
+    const before = tokens[i - 1] && tokens[i - 1].t;
+    if (!ASSIGNMENT.has(tokens[i + 3].t) && before !== '++' && before !== '--') continue;
+    let end = i;
+    while (end < to && !(depth[end] === depth[i] && (tokens[end].t === ';' || closes(tokens[end])))) end++;
+    found.push(tokens.slice(i, end));
+    i = end;
+  }
+  if (found.length === 0) throw new Error(`game rule surface: no assignment to this.${field} in class Game`);
+  return found;
+}
+
 function render(tokens) {
   let out = '';
   tokens.forEach((token, i) => {
@@ -228,6 +249,9 @@ function gameRuleSurface(source) {
   for (const name of GAME_METHODS) {
     for (const part of declarations(tokens, depth, name, depth[open] + 1, open + 1, end)) parts.push(withoutBookkeeping(render(part)));
   }
+  for (const field of GAME_FIELDS) {
+    for (const part of fieldAssignments(tokens, depth, field, open + 1, end)) parts.push(render(part));
+  }
   return parts.join('\n');
 }
 
@@ -235,16 +259,21 @@ function gameRuleIdentity(source) {
   return crypto.createHash('sha256').update(gameRuleSurface(source)).digest('hex');
 }
 
-// The bytes of `file` at whichever commit hashed to `hash`, or null.
-function historicalBytes(root, file, hash) {
+// The newest commit whose `file` hashed to `hash`, with those bytes, or null.
+function historicalVersion(root, file, hash) {
   const commits = execFileSync('git', ['log', '--format=%H', '--', file], { cwd: root, encoding: 'utf8' })
     .trim().split('\n').filter(Boolean);
   for (const commit of commits) {
     let bytes;
     try { bytes = execFileSync('git', ['show', `${commit}:${file}`], { cwd: root }); } catch { continue; }
-    if (crypto.createHash('sha256').update(bytes).digest('hex') === hash) return bytes;
+    if (crypto.createHash('sha256').update(bytes).digest('hex') === hash) return { commit, bytes };
   }
   return null;
 }
 
-module.exports = { TOP_LEVEL, GAME_METHODS, tokenize, gameRuleSurface, gameRuleIdentity, historicalBytes };
+function historicalBytes(root, file, hash) {
+  const version = historicalVersion(root, file, hash);
+  return version && version.bytes;
+}
+
+module.exports = { TOP_LEVEL, GAME_METHODS, GAME_FIELDS, tokenize, gameRuleSurface, gameRuleIdentity, historicalVersion, historicalBytes };

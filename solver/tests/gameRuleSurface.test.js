@@ -41,6 +41,7 @@ test('a changed win/lose check, chain rule, level, spawn weight or outcome strin
     ['if (this.isValidChain()) {', 'if (true) {'],
     ["this.finishAuthoring('win', 'target reached');", "this.finishAuthoring('w/*ignored*/in', 'target reached');"],
     ["this.finishAuthoring('win', 'target reached');", "this.finishAuthoring('w//in', 'target reached');"],
+    ['this.maxHistory = 10;', 'this.maxHistory = 0;'],
     ['    isAdjacent(tile1, tile2) {', '    isAdjacent() { return true; }\n    isAdjacent(tile1, tile2) {'],
   ]) {
     assert.notEqual(gameRuleSurface(edited(from, to)), surface, `not detected: ${to}`);
@@ -54,6 +55,7 @@ test('reformatting a declaration signature is not a rule change', () => {
 });
 
 test('a rule declaration that disappears is refused, not skipped', () => {
+  assert.throws(() => gameRuleSurface(edited('this.maxHistory = 10;', '')), /no assignment to this.maxHistory/);
   assert.throws(() => gameRuleSurface(edited('    hasValidMoves() {', '    hasAnyMoves() {')), /hasValidMoves not found/);
 });
 

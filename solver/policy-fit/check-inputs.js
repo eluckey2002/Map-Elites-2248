@@ -1,6 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
-const {gameRuleIdentity,historicalBytes}=require('../game-rule-surface');
+const {execFileSync}=require('node:child_process');
+const {gameRuleIdentity,historicalVersion}=require('../game-rule-surface');
 const root=path.resolve(__dirname,'../..');
 // DECISION-0013: src/game.js may change for browser-only fixes. Its pinned
 // bytes must still exist in history and its game rules must still equal theirs
@@ -8,6 +9,8 @@ const root=path.resolve(__dirname,'../..');
 // whenever src/game.js changes, and only its two runtime identity fields move:
 // every other field must still match the pinned bytes exactly, and the pilot's
 // own qualify.js must verify the new receipt (self-hash, runtime bundle, replay).
+// That qualify.js must be byte-identical to the one at the commit holding the
+// pinned receipt, so weakening the verifier cannot admit a receipt.
 const LIVE_GAME='src/game.js';
 const REDERIVED_RECEIPT=/^pilots\/[A-Za-z0-9-]+\/execution-receipt\.json$/;
 const RUNTIME_IDENTITY_FIELDS=['artifactIdentity','runtimeBundleIdentity'];
@@ -16,9 +19,12 @@ function sameApartFromRuntimeIdentity(live,pinned){
  const strip=bytes=>{const value=JSON.parse(bytes.toString('utf8')); for(const field of RUNTIME_IDENTITY_FIELDS) delete value[field]; return JSON.stringify(value);};
  return strip(live)===strip(pinned);
 }
-function rederivedReceiptVerifies(input,live){
- const qualify=path.join(root,path.dirname(input),'qualify.js');
- if(!fs.existsSync(qualify)) return false;
+function rederivedReceiptVerifies(input,live,pinnedCommit,liveQualifier){
+ const relative=path.dirname(input)+'/qualify.js',qualify=path.join(root,relative);
+ if(!pinnedCommit||!fs.existsSync(qualify)) return false;
+ let pinnedQualifier;
+ try{pinnedQualifier=execFileSync('git',['show',pinnedCommit+':'+relative],{cwd:root,stdio:['ignore','pipe','ignore']});}catch{return false;}
+ if(!pinnedQualifier.equals(liveQualifier||fs.readFileSync(qualify))) return false;
  try{return require(qualify).verifyExecution(JSON.parse(live.toString('utf8'))).status==='PASS';}catch{return false;}
 }
 function checkInputs(manifest){
@@ -30,8 +36,8 @@ function checkInputs(manifest){
  for(const [input,hash] of Object.entries(manifest)){
   const live=fs.readFileSync(path.join(root,input));
   if(sha(live)===hash) continue;
-  const pinned=input===LIVE_GAME||REDERIVED_RECEIPT.test(input)?historicalBytes(root,input,hash):null;
-  const accepted=pinned&&(input===LIVE_GAME?gameRuleIdentity(live)===gameRuleIdentity(pinned):sameApartFromRuntimeIdentity(live,pinned)&&rederivedReceiptVerifies(input,live));
+  const pinned=input===LIVE_GAME||REDERIVED_RECEIPT.test(input)?historicalVersion(root,input,hash):null;
+  const accepted=pinned&&(input===LIVE_GAME?gameRuleIdentity(live)===gameRuleIdentity(pinned.bytes):sameApartFromRuntimeIdentity(live,pinned.bytes)&&rederivedReceiptVerifies(input,live,pinned.commit));
   if(!accepted) throw new Error('Historical input drift: '+input);
  }
  return Object.keys(manifest).length;
