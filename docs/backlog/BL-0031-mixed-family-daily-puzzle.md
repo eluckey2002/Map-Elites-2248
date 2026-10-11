@@ -31,7 +31,10 @@ The format the idea points to:
   Dry Well board);
 - the 2248 chain rule, with tiles from more than one number family (2s, 3s, and
   possibly others) on the board;
-- a short result players can share.
+- a short result players can share;
+- optionally a "new puzzle variant of the day": each day tries a different
+  rule twist or level kind, so the daily puzzle doubles as a testing ground
+  for ideas before they go into 2248 (the owner, 2026-10-11).
 
 The owner's view that no game on the market combines several number families is
 his own; it has not been checked.
