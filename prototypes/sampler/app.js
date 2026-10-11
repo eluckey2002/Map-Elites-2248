@@ -5,10 +5,11 @@
   const rules=window.SamplerRules,levels=window.SamplerLevels,$=id=>document.getElementById(id);
   const STUDY='kinds-sampler-v1',LS='kindsSampler.v1';
   const COLORS=['#d9822b','#3d7fb8','#3f8f5a'],LETTERS='ABC',RINGS=['ing-a','ing-b','ing-c'];
-  let local={current:0};
+  let local={current:0,played:{}};
   try{Object.assign(local,JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){/* storage unavailable */}
   const keep=()=>{try{localStorage.setItem(LS,JSON.stringify(local));}catch(e){/* fine */}};
   if(!(local.current in levels))local.current=0;
+  if(!local.played||typeof local.played!=='object')local.played={};
   let level,state,history,selection,previewing,run,answers={};
   let dbPromise=null;
   // Only a database handle that was actually acquired is cached; a rejection or null is retried on the next save.
@@ -31,7 +32,7 @@
 
   function goalChips(shown){
     const g=goal(),chip=(text,color,done)=>{const c=document.createElement('span');c.className='chip'+(done?' done':'');c.style.setProperty('--c',color);c.textContent=text+(done?' ✓':'');return c;};
-    if(g.type==='orders')return g.orders.map((o,i)=>chip(`${g.orders.length>1?LETTERS[i]+' · ':''}${fmt(o.make)} = ${o.make/o.from} × ${o.from}${o.at?' on ◎':''}`,COLORS[i],shown.done[i]));
+    if(g.type==='orders')return g.orders.map((o,i)=>chip(`${g.orders.length>1?LETTERS[i]+' · ':''}${fmt(o.make)} = ${o.make/o.from} × ${o.from}${o.at?' on ◎':''}${g.feeds&&i?', using ●':''}`,COLORS[i],shown.done[i]));
     if(g.type==='exact')return [chip(`Make exactly ${fmt(g.make)}`,COLORS[0],shown.done[0])];
     if(g.type==='relay')return g.stages.map((v,i)=>chip(i?`then ${fmt(v)}, using it`:`Make ${fmt(v)}`,COLORS[i],shown.done[i]));
     if(g.type==='leftover')return [chip(`Leave ${g.max} tile${g.max>1?'s':''}`,COLORS[0],rules.goalMet(level,shown))];
@@ -58,7 +59,12 @@
       const order=rules.completes(level,state,selection);
       if(order>=0)return {text:`${values.length} × ${g.orders[order].from} → ${fmt(sum)} on the spot. Completes the order${g.orders.length>1?' '+LETTERS[order]:''}.`,tone:'good'};
       const recipe=rules.recipeOnly(level,state,selection);
-      if(recipe>=0)return {text:`Right recipe, wrong spot: the chain has to end on ◎.`,tone:'warn'};
+      if(recipe>=0){
+        const o=g.orders[recipe],[ex,ey]=selection.at(-1);
+        if(o.at&&!(o.at[0]===ex&&o.at[1]===ey))return {text:`Right recipe, wrong spot: the chain has to end on ◎.`,tone:'warn'};
+        if(g.feeds&&state.done.indexOf(false)!==recipe)return {text:`Right recipe, but order ${LETTERS[state.done.indexOf(false)]} comes first.`,tone:'warn'};
+        return {text:`Right recipe, but it has to include the ${fmt(g.orders[recipe-1].make)} order ${LETTERS[recipe-1]} made (●).`,tone:'warn'};
+      }
       for(const [i,o] of g.orders.entries()){
         if(state.done[i])continue;
         const used=values.filter(v=>v===o.from).length;
@@ -162,6 +168,10 @@
       group.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(a[group.dataset.q]===b.dataset.v)));
     });
     if(document.activeElement!==$('note'))$('note').value=a.note||'';
+    const played=!!local.played[level.id];
+    document.querySelectorAll('#questions button,#note').forEach(el=>{el.disabled=!played;});
+    if(!played)$('q-status').textContent='Make a move on this board first.';
+    else if($('q-status').textContent==='Make a move on this board first.')$('q-status').textContent='';
   }
 
   async function saveDoc(collection,id,doc,statusEl){
@@ -178,16 +188,17 @@
     const doc=JSON.parse(JSON.stringify(Object.assign({},r,{endedAt:new Date().toISOString(),reason,outcome:state.outcome,movesUsed:state.moves,
       budget:state.maxMoves,done:state.done,finalGrid:state.grid.map(row=>row.map(t=>t?t.value:0))})));
     delete doc.savedRev;
-    pending[r.id]={run:r,rev:r.rev,doc};flush();
+    pending['runs/'+r.id]={collection:'runs',id:r.id,doc,statusEl:$('run-status'),done:()=>{r.savedRev=Math.max(r.savedRev||0,doc.rev);}};flush();
   }
+  function saveAnswer(a){pending['answers/'+a.board]={collection:'answers',id:a.board,doc:JSON.parse(JSON.stringify(a)),statusEl:$('q-status')};flush();}
   async function flush(){
     if(flushing){again=true;return;}flushing=true;
     try{
-      for(const id of Object.keys(pending)){
-        const item=pending[id];
-        if(await saveDoc('runs',id,item.doc,$('run-status'))){
-          item.run.savedRev=Math.max(item.run.savedRev||0,item.rev);
-          if(pending[id]===item)delete pending[id];
+      for(const key of Object.keys(pending)){
+        const item=pending[key];
+        if(await saveDoc(item.collection,item.id,item.doc,item.statusEl)){
+          if(item.done)item.done();
+          if(pending[key]===item)delete pending[key];
         }
       }
     }finally{flushing=false;}
@@ -198,7 +209,8 @@
     history.push(state);state=rules.move(level,state,chain);
     run.actions.push({type:'move',chain,values,at:Date.now()});run.rev++;
     selection=[];previewing=false;
-    if(state.outcome!=='playing')saveRun('finished');
+    local.played[level.id]=run.id;keep();
+    saveRun(state.outcome==='playing'?'active':'finished');
     render();
   }
   function select(x,y){
@@ -222,17 +234,18 @@
   $('retry').onclick=()=>{if(run.actions.length)saveRun(state.outcome==='playing'?'retried':'finished');begin();};
   $('next').onclick=()=>switchBoard((local.current+1)%levels.length);
   document.querySelectorAll('#questions .chips').forEach(group=>group.addEventListener('click',e=>{
-    const b=e.target.closest('button');if(!b)return;
-    const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{[group.dataset.q]:b.dataset.v,savedAt:new Date().toISOString()});
-    renderQuestions();render();saveDoc('answers',level.id,a,$('q-status'));
+    const b=e.target.closest('button');if(!b||!local.played[level.id])return;
+    const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{[group.dataset.q]:b.dataset.v,runId:local.played[level.id],savedAt:new Date().toISOString()});
+    renderQuestions();render();saveAnswer(a);
   }));
   $('note').addEventListener('change',()=>{
-    const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{note:$('note').value.slice(0,500),savedAt:new Date().toISOString()});
-    saveDoc('answers',level.id,a,$('q-status'));render();
+    if(!local.played[level.id])return;
+    const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{note:$('note').value.slice(0,500),runId:local.played[level.id],savedAt:new Date().toISOString()});
+    saveAnswer(a);render();
   });
   window.addEventListener('pagehide',()=>{if(run&&run.actions.length)saveRun(state.outcome==='playing'?'closed':'finished');});
   // Stored answers load in the background; a board answered locally in the meantime keeps its newer copy.
   (async()=>{try{const db=await database();if(!db)return;const snap=await db.collection('answers').get();
-    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(v&&v.board&&(!answers[v.board]||(answers[v.board].savedAt||'')<(v.savedAt||'')))answers[v.board]=v;});render();}catch(e){/* offline is fine */}})();
+    (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(v&&v.board&&(!answers[v.board]||(answers[v.board].savedAt||'')<(v.savedAt||'')))answers[v.board]=v;if(v&&v.board&&v.runId&&!local.played[v.board])local.played[v.board]=v.runId;});render();}catch(e){/* offline is fine */}})();
   begin();
 })();

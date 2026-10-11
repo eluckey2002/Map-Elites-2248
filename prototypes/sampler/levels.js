@@ -6,7 +6,7 @@
   /* Kinds sampler: each board is one core idea plus one layer that makes the steps depend on each other (PDL-038:
      Recipe alone "is not enough"; orders that feed each other "looks promising"). Kinds and layers are from
      level-archetypes/11-five-kinds-expanded.md. Three Separate is the control (three orders that share nothing).
-     Screened with search.js: a beam-solver win in (moves - 2) that needs at least 4 moves, the largest-sum harvest
+     Screened with search.js: a beam-solver witness in (moves - 2) that takes at least 4 moves, the largest-sum harvest
      proxy loses, the "do the obvious" proxy (fill any goal the moment it can, else the largest sum) loses, and the
      twist checks in search.necessity pass. Refills mix in 6, 12 and 24 so long chains are rarer. */
   const spawnValues=[4,6,8,12,16,24,32];
@@ -17,9 +17,9 @@
       seed:161,moves:7,spawnValues,goal:{type:'orders',orders:[{make:144,from:48,at:[2,3]},{make:432,from:144,at:[2,5]}]},
       grid:[[144,6,24,24,12],[8,12,48,24,6],[12,12,24,12,12],[8,144,12,4,24],[24,16,12,6,16],[24,4,24,12,12]]},
     {id:'feed-the-next',kind:'feeding-orders',name:'Feed the Next',focus:'Each order makes an ingredient for the next',
-      ruleTitle:'Three orders that feed each other.',rule:'Three 8s make a 24, an ingredient for order B. Three 24s make a 72, an ingredient for order C. The board starts short of 24s and 72s.',
+      ruleTitle:'Three orders that feed each other.',rule:'Fill A, then B, then C. The tile each order makes gets a ●, and the next order’s chain must include it: A’s 24 goes into B, B’s 72 goes into C. The board starts short of 24s and 72s.',
       hint:'Choose a chain. Each order needs one chain made only of its ingredient.',
-      seed:61,moves:7,spawnValues,goal:{type:'orders',orders:[{make:24,from:8},{make:72,from:24},{make:216,from:72}]},
+      seed:61,moves:7,spawnValues,goal:{type:'orders',feeds:true,orders:[{make:24,from:8},{make:72,from:24},{make:216,from:72}]},
       grid:[[8,48,8,8,8],[8,12,16,4,4],[12,8,72,8,8],[48,8,4,8,24],[24,8,12,8,16],[8,72,48,8,8]]},
     {id:'shared-material',kind:'shared-material',name:'Shared Material',focus:'Two orders want the same 24s, and there aren’t enough',
       ruleTitle:'Two orders, one pile of 24s.',rule:'Order A needs three 24s, order B needs four. The board has four 24s, and no 12s or 24s fall in. Two 12s make a 24.',

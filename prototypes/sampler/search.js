@@ -3,7 +3,7 @@
 const rules=require('./model');
 
 function key(state){
-  return state.grid.map(r=>r.map(t=>t?t.value+(t.rust?'r':''):'.').join(',')).join('/')+'|'+state.done.join('')+'|'+state.randomCursor+'|'+state.columnCursor.join(',');
+  return state.grid.map(r=>r.map(t=>t?t.value+(t.rust?'r':'')+(t.made?'m':''):'.').join(',')).join('/')+'|'+state.done.join('')+'|'+state.randomCursor+'|'+state.columnCursor.join(',');
 }
 const tilesOf=state=>state.grid.flat().filter(Boolean);
 const near=(a,b,d)=>Math.max(Math.abs(a[0]-b[0]),Math.abs(a[1]-b[1]))<=d;
@@ -107,9 +107,13 @@ function necessity(level,opts={}){
   if(level.forecast){
     // With useless refills (one huge value) there must be no win: the falling tiles are needed.
     const sol=solve({...level,spawnValues:[1<<20]},opts);out.winsWithoutRefills=!!sol;
+    // A player who can't see what falls: plans made against other refill sequences (other seeds) must all fail on the
+    // real one. Then knowing the shown refills is what the win depends on.
+    out.forecastBlindWins=[1,2,3].some(k=>{const blind=solve({...level,seed:level.seed+1000*k},opts);
+      return !!blind&&play(level,blind.path).outcome==='won';});
   }
   if(level.rust){
-    // Without rust, the harvest proxy should win; with it, lose. Then rust is what defeats the habit.
+    // Reported, not required: whether the harvest proxy would win with no rust at all.
     const {rust,...plain}=level;out.harvestWinsWithoutRust=harvest(plain).outcome==='won';
     // A player who plans as if there were no rust: that plan must fail once rust spreads.
     const sol=solve(plain,opts);out.rustBlindWins=!!sol&&play(level,sol.path).outcome==='won';

@@ -33,19 +33,20 @@ test('rust blocks chaining, spreads after a move, and is scraped off by a chain 
   assert.ok(after.last.cleared.some(([x,y])=>x===3&&y===0),'chain ending beside rust scrapes it');
 });
 
-test('each sampler board opens without a win, has a solver win in budget that needs 4+ moves, both shortcut proxies lose, and its twist binds',()=>{
+test('each sampler board opens without a win, has a solver witness in budget that takes 4+ moves, both shortcut proxies lose, and its twist binds',()=>{
   for(const level of levels){
     const state=rules.create(level);
     assert.ok(!rules.chains(state,8).some(c=>rules.move(level,state,c).outcome==='won'),level.id+' opens with a win');
     const sol=solve(level,{beam:200,maxLength:7});
     assert.ok(sol&&sol.moves<=level.moves-2,level.id+' has no solver win with two spare moves');
-    assert.ok(sol.moves>=4,level.id+' is won in under 4 moves');
+    assert.ok(sol.moves>=4,level.id+': the solver witness takes under 4 moves');
     assert.equal(rules.replay(level,sol.path.map(chain=>({type:'move',chain}))).outcome,'won');
     assert.notEqual(harvest(level).outcome,'won',level.id+' is won by the harvest proxy');
     assert.notEqual(obvious(level).outcome,'won',level.id+' is won by the do-the-obvious proxy');
     const nec=necessity(level,{beam:200,maxLength:7});
     assert.notEqual(nec.spotBlindWins,true,level.id+': ignoring the spot still wins');
-    assert.notEqual(nec.winsWithoutRefills,true,level.id+': the forecast is not needed');
+    assert.notEqual(nec.winsWithoutRefills,true,level.id+': the refills are not needed');
+    assert.notEqual(nec.forecastBlindWins,true,level.id+': a plan made without the shown refills still wins');
     assert.notEqual(nec.rustBlindWins,true,level.id+': ignoring the rust still wins');
   }
 });
@@ -59,4 +60,15 @@ test('the shared-material board starts with fewer 24s than both orders need, and
   const level=levels.find(l=>l.id==='shared-material'),need=level.goal.orders.reduce((n,o)=>n+o.make/o.from,0);
   assert.ok(level.grid.flat().filter(x=>x===24).length<need);
   assert.ok(!level.spawnValues.includes(12)&&!level.spawnValues.includes(24));
+});
+
+test('feeding orders fill in turn, and each later order must include the tile the previous one made',()=>{
+  const level={id:'f',seed:1,moves:5,spawnValues:[4],goal:{type:'orders',feeds:true,orders:[{make:24,from:8},{make:72,from:24}]},
+    grid:[[8,8,8,4],[24,24,24,4]]};
+  let state=rules.create(level);
+  assert.equal(rules.completes(level,state,[[0,1],[1,1],[2,1]]),-1,'B before A');
+  state=rules.move(level,state,[[0,0],[1,0],[2,0]]);
+  assert.ok(state.done[0]&&state.grid.flat().some(t=>t&&t.made&&t.value===24),'A’s 24 is marked');
+  const plain=[];state.grid.forEach((row,y)=>row.forEach((t,x)=>{if(t&&t.value===24&&!t.made)plain.push([x,y]);}));
+  assert.equal(rules.completes(level,state,plain.slice(0,3)),-1,'three 24s without the ● do not count');
 });

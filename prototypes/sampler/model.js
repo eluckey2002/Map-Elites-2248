@@ -76,8 +76,14 @@
   function completes(level,state,chain){
     if(level.goal.type!=='orders')return -1;
     const values=chain.map(([x,y])=>state.grid[y][x].value),sum=values.reduce((a,b)=>a+b,0),[ex,ey]=chain.at(-1);
-    return level.goal.orders.findIndex((o,i)=>!state.done[i]&&sum===o.make&&values.every(v=>v===o.from)&&
+    const i=level.goal.orders.findIndex((o,i)=>!state.done[i]&&sum===o.make&&values.every(v=>v===o.from)&&
       (!o.at||o.at[0]===ex&&o.at[1]===ey));
+    return i>=0&&feedsOk(level,state,chain,i)?i:-1;
+  }
+  // With `feeds`, orders fill in turn and each order after the first must use the tile the previous order made (●).
+  function feedsOk(level,state,chain,i){
+    if(!level.goal.feeds)return true;
+    return state.done.indexOf(false)===i&&(i===0||chain.some(([x,y])=>state.grid[y][x].made));
   }
   // The same check ignoring the marked cell, so the page can say "right recipe, wrong spot".
   function recipeOnly(level,state,chain){
@@ -166,7 +172,7 @@
     const points=core.executeChain(state,tiles);
     tiles.forEach(t=>{delete t.made;});
     if(stage>=0){state.done[stage]=true;survivor.made=true;}
-    if(order>=0)state.done[order]=true;
+    if(order>=0){state.done[order]=true;if(level.goal.feeds)survivor.made=true;}
     if(linked)state.done[0]=true;
     if(level.goal.type==='exact'&&survivor.value===level.goal.make)state.done[0]=true;
     // A chain that ends touching rust scrapes it off (with `scrape`, only a chain of that exact sum).
