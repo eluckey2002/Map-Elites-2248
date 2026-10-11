@@ -20,6 +20,15 @@ test('an order with a spot counts only when its chain ends on the spot',()=>{
   assert.equal(rules.move(level,state,[[0,0],[1,0],[2,0]]).outcome,'won');
 });
 
+test('oneAtATime boards refuse an order out of turn',()=>{
+  const level={id:'t',seed:1,moves:5,spawnValues:[8],oneAtATime:true,goal:{type:'orders',orders:[{make:64,from:16},{make:32,from:8}]},
+    grid:[[16,16,16,16],[8,8,8,8],[8,8,8,8]]};
+  const state=rules.create(level);
+  assert.equal(rules.completes(level,state,[[0,1],[1,1],[2,1],[3,1]]),-1,'B before A');
+  assert.equal(rules.recipeOnly(level,state,[[0,1],[1,1],[2,1],[3,1]]),-1);
+  assert.equal(rules.completes(level,state,[[0,0],[1,0],[2,0],[3,0]]),0);
+});
+
 test('stone stops gravity and diagonal squeezes; no-refill boards do not refill; forecast fills columns from their queue',()=>{
   const level={id:'t',seed:2,moves:5,spawnValues:[4,8],refill:false,stone:[[1,1]],goal:{type:'exact',make:1024},
     grid:[[8,8,8],[8,0,4],[4,4,4]]};
@@ -205,7 +214,8 @@ test('See It Coming: the forecast is shown, and a forecast-blind player loses wh
   assert.ok(level.forecast&&level.goal.type==='relay');
   assert.ok(/^Next tiles/i.test(level.rule),'the rule mentions the forecast first');
   const nec=necessity(level,{beam:200,maxLength:7});
-  assert.deepEqual(nec.blindPlanWins,nec.blindPlanWins.map(()=>false),'a plan made with other refills still wins');
+  assert.ok(nec.blindPlanWins.every(w=>w===false||w===null),'a plan made with other refills still wins');
+  assert.ok(nec.blindPlanWins.includes(false),'no alt seed produced a replayable plan, so the check proves nothing');
   assert.deepEqual(nec.blindReplanWins,nec.blindReplanWins.map(()=>false),'a player re-planning without the forecast still wins');
 });
 

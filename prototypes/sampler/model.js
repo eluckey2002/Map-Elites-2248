@@ -80,9 +80,11 @@
     if(level.goal.type!=='orders')return -1;
     const values=chain.map(([x,y])=>state.grid[y][x].value),sum=values.reduce((a,b)=>a+b,0),[ex,ey]=chain.at(-1);
     // The first unfinished order this chain fills, all rules included (two orders can share a recipe).
-    return level.goal.orders.findIndex((o,i)=>!state.done[i]&&sum===o.make&&values.every(v=>v===o.from)&&
+    return level.goal.orders.findIndex((o,i)=>!state.done[i]&&inTurn(level,state,i)&&sum===o.make&&values.every(v=>v===o.from)&&
       (!o.at||o.at[0]===ex&&o.at[1]===ey)&&partsOk(level,state,chain,i));
   }
+  // `oneAtATime` boards (Make It Here) fill their orders strictly in list order, the same as the page shows them.
+  const inTurn=(level,state,i)=>!level.oneAtATime||state.done.indexOf(false)===i;
   const isPart=t=>!!t&&!!t.made;
   function partCount(state){let n=0;for(const row of state.grid)for(const t of row)if(isPart(t))n++;return n;}
   // How many parts the board would hold after this chain fills an order: the chain's parts merge away, its last tile
@@ -104,7 +106,7 @@
   function recipeOnly(level,state,chain){
     if(level.goal.type!=='orders')return -1;
     const values=chain.map(([x,y])=>state.grid[y][x].value),sum=values.reduce((a,b)=>a+b,0);
-    return level.goal.orders.findIndex((o,i)=>!state.done[i]&&sum===o.make&&values.every(v=>v===o.from));
+    return level.goal.orders.findIndex((o,i)=>!state.done[i]&&inTurn(level,state,i)&&sum===o.make&&values.every(v=>v===o.from));
   }
   // The relay stage this chain completes, or -1: its sum is the stage's target and, after the first stage, it uses the
   // tile the previous stage made.

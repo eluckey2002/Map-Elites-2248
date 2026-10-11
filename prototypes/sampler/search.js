@@ -155,7 +155,7 @@ function forecastBlind(level,altSeed,opts={beam:150,maxLength:7}){
 }
 
 // Twist-necessity checks (research F12: if the board can be won without the twist, it is not that kind yet).
-function necessity(level,opts={},{altSeeds=[101,202,303]}={}){
+function necessity(level,opts={},{altSeeds=[55,11,22]}={}){
   const out={};
   if(level.goal.type==='orders'&&level.goal.orders.some(o=>o.at)){
     // A player who makes the recipe but ignores the spot: the plan that wins with no spot must fail with it.
@@ -167,9 +167,9 @@ function necessity(level,opts={},{altSeeds=[101,202,303]}={}){
     const sol=solve({...level,spawnValues:[1<<20]},opts);out.winsWithoutRefills=!!sol;
   }
   if(level.forecast&&level.goal.type==='relay'){
-    // Seeing the refills must matter: a whole plan made with other refills fails on the real ones, and a player who
+    // Seeing the refills must matter: a whole plan made with other refills fails on the real ones (null = that seed has no win in the search at all), and a player who
     // re-plans every move without seeing what falls also fails.
-    out.blindPlanWins=altSeeds.map(seed=>{const sol=solve({...level,seed},opts);return !!sol&&play(level,sol.path).outcome==='won';});
+    out.blindPlanWins=altSeeds.map(seed=>{const sol=solve({...level,seed},opts);return sol?play(level,sol.path).outcome==='won':null;});
     out.blindReplanWins=altSeeds.map(seed=>forecastBlind(level,seed).outcome==='won');
   }
   if(level.goal.parts&&level.goal.anyOrder){

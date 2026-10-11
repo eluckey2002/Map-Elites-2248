@@ -96,12 +96,16 @@ The forecast-aware witness is the beam solver, which sees the real refills.
 Two forecast-blind players must lose at the same budget:
 
 - **Blind plan**: the solver plans the whole game with a different refill
-  seed (101, 202, 303), and that plan is played on the real board.
+  seed (55, 11, 22), and that plan is played on the real board. Only seed 55
+  has a win at all (4 moves with its own refills); that plan is played on the
+  real board and does not win. Seeds 11 and 22 have no win in the search, so
+  they prove nothing either way. The test requires at least one replayable
+  plan, so the check cannot pass on an empty result.
 - **Blind re-planner**: every move, the solver re-plans from the real board
-  with imagined refills (seed 101, 202 or 303), plays the first chain of its
+  with imagined refills (seed 55, 11 or 22), plays the first chain of its
   plan, sees what actually fell, and plans again.
 
-All six lose on the real board; the witness wins in 4. The v2 check (with
+The seed 55 plan and all three re-planners lose on the real board; the witness wins in 4. The v2 check (with
 useless refills there is no win) still holds too.
 
 ## What changed from v1 (PDL-039)
@@ -134,6 +138,10 @@ owner beat v1 Rust by scraping a few times and then making one long chain: a
 Chains are unchanged (`solver/engine`): touching tiles, diagonals included, at
 least three, first two equal, then equal or double; the sum lands on the last
 tile; gravity; seeded refills. `model.js` adds:
+
+- **One at a time** (`oneAtATime`, Make It Here): orders fill strictly in list
+  order, A then B. The model refuses a B fill while A is open, so the page and
+  the rules agree (Codex review of #86).
 
 - **Orders** (`orders`): one chain made only of the ingredient, four of them.
   Optional `at`: the chain must end on that cell (◎).
@@ -247,7 +255,7 @@ Boards came from seeded generation (pools and filters per kind; scratch
 | 3 | Feed the Next — Advanced | Any order, cap of two parts, D needs two parts (proposed rule) | 3 (new) | 9 | 5 | no win (4 orders) | 640 | lose / lose | in-order greedy loses; strict order needs 7 |
 | 4 | Shared Material | Two orders want the same nine green 3s (eight needed) | 64 | 8 | 4 | no win | 163 | lose / lose | — |
 | 5 | Three Separate | Control: [8] × 4, [64] × 4, [128] × 4 | 2 | 9 | 5 | no win | 457 | lose / lose | (control) |
-| 6 | See It Coming | Forecast + relay: 256, then 512 using it | 4 (new) | 8 | 4 | no win | 1221 | lose / lose | refills needed; 3 blind plans and 3 blind re-planners lose |
+| 6 | See It Coming | Forecast + relay: 256, then 512 using it | 4 (new) | 8 | 4 | no win | 1221 | lose / lose | refills needed; the one blind plan that exists and 3 blind re-planners lose |
 | 7 | The Drought | Boss: no refills, make one 512 | 59 (new) | 10 | 6 | no win | 396 | stuck / stuck | — |
 | 8 | Through the Gate | 7 × 6 rooms, gate at 128 or more, forecast, link both ★ | 3 (gate 64 → 128) | 8 | 4 | no win | 303 | lose / lose | refills needed |
 
