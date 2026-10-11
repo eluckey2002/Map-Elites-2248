@@ -100,14 +100,11 @@
     }
     return state;
   }
-  // Every distinct legal chain (distinct by cell set and end cell), up to maxLength tiles.
-  function chains(state,maxLength=8){
-    const out=[],seen=new Set();
+  // Calls visit(chain, tiles) for every legal chain path of minChain..maxLength tiles, in a fixed order. The arrays are
+  // reused by the walk, so a visitor that keeps a chain must copy it.
+  function eachChain(state,maxLength,visit){
     function dfs(chain,tiles){
-      if(chain.length>=state.minChain){
-        const key=chain.slice(0,-1).map(p=>p.join(',')).sort().join(' ')+'>'+chain.at(-1).join(',');
-        if(!seen.has(key)){seen.add(key);out.push(chain.map(p=>[...p]));}
-      }
+      if(chain.length>=state.minChain)visit(chain,tiles);
       if(chain.length>=maxLength)return;
       const [x,y]=chain.at(-1);
       for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
@@ -119,7 +116,15 @@
       }
     }
     for(let y=0;y<state.gridHeight;y++)for(let x=0;x<state.gridWidth;x++)dfs([[x,y]],[state.grid[y][x]]);
+  }
+  // Every distinct legal chain (distinct by cell set and end cell), up to maxLength tiles.
+  function chains(state,maxLength=8){
+    const out=[],seen=new Set();
+    eachChain(state,maxLength,chain=>{
+      const key=chain.slice(0,-1).map(p=>p.join(',')).sort().join(' ')+'>'+chain.at(-1).join(',');
+      if(!seen.has(key)){seen.add(key);out.push(chain.map(p=>[...p]));}
+    });
     return out;
   }
-  return {create,valid,completes,move,preview,hasMove,replay,chains,MIN_CHAIN};
+  return {create,valid,completes,move,preview,hasMove,replay,eachChain,chains,MIN_CHAIN};
 });

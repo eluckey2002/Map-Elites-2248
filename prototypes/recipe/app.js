@@ -21,7 +21,7 @@
   function begin(fresh){
     level=levels[local.current];state=rules.create(level);history=[];selection=[];previewing=false;
     if(fresh!==false)run={id:`${level.id}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,6)}`,study:STUDY,board:level.id,
-      number:local.current+1,startedAt:new Date().toISOString(),actions:[],previews:0,undos:0};
+      number:local.current+1,startedAt:new Date().toISOString(),actions:[],rev:0,savedRev:0,previews:0,undos:0};
     render();
   }
 
@@ -111,21 +111,35 @@
     try{const db=await database();if(!db)throw new Error('no db');await db.collection(collection).doc(id).set(doc);if(statusEl)statusEl.textContent='Saved';return true;}
     catch(e){if(statusEl)statusEl.textContent='Not saved (open the page signed in).';return false;}
   }
-  // A run is marked saved only after its write succeeds, so a failed save is retried on the next leave, retry or close.
-  // Flags live on the run object because retry and board switches replace `run` while a write is in flight.
-  async function saveRun(reason){
+  // Each save snapshots the run (deep copy, with its revision) into a pending queue keyed by run id, then flushes the queue.
+  // A snapshot leaves the queue only after its write succeeds, so a failed save, from this run or an earlier board, is
+  // retried on the next save. A run counts as saved only up to the revision that was actually written.
+  const pending={};let flushing=false,again=false;
+  function saveRun(reason){
     const r=run;
-    if(r.saved||r.saving||!r.actions.length)return;r.saving=true;
-    const doc=Object.assign({},r,{endedAt:new Date().toISOString(),reason,outcome:state.outcome,movesUsed:state.moves,budget:state.maxMoves,
-      ordersFilled:state.done,finalGrid:state.grid.map(row=>row.map(t=>t.value))});
-    delete doc.saved;delete doc.saving;
-    r.saved=await saveDoc('runs',r.id,doc,$('run-status'));r.saving=false;
+    if(!r.actions.length||r.savedRev===r.rev)return;
+    const doc=JSON.parse(JSON.stringify(Object.assign({},r,{endedAt:new Date().toISOString(),reason,outcome:state.outcome,movesUsed:state.moves,
+      budget:state.maxMoves,ordersFilled:state.done,finalGrid:state.grid.map(row=>row.map(t=>t.value))})));
+    delete doc.savedRev;
+    pending[r.id]={run:r,rev:r.rev,doc};flush();
   }
-
+  async function flush(){
+    if(flushing){again=true;return;}flushing=true;
+    try{
+      for(const id of Object.keys(pending)){
+        const item=pending[id];
+        if(await saveDoc('runs',id,item.doc,$('run-status'))){
+          item.run.savedRev=Math.max(item.run.savedRev||0,item.rev);
+          if(pending[id]===item)delete pending[id];
+        }
+      }
+    }finally{flushing=false;}
+    if(again){again=false;flush();}
+  }
   function apply(chain){
     const values=chain.map(p=>valueAt(state,p)),order=rules.completes(level,state,chain);
     history.push(state);state=rules.move(level,state,chain);
-    run.actions.push({type:'move',chain,values,order,mixed:new Set(values).size>1,at:Date.now()});
+    run.actions.push({type:'move',chain,values,order,mixed:new Set(values).size>1,at:Date.now()});run.rev++;
     selection=[];previewing=false;
     if(state.outcome!=='playing')saveRun('finished');
     render();
@@ -147,7 +161,7 @@
   $('merge').onclick=()=>{if(state.outcome==='playing'&&rules.valid(state,selection))apply(selection.map(p=>[...p]));};
   $('preview').onclick=()=>{if(rules.valid(state,selection)){previewing=!previewing;if(previewing)run.previews++;render();}};
   $('clear').onclick=()=>{selection=[];previewing=false;render();};
-  $('undo').onclick=()=>{if(!history.length)return;state=history.pop();run.undos++;run.actions.push({type:'undo',at:Date.now()});run.saved=false;selection=[];previewing=false;render();};
+  $('undo').onclick=()=>{if(!history.length)return;state=history.pop();run.undos++;run.actions.push({type:'undo',at:Date.now()});run.rev++;selection=[];previewing=false;render();};
   $('retry').onclick=()=>{if(run.actions.length)saveRun(state.outcome==='playing'?'retried':'finished');begin();};
   $('next').onclick=()=>switchBoard((local.current+1)%levels.length);
   document.querySelectorAll('#questions .chips').forEach(group=>group.addEventListener('click',e=>{
