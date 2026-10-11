@@ -36,8 +36,8 @@ move is wrong in two ways a player can see:
 The exact state: board 2, "Leave the 256", opens with five 128s at (4,2),
 (0,4), (3,4), (3,5) and (4,5), next to 256s at (3,2) and (2,4) (column, row,
 zero-based). The legal chain 128+128+128+256 sums to 640 and uses three of the
-128s the order needs. The largest-sum proxy plays a 10-tile mixed chain ending in
-128+256 on move 1, then 128+128+128+256 on move 2, and runs out of moves. The
+128s the order needs. The largest-sum proxy (any chain length) plays mixed chains ending
+in 128+256 on moves 1 and 2, then 128+128+128+256 on move 3, and runs out of moves. The
 checked witness leaves the 256s alone: build two 128s (16×4, then 32×4), then join
 four 128s.
 

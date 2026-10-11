@@ -9,7 +9,7 @@
   try{Object.assign(local,JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){/* storage unavailable */}
   const keep=()=>{try{localStorage.setItem(LS,JSON.stringify(local));}catch(e){/* fine */}};
   if(!(local.current in levels))local.current=0;
-  let level,state,history,selection,previewing,run,saved,answers={};
+  let level,state,history,selection,previewing,run,answers={};
   let dbPromise=null;
   const database=()=>(dbPromise||=(window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null)));
 
@@ -22,7 +22,7 @@
     level=levels[local.current];state=rules.create(level);history=[];selection=[];previewing=false;
     if(fresh!==false)run={id:`${level.id}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,6)}`,study:STUDY,board:level.id,
       number:local.current+1,startedAt:new Date().toISOString(),actions:[],previews:0,undos:0};
-    saved=false;render();
+    render();
   }
 
   function describeSelection(){
@@ -111,11 +111,15 @@
     try{const db=await database();if(!db)throw new Error('no db');await db.collection(collection).doc(id).set(doc);if(statusEl)statusEl.textContent='Saved';return true;}
     catch(e){if(statusEl)statusEl.textContent='Not saved (open the page signed in).';return false;}
   }
-  function saveRun(reason){
-    if(saved||!run.actions.length)return;saved=true;
-    const doc=Object.assign({},run,{endedAt:new Date().toISOString(),reason,outcome:state.outcome,movesUsed:state.moves,budget:state.maxMoves,
-      ordersFilled:state.done,finalGrid:state.grid.map(r=>r.map(t=>t.value))});
-    saveDoc('runs',run.id,doc,$('run-status'));
+  // A run is marked saved only after its write succeeds, so a failed save is retried on the next leave, retry or close.
+  // Flags live on the run object because retry and board switches replace `run` while a write is in flight.
+  async function saveRun(reason){
+    const r=run;
+    if(r.saved||r.saving||!r.actions.length)return;r.saving=true;
+    const doc=Object.assign({},r,{endedAt:new Date().toISOString(),reason,outcome:state.outcome,movesUsed:state.moves,budget:state.maxMoves,
+      ordersFilled:state.done,finalGrid:state.grid.map(row=>row.map(t=>t.value))});
+    delete doc.saved;delete doc.saving;
+    r.saved=await saveDoc('runs',r.id,doc,$('run-status'));r.saving=false;
   }
 
   function apply(chain){
@@ -136,15 +140,15 @@
   }
   function switchBoard(i){
     if(i===local.current)return;
-    if(state.outcome==='playing'&&state.moves)saveRun('left-board');
+    if(run.actions.length)saveRun(state.outcome==='playing'?'left-board':'finished');
     local.current=i;keep();begin();
   }
   $('board').addEventListener('click',e=>{const cell=e.target.closest('button[data-x]');if(cell&&!cell.disabled)select(+cell.dataset.x,+cell.dataset.y);});
   $('merge').onclick=()=>{if(state.outcome==='playing'&&rules.valid(state,selection))apply(selection.map(p=>[...p]));};
   $('preview').onclick=()=>{if(rules.valid(state,selection)){previewing=!previewing;if(previewing)run.previews++;render();}};
   $('clear').onclick=()=>{selection=[];previewing=false;render();};
-  $('undo').onclick=()=>{if(!history.length)return;state=history.pop();run.undos++;run.actions.push({type:'undo',at:Date.now()});saved=false;selection=[];previewing=false;render();};
-  $('retry').onclick=()=>{if(state.outcome==='playing'&&state.moves)saveRun('retried');begin();};
+  $('undo').onclick=()=>{if(!history.length)return;state=history.pop();run.undos++;run.actions.push({type:'undo',at:Date.now()});run.saved=false;selection=[];previewing=false;render();};
+  $('retry').onclick=()=>{if(run.actions.length)saveRun(state.outcome==='playing'?'retried':'finished');begin();};
   $('next').onclick=()=>switchBoard((local.current+1)%levels.length);
   document.querySelectorAll('#questions .chips').forEach(group=>group.addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b)return;
@@ -155,7 +159,7 @@
     const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,number:local.current+1},answers[level.id]||{},{note:$('note').value.slice(0,500),savedAt:new Date().toISOString()});
     saveDoc('answers',level.id,a,$('q-status'));render();
   });
-  window.addEventListener('pagehide',()=>{if(state&&state.outcome==='playing'&&state.moves)saveRun('closed');});
+  window.addEventListener('pagehide',()=>{if(run&&run.actions.length)saveRun(state.outcome==='playing'?'closed':'finished');});
   (async()=>{try{const db=await database();if(!db)return;const snap=await db.collection('answers').get();
     (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(v&&v.board)answers[v.board]=v;});render();}catch(e){/* offline is fine */}})();
   begin();

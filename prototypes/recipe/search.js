@@ -45,12 +45,12 @@ function solve(level,{beam=400,maxLength=7,budget=level.moves}={}){
   return null;
 }
 
-// Harvest proxy: always take the chain with the largest sum (ties: longer). Reports whether it wins.
+// Harvest proxy: always take the chain with the largest sum (ties: longer), over every chain length on the board. Reports whether it wins.
 function harvest(level){
   let state=rules.create(level);const path=[];
   while(state.outcome==='playing'){
     let best=null,bestSum=-1;
-    for(const chain of rules.chains(state,10)){
+    for(const chain of rules.chains(state,state.gridWidth*state.gridHeight)){
       const sum=chain.reduce((s,[x,y])=>s+state.grid[y][x].value,0);
       if(sum>bestSum||(sum===bestSum&&chain.length>best.length)){best=chain;bestSum=sum;}
     }
