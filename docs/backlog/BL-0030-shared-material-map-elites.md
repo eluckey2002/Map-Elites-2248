@@ -36,12 +36,13 @@ varies boards inside one kind along axes a player can count:
 
 ## Current evidence
 
-None yet. Depends on how the owner rates the Shared Material board in BL-0029.
+PDL-039: the owner kept the Shared Material kind ("that creates a decision!") but beat the v1 board by clearing tiles and letting refills rebuild the shared tile. The kind needs shared tiles refills cannot make.
 
 ## Next action
 
-Wait for BL-0029's owner play.
+Rebuild the Shared Material board with protected shared tiles in the second sampler version; register the search once the owner confirms that board plays as a decision.
 
 ## History
 
 - 2026-10-11 — Proposed from the owner's remark in the kinds sampler thread.
+- 2026-10-11 — Updated after PDL-039.

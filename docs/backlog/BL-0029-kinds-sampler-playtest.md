@@ -33,13 +33,14 @@ three unrelated orders. The owner plays them and says which layers add planning.
 
 ## Current evidence
 
-PDL-038, REVISE. Screening for every board is in `prototypes/sampler/model.test.js`.
+PDL-039, REVISE (per-board decisions). Before that, PDL-038, REVISE. Screening for every board is in `prototypes/sampler/model.test.js`.
 
 ## Next action
 
-Owner play on the private Artifact.
+The owner plays See It Coming, the one board without a run or verdict, in the second sampler version (PDL-039).
 
 ## History
 
 - 2026-10-11 — Created after PDL-038. Eight boards published to a new private
   Artifact; owner play pending.
+- 2026-10-11 — Owner played all boards except See It Coming; recorded as PDL-039. Stays active until See It Coming has a verdict.
