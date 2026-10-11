@@ -433,12 +433,25 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
 // evidence is still bound byte-for-byte. The policy lives in this file, not in
 // an editable data file: the mandatory path set cannot be shrunk or swapped by
 // a config-only change, only by a reviewed edit to the gate.
+// DECISION-0013 adds src/game.js as a live file for the results below: the
+// browser game's input and display code must stay editable, and game-rule
+// parity with solver/engine.js is guarded by solver/tests/mirrors-game.test.js.
 const FROZEN_TREE_POLICY = {
+  'RESULT-0047': {
+    decision: 'DECISION-0013',
+    reason: 'Its recomputation hashes src/game.js byte for byte, so any browser-only fix to the game (input, display) made the live-tree recomputation fail.',
+    live_files: ['tools/verify-experiments.js', 'src/game.js'],
+  },
+  'RESULT-0049': {
+    decision: 'DECISION-0013',
+    reason: 'Its recomputation hashes src/game.js byte for byte, so any browser-only fix to the game (input, display) made the live-tree recomputation fail.',
+    live_files: ['tools/verify-experiments.js', 'src/game.js'],
+  },
   'RESULT-0082': {
-    decision: 'DECISION-0011',
-    reason: 'Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail.',
+    decision: 'DECISION-0013',
+    reason: 'Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail; src/game.js is frozen in its protocol, so any browser-only game fix did the same.',
     append_only: ['experiments/SEEDS.md'],
-    live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js'],
+    live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js', 'src/game.js'],
     extra_immutable: ['solver/policy-lab/runs/resume'],
   },
 };

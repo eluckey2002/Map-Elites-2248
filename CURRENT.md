@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Browser game bug fixes — 2026-10-11
+
+DECISION-0013 (provisional, check pending) lets `src/game.js` change without turning the gate red for RESULT-0047, RESULT-0049 and RESULT-0082: all three now recompute at their admission commits, with `src/game.js` a live file. The first fixes under it scope Enter to the board and stop a level reload during the merge animation from ticking blockers on the new board (`solver/tests/gameInputSafety.test.js`). HUMAN-PILOT-0002 was re-derived; only its two identity fields changed. Source review: the 2026-10-11 repo review in the owner's project files.
+
 ## Selectable Nemesis opponents — 2026-10-04
 
 DECISION-0012 records the owner-authorized additional Wider-search bot from RESULT-0082. Nemesis now selects either opponent on the same board and seed, retaining that selection for result checks. The shipped bot remains the default. See [implementation and verification](docs/game-design/levels/receipts/NEMESIS-POLICY-1.md). Task NEMESIS-POLICY-1 awaits owner review. The 2026-10-08 [technical review and correction](docs/game-design/levels/receipts/NEMESIS-PR68-REVIEW.md) isolates and bounds cold simulations, rejects incomplete board identities, and adds cache/race regressions. Fresh independent Codex runtime review passed, including shutdown cancellation and queued-policy deadlines. GitHub reviewed runtime head 599e7c7b; its remaining navigation-status finding is corrected here. PR #68 is ready for review, with final published-head re-review pending. Task NEMESIS-POLICY-1 still awaits owner gameplay review; technical PR review does not accept that task or RESULT-0082. Mobile QA is not a requirement.

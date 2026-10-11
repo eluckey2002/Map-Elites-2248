@@ -1793,6 +1793,23 @@ Every record created after 2026-09-25 names `written_by`. A record reaches `acce
 - **written_by:** codex-nemesis, NEMESIS-POLICY-1 session, branch codex/nemesis-policy-selector
 - **notes:** Owner authorization is recorded with its implementation. This provisional record has no checked_by and assigns no scientific acceptance or default-policy promotion. RESULT-0082 retains its existing standing and limitations.
 
+### DECISION-0013 — Keep src/game.js editable for browser-only fixes while RESULT-0047, RESULT-0049 and RESULT-0082 stay recomputable
+
+- **type:** decision
+- **status:** provisional
+- **scope:** the `FROZEN_TREE_POLICY` table in `tools/verify-experiments.js`, for `RESULT-0047`, `RESULT-0049` and `RESULT-0082` only; no change to any result's measurements, closure, contract, protocol or standing, and no change to game rules
+- **statement:** The owner grants a second recorded exception to the rule that a red gate is never fixed by editing the gate (`AGENTS.md`, Landing changes on `main`), extending `DECISION-0011`. `RESULT-0047`, `RESULT-0049` and `RESULT-0082` all freeze the bytes of `src/game.js`, so any edit to the browser game, including input and display fixes that change no rule, turned the experiment gate red. All three are now listed in `FROZEN_TREE_POLICY`, so the gate runs each closeout contract's own, unchanged command in a detached checkout of the commit that admitted its closure. `src/game.js` becomes a live file for each: the recomputation reads it at the admission commit, and the live tree may change it. For `RESULT-0047` and `RESULT-0049` the other exemption is `tools/verify-experiments.js`, the gate itself, which their protocols only freeze. `RESULT-0082` keeps every path `DECISION-0011` named: the append-only `experiments/SEEDS.md`, the live checks `tools/verify-experiments.js` and `solver/tests/failedRunLedger.test.js`, and the journal directory `solver/policy-lab/runs/resume`. Every other input each recomputation reads must still match its admission commit. Game-rule parity between `src/game.js` and `solver/engine.js` stays guarded by `solver/tests/mirrors-game.test.js`; a change to game rules still needs measurement and its own ledger record.
+- **evidence:** Owner choice on 2026-10-11 in the "Bug fix campaign" project thread: "Allow narrow exemption" on the question "How should I unfreeze src/game.js so the game fixes can merge?"; `experiments/RESULT-0047/protocol.md` (frozen `src/game.js: 3d405595707621ce`); `experiments/RESULT-0049/subject.js` (`SOURCE_FILES` includes `src/game.js`); `experiments/RESULT-0082/protocol.md` (frozen `src/game.js: 3d405595707621ce`); `DECISION-0011`.
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-10-11
+- **reverify:** Read the owner choice cited above. Run `node tools/verify-experiments.js` on a tree whose `src/game.js` differs from `main` before this decision and expect `EXPERIMENT GATE PASS`; run `node --test solver/tests/mirrors-game.test.js` and expect it to pass. This ruling is not a test verdict.
+- **updated:** 2026-10-11
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude, project thread session_01WmT3r4NV7iUvA8qb9j2vEj, branch claude/project-thread-6syhk4
+- **checked_by:** pending
+- **notes:** Found while fixing two browser bugs (Enter submitting from any focused button; a level reload during the merge animation ticking blockers on the new board). Provisional until the owner or another agent checks it. Rejected alternatives: moving the fixes into a separate file that patches the game at load (avoids the freeze but splits the game's code), and leaving the game bugs unfixed.
+
 ## Assembly cut log
 
 - Omitted draft labels and repeated draft identities because the root ledger is the assembled authority surface.
