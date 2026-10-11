@@ -93,7 +93,7 @@
     $('result').hidden=!over;
     if(over){
       const filled=state.done.filter(Boolean).length;
-      $('result-title').textContent=state.outcome==='won'?(level.orders.length>1?'Both orders filled':'Order filled'):'Attempt finished';
+      $('result-title').textContent=state.outcome==='won'?(level.orders.length>2?'All orders filled':level.orders.length>1?'Both orders filled':'Order filled'):'Attempt finished';
       $('result-detail').textContent=state.outcome==='won'?`Done in ${state.moves} of ${state.maxMoves} moves.`:
         `${state.outcome==='out-of-moves'?'Out of moves':'No legal chain left'}. ${filled} of ${level.orders.length} order${level.orders.length>1?'s':''} filled. Undo, or retry the same board.`;
     }
