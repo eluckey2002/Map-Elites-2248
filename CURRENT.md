@@ -4,7 +4,7 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Recipe prototype — 2026-10-11
 
-The owner proposed Recipe goals: win by making an exact tile from one ingredient, such as a 512 from only 128s. [`prototypes/recipe/`](prototypes/recipe/README.md) has four screened boards, playable on a private Artifact. They are not in the app. Open: owner play and a PDL entry (task BL-0027). The README explains why this is not the retired Forge Contracts (PDL-009) or Three Forge Docks (PDL-010).
+The owner proposed Recipe goals: win by making an exact tile from one ingredient, such as a 512 from only 128s. [`prototypes/recipe/`](prototypes/recipe/README.md) has four screened boards, playable on a private Artifact. They are not in the app. Owner play is recorded as PDL-037, KEEP (BL-0027 done). Next: more Recipe boards as a level kind. The README explains why this is not the retired Forge Contracts (PDL-009) or Three Forge Docks (PDL-010).
 
 ## Browser game bug fixes — 2026-10-11
 
