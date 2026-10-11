@@ -1,0 +1,2077 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "kind": "board-map-elites elites",
+    "protocol": "RESULT-0084",
+    "artifactIdentity": "12dab1784f92ff434391f7efa4dcf117004fac62ff6037bae8f513523ed5eadf"
+  },
+  "results": [
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0009",
+        "level": 56,
+        "target": 62400,
+        "tileScale": 32,
+        "moves": 14,
+        "minChain": 4,
+        "gridW": 4,
+        "gridH": 6,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 0,
+            "y": 1,
+            "duration": 3
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 3
+          }
+        ],
+        "sourceShapeIdentity": "fff48139096af74c1c2874352c0f0dcdc8994371ac962acc113e40d9a4feafb5"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0009",
+        "shapeIdentity": "fff48139096af74c1c2874352c0f0dcdc8994371ac962acc113e40d9a4feafb5",
+        "candidateIdentity": "bf508a063d8299536248d5b85eeacf4d97b884eabcd53a58e5528500e466dfe8",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 32576,
+            "p25": 60608,
+            "median": 69440,
+            "p75": 78016,
+            "maximum": 117376
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 69440,
+          "demand": 0.9,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 62400
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 33248,
+            "p25": 58816,
+            "median": 64000,
+            "p75": 66816,
+            "maximum": 95232
+          },
+          "terminalCounts": {
+            "win": 197,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 103,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "4b2c4b29f69c3336c466c6cd5ea4a37a6a1f22ceebe71af468d893289d2348a9"
+      },
+      "cell": "0,1",
+      "rank": 1,
+      "boardIdentity": "d93bfdae0842fa27e7136ef20697135817ef7feb079490559ae9a839c1f6c6a9"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0008",
+        "level": 56,
+        "target": 147000,
+        "tileScale": 32,
+        "moves": 23,
+        "minChain": 3,
+        "gridW": 4,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 1,
+            "y": 1,
+            "duration": 7
+          },
+          {
+            "type": "ice",
+            "x": 2,
+            "y": 3,
+            "duration": 7
+          }
+        ],
+        "sourceShapeIdentity": "e55f15c64e13cbd430152348fd7926f814567ede80e81b937ea1114f7266172a"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0008",
+        "shapeIdentity": "e55f15c64e13cbd430152348fd7926f814567ede80e81b937ea1114f7266172a",
+        "candidateIdentity": "1a9011d9cd722d89c855f29c58877d66d020180f4c195c1fd04ee5655a529a2f",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 68864,
+            "p25": 142848,
+            "median": 154944,
+            "p75": 171584,
+            "maximum": 233664
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 154944,
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 147000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 80448,
+            "p25": 133568,
+            "median": 147456,
+            "p75": 152448,
+            "maximum": 196480
+          },
+          "terminalCounts": {
+            "win": 166,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 134,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "2449b1b5ffaffc2ec80733caf2dfedb010aadb70370f6f2b3033208f39d0fb98"
+      },
+      "cell": "0,4",
+      "rank": 1,
+      "boardIdentity": "31556eb118fef20cd0f5bb81164a740c630ed77a789e71db4d4b915bf226f84a"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0007",
+        "level": 56,
+        "target": 70000,
+        "tileScale": 32,
+        "moves": 15,
+        "minChain": 3,
+        "gridW": 4,
+        "gridH": 6,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 3,
+            "y": 4,
+            "duration": 10
+          },
+          {
+            "type": "bomb",
+            "x": 0,
+            "y": 5,
+            "timer": 19
+          },
+          {
+            "type": "bomb",
+            "x": 0,
+            "y": 1,
+            "timer": 10
+          }
+        ],
+        "sourceShapeIdentity": "0424d3aab8a391f51871fdf844b871f4371ea330e0587d22b836e0099da1664e"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0007",
+        "shapeIdentity": "0424d3aab8a391f51871fdf844b871f4371ea330e0587d22b836e0099da1664e",
+        "candidateIdentity": "9595ea9d08733f82adbe655fb8c68d16c32db46a273a9912330d8f0b6fa417a3",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 27776,
+            "p25": 65728,
+            "median": 73728,
+            "p75": 81344,
+            "maximum": 120640
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 73728,
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 70000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 39552,
+            "p25": 63616,
+            "median": 71040,
+            "p75": 74368,
+            "maximum": 113920
+          },
+          "terminalCounts": {
+            "win": 183,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 117,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "b4587fbc0e19b0abab3c609895ee722a0aa2a758cf18f6d57cf24d4b6c007bdf"
+      },
+      "cell": "0,5",
+      "rank": 1,
+      "boardIdentity": "cb804d45f0c95362d699facdbff650d693339733ece9fac5f7daaf8f8ca257d7"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0019",
+        "level": 56,
+        "target": 134000,
+        "tileScale": 32,
+        "moves": 24,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 2,
+            "y": 3,
+            "duration": 4
+          },
+          {
+            "type": "stone",
+            "x": 0,
+            "y": 3
+          }
+        ],
+        "sourceShapeIdentity": "4db9c22b80c2e6f83c94c6f8fe3fc769d1ba12d61de19cd4646d4ea75ce31e1a"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0019",
+        "shapeIdentity": "4db9c22b80c2e6f83c94c6f8fe3fc769d1ba12d61de19cd4646d4ea75ce31e1a",
+        "candidateIdentity": "14871db5091039217e7757d36cace6b1fb74eac30ff3f753b549a723afe4191a",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 82176,
+            "p25": 152640,
+            "median": 168128,
+            "p75": 185024,
+            "maximum": 241216
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 168128,
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 134000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 69632,
+            "p25": 134976,
+            "median": 137536,
+            "p75": 143424,
+            "maximum": 182592
+          },
+          "terminalCounts": {
+            "win": 267,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 33,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "8cf6fdad652e065cfa97273bb07bcea2bb000473f970059feef6654fa55131af"
+      },
+      "cell": "1,3",
+      "rank": 1,
+      "boardIdentity": "4b7df947bfcba6cbf0acabcccd672fe7ac8b91916b178d6972d975bfbf008200"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0020",
+        "level": 56,
+        "target": 72300,
+        "tileScale": 32,
+        "moves": 16,
+        "minChain": 3,
+        "gridW": 4,
+        "gridH": 6,
+        "blockers": [],
+        "sourceShapeIdentity": "c4aebd5959a2f4c728d8fcb1da6950179de9c29cf716077086d7214e28db5c47"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0020",
+        "shapeIdentity": "c4aebd5959a2f4c728d8fcb1da6950179de9c29cf716077086d7214e28db5c47",
+        "candidateIdentity": "85005c25e9c49de0c0e632ab1eafdc0362a086870ea8e2be55a938199b408469",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 52576,
+            "p25": 79744,
+            "median": 90496,
+            "p75": 102720,
+            "maximum": 139392
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 90496,
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 72300
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 37792,
+            "p25": 73216,
+            "median": 76224,
+            "p75": 81216,
+            "maximum": 123584
+          },
+          "terminalCounts": {
+            "win": 257,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 43,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "6a31d34a440447f5f1520b844bc3b6ee9c31ad8040ff9872959ca056e4dd34f6"
+      },
+      "cell": "3,3",
+      "rank": 1,
+      "boardIdentity": "a0dc55286152c8eeaa5c4e40253e548c9627c816ebccd8415951283db10d0283"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0005",
+        "level": 56,
+        "target": 79900,
+        "tileScale": 32,
+        "moves": 16,
+        "minChain": 4,
+        "gridW": 4,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 1,
+            "y": 3,
+            "duration": 8
+          },
+          {
+            "type": "bomb",
+            "x": 0,
+            "y": 3,
+            "timer": 14
+          },
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 2,
+            "timer": 13
+          }
+        ],
+        "sourceShapeIdentity": "7c2c95912bb501ec877b43ff76e87d44d2a845f5b42f0aa9e6a023fb6f9c9eb3"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0005",
+        "shapeIdentity": "7c2c95912bb501ec877b43ff76e87d44d2a845f5b42f0aa9e6a023fb6f9c9eb3",
+        "candidateIdentity": "f66f381c5c0cb928cd095e7d008490ac81ac5b28b524484f09b4fc22ec4e9a01",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 46976,
+            "p25": 83328,
+            "median": 94016,
+            "p75": 109056,
+            "maximum": 143744
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 94016,
+          "demand": 0.85,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 79900
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 47424,
+            "p25": 78464,
+            "median": 82368,
+            "p75": 88640,
+            "maximum": 134080
+          },
+          "terminalCounts": {
+            "win": 216,
+            "noValidMoves": 0,
+            "bombExploded": 3,
+            "outOfMoves": 81,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "de29317b86f88878318fe243fdc57cde3a870b509f00e53f221e3d6036472ab2"
+      },
+      "cell": "3,4",
+      "rank": 1,
+      "boardIdentity": "460a7331cc52f08406748be2a2ab871546bcd2f7636ee02a33b80025019e1430"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0012",
+        "level": 56,
+        "target": 73100,
+        "tileScale": 32,
+        "moves": 15,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 5,
+        "blockers": [
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 1,
+            "timer": 18
+          },
+          {
+            "type": "ice",
+            "x": 0,
+            "y": 4,
+            "duration": 3
+          }
+        ],
+        "sourceShapeIdentity": "7cde912a9fff31a23082d0c1243bc136aeaf03272cad6b1dae88b478bbcf9d36"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0012",
+        "shapeIdentity": "7cde912a9fff31a23082d0c1243bc136aeaf03272cad6b1dae88b478bbcf9d36",
+        "candidateIdentity": "be5ee434b1068c77a3a10475f2e5b484a6a26d71e4777a75898db85f936255b0",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 39744,
+            "p25": 64512,
+            "median": 76992,
+            "p75": 87616,
+            "maximum": 111872
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 76992,
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 73100
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 35072,
+            "p25": 67456,
+            "median": 74240,
+            "p75": 78848,
+            "maximum": 124352
+          },
+          "terminalCounts": {
+            "win": 185,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 115,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "04a642f0da2a96ca245770fb1d5ccb4a99b4955c77c0435df8f7aa63e4cb4467"
+      },
+      "cell": "4,4",
+      "rank": 1,
+      "boardIdentity": "f562988bddf0ad7203e9bf0adb0a074d5104d1b9f12185a89e798a489d9488d4"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0001",
+        "level": 56,
+        "target": 146000,
+        "tileScale": 32,
+        "moves": 26,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 7,
+        "blockers": [
+          {
+            "type": "bomb",
+            "x": 1,
+            "y": 3,
+            "timer": 17
+          },
+          {
+            "type": "bomb",
+            "x": 2,
+            "y": 5,
+            "timer": 9
+          }
+        ],
+        "sourceShapeIdentity": "3ac879bfb57448e19e9fc4404ac845eabc81b19c1154e6e32b6e223bb0882982"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0001",
+        "shapeIdentity": "3ac879bfb57448e19e9fc4404ac845eabc81b19c1154e6e32b6e223bb0882982",
+        "candidateIdentity": "3496fca73a16b0052c5a93e69dd357f23ec2acd8a13031b64ba09122b812c489",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 104768,
+            "p25": 161216,
+            "median": 183680,
+            "p75": 201664,
+            "maximum": 259392
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 183680,
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 146000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 43072,
+            "p25": 147200,
+            "median": 150528,
+            "p75": 156608,
+            "maximum": 200832
+          },
+          "terminalCounts": {
+            "win": 261,
+            "noValidMoves": 0,
+            "bombExploded": 1,
+            "outOfMoves": 38,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "1344446707b1a701d4e77e005c8fddb488e7d153ef560653d4e98560ef2f21a0"
+      },
+      "cell": "6,1",
+      "rank": 1,
+      "boardIdentity": "4a884a19a10882a6a8752b01495638ab9b9b335dfa2fcc3d043e8a91df18021f"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0002",
+        "level": 56,
+        "target": 149000,
+        "tileScale": 32,
+        "moves": 27,
+        "minChain": 3,
+        "gridW": 6,
+        "gridH": 6,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 3,
+            "y": 0
+          },
+          {
+            "type": "bomb",
+            "x": 1,
+            "y": 3,
+            "timer": 12
+          }
+        ],
+        "sourceShapeIdentity": "a8d2133aae406929c92082aab47831078093f43c8bc566933c3f9f5325d7bcae"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0002",
+        "shapeIdentity": "a8d2133aae406929c92082aab47831078093f43c8bc566933c3f9f5325d7bcae",
+        "candidateIdentity": "0c2dff89ee44ee769e37f69a221a2b0694e77f6c0a99868c31e274dda942acf8",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 116352,
+            "p25": 167424,
+            "median": 186880,
+            "p75": 210048,
+            "maximum": 271424
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 186880,
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 149000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 116608,
+            "p25": 150400,
+            "median": 153600,
+            "p75": 160896,
+            "maximum": 220544
+          },
+          "terminalCounts": {
+            "win": 271,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 29,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "b66040f8991063c082ba5ff24b09222f2946b563bb880792e62d4981b4e358e6"
+      },
+      "cell": "6,1",
+      "rank": 2,
+      "boardIdentity": "c81a57637831c6568b800238282082535413f4994f5f0404f5bdcbb69cb404aa"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0006",
+        "level": 56,
+        "target": 210000,
+        "tileScale": 32,
+        "moves": 31,
+        "minChain": 4,
+        "gridW": 7,
+        "gridH": 6,
+        "blockers": [],
+        "sourceShapeIdentity": "72ce57a2d240994267a8bf3e1fe3e00fa4c74e1efa8ebde47720c0b6297a4387"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0006",
+        "shapeIdentity": "72ce57a2d240994267a8bf3e1fe3e00fa4c74e1efa8ebde47720c0b6297a4387",
+        "candidateIdentity": "603d48d1fad8991c96b1f784aab053e54633d375a0b81126b63e8061e9b60160",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 167456,
+            "p25": 239488,
+            "median": 263360,
+            "p75": 286080,
+            "maximum": 364416
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 263360,
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 210000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 153376,
+            "p25": 211840,
+            "median": 215040,
+            "p75": 229824,
+            "maximum": 301440
+          },
+          "terminalCounts": {
+            "win": 283,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 17,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "7e1fecd1dff178f646d63a306709756b79f2eede7508902638e8f7cb3368b52a"
+      },
+      "cell": "6,1",
+      "rank": 3,
+      "boardIdentity": "820fcbb6e21c4bced67060dddc397b33f862cbdd846cac8a820254b09f1f9424"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0011",
+        "level": 56,
+        "target": 153000,
+        "tileScale": 32,
+        "moves": 22,
+        "minChain": 4,
+        "gridW": 7,
+        "gridH": 5,
+        "blockers": [],
+        "sourceShapeIdentity": "2f85e9d7b50cc0343fd07d3a74e63560ce9826d9e8f7aba091e72b8be07e59f5"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0011",
+        "shapeIdentity": "2f85e9d7b50cc0343fd07d3a74e63560ce9826d9e8f7aba091e72b8be07e59f5",
+        "candidateIdentity": "0ba18a6522b512b8cdfe3f5e281edb73508fa5e2e4744af263e1c66e3244cdc4",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 99488,
+            "p25": 145728,
+            "median": 161792,
+            "p75": 182592,
+            "maximum": 242944
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 161792,
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 153000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 89984,
+            "p25": 149312,
+            "median": 154944,
+            "p75": 159488,
+            "maximum": 199616
+          },
+          "terminalCounts": {
+            "win": 200,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 100,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "3288c8cc0ce5ecdf92b89bab7311ff80f0c08ccea35c9830b7663e7093a6ef98"
+      },
+      "cell": "6,2",
+      "rank": 1,
+      "boardIdentity": "038510455059a22e6d32cb4c962fa78633cc2ae72663b57e248d33bc5e232d00"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0016",
+        "level": 56,
+        "target": 168000,
+        "tileScale": 32,
+        "moves": 24,
+        "minChain": 4,
+        "gridW": 6,
+        "gridH": 6,
+        "blockers": [],
+        "sourceShapeIdentity": "701ca2eb8cc90229cb017727001a9538da524edd73ee930c32950d587573b2a6"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0016",
+        "shapeIdentity": "701ca2eb8cc90229cb017727001a9538da524edd73ee930c32950d587573b2a6",
+        "candidateIdentity": "33bf62395520bed72ae8fc94f28365fca72ece70ec2ea28aa8505c8df1cdf1d4",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 114688,
+            "p25": 169664,
+            "median": 187008,
+            "p75": 210048,
+            "maximum": 285184
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 187008,
+          "demand": 0.9,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 168000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 96608,
+            "p25": 167808,
+            "median": 170752,
+            "p75": 178880,
+            "maximum": 214016
+          },
+          "terminalCounts": {
+            "win": 220,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 80,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "fffd5774adb7c403cdaf1f3939c0bbc34e734fc2ff5cf82682f4c9baaf428085"
+      },
+      "cell": "6,2",
+      "rank": 2,
+      "boardIdentity": "30f91fe6135c4dab14519bd1e8541d50ecd3d219f3b37366e734015c1eb9765b"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0003",
+        "level": 56,
+        "target": 80700,
+        "tileScale": 32,
+        "moves": 16,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 6,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 4,
+            "y": 3,
+            "duration": 3
+          },
+          {
+            "type": "ice",
+            "x": 2,
+            "y": 0,
+            "duration": 3
+          },
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 2
+          }
+        ],
+        "sourceShapeIdentity": "be85b375eb5ea21dc7c17c0fe31d36c908fe4a6c6b663b7184cbd34a4bbefc1c"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0003",
+        "shapeIdentity": "be85b375eb5ea21dc7c17c0fe31d36c908fe4a6c6b663b7184cbd34a4bbefc1c",
+        "candidateIdentity": "f64d01bd1ae193662f61e241cf46b903162c1c131a4c4ba48d08f794d694538d",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 56320,
+            "p25": 85632,
+            "median": 100928,
+            "p75": 112000,
+            "maximum": 162816
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 100928,
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 80700
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 45312,
+            "p25": 81408,
+            "median": 84096,
+            "p75": 90048,
+            "maximum": 139904
+          },
+          "terminalCounts": {
+            "win": 254,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 46,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "9b979795589238208ae598cd841e38e8ac038bc91dbcc0d8daded4d50298a938"
+      },
+      "cell": "6,2",
+      "rank": 3,
+      "boardIdentity": "81ae19285374bfff15275b28336c753d30727af1bff964b7a9a546ec725df208"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0022",
+        "level": 56,
+        "target": 144000,
+        "tileScale": 32,
+        "moves": 20,
+        "minChain": 3,
+        "gridW": 6,
+        "gridH": 6,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 4,
+            "y": 5
+          },
+          {
+            "type": "ice",
+            "x": 0,
+            "y": 4,
+            "duration": 3
+          }
+        ],
+        "sourceShapeIdentity": "1c7b7b79b219b2230615c8632bde8a3fbe9829f1d08f20ea67f58ebb2d8758e5"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0022",
+        "shapeIdentity": "1c7b7b79b219b2230615c8632bde8a3fbe9829f1d08f20ea67f58ebb2d8758e5",
+        "candidateIdentity": "b6a570ac72d7963b803a1cb63f27e59886c86423c373cf8eeabb44db561334e2",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 72864,
+            "p25": 136320,
+            "median": 152448,
+            "p75": 169920,
+            "maximum": 225024
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 152448,
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 144000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 93120,
+            "p25": 134080,
+            "median": 145152,
+            "p75": 149568,
+            "maximum": 224128
+          },
+          "terminalCounts": {
+            "win": 183,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 117,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "6166bac733645904ca94c27e9b387898181ef736b0df84ddf82473997d0e3afd"
+      },
+      "cell": "6,3",
+      "rank": 1,
+      "boardIdentity": "624e8f91d824771a904a3ef2d55f758eef5de275c1f8556efc9859c2704453c9"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0004",
+        "level": 56,
+        "target": 120000,
+        "tileScale": 32,
+        "moves": 20,
+        "minChain": 3,
+        "gridW": 7,
+        "gridH": 5,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 1,
+            "y": 4,
+            "duration": 3
+          }
+        ],
+        "sourceShapeIdentity": "31f9f6e2d43c6a86826039c01e7abd9d84c7f0ee3638e34b0bc3c71509b8c3e4"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0004",
+        "shapeIdentity": "31f9f6e2d43c6a86826039c01e7abd9d84c7f0ee3638e34b0bc3c71509b8c3e4",
+        "candidateIdentity": "3c98ea24e23aabe01cf5a03f343263e4f68a025816bba5de3dcd9846dfa8af6c",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 76096,
+            "p25": 134016,
+            "median": 150464,
+            "p75": 167552,
+            "maximum": 218496
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 150464,
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 120000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 81152,
+            "p25": 120960,
+            "median": 124096,
+            "p75": 130560,
+            "maximum": 184064
+          },
+          "terminalCounts": {
+            "win": 255,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 45,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "51961014e36a50cfe5c78fbf288eafcc7da19b6e1018c4066538b2485ff7c71e"
+      },
+      "cell": "6,3",
+      "rank": 2,
+      "boardIdentity": "1326c2fc3b3652a462c9c50be021a54b25b5326aad6d54e51f767d2431f9643a"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0010",
+        "level": 56,
+        "target": 123000,
+        "tileScale": 32,
+        "moves": 22,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 6,
+        "blockers": [],
+        "sourceShapeIdentity": "e411459e7446aa853d0f7317a4f15bf5b84b3d21d2d58c48dba7c69589675cca"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0010",
+        "shapeIdentity": "e411459e7446aa853d0f7317a4f15bf5b84b3d21d2d58c48dba7c69589675cca",
+        "candidateIdentity": "240925873ba6fefabd55a95e3f5f3e4bd4d4e89646dc12eafa3a1f323256b0fa",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 90624,
+            "p25": 137920,
+            "median": 154112,
+            "p75": 172224,
+            "maximum": 217088
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 154112,
+          "demand": 0.8,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 123000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 85952,
+            "p25": 124128,
+            "median": 126848,
+            "p75": 134208,
+            "maximum": 180800
+          },
+          "terminalCounts": {
+            "win": 267,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 33,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "3e303975c087dd75138054c68ba40584679b5fbbb0bb51ad9362870ed6c9c204"
+      },
+      "cell": "6,3",
+      "rank": 3,
+      "boardIdentity": "d0ea6583ca0c229be9e4c987da8f12d87aa3dec2b91bec3f2be426a7299d21b2"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0013",
+        "level": 56,
+        "target": 214000,
+        "tileScale": 32,
+        "moves": 30,
+        "minChain": 3,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "bomb",
+            "x": 1,
+            "y": 4,
+            "timer": 12
+          },
+          {
+            "type": "bomb",
+            "x": 0,
+            "y": 3,
+            "timer": 9
+          },
+          {
+            "type": "bomb",
+            "x": 3,
+            "y": 0,
+            "timer": 9
+          }
+        ],
+        "sourceShapeIdentity": "701d332e12c9b6d975140982e77ffa09d98b0f0970735a55557637b3fc19db80"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0013",
+        "shapeIdentity": "701d332e12c9b6d975140982e77ffa09d98b0f0970735a55557637b3fc19db80",
+        "candidateIdentity": "a417961e7a83bcd61192ba63c6db12654e0cef49ff0e13164fdc435021f03300",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 152096,
+            "p25": 203392,
+            "median": 225920,
+            "p75": 249024,
+            "maximum": 320768
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 225920,
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 214000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 105600,
+            "p25": 200128,
+            "median": 215104,
+            "p75": 219904,
+            "maximum": 285120
+          },
+          "terminalCounts": {
+            "win": 181,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 119,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "731a8bd0ab0c60535cdce58cd88c35ef4364e691b771755d4119aba7595686f1"
+      },
+      "cell": "6,4",
+      "rank": 1,
+      "boardIdentity": "abe3cdc373184ef0be99364525056fa6e016ee66f8a876d25ef4343abb313d70"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0023",
+        "level": 56,
+        "target": 219000,
+        "tileScale": 32,
+        "moves": 29,
+        "minChain": 4,
+        "gridW": 7,
+        "gridH": 6,
+        "blockers": [
+          {
+            "type": "ice",
+            "x": 6,
+            "y": 4,
+            "duration": 4
+          },
+          {
+            "type": "bomb",
+            "x": 0,
+            "y": 0,
+            "timer": 20
+          },
+          {
+            "type": "ice",
+            "x": 0,
+            "y": 1,
+            "duration": 7
+          }
+        ],
+        "sourceShapeIdentity": "ceff24e5a19736fab1ee59c45293580ff4495b0b37ccb98a7178e2b352eae2b6"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0023",
+        "shapeIdentity": "ceff24e5a19736fab1ee59c45293580ff4495b0b37ccb98a7178e2b352eae2b6",
+        "candidateIdentity": "b87f208372e556aaf95f4201ed2a52617f6aa86b441fd86a59ad8043d0069502",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 156160,
+            "p25": 212160,
+            "median": 230976,
+            "p75": 256832,
+            "maximum": 303744
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 230976,
+          "demand": 0.95,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 219000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 130144,
+            "p25": 213568,
+            "median": 220672,
+            "p75": 226944,
+            "maximum": 296128
+          },
+          "terminalCounts": {
+            "win": 207,
+            "noValidMoves": 0,
+            "bombExploded": 1,
+            "outOfMoves": 92,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "debb4cc9412651e28752053fe3b1e24e78c1c0874da2c70fbdbbdcac89a41984"
+      },
+      "cell": "6,4",
+      "rank": 2,
+      "boardIdentity": "1ae76ea3c1a3683216889ab78ae3f146903c91a182a59d14bda497d2974bf8ed"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0015",
+        "level": 56,
+        "target": 150000,
+        "tileScale": 32,
+        "moves": 24,
+        "minChain": 3,
+        "gridW": 6,
+        "gridH": 6,
+        "blockers": [
+          {
+            "type": "stone",
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "sourceShapeIdentity": "abd052107448745fe4ca807a0ad95c9421f56cb2a7aa0c4546165f3907ca74d9"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0015",
+        "shapeIdentity": "abd052107448745fe4ca807a0ad95c9421f56cb2a7aa0c4546165f3907ca74d9",
+        "candidateIdentity": "1cf0237e0028070be6036367e9a84df23560e7ea6d9dffc5d55d7bc668e8b47d",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 111296,
+            "p25": 155840,
+            "median": 176640,
+            "p75": 200320,
+            "maximum": 291968
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 176640,
+          "demand": 0.85,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 150000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 108256,
+            "p25": 150784,
+            "median": 153792,
+            "p75": 159680,
+            "maximum": 229952
+          },
+          "terminalCounts": {
+            "win": 260,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 40,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "84903660ae756b56842f7b81c502bc42d20bbbcdfb20c2cfa25ded59141d5554"
+      },
+      "cell": "6,4",
+      "rank": 3,
+      "boardIdentity": "626e20d432ce17afdb9f559bce4c1e52a7e50d70afdd3a0b07a31169cef29253"
+    },
+    {
+      "candidate": {
+        "schemaVersion": 1,
+        "name": "gen-0000",
+        "level": 56,
+        "target": 137000,
+        "tileScale": 32,
+        "moves": 20,
+        "minChain": 4,
+        "gridW": 5,
+        "gridH": 8,
+        "blockers": [
+          {
+            "type": "bomb",
+            "x": 1,
+            "y": 0,
+            "timer": 14
+          },
+          {
+            "type": "ice",
+            "x": 3,
+            "y": 5,
+            "duration": 3
+          }
+        ],
+        "sourceShapeIdentity": "218e8534747602bdfbb3898986c2de7f5c6068504dc944d628eceb2542e4b473"
+      },
+      "receipt": {
+        "schemaVersion": 1,
+        "shapeName": "gen-0000",
+        "shapeIdentity": "218e8534747602bdfbb3898986c2de7f5c6068504dc944d628eceb2542e4b473",
+        "candidateIdentity": "52b95cd2d4abc239cc9d6d12294388c9771eda4fcd732e44847c3b4f68c60480",
+        "inputIdentities": {
+          "engine": "0ed4b31004df13e3eae45b1cd0ad692f5956c636630b89e1f96f068e5a451873",
+          "levelAuthor": "c0eef4a582ea0c61e3d8b9601320e53266016785318334301a46ef29f76b04f4"
+        },
+        "calibration": {
+          "version": "calib-1",
+          "params": {
+            "wRoll": 1,
+            "wPlace": 1,
+            "turnover": 40,
+            "width": 24,
+            "bombMax": 9,
+            "tieBreak": "degree",
+            "wHarvest": 0
+          },
+          "solverIdentity": "c3cefaf3ab0387180349948ba1adc9a0737cc07ae1ebfcdf51b1e8c0396f77ed"
+        },
+        "fitting": {
+          "seedRange": {
+            "start": 0,
+            "count": 150
+          },
+          "scoreQuantiles": {
+            "minimum": 98752,
+            "p25": 136640,
+            "median": 152256,
+            "p75": 167168,
+            "maximum": 221440
+          },
+          "terminalCounts": {
+            "win": 0,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 150,
+            "incomplete": 0,
+            "total": 150
+          }
+        },
+        "targetDerivation": {
+          "policy": "median-times-demand-rounded-down",
+          "measuredMedian": 152256,
+          "demand": 0.9,
+          "demandStatus": "provisional-proposal",
+          "tileScalePolicy": "2 ** floor((level - 1) / 10)",
+          "tileScale": 32,
+          "roundedTarget": 137000
+        },
+        "holdout": {
+          "seedRange": {
+            "start": 100000,
+            "count": 300
+          },
+          "scoreQuantiles": {
+            "minimum": 76224,
+            "p25": 136704,
+            "median": 139776,
+            "p75": 145856,
+            "maximum": 223232
+          },
+          "terminalCounts": {
+            "win": 223,
+            "noValidMoves": 0,
+            "bombExploded": 0,
+            "outOfMoves": 77,
+            "incomplete": 0,
+            "total": 300
+          }
+        },
+        "receiptIdentity": "9d8c2b2a837a2e2dba699e3a81443eb641a0aa845a4a4f1b50baf9a888727b9b"
+      },
+      "cell": "6,5",
+      "rank": 1,
+      "boardIdentity": "92317e3ff516d7915a7079eb9190ca2ea72883afad3e3832d0b5c4a4b9fabafe"
+    }
+  ]
+}

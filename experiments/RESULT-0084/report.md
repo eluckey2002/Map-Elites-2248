@@ -129,9 +129,21 @@ Any owner-versus-bot comparison is a later record and cannot change this one.
 - `src/game.js` was frozen at `3d405595707621ce`; if a later change to it
   lands first, re-verify at the registration commit, not on the later tree.
 
+## Post-run audit
+
+Codex review on PR #72 found two checks the frozen verifier lacks: it does not
+compare the run parameters with the registered command, and it does not bind
+each evaluated candidate to the shape it sits beside. The verifier is frozen
+into this result, so the two checks live in `experiments/RESULT-0084/audit.js`
+(tested by `solver/tests/result0084Audit.test.js`). It passes on this artifact:
+all 7 registered parameters match, and all 24 candidates and receipts carry
+their shape's identity. Neither finding changes any number above.
+
 ## Reverify
 
 At or after the registration commit with the frozen sources unchanged:
 `node solver/verify-board-map-elites.js experiments/RESULT-0084/output/archive.json experiments/RESULT-0084/output/map.html`
 — expect `PASS` with artifact identity `12dab178…`, 12 occupied cells,
 5 breadth bins, 5 regret bins, ρ 0.626545, `SUPPORTED_AT_BOUNDED_SCOPE`.
+Then run `node experiments/RESULT-0084/audit.js`; expect `PASS` for 24
+evaluations.

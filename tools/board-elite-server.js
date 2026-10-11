@@ -3,11 +3,16 @@
 //
 //   node tools/board-elite-server.js --archive experiments/<RESULT-ID>/output/archive.json --list
 //   node tools/board-elite-server.js --archive <archive.json> --board <boardIdentity prefix> [--port 8290]
+//   node tools/board-elite-server.js --archive <archive.json> --write-batch solver/generated-batch-<name>.json
 //
 // It wraps solver/authoring-server.js (a hashed pilot input, so it is not
 // edited) with the one file that server predates: src/game-library.js, which
 // index.html now loads first. Recordings are written to recordings/ exactly as
 // the authoring server writes them, bound to the elite's candidate identity.
+// solver/human-benchmark.js resolves a recording through recording-replay's
+// candidate index, which reads solver/generated-batch*.json, so --write-batch
+// writes the archive's elites in that shape; a recording of any elite then
+// resolves to its board.
 const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
@@ -17,7 +22,7 @@ const ROOT = path.join(__dirname, '..');
 const LIBRARY = path.join(ROOT, 'src', 'game-library.js');
 
 function parseArgs(argv) {
-  const args = { port: 8290, list: false };
+  const args = { port: 8290, list: false, writeBatch: null };
   for (let index = 0; index < argv.length; index++) {
     const flag = argv[index];
     if (flag === '--list') { args.list = true; continue; }
@@ -27,6 +32,7 @@ function parseArgs(argv) {
     else if (flag === '--board') args.board = value;
     else if (flag === '--port') args.port = Number(value);
     else if (flag === '--recordings') args.recordings = value;
+    else if (flag === '--write-batch') args.writeBatch = value;
     else throw new Error(`unknown flag ${flag}`);
   }
   if (!args.archive) throw new Error('--archive is required');
@@ -47,6 +53,14 @@ function selectElite(archive, prefix) {
   return matches[0];
 }
 
+function eliteBatch(archive) {
+  return {
+    schemaVersion: 1,
+    source: { kind: 'board-map-elites elites', protocol: archive.registration?.protocol ?? null, artifactIdentity: archive.artifactIdentity },
+    results: eliteEntries(archive).map(({ candidate, receipt, cell, rank, boardIdentity }) => ({ candidate, receipt, cell, rank, boardIdentity })),
+  };
+}
+
 function createEliteServer(elite, { recordingsDir } = {}) {
   const inner = createAuthoringServer({ store: { candidates: [elite.candidate] }, receipt: elite.receipt, recordingsDir });
   return http.createServer((request, response) => {
@@ -64,6 +78,14 @@ function main() {
   const args = parseArgs(process.argv.slice(2));
   const archive = JSON.parse(fs.readFileSync(path.resolve(args.archive), 'utf8'));
   const seeds = archive.config?.descriptorSeeds || [];
+  if (args.writeBatch) {
+    const out = path.resolve(args.writeBatch);
+    if (!/^generated-batch.*\.json$/.test(path.basename(out))) throw new Error('--write-batch must name a generated-batch*.json file');
+    if (fs.existsSync(out)) throw new Error(`refusing to overwrite ${args.writeBatch}`);
+    fs.writeFileSync(out, `${JSON.stringify(eliteBatch(archive), null, 2)}\n`);
+    process.stdout.write(`WROTE ${args.writeBatch}\n`);
+    return;
+  }
   if (args.list) {
     for (const elite of eliteEntries(archive)) {
       process.stdout.write(`${elite.boardIdentity.slice(0, 12)}  cell ${elite.cell}  rank ${elite.rank}  ${elite.candidate.gridW}x${elite.candidate.gridH}  target ${elite.candidate.target}  moves ${elite.candidate.moves}\n`);
@@ -83,4 +105,4 @@ if (require.main === module) {
   try { main(); } catch (error) { process.stderr.write(`${error.message}\n`); process.exit(2); }
 }
 
-module.exports = { parseArgs, eliteEntries, selectElite, createEliteServer };
+module.exports = { parseArgs, eliteBatch, eliteEntries, selectElite, createEliteServer };

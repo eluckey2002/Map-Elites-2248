@@ -3,7 +3,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { parseArgs, selectElite, createEliteServer } = require('../../tools/board-elite-server');
+const { parseArgs, eliteBatch, eliteEntries, selectElite, createEliteServer } = require('../../tools/board-elite-server');
+const { resolveRecordedBoard } = require('../human-benchmark');
 const { identity } = require('../level-author');
 const { LEVELS } = require('../../src/game');
 
@@ -48,4 +49,18 @@ test('board selection and arguments fail closed', () => {
   assert.throws(() => selectElite(archiveFor(candidate), 'cdcdcd'), /matches 0 elites/);
   assert.throws(() => parseArgs(['--board', 'abc']), /--archive is required/);
   assert.throws(() => parseArgs(['--archive', 'a.json', '--port', 'x']), /--port/);
+});
+
+test('every RESULT-0084 elite recording resolves to its board through the committed batch', () => {
+  const root = path.join(__dirname, '..', '..');
+  const archive = JSON.parse(fs.readFileSync(path.join(root, 'experiments', 'RESULT-0084', 'output', 'archive.json'), 'utf8'));
+  const committed = JSON.parse(fs.readFileSync(path.join(root, 'solver', 'generated-batch-result-0084-elites.json'), 'utf8'));
+  assert.deepEqual(committed, JSON.parse(JSON.stringify(eliteBatch(archive))), 'committed batch is stale against the archive');
+  const elites = eliteEntries(archive);
+  assert.equal(elites.length, 20);
+  for (const elite of elites) {
+    const resolved = resolveRecordedBoard({ candidateIdentity: elite.receipt.candidateIdentity, candidateLevel: elite.candidate.level });
+    assert.ok(resolved, `elite ${elite.boardIdentity.slice(0, 12)} does not resolve`);
+    assert.deepEqual(resolved.candidate, elite.candidate);
+  }
 });
