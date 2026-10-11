@@ -126,6 +126,11 @@ function createPlayServer({ store = STORE, connectionsStore, now = () => new Dat
     if (pathname.startsWith('/api/') && !isLocalRequest(request)) {
       json(response, 403, { error: 'requests must come from this play server' }); return;
     }
+    // A cross-site form cannot send JSON, so this also covers older browsers
+    // that send neither Origin nor Sec-Fetch-Site on a form post.
+    if (request.method === 'POST' && !/^application\/json\s*(;|$)/i.test(request.headers['content-type'] || '')) {
+      json(response, 415, { error: 'send JSON' }); return;
+    }
 
     if (request.method === 'GET' && pathname === '/api/connection-identity') {
       json(response, 200, { identity: connections.identity, schemaVersion: 1 }); return;

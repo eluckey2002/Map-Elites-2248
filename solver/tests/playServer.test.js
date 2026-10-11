@@ -162,6 +162,9 @@ test('the play server API refuses requests from other web pages', async (t) => {
   assert.equal(await send('GET', '/api/connection-identity', { origin: self, 'sec-fetch-site': 'same-origin' }), 200);
   assert.equal(await send('GET', '/api/connection-identity', { host: `localhost:${port}` }), 200);
   assert.equal(await send('GET', '/api/connection-identity'), 200);
-  assert.equal(await send('POST', '/api/play-sessions', { origin: self }), 400);
+  assert.equal(await send('POST', '/api/play-sessions', { origin: self, 'content-type': 'application/json' }), 400);
+  // An old browser's form post carries no provenance headers but cannot be JSON.
+  assert.equal(await send('POST', '/api/play-sessions', { 'content-type': 'application/x-www-form-urlencoded' }), 415);
+  assert.equal(await send('POST', '/api/connection-attempts', { 'content-type': 'text/plain' }), 415);
   assert.equal(await send('GET', '/index.html', { 'sec-fetch-site': 'cross-site' }), 200);
 });
