@@ -155,10 +155,11 @@ owner for approval (owner decision, 2026-10-11).
 2. **One pull request per ask, with related fixes bundled.** Put related fixes
    from one request in a single pull request instead of several small ones.
    Fill in `.github/pull_request_template.md`.
-3. **Scope is locked to the title.** A pull request does what its title says
-   and nothing more. A review finding outside that scope goes in the pull
-   request description under "Follow-ups" and is left for later work; it does
-   not become another commit here. On 2026-10-11, PR #70 opened as four game
+3. **Scope is locked to the opening title.** A pull request does what the
+   title it was opened with says and nothing more; do not broaden the title.
+   A review finding outside that scope goes in the pull request description
+   under "Follow-ups" and is left for later work; it does not become another
+   commit here. On 2026-10-11, PR #70 opened as four game
    bug fixes and grew seventeen gate-hardening commits chasing Codex findings.
 4. **Do not merge until the Codex review has completed.** Codex reviews every
    pull request when it opens and either leaves inline findings or reacts 👍.
@@ -182,14 +183,16 @@ owner for approval (owner decision, 2026-10-11).
    concurrent writer problem again.
 7. **A pull request is done, and gets merged, when all of these hold:** the
    `experiment gate` check is green; the full test suite fails nothing that
-   passes on `main` (the documented deliberate failures in "Before you edit
-   anything", and anything already red on `main`, do not block, but say which
-   in the pull request); Codex has finished per rules 4 and 5 and every review thread is resolved;
-   there is no merge conflict. Then merge it, remove its worktree, and tell
-   the owner in one line that it merged.
+   passes on `main`, and every test the pull request adds or unskips passes
+   (the documented deliberate failures in "Before you edit anything", and
+   anything already red on `main`, do not block, but say which in the pull
+   request); Codex has finished per rules 4 and 5 and every review thread is
+   resolved; there is no merge conflict. Then merge it, remove its worktree,
+   and tell the owner in one line that it merged.
 8. **Do not leave drafts idle.** A pull request with no commits or comments
    for three days is either finished and merged or closed with a one-line
-   reason by the agent that owns it.
+   reason by the agent that owns it. If that agent's claim has lapsed, the
+   agent that reclaims the task becomes the owner and does this.
 9. **Do not stop for the owner's OK.** Opening, fixing, re-requesting review,
    merging and closing pull requests need no approval. Where a choice is
    unclear, pick the sensible default, state it in the pull request

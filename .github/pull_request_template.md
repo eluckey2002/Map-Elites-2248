@@ -14,7 +14,7 @@
 
 - [ ] `experiment gate` green
 - [ ] Full test suite: nothing fails that passes on `main` (deliberate failures: levels 52 and 54 receipts, Universe Map)
-- [ ] Codex review finished (at most three rounds; see AGENTS.md, "Landing changes on `main`")
+- [ ] Codex review finished (at most three rounds, plus one final review if a required fix changed the head; see AGENTS.md, "Landing changes on `main`")
 
 ## Follow-ups
 
