@@ -1055,3 +1055,35 @@ design result:
   board like board 1.
 - **Sources:** Owner message in the Level archetypes thread; Artifact `runs`
   and `answers`; [Recipe README](recipe/README.md). Task: BL-0027.
+
+### PDL-038 — Recipe alone is not enough; orders that feed each other look promising
+
+- **Reported:** 2026-10-11, 14:43–15:00 UTC, in the Level archetypes thread,
+  after a second look at the Recipe Artifact (boards 1–8, study
+  `recipe-prototype-v1`). Supplements PDL-037.
+- **Captured play since PDL-037:** two runs. Board 1 replayed and won in 4 of 6
+  moves (solver witness 4). Board 4 replayed and left after 6 of 7 moves with
+  order B filled and order A not; its last chain joined five 128s (640), one
+  more than the order allows. No runs were saved for boards 5–8.
+- **Owner reaction, verbatim:** "well the boards are all the same"; asked
+  whether that meant they play the same, "yes - this by itself is not enough."
+  On board 8 (Three Courses): "now this board 8! now this looks promising."
+  On spawns: "we need to expand the spawn - there are two few numbers so it
+  makes it really easy. that is what akllowed chains to be 22 in length".
+- **Interpretation (inferred):** Boards 1–7 each ask for one target and vary
+  only the numbers, which the research files predict reads as difficulty, not a
+  different kind. Board 8 is the one board where an order's output is another
+  order's ingredient (four 32s make the 128 that order C needs), so tiles have
+  competing jobs and the order of filling is the puzzle.
+- **Decision:** **REVISE**. Keep the Recipe goal, but not as a kind on its own.
+  Test whether "orders that feed each other" is what made board 8 promising,
+  with a control board of three unrelated orders.
+- **Limits:** Board 8 was looked at, not played; no saved run. The spawn
+  comment is about chain length in general. The 22-tile chain is not in the
+  Recipe runs, and its source board was not identified.
+- **Next recommendation:** A sampler page: one board per candidate kind
+  (Recipe on a marked spot, Forecast, Dry Well, Rooms, Rust), plus the
+  feeding-orders test and its control, all with a wider spawn mix that
+  includes 6, 12 and 24.
+- **Sources:** Owner messages in the Level archetypes thread; Artifact `runs`
+  and `answers`; level-archetypes/11-five-kinds-expanded.md. Task: BL-0028.

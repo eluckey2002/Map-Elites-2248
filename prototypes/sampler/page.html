@@ -1,0 +1,102 @@
+<title>Kinds Sampler</title>
+<style>
+:root{--bg:#f3f2ec;--ink:#203b34;--muted:#5f6f66;--line:#dcded6;--panel:#e6eadc;--shell:#d4dcce;--primary:#285941;--warn:#9a5a12;--good:#2f6b3f;--sel:#ed9757;--a:#d9822b;--b:#3d7fb8;--g:#3f8f5a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17201c;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#212c27;--shell:#2a3731;--primary:#4f9a74;--warn:#e0a35a;--good:#7cc290}}
+:root[data-theme="dark"]{--bg:#17201c;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#212c27;--shell:#2a3731;--primary:#4f9a74;--warn:#e0a35a;--good:#7cc290}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button{font:inherit;cursor:pointer;min-height:44px}button:disabled{cursor:default;opacity:.45}
+:focus-visible{outline:3px solid var(--sel);outline-offset:2px}
+.app{max-width:1000px;margin:0 auto;padding:0 16px 24px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark small{font-size:10px;letter-spacing:2px;margin-left:8px;font-weight:600;color:var(--muted)}
+#boards{display:flex;gap:6px}#boards button{width:40px;height:40px;min-height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);position:relative;font-weight:700}
+#boards button.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+#boards button.answered::after{content:'✓';position:absolute;right:-3px;bottom:-3px;width:15px;height:15px;border-radius:50%;background:var(--good);color:#fff;font-size:9px;line-height:15px}
+.layout{display:grid;grid-template-columns:minmax(0,500px) minmax(240px,1fr);gap:32px;align-items:start;margin-top:14px}
+.intro h1{font-size:28px;letter-spacing:-1px}.intro p{color:var(--muted);font-size:14px;margin-top:2px}
+.stats{display:flex;justify-content:space-between;gap:10px;align-items:flex-end;margin:12px 0 10px}
+.stats span.k{display:block;font-size:9px;letter-spacing:1.5px;color:var(--muted);margin-bottom:5px}
+.stats strong{font-size:18px;font-variant-numeric:tabular-nums}#ingredients{white-space:pre;line-height:1.25}#moves{white-space:nowrap}
+#orders{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-block;padding:6px 10px;border-radius:999px;border:2px solid var(--c);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.chip.done{background:var(--c);color:#fff}
+.actions{display:flex;gap:8px}.actions button{border-radius:8px;padding:0 14px;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+#merge{flex:1;background:var(--primary);border-color:var(--primary);color:#fff}
+#status{min-height:2.9em;margin:9px 2px;font-size:13px;line-height:1.45;color:var(--muted)}
+#status[data-tone="good"]{color:var(--good);font-weight:600}#status[data-tone="warn"]{color:var(--warn)}
+.shell{position:relative;background:var(--shell);border-radius:16px;padding:8px;width:min(100%,calc((100vh - 400px) / 1.2));min-width:260px}
+#board{display:grid;gap:6px;user-select:none}
+#path{position:absolute;inset:8px;width:calc(100% - 16px);height:calc(100% - 16px);pointer-events:none;overflow:visible}
+.tile{aspect-ratio:1;min-height:0;border-radius:9px;border:0;position:relative;font-weight:750;font-size:clamp(14px,3.6vw,21px);color:#253a2e;box-shadow:0 2px 0 #0002;font-variant-numeric:tabular-nums}
+.tile:disabled{opacity:1}
+.t1{background:#eef0e2}.t2{background:#dfe7c6}.t3{background:#c4d9a4}.t4{background:#9fc48d}.t5{background:#6f9f80;color:#fff}.t6{background:#3f6f57;color:#fff}.t7{background:#2a5442;color:#fff}.t8{background:#1d3d31;color:#fff}.t9{background:#122a21;color:#fff}
+.ing-a{box-shadow:inset 0 0 0 3px var(--a),0 2px 0 #0002}.ing-a::before{content:'';position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--a)}
+.ing-b{box-shadow:inset 0 0 0 3px var(--b),0 2px 0 #0002}.ing-b::before{content:'';position:absolute;top:4px;right:4px;width:8px;height:8px;background:var(--b);clip-path:polygon(0 0,100% 0,100% 100%)}
+.ing-c{box-shadow:inset 0 0 0 3px var(--g),0 2px 0 #0002}.ing-c::before{content:'';position:absolute;bottom:4px;left:4px;width:8px;height:8px;background:var(--g);clip-path:polygon(0 100%,0 0,100% 100%)}
+#forecast{display:grid;gap:6px;margin-bottom:6px}#forecast .next{text-align:center;font-weight:750;font-size:15px;line-height:1.1;color:var(--ink);background:var(--bg);border-radius:7px;padding:4px 0}
+#forecast .next small{display:block;font-size:10px;font-weight:500;color:var(--muted)}
+#forecast[hidden]{display:none}
+.tile.stone{background:repeating-linear-gradient(45deg,#5d625c,#5d625c 6px,#4d524c 6px,#4d524c 12px);box-shadow:none}
+.tile.empty{background:transparent;box-shadow:inset 0 0 0 2px #0001}
+.tile.odd{font-style:italic}
+.tile.rust{background:#a5592f !important;color:#fff3e6 !important;opacity:.95}.tile.rust::after{content:'rust';position:absolute;bottom:2px;left:0;right:0;font-size:9px;font-style:normal;letter-spacing:1px}
+.tile.spot{outline:3px dashed var(--a);outline-offset:-5px}.tile.spot::after{content:'◎';position:absolute;bottom:1px;right:5px;font-size:12px;color:var(--a)}
+.tile.ice{background:#bfe0ef !important;color:#24526a !important}.tile.ice::after{content:'ice';position:absolute;bottom:2px;left:0;right:0;font-size:9px;font-style:normal;letter-spacing:1px}
+.tile.gate{color:#fff;font-size:13px}.tile.gate::before{content:'GATE';position:absolute;top:3px;left:0;right:0;font-size:8px;letter-spacing:1px;font-style:normal}
+.tile.made::before{content:'●';position:absolute;top:2px;left:5px;font-size:10px;color:var(--a)}
+.tile.mark::after{content:'★';position:absolute;top:2px;right:5px;font-size:12px;color:var(--b)}.tile.mark{box-shadow:inset 0 0 0 3px var(--b),0 2px 0 #0002}
+.sel{outline:3px solid var(--sel);outline-offset:-3px;transform:scale(.93)}
+.ord{position:absolute;top:3px;left:5px;font-size:10px;font-weight:700;color:#8c4b1a;background:#fff3dc;padding:0 4px;border-radius:4px}
+.landed{outline:3px dashed var(--sel);outline-offset:-3px}
+body.previewing .shell{outline:3px solid var(--sel);outline-offset:3px}
+.minor{display:flex;justify-content:space-between;margin-top:6px}.minor button{border:0;background:none;color:var(--muted);font-size:13px}
+aside .rule h2{font-size:20px;letter-spacing:-.4px}aside p,aside li{font-size:13px;line-height:1.6;color:var(--muted)}aside .rule p{margin-top:8px}
+aside h3{font-size:13px;margin-top:16px}
+.box{background:var(--panel);border-radius:10px;padding:14px;margin-top:16px}
+#result h2{font-size:18px}#result p{margin-top:6px}#result button{margin-top:10px;width:100%;border-radius:8px;border:0;background:var(--primary);color:#fff;font-weight:600}
+#questions .q{margin-top:10px}#questions .q>p{color:var(--ink);font-weight:600}
+.chips2{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chips2 button{min-width:44px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.scale{margin:4px 0 0;font-size:12px;color:var(--muted)}
+.chips2 button[aria-pressed="true"]{background:var(--primary);color:#fff;border-color:var(--primary)}
+#note{width:100%;margin-top:6px;padding:8px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:13px;resize:vertical}
+.small{font-size:11px;color:var(--muted);margin-top:6px;min-height:1.2em}
+@media (max-width:760px){
+  .layout{grid-template-columns:1fr;gap:16px}
+  .shell{width:100%;min-width:0}
+  .actions{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:8px 0;order:5}
+  .play{display:flex;flex-direction:column}.play .shell{order:3}.play #status{order:2}.play .minor{order:4}
+  header .mark small{display:none}
+  #boards{display:grid;grid-template-columns:repeat(4,44px);gap:6px}#boards button{width:44px;height:44px;min-height:44px}
+}
+</style>
+<div class="app">
+  <header><span class="mark">2248<small>KINDS SAMPLER</small></span><nav id="boards" aria-label="Boards"></nav></header>
+  <div class="layout">
+    <section class="play" aria-label="Sampler board">
+      <div class="intro"><h1 id="title"></h1><p id="focus"></p></div>
+      <div class="stats">
+        <div><span class="k">GOAL</span><div id="orders"></div></div>
+        <div><span class="k" id="progress-k">INGREDIENTS</span><strong id="ingredients"></strong></div>
+        <div style="text-align:right"><span class="k">MOVES LEFT</span><strong id="moves"></strong></div>
+      </div>
+      <div class="actions"><button id="merge">Merge chain</button><button id="preview">Preview result</button><button id="clear">Clear</button></div>
+      <p id="status" role="status" aria-live="polite"></p>
+      <div class="shell"><div id="forecast" hidden aria-label="Next tile for each column"></div><div id="board" aria-label="Tile board"></div><svg id="path" aria-hidden="true"></svg></div>
+      <div class="minor"><button id="undo">↶ Undo</button><button id="retry">↻ Same board again</button></div>
+    </section>
+    <aside>
+      <div class="rule"><h2 id="rule-title"></h2><p id="rule-body"></p>
+        <p>Each board is a different kind of level. There is no score: meet the goal before the moves run out.</p></div>
+      <h3>How to make a chain</h3>
+      <p>Click touching tiles, diagonals included: start with two equal tiles, then equal or double. Use at least three. The last tile you click keeps the sum. Preview, clear and undo are free; retries use the same board and refills.</p>
+      <section id="result" class="box" aria-live="polite" hidden><h2 id="result-title"></h2><p id="result-detail"></p><button id="next">Next board →</button><p id="run-status" class="small"></p></section>
+      <section id="questions" class="box" aria-label="Two quick questions">
+        <div class="q"><p>Different from your usual plan?</p><div class="chips chips2" data-q="different"><button type="button" data-v="yes">Yes</button><button type="button" data-v="partly">Partly</button><button type="button" data-v="no">No</button></div></div>
+        <div class="q"><p>More boards like this?</p><div class="chips chips2" data-q="wantMore"><button type="button" data-v="1">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button><button type="button" data-v="4">4</button><button type="button" data-v="5">5</button></div><p class="scale">1 = no more like this · 5 = lots more</p></div>
+        <div class="q"><p>What was the trick, in one sentence? (optional)</p><textarea id="note" rows="2" maxlength="500"></textarea></div>
+        <p id="q-status" class="small"></p>
+      </section>
+    </aside>
+  </div>
+</div>

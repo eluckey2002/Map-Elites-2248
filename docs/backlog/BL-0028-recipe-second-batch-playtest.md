@@ -1,7 +1,7 @@
 ---
 id: BL-0028
 title: Owner plays Recipe boards 5–8
-status: active
+status: dropped
 milestone: level-archetypes
 depends_on: [BL-0027]
 updated: 2026-10-11
@@ -32,14 +32,14 @@ first four with different numbers?
 
 ## Current evidence
 
-None yet. The boards are screened (beam-solver win in budget; the largest-sum
-proxy loses), which is not owner evidence.
+PDL-038, REVISE.
 
 ## Next action
 
-Wait for owner play, then read the Artifact's `runs` and `answers`.
+None. Follow-up work is the kinds sampler (BL-0029).
 
 ## History
 
 - 2026-10-11 — Boards 5–8 added to the Recipe prototype and published to the
   same private Artifact. Owner play pending.
+- 2026-10-11 — Dropped: the owner judged Recipe boards alike before playing 5–8 (PDL-038, REVISE). Boards 5–8 stay on the Artifact.

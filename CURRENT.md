@@ -2,9 +2,13 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Kinds sampler — 2026-10-11
+
+[`prototypes/sampler/`](prototypes/sampler/README.md) has eight screened boards on a private Artifact, not in the app. Each pairs one level kind with a layer that makes its steps depend on each other, following PDL-038; one is a control. Owner play pending (task BL-0029). A MAP-Elites search over Shared Material boards is proposed as BL-0030.
+
 ## Recipe prototype — 2026-10-11
 
-The owner proposed Recipe goals: win by making an exact tile from one ingredient, such as a 512 from only 128s. [`prototypes/recipe/`](prototypes/recipe/README.md) has eight screened boards in two batches, playable on a private Artifact. They are not in the app. Owner play is recorded as PDL-037, KEEP (BL-0027 done). Boards 5–8 (second batch) are on the same Artifact; owner play pending (task BL-0028). The README explains why this is not the retired Forge Contracts (PDL-009) or Three Forge Docks (PDL-010).
+The owner proposed Recipe goals: win by making an exact tile from one ingredient, such as a 512 from only 128s. [`prototypes/recipe/`](prototypes/recipe/README.md) has eight screened boards in two batches, playable on a private Artifact. They are not in the app. Owner play is recorded as PDL-037, KEEP (BL-0027 done). Boards 5–8 (second batch) are on the same Artifact. PDL-038, REVISE: one order varied only by numbers is not enough; orders that feed each other look promising (BL-0028 dropped). The README explains why this is not the retired Forge Contracts (PDL-009) or Three Forge Docks (PDL-010).
 
 ## Browser game bug fixes — 2026-10-11
 
