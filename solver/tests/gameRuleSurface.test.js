@@ -100,6 +100,8 @@ test('every browser declaration in game.js today is free to change', () => {
     assert.equal(gameRuleSurface(source.replace(head[0], `${head[0]}        const unusedForTest = 1;\n`)), surface, name);
   }
   assert.equal(gameRuleSurface(edited('    return String(value);', '    const unusedForTest = 1;\n    return String(value);')), surface);
+  const updateUI = source.match(/\n    updateUI\(\) \{\n/)[0];
+  assert.equal(gameRuleSurface(source.replace(updateUI, `${updateUI}        for (const { b } of [{ b: 2 }]) {}\n`)), surface);
 });
 
 test('a browser declaration that writes game state or calls rule code is bound like rule code', () => {
@@ -139,6 +141,8 @@ test('a browser declaration that writes game state or calls rule code is bound l
     ['drawTile', 'tile[name].call(tile);'],
     ['updateUI', 'for (this.score of [0]) {}'],
     ['updateUI', 'for (this.chain.length in [0]) {}'],
+    ['updateUI', 'for ([this.score] of [[0]]) {}'],
+    ['updateUI', 'for ({ x: this.score } of [{ x: 0 }]) {}'],
     ['updateUI', '{ const target = this.grid[0][0]; target.value = 0; } const target = document.body;'],
     ['drawTile', '(({ tickBlocker }) => tickBlocker.call(tile))(tile);'],
     ['updateUI', "document.getElementById('restartBtn').click();"],

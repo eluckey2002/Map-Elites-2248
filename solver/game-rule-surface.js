@@ -325,6 +325,11 @@ function browserOnly(tokens, [start, end], name, rules) {
       const declared = target && ['const', 'let', 'var'].includes(t(target.root - 1));
       const head = target && t(target.root - (declared ? 2 : 1)) === '(' && t(target.root - (declared ? 3 : 2)) === 'for';
       if (head && !declared && !writable(target)) return false;
+      // An undeclared destructuring target, as in for ([this.score] of rows), assigns members.
+      if (!target && [']', '}'].includes(t(i - 1))) {
+        const open = matchOpen(tokens, i - 1);
+        if (t(open - 1) === '(' && t(open - 2) === 'for') return false;
+      }
     }
     if (['++', '--', 'delete'].includes(token.t) && (id(i + 1) || t(i + 1) === '(')) {
       let k = i + 1;
