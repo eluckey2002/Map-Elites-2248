@@ -11,8 +11,9 @@
 // but it may not write game state, call other rule code, or reach the game
 // through reflection or a global. If it fails, it stays in the surface like
 // any other code. The check reads tokens, so it does not try to follow code
-// built from strings at run time (HTML handlers, computed property names) or
-// game objects handed through several local variables; reviewers own those.
+// built from strings at run time (HTML handlers, computed property names),
+// game objects handed through several local variables, or game objects stored
+// on a page object and written through it later; reviewers own those.
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 
