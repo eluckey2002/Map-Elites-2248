@@ -1,11 +1,13 @@
 /* Kinds sampler: one rules module for five candidate level kinds from the archetype research
    (level-archetypes files 04, 09, 09b, 10, 11). Chain legality, sum-on-last-tile and gravity follow the Recipe
    prototype (prototypes/recipe/model.js). Each board has one goal and at most one twist:
-     goal.type 'orders'   Recipe orders; an order with `at` counts only if its chain ends on that cell. With `feeds`
-                          (v1, kept for Feed the Next — Advanced) orders fill in turn and each later order must use the
-                          tile the previous order made. With `parts` (v2) orders fill in turn, the tile each order
-                          makes becomes a part, each later order's chain must include at least one part (any part), and
-                          a fill that would leave more than MAX_PARTS parts on the board is not allowed.
+     goal.type 'orders'   Recipe orders; an order with `at` counts only if its chain ends on that cell. With `parts` (v2)
+                          orders fill in turn, the tile each order makes becomes a part, each later order's chain must
+                          include at least one part (any part), and a fill that would leave more than MAX_PARTS parts on
+                          the board is not allowed. With `parts` and `anyOrder` (v3 Feed the Next — Advanced, proposed)
+                          orders fill in any order, every fill makes a part, an order's chain must include `o.parts`
+                          parts (default 0), and the MAX_PARTS cap still refuses a fill that would make a third part.
+                          `goal.cap` overrides MAX_PARTS (screening only: search.js removes the cap to test it binds).
      goal.type 'exact'    make one tile of exactly goal.make (any values).
      goal.type 'leftover' end with at most goal.max tiles on the board.
      goal.type 'connect'  one chain must include every cell in goal.marks.
@@ -15,11 +17,6 @@
      refill: false        no refills (The Drought); empty cells stay empty.
      boss: {title, text}  a boss board: the page announces it before the first move.
      stone: [[x,y],...]   walls: no tile, nothing falls through, nothing chains across a diagonal between two walls.
-     rust: {cells, every, scrape, ice}
-                          rusted tiles can't be chained; every `every` moves (0: never) rust spreads to one clean tile
-                          beside it (up, down, left, right). A chain that ends touching rust (diagonals included) clears
-                          that rust; with `scrape`, only a chain whose sum is at least `scrape` does. `ice` only renames
-                          it on the page.
      gate: {at, sum}      a wall cell that opens once a chain whose sum is at least `sum` ends touching it. */
 (function(root,factory){
   if(typeof module==='object'&&module.exports)module.exports=factory(require('../../solver/engine'));
@@ -39,21 +36,21 @@
       Array.isArray(level.spawnValues)&&level.spawnValues.length&&level.spawnValues.every(positive)&&
       g&&GOALS.includes(g.type)&&
       (g.type!=='orders'||Array.isArray(g.orders)&&g.orders.length&&g.orders.every(o=>positive(o.make)&&positive(o.from)&&
-        o.make%o.from===0&&o.make/o.from>=MIN_CHAIN&&(o.at===undefined||cell(o.at)&&!stone.has(String(o.at)))))&&
+        o.make%o.from===0&&o.make/o.from>=MIN_CHAIN&&(o.parts===undefined||Number.isInteger(o.parts)&&o.parts>=0)&&(o.at===undefined||cell(o.at)&&!stone.has(String(o.at)))))&&
       (g.type!=='exact'||positive(g.make))&&(g.type!=='leftover'||positive(g.max))&&
       (g.type!=='connect'||Array.isArray(g.marks)&&g.marks.length>=2&&g.marks.every(p=>cell(p)&&!stone.has(String(p))))&&
       (g.type!=='relay'||Array.isArray(g.stages)&&g.stages.length>1&&g.stages.every(positive))&&
       (level.gate===undefined||cell(level.gate.at)&&stone.has(String(level.gate.at))&&positive(level.gate.sum))&&
       (level.stone===undefined||Array.isArray(level.stone)&&level.stone.every(cell))&&
-      (level.rust===undefined||Array.isArray(level.rust.cells)&&level.rust.cells.every(p=>cell(p)&&!stone.has(String(p)))&&Number.isInteger(level.rust.every)&&level.rust.every>=0&&
-        (level.rust.scrape===undefined||positive(level.rust.scrape)));
+      // Rust was retired in v3 (PDL-040); a board that still asks for it is refused rather than silently ignored.
+      level.rust===undefined&&!(g&&g.feeds);
     if(!ok)throw new Error('Invalid sampler board');
   }
   function create(level){
     checkLevel(level);
-    const rusty=new Set((level.rust?level.rust.cells:[]).map(String)),stone=new Set((level.stone||[]).map(String));
+    const stone=new Set((level.stone||[]).map(String));
     return {id:level.id,gridWidth:level.grid[0].length,gridHeight:level.grid.length,
-      grid:level.grid.map((row,y)=>row.map((value,x)=>stone.has(x+','+y)?null:{x,y,value,blocker:null,rust:rusty.has(x+','+y)})),
+      grid:level.grid.map((row,y)=>row.map((value,x)=>stone.has(x+','+y)?null:{x,y,value,blocker:null})),
       stone:[...stone],minChain:MIN_CHAIN,tileScale:1,score:0,moves:0,maxMoves:level.moves,
       randomCursor:0,columnCursor:level.grid[0].map(()=>0),
       done:Array(level.goal.type==='orders'?level.goal.orders.length:level.goal.type==='relay'?level.goal.stages.length:1).fill(false),
@@ -61,7 +58,7 @@
   }
   function inside(state,x,y){return x>=0&&y>=0&&x<state.gridWidth&&y<state.gridHeight;}
   const isStone=(state,x,y)=>state.stone.includes(x+','+y);
-  const usable=tile=>!!tile&&!tile.rust;
+  const usable=tile=>!!tile;
   // A diagonal step is blocked when both cells it squeezes between are stone.
   const stepOpen=(state,ax,ay,bx,by)=>ax===bx||ay===by||!(isStone(state,ax,by)&&isStone(state,bx,ay));
   function valid(state,chain,complete=true){
@@ -82,30 +79,34 @@
   function completes(level,state,chain){
     if(level.goal.type!=='orders')return -1;
     const values=chain.map(([x,y])=>state.grid[y][x].value),sum=values.reduce((a,b)=>a+b,0),[ex,ey]=chain.at(-1);
-    const i=level.goal.orders.findIndex((o,i)=>!state.done[i]&&sum===o.make&&values.every(v=>v===o.from)&&
-      (!o.at||o.at[0]===ex&&o.at[1]===ey));
-    return i>=0&&feedsOk(level,state,chain,i)&&partsOk(level,state,chain,i)?i:-1;
+    // The first unfinished order this chain fills, all rules included (two orders can share a recipe).
+    return level.goal.orders.findIndex((o,i)=>!state.done[i]&&inTurn(level,state,i)&&sum===o.make&&values.every(v=>v===o.from)&&
+      (!o.at||o.at[0]===ex&&o.at[1]===ey)&&partsOk(level,state,chain,i));
   }
+  // `oneAtATime` boards (Make It Here) fill their orders strictly in list order, the same as the page shows them.
+  const inTurn=(level,state,i)=>!level.oneAtATime||state.done.indexOf(false)===i;
   const isPart=t=>!!t&&!!t.made;
   function partCount(state){let n=0;for(const row of state.grid)for(const t of row)if(isPart(t))n++;return n;}
   // How many parts the board would hold after this chain fills an order: the chain's parts merge away, its last tile
   // becomes a part.
   const partsAfter=(state,chain)=>partCount(state)-chain.filter(([x,y])=>isPart(state.grid[y][x])).length+1;
-  // With `parts`, orders fill in turn; each order after the first must include a part; at most MAX_PARTS parts at once.
+  // How many parts order i's chain must include: `o.parts` when given; otherwise one for every order after the first
+  // (in-turn parts), none with `anyOrder`.
+  const partsNeeded=(level,i)=>{const o=level.goal.orders[i];return o.parts!==undefined?o.parts:level.goal.anyOrder||i===0?0:1;};
+  const partsIn=(state,chain)=>chain.filter(([x,y])=>isPart(state.grid[y][x])).length;
+  // With `parts`: orders fill in turn (unless `anyOrder`); the chain includes the parts it needs; at most MAX_PARTS
+  // parts at once.
   function partsOk(level,state,chain,i){
     if(!level.goal.parts)return true;
-    return state.done.indexOf(false)===i&&(i===0||chain.some(([x,y])=>isPart(state.grid[y][x])))&&partsAfter(state,chain)<=MAX_PARTS;
-  }
-  // With `feeds`, orders fill in turn and each order after the first must use the tile the previous order made (●).
-  function feedsOk(level,state,chain,i){
-    if(!level.goal.feeds)return true;
-    return state.done.indexOf(false)===i&&(i===0||chain.some(([x,y])=>state.grid[y][x].made));
+    const g=level.goal,cap=g.cap===undefined?MAX_PARTS:g.cap;
+    // `strictTurn` is a screening flag only (search.js): an any-order board played strictly in list order.
+    return (g.anyOrder&&!g.strictTurn||state.done.indexOf(false)===i)&&partsIn(state,chain)>=partsNeeded(level,i)&&partsAfter(state,chain)<=cap;
   }
   // The same check ignoring the marked cell, so the page can say "right recipe, wrong spot".
   function recipeOnly(level,state,chain){
     if(level.goal.type!=='orders')return -1;
     const values=chain.map(([x,y])=>state.grid[y][x].value),sum=values.reduce((a,b)=>a+b,0);
-    return level.goal.orders.findIndex((o,i)=>!state.done[i]&&sum===o.make&&values.every(v=>v===o.from));
+    return level.goal.orders.findIndex((o,i)=>!state.done[i]&&inTurn(level,state,i)&&sum===o.make&&values.every(v=>v===o.from));
   }
   // The relay stage this chain completes, or -1: its sum is the stage's target and, after the first stage, it uses the
   // tile the previous stage made.
@@ -140,7 +141,7 @@
     return Array.from({length:n},()=>level.spawnValues[Math.floor(random()*level.spawnValues.length)]);
   }
   function refill(level,state){
-    const placed=[],put=(x,y,value)=>{state.grid[y][x]={x,y,value,blocker:null,rust:false};placed.push({x,y,value});};
+    const placed=[],put=(x,y,value)=>{state.grid[y][x]={x,y,value,blocker:null};placed.push({x,y,value});};
     if(level.refill===false)return placed;
     if(level.forecast){
       for(let x=0;x<state.gridWidth;x++){
@@ -158,22 +159,6 @@
     }
     return placed;
   }
-  // Cells rust would spread into: clean tiles beside a rusted tile (up, down, left, right), in reading order.
-  function rustFront(state){
-    const out=[];
-    for(let y=0;y<state.gridHeight;y++)for(let x=0;x<state.gridWidth;x++){
-      const t=state.grid[y][x];if(!t||t.rust)continue;
-      if([[1,0],[-1,0],[0,1],[0,-1]].some(([dx,dy])=>inside(state,x+dx,y+dy)&&state.grid[y+dy][x+dx]&&state.grid[y+dy][x+dx].rust))out.push([x,y]);
-    }
-    return out;
-  }
-  // Rust spreads after moves every, 2*every, ...; the cell is picked by the seed and the move number.
-  const spreadsAfter=(level,moves)=>!!level.rust&&level.rust.every>0&&moves%level.rust.every===0;
-  function nextRust(level,state,moves){
-    const options=rustFront(state);
-    return options.length?options[Math.floor(core.makeRng(level.seed*31+moves)()*options.length)]:null;
-  }
-  const scrapes=(level,sum)=>!!level.rust&&(!level.rust.scrape||sum>=level.rust.scrape);
   const opensGate=(level,sum)=>!!level.gate&&sum>=level.gate.sum;
   function hasMove(state){
     let found=false;
@@ -190,29 +175,19 @@
     const points=core.executeChain(state,tiles);
     tiles.forEach(t=>{delete t.made;});
     if(stage>=0){state.done[stage]=true;survivor.made=true;}
-    if(order>=0){state.done[order]=true;if(level.goal.feeds||level.goal.parts)survivor.made=true;}
+    if(order>=0){state.done[order]=true;if(level.goal.parts)survivor.made=true;}
     if(linked)state.done[0]=true;
     if(level.goal.type==='exact'&&survivor.value===level.goal.make)state.done[0]=true;
-    // A chain that ends touching rust scrapes it off (with `scrape`, only a chain whose sum is at least `scrape`).
-    const cleared=[],touches=(x,y)=>Math.max(Math.abs(survivor.x-x),Math.abs(survivor.y-y))===1;
-    if(level.rust&&scrapes(level,sum))for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
-      const x=survivor.x+dx,y=survivor.y+dy,t=inside(state,x,y)?state.grid[y][x]:null;
-      if(t&&t.rust&&(dx||dy)){t.rust=false;cleared.push([x,y]);}
-    }
+    const touches=(x,y)=>Math.max(Math.abs(survivor.x-x),Math.abs(survivor.y-y))===1;
     let opened=false;
     if(level.gate&&!state.gateOpen&&opensGate(level,sum)&&touches(...level.gate.at)){
       state.gateOpen=true;opened=true;state.stone=state.stone.filter(k=>k!==String(level.gate.at));
     }
     settle(state);
     const placed=refill(level,state);
-    let rusted=null;
-    if(!goalMet(level,state)&&spreadsAfter(level,state.moves)){
-      rusted=nextRust(level,state,state.moves);
-      if(rusted)state.grid[rusted[1]][rusted[0]].rust=true;
-    }
     if(level.goal.type==='leftover')state.done[0]=goalMet(level,state);
     state.outcome=goalMet(level,state)?'won':state.moves>=state.maxMoves?'out-of-moves':!hasMove(state)?'no-chains':'playing';
-    state.last={points,order,stage,opened,landing:{x:survivor.x,y:survivor.y,value:survivor.value},refill:placed,rusted,cleared};
+    state.last={points,order,stage,opened,landing:{x:survivor.x,y:survivor.y,value:survivor.value},refill:placed};
     return state;
   }
   function preview(level,state,chain){return valid(state,chain)&&state.outcome==='playing'?move(level,state,chain):null;}
@@ -256,6 +231,34 @@
     });
     return out;
   }
+  // Every distinct legal chain whose sum is exactly `target` (distinct by cell set and end cell), any length. Walks
+  // backwards from each end tile: a chain never goes down in value, so going backwards each tile is equal to or half
+  // the one after it, and the running sum bounds the walk. Used by the exhaustive short-win check in search.js.
+  function chainsWithSum(state,target){
+    const out=[],seen=new Set(),path=[];let sum=0;
+    function back(){
+      const cur=path.at(-1),ct=state.grid[cur[1]][cur[0]];
+      if(path.length>=state.minChain&&sum===target){
+        const second=state.grid[path.at(-2)[1]][path.at(-2)[0]];
+        if(ct.value===second.value){
+          const chain=path.slice().reverse(),key=chain.slice(0,-1).map(p=>p.join(',')).sort().join(' ')+'>'+chain.at(-1).join(',');
+          if(!seen.has(key)){seen.add(key);out.push(chain);}
+        }
+      }
+      for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+        const nx=cur[0]+dx,ny=cur[1]+dy;
+        if((!dx&&!dy)||!inside(state,nx,ny)||!stepOpen(state,nx,ny,cur[0],cur[1])||path.some(([px,py])=>px===nx&&py===ny))continue;
+        const t=state.grid[ny][nx];
+        if(!usable(t)||sum+t.value>target||!(ct.value===t.value||ct.value===2*t.value))continue;
+        path.push([nx,ny]);sum+=t.value;back();path.pop();sum-=t.value;
+      }
+    }
+    for(let y=0;y<state.gridHeight;y++)for(let x=0;x<state.gridWidth;x++){
+      const t=state.grid[y][x];if(!usable(t)||t.value>target)continue;
+      path.push([x,y]);sum=t.value;back();path.pop();
+    }
+    return out;
+  }
   return {create,valid,completes,recipeOnly,relayStage,connects,move,preview,hasMove,replay,eachChain,chains,upcoming,tileCount,goalMet,
-    nextRust,spreadsAfter,isStone,partCount,partsAfter,scrapes,opensGate,MIN_CHAIN,MAX_PARTS};
+    isStone,partCount,partsAfter,partsNeeded,partsIn,opensGate,chainsWithSum,MIN_CHAIN,MAX_PARTS};
 });

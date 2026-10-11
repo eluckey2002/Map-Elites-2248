@@ -47,3 +47,6 @@ None. Every board has a verdict (PDL-039, PDL-040). A third sampler version is t
 - 2026-10-11 — Version 2 (nine boards, PDL-039 revisions) published to the same
   Artifact under study `kinds-sampler-v2`; owner play pending, See It Coming included.
 - 2026-10-11 — Owner played all nine version 2 boards, See It Coming included; recorded as PDL-040. Done.
+- 2026-10-11 — Version 3 (eight boards, PDL-040 revisions) published to the same
+  Artifact under study `kinds-sampler-v3`; follow-up play pending, not required
+  for this item.
