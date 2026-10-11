@@ -80,7 +80,7 @@ Not every remark is a directive. Owner messages mix thinking-out-loud with instr
 
 Change game rules systematically, never ad hoc. A rule or scoring change is measured with `solver/game-tester.js` against the shipped curve before it lands, and gets a ledger record when it does.
 
-A captured play session is work to do, not a question to ask. When a new file appears in `play-sessions/`, run `node solver/human-benchmark.js --recording <file>` and report the same-seed comparison; use `node solver/board-trace.js --recording <file>` when positions need inspection. Do not ask whether the owner wants it looked at.
+A captured play session is work to do, not a question to ask. When a new file appears in `play-sessions/`, run `node solver/human-benchmark.js --recording <file>` and report the same-seed comparison; use `node solver/board-trace.js --recording <file>` when positions need inspection. Do not ask whether the owner wants it looked at. Sessions played on the hosted server (`render.yaml`) are committed to the `play-inbox` branch instead of `main`: run `git fetch origin play-inbox` and `git diff --name-only --diff-filter=A origin/main...origin/play-inbox -- play-sessions/` to list them, then `git show origin/play-inbox:<file> > <tmp>.json` to get one onto disk for the benchmark.
 
 ## Experiments
 

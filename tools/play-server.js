@@ -10,6 +10,12 @@
 //
 //   node tools/play-server.js            # port 8248
 //   PORT=9000 node tools/play-server.js
+//
+// Hosted (render.yaml) it also reads:
+//   HOST=0.0.0.0          accept connections from other machines
+//   PLAY_ACCESS_KEY=...   require ?key=... once per browser (kept in a cookie)
+//   GITHUB_TOKEN, PLAY_INBOX_REPO, PLAY_INBOX_BRANCH
+//                         also commit each new session to that branch
 const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
@@ -18,11 +24,14 @@ const { POLICIES } = require('./nemesis');
 const { createNemesisRunner } = require('./nemesis-worker');
 const { LEVELS } = require('../src/game');
 const { createConnectionCapture } = require('./connection-capture');
+const { inboxFromEnv } = require('./github-inbox');
 
 const ROOT = path.join(__dirname, '..');
 const SRC = path.join(ROOT, 'src');
 const STORE = path.join(ROOT, 'play-sessions');
 const PORT = Number(process.env.PORT || 8248);
+const HOST = process.env.HOST || '127.0.0.1';
+const KEY_COOKIE = 'play_key';
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -98,13 +107,54 @@ function storedSessionId(store, session) {
   return identity;
 }
 
-function createPlayServer({ store = STORE, connectionsStore, now = () => new Date().toISOString(), challengeSources = null } = {}) {
+function sameSecret(given, expected) {
+  const a = crypto.createHash('sha256').update(String(given)).digest();
+  const b = crypto.createHash('sha256').update(String(expected)).digest();
+  return crypto.timingSafeEqual(a, b);
+}
+
+function cookieValue(request, name) {
+  for (const part of (request.headers.cookie || '').split(';')) {
+    const [key, ...rest] = part.trim().split('=');
+    if (key === name) return decodeURIComponent(rest.join('='));
+  }
+  return null;
+}
+
+// A hosted server is reachable by anyone with the URL. With an access key set,
+// the first visit carries ?key=..., which becomes a cookie, so the game's own
+// requests (which know nothing about the key) are let through afterwards.
+// Returns true when the request was answered here.
+function guardAccess(request, response, url, accessKey) {
+  if (!accessKey || url.pathname === '/healthz') return false;
+  const given = url.searchParams.get('key');
+  if (given !== null && sameSecret(given, accessKey)) {
+    url.searchParams.delete('key');
+    const secure = request.headers['x-forwarded-proto'] === 'https' ? '; Secure' : '';
+    response.writeHead(302, {
+      location: `${url.pathname}${url.search}`,
+      'set-cookie': `${KEY_COOKIE}=${encodeURIComponent(accessKey)}; Path=/; Max-Age=31536000; HttpOnly; SameSite=Lax${secure}`,
+    });
+    response.end();
+    return true;
+  }
+  const cookie = cookieValue(request, KEY_COOKIE);
+  if (cookie !== null && sameSecret(cookie, accessKey)) return false;
+  response.writeHead(401, { 'content-type': 'text/plain; charset=utf-8' });
+  response.end('Open this game with the link that includes ?key=...\n');
+  return true;
+}
+
+function createPlayServer({ store = STORE, connectionsStore, now = () => new Date().toISOString(), challengeSources = null,
+  accessKey = process.env.PLAY_ACCESS_KEY || null, inbox = inboxFromEnv() } = {}) {
   fs.mkdirSync(store, { recursive: true });
   const connections = createConnectionCapture({ store: connectionsStore });
   const nemesis = createNemesisRunner({ sources: challengeSources });
   const server = http.createServer(async (request, response) => {
     const url = new URL(request.url || '/', 'http://localhost');
     const { pathname } = url;
+    if (guardAccess(request, response, url, accessKey)) return;
+    if (request.method === 'GET' && pathname === '/healthz') { json(response, 200, { status: 'ok' }); return; }
 
     if (request.method === 'GET' && pathname === '/api/connection-identity') {
       json(response, 200, { identity: connections.identity, schemaVersion: 1 }); return;
@@ -156,7 +206,12 @@ function createPlayServer({ store = STORE, connectionsStore, now = () => new Dat
         // The identity excludes server-added capture metadata, so submitting
         // the same play again remains one benchmark row.
         const file = path.join(store, `${id}.json`);
-        if (!fs.existsSync(file)) fs.writeFileSync(file, body);
+        if (!fs.existsSync(file)) {
+          fs.writeFileSync(file, body);
+          // The local file is gone on the next hosted restart; the branch is
+          // where agents find it. Failures are logged, never shown to the player.
+          if (inbox) inbox.publish(`play-sessions/${id}.json`, body).catch(() => {});
+        }
         process.stdout.write(
           `captured level ${session.candidateLevel} seed ${session.seed}: `
           + `${session.outcome} ${session.score} in ${session.movesUsed} moves -> ${id.slice(0, 12)}\n`,
@@ -200,8 +255,8 @@ function createPlayServer({ store = STORE, connectionsStore, now = () => new Dat
 }
 
 if (require.main === module) {
-  createPlayServer().listen(PORT, '127.0.0.1', () => {
-    process.stdout.write(`Play server: http://127.0.0.1:${PORT}/index.html\nNemesis:     http://127.0.0.1:${PORT}/nemesis.html\nCapturing to ${STORE}\n`);
+  createPlayServer().listen(PORT, HOST, () => {
+    process.stdout.write(`Play server: http://${HOST}:${PORT}/index.html\nNemesis:     http://${HOST}:${PORT}/nemesis.html\nCapturing to ${STORE}\n`);
   });
 }
 

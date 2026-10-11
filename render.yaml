@@ -1,0 +1,25 @@
+# Hosts tools/play-server.js on Render so the game can be played from a phone
+# away from home. Each new play session is also committed to the play-inbox
+# branch, where agents read it (see AGENTS.md). Set GITHUB_TOKEN in the Render
+# dashboard: a fine-grained token with Contents read/write on this repo only.
+services:
+  - type: web
+    name: map-elites-2248-play
+    runtime: node
+    plan: free
+    buildCommand: "true"
+    startCommand: node tools/play-server.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: HOST
+        value: 0.0.0.0
+      - key: PLAY_INBOX_REPO
+        value: eluckey2002/Map-Elites-2248
+      - key: PLAY_INBOX_BRANCH
+        value: play-inbox
+      - key: PLAY_ACCESS_KEY
+        generateValue: true
+      - key: GITHUB_TOKEN
+        sync: false
