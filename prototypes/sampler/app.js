@@ -79,7 +79,7 @@
         const fits=g.orders.map((q,i)=>!state.done[i]&&q.from===o.from&&q.make===o.make?i:-1).filter(i=>i>=0);
         const short=fits.filter(i=>rules.partsIn(state,selection)<rules.partsNeeded(level,i));
         if(g.parts&&short.length===fits.length){const n=rules.partsNeeded(level,short[0]);return {text:`Right recipe, but ${g.anyOrder?'order '+LETTERS[short[0]]+'’s':'the'} chain has to include ${n===1?'a part':n===2?'two parts':n+' parts'} (●).`,tone:'warn'};}
-        if(g.parts&&rules.partsAfter(state,selection)>rules.MAX_PARTS)return {text:`Not allowed: that would make a third part. At most ${rules.MAX_PARTS} parts at once.`,tone:'warn'};
+        if(g.parts&&rules.partsAfter(state,selection)>rules.MAX_PARTS)return {text:`That would make a third part, so it does not fill the order. The tiles would still merge and use a move. At most ${rules.MAX_PARTS} parts at once.`,tone:'warn'};
         return {text:'Right recipe, but it does not fill an order here.',tone:'warn'};
       }
       for(const [i,o] of g.orders.entries()){

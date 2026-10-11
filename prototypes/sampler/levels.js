@@ -22,7 +22,7 @@
       seed:38,moves:8,spawnValues,goal:{type:'orders',parts:true,orders:[{make:64,from:16},{make:256,from:64},{make:1024,from:256}]},
       grid:[[16,64,8,2,64],[32,64,256,64,4],[16,64,64,16,8],[64,64,32,16,4],[16,16,16,256,64],[2,8,64,64,16]]},
     {id:'feed-the-next-advanced',kind:'parts-any-order',name:'Feed the Next — Advanced',focus:'Advanced: any order, but only two parts fit on the board',
-      ruleTitle:'Advanced: four orders, any order, two parts at most.',rule:'Fill the orders in any order. Each fill turns its tile into a part (●), and at most two parts fit on the board: a fill that would make a third is refused. D’s chain must include two parts.',
+      ruleTitle:'Advanced: four orders, any order, two parts at most.',rule:'Fill the orders in any order. Each fill turns its tile into a part (●), and at most two parts fit on the board: a fill that would make a third does not count (the tiles still merge and the move is spent). D’s chain must include two parts.',
       hint:'Choose a chain. Count your parts before each fill.',
       seed:3,moves:9,spawnValues,goal:{type:'orders',parts:true,anyOrder:true,orders:[{make:64,from:16},{make:32,from:8},{make:64,from:16},{make:256,from:64,parts:2}]},
       grid:[[8,32,16,4,64],[16,4,16,8,64],[8,4,64,8,16],[32,4,8,16,4],[4,16,4,16,8],[2,8,4,16,32]]},

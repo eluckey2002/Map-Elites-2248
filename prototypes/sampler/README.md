@@ -52,7 +52,7 @@ refills, no leave-N goals, `[tile] × N` chips, plain words) all stay.
    minute). v1's board and its 3-family spawn list are gone; Advanced now
    follows the powers-of-two rule. *Rule proposed, not owner-approved:* four
    orders, filled in any order; every fill turns its tile into a part (●); at
-   most two parts on the board, and a fill that would make a third is refused;
+   most two parts on the board, and a fill that would make a third does not count (the tiles still merge and the move is spent);
    order D's chain must include **two** parts. See "Advanced: why the rule
    differs from the spec" below.
 5. **See It Coming, forecast visible and needed.** "i didnt even notice the
@@ -148,7 +148,7 @@ tile; gravity; seeded refills. `model.js` adds:
 - **Parts** (`parts`, v2 Feed the Next): orders fill in turn; the tile an order
   makes becomes a part (●); every later order's chain must include at least one
   part (any part); an order fill that would leave a third part on the board is
-  refused, with a status message. The page counts `parts: n/2`.
+  not counted, with a status message; the tiles still merge and the move is spent. The page counts `parts: n/2`.
 - **Any-order parts** (`parts` + `anyOrder`, v3 Advanced, proposed): orders
   fill in any order; every fill makes a part; an order needs `o.parts` parts in
   its chain (D needs two); the same cap of two parts refuses a third. Two
