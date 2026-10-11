@@ -28,7 +28,8 @@ const BROWSER_STATE = new Set(['canvas', 'ctx', 'tileSize']);
 const READERS = new Set(['calculateChainValue', 'getChainMultiplier', 'isValidChain', 'calculateStars']);
 // Rule entry points that stand for a player's input, and where they may be called.
 const INPUT_ACTIONS = {
-  setupEventListeners: ['handleTileClick', 'submitChain', 'clearChain', 'undo', 'reloadCurrentLevel', 'nextLevel'],
+  setupEventListeners: ['handleTileClick', 'submitChain', 'clearChain', 'undo', 'reloadCurrentLevel', 'nextLevel',
+    'showLevelSelect'],
   showLevelSelect: ['loadLevel'],
 };
 // Names that reach the game object, its prototypes or code built at run time:
@@ -295,7 +296,9 @@ function browserOnly(tokens, [start, end], name, rules) {
       const member = t(i + 2);
       if (BROWSER_STATE.has(member)) continue;
       // A rule method named at all, called or not (`?.()`, `.call`, a callback), must be allowed here.
-      const allowed = BROWSER_METHODS.includes(member) || READERS.has(member) || actions.has(member);
+      // A browser method that wires input is itself an input action: only its named callers may run it.
+      const allowed = (BROWSER_METHODS.includes(member) && !Object.hasOwn(INPUT_ACTIONS, member))
+        || READERS.has(member) || actions.has(member);
       if (!allowed && (rules.methods.has(member) || ['(', '?.'].includes(t(i + 3)) || ['string', 'template-head'].includes(tokens[i + 3]?.kind))) return false;
       if (WRITES.has(t(i + 3)) || ['++', '--', 'delete'].includes(t(i - 1))) return false;
     }

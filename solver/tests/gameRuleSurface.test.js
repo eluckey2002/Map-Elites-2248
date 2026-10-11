@@ -130,6 +130,8 @@ test('a browser declaration that writes game state or calls rule code is bound l
     ['updateUI', 'setTimeout(this.executeChain.bind(this));'],
     ['updateUI', 'setTimeout(createInitialGrid);'],
     ['updateUI', 'this.someHelper();'],
+    ['updateUI', 'this.setupEventListeners();'],
+    ['render', 'this.showLevelSelect();'],
     ['setupEventListeners', "document['defaultView']['game']['checkWinLose'] = () => {};"],
     ['setupEventListeners', "document.body[key] = null;"],
     ['updateUI', "const name = 'executeChain';"],
