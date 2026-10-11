@@ -1825,3 +1825,19 @@ The proof track is parked, not closed. It resumes from the unresolved **12,336â€
 - **superseded_by:** []
 - **written_by:** codex-policy-fit-r5, owner-selected Goal 3 revision 5 session, branch codex/policy-learned-judge-r5
 - **notes:** Provisional, not self-accepted, and checked_by remains absent. The corrected cross-check is arithmetic on sealed historical data. A distinct Codex review remains required for the revised pull-request head.
+
+### DECISION-0013 â€” Ship the Delivery puzzle family as a finite pack in the original game
+
+- **type:** decision
+- **status:** provisional
+- **scope:** a three-board Delivery pack reachable from Level Select in the original app; no campaign integration, endless mode, new mechanic, retune or change to `src/game.js`
+- **statement:** On 2026-10-11 the owner answered "yes" to shipping Delivery as the second puzzle type beside Connections, then approved docs/plans/2026-10-11-delivery-and-level-map-elites-plan.md ("Both fresh run"). This narrows PDL-035's settled boundary "do not integrate Delivery into the app" for Delivery only. The pack holds the three owner-played boards, unchanged: Pair Drop (PDL-011), Staggered (PDL-019) and Landing (PDL-021). Its rules are a Delivery-only port of the prototype model and are tested to reproduce the prototypes move for move.
+- **evidence:** owner messages in the project thread recorded in docs/game-design/levels/receipts/DELIVERY-PACK-1.md; implementation src/delivery-rules.js, src/delivery-levels.js, src/delivery-game.js, src/delivery-style.css, src/game-library.js, src/index.html; authored routes docs/game-design/levels/delivery-pack/witnesses.json; tests solver/tests/deliveryRules.test.js and solver/tests/deliveryGame.test.js
+- **proof_class:** `owner_decision`
+- **as_of:** 2026-10-11
+- **reverify:** Run `node --test solver/tests/deliveryRules.test.js solver/tests/deliveryGame.test.js solver/tests/gameLibrary.test.js`; start `node tools/play-server.js` and open `/?mode=delivery`. Every authored route delivers the parcel, and 75 random legal games match the prototype models move for move.
+- **updated:** 2026-10-11
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude, project thread "repo review", branch claude/project-thread-4qfp1a
+- **notes:** Provisional with no checked_by. The owner's playtest of the shipped pack is the acceptance check. Authored routes prove each board can be won; they are not a difficulty or enjoyment result. Captured play for this mode is not wired to the local capture server yet.
