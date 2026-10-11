@@ -17,7 +17,9 @@ db (`runs`, `answers`).
   ends the attempt.
 - Chains, sums, last-tap landing, gravity and fixed seeded refills are unchanged
   from the Delivery pack (`src/delivery-rules.js`): at least three tiles, first two
-  equal, then equal or double. Refills draw from 8, 16, 32.
+  equal, then equal or double. Refills draw from each board's own pool: 8, 16,
+  32 unless the board table below lists another
+  (the Refills column).
 
 ## Why this is not Forge Contracts or Three Forge Docks again
 
@@ -51,12 +53,22 @@ screen, not the owner's behaviour (AGENTS.md). `model.test.js` checks every boar
 it does not open with a win, the solver wins within budget, the replay verifies,
 and the proxy loses.
 
-| # | Board | Order | Budget | Solver witness |
-|---|---|---|---|---|
-| 1 | Four of a Kind | 512 from 128s | 6 | 4 moves |
-| 2 | Leave the 256 | 512 from 128s | 5 | 3 moves |
-| 3 | Three Quarters | 384 from 128s | 6 | 4 moves |
-| 4 | Two Orders | 512 from 128s, 256 from 64s | 7 | 5 moves |
+| # | Board | Order | Budget | Solver witness | Refills |
+|---|---|---|---|---|---|
+| 1 | Four of a Kind | 512 from 128s | 6 | 4 moves | 8, 16, 32 |
+| 2 | Leave the 256 | 512 from 128s | 5 | 3 moves | 8, 16, 32 |
+| 3 | Three Quarters | 384 from 128s | 6 | 4 moves | 8, 16, 32 |
+| 4 | Two Orders | 512 from 128s, 256 from 64s | 7 | 5 moves | 8, 16, 32 |
+| 5 | The Big One | 1024 from 256s | 6 | 4 moves | 16, 32, 64 |
+| 6 | Both Ways | 128 from 32s, 256 from 64s | 6 | 4 moves | 8, 16 |
+| 7 | Leave the 128s | 256 from 64s | 6 | 4 moves | 8, 16, 32 |
+| 8 | Three Courses | 128 from 32s, 256 from 64s, 512 from 128s | 7 | 5 moves | 8, 16, 32 |
+
+Boards 5–8 (second batch, after PDL-037) vary the ingredient and the conflict:
+a bigger ingredient, two orders where one ingredient builds the other, a board
+crowded with the tile one step above the ingredient, and a three-order ladder.
+They were picked from seeded candidates by how many ingredient tiles the
+largest-sum proxy wastes in chains that fill no order.
 
 Boards were picked from seeded random grids (seeds in `levels.js`), not hand
 authored. The witnesses show that building each 128 is itself an exact-sum
@@ -67,4 +79,5 @@ existence checks, not optimal or unique solutions.
 
 - Does "only 128s" change which chain looks best, or does it feel like counting?
 - Is board 4's shared ingredient (64s build 128s and fill order B) a real conflict?
+- Do boards 5–8 feel like new decisions, or like the first four with different numbers?
 - Recipe and Connections are both exact-sum goals. Do they feel like different kinds?

@@ -4,7 +4,7 @@
   'use strict';
   const rules=window.RecipeRules,levels=window.RecipeLevels,$=id=>document.getElementById(id);
   const STUDY='recipe-prototype-v1',LS='recipeProto.v1';
-  const COLORS=['#d9822b','#3d7fb8'];
+  const COLORS=['#d9822b','#3d7fb8','#3f8f5a'],LETTERS='ABC',RINGS=['ing-a','ing-b','ing-c'];
   let local={current:0};
   try{Object.assign(local,JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){/* storage unavailable */}
   const keep=()=>{try{localStorage.setItem(LS,JSON.stringify(local));}catch(e){/* fine */}};
@@ -34,7 +34,7 @@
       return {text:selection.length<rules.MIN_CHAIN?`${values.join(' + ')}. Use at least ${rules.MIN_CHAIN} tiles: start with two equal, then equal or double.`:'Not a legal chain.',tone:''};
     }
     const order=rules.completes(level,state,selection);
-    if(order>=0)return {text:`${values.length} × ${level.orders[order].from} → ${fmt(sum)} on the last tile. Completes the order${level.orders.length>1?' '+'AB'[order]:''}.`,tone:'good'};
+    if(order>=0)return {text:`${values.length} × ${level.orders[order].from} → ${fmt(sum)} on the last tile. Completes the order${level.orders.length>1?' '+LETTERS[order]:''}.`,tone:'good'};
     for(const [i,o] of level.orders.entries()){
       if(state.done[i])continue;
       const used=values.filter(v=>v===o.from).length;
@@ -51,8 +51,8 @@
     const predicted=legal?rules.preview(level,state,selection):null,shown=previewing&&predicted?predicted:state;
     // orders + ingredients + moves
     $('orders').replaceChildren(...level.orders.map((o,i)=>{const chip=document.createElement('span');chip.className='chip'+(shown.done[i]?' done':'');
-      chip.style.setProperty('--c',COLORS[i]);chip.textContent=`${level.orders.length>1?'AB'[i]+' · ':''}${fmt(o.make)} = ${o.make/o.from} × ${o.from}${shown.done[i]?' ✓':''}`;return chip;}));
-    $('ingredients').textContent=level.orders.map(o=>`${o.from}s ${Math.min(ingredientCount(shown,o),o.make/o.from)}/${o.make/o.from}`).join(' · ');
+      chip.style.setProperty('--c',COLORS[i]);chip.textContent=`${level.orders.length>1?LETTERS[i]+' · ':''}${fmt(o.make)} = ${o.make/o.from} × ${o.from}${shown.done[i]?' ✓':''}`;return chip;}));
+    $('ingredients').textContent=level.orders.map(o=>`${o.from}s ${Math.min(ingredientCount(shown,o),o.make/o.from)}/${o.make/o.from}`).join('\n');
     $('moves').textContent=`${shown.maxMoves-shown.moves} / ${shown.maxMoves}`;
     // board
     const board=$('board');board.style.gridTemplateColumns=`repeat(${shown.gridWidth},1fr)`;board.replaceChildren();
@@ -60,7 +60,7 @@
       const tile=shown.grid[y][x],cell=document.createElement('button');cell.type='button';cell.dataset.x=x;cell.dataset.y=y;
       const tier=Math.min(9,Math.max(1,Math.round(Math.log2(tile.value))-2));cell.className='tile t'+tier;
       cell.textContent=fmt(tile.value);
-      level.orders.forEach((o,i)=>{if(tile.value===o.from&&!shown.done[i]){cell.classList.add(i?'ing-b':'ing-a');}});
+      level.orders.forEach((o,i)=>{if(tile.value===o.from&&!shown.done[i]){cell.classList.add(RINGS[i]);}});
       const order=selection.findIndex(([sx,sy])=>sx===x&&sy===y);
       if(order>=0&&!previewing){cell.classList.add('sel');const tag=document.createElement('span');tag.className='ord';tag.textContent=order+1;cell.append(tag);}
       if(previewing&&predicted&&predicted.last.landing.x===x&&predicted.last.landing.y===y)cell.classList.add('landed');
@@ -93,7 +93,7 @@
     $('result').hidden=!over;
     if(over){
       const filled=state.done.filter(Boolean).length;
-      $('result-title').textContent=state.outcome==='won'?(level.orders.length>1?'Both orders filled':'Order filled'):'Attempt finished';
+      $('result-title').textContent=state.outcome==='won'?(level.orders.length>2?'All orders filled':level.orders.length>1?'Both orders filled':'Order filled'):'Attempt finished';
       $('result-detail').textContent=state.outcome==='won'?`Done in ${state.moves} of ${state.maxMoves} moves.`:
         `${state.outcome==='out-of-moves'?'Out of moves':'No legal chain left'}. ${filled} of ${level.orders.length} order${level.orders.length>1?'s':''} filled. Undo, or retry the same board.`;
     }
