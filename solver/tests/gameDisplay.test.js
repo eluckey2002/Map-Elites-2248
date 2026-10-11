@@ -31,24 +31,23 @@ function sizedGame(devicePixelRatio) {
   }
 }
 
-test('the board is drawn at the screen pixel density and laid out in CSS pixels', () => {
+test('the board is drawn at the screen pixel density and its display size is left to the stylesheet', () => {
   const { game, transforms } = sizedGame(2);
-  const cssWidth = 5 * game.tileSize + 6 * 6;
-  const cssHeight = 8 * game.tileSize + 6 * 9;
-  assert.equal(game.canvas.style.width, `${cssWidth}px`);
-  assert.equal(game.canvas.style.height, `${cssHeight}px`);
-  assert.equal(game.canvas.width, cssWidth * 2);
-  assert.equal(game.canvas.height, cssHeight * 2);
+  const boardWidth = 5 * game.tileSize + 6 * 6;
+  const boardHeight = 8 * game.tileSize + 6 * 9;
+  assert.deepEqual(game.canvas.style, {});
+  assert.equal(game.canvas.width, boardWidth * 2);
+  assert.equal(game.canvas.height, boardHeight * 2);
   assert.deepEqual(transforms.at(-1), [2, 0, 0, 2, 0, 0]);
 
-  // A tap is still read in CSS pixels: the centre of column 2, row 3.
+  // A tap on an unscaled board: the centre of column 2, row 3.
   const centre = (index) => 6 + index * (game.tileSize + 6) + game.tileSize / 2;
   assert.deepEqual(game.getGridPos(centre(2), centre(3)), { col: 2, row: 3 });
 });
 
 test('a screen without a pixel ratio draws one canvas pixel per CSS pixel', () => {
   const { game, transforms } = sizedGame(undefined);
-  assert.equal(game.canvas.width, parseInt(game.canvas.style.width, 10));
+  assert.equal(game.canvas.width, 5 * game.tileSize + 6 * 6);
   assert.deepEqual(transforms.at(-1), [1, 0, 0, 1, 0, 0]);
 });
 

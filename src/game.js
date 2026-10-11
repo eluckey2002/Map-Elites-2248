@@ -406,11 +406,10 @@ class Game {
             this.tileSize = Math.floor((maxWidth - this.tilePadding * (this.gridWidth + 1)) / this.gridWidth);
             const width = this.gridWidth * this.tileSize + this.tilePadding * (this.gridWidth + 1);
             const height = this.gridHeight * this.tileSize + this.tilePadding * (this.gridHeight + 1);
-            // Draw at the screen's pixel density so tiles stay sharp; layout and
-            // input keep using CSS pixels.
+            // Draw at the screen's pixel density so tiles stay sharp. The
+            // stylesheet sets the displayed size; drawing and input keep using
+            // board units.
             const scale = window.devicePixelRatio || 1;
-            this.canvas.style.width = width + 'px';
-            this.canvas.style.height = height + 'px';
             this.canvas.width = Math.round(width * scale);
             this.canvas.height = Math.round(height * scale);
             this.ctx.setTransform(scale, 0, 0, scale, 0, 0);
