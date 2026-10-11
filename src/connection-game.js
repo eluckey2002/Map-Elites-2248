@@ -6,6 +6,8 @@
   let identity,attemptId,revision=0,saveQueue=Promise.resolve(),combinationsKey='',combinationsOpen=false;
   function resetSelection(){selection=[];preview=false;removing=false;dragging=false;}
   function persist(){
+    if(!identity){$('save').textContent='Not saved: open this page from the play server to keep attempts.';return;}
+    const query=new URLSearchParams(window.location.search);query.set('attempt',attemptId);window.history.replaceState({},'','?'+query.toString());
     const current=attemptId,currentRevision=++revision;
     const body=JSON.stringify({schemaVersion:1,attemptId,identity,levelId:level.id,revision,actions,feedback:$('feedback').value});
     $('save').textContent='Saving this attempt…';
@@ -48,7 +50,7 @@
       for(const [name,value] of Object.entries({points:selection.map(([x,y])=>`${x*100+50},${y*100+50}`).join(' '),fill:'none',stroke:'#e59a59','stroke-width':'5','stroke-linecap':'round','stroke-linejoin':'round'}))line.setAttribute(name,value);
       $('path').append(line);
     }
-    $('merge').disabled=!legal;$('preview').disabled=!legal;$('clear').disabled=!selection.length&&!removing;
+    $('merge').disabled=!legal||preview;$('preview').disabled=!legal;$('clear').disabled=!selection.length&&!removing;
     $('preview').textContent=preview?'Back to board':'Preview result';$('undo').disabled=!history.length;
     $('remove').disabled=preview||state.outcome!=='playing'||!state.charges;
     $('remove').textContent=removing?'Cancel removal':'Remove a tile';$('remove').setAttribute('aria-pressed',String(removing));
@@ -108,18 +110,23 @@
       actions.push(action);
     }
     attemptId=crypto.randomUUID();revision=0;resetSelection();$('feedback').value=saved?.feedback||'';
-    const query=new URLSearchParams(window.location.search);query.set('attempt',attemptId);window.history.replaceState({},'','?'+query.toString());
-    render();persist();
+    render();
+    // A fresh board is saved once the player acts; a reopened attempt is
+    // copied straight away so its link keeps working.
+    if(saved)persist();
+    else{const query=new URLSearchParams(window.location.search);query.delete('attempt');window.history.replaceState({},'','?'+query.toString());$('save').textContent='';}
   }
-  $('retry').onclick=()=>begin();$('feedback').onchange=persist;
+  $('retry').onclick=()=>{if(actions.length&&!window.confirm('Start this puzzle again? Your moves and undo history will be cleared.'))return;begin();};$('feedback').onchange=persist;
   try{
     if(!level)throw new Error('Unknown puzzle. Choose one from the library.');
-    const response=await fetch('/api/connection-identity');if(!response.ok)throw new Error('Could not connect to this puzzle runtime. Reload to try again.');
-    identity=(await response.json()).identity;
+    // The rules run in the browser, so the puzzle plays without the play
+    // server; only saving attempts needs it.
+    try{const response=await fetch('/api/connection-identity');if(response.ok)identity=(await response.json()).identity;}catch{}
     document.title=`2248 · ${level.name}`;$('title').textContent=level.name;$('subtitle').textContent=level.focus+' · three connections on one board';
     $('next').href=window.GameLibrary?window.GameLibrary.connectionsUrl(window.location.search):'?mode=connections';
     let saved=null;const source=params.get('attempt');
     if(source){
+      if(!identity)throw new Error('Saved attempts open only from the play server. Return to the library for a fresh attempt.');
       const response=await fetch('/api/connection-attempts/'+encodeURIComponent(source));if(!response.ok)throw new Error('Saved attempt unavailable. Return to the library for a fresh attempt.');
       saved=await response.json();if(saved.identity!==identity||saved.levelId!==level.id)throw new Error('Saved attempt belongs to a different puzzle runtime.');
       rules.replay(level,saved.actions);

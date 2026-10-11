@@ -22,6 +22,16 @@
     const params=new URLSearchParams(search);params.delete('mode');params.delete('puzzle');params.delete('attempt');
     return params.size?'?'+params.toString():'?mode=legacy';
   }
+  // The play server builds connection-core.js from the solver engine. A
+  // plain static server of the repository has no such file, so load the
+  // engine itself as a CommonJS module instead.
+  async function loadCore(root,load){
+    try{await load('connection-core.js');return;}catch{}
+    root.module={exports:{}};
+    try{await load('../solver/engine.js');root.ChainCore=root.module.exports;}
+    catch{throw new Error('Could not load the puzzle rules. Serve the repository root, or run node tools/play-server.js.');}
+    finally{delete root.module;}
+  }
   async function boot(root){
     const doc=root.document,$=id=>doc.getElementById(id),search=root.location.search;
     function load(src){return new Promise((resolve,reject)=>{const script=doc.createElement('script');script.src=src;script.onload=resolve;script.onerror=()=>reject(new Error('Could not load '+src));doc.head.append(script);});}
@@ -50,7 +60,7 @@
         }
         return;
       }
-      for(const src of ['connection-core.js','connection-rules.js','connection-math.js','connection-game.js'])await load(src);
+      await loadCore(root,load);for(const src of ['connection-rules.js','connection-math.js','connection-game.js'])await load(src);
     }catch(error){
       const alert=$('cx-error');alert.hidden=false;alert.textContent=error.message;
       if($('connections-app').hidden)$('legacy-app').append(alert);
@@ -76,7 +86,7 @@
         });
         return;
       }
-      for(const src of ['connection-core.js','delivery-rules.js','delivery-game.js'])await load(src);
+      await loadCore(root,load);for(const src of ['delivery-rules.js','delivery-game.js'])await load(src);
     }catch(error){$('dx-error').hidden=false;$('dx-error').textContent=error.message;}
   }
   return {resolveRoute,connectionsUrl,deliveryUrl,legacyUrl,boot};
