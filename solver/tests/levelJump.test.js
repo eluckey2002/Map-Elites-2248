@@ -76,6 +76,7 @@ test('loading and retrying a fixed shipped-level seed reproduces the board RNG',
         this.currentLevel = level.level;
         rngSamples.push([rng(), rng(), rng()]);
       },
+      hasValidMoves() { return true; },
       submitPlaySession() {},
     });
 

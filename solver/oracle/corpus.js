@@ -5,6 +5,7 @@ const { valueIdentity, validateSeed } = require('../benchmark-inputs');
 const { resolveRecordedBoard } = require('../human-benchmark');
 const { replayRecording } = require('../benchmark-replay');
 const { createPuzzle, boardSnapshot } = require('./simulation');
+const { gameRuleIdentity, historicalBytes } = require('../game-rule-surface');
 
 const ROOT = path.resolve(__dirname, '../..');
 const DEFAULT_MANIFEST = path.join(ROOT, 'docs/oracle/corpus.json');
@@ -72,8 +73,16 @@ function loadCorpus(file = DEFAULT_MANIFEST, expectedIdentity = FROZEN_MANIFEST_
     throw new Error('frozen corpus identity mismatch');
   }
   const frozenFiles = manifest.puzzles.flatMap(puzzle => puzzle.recordings.map(recording => recording.file));
-  const actual = collectCorpus(frozenFiles);
-  if (actual.manifestIdentity !== expectedIdentity) throw new Error('live corpus or rules differ from the frozen manifest');
+  const { manifestIdentity: _live, ...actual } = collectCorpus(frozenFiles);
+  // DECISION-0015: src/game.js may change for browser-only fixes, so its bytes
+  // are not compared live. Its game rules must still equal the frozen version's,
+  // and every puzzle's level, board and spawns are still rebuilt live.
+  const frozenGame = historicalBytes(ROOT, 'src/game.js', manifest.gameIdentity);
+  const liveGame = fs.readFileSync(path.join(ROOT, 'src/game.js'));
+  if (!frozenGame || gameRuleIdentity(frozenGame) !== gameRuleIdentity(liveGame)
+    || valueIdentity({ ...actual, gameIdentity: manifest.gameIdentity }) !== expectedIdentity) {
+    throw new Error('live corpus or rules differ from the frozen manifest');
+  }
   return manifest;
 }
 

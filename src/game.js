@@ -207,6 +207,10 @@ class Tile {
     }
 }
 
+function formatTileValue(value) {
+    return String(value);
+}
+
 function makeSeededRng(seed) {
     let state = seed >>> 0;
     const rng = function () {
@@ -418,9 +422,12 @@ class Game {
             this.handleTileClick(touch.clientX, touch.clientY);
         });
 
-        // Enter submits the chain, Escape clears it
+        // Enter submits the chain, Escape clears it. Enter on a focused
+        // button or field belongs to that control, not to the board.
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
+                if (e.target && typeof e.target.closest === 'function'
+                    && e.target.closest('button, a, input, select, textarea, [contenteditable]')) return;
                 e.preventDefault();
                 this.submitChain();
             } else if (e.key === 'Escape') {
@@ -619,7 +626,8 @@ class Game {
 
         // Animate and then handle gravity + spawning
         this.animating = true;
-        setTimeout(() => {
+        this.mergeTimer = setTimeout(() => {
+            this.mergeTimer = null;
             finalTile.merging = false;
             this.applyGravity();
             this.spawnNewTiles();
@@ -789,6 +797,18 @@ class Game {
     // LEVEL MANAGEMENT
     // ========================================================================
 
+    // Session plumbing around initializeLevel, which holds the level's rules.
+    // A move still animating belongs to the board being replaced: its pending
+    // callback must not tick blockers or score on the new one. A dealt board
+    // with no legal chain gets a message instead of a silent dead end; it
+    // records no outcome, exactly as before.
+    beginLevel(levelData, rng, authoringCapture = null) {
+        clearTimeout(this.mergeTimer);
+        this.mergeTimer = null;
+        this.initializeLevel(levelData, rng, authoringCapture);
+        if (!this.hasValidMoves()) this.showGameOver('No valid moves!');
+    }
+
     initializeLevel(levelData, rng, authoringCapture = null) {
         validatePlayableLevel(levelData);
 
@@ -867,7 +887,7 @@ class Game {
             seed,
             submit: (payload) => this.submitPlaySession(payload),
         });
-        this.initializeLevel(levelData, makeSeededRng(seed), capture);
+        this.beginLevel(levelData, makeSeededRng(seed), capture);
         const seedEl = document.getElementById('seedValue');
         if (seedEl) seedEl.textContent = String(seed);
     }
@@ -880,7 +900,7 @@ class Game {
             seed: session.seed,
             submit: (payload) => this.submitRecording(payload),
         });
-        this.initializeLevel(session.levelData, makeSeededRng(session.seed), capture);
+        this.beginLevel(session.levelData, makeSeededRng(session.seed), capture);
         this.updateAuthoringStatus(`Candidate ${session.levelData.level} · seed ${session.seed} · ready`);
     }
 
@@ -1287,11 +1307,13 @@ class Game {
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
 
-            let displayValue = tile.value.toString();
-            if (tile.value >= 1000000) {
-                displayValue = (tile.value / 1000000).toFixed(1) + 'M';
-            } else if (tile.value >= 1000) {
-                displayValue = (tile.value / 1000).toFixed(tile.value >= 10000 ? 0 : 1) + 'K';
+            // Chains match exact values, so the label is exact too: shrink
+            // the font to fit rather than round 12288 and 12400 to one "12K".
+            const displayValue = formatTileValue(tile.value);
+            const maxTextWidth = this.tileSize * 0.86;
+            const textWidth = ctx.measureText(displayValue).width;
+            if (textWidth > maxTextWidth) {
+                ctx.font = `bold ${fontSize * maxTextWidth / textWidth}px sans-serif`;
             }
 
             ctx.fillText(displayValue, x + this.tileSize / 2, y + this.tileSize / 2);
@@ -1410,6 +1432,7 @@ if (typeof module !== 'undefined' && module.exports) {
         Game,
         createInitialGrid,
         customCandidateFromQuery,
+        formatTileValue,
         levelFromQuery,
         makeSeededRng,
         rngForLevel,

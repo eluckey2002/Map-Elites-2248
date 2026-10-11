@@ -22,6 +22,7 @@ const crypto = require('node:crypto');
 const os = require('node:os');
 const { execFileSync } = require('node:child_process');
 const { assessFailedRunLedger } = require('./failed-run-ledger');
+const { gameRuleIdentity } = require('../solver/game-rule-surface');
 
 const ROOT = path.join(__dirname, '..');
 const LEDGER = path.join(ROOT, 'EVIDENCE_LEDGER.md');
@@ -433,12 +434,26 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
 // evidence is still bound byte-for-byte. The policy lives in this file, not in
 // an editable data file: the mandatory path set cannot be shrunk or swapped by
 // a config-only change, only by a reviewed edit to the gate.
+// DECISION-0015 adds src/game.js as a live file for the results below: the
+// browser game's input and display code must stay editable, while its game
+// rules stay bound to the admission commit (see frozenInputProblems).
+const GAME_SOURCE = 'src/game.js';
 const FROZEN_TREE_POLICY = {
+  'RESULT-0047': {
+    decision: 'DECISION-0015',
+    reason: 'Its recomputation hashes src/game.js byte for byte, so any browser-only fix to the game (input, display) made the live-tree recomputation fail; solver/oracle/corpus.js now records src/game.js instead of comparing it live.',
+    live_files: ['tools/verify-experiments.js', 'src/game.js', 'solver/oracle/corpus.js'],
+  },
+  'RESULT-0049': {
+    decision: 'DECISION-0015',
+    reason: 'Its recomputation hashes src/game.js byte for byte, so any browser-only fix to the game (input, display) made the live-tree recomputation fail.',
+    live_files: ['tools/verify-experiments.js', 'src/game.js'],
+  },
   'RESULT-0082': {
-    decision: 'DECISION-0011',
-    reason: 'Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail.',
+    decision: 'DECISION-0015',
+    reason: 'Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail; src/game.js is frozen in its protocol, so any browser-only game fix did the same.',
     append_only: ['experiments/SEEDS.md'],
-    live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js'],
+    live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js', 'src/game.js'],
     extra_immutable: ['solver/policy-lab/runs/resume'],
   },
 };
@@ -545,7 +560,20 @@ function frozenInputProblems(id, commit, entry) {
       problems.push(`${id} append-only input ${rel} no longer begins with its admitted bytes`);
     }
   }
+  // DECISION-0015: src/game.js is live for its browser code only. Its game
+  // rules (solver/game-rule-surface.js) must still be the admitted ones.
+  if (live.has(GAME_SOURCE)) {
+    const current = fs.existsSync(path.join(ROOT, GAME_SOURCE)) ? fs.readFileSync(path.join(ROOT, GAME_SOURCE)) : null;
+    problems.push(...gameRuleProblems(id, commit, current));
+  }
   return problems;
+}
+
+function gameRuleProblems(id, commit, current) {
+  const admitted = showAtCommit(commit, GAME_SOURCE, ROOT, { raw: true });
+  let same = false;
+  try { same = Boolean(admitted && current) && gameRuleIdentity(admitted) === gameRuleIdentity(current); } catch { same = false; }
+  return same ? [] : [`${id} live input ${GAME_SOURCE} changed a game rule since admission commit ${commit.slice(0, 8)}`];
 }
 
 function runAtAdmissionCommit(result, closureRel, argv, cwd, entry) {
@@ -1358,5 +1386,5 @@ module.exports = {
   assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
   assessClosureReceipt, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
-  FROZEN_TREE_POLICY, committedVersions, frozenInputProblems, frozenTreeEntryProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
+  FROZEN_TREE_POLICY, committedVersions, frozenInputProblems, frozenTreeEntryProblems, gameRuleProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };

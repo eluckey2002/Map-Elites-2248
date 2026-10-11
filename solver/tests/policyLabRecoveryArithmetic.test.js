@@ -6,6 +6,7 @@ const path=require('node:path');
 const os=require('node:os');
 const {spawnSync,execFileSync}=require('node:child_process');
 const {axis,summarize}=require('../policy-lab/recovery-recompute');
+const {closeoutRoot}=require('./fixtures/policy-closeout-snapshot');
 test('independent arithmetic gives the hand-calculated level and seed errors',()=>{
   const a=axis([0,2,4,6],2,2);
   assert.equal(a.mean,3);assert.equal(a.seLevel,2);assert.equal(a.seSeed,1);assert.equal(a.se,2);
@@ -27,7 +28,7 @@ test('independent arithmetic keeps win regressions and single mutual-win uncerta
   cells[0].candidate.movesToTarget=9;assert.throws(()=>summarize(cells,[1,2],[10,11]),/malformed/);
 });
 test('independent audit matches inherited real panels and rejects discounted charges or burned C3 substitution',t=>{
-  const root=path.resolve(__dirname,'../..');
+  const root=closeoutRoot();
   const temp=fs.mkdtempSync(path.join(os.tmpdir(),'policy-recovery-arithmetic-'));
   t.after(()=>fs.rmSync(temp,{recursive:true,force:true}));
   const plan='docs/goals/policy-terms-loop/RECOVERY_PLAN.md';

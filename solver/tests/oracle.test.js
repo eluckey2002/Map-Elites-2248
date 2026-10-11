@@ -56,7 +56,9 @@ test('oracle corpus reads and replays all real recordings, groups exact repeats,
   assert.equal(manifest.puzzles.length, 20);
   assert.equal(manifest.puzzles.filter(p => p.humanBestMoves === null).length, 1);
   const frozenFiles = manifest.puzzles.flatMap(puzzle => puzzle.recordings.map(recording => recording.file));
-  assert.equal(collectCorpus(frozenFiles).manifestIdentity, manifest.manifestIdentity);
+  // DECISION-0015: src/game.js is recorded in the manifest, not compared live.
+  const { manifestIdentity: _live, ...live } = collectCorpus(frozenFiles);
+  assert.equal(valueIdentity({ ...live, gameIdentity: manifest.gameIdentity }), manifest.manifestIdentity);
   const split = manifest.puzzles.find(p => p.recordings.some(r => r.levelNumber === 51));
   assert.equal(split.recordings.length, 3);
   assert.equal(split.humanBestMoves, 12);

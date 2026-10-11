@@ -5,6 +5,7 @@ const path=require('node:path');
 const {requiredAudits,requireCompletedAudit}=require('../../docs/goals/policy-terms-loop/resume-closure-state');
 const {assertBindings,evidencePaths}=require('../../docs/goals/policy-terms-loop/resume-closure-inputs');
 const {verify}=require('../../docs/goals/policy-terms-loop/verify-resume-closeout');
+const {closeoutRoot}=require('./fixtures/policy-closeout-snapshot');
 const controls={status:'CONTROLS_COMPLETE',headlines:{controls:Array(12).fill({}),path:'CONTROLS_PASSED'}};
 test('resumed closeout cannot turn a running phase or unconfirmed candidate into a named finish',()=>{
   assert.throws(()=>requiredAudits({controls}),/completed named closure/);
@@ -28,6 +29,6 @@ test('closeout rejects successful exits with incomplete numeric audits and keeps
   assert.throws(()=>requireCompletedAudit('solver/policy-lab/resume-recompute.js','MATCH retained arithmetic\nUNVERIFIED aggregate',{path:'A'}),/complete control/);
   assert.throws(()=>requireCompletedAudit('solver/policy-lab/resume-proposal-recompute.js','MATCH retained proposal arithmetic',{path:'B'}),/complete proposal/);
   assert.throws(()=>requireCompletedAudit('solver/policy-lab/resume-proposal-recompute.js --confirmation','MATCH confirmation arithmetic',{path:'A'}),/complete confirmation/);
-  const result=verify(path.resolve(__dirname,'../..'));assert.equal(typeof result.pending,'boolean');
+  const result=verify(closeoutRoot());assert.equal(typeof result.pending,'boolean');
   if(result.pending)assert.equal(result.scientificComplete,false);
 });
