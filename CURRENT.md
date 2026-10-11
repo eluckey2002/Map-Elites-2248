@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Delivery puzzle pack — 2026-10-11
+
+DECISION-0013 and PDL-036 record the owner's request to ship Delivery as the second puzzle family. The original app now has a three-board Delivery pack at `?mode=delivery`, reached from Level Select: Pair Drop, Staggered and Landing, unchanged from the owner-played prototypes. See [DELIVERY-PACK-1](docs/game-design/levels/receipts/DELIVERY-PACK-1.md) for scope, checks and limits. Open: the owner's in-app playtest (task DELIVERY-PACK-1). Not wired to local play capture yet. The approved [plan](docs/plans/2026-10-11-delivery-and-level-map-elites-plan.md) also restarts level MAP-Elites as a fresh run (Part 2), which is separate work.
+
 ## Board MAP-Elites, fresh run — 2026-10-11
 
 The family-board search is back on `main` as a fresh run rather than a port of the dropped RESULT-0044..0047. The owner chose the axes: successful plan breadth across, baseline regret (moves the shipped bot gives away against the cheapest replayed plan) up. [RESULT-0084](EVIDENCE_LEDGER.md#result-0084--fresh-board-map-elites-fills-12-cells-on-breadth--baseline-regret) closed `SUPPORTED_AT_BOUNDED_SCOPE` with 12 cells, 5 bins on each axis and a passing verifier; regret and harvest correlate at ρ 0.63. It is provisional and ships no board. Next is the owner playing up to five elites through `tools/board-elite-server.js` ([report](experiments/RESULT-0084/report.md) lists them).

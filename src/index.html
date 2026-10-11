@@ -315,7 +315,7 @@
         }
     </style>
     <link rel="stylesheet" href="keeper-motion-prototype.css?v=alchemy-26">
-    <style>#legacy-app{display:contents}#legacy-app[hidden],#connections-app[hidden]{display:none!important}</style>
+    <style>#legacy-app{display:contents}#legacy-app[hidden],#connections-app[hidden],#delivery-app[hidden]{display:none!important}</style>
 </head>
 <body>
     <div id="legacy-app">
@@ -417,6 +417,7 @@
         <div class="modal-content">
             <div class="modal-title">Select Level</div>
             <a id="connections-entry" class="btn btn-secondary" href="?mode=connections" style="display:block;text-align:center;text-decoration:none;margin-bottom:12px">Connection puzzles →</a>
+            <a id="delivery-entry" class="btn btn-secondary" href="?mode=delivery" style="display:block;text-align:center;text-decoration:none;margin-bottom:12px">Delivery puzzles →</a>
             <div class="level-select" id="levelSelect"></div>
             <button class="btn btn-secondary" id="closeLevelSelect" style="width: 100%; margin-top: 15px;">Close</button>
         </div>
@@ -448,6 +449,28 @@
             </aside>
         </div>
         <footer class="cx-footer">Connections · Local first-pack playtest · Original level progress is preserved</footer>
+    </main>
+    <main id="delivery-app" class="cx-app dx-app" hidden>
+        <header class="cx-header"><a id="dx-legacy" href="?mode=legacy">2248 <span>TILE GAME</span></a><a id="dx-library-link" href="?mode=delivery">Delivery puzzles</a></header>
+        <section class="cx-intro"><p class="cx-eyebrow">BUILD · CLEAR · DELIVER</p><h1 id="dx-title">Delivery puzzles</h1><p id="dx-subtitle">One parcel. Clear a way down before the moves run out.</p></section>
+        <p id="dx-error" role="alert" hidden></p>
+        <section id="dx-library" hidden><div id="dx-level-list" class="cx-level-list"></div><p class="cx-note">Play in order or pick any board. Each retry restores the same board and refills.</p></section>
+        <div id="dx-play" class="cx-layout" hidden>
+            <section aria-label="Delivery puzzle">
+                <div class="cx-stats"><div><span>PARCEL</span><strong id="dx-parcel">In transit</strong></div><div><span>MOVES LEFT</span><strong id="dx-moves"></strong></div><div><span>SCORE</span><strong id="dx-score">0</strong></div></div>
+                <div class="cx-actions dx-actions"><button id="dx-merge" class="cx-primary">Merge chain</button><button id="dx-preview" class="cx-secondary">Preview result</button><button id="dx-clear" class="cx-secondary">Clear</button></div>
+                <p id="dx-selection" class="cx-selection dx-selection" role="status"></p>
+                <div class="cx-board-shell"><div id="dx-board" aria-label="Tile board"></div><svg id="dx-path" aria-hidden="true"></svg></div>
+                <div id="dx-exit" class="dx-exit" aria-hidden="true"></div>
+                <div class="cx-minor-actions"><button id="dx-undo">Undo</button><button id="dx-retry">Retry puzzle</button></div>
+                <section id="dx-result" class="cx-result" aria-live="polite" hidden><h2 id="dx-result-title"></h2><p id="dx-result-detail"></p><a id="dx-next" href="?mode=delivery">Next puzzle →</a></section>
+            </section>
+            <aside class="cx-aside">
+                <div class="cx-rule"><h2>Get the parcel out.</h2><p>The parcel falls when the tiles under it clear. It leaves through the bottom of its column, marked ↓. The parcel can never join a chain.</p></div>
+                <div class="cx-rule"><h3>How to make a chain</h3><p>Start with two equal neighbors, then continue equal or double. Use at least three tiles; diagonals count. The last tile you select keeps the sum, so choose where the chain ends.</p><p>Merging spends one move. Preview, clear and undo are free. Retries use the same board and refills.</p></div>
+            </aside>
+        </div>
+        <footer class="cx-footer">Delivery · First pack of three owner-played boards · Original level progress is preserved</footer>
     </main>
     <script src="game-library.js"></script>
 </body>
