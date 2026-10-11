@@ -4,7 +4,7 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Kinds sampler — 2026-10-11
 
-[`prototypes/sampler/`](prototypes/sampler/README.md) has eight screened boards on a private Artifact, not in the app. Each pairs one level kind with a layer that makes its steps depend on each other, following PDL-038; one is a control. Owner play pending (task BL-0029). A MAP-Elites search over Shared Material boards is proposed as BL-0030.
+[`prototypes/sampler/`](prototypes/sampler/README.md) has eight screened boards on a private Artifact, not in the app. Each pairs one level kind with a layer that makes its steps depend on each other, following PDL-038; one is a control. Owner play pending (task BL-0029). A MAP-Elites search over Shared Material boards is proposed as BL-0030. A separate mixed-family daily puzzle game is parked as BL-0031.
 
 ## Recipe prototype — 2026-10-11
 
