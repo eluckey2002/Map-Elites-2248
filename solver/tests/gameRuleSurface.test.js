@@ -5,7 +5,7 @@ const path = require('node:path');
 const { gameRuleSurface } = require('../game-rule-surface');
 
 /**
- * DECISION-0013 lets src/game.js change for browser-only fixes while frozen
+ * DECISION-0015 lets src/game.js change for browser-only fixes while frozen
  * results stay bound to its game rules. The rule surface is the whole file less
  * a named list of drawing, layout and input declarations, so anything new is
  * bound by default. These checks pin both sides of that line.

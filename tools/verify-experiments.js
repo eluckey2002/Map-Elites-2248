@@ -434,23 +434,23 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
 // evidence is still bound byte-for-byte. The policy lives in this file, not in
 // an editable data file: the mandatory path set cannot be shrunk or swapped by
 // a config-only change, only by a reviewed edit to the gate.
-// DECISION-0013 adds src/game.js as a live file for the results below: the
+// DECISION-0015 adds src/game.js as a live file for the results below: the
 // browser game's input and display code must stay editable, while its game
 // rules stay bound to the admission commit (see frozenInputProblems).
 const GAME_SOURCE = 'src/game.js';
 const FROZEN_TREE_POLICY = {
   'RESULT-0047': {
-    decision: 'DECISION-0013',
+    decision: 'DECISION-0015',
     reason: 'Its recomputation hashes src/game.js byte for byte, so any browser-only fix to the game (input, display) made the live-tree recomputation fail; solver/oracle/corpus.js now records src/game.js instead of comparing it live.',
     live_files: ['tools/verify-experiments.js', 'src/game.js', 'solver/oracle/corpus.js'],
   },
   'RESULT-0049': {
-    decision: 'DECISION-0013',
+    decision: 'DECISION-0015',
     reason: 'Its recomputation hashes src/game.js byte for byte, so any browser-only fix to the game (input, display) made the live-tree recomputation fail.',
     live_files: ['tools/verify-experiments.js', 'src/game.js'],
   },
   'RESULT-0082': {
-    decision: 'DECISION-0013',
+    decision: 'DECISION-0015',
     reason: 'Its recomputation hashes the whole of experiments/SEEDS.md, which is append-only, so any later seed reservation made the live-tree recomputation fail; src/game.js is frozen in its protocol, so any browser-only game fix did the same.',
     append_only: ['experiments/SEEDS.md'],
     live_files: ['tools/verify-experiments.js', 'solver/tests/failedRunLedger.test.js', 'src/game.js'],
@@ -560,7 +560,7 @@ function frozenInputProblems(id, commit, entry) {
       problems.push(`${id} append-only input ${rel} no longer begins with its admitted bytes`);
     }
   }
-  // DECISION-0013: src/game.js is live for its browser code only. Its game
+  // DECISION-0015: src/game.js is live for its browser code only. Its game
   // rules (solver/game-rule-surface.js) must still be the admitted ones.
   if (live.has(GAME_SOURCE)) {
     const current = fs.existsSync(path.join(ROOT, GAME_SOURCE)) ? fs.readFileSync(path.join(ROOT, GAME_SOURCE)) : null;

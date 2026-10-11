@@ -1,0 +1,10 @@
+/* Delivery reuses the Connections layout; these rules add the parcel, its shaft and the exit marker. */
+.dx-app #dx-board{display:grid;gap:6px;touch-action:none;user-select:none}
+.dx-app #dx-path{position:absolute;inset:9px;width:calc(100% - 18px);height:calc(100% - 18px);pointer-events:none;overflow:visible}
+.dx-app .dx-shaft{box-shadow:inset 0 0 0 2px #c48047aa}
+.dx-app .dx-parcel{background:#f4c26b;color:#5a3a12;font-size:26px;box-shadow:inset 0 0 0 3px #b9782f}
+.dx-exit{display:grid;gap:6px;padding:4px 9px 0;font-size:11px;font-weight:700;letter-spacing:1px;color:#9a5a26;text-align:center;min-height:18px}
+.dx-actions{margin-bottom:6px}
+.dx-app .dx-selection{min-height:20px;margin:6px 0 10px}
+/* Keep the whole board and its controls on one desktop screen (review finding: controls sat below the fold). */
+@media (min-width:741px){.dx-app .cx-intro{margin:18px 0 14px}.dx-app .cx-intro h1{font-size:36px;margin:6px 0}.dx-app .cx-board-shell,.dx-app .dx-exit{max-width:340px}}

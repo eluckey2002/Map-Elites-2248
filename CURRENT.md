@@ -4,7 +4,11 @@ This page is a bounded navigation record, not evidence. Read the [evidence ledge
 
 ## Browser game bug fixes — 2026-10-11
 
-DECISION-0013 (provisional, check pending) lets the browser code in `src/game.js` change without turning the gate red for RESULT-0047, RESULT-0049 and RESULT-0082, while its game rules stay bound (`solver/game-rule-surface.js`): all three now recompute at their admission commits, with `src/game.js` a live file. The fixes under it scope Enter to the board, stop a level reload during the merge animation from ticking blockers on the new board, say at once when a dealt board has no legal chain, and show exact tile values (`solver/tests/gameInputSafety.test.js`). HUMAN-PILOT-0002 was re-derived; only its two identity fields changed. Source review: the 2026-10-11 repo review in the owner's project files.
+DECISION-0015 (provisional, check pending) lets the browser code in `src/game.js` change without turning the gate red for RESULT-0047, RESULT-0049 and RESULT-0082, while its game rules stay bound (`solver/game-rule-surface.js`): all three now recompute at their admission commits, with `src/game.js` a live file. The fixes under it scope Enter to the board, stop a level reload during the merge animation from ticking blockers on the new board, say at once when a dealt board has no legal chain, and show exact tile values (`solver/tests/gameInputSafety.test.js`). HUMAN-PILOT-0002 was re-derived; only its two identity fields changed. Source review: the 2026-10-11 repo review in the owner's project files.
+
+## Delivery puzzle pack — 2026-10-11
+
+DECISION-0013 and PDL-036 record the owner's request to ship Delivery as the second puzzle family. The original app now has a three-board Delivery pack at `?mode=delivery`, reached from Level Select: Pair Drop, Staggered and Landing, unchanged from the owner-played prototypes. See [DELIVERY-PACK-1](docs/game-design/levels/receipts/DELIVERY-PACK-1.md) for scope, checks and limits. Open: the owner's in-app playtest (task DELIVERY-PACK-1). Not wired to local play capture yet. The approved [plan](docs/plans/2026-10-11-delivery-and-level-map-elites-plan.md) also restarts level MAP-Elites as a fresh run (Part 2), which is separate work.
 
 ## Selectable Nemesis opponents — 2026-10-04
 

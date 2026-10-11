@@ -74,7 +74,7 @@ function loadCorpus(file = DEFAULT_MANIFEST, expectedIdentity = FROZEN_MANIFEST_
   }
   const frozenFiles = manifest.puzzles.flatMap(puzzle => puzzle.recordings.map(recording => recording.file));
   const { manifestIdentity: _live, ...actual } = collectCorpus(frozenFiles);
-  // DECISION-0013: src/game.js may change for browser-only fixes, so its bytes
+  // DECISION-0015: src/game.js may change for browser-only fixes, so its bytes
   // are not compared live. Its game rules must still equal the frozen version's,
   // and every puzzle's level, board and spawns are still rebuilt live.
   const frozenGame = historicalBytes(ROOT, 'src/game.js', manifest.gameIdentity);

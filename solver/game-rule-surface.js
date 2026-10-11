@@ -1,5 +1,5 @@
 'use strict';
-// DECISION-0013. src/game.js mixes game rules with input, animation and
+// DECISION-0015. src/game.js mixes game rules with input, animation and
 // drawing. Frozen results may let the browser code change, but never the rules.
 // The rule surface is all of src/game.js as JavaScript tokens, less the
 // browser-only declarations named below and two pieces of this PR's

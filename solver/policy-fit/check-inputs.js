@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const {execFileSync}=require('node:child_process');
 const {gameRuleIdentity,historicalVersion}=require('../game-rule-surface');
 const root=path.resolve(__dirname,'../..');
-// DECISION-0013: src/game.js may change for browser-only fixes. Its pinned
+// DECISION-0015: src/game.js may change for browser-only fixes. Its pinned
 // bytes must still exist in history and its game rules must still equal theirs
 // (solver/game-rule-surface.js). A pilot execution receipt is re-derived
 // whenever src/game.js changes, and only its two runtime identity fields move:

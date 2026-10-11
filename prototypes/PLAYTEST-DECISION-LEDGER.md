@@ -1007,3 +1007,10 @@ design result:
   decision entry. Native gameplay/touch QA remains incomplete. The release
   state and fresh verification belong in the [integration record](../docs/game-design/levels/connections-integration.md).
   Task: CONNECTIONS-MAIN-INTEGRATION-1; reviewer: owner.
+
+### PDL-036 — Ship Delivery as the second puzzle family
+
+- **Authorized:** 2026-10-11. Owner, asked "Should Delivery ship as the second puzzle type?": "Yes"; plan approved with "Both fresh run".
+- **Scope:** A finite pack of the three owner-played Delivery boards, unchanged: Pair Drop (PDL-011), Staggered (PDL-019), Landing (PDL-021), in that teaching order. Reached from Level Select at `?mode=delivery`. This narrows PDL-035's "do not integrate Delivery into the app" for Delivery only; its other boundaries stand.
+- **Baseline:** Build-and-harvest (PDL-008). The decision scenes are the ones already named in the prototype READMEs; no new board or claim is added.
+- **Standing:** Built and browser-checked, not owner-played in the app. Ledger: DECISION-0013. Task: DELIVERY-PACK-1; reviewer: owner.
