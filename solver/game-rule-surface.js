@@ -1,35 +1,29 @@
 'use strict';
 // DECISION-0013. src/game.js mixes game rules with input, animation and
 // drawing. Frozen results may let the browser code change, but never the rules.
-// The rule surface is the token stream of every declaration below. Two
-// versions of game.js play by the same rules only if their rule surfaces are
-// equal; a missing declaration is an error, so a rename cannot drop a rule out
-// of the comparison silently.
+// The rule surface is all of src/game.js as JavaScript tokens, less the
+// browser-only declarations named below and two pieces of this PR's
+// bookkeeping. Everything else, including any code added later (a method, a
+// class field, a prototype patch, a helper), is part of the surface. Two
+// versions of game.js play by the same rules only if their surfaces are equal.
+// Edits inside a browser-only declaration are not checked, so those
+// declarations must only draw, lay out, map input or show messages.
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 
-const TOP_LEVEL = [
-  'BLOCKER_TYPES', 'LEVELS', 'Tile', 'makeSeededRng', 'rngForLevel', 'requirePlayableInteger',
-  'playableTileScale', 'validatePlayableLevel', 'createInitialGrid',
+const BROWSER_TOP_LEVEL = ['TILE_COLORS', 'formatTileValue'];
+const BROWSER_METHODS = [
+  'setupCanvas', 'setupEventListeners', 'getGridPos', 'updateUI', 'updateChainIndicator', 'showMultiplierPopup',
+  'showLevelComplete', 'showGameOver', 'showLevelSelect', 'showModal', 'hideModal', 'render', 'drawTile',
+  'roundRect', 'gameLoop', 'updateAuthoringStatus',
 ];
-// handleTileClick and submitChain decide which chains the player can build and
-// submit, and loadLevel and startCustomLevel decide which seed deals the board,
-// so they are rules even though they also touch the page.
-const GAME_METHODS = [
-  'initializeLevel', 'loadLevel', 'startCustomLevel', 'handleTileClick', 'submitChain', 'isAdjacent', 'canExtendChain', 'isValidChain',
-  'calculateChainValue', 'getChainMultiplier', 'executeChain', 'applyGravity', 'spawnNewTiles', 'tickBlockers',
-  'checkBombs', 'checkWinLose', 'hasValidMoves', 'canFormValidChain', 'saveState', 'undo',
-];
-// Game fields read by bound rules but set elsewhere (the constructor): every
-// assignment to them anywhere in class Game is bound.
-const GAME_FIELDS = ['maxHistory'];
 // A beginLevel that only wraps initializeLevel with the bookkeeping below and a
 // dead-board message reads as a direct initializeLevel call. Any other
 // beginLevel is itself part of the surface.
 const PASSTHROUGH = ['beginLevel', 'beginLevel(levelData, rng, authoringCapture = null) { clearTimeout(this.mergeTimer); '
   + "this.mergeTimer = null; this.initializeLevel(levelData, rng, authoringCapture); if (!this.hasValidMoves()) this.showGameOver('No valid moves!'); }",
 'this.beginLevel(', 'this.initializeLevel('];
-// Method modifiers that change what calling the method does.
+// Modifiers that belong to the declaration they precede.
 const MODIFIERS = new Set(['static', 'async', 'get', 'set', '*']);
 // Bookkeeping that lets a level reload cancel a pending merge. It decides
 // whether the callback runs on the board it belongs to, not what the callback does.
@@ -47,8 +41,6 @@ const BEFORE_EXPRESSION = new Set(['return', 'typeof', 'instanceof', 'in', 'of',
 // a semicolon at it mattered, the same text without the break would not parse.
 const RESTRICTED = new Set(['return', 'throw', 'break', 'continue', 'yield', 'async']);
 const LINE_BREAK = new RegExp('[\\n\\r\\u2028\\u2029]');
-const ASSIGNMENT = new Set(['=', '+=', '-=', '*=', '/=', '%=', '**=', '<<=', '>>=', '>>>=', '&=', '|=', '^=',
-  '&&=', '||=', '??=', '++', '--']);
 const OPEN = new Set(['{', '[', '(']);
 const CLOSE = new Set(['}', ']', ')']);
 const IDENTIFIER = new RegExp('[A-Za-z_$#\\u0080-\\uffff][\\w$\\u0080-\\uffff]*', 'y');
@@ -169,8 +161,8 @@ function depths(tokens) {
   return out;
 }
 
-// Every declaration of `name` at nesting depth `level` within [from, to): a
-// second declaration of the same name would replace the first, so both count.
+// [start, end] token ranges of every declaration of `name` at nesting depth
+// `level` within [from, to), modifiers included.
 function declarations(tokens, depth, name, level, from, to) {
   const found = [];
   const t = (i) => tokens[i] && tokens[i].t;
@@ -188,48 +180,8 @@ function declarations(tokens, depth, name, level, from, to) {
     if (t(body) !== '{' && t(body) !== '[') throw new Error(`game rule surface: ${name} has no body`);
     const end = matchClose(tokens, body);
     let start = i;
-    if (level > 0) while (start > from && depth[start - 1] === level && MODIFIERS.has(t(start - 1))) start--;
-    found.push(tokens.slice(start, end + 1));
-    i = end;
-  }
-  if (found.length === 0) throw new Error(`game rule surface: ${name} not found in src/game.js`);
-  return found;
-}
-
-// Every statement in [from, to) that assigns this.<field>, through its `;`.
-function fieldAssignments(tokens, depth, field, from, to) {
-  const found = [];
-  for (let i = from; i < to - 3; i++) {
-    if (tokens[i].t !== 'this' || tokens[i + 1].t !== '.' || tokens[i + 2].t !== field) continue;
-    const before = tokens[i - 1] && tokens[i - 1].t;
-    if (!ASSIGNMENT.has(tokens[i + 3].t) && before !== '++' && before !== '--') continue;
-    let end = i;
-    while (end < to && !(depth[end] === depth[i] && (tokens[end].t === ';' || closes(tokens[end])))) end++;
-    found.push(tokens.slice(i, end));
-    i = end;
-  }
-  if (found.length === 0) throw new Error(`game rule surface: no assignment to this.${field} in class Game`);
-  return found;
-}
-
-// Every statement anywhere in the file that assigns a member called `name`
-// (`this.name = ...`, `Game.prototype.name = ...`, `obj['name'] = ...`): an
-// assignment like that replaces a bound method for the instances it reaches.
-function memberAssignments(tokens, depth, name) {
-  const found = [];
-  const quoted = new Set([`'${name}'`, `"${name}"`, `\`${name}\``]);
-  for (let i = 0; i < tokens.length - 2; i++) {
-    let after;
-    if (tokens[i].t === '.' && tokens[i + 1].t === name) after = i + 2;
-    else if (tokens[i].t === '[' && quoted.has(tokens[i + 1].t) && tokens[i + 2] && tokens[i + 2].t === ']') after = i + 3;
-    else continue;
-    if (!tokens[after] || !ASSIGNMENT.has(tokens[after].t)) continue;
-    let start = i;
-    while (start > 0 && depth[start - 1] >= depth[i]
-      && !(depth[start - 1] === depth[i] && [';', '{', '}'].includes(tokens[start - 1].t))) start--;
-    let end = after;
-    while (end < tokens.length && !(depth[end] === depth[i] && (tokens[end].t === ';' || closes(tokens[end])))) end++;
-    found.push(tokens.slice(start, end));
+    while (start > from && depth[start - 1] === level && MODIFIERS.has(t(start - 1))) start--;
+    found.push([start, end]);
     i = end;
   }
   return found;
@@ -247,21 +199,9 @@ function render(tokens) {
   return out;
 }
 
-// Level intro text is shown to the player and never read by a rule.
-function withoutIntroCopy(tokens) {
-  return tokens.filter((token, i) => {
-    for (let k = 0; k < 4; k++) {
-      const at = i - k;
-      if (tokens[at] && tokens[at].t === ',' && tokens[at + 1]?.t === 'intro' && tokens[at + 2]?.t === ':'
-        && tokens[at + 3]?.kind === 'string') return false;
-    }
-    return true;
-  });
-}
-
-function withoutBookkeeping(text) {
+function replaceAll(text, pairs) {
   let out = ` ${text} `;
-  for (const [from, to] of BOOKKEEPING) out = out.split(` ${render(tokenize(from))} `).join(` ${render(tokenize(to))} `);
+  for (const [from, to] of pairs) out = out.split(` ${render(tokenize(from))} `).join(` ${render(tokenize(to))} `);
   return out.slice(1, -1);
 }
 
@@ -269,36 +209,42 @@ function gameRuleSurface(source) {
   const text = Buffer.isBuffer(source) ? source.toString('utf8') : source;
   const tokens = tokenize(text);
   const depth = depths(tokens);
-  const parts = [];
-  for (const name of TOP_LEVEL) {
-    for (const part of declarations(tokens, depth, name, 0, 0, tokens.length)) {
-      parts.push(render(name === 'LEVELS' ? withoutIntroCopy(part) : part));
+  const drop = new Set();
+  const dropRange = ([start, end]) => { for (let i = start; i <= end; i++) drop.add(i); };
+
+  for (const name of BROWSER_TOP_LEVEL) {
+    declarations(tokens, depth, name, 0, 0, tokens.length).forEach(dropRange);
+    // Its shorthand entry in an object literal, such as module.exports.
+    tokens.forEach((token, i) => {
+      if (token.t !== name || drop.has(i) || !['{', ','].includes(tokens[i - 1]?.t) || ![',', '}'].includes(tokens[i + 1]?.t)) return;
+      drop.add(i);
+      if (tokens[i + 1].t === ',') drop.add(i + 1);
+    });
+  }
+
+  // Level intro text is shown to the player and never read by a rule.
+  for (const [start, end] of declarations(tokens, depth, 'LEVELS', 0, 0, tokens.length)) {
+    for (let i = start; i < end - 3; i++) {
+      if (tokens[i].t === ',' && tokens[i + 1].t === 'intro' && tokens[i + 2].t === ':' && tokens[i + 3].kind === 'string') {
+        [i, i + 1, i + 2, i + 3].forEach((k) => drop.add(k));
+      }
     }
   }
+
   const games = declarations(tokens, depth, 'Game', 0, 0, tokens.length);
   if (games.length !== 1) throw new Error('game rule surface: expected one class Game in src/game.js');
-  const start = tokens.indexOf(games[0][0]);
-  const open = start + games[0].findIndex((token) => token.t === '{');
-  const end = matchClose(tokens, open);
+  let open = games[0][0];
+  while (tokens[open].t !== '{') open++;
+  const end = games[0][1];
+  for (const name of BROWSER_METHODS) declarations(tokens, depth, name, depth[open] + 1, open + 1, end).forEach(dropRange);
   const [wrapper, wrapperText, wrapperCall, directCall] = PASSTHROUGH;
-  let wrappers = [];
-  try { wrappers = declarations(tokens, depth, wrapper, depth[open] + 1, open + 1, end).map(render); } catch { /* absent */ }
-  const passthrough = wrappers.length === 1 && wrappers[0] === render(tokenize(wrapperText));
-  if (!passthrough) parts.push(...wrappers);
-  for (const name of GAME_METHODS) {
-    for (const part of declarations(tokens, depth, name, depth[open] + 1, open + 1, end)) {
-      let text = withoutBookkeeping(render(part));
-      if (passthrough) text = ` ${text} `.split(` ${render(tokenize(wrapperCall))} `).join(` ${render(tokenize(directCall))} `).slice(1, -1);
-      parts.push(text);
-    }
-  }
-  for (const field of GAME_FIELDS) {
-    for (const part of fieldAssignments(tokens, depth, field, open + 1, end)) parts.push(render(part));
-  }
-  for (const name of [...GAME_METHODS, wrapper]) {
-    for (const part of memberAssignments(tokens, depth, name)) parts.push(render(part));
-  }
-  return parts.join('\n');
+  const wrappers = declarations(tokens, depth, wrapper, depth[open] + 1, open + 1, end);
+  const passthrough = wrappers.length === 1
+    && render(tokens.slice(wrappers[0][0], wrappers[0][1] + 1)) === render(tokenize(wrapperText));
+  if (passthrough) dropRange(wrappers[0]);
+
+  const surface = replaceAll(render(tokens.filter((_, i) => !drop.has(i))), BOOKKEEPING);
+  return passthrough ? replaceAll(surface, [[wrapperCall, directCall]]) : surface;
 }
 
 function gameRuleIdentity(source) {
@@ -322,4 +268,4 @@ function historicalBytes(root, file, hash) {
   return version && version.bytes;
 }
 
-module.exports = { TOP_LEVEL, GAME_METHODS, GAME_FIELDS, tokenize, gameRuleSurface, gameRuleIdentity, historicalVersion, historicalBytes };
+module.exports = { BROWSER_TOP_LEVEL, BROWSER_METHODS, tokenize, gameRuleSurface, gameRuleIdentity, historicalVersion, historicalBytes };
