@@ -1162,9 +1162,14 @@ design result:
   - Through the Gate: KEEP the idea; REVISE the board (gate opens on 48 or
     more, wider rooms, show upcoming tiles, enough chains at the start).
   - Rust: REVISE the target to a power of two.
-- **Standing rules from this session:** refills are one fixed rule on normal
-  levels; only an announced boss may change them. Spawns are powers of two
-  (2–64); other number families appear only as placed, colored tiles.
+- **Owner-stated rules from this session:** refills stay the same on normal
+  levels ("one of the few things that is steady with the game"); a boss level
+  may change them ("the boss changes the refill"). The spawn he asked for in
+  PDL-038 is powers of two, "2,4,8,16,32,64".
+- **Working default (inferred, not owner-confirmed):** other number families
+  appear only as tiles placed on the starting board, never from refills. This
+  follows from the two rules above and from the owner's "there ya go!" to
+  protected shared tiles on board 3, but he did not state it as a rule.
 - **Limits:** One player, one session, mostly first attempts. Board 5 has no
   run. Boards 2, 6 and 7 were left, so their runs show where he stopped, not
   whether the boards are winnable for him. Board 7's second run is a retry of

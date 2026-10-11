@@ -1,7 +1,7 @@
 ---
 id: BL-0029
 title: Owner plays the kinds sampler
-status: done
+status: active
 milestone: level-archetypes
 depends_on: [BL-0028]
 updated: 2026-10-11
@@ -37,10 +37,10 @@ PDL-039, REVISE (per-board decisions). Before that, PDL-038, REVISE. Screening f
 
 ## Next action
 
-None. Follow-up: a second sampler version per PDL-039.
+The owner plays See It Coming, the one board without a run or verdict, in the second sampler version (PDL-039).
 
 ## History
 
 - 2026-10-11 — Created after PDL-038. Eight boards published to a new private
   Artifact; owner play pending.
-- 2026-10-11 — Owner played all boards except See It Coming; recorded as PDL-039.
+- 2026-10-11 — Owner played all boards except See It Coming; recorded as PDL-039. Stays active until See It Coming has a verdict.
