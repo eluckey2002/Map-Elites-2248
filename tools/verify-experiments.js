@@ -439,8 +439,8 @@ function assessClosedEvidenceImmutability(result, protocol, opened, overrides = 
 const FROZEN_TREE_POLICY = {
   'RESULT-0047': {
     decision: 'DECISION-0013',
-    reason: 'Its recomputation hashes src/game.js byte for byte, so any browser-only fix to the game (input, display) made the live-tree recomputation fail.',
-    live_files: ['tools/verify-experiments.js', 'src/game.js'],
+    reason: 'Its recomputation hashes src/game.js byte for byte, so any browser-only fix to the game (input, display) made the live-tree recomputation fail; solver/oracle/corpus.js now records src/game.js instead of comparing it live.',
+    live_files: ['tools/verify-experiments.js', 'src/game.js', 'solver/oracle/corpus.js'],
   },
   'RESULT-0049': {
     decision: 'DECISION-0013',

@@ -295,14 +295,18 @@ test('frozen-tree recompute entries must cite a real decision and a reason', () 
   assert.match(frozenTreeEntryProblems('RESULT-0082', null, ledger)[0], /not an object/);
 });
 
-test('LIVE: RESULT-0047 and RESULT-0049 exempt only the gate and src/game.js (DECISION-0013)', () => {
+test('LIVE: RESULT-0047 and RESULT-0049 exempt only the paths DECISION-0013 names', () => {
   const { FROZEN_TREE_POLICY, frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
   const ledger = fsx.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
+  const expectedLive = {
+    'RESULT-0047': ['tools/verify-experiments.js', 'src/game.js', 'solver/oracle/corpus.js'],
+    'RESULT-0049': ['tools/verify-experiments.js', 'src/game.js'],
+  };
   for (const id of ['RESULT-0047', 'RESULT-0049']) {
     const entry = FROZEN_TREE_POLICY[id];
     assert.deepEqual(
       { append_only: entry.append_only, live_files: entry.live_files, extra_immutable: entry.extra_immutable, decision: entry.decision },
-      { append_only: undefined, live_files: ['tools/verify-experiments.js', 'src/game.js'], extra_immutable: undefined, decision: 'DECISION-0013' },
+      { append_only: undefined, live_files: expectedLive[id], extra_immutable: undefined, decision: 'DECISION-0013' },
     );
     assert.deepEqual(frozenTreeEntryProblems(id, entry, ledger), [], `${id} must cite a decision naming it and every exempt path`);
   }

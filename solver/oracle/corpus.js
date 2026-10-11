@@ -72,8 +72,13 @@ function loadCorpus(file = DEFAULT_MANIFEST, expectedIdentity = FROZEN_MANIFEST_
     throw new Error('frozen corpus identity mismatch');
   }
   const frozenFiles = manifest.puzzles.flatMap(puzzle => puzzle.recordings.map(recording => recording.file));
-  const actual = collectCorpus(frozenFiles);
-  if (actual.manifestIdentity !== expectedIdentity) throw new Error('live corpus or rules differ from the frozen manifest');
+  const { manifestIdentity: _live, ...actual } = collectCorpus(frozenFiles);
+  // DECISION-0013: the browser file src/game.js is recorded, not compared live.
+  // Every puzzle's level, board and spawns are still rebuilt from the live rules
+  // and engine, so a rule change is still refused; a browser-only fix is not.
+  if (valueIdentity({ ...actual, gameIdentity: manifest.gameIdentity }) !== expectedIdentity) {
+    throw new Error('live corpus or rules differ from the frozen manifest');
+  }
   return manifest;
 }
 
