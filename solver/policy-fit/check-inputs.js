@@ -9,7 +9,7 @@ const root=path.resolve(__dirname,'../..');
 // whenever src/game.js changes, and only its two runtime identity fields move:
 // every other field must still match the pinned bytes exactly, and the pilot's
 // own qualify.js must verify the new receipt (self-hash, runtime bundle, replay).
-// That qualify.js must be byte-identical to the one at the commit holding the
+// That qualify.js must be byte-identical to the one at the commit that first held the
 // pinned receipt, so weakening the verifier cannot admit a receipt.
 const LIVE_GAME='src/game.js';
 const REDERIVED_RECEIPT=/^pilots\/[A-Za-z0-9-]+\/execution-receipt\.json$/;

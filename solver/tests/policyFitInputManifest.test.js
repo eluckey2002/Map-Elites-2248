@@ -33,3 +33,21 @@ test('a re-derived pilot receipt must carry identities its own pinned pilot veri
  assert.ok(!rederivedReceiptVerifies(input,live,commit,Buffer.concat([qualifier,Buffer.from('\nmodule.exports.verifyExecution=()=>({status:\'PASS\'});\n')])));
  assert.ok(!rederivedReceiptVerifies(input,live,'04c5e5f5^'),'a pinned commit without the verifier is not trusted');
 });
+test('a later commit that restores pinned bytes beside a changed verifier cannot stand in for the original',()=>{
+ const os=require('node:os'),{execFileSync}=require('node:child_process'),crypto=require('node:crypto');
+ const repo=fs.mkdtempSync(path.join(os.tmpdir(),'pinned-history-'));
+ const git=(...args)=>execFileSync('git',['-c','user.name=t','-c','user.email=t@t','-c','commit.gpgsign=false',...args],{cwd:repo,encoding:'utf8'}).trim();
+ try{
+  git('init','-q');
+  fs.mkdirSync(path.join(repo,'p'));
+  const receipt='{"score":1}';
+  fs.writeFileSync(path.join(repo,'p/receipt.json'),receipt); fs.writeFileSync(path.join(repo,'p/qualify.js'),'strict');
+  git('add','.'); git('commit','-q','-m','original'); const original=git('rev-parse','HEAD');
+  fs.rmSync(path.join(repo,'p/receipt.json')); fs.writeFileSync(path.join(repo,'p/qualify.js'),'weak');
+  git('add','-A'); git('commit','-q','-m','move'); 
+  fs.writeFileSync(path.join(repo,'p/receipt.json'),receipt);
+  git('add','.'); git('commit','-q','-m','restore beside weak verifier');
+  const hash=crypto.createHash('sha256').update(receipt).digest('hex');
+  assert.equal(historicalVersion(repo,'p/receipt.json',hash).commit,original);
+ }finally{fs.rmSync(repo,{recursive:true,force:true});}
+});

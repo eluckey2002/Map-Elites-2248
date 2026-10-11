@@ -40,6 +40,8 @@ const MEMBER_ESCAPES = new Set(['prototype', '__proto__', 'constructor', 'define
 const WINDOW_MEMBERS = new Set(['innerWidth', 'innerHeight', 'devicePixelRatio', 'addEventListener', 'removeEventListener']);
 const ARRAY_MUTATORS = new Set(['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse', 'fill', 'copyWithin',
   'set', 'add', 'delete', 'clear']);
+// Keywords that can stand before `(...) {` without naming a method.
+const KEYWORDS = new Set(['if', 'for', 'while', 'switch', 'catch', 'function', 'with', 'return', 'typeof', 'await']);
 const WRITES = new Set(['=', '+=', '-=', '*=', '/=', '%=', '**=', '<<=', '>>=', '>>>=', '&=', '|=', '^=', '&&=',
   '||=', '??=', '++', '--']);
 // A beginLevel that only wraps initializeLevel with the bookkeeping below and a
@@ -223,12 +225,12 @@ function matchOpen(tokens, close) {
 }
 
 // Names of every method of every class, and of every top-level function,
-// outside the browser-only declarations.
+// outside the browser-only declarations. Browser-only code may not name them.
 function ruleNames(tokens, depth) {
   const methods = new Set(ARRAY_MUTATORS);
   const functions = new Set();
   tokens.forEach((token, i) => {
-    if (token.kind !== 'identifier' || tokens[i + 1]?.t !== '(') return;
+    if (token.kind !== 'identifier' || tokens[i + 1]?.t !== '(' || KEYWORDS.has(token.t)) return;
     if (depth[i] === 0 && tokens[i - 1]?.t === 'function') functions.add(token.t);
     if (depth[i] > 0 && tokens[i - 1]?.t !== '.' && tokens[matchClose(tokens, i + 1) + 1]?.t === '{') methods.add(token.t);
   });
@@ -245,6 +247,8 @@ function browserOnly(tokens, [start, end], name, rules) {
   const t = (i) => tokens[i] && tokens[i].t;
   const id = (i) => tokens[i] && tokens[i].kind === 'identifier';
   const actions = new Set(INPUT_ACTIONS[name] || []);
+  const named = (word) => MEMBER_ESCAPES.has(word) || GLOBAL_ESCAPES.has(word) || ['window', 'document'].includes(word)
+    || (rules.methods.has(word) && !ARRAY_MUTATORS.has(word)) || rules.functions.has(word);
   const locals = new Map(); // name -> true when a const holding a page or canvas object
   const isDocument = (i) => t(i) === 'document' && !locals.has('document');
   const page = (i) => isDocument(i) || (t(i) === 'this' && t(i + 1) === '.' && BROWSER_STATE.has(t(i + 2)))
@@ -259,26 +263,30 @@ function browserOnly(tokens, [start, end], name, rules) {
       for (let k = i + 1; k < matchClose(tokens, i); k++) if (id(k) && t(k - 1) !== '=') locals.set(t(k), false);
     }
   }
-  // Root of the member chain ending at `i`, and whether the chain has members.
+  // Root of the member chain ending at `i`, whether the chain has members,
+  // and whether any of them is computed (`a[b]`).
   const rootBefore = (i) => {
     let k = i;
     let members = false;
+    let computed = false;
     for (;;) {
-      if (t(k) === ']' || t(k) === ')') { k = matchOpen(tokens, k) - 1; members = true; continue; }
+      if (t(k) === ']' || t(k) === ')') { computed ||= t(k) === ']'; k = matchOpen(tokens, k) - 1; members = true; continue; }
       if (!id(k)) return null;
       if (t(k - 1) === '.' || t(k - 1) === '?.') { k -= 2; members = true; continue; }
-      return { root: k, members };
+      return { root: k, members, computed };
     }
   };
   const writable = (target) => {
     if (!target) return false;
-    const { root, members } = target;
+    const { root, members, computed } = target;
     if (t(root) === 'this') return false; // writes to BROWSER_STATE are allowed below
-    if (members) return isDocument(root) || locals.get(t(root)) === true;
+    if (members) return !computed && (isDocument(root) || locals.get(t(root)) === true);
     return locals.has(t(root));
   };
   for (let i = start; i <= end; i++) {
     const token = tokens[i];
+    // A name spelled as a string, as in document['defaultView'], counts as that name.
+    if (token.kind === 'string' && named(token.t.slice(1, -1))) return false;
     if (token.kind === 'identifier' && (MEMBER_ESCAPES.has(token.t)
       || (GLOBAL_ESCAPES.has(token.t) && t(i - 1) !== '.' && t(i - 1) !== '?.'))) return false;
     if (token.t === 'window' && !(t(i + 1) === '.' && WINDOW_MEMBERS.has(t(i + 2)))) return false;
@@ -286,7 +294,9 @@ function browserOnly(tokens, [start, end], name, rules) {
       if (t(i + 1) !== '.' || !id(i + 2)) return false;
       const member = t(i + 2);
       if (BROWSER_STATE.has(member)) continue;
-      if (t(i + 3) === '(' && !(BROWSER_METHODS.includes(member) || READERS.has(member) || actions.has(member))) return false;
+      // A rule method named at all, called or not (`?.()`, `.call`, a callback), must be allowed here.
+      const allowed = BROWSER_METHODS.includes(member) || READERS.has(member) || actions.has(member);
+      if (!allowed && (rules.methods.has(member) || ['(', '?.'].includes(t(i + 3)) || ['string', 'template-head'].includes(tokens[i + 3]?.kind))) return false;
       if (WRITES.has(t(i + 3)) || ['++', '--', 'delete'].includes(t(i - 1))) return false;
     }
     if (WRITES.has(token.t) && token.kind === 'punctuator') {
@@ -302,7 +312,7 @@ function browserOnly(tokens, [start, end], name, rules) {
       const target = rootBefore(k);
       if (!(target && t(target.root) === 'this' && BROWSER_STATE.has(t(target.root + 2))) && !writable(target)) return false;
     }
-    if (token.kind === 'identifier' && t(i + 1) === '(') {
+    if (token.kind === 'identifier') {
       if (t(i - 1) === '.' || t(i - 1) === '?.') {
         const target = rootBefore(i);
         const direct = target && t(target.root) === 'this' && target.root + 2 === i; // checked above
@@ -399,9 +409,12 @@ function gameRuleIdentity(source) {
   return crypto.createHash('sha256').update(gameRuleSurface(source)).digest('hex');
 }
 
-// The newest commit whose `file` hashed to `hash`, with those bytes, or null.
+// The oldest commit whose `file` hashed to `hash`, with those bytes, or null.
+// The oldest one is where those bytes were first committed; a later commit
+// that restores the same bytes, perhaps beside a changed verifier, cannot
+// take its place.
 function historicalVersion(root, file, hash) {
-  const commits = execFileSync('git', ['log', '--format=%H', '--', file], { cwd: root, encoding: 'utf8' })
+  const commits = execFileSync('git', ['log', '--reverse', '--format=%H', '--', file], { cwd: root, encoding: 'utf8' })
     .trim().split('\n').filter(Boolean);
   for (const commit of commits) {
     let bytes;
