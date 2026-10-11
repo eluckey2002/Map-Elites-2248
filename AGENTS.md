@@ -146,10 +146,12 @@ The rules below are not enforced by any mechanism. The agent that opens a
 pull request runs its whole lifecycle, merge included, without asking the
 owner for approval (owner decision, 2026-10-11).
 
-1. **Check open pull requests before starting.** Run `gh pr list` and read the
-   titles of anything touching the same files. On 2026-09-26, PR #41 and PR #46
-   each built a separate generator for `LEDGER-INDEX.md`. Extend or coordinate
-   with the open work instead of duplicating it.
+1. **Check open pull requests before starting.** Run
+   `gh pr list --limit 100 --json number,title,files` and look for any that
+   touch the files you plan to change; a title alone can hide the overlap.
+   On 2026-09-26, PR #41 and PR #46 each built a separate generator for
+   `LEDGER-INDEX.md`. Extend or coordinate with the open work instead of
+   duplicating it.
 2. **One pull request per ask, with related fixes bundled.** Put related fixes
    from one request in a single pull request instead of several small ones.
    Fill in `.github/pull_request_template.md`.
@@ -160,7 +162,8 @@ owner for approval (owner decision, 2026-10-11).
    bug fixes and grew seventeen gate-hardening commits chasing Codex findings.
 4. **Do not merge until the Codex review has completed.** Codex reviews every
    pull request when it opens and either leaves inline findings or reacts 👍.
-   Wait for one or the other. On 2026-09-03 PR #3 was merged thirty seconds
+   Wait for one or the other. Codex does not review a draft: mark the draft
+   ready, or comment `@codex review`, before you wait. On 2026-09-03 PR #3 was merged thirty seconds
    before its review landed; the finding was correct and `main` carried a
    mislabelled record until PR #4.
    Codex does not re-review later pushes on its own: after pushing fixes,
@@ -168,9 +171,10 @@ owner for approval (owner decision, 2026-10-11).
 5. **Fix by severity, and stop after three Codex rounds.** Fix P0 and P1
    findings and any real bug a player or the ledger would see. Answer P2 and
    lower findings with a one-line reply and resolve the thread without code
-   unless the fix is trivial and in scope. A round is one `@codex review`
-   verdict. After the third round, request no more reviews: fix what is still
-   P0/P1 or a real bug, list everything else under "Follow-ups", and merge.
+   unless the fix is trivial and in scope. A round is one Codex verdict.
+   After the third round, fix only what is still P0/P1 or a real bug and list
+   everything else under "Follow-ups". If that changed the head, request one
+   final review of it and act only on P0/P1 findings or real bugs; then merge.
 6. **The agent that opened the pull request owns it to the end.** Address
    every inline finding with a fix commit or a written reply on the thread,
    resolve the thread, then merge it yourself. Do not ask Codex to push fixes
@@ -180,8 +184,7 @@ owner for approval (owner decision, 2026-10-11).
    `experiment gate` check is green; the full test suite fails nothing that
    passes on `main` (the documented deliberate failures in "Before you edit
    anything", and anything already red on `main`, do not block, but say which
-   in the pull request);
-   Codex has finished per rules 4 and 5 and every review thread is resolved;
+   in the pull request); Codex has finished per rules 4 and 5 and every review thread is resolved;
    there is no merge conflict. Then merge it, remove its worktree, and tell
    the owner in one line that it merged.
 8. **Do not leave drafts idle.** A pull request with no commits or comments
