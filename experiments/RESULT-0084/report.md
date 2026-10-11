@@ -131,13 +131,18 @@ Any owner-versus-bot comparison is a later record and cannot change this one.
 
 ## Post-run audit
 
-Codex review on PR #72 found two checks the frozen verifier lacks: it does not
-compare the run parameters with the registered command, and it does not bind
-each evaluated candidate to the shape it sits beside. The verifier is frozen
-into this result, so the two checks live in `experiments/RESULT-0084/audit.js`
-(tested by `solver/tests/result0084Audit.test.js`). It passes on this artifact:
-all 7 registered parameters match, and all 24 candidates and receipts carry
-their shape's identity. Neither finding changes any number above.
+Codex review on PR #72 found four checks the frozen verifier lacks. It does
+not compare the run parameters with the registered command. It does not bind
+each evaluated candidate to the shape it sits beside. It does not hold breadth
+routes to the registered one-move landmark bound. It does not re-check a board
+marked ineligible whose receipt passes the authoring verifier. The verifier is
+frozen into this result, so the four checks live in
+`experiments/RESULT-0084/audit.js` (tested by
+`solver/tests/result0084Audit.test.js`). It passes on this artifact: all 8
+registered parameters match, all 24 candidates and receipts carry their
+shape's identity, every breadth route is one move, and all 3 excluded boards
+fail the authoring verifier with their recorded reason (holdout lockouts).
+None of the findings changes any number above.
 
 ## Reverify
 

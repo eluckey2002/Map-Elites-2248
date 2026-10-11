@@ -8,7 +8,7 @@ DECISION-0013 and PDL-036 record the owner's request to ship Delivery as the sec
 
 ## Board MAP-Elites, fresh run — 2026-10-11
 
-The family-board search is back on `main` as a fresh run rather than a port of the dropped RESULT-0044..0047. The owner chose the axes: successful plan breadth across, baseline regret (moves the shipped bot gives away against the cheapest replayed plan) up. [RESULT-0084](EVIDENCE_LEDGER.md#result-0084--fresh-board-map-elites-fills-12-cells-on-breadth--baseline-regret) closed `SUPPORTED_AT_BOUNDED_SCOPE` with 12 cells, 5 bins on each axis and a passing verifier; regret and harvest correlate at ρ 0.63. It is provisional and ships no board. Next is the owner playing up to five elites through `tools/board-elite-server.js` ([report](experiments/RESULT-0084/report.md) lists them).
+The family-board search is back on `main` as a fresh run rather than a port of the dropped RESULT-0044..0047. The owner chose the axes: successful plan breadth across, baseline regret (moves the shipped bot gives away against the cheapest replayed plan) up. [RESULT-0084](EVIDENCE_LEDGER.md#result-0084--fresh-board-map-elites-fills-12-cells-on-breadth--baseline-regret) is provisional and ships no board; read its standing and measurements in the ledger. Next is the owner playing up to five elites through `tools/board-elite-server.js` ([report](experiments/RESULT-0084/report.md) lists them).
 
 ## Selectable Nemesis opponents — 2026-10-04
 

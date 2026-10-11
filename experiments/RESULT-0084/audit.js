@@ -3,16 +3,20 @@
 //
 // solver/verify-board-map-elites.js is frozen into this result, so it cannot
 // be edited without breaking the result's own source closure. This audit adds
-// the two checks it lacks, against the same artifact:
+// the checks it lacks, against the same artifact:
 //   1. the artifact's run parameters are exactly the registered command's;
-//   2. every evaluated candidate was authored from the shape it sits beside.
+//   2. every evaluated candidate was authored from the shape it sits beside;
+//   3. every breadth route stays within the registered landmark move bound;
+//   4. every excluded board really fails the authoring verifier, with the
+//      recorded reason (the frozen verifier skips a passing board marked
+//      ineligible).
 //
 //   node experiments/RESULT-0084/audit.js [archive.json]
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
-const { identity } = require('../../solver/level-author');
+const { identity, verifyCandidate } = require('../../solver/level-author');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const PROTOCOL = 'experiments/RESULT-0084/protocol.md';
@@ -26,6 +30,10 @@ const REGISTERED = Object.freeze({
   descriptorSeeds: [71000000, 71000001, 71000002],
   oracleMaxExpandedStates: 600,
   oracleBudgetMs: 30000,
+  landmarkOptions: {
+    mode: 'bounded', maxNodes: 1, beamWidth: 1, actionsPerState: 32,
+    pathWidth: 3, maxPathStates: 100000, maxResults: 128, maxMoves: 1,
+  },
 });
 
 function registeredProtocolText() {
@@ -50,9 +58,37 @@ function auditShapeBinding(artifact) {
   }
 }
 
+function auditRouteBounds(artifact) {
+  const { maxMoves } = REGISTERED.landmarkOptions;
+  for (const [index, evaluation] of artifact.evaluations.entries()) {
+    for (const row of evaluation.descriptors?.breadth?.rows || []) {
+      for (const route of row.routes) {
+        assert.equal(route.chains.length, route.moves, `evaluation ${index} seed ${row.seed} route move count differs from its chains`);
+        assert.ok(route.moves <= maxMoves, `evaluation ${index} seed ${row.seed} route exceeds the registered ${maxMoves}-move bound`);
+      }
+    }
+  }
+}
+
+function auditExclusions(artifact, verify = verifyCandidate) {
+  for (const [index, evaluation] of artifact.evaluations.entries()) {
+    if (evaluation.eligible) continue;
+    let failure = null;
+    try {
+      verify({ schemaVersion: 1, candidates: [evaluation.candidate] }, evaluation.receipt);
+    } catch (error) {
+      failure = error.message;
+    }
+    assert.ok(failure, `evaluation ${index} is excluded but passes the authoring verifier`);
+    assert.equal(evaluation.exclusion, `authoring verifier: ${failure}`, `evaluation ${index} exclusion reason differs from the verifier`);
+  }
+}
+
 function audit(artifact, options = {}) {
   auditParameters(artifact, options.protocolText);
   auditShapeBinding(artifact);
+  auditRouteBounds(artifact);
+  auditExclusions(artifact);
   return { verdict: 'PASS', artifactIdentity: artifact.artifactIdentity, evaluations: artifact.evaluations.length };
 }
 
@@ -66,4 +102,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { REGISTERED, REGISTERED_COMMAND, audit, auditParameters, auditShapeBinding };
+module.exports = { REGISTERED, REGISTERED_COMMAND, audit, auditExclusions, auditParameters, auditRouteBounds, auditShapeBinding };
