@@ -1,10 +1,10 @@
 ---
 id: BL-0030
 title: MAP-Elites search over Shared Material boards
-status: proposed
+status: in_progress
 milestone: level-archetypes
 depends_on: [BL-0029]
-updated: 2026-10-11
+updated: 2026-10-12
 ---
 
 # BL-0030 — MAP-Elites search over Shared Material boards
@@ -36,13 +36,14 @@ varies boards inside one kind along axes a player can count:
 
 ## Current evidence
 
-PDL-039: the owner kept the Shared Material kind ("that creates a decision!") but beat the v1 board by clearing tiles and letting refills rebuild the shared tile. The kind needs shared tiles refills cannot make.
+PDL-039: the owner kept the Shared Material kind ("that creates a decision!") but beat the v1 board by clearing tiles and letting refills rebuild the shared tile. The kind needs shared tiles refills cannot make. The registered search has run: see RESULT-0085 in the evidence ledger for what it filled and its limits.
 
 ## Next action
 
-Rebuild the Shared Material board with protected shared tiles in the second sampler version; register the search once the owner confirms that board plays as a decision.
+The owner plays a few elites from different cells of RESULT-0085 and a PDL entry records the reaction. Search fixes found in review (listed in the RESULT-0085 report's Limits) wait for a new instrument version and a new record.
 
 ## History
 
 - 2026-10-11 — Proposed from the owner's remark in the kinds sampler thread.
 - 2026-10-11 — Updated after PDL-039.
+- 2026-10-12 — RESULT-0085 ran the registered search; see the ledger record and `experiments/RESULT-0085/report.md` for what it filled. Owner play of a few elites is next.

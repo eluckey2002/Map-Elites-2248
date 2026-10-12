@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: an order with a spot counts only when its chain ends on the spot
+ok 1 - an order with a spot counts only when its chain ends on the spot
+  ---
+  duration_ms: 5.375312
+  type: 'test'
+  ...
+# Subtest: oneAtATime boards refuse an order out of turn
+ok 2 - oneAtATime boards refuse an order out of turn
+  ---
+  duration_ms: 0.648056
+  type: 'test'
+  ...
+# Subtest: stone stops gravity and diagonal squeezes; no-refill boards do not refill; forecast fills columns from their queue
+ok 3 - stone stops gravity and diagonal squeezes; no-refill boards do not refill; forecast fills columns from their queue
+  ---
+  duration_ms: 3.335017
+  type: 'test'
+  ...
+# Subtest: no rust anywhere: Rust is retired (PDL-040), boards that ask for rust or v1 feeds are refused
+ok 4 - no rust anywhere: Rust is retired (PDL-040), boards that ask for rust or v1 feeds are refused
+  ---
+  duration_ms: 7.101016
+  type: 'test'
+  ...
+# Subtest: the board list is the eight v3 boards in order
+ok 5 - the board list is the eight v3 boards in order
+  ---
+  duration_ms: 0.219009
+  type: 'test'
+  ...
+# Subtest: v4: every board that refills shows its Next tiles (per-column draws); only the Drought does not
+ok 6 - v4: every board that refills shows its Next tiles (per-column draws); only the Drought does not
+  ---
+  duration_ms: 0.944535
+  type: 'test'
+  ...
+# Subtest: one refill rule: every normal board refills from 2..64; only the announced boss differs
+ok 7 - one refill rule: every normal board refills from 2..64; only the announced boss differs
+  ---
+  duration_ms: 0.356426
+  type: 'test'
+  ...
+# Subtest: numbers players compute are powers of two (except green tiles placed on Shared Material); no leave-N goals
+ok 8 - numbers players compute are powers of two (except green tiles placed on Shared Material); no leave-N goals
+  ---
+  duration_ms: 0.557853
+  type: 'test'
+  ...
+# Subtest: refills never produce a value outside spawnValues (first 200 refills per board)
+ok 9 - refills never produce a value outside spawnValues (first 200 refills per board)
+  ---
+  duration_ms: 343.331714
+  type: 'test'
+  ...
+# Subtest: chainsWithSum finds exactly the legal chains with that sum (checked against brute force on every board)
+ok 10 - chainsWithSum finds exactly the legal chains with that sum (checked against brute force on every board)
+  ---
+  duration_ms: 765.199284
+  type: 'test'
+  ...
+# Subtest: exhaustive short-win check finds a planted 2-move win and a 3-move win made of long chains
+ok 11 - exhaustive short-win check finds a planted 2-move win and a 3-move win made of long chains
+  ---
+  duration_ms: 3.192022
+  type: 'test'
+  ...
+# Subtest: each board: no win in 3 moves or fewer (exhaustive), budget = best known line + 6 (floor 3 per order + 4), at least 60 opening chains, its twist binds
+ok 12 - each board: no win in 3 moves or fewer (exhaustive), budget = best known line + 6 (floor 3 per order + 4), at least 60 opening chains, its twist binds
+  ---
+  duration_ms: 2167700.299283
+  type: 'test'
+  ...
+# Subtest: ordinary-player baseline (game, not brain teaser): reported on every board, and it wins at the budget on Feed the Next and Three Separate
+ok 13 - ordinary-player baseline (game, not brain teaser): reported on every board, and it wins at the budget on Feed the Next and Three Separate
+  ---
+  duration_ms: 13.006907
+  type: 'test'
+  ...
+# Subtest: parts (Feed the Next): an order makes a part; later orders must include a part; a fill that would make a third part is refused
+ok 14 - parts (Feed the Next): an order makes a part; later orders must include a part; a fill that would make a third part is refused
+  ---
+  duration_ms: 0.597853
+  type: 'test'
+  ...
+# Subtest: any-order parts (Advanced): orders fill in any order, every fill makes a part, the cap refuses a third, and an order can need two parts
+ok 15 - any-order parts (Advanced): orders fill in any order, every fill makes a part, the cap refuses a third, and an order can need two parts
+  ---
+  duration_ms: 0.260408
+  type: 'test'
+  ...
+# Subtest: Feed the Next — Advanced (v3, proposed rule): four orders in any order, cap of two parts, D needs two parts; the cap bites
+ok 16 - Feed the Next — Advanced (v3, proposed rule): four orders in any order, cap of two parts, D needs two parts; the cap bites
+  ---
+  duration_ms: 81222.457745
+  type: 'test'
+  ...
+# Subtest: See It Coming: the forecast is shown, and a forecast-blind player loses where the forecast-aware witness wins
+ok 17 - See It Coming: the forecast is shown, and a forecast-blind player loses where the forecast-aware witness wins
+  ---
+  duration_ms: 431005.486884
+  type: 'test'
+  ...
+# Subtest: Make It Here: one order on screen at a time, two short rule sentences, no hint line
+ok 18 - Make It Here: one order on screen at a time, two short rule sentences, no hint line
+  ---
+  duration_ms: 0.352037
+  type: 'test'
+  ...
+# Subtest: Shared Material: both orders want the same green tile, which is placed only, can never be made, and is scarce
+ok 19 - Shared Material: both orders want the same green tile, which is placed only, can never be made, and is scarce
+  ---
+  duration_ms: 0.224283
+  type: 'test'
+  ...
+# Subtest: The Drought is the only boss: announced, no refills, one power-of-two target
+ok 20 - The Drought is the only boss: announced, no refills, one power-of-two target
+  ---
+  duration_ms: 0.21311
+  type: 'test'
+  ...
+# Subtest: Through the Gate is 7 × 6 with a stone wall in the middle column, the forecast on, and a ★ in each room
+ok 21 - Through the Gate is 7 × 6 with a stone wall in the middle column, the forecast on, and a ★ in each room
+  ---
+  duration_ms: 0.14604
+  type: 'test'
+  ...
+# Subtest: the gate opens on a chain whose sum is at least gate.sum ending beside it, and not on a smaller one
+ok 22 - the gate opens on a chain whose sum is at least gate.sum ending beside it, and not on a smaller one
+  ---
+  duration_ms: 0.420992
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2681418.713115

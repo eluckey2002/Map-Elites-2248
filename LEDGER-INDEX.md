@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 98 (38 accepted, 24 narrowed, 3 open, 18 provisional, 4 stale, 11 superseded).
+Records: 99 (38 accepted, 24 narrowed, 3 open, 19 provisional, 4 stale, 11 superseded).
 
 ## Current records
 
@@ -76,6 +76,7 @@ Records: 98 (38 accepted, 24 narrowed, 3 open, 18 provisional, 4 stale, 11 super
 | RESULT-0081 | Journaled policy diagnostic interrupted during the final control block | provisional | direct_source | The continuation preserved RESULT-0080 and all prior charges. | 1742 |
 | RESULT-0082 | Wider candidate search clears the paired move-gain and net-win bars | provisional | heuristic_observation, direct_source | Path A closes CLOSED with the predeclared primary outcome SUPPORTED. | 1762 |
 | RESULT-0084 | Fresh board MAP-Elites fills 12 cells on breadth × baseline regret | provisional | direct_source, heuristic_observation | The run closed `SUPPORTED_AT_BOUNDED_SCOPE`: 12 occupied cells (bar 5), 5 breadth bins (bar 2), 5 baseline-regret bins (bar 2), and the independent verifier passed the exact artifact and map, including a re-play of the… | 1862 |
+| RESULT-0085 | Shared Material MAP-Elites fills 6 of 18 cells in one wall-clock-bound run | provisional | direct_source, heuristic_observation | The single confirmation run filled 6 of 18 cells (`X0\|Y3\|Z0`, `X1\|Y2\|Z1`, `X1\|Y3\|Z0`, `X2+\|Y2\|Z0`, `X2+\|Y2\|Z1`, `X2+\|Y3\|Z0`), every one passing the independent replay, spanning Y=2 and Y=3; P1 (at least 4 verified cells… | 1878 |
 | CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1431 |
 | CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1445 |
 | CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1460 |

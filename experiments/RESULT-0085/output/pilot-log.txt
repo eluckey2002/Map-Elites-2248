@@ -1,0 +1,2 @@
+seed 85101: 0/18 cells in 40 evals, 28.0s (evals)
+rejections: {"no rough win":13,"fewer than 60 opening chains":2,"rough win in 3 or fewer":21,"too many opening chains (cost guard)":3,"too many greens":1}

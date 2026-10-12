@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: descriptors on a hand-made board: spare greens, orders, setup moves, cell
+ok 1 - descriptors on a hand-made board: spare greens, orders, setup moves, cell
+  ---
+  duration_ms: 6.796589
+  type: 'test'
+  ...
+# Subtest: budget = max(best + 6, 3 x orders + 4); the family is forecast, 6x6, plain 12-from-3 orders
+ok 2 - budget = max(best + 6, 3 x orders + 4); the family is forecast, 6x6, plain 12-from-3 orders
+  ---
+  duration_ms: 1.984345
+  type: 'test'
+  ...
+# Subtest: no refill is ever a 3 and refills stay on the spawn list, so flushing the board cannot rebuild greens
+ok 3 - no refill is ever a 3 and refills stay on the spawn list, so flushing the board cannot rebuild greens
+  ---
+  duration_ms: 6558.419721
+  type: 'test'
+  ...
+# Subtest: boards that must fail: too few greens, immediate wins, no spare chains
+ok 4 - boards that must fail: too few greens, immediate wins, no spare chains
+  ---
+  duration_ms: 7.87746
+  type: 'test'
+  ...
+# Subtest: planted keeper: the full keeper test passes and every gate is visible in the entry
+ok 5 - planted keeper: the full keeper test passes and every gate is visible in the entry
+  ---
+  duration_ms: 15995.845763
+  type: 'test'
+  ...
+# Subtest: the ordinary player prefers moves toward an unfilled order, sees one move ahead, and wins the planted keeper
+ok 6 - the ordinary player prefers moves toward an unfilled order, sees one move ahead, and wins the planted keeper
+  ---
+  duration_ms: 74.731454
+  type: 'test'
+  ...
+# Subtest: winning first chains are counted from replayable lines
+ok 7 - winning first chains are counted from replayable lines
+  ---
+  duration_ms: 4357.098198
+  type: 'test'
+  ...
+# Subtest: archive round trip; the verifier accepts it and rejects tampered boards, witnesses, budgets and fitness
+ok 8 - archive round trip; the verifier accepts it and rejects tampered boards, witnesses, budgets and fitness
+  ---
+  duration_ms: 4466.499185
+  type: 'test'
+  ...
+# Subtest: a fixed seed gives identical output in a tiny run, and a different seed differs in what it tried
+ok 9 - a fixed seed gives identical output in a tiny run, and a different seed differs in what it tried
+  ---
+  duration_ms: 38747.99465
+  type: 'test'
+  ...
+# Subtest: positive control: the first five start boards of the sampler (seed 2, setup-needing) keep cells in at least two X bins and two Z bins
+ok 10 - positive control: the first five start boards of the sampler (seed 2, setup-needing) keep cells in at least two X bins and two Z bins
+  ---
+  duration_ms: 20552.996054
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 90889.026875
