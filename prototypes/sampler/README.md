@@ -186,9 +186,12 @@ parts, let alone three (the same reason the cap never binds on the parts
 tier, below). So this build keeps the spec's any-order, part-per-fill and
 cap clauses and replaces "every later order needs a part" with "D needs two
 parts". A and C both make 64, D wants four 64s including two parts, B makes a
-32. Filling A, B, C in list order makes three parts, so C is refused; strict
-list order can still win only by spending B's part in a throwaway chain, which
-costs moves. The witness fills A and C first, then D, then B. This is a rule
+32. Filling A, B, C in list order makes three parts, so C is refused. On the
+shipped seed (17) strict list order still ties the best line (5 moves, found
+with chains up to 8; the earlier claim that it is slower held only for chains
+up to 7). Any-order play is a freedom there, not a speed-up. Seeds 1 to 3 do
+make list order slower, but the ordinary player loses all three. The witness
+fills A and C first, then D, then B. This is a rule
 change the owner has not seen; treat it as a candidate.
 
 ### Forecast check (See It Coming)
@@ -337,8 +340,7 @@ ordinary-player baseline, and twist checks. Screens are not evidence (AGENTS.md)
 - Twist checks: spot (the plan that wins with the spots removed fails with
   them); Through the Gate and See It Coming need the refills (no win with
   useless ones); See It Coming: forecast-blind whole plans and forecast-blind
-  re-planners lose (other seeds 101, 202, 303); Advanced: strict list order
-  cannot win in the best number of moves, the in-order greedy player loses, a
+  re-planners lose (other seeds 101, 202, 303); Advanced: the in-order greedy player loses (strict list order ties the best line on seed 17; see the Advanced section), a
   plan made without the cap fails.
 - The ordinary player wins at the budget on Feed the Next and Three Separate
   (the rest reported; see "Limits").
