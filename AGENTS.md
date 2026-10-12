@@ -125,8 +125,10 @@ Several agents work in this repository at once.
 2. **One task, one branch, one worktree, one agent.** Never share a worktree
    between two running agents.
 3. **Put it in one place:** `git fetch` then
-   `git worktree add -b <branch> ../wt/<branch-name> origin/main`. Without an
-   `origin` remote, use `main` as the base.
+   `git worktree add -b <agent>/<slug> .claude/worktrees/<slug> origin/main`
+   (Claude's built-in worktree tool already uses this path and a `claude/<slug>`
+   branch). Without an `origin` remote, use `main` as the base. Nowhere else:
+   not `../wt/`, not a temp folder.
 4. **Remove it when its pull request merges** (`git worktree remove`). A leftover
    worktree is part of the pull request not yet being finished. Check
    `git status` first. If it holds unmerged work, don't delete it; say so.
