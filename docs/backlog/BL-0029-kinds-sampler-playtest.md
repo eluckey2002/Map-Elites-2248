@@ -50,3 +50,4 @@ None. Every board has a verdict (PDL-039, PDL-040). A third sampler version is t
 - 2026-10-11 — Version 3 (eight boards, PDL-040 revisions) published to the same
   Artifact under study `kinds-sampler-v3`; follow-up play pending, not required
   for this item.
+- 2026-10-12 — Owner played version 3 (too few moves, hidden draws, "brain teaser not a game"). Version 4 built locally (not yet published): next tiles shown on every refilling board, budgets best + 6 with a per-order floor, ordinary-player baseline reported; follow-up play pending, not required for this item.

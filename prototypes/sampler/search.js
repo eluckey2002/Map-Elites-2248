@@ -138,6 +138,39 @@ function obvious(level){
   return {outcome:state.outcome,moves:state.moves,path};
 }
 
+/* Ordinary-player baseline ("game, not brain teaser", evan's v3 note): one move at a time, no undo, no preview, fixed
+   tie-breaks (first chain found), sees the board and the Next tiles but plans nothing beyond the move. On an orders
+   board each move it takes, in this order: (1) a chain that fills an order now; (2) a chain whose sum is the next
+   unfilled order's ingredient (it builds one more of what the order needs), preferring one that ends nearest the order's
+   spot; (3) the same for any later order; (4) the longest chain of small tiles (all below every open order's ingredient, sum a power of two so tiles stay
+   in the 2 line), merging the biggest group it can. On other boards it takes the chain whose result scores best on the beam's progress
+   heuristic. It is an acceptance screen (does an ordinary line win at the budget?), not a model of the owner. */
+function ordinary(level,{maxLength=8}={}){
+  let state=rules.create(level);const path=[];
+  const g=level.goal;
+  const dist=(chain,o)=>o.at?Math.max(Math.abs(chain.at(-1)[0]-o.at[0]),Math.abs(chain.at(-1)[1]-o.at[1])):0;
+  while(state.outcome==='playing'){
+    const all=rules.chains(state,maxLength);let pick=null;
+    if(g.type==='orders'){
+      const open=g.orders.map((o,i)=>i).filter(i=>!state.done[i]);
+      pick=all.find(c=>rules.completes(level,state,c)>=0)||null;
+      for(const i of open){if(pick)break;
+        const o=g.orders[i];let best=null,bd=1e9;
+        for(const c of all){if(sumOf(state,c)!==o.from)continue;const d=dist(c,o);if(d<bd){bd=d;best=c;}}
+        pick=best;}
+      if(!pick){const f=Math.min(...open.map(i=>g.orders[i].from));let bl=0;
+        for(const c of all){const sm=sumOf(state,c);
+          if(c.every(([x,y])=>state.grid[y][x].value<f)&&(sm&(sm-1))===0&&c.length>bl){bl=c.length;pick=c;}}}
+      if(!pick)pick=all[0];
+    }else{
+      let bestH=-Infinity;
+      for(const c of all){const next=rules.move(level,state,c);const h=next.outcome==='won'?1e9:heuristic(level,next);if(h>bestH){bestH=h;pick=c;}}
+    }
+    path.push(pick);state=rules.move(level,state,pick);
+  }
+  return {outcome:state.outcome,moves:state.moves,path};
+}
+
 const play=(level,path)=>{let s=rules.create(level);for(const c of path){if(s.outcome!=='playing'||!rules.valid(s,c))return s;s=rules.move(level,s,c);}return s;};
 
 /* Forecast-blind player: plans like the solver but cannot see the refills, so it imagines them from another seed.
@@ -162,8 +195,8 @@ function necessity(level,opts={},{altSeeds=[55,11,22],replanSeeds=[101,55,11,22]
     const blind={...level,goal:{...level.goal,orders:level.goal.orders.map(({at,...o})=>o)}};
     const sol=solve(blind,opts);out.spotBlindWins=!!sol&&play(level,sol.path).outcome==='won';
   }
-  if(level.forecast){
-    // With useless refills (one huge value) there must be no win: the falling tiles are needed.
+  if(level.forecast&&(level.goal.type==='relay'||level.goal.type==='connect')){
+    // (v4: every refilling board shows its Next tiles; only the relay and gate boards need them.) With useless refills (one huge value) there must be no win: the falling tiles are needed.
     const sol=solve({...level,spawnValues:[1<<20]},opts);out.winsWithoutRefills=!!sol;
   }
   if(level.forecast&&level.goal.type==='relay'){
@@ -176,7 +209,7 @@ function necessity(level,opts={},{altSeeds=[55,11,22],replanSeeds=[101,55,11,22]
     // The cap must bite: playing the orders strictly in list order (A, B, C, D) cannot win within the budget, a greedy
     // in-order player loses, and a plan made as if there were no cap fails once the cap applies.
     const strict={...level,goal:{...level.goal,strictTurn:true}};
-    out.strictOrderWin=solve(strict,opts);
+    out.strictOrderWin=solve(strict,{...opts,budget:level.best||level.moves});
     out.strictOrderGreedy=obvious(strict).outcome;
     const capless=solve({...level,goal:{...level.goal,cap:Infinity}},opts);
     out.capBlindWins=capless?play(level,capless.path).outcome==='won':null;
@@ -184,4 +217,4 @@ function necessity(level,opts={},{altSeeds=[55,11,22],replanSeeds=[101,55,11,22]
   return out;
 }
 
-module.exports={solve,exhaustive,harvest,obvious,forecastBlind,heuristic,necessity,play,needOf};
+module.exports={solve,exhaustive,harvest,obvious,ordinary,forecastBlind,heuristic,necessity,play,needOf};
