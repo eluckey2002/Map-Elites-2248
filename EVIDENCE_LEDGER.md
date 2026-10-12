@@ -1874,3 +1874,20 @@ The proof track is parked, not closed. It resumes from the unresolved **12,336â€
 - **superseded_by:** []
 - **written_by:** claude, project thread "repo review", branch claude/project-thread-4qfp1a-level-search
 - **notes:** Provisional, not self-accepted; checked_by is absent until a different agent, a script run by someone else, or the owner checks it. This is the fresh run the owner chose on 2026-10-11 in place of renumbering the dropped RESULT-0044..0047 (BL-0023 criterion 4). The owner-versus-bot calibration playtest on up to five elites is a separate, later record.
+
+### RESULT-0085 â€” Shared Material MAP-Elites fills 6 of 18 cells in one wall-clock-bound run
+
+- **type:** result
+- **status:** provisional
+- **scope:** one registered MAP-Elites search over Shared Material boards (6x6, forecast, plain 12-from-3 orders, two or three orders, spare greens and setup moves as axes); search seed 2085, 1431 evaluations stopped by the 3300 s wall-clock cap (ceiling 1500 not reached); frozen sources per `experiments/RESULT-0085/protocol.md`; BL-0030
+- **statement:** The single confirmation run filled 6 of 18 cells (`X0|Y3|Z0`, `X1|Y2|Z1`, `X1|Y3|Z0`, `X2+|Y2|Z0`, `X2+|Y2|Z1`, `X2+|Y3|Z0`), every one passing the independent replay, spanning Y=2 and Y=3; P1 (at least 4 verified cells spanning both Y values) is SUPPORTED. The two largest-fitness entries also passed the deep verify. Nothing filled at X0 with two orders, at any Z of 2 or more, or at hard difficulty. Z is a found minimum and difficulty is a one-ply player's win rate, so cell labels are the instrument's reading; the run was bound by wall clock, used one seed, and five of the six boards are near-neighbours. A 200-sample uniform diagnostic passed the keeper test more often per evaluation (16 of 200) than the loop did (7 of 1431) and reached one cell the loop did not; that is a diagnostic, not a compute-matched comparison. No claim is made that any board is fun, and nothing ships.
+- **evidence:** registered protocol `experiments/RESULT-0085/protocol.md`, registration commit `e2613d497ec7af72247b053413e89ced8d5a9ebd`; archive [archive.json](experiments/RESULT-0085/output/archive.json) (SHA-256 `f0b087803b697d95aac7c959e11209057f2f2fcd0e54a3ad01d76f84fd159071`); run log `experiments/RESULT-0085/output/confirmation.log`; deep verify [deep-verify.json](experiments/RESULT-0085/output/deep-verify.json); uniform sample [uniform-sample.json](experiments/RESULT-0085/output/uniform-sample.json); counts, per-cell boards and limits in `experiments/RESULT-0085/report.md`; post-run script `experiments/RESULT-0085/audit.js`
+- **proof_class:** `direct_source` for the replayed witnesses and archive integrity; `heuristic_observation` for how many cells one seeded search fills
+- **as_of:** 2026-10-12
+- **reverify:** On a checkout whose history reaches `186a4f20`, run `node prototypes/sampler/shared-search.js --verify experiments/RESULT-0085/output/archive.json`; expect PASS for 6 cells. Then `node experiments/RESULT-0085/audit.js deep`; expect PASS for `X0|Y3|Z0` and `X1|Y2|Z1`. The search itself is not reproducible from its seed because the wall-clock cap bound.
+- **updated:** 2026-10-12
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude, project thread session_01DhADuaPsvARsjv3qRngjx2, branch bl30-local (claude/project-thread-lxxr86)
+- **checked_by:** pending
+- **notes:** Provisional, not self-accepted; checked_by stays pending until a different agent, a script run by someone else, or the owner checks it. Owner play of a few elites from different cells is a separate, later PDL entry and cannot change this result. The archive and the two post-run JSON files carry no registration stamp because the frozen instrument does not write one; they are cited as links, and tie to this result through the registered protocol, the commit above and the version hashes inside the archive. A filled cell may not be quoted as reachable by a second run.

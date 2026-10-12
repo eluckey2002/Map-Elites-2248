@@ -1,0 +1,1 @@
+- 2026-10-12 — RESULT-0085 ran: one registered search filled 6 of 18 cells, all verified (P1 supported, provisional). Owner play of a few elites is next; see `experiments/RESULT-0085/report.md`.
