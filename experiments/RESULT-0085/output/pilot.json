@@ -1,0 +1,85 @@
+{
+ "format": "shared-material-archive",
+ "version": 2,
+ "versions": {
+  "instrument": 2,
+  "sharedSearch": "f662d3969abf0d04d2102d5212d10e34579a6955",
+  "model": "024c3f61fd49ece0b18045791b5f25623be44cef",
+  "search": "936240d37955bf9a92e6d4e63ccb1506316f49a7",
+  "engine": "ef53e76f19a1f359e4ed3157ef539cd707cd7a53",
+  "node": "v22.22.0"
+ },
+ "args": {
+  "seed": 85101,
+  "evals": 40,
+  "maxSeconds": 3300,
+  "cfg": {
+   "beams": [
+    {
+     "beam": 1000,
+     "maxLength": 8
+    },
+    {
+     "beam": 200,
+     "maxLength": 7
+    }
+   ],
+   "roughBeam": {
+    "beam": 40,
+    "maxLength": 6
+   },
+   "roughBudget": 12,
+   "collect": {
+    "beam": 200,
+    "maxLength": 7,
+    "cap": 200
+   },
+   "first": {
+    "tries": 30,
+    "cap": 10,
+    "beam": 20,
+    "maxLength": 6
+   },
+   "maxOpen": 700,
+   "maxLong": 20000
+  }
+ },
+ "family": {
+  "cols": 6,
+  "rows": 6,
+  "orderMake": 12,
+  "orderFrom": 3,
+  "spawnValues": [
+   2,
+   4,
+   8,
+   16,
+   32,
+   64
+  ],
+  "forecast": true,
+  "slack": 6,
+  "minFirstMoves": 3,
+  "minOpening": 60
+ },
+ "cellCount": 0,
+ "cellsPossible": 18,
+ "stats": {
+  "evaluated": 40,
+  "cacheHits": 9,
+  "kept": 0,
+  "replaced": 0,
+  "rejected": {
+   "no rough win": 13,
+   "fewer than 60 opening chains": 2,
+   "rough win in 3 or fewer": 21,
+   "too many opening chains (cost guard)": 3,
+   "too many greens": 1
+  }
+ },
+ "run": {
+  "stoppedBy": "evals",
+  "seconds": 27.986
+ },
+ "cells": {}
+}
