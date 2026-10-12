@@ -33,7 +33,7 @@ teaser puzzle not a game." (and that v3 was "a regression" from v2).
 1. **The spawn is shown on every board that refills.** `forecast: true` on
    every board except The Drought (nothing refills). Forecast mode gives each
    column its own refill queue, so draws no longer depend on play order, and
-   the NEXT TILES strip shows the next two per column. Rule text on each board
+   the NEXT TILES strip shows the next three per column. Rule text on each board
    names the strip (Make It Here: one short sentence, still two in all). What
    refills can be is unchanged (2 to 64). Why it matters: with one shared
    random stream the best line on the same start grid ranged from 4 to 19
@@ -75,6 +75,13 @@ teaser puzzle not a game." (and that v3 was "a regression" from v2).
    screen at 390 × 844 and 1280 × 720 on every board (tiles at most 48 px
    phone, 40 px laptop, at least 36 px). On a laptop the Merge/Clear buttons and
    status line moved under the board.
+
+Proposed, not owner-approved: per-column refill queues. The spawn values (2 to 64,
+never a 3) and the random draw are unchanged; only the order draws are used
+changes (per column, not per move), which is what lets the strip show exactly
+what drops in. The owner asked for the draws to be shown, and See It Coming
+already used this mechanism in versions 2 and 3, but he has not been asked about
+it on every board. Owner play of version 4 decides whether it stays.
 
 Boards re-picked. Forecast mode changes the refill stream, so the v3 seeds no
 longer gave the same boards. Start grids are all v3's. Make It Here moved to
@@ -262,8 +269,8 @@ tile; gravity; seeded refills. `model.js` adds:
   the tile the last one made (●).
 - **Exact** (`exact`: make one tile of the target), **Connect** (`connect`: one
   chain through every ★).
-- **Forecast**: each column has its own refill queue; the next two show above
-  it in the NEXT TILES strip.
+- **Forecast**: each column has its own refill queue; the next three show above
+  it in the NEXT TILES strip. Three covers any chain with up to four tiles stacked in one column; a straight line of five or six in one column can still deal a tile the strip does not show (rare; reported, not prevented).
 - **Boss** (`boss`, with `refill:false`): a banner names the boss and what it
   changes until the first move.
 - **Stone** walls and a **gate**: a stone cell that opens when a chain whose sum
@@ -340,7 +347,7 @@ ordinary-player baseline, and twist checks. Screens are not evidence (AGENTS.md)
 - Twist checks: spot (the plan that wins with the spots removed fails with
   them); Through the Gate and See It Coming need the refills (no win with
   useless ones); See It Coming: forecast-blind whole plans and forecast-blind
-  re-planners lose (other seeds 101, 202, 303); Advanced: the in-order greedy player loses (strict list order ties the best line on seed 17; see the Advanced section), a
+  re-planners lose (whole-plan check on seeds 55, 11, 22; re-planner on 101, 55, 11, 22 — the `necessity()` defaults); Advanced: the in-order greedy player loses (strict list order ties the best line on seed 17; see the Advanced section), a
   plan made without the cap fails.
 - The ordinary player wins at the budget on Feed the Next and Three Separate
   (the rest reported; see "Limits").

@@ -38,7 +38,7 @@
       seed:2,best:6,moves:17,spawnValues,forecast:true,goal:{type:'orders',orders:[{make:32,from:8},{make:256,from:64},{make:512,from:128}]},
       grid:[[32,128,32,4,64],[128,128,64,128,64],[64,128,128,4,128],[128,64,64,8,64],[8,2,4,16,16],[4,8,64,32,8]]},
     {id:'see-it-coming',kind:'forecast-relay',name:'See It Coming',focus:'Make 256, then 512 using it; plan with the next tiles',
-      ruleTitle:'Watch the next tiles: make 256, then 512 using it.',rule:'Next tiles: the dark strip above the board shows the next two tiles that drop into each column. Make a 256 (it gets a ●), then a 512 with a chain that includes it.',
+      ruleTitle:'Watch the next tiles: make 256, then 512 using it.',rule:'Next tiles: the dark strip above the board shows the next three tiles that drop into each column. Make a 256 (it gets a ●), then a 512 with a chain that includes it.',
       hint:'Choose a chain. Check the next tiles first.',
       seed:4,best:4,moves:12,spawnValues,forecast:true,goal:{type:'relay',stages:[256,512]},
       grid:[[2,8,2,16,2],[8,8,4,2,4],[8,4,32,16,32],[4,2,4,8,2],[2,2,16,4,32],[8,16,16,8,32]]},
@@ -48,7 +48,7 @@
       seed:59,best:6,moves:12,spawnValues,refill:false,boss:{title:'Boss: The Drought',text:'Nothing refills on this board.'},goal:{type:'exact',make:512},
       grid:[[128,16,32,2,8],[64,2,4,4,4],[128,4,4,8,8],[16,16,2,2,32],[64,128,2,16,8],[4,4,16,16,2]]},
     {id:'through-the-gate',kind:'rooms-gate',name:'Through the Gate',focus:'Open the wall with a chain adding up to 128 or more, then link both ★',
-      ruleTitle:'Open the gate, then connect the rooms.',rule:'A wall splits the board into two rooms. The gate opens when a chain that adds up to 128 or more ends on a tile beside the gate. Then one chain must pass through both ★ cells. The Next tiles strip above the board shows the next two tiles that drop into each column.',
+      ruleTitle:'Open the gate, then connect the rooms.',rule:'A wall splits the board into two rooms. The gate opens when a chain that adds up to 128 or more ends on a tile beside the gate. Then one chain must pass through both ★ cells. The Next tiles strip above the board shows the next three tiles that drop into each column.',
       hint:'Choose a chain. Open the gate first.',
       seed:3,best:4,moves:12,spawnValues,forecast:true,stone:[[3,0],[3,1],[3,2],[3,3],[3,4],[3,5]],gate:{at:[3,4],sum:128},goal:{type:'connect',marks:[[0,4],[6,5]]},
       grid:[[8,16,64,0,4,32,32],[16,8,4,0,16,8,16],[16,4,8,0,16,4,4],[8,16,16,0,8,4,64],[4,2,4,0,16,64,16],[2,4,32,0,4,4,64]]}

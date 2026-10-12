@@ -51,3 +51,4 @@ None. Every board has a verdict (PDL-039, PDL-040). A third sampler version is t
   Artifact under study `kinds-sampler-v3`; follow-up play pending, not required
   for this item.
 - 2026-10-12 — Owner played version 3 (too few moves, hidden draws, "brain teaser not a game"). Version 4 built locally (not yet published): next tiles shown on every refilling board, budgets best + 6 with a per-order floor, ordinary-player baseline reported; follow-up play pending, not required for this item.
+- 2026-10-12 — Version 4 shows three next tiles per column on every refilling board. Per-column refill queues (the mechanism See It Coming already used) are now on every refilling board; this is proposed, not owner-approved, and owner play of version 4 decides it (README, "Boards re-picked").

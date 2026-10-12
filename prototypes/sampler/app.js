@@ -135,15 +135,15 @@
     const how=$('howto');how.hidden=!level.howto;how.textContent=level.howto||'';
     $('rule-extra').hidden=goal().type!=='orders';
     $('moves').textContent=`${shown.maxMoves-shown.moves} / ${shown.maxMoves}`;
-    // Forecast strip (v3: labelled, larger, high contrast): the next two tiles that drop into each column, nearest at
+    // Forecast strip (v3: labelled, larger, high contrast): the next three tiles that drop into each column (a chain of four stacked in one column uses three), nearest at
     // the bottom, right above its column. A stone column shows nothing.
     const fc=$('forecast');fc.hidden=!level.forecast;
     if(level.forecast){const row=$('forecast-row');row.style.gridTemplateColumns=`repeat(${shown.gridWidth},minmax(0,1fr))`;
       row.replaceChildren(...Array.from({length:shown.gridWidth},(_,x)=>{const d=document.createElement('div');d.className='next';
         if(Array.from({length:shown.gridHeight},(_,y)=>rules.isStone(shown,x,y)).every(Boolean)&&!(level.gate&&shown.gateOpen&&level.gate.at[0]===x)){d.classList.add('wall');return d;}
-        const [a,b]=rules.upcoming(level,shown,x,2);
-        for(const v of [b,a]){const t=miniTile(v);t.classList.add('ftile');d.append(t);}
-        d.setAttribute('aria-label',`Column ${x+1}: next ${a}, then ${b}`);return d;}));}
+        const [a,b,c]=rules.upcoming(level,shown,x,3);
+        for(const v of [c,b,a]){const t=miniTile(v);t.classList.add('ftile');d.append(t);}
+        d.setAttribute('aria-label',`Column ${x+1}: next ${a}, then ${b}, then ${c}`);return d;}));}
     // board
     const boss=$('boss');boss.hidden=!(level.boss&&state.moves===0);
     if(level.boss){$('boss-title').textContent=level.boss.title;$('boss-text').textContent=level.boss.text;}
