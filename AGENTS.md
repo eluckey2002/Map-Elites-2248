@@ -44,7 +44,7 @@ promote a scientific claim or replace the experiment gates below.
 
 Each line here is a fact you can check in a minute. Check it rather than trust it — if one is wrong, fix the line.
 
-- **`node --test solver/tests/*.test.js` has three documented deliberate failures and one skip; the local prototype-collector inventory can also fail with newer action-based captures.** CI's `full test suite` job prints the current totals. This line carries no count on purpose: every pull request that added a test used to edit it, and open pull requests collided on it. The three deliberate failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting. The additional local collector gap is diagnosed in `docs/game-design/levels/receipts/CONNECTIONS-POWERUP-1.md`: its `level.js`/`variants.js` discovery skips newer `model.js` families while its inventory test counts their saves. Do not weaken that test or treat the full suite as green; a capture-protocol repair is separate work.
+- **`node --test solver/tests/*.test.js` has three documented deliberate failures and one skip; the local prototype-collector inventory can also fail with newer action-based captures.** CI's `full test suite` job prints the current totals. This line carries no count on purpose; do not add one. The three deliberate failures are the stale candidate receipts for levels 52 and 54, and the Universe Map's generated-view check. One carries its own "THIS FAILURE IS KNOWN AND DECIDED, it is not yours to fix" message. Do not clear them by re-authoring, archiving, or exempting. The additional local collector gap is diagnosed in `docs/game-design/levels/receipts/CONNECTIONS-POWERUP-1.md`: its `level.js`/`variants.js` discovery skips newer `model.js` families while its inventory test counts their saves. Do not weaken that test or treat the full suite as green; a capture-protocol repair is separate work.
 - **The Universe Map is a 2026-08-28 snapshot, and its staleness failure is true.** It still names champion `52f500c` and selects only `RESULT-0017`; `DECISION-0004` promoted `b82a9b6` and explicitly did not rewrite the map. Do not clear the failure by bumping `universe/contract.json`'s `asOf` and rebuilding: that restamps the old champion and frontier as current. Refreshing it means re-curating the contract's selected records against the ledger first.
 - **`src/game.js` is hashed into `HUMAN-PILOT-0002`'s runtime identity.** Any edit, including a comment, breaks that receipt. Re-derive with `node pilots/HUMAN-PILOT-0002/qualify.js write` and confirm the replay still matches `RESULT-0028` in the ledger — only the two identity fields should change. The experiment gate no longer freezes its bytes: `DECISION-0015` recomputes `RESULT-0047`, `RESULT-0049` and `RESULT-0082` at their admission commits with `src/game.js` live, but its game rules (everything in it except the browser-only declarations named in `solver/game-rule-surface.js`, and those only while they write no game state and call no other rule code) must still match; a rule change turns the gate red. The oracle corpus check and the policy-fit historical input check no longer compare its bytes live either (also `DECISION-0015`); both still refuse a changed game rule or a pilot receipt that changed beyond its two identity fields.
 - **`solver/engine.js` and `solver/level-author.js` are hashed into every candidate receipt** via `defaultInputIdentities()` in `level-author.js`. A comment-only edit to either fails `candidate-levels.json`'s receipt gate, which then asks for a full re-authoring of a shipped level. Documentation that would touch them belongs somewhere nothing hashes.
@@ -117,9 +117,7 @@ Do not append to `HANDOFF.md`. It is a historical session journal; what it used 
 
 ## Worktrees
 
-Several agents work in this repository at once. On 2026-09-26 twenty worktrees had
-piled up across three directories, and an agent edited the main checkout while
-another agent was reconciling it.
+Several agents work in this repository at once.
 
 1. **Never edit in the main checkout**: the first entry in `git worktree list`
    (on the owner's machine, `C:\OOO\Map-Elites-2248`). Reading it is fine. Make
@@ -149,9 +147,7 @@ owner for approval (owner decision, 2026-10-11).
 1. **Check open pull requests before starting.** Run
    `gh pr list --limit 100 --json number,title,files` and look for any that
    touch the files you plan to change; a title alone can hide the overlap.
-   On 2026-09-26, PR #41 and PR #46 each built a separate generator for
-   `LEDGER-INDEX.md`. Extend or coordinate with the open work instead of
-   duplicating it.
+   Extend or coordinate with the open work instead of duplicating it.
 2. **One pull request per ask, with related fixes bundled.** Put related fixes
    from one request in a single pull request instead of several small ones.
    Fill in `.github/pull_request_template.md`.
@@ -159,14 +155,11 @@ owner for approval (owner decision, 2026-10-11).
    title it was opened with says and nothing more; do not broaden the title.
    A review finding outside that scope goes in the pull request description
    under "Follow-ups" and is left for later work; it does not become another
-   commit here. On 2026-10-11, PR #70 opened as four game
-   bug fixes and grew seventeen gate-hardening commits chasing Codex findings.
+   commit here.
 4. **Do not merge until the Codex review has completed.** Codex reviews every
    pull request when it opens and either leaves inline findings or reacts 👍.
    Wait for one or the other. Codex does not review a draft: mark the draft
-   ready, or comment `@codex review`, before you wait. On 2026-09-03 PR #3 was merged thirty seconds
-   before its review landed; the finding was correct and `main` carried a
-   mislabelled record until PR #4.
+   ready, or comment `@codex review`, before you wait.
    Codex does not re-review later pushes on its own: after pushing fixes,
    comment `@codex review` on the pull request and wait for its new verdict.
 5. **Fix by severity, and stop after three Codex rounds.** Fix P0 and P1
