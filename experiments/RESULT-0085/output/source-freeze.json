@@ -1,0 +1,9 @@
+{
+ "note": "Written by audit.js sources: sha256 prefixes of the files whose SHA-1s the archive recorded, each also named in protocol.md version_freeze.",
+ "sources": {
+  "sharedSearch": "4d7759ff80353db4",
+  "model": "c10ee6469dc0cd64",
+  "search": "fee7eb7ac161a56e",
+  "engine": "0ed4b31004df13e3"
+ }
+}

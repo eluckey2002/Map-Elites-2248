@@ -46,3 +46,4 @@ Rebuild the Shared Material board with protected shared tiles in the second samp
 
 - 2026-10-11 — Proposed from the owner's remark in the kinds sampler thread.
 - 2026-10-11 — Updated after PDL-039.
+- 2026-10-12 — RESULT-0085 ran the registered search; see the ledger record and `experiments/RESULT-0085/report.md` for what it filled. Owner play of a few elites is next.

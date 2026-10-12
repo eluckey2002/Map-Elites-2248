@@ -16,7 +16,7 @@ is fun; the owner plays them separately.
 | --- | --- |
 | C1 negative control | PASS |
 | C2 positive control | PASS |
-| C3 suite unchanged | PASS locally for the solver suite; the 22 model tests did not finish here (CI authoritative) |
+| C3 suite unchanged | PASS (solver suite; and the 22 sampler model tests, run to completion after review) |
 | P1 how many cells fill | SUPPORTED |
 | P2 nothing counted unverified | PASS |
 | P3 is this just more compute | INCONCLUSIVE (reported, not gated) |
@@ -58,7 +58,7 @@ demonstrated. The run's own log shows the rule firing in the live loop: 1
 entry` and `positive control: the first five start boards of the sampler (seed
 2, setup-needing) keep cells in at least two X bins and two Z bins`.
 
-### C3 — suite unchanged: PASS on the solver suite; model tests not confirmed locally
+### C3 — suite unchanged: PASS
 The registered shallow-clone baseline was 877 tests, 861 pass, 15 fail, 1
 skip. Run after the experiment on this same shallow clone
 (`node --test solver/tests/*.test.js`): 877 tests, 862 pass, 14 fail, 1 skip.
@@ -73,13 +73,13 @@ The other 11 failures are of the shallow-clone class (ledger-citation,
 protocol-commit and custody-proof checks that cannot see cited commits). That is
 one fewer than the registered 15; the registered record gives the baseline by
 count, so I could not diff those 11 by name. **The CI run on the PR, with full
-history, is authoritative** for the full suite. The 22 sampler model tests (`prototypes/sampler/model.test.js`) **did not
-finish on this clone**: two attempts were stopped after about 35 minutes with
-no result (the file runs exhaustive and beam searches on all eight boards), so I
-cannot report them as passing. Evidence they are unchanged: `git diff 0de88a66 HEAD -- prototypes solver src`
-is empty, so no source or test file under test moved between the instrument
-commit and this result. Treat that part of C3 as unconfirmed here and read it
-from the CI run. This result changed no solver, game or sampler source file.
+history, is authoritative** for the full suite. The 22 sampler model tests (`prototypes/sampler/model.test.js`) did not
+finish within the first two attempts (about 35 minutes each, stopped). After
+Codex review flagged that, they were run to completion on this branch
+(`output/c3-model-tests.txt`): all 22 pass, 0 fail, in about 45 minutes. CI
+runs only `solver/tests`, so this local run is the evidence for that half of
+C3. `git diff 0de88a66 HEAD -- prototypes solver src` is empty, so no source or
+test file moved between the instrument commit and this result. This result changed no solver, game or sampler source file.
 
 ### P1 — how many cells fill: SUPPORTED
 6 of 18 cells hold keepers that pass `--verify` (P2); the filled cells are Y=2:
@@ -255,6 +255,22 @@ not find a board for it here, not that none exists.
   in a PDL entry.
 - The 6 elites are near-duplicates in places (see Elites). The map is wide in
   label and narrow in board shape.
+- **Instrument defects found in Codex review after the run (not fixed: the
+  run's code is frozen, and the archive is what that code produced).**
+  (1) At a cell already holding the fitness cap, a candidate with the same best
+  line and a smaller hash is rejected before the declared tie-break applies, so
+  a capped cell may keep a different, equally good elite. (2) A truncated archive
+  entry missing `descriptors` or `bites` makes `--verify` throw instead of
+  reporting the cell as failed; the shipped archive is complete. (3) With
+  `noFill`, separate blobs can land next to each other, so a board can start
+  with a one-move order fill; those boards are still checked by the keeper test.
+  (4) The order-count mutation can draw repeated coordinates and add fewer than
+  four greens; the child is then rejected as `too few greens`, which wastes
+  evaluations. None of these changes a stored elite's validity (every kept
+  entry passes the independent replay). (1), (3) and (4) can change which
+  elite is kept and how efficiently the search explores, so the 6-cell count
+  reads as a floor on this instrument, not a tuned result. Fixes belong in a
+  new instrument version and a new record.
 - The proxies ("bites"), the split report and the compute comparison are
   descriptive only and did not decide acceptance.
 
@@ -273,4 +289,4 @@ On a checkout whose history reaches `186a4f20`:
 `node prototypes/sampler/shared-search.js --verify experiments/RESULT-0085/output/archive.json`
 expects PASS for 6 cells; `node experiments/RESULT-0085/audit.js deep` expects
 PASS for `X0|Y3|Z0` and `X1|Y2|Z1`; `node experiments/RESULT-0085/audit.js uniform`
-expects 16 of 200 keepers (it is deterministic from seed 208501).
+expects 16 of 200 keepers (it is deterministic from seed 208501). Both audit modes print only; they replace the retained `output/*.json` receipts solely with `--write`. `node experiments/RESULT-0085/audit.js sources` expects PASS and binds the archive's SHA-1s to the frozen files (`output/source-freeze.json`).

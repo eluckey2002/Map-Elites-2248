@@ -26,7 +26,7 @@ The family-board search is back on `main` as a fresh run rather than a port of t
 
 ## Shared Material MAP-Elites — 2026-10-12
 
-[RESULT-0085](EVIDENCE_LEDGER.md#result-0085--shared-material-map-elites-fills-6-of-18-cells-in-one-wall-clock-bound-run) is provisional and ships no board: one registered search of the BL-0030 Shared Material map filled 6 of 18 cells, all verified, spanning both order counts. Read its limits in the [report](experiments/RESULT-0085/report.md) before quoting it; it is one seed and bound by wall clock. Next is the owner playing a few elites from different cells, recorded separately in a PDL entry. Goal: [BL-0030](docs/backlog/BL-0030-map-elites-shared-material.md).
+[RESULT-0085](EVIDENCE_LEDGER.md#result-0085--shared-material-map-elites-fills-6-of-18-cells-in-one-wall-clock-bound-run) is provisional and ships no board: one registered search of the BL-0030 Shared Material map, with every filled cell verified. Read its counts and limits in the [report](experiments/RESULT-0085/report.md) before quoting it; it is one seed and bound by wall clock. Next is the owner playing a few elites from different cells, recorded separately in a PDL entry. Goal: [BL-0030](docs/backlog/BL-0030-shared-material-map-elites.md).
 
 ## Selectable Nemesis opponents — 2026-10-04
 

@@ -2,6 +2,7 @@
 // Post-run steps of RESULT-0085, run exactly as its protocol names them. Reads the archive; never changes it.
 //   node experiments/RESULT-0085/audit.js deep     deep verify of the 2 largest-fitness entries (ties by cell key)
 //   node experiments/RESULT-0085/audit.js uniform  P3 diagnostic: 200 uniform samples, seed 208501, same evaluate/config
+//   node experiments/RESULT-0085/audit.js sources  bind the archive to the registered freeze (writes output/source-freeze.json)
 const fs = require('node:fs');
 const path = require('node:path');
 const S = require('../../prototypes/sampler/shared-search.js');
@@ -18,6 +19,12 @@ function randomTarget(rng,i){
   return {orders,spare,tight,minBlobs,noFill:rng()<0.5};
 }
 
+// A recheck prints only. The retained receipts in output/ are rewritten solely with --write.
+function save(name, value) {
+  if (!process.argv.includes('--write')) return;
+  fs.writeFileSync(path.join(__dirname, 'output', name), JSON.stringify(value, null, 1) + '\n');
+}
+
 function deep() {
   const keys = Object.keys(archive.cells).sort((a, b) => archive.cells[b].fitness - archive.cells[a].fitness || (a < b ? -1 : 1));
   const chosen = keys.slice(0, 2), out = {};
@@ -27,7 +34,7 @@ function deep() {
     out[k] = { fitness: archive.cells[k].fitness, fails, seconds: (Date.now() - t0) / 1000 };
     console.log(`${k} fitness ${archive.cells[k].fitness}: ${fails.length ? 'FAIL ' + fails.join('; ') : 'PASS'} (${out[k].seconds.toFixed(1)}s)`);
   }
-  fs.writeFileSync(path.join(__dirname, 'output', 'deep-verify.json'), JSON.stringify({ chosen, results: out }, null, 1) + '\n');
+  save('deep-verify.json', { chosen, results: out });
   return chosen.every(k => out[k].fails.length === 0) ? 0 : 1;
 }
 
@@ -48,11 +55,42 @@ function uniform() {
     loop: { evaluated: st.evaluated, keepers: loopKeepers, kept: st.kept, replaced: st.replaced, lostItsCell: st.rejected['lost its cell'] || 0, keeperRate: loopKeepers / st.evaluated },
   };
   console.log(JSON.stringify(result));
-  fs.writeFileSync(path.join(__dirname, 'output', 'uniform-sample.json'), JSON.stringify(result, null, 1) + '\n');
+  save('uniform-sample.json', result);
   return 0;
+}
+
+// The gate reads `sources` (role -> sha256 prefix) and checks each against the protocol's version_freeze. The archive
+// itself records only SHA-1 under `versions`, so this step confirms those SHA-1s still match the frozen files, then
+// emits the sha256 prefixes the gate can read. It fails if any frozen file moved since the run.
+function sources() {
+  const crypto = require('node:crypto');
+  const root = path.join(__dirname, '..', '..');
+  const hex = (alg, rel) => crypto.createHash(alg).update(fs.readFileSync(path.join(root, rel))).digest('hex');
+  const roles = {
+    sharedSearch: 'prototypes/sampler/shared-search.js', model: 'prototypes/sampler/model.js',
+    search: 'prototypes/sampler/search.js', engine: 'solver/engine.js',
+  };
+  const out = {};
+  let ok = true;
+  for (const [role, rel] of Object.entries(roles)) {
+    const same = hex('sha1', rel) === archive.versions[role];
+    if (!same) { ok = false; console.log(`FAIL ${role}: ${rel} no longer matches the archive's recorded SHA-1`); }
+    out[role] = hex('sha256', rel).slice(0, 16);
+  }
+  const protocol = fs.readFileSync(path.join(__dirname, 'protocol.md'), 'utf8');
+  for (const [role, h] of Object.entries(out)) {
+    if (!protocol.includes(h)) { ok = false; console.log(`FAIL ${role}: ${h} is not in the protocol's version_freeze`); }
+  }
+  console.log(ok ? 'PASS archive SHA-1s match the frozen files' : 'FAIL');
+  save('source-freeze.json', {
+    note: 'Written by audit.js sources: sha256 prefixes of the files whose SHA-1s the archive recorded, each also named in protocol.md version_freeze.',
+    sources: out,
+  });
+  return ok ? 0 : 1;
 }
 
 const mode = process.argv[2];
 if (mode === 'deep') process.exitCode = deep();
+else if (mode === 'sources') process.exitCode = sources();
 else if (mode === 'uniform') process.exitCode = uniform();
-else { console.error('usage: audit.js deep|uniform'); process.exitCode = 2; }
+else { console.error('usage: audit.js deep|uniform|sources [--write]'); process.exitCode = 2; }
