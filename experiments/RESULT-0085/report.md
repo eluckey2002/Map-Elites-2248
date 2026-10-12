@@ -266,11 +266,15 @@ not find a board for it here, not that none exists.
   with a one-move order fill; those boards are still checked by the keeper test.
   (4) The order-count mutation can draw repeated coordinates and add fewer than
   four greens; the child is then rejected as `too few greens`, which wastes
-  evaluations. None of these changes a stored elite's validity (every kept
-  entry passes the independent replay). (1), (3) and (4) can change which
-  elite is kept and how efficiently the search explores, so the 6-cell count
-  reads as a floor on this instrument, not a tuned result. Fixes belong in a
-  new instrument version and a new record.
+  evaluations. (5) `--verify` checks the lower opening-chain bound but not the
+  upper `maxOpen` cap, so it could certify an entry that the search itself
+  would reject for cost; the six shipped entries were all produced by the
+  search, which does apply the cap. None of these changes a stored elite's
+  validity under the checks that did run (every kept entry passes the
+  independent replay). (1), (3) and (4) can change the whole stochastic
+  trajectory, so the 6 cells are an exact observation of this frozen
+  instrument, not a bound on a corrected one (which could fill more or fewer).
+  Fixes belong in a new instrument version and a new record.
 - The proxies ("bites"), the split report and the compute comparison are
   descriptive only and did not decide acceptance.
 
