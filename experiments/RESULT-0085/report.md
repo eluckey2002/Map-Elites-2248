@@ -27,11 +27,11 @@ is fun; the owner plays them separately.
   instrument `0de88a66`, INSTRUMENT_VERSION 2. Branch `bl30-local`.
 - Pilot: seed 85101, 40 evaluations, 0 of 18 cells, 28.0 s. It only showed the
   harness runs and wrote its file. Its numbers are not results and are not
-  quoted again here (`output/pilot.json`, `output/pilot.log`).
+  quoted again here (`output/pilot.json`, `output/pilot-log.txt`).
 - Confirmation, run once, command exactly as registered:
   `node prototypes/sampler/shared-search.js --seed 2085 --evals 1500 --max-seconds 3300 --out experiments/RESULT-0085/output/archive.json`.
   Started 2026-10-12T04:00:28Z, ended 04:55:28Z (`output/confirmation-start.txt`,
-  `output/confirmation-end.txt`, `output/confirmation.log`).
+  `output/confirmation-end.txt`, `output/confirmation-log.txt`).
 - Archive versions: instrument 2, shared-search `f662d396…`, model `024c3f61…`,
   search `936240d3…`, engine `ef53e76f…`, node v22.22.0.
 - No re-run, no second seed, no edit to the archive or to any frozen file.
@@ -93,7 +93,7 @@ count of one run with one seed.
 printed PASS for all 6 cells. The 2 entries with the largest fitness (all six
 tie at 10, so by cell key: `X0|Y3|Z0` and `X1|Y2|Z1`) were also run through
 `verifyEntry(cell, entry, {deep:true})` by `experiments/RESULT-0085/audit.js deep`:
-both returned no failures (`output/deep-verify.log`, `output/deep-verify.json`;
+both returned no failures (`output/deep-verify-log.txt`, `output/deep-verify.json`;
 9.6 s and 14.6 s). Difficulty bins of every kept board are in the table; they
 are reported, not gated. No stored keeper failed, so none was dropped.
 
@@ -115,7 +115,7 @@ These are diagnostics. They cannot change P1 or P2.
   in play: **16 of 200 (8.0%)** passed the whole keeper test, in 343 s (0.58
   per second). Those 16 landed in 5 cells: `X2+|Y3|Z0` 7, `X1|Y3|Z0` 5,
   `X1|Y2|Z1` 2, `X2+|Y2|Z0` 1 and `X1|Y2|Z0` 1. `X1|Y2|Z0` was not filled by the
-  loop (`output/uniform-sample.json`, `output/uniform-sample.log`).
+  loop (`output/uniform-sample.json`, `output/uniform-sample-log.txt`).
 - Plain reading: per evaluation, uniform start boards passed the keeper test
   far more often than the loop's evaluations did, and 200 uniform samples
   reached 4 of the 6 cells the loop filled plus one it did not. The two rates

@@ -1,0 +1,11 @@
+20/200 samples, 3 keepers, 42s
+40/200 samples, 3 keepers, 53s
+60/200 samples, 3 keepers, 76s
+80/200 samples, 7 keepers, 133s
+100/200 samples, 9 keepers, 178s
+120/200 samples, 9 keepers, 193s
+140/200 samples, 10 keepers, 227s
+160/200 samples, 11 keepers, 248s
+180/200 samples, 14 keepers, 299s
+200/200 samples, 16 keepers, 343s
+{"seed":208501,"samples":200,"keepers":16,"keeperRate":0.08,"rejected":{"fewer than 60 opening chains":34,"no rough win":85,"too many opening chains (cost guard)":19,"rough win in 3 or fewer":39,"win in 3 moves or fewer":2,"ordinary player loses":5},"keptBoards":[{"i":10,"cell":"X1|Y2|Z1","fitness":10,"best":4},{"i":15,"cell":"X2+|Y3|Z0","fitness":10,"best":4},{"i":19,"cell":"X1|Y3|Z0","fitness":10,"best":4},{"i":60,"cell":"X2+|Y2|Z0","fitness":10,"best":4},{"i":66,"cell":"X1|Y2|Z1","fitness":10,"best":4},{"i":67,"cell":"X1|Y3|Z0","fitness":8,"best":4},{"i":71,"cell":"X2+|Y3|Z0","fitness":10,"best":4},{"i":87,"cell":"X2+|Y3|Z0","fitness":10,"best":5},{"i":99,"cell":"X1|Y3|Z0","fitness":10,"best":4},{"i":127,"cell":"X2+|Y3|Z0","fitness":10,"best":4},{"i":149,"cell":"X2+|Y3|Z0","fitness":10,"best":4},{"i":165,"cell":"X2+|Y3|Z0","fitness":10,"best":4},{"i":178,"cell":"X1|Y2|Z0","fitness":10,"best":4},{"i":179,"cell":"X1|Y3|Z0","fitness":10,"best":4},{"i":183,"cell":"X2+|Y3|Z0","fitness":10,"best":4},{"i":187,"cell":"X1|Y3|Z0","fitness":9,"best":4}],"seconds":342.767,"loop":{"evaluated":1431,"keepers":7,"kept":6,"replaced":1,"lostItsCell":0,"keeperRate":0.004891684136967156}}

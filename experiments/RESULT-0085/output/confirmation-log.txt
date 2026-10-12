@@ -1,0 +1,9 @@
+eval 8: new cell X2+|Y3|Z0 fitness 10 best 4 budget 13
+eval 40: new cell X1|Y3|Z0 fitness 10 best 4 budget 13
+eval 129: new cell X2+|Y2|Z0 fitness 10 best 4 budget 10
+eval 213: new cell X2+|Y2|Z1 fitness 10 best 4 budget 10
+eval 387: new cell X1|Y2|Z1 fitness 10 best 5 budget 11
+eval 414: new cell X0|Y3|Z0 fitness 10 best 4 budget 13
+eval 421: X1|Y2|Z1 improved 10 -> 10
+seed 2085: 6/18 cells in 1431 evals, 3300.3s (wall-clock)
+rejections: {"no rough win":331,"ordinary player loses":73,"rough win in 3 or fewer":509,"win in 3 moves or fewer":79,"lost its cell (incumbent at the cap)":262,"too many opening chains (cost guard)":44,"too many greens":4,"fewer than 60 opening chains":121,"too few greens":1}
