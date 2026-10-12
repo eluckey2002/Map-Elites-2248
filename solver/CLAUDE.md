@@ -1,5 +1,3 @@
-# Before you measure anything in here
+@AGENTS.md
 
-The rules for this directory live in [AGENTS.md](AGENTS.md), which both Claude
-and Codex read. This file exists only to point there; it is deliberately not a
-second copy, because two copies of a rule drift.
+AGENTS.md (imported above) holds the rules for this directory. Amend them there, not here.
