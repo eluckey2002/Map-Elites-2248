@@ -21,6 +21,10 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 #orders{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:inline-block;padding:6px 10px;border-radius:999px;border:2px solid var(--c);font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
 .chip.done{background:var(--c);color:#fff}
+#dots{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;border:2px solid var(--muted);font-weight:800;font-size:14px;font-variant-numeric:tabular-nums;color:var(--ink)}
+#dots[hidden]{display:none}
+#dots.full{border-color:var(--warn);background:var(--warn);color:#fff}
+#howto{font-size:13px;color:var(--ink);margin-top:4px;line-height:1.35}#howto[hidden]{display:none}
 .chip.later{opacity:.45;font-size:12px;padding:3px 8px;border-width:1px;filter:grayscale(1)}
 .actions{display:flex;gap:8px}.actions button{border-radius:8px;padding:0 14px;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
 #merge{flex:1;background:var(--primary);border-color:var(--primary);color:#fff}
@@ -31,7 +35,7 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 .shell{position:relative;background:var(--shell);border-radius:14px;padding:7px;width:min(100%,300px);min-width:0;max-width:100%}
 #board{display:grid;gap:5px;user-select:none}
 .grid-wrap{position:relative}#path{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.tile{aspect-ratio:1;min-height:0;border-radius:9px;border:0;position:relative;font-weight:750;font-size:var(--tf,16px);color:#253a2e;box-shadow:0 2px 0 #0002;font-variant-numeric:tabular-nums}
+.tile{padding:0;aspect-ratio:1;min-height:0;border-radius:9px;border:0;position:relative;font-weight:750;font-size:var(--tf,16px);color:#253a2e;box-shadow:0 2px 0 #0002;font-variant-numeric:tabular-nums}
 .tile:disabled{opacity:1}
 /* 2 line (2, 4, 8 ...): warm sand to brown. 3 line (3, 6, 12 ...): green, only ever placed on the starting board. */
 .t1{background:#f4ecd8}.t2{background:#ecdcb4}.t3{background:#e3c68a}.t4{background:#d8a960}.t5{background:#c4873a;color:#fff}.t6{background:#a3672a;color:#fff}.t7{background:#7f4c1f;color:#fff}.t8{background:#5c3517;color:#fff}.t9{background:#3e2410;color:#fff}
@@ -56,7 +60,7 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 #forecast .next{display:flex;flex-direction:column;align-items:center;gap:3px}
 #forecast .next.wall{visibility:hidden}
 #forecast .ftile{display:block;width:100%;max-width:48px;margin:0;font-size:15px;font-weight:800;line-height:24px;border-radius:6px;box-shadow:none}
-#forecast .ftile:first-child{opacity:.75;line-height:18px;font-size:12px}
+#forecast .ftile:not(:last-child){opacity:.75;line-height:16px;font-size:11px}
 #forecast[hidden]{display:none}
 .tile.stone{background:repeating-linear-gradient(45deg,#5d625c,#5d625c 6px,#4d524c 6px,#4d524c 12px);box-shadow:none}
 .tile.empty{background:transparent;box-shadow:inset 0 0 0 2px #0001}
@@ -65,7 +69,7 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 .tile.spot-b{outline-color:var(--b)}.tile.spot-b::after{color:var(--b)}
 /* A later order's spot (Make It Here): still shown, so A can be planned around it, but quiet until its turn. */
 .tile.spot-later{outline-width:2px;outline-style:dotted}.tile.spot-later::after{opacity:.6}
-.tile.gate{color:#fff;font-size:12px}.tile.gate::before{content:'GATE';position:absolute;top:3px;left:0;right:0;font-size:8px;letter-spacing:1px;font-style:normal}
+.tile.gate{color:#fff;font-size:13px;font-weight:850;background:repeating-linear-gradient(45deg,#8a4b12,#8a4b12 6px,#6e3a0c 6px,#6e3a0c 12px);box-shadow:0 0 0 3px #f0a64a,0 2px 0 #0002}.tile.gate-next{outline:3px dotted #c9791f;outline-offset:-4px}.tile.gate::before{content:'GATE';position:absolute;top:3px;left:0;right:0;font-size:8px;letter-spacing:1px;font-style:normal}
 .tile.made::before{content:'●';position:absolute;top:2px;left:4px;bottom:auto;right:auto;width:16px;height:16px;line-height:16px;border-radius:50%;background:#fff;clip-path:none;font-size:13px;color:var(--a);box-shadow:0 0 0 1px var(--a)}
 .ing-a.ing-b{box-shadow:inset 0 0 0 3px var(--a),inset 0 0 0 6px var(--b),0 2px 0 #0002}.ing-a.ing-b::before{right:auto;left:5px}
 .tile.mark::after{content:'★';position:absolute;top:2px;right:5px;font-size:12px;color:var(--b)}.tile.mark{box-shadow:inset 0 0 0 3px var(--b),0 2px 0 #0002}
@@ -84,8 +88,17 @@ aside h3{font-size:13px;margin-top:16px}
 .chips2 button[aria-pressed="true"]{background:var(--primary);color:#fff;border-color:var(--primary)}
 #note{width:100%;margin-top:6px;padding:8px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-size:13px;resize:vertical}
 .small{font-size:11px;color:var(--muted);margin-top:6px;min-height:1.2em}
+@media (min-width:761px){
+  /* laptop: board first, then the buttons and the status line under it, so the board and the strip fit the first screen */
+  .play{display:flex;flex-direction:column}.play .intro{order:1}.play .stats{order:2}.play #boss{order:3}.play .shell{order:4}
+  .play .actions{order:5}.play #status{order:6;min-height:2.6em}.play .minor{order:7}
+}
+.play,aside{min-width:0}.stats>div{min-width:0}#orders{max-width:100%}.chip{max-width:100%}
 @media (max-width:760px){
-  .layout{grid-template-columns:1fr;gap:16px}
+  .stats{flex-wrap:wrap;gap:4px 12px}.stats>div:first-child{flex:1 1 100%}
+  .chip{font-size:13px;padding:4px 9px}#ingredients{white-space:normal;font-size:14px}
+  #forecast .flabel span{display:none}
+  .layout{grid-template-columns:minmax(0,1fr);gap:16px}
   .actions{position:sticky;bottom:0;z-index:5;background:var(--bg);padding:8px 0;order:5}
   .play{display:flex;flex-direction:column}.play .shell{order:3}.play #status{order:2}.play .minor{order:4}
   header{padding:6px 0}header .mark{display:none}
@@ -97,9 +110,9 @@ aside h3{font-size:13px;margin-top:16px}
   <header><span class="mark">2248<small>KINDS SAMPLER</small></span><nav id="boards" aria-label="Boards"></nav></header>
   <div class="layout">
     <section class="play" aria-label="Sampler board">
-      <div class="intro"><h1 id="title"></h1><p id="focus"></p></div>
+      <div class="intro"><h1 id="title"></h1><p id="focus"></p><p id="howto" hidden></p></div>
       <div class="stats">
-        <div><span class="k">GOAL</span><div id="orders"></div></div>
+        <div><span class="k">GOAL</span><div id="orders"></div><div id="dots" hidden></div></div>
         <div><span class="k" id="progress-k">INGREDIENTS</span><strong id="ingredients"></strong></div>
         <div style="text-align:right"><span class="k">MOVES LEFT</span><strong id="moves"></strong></div>
       </div>
@@ -111,6 +124,7 @@ aside h3{font-size:13px;margin-top:16px}
     </section>
     <aside>
       <div class="rule"><h2 id="rule-title"></h2><p id="rule-body"></p>
+        <p id="rule-extra" hidden>Any tile showing the right number counts, including tiles you merge.</p>
         <p>Each board is a different kind of level. There is no score: meet the goal before the moves run out.</p></div>
       <h3>How to make a chain</h3>
       <p>Click touching tiles, diagonals included: start with two equal tiles, then equal or double. Use at least three. The last tile you click keeps the sum. Preview, clear and undo are free; retries use the same board and refills.</p>

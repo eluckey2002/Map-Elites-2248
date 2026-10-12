@@ -1,13 +1,15 @@
 const test=require('node:test');const assert=require('node:assert');
 const fs=require('node:fs'),path=require('node:path');
-const rules=require('./model'),levels=require('./levels'),{solve,exhaustive,harvest,obvious,necessity}=require('./search');
+const rules=require('./model'),levels=require('./levels'),{solve,exhaustive,ordinary,necessity}=require('./search');
 
 const SPAWN=[2,4,8,16,32,64];
 const ADVANCED='feed-the-next-advanced';
 const isPow2=v=>Number.isSafeInteger(v)&&v>0&&(v&(v-1))===0;
 const isThreeLine=v=>{if(!Number.isSafeInteger(v)||v<3)return false;let n=v;while(n%2===0)n/=2;return n===3;};
-// Budget rule (PDL-040): the best known line plus four spare moves.
-const SPARE=4;
+// Budget rule (v4): the best known line plus six, and on orders boards at least 3 moves per order plus 4; boards the
+// ordinary-player screen raised are capped at three times the best line (or the floor, if larger).
+const SPARE=6;
+const floorOf=l=>l.goal.type==='orders'?3*l.goal.orders.length+4:0;
 const BEAMS=[{beam:1000,maxLength:8},{beam:200,maxLength:7}];
 
 test('an order with a spot counts only when its chain ends on the spot',()=>{
@@ -59,6 +61,18 @@ test('no rust anywhere: Rust is retired (PDL-040), boards that ask for rust or v
 test('the board list is the eight v3 boards in order',()=>{
   assert.deepEqual(levels.map(l=>l.id),['make-it-here','feed-the-next',ADVANCED,'shared-material','three-separate','see-it-coming',
     'the-drought','through-the-gate']);
+});
+
+test('v4: every board that refills shows its Next tiles (per-column draws); only the Drought does not',()=>{
+  for(const level of levels){
+    assert.equal(!!level.forecast,level.refill!==false,level.id+': forecast flag');
+    if(level.forecast)assert.ok(/next tiles/i.test(level.rule+' '+(level.howto||'')),level.id+': rule text does not name the Next tiles strip');
+  }
+  const page=fs.readFileSync(path.join(__dirname,'page.html'),'utf8');
+  assert.ok(/id="forecast"/.test(page)&&/NEXT TILES/.test(page),'the strip is in the page');
+  // each column has its own refill queue, so draws do not depend on play order
+  const level=levels.find(l=>l.id==='feed-the-next'),a=rules.create(level),b=rules.create(level);
+  assert.deepEqual([0,1,2,3,4].map(x=>rules.upcoming(level,a,x,3)),[0,1,2,3,4].map(x=>rules.upcoming(level,b,x,3)));
 });
 
 test('one refill rule: every normal board refills from 2..64; only the announced boss differs',()=>{
@@ -126,27 +140,34 @@ test('exhaustive short-win check finds a planted 2-move win and a 3-move win mad
   assert.equal(rules.replay(drought,d.win.map(chain=>({type:'move',chain}))).outcome,'won');
 });
 
-test('each board: no win in 3 moves or fewer (exhaustive), budget = best known line + 4, at least 60 opening chains, both proxies lose, and its twist binds',()=>{
+test('each board: no win in 3 moves or fewer (exhaustive), budget = best known line + 6 (floor 3 per order + 4), at least 60 opening chains, its twist binds',()=>{
   for(const level of levels){
     const state=rules.create(level),open=rules.chains(state,8);
     assert.ok(open.length>=60,`${level.id} opens with only ${open.length} chains`);
     const short=exhaustive(level,3);
     assert.equal(short.win,null,`${level.id} can be won in ${short.win&&short.win.length} moves`);
-    // Best known: the shortest line any of the screening beams finds (the wide beam of PDL-040, plus the v2 beam, which
-    // on See It Coming finds a line the wide one misses; exhaustive search already rules out 3 or fewer). It must be
-    // exactly the budget minus four.
-    const best=level.moves-SPARE;
+    // level.best is the shortest line the screening beams find (beam 1000 / chains up to 8, beam 200 / up to 7).
+    const best=level.best;
     assert.ok(best>=4,level.id+': best known line under 4 moves');
     const lines=BEAMS.map(o=>solve(level,{...o,budget:best})).filter(Boolean);
-    assert.ok(lines.length,`${level.id}: no line of ${best} moves (budget ${level.moves} = best + ${SPARE})`);
+    assert.ok(lines.length,`${level.id}: no line of ${best} moves`);
     const sol=lines.reduce((a,b)=>b.moves<a.moves?b:a);
-    assert.equal(sol.moves,best,`${level.id}: a beam finds ${sol.moves} moves, so the budget should be ${sol.moves+SPARE}`);
     assert.equal(rules.replay(level,sol.path.map(chain=>({type:'move',chain}))).outcome,'won');
-    assert.notEqual(harvest(level).outcome,'won',level.id+' is won by the harvest proxy');
-    assert.notEqual(obvious(level).outcome,'won',level.id+' is won by the do-the-obvious proxy');
+    for(const o of BEAMS)assert.equal(solve(level,{...o,budget:best-1}),null,`${level.id}: a beam finds a line shorter than ${best}`);
+    const base=Math.max(best+SPARE,floorOf(level));
+    assert.ok(level.moves>=base,`${level.id}: budget ${level.moves} is under best + ${SPARE} / the floor (${base})`);
+    assert.ok(level.moves<=Math.max(3*best,floorOf(level),base),`${level.id}: budget ${level.moves} is over three times the best line`);
     const nec=necessity(level,{beam:200,maxLength:7});
     assert.notEqual(nec.spotBlindWins,true,level.id+': ignoring the spot still wins');
     assert.notEqual(nec.winsWithoutRefills,true,level.id+': the refills are not needed');
+  }
+});
+
+test('ordinary-player baseline (game, not brain teaser): reported on every board, and it wins at the budget on Feed the Next and Three Separate',()=>{
+  for(const id of ['feed-the-next','three-separate']){
+    const level=levels.find(l=>l.id===id),r=ordinary(level);
+    assert.equal(r.outcome,'won',id+': an ordinary one-move-at-a-time player loses at the budget');
+    assert.equal(rules.replay(level,r.path.map(chain=>({type:'move',chain}))).outcome,'won');
   }
 });
 
@@ -198,12 +219,19 @@ test('Feed the Next — Advanced (v3, proposed rule): four orders in any order, 
   // The two parts D needs are the tiles two other orders make; the third plain order makes something else.
   const D=g.orders[3],makers=g.orders.slice(0,3).filter(o=>o.make===D.from);
   assert.equal(makers.length,2,'exactly two orders make D’s ingredient');
-  const nec=necessity(level,{beam:200,maxLength:7});
-  // Strictly in list order (A, B, C, D) the board is lost or needs more moves than the best known line.
-  assert.ok(!nec.strictOrderWin||nec.strictOrderWin.moves>level.moves-SPARE,'in-order play is as quick as the witness');
+  const nec=necessity(level,{beam:200,maxLength:8});
+  // Reported, not gated (Codex round 1): at the full screening chain length strict list order ties the best line on this
+  // seed (5 moves), so any-order play is a freedom here, not a speed-up. Seeds 1 to 3 do make list order slower, but the
+  // ordinary-player baseline loses all three, so seed 17 stays.
+  assert.ok(nec.strictOrderWin===null||nec.strictOrderWin.path.length===level.best,'strict order may tie the best line, never beat it');
   assert.notEqual(nec.strictOrderGreedy,'won','a greedy in-order player wins');
+  assert.equal(nec.capBlindWins,false,'a plan made without the cap still wins');
+  // v4: a first-time player can read it: ● wording, three short sentences, a one-line how-it-works, a counter in the page.
+  assert.ok(!/part/i.test(level.rule),'jargon in the rule');assert.ok(level.rule.split(/(?<=\.)\s+/).length<=3);
+  assert.ok(/●/.test(level.rule)&&level.howto&&/●/.test(level.howto));
+  assert.ok(/id="dots"/.test(fs.readFileSync(path.join(__dirname,'page.html'),'utf8')));
   // The best known line fills an order out of list order.
-  const sol=BEAMS.map(o=>solve(level,{...o,budget:level.moves-SPARE})).find(Boolean);
+  const sol=BEAMS.map(o=>solve(level,{...o,budget:level.best})).find(Boolean);
   let s=rules.create(level);const filled=[];
   for(const c of sol.path){s=rules.move(level,s,c);if(s.last.order>=0)filled.push(s.last.order);}
   assert.notDeepEqual(filled,[0,1,2,3],'the witness fills the orders in list order');

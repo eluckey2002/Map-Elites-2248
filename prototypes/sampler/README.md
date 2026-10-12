@@ -5,10 +5,11 @@ playtest screening, not evidence-ledger evidence.
 
 Build with `node prototypes/sampler/build.js <out.html>`. v1 was played as private
 Artifact https://claude.ai/artifact/SQuCNP6SQyC7m7dbSuN3YP (study `kinds-sampler-v1`).
-v2 was study `kinds-sampler-v2` (PDL-039). This is v3 (study `kinds-sampler-v3`,
-local-storage key `kindsSampler.v3`, PDL-040); runs and answers save to the
-Artifact's db with the same schema (`runs`, `answers`), answer ids
-`kinds-sampler-v3--<board>`, and the page loads only this study's answers.
+v2 was study `kinds-sampler-v2` (PDL-039), v3 `kinds-sampler-v3` (PDL-040). This
+is v4 (study `kinds-sampler-v4`, local-storage key `kindsSampler.v4`, the owner's
+notes on v3); runs and answers save to the Artifact's db with the same schema
+(`runs`, `answers`), answer ids `kinds-sampler-v4--<board>`, and the page loads
+only this study's answers.
 
 ## Why
 
@@ -19,6 +20,113 @@ element that adds "puzzle brain strategy". Each board here pairs one kind from
 `level-archetypes/11-five-kinds-expanded.md` (project files) with one layer that
 makes its steps depend on each other. Three Separate is the control: three
 orders that share nothing.
+
+## What changed from v3 (evan's v3 notes)
+
+Evan played v3: "so, again, too few moves." / "you have to few moves. I don't
+want to have to undo and hunt for an answer." / "I don't think I am making bad
+plays - I think it is just the draws I am getting." / "I don't use the preview
+button as a game play thing" / "if you wanted preview to be a part of the game
+then show the tiles" / "show the spawn I mean." / "you are creating like a brain
+teaser puzzle not a game." (and that v3 was "a regression" from v2).
+
+1. **The spawn is shown on every board that refills.** `forecast: true` on
+   every board except The Drought (nothing refills). Forecast mode gives each
+   column its own refill queue, so draws no longer depend on play order, and
+   the NEXT TILES strip shows the next three per column. Rule text on each board
+   names the strip (Make It Here: one short sentence, still two in all). What
+   refills can be is unchanged (2 to 64). Why it matters: with one shared
+   random stream the best line on the same start grid ranged from 4 to 19
+   across 12 other seeds on Shared Material (two seeds had no win) and 3 to 10
+   on Three Separate, so a budget set on one seed was hostile to anyone whose
+   draws differed.
+2. **Looser budgets.** Budget = best known line + 6 (was + 4), and on orders
+   boards at least 3 moves per order + 4 (Advanced, four orders: 16). Best known
+   is as in v3 (beam 1000 with chains up to 8, beam 200 up to 7, shortest), on
+   the forecast board; the exhaustive no-win-in-3 proof is kept.
+3. **Acceptance screen, "game, not brain teaser".** `ordinary()` in `search.js`
+   is a simple one-move-at-a-time player (fills an order if it can; else builds
+   one more of the next order's ingredient, nearest its spot; else merges the
+   biggest small group; no undo, no preview, fixed tie-breaks; on gate, relay
+   and exact boards it takes the best one-ply result on the beam's heuristic).
+   It must win at the budget; where it lost at best + 6 the budget was raised
+   by 2 until it won, capped at 3 times the best line (or the floor). Harvest
+   and do-the-obvious are now reported facts, not gates (evan prefers loose
+   limits over bite); neither wins any v4 board.
+4. **Feed the Next — Advanced is explained.** Evan: "that will definitely need
+   to be explained better." The rule is unchanged but reads: every order you
+   fill leaves a ●; only two ● fit; a third doesn't count (tiles still merge,
+   the move is spent); D's four 64s must include two ●. No "parts" word (the
+   parts tier, Feed the Next, keeps its wording). A live counter "● n of 2" sits
+   under the chips (warning colour at 2 of 2), chips say what each needs
+   ("D · [64] × 4, two of them ●"), a one-line "how it works" sits under the
+   title, and the refusal reads "Two ● are already on the board. Use them up
+   first (D's chain uses two) before filling another order."
+5. **"Tiles you merge count too."** Evan asked whether he could make a 16 and
+   use it: yes, any tile showing the right value counts. Every orders board says
+   so, and a chain that mixes values says "every tile in the chain must show 16".
+6. **Through the Gate wording.** Evan read "a chain of 128" as needing a 128
+   tile. The rule now says "a chain that adds up to 128 or more ends on a tile
+   beside the gate"; a chip says the same; the status line says when a chain
+   adds up to 128 or more but doesn't end beside the gate (and the reverse);
+   the gate is a striped, outlined wall cell and the tiles beside it are
+   dotted while it is shut. No rule change.
+7. **Layout.** The strip, order chips, the ● counter and the board fit the first
+   screen at 390 × 844 and 1280 × 720 on every board (tiles at most 48 px
+   phone, 40 px laptop, at least 36 px). On a laptop the Merge/Clear buttons and
+   status line moved under the board.
+
+Proposed, not owner-approved: per-column refill queues. The spawn values (2 to 64,
+never a 3) and the random draw are unchanged; only the order draws are used
+changes (per column, not per move), which is what lets the strip show exactly
+what drops in. The owner asked for the draws to be shown, and See It Coming
+already used this mechanism in versions 2 and 3, but he has not been asked about
+it on every board. Owner play of version 4 decides whether it stays.
+
+Boards re-picked. Forecast mode changes the refill stream, so the v3 seeds no
+longer gave the same boards. Start grids are all v3's. Make It Here moved to
+seed 42 and Advanced to seed 17 (the ordinary player wins there and the exhaustive check, spot check and cap check
+pass); every other board keeps its v3 seed. Kept despite the ordinary player
+losing: Shared Material, See It Coming, The Drought and Through the Gate (see
+the table and "Limits"). See It Coming seed 4 was kept over seeds 6, 61 and 74
+(where the ordinary player wins) because on 61 and 74 a forecast-blind
+re-planner also wins, so the strip would not matter. Evan stalled on Make It
+Here and Advanced in v3; the floor and the new budgets are the fix, the designs
+are unchanged.
+
+### Robustness: the same start grid under other seeds
+
+Best line by the beam (200 wide, chains up to 8 tiles, up to 14 moves; blank =
+none found) for seeds 11 to 16, not a gate:
+
+| Board | Home seed best | Seeds 11, 12, 13, 14, 15, 16 |
+|---|---|---|
+| Make It Here | 6 | 5, 8, 4, -, 14, 4 |
+| Feed the Next | 4 | 4, 4, 4, 4, 4, 4 |
+| Feed the Next — Advanced | 5 | 5, 5, 6, 5, 5, 5 |
+| Shared Material | 5 | 4, 13, 5, 6, 5, 8 |
+| Three Separate | 6 | 5, 5, 4, 6, -, 6 |
+| See It Coming | 4 | no win under most seeds (seeds 1 to 17: wins only on 1, 3, 7, 13, 16, 17) |
+| Through the Gate | 4 | 4, 4, 5, -, 4, 4 |
+
+The ordinary player on the same 12 other seeds (11 to 22) at each board's
+budget wins: Make It Here 3, Feed the Next 12, Advanced 1, Three Separate 3,
+the others 0.
+
+### Limits
+
+- The ordinary player wins at the budget on 4 of 8 boards (home seed): Make It
+  Here, Feed the Next, Advanced, Three Separate. It loses on Shared Material,
+  See It Coming, The Drought and Through the Gate even at the cap (3 times the
+  best line), and on none of 80 seeds for Shared Material or Through the Gate.
+  The target was 6 of 8. It is a crude player (no look-ahead, no sense of
+  scarcity), so a loss means "an ordinary line does not stumble into this", not
+  that the board is hard; those boards keep their v3 designs and the floor.
+- Advanced: the ordinary player wins on its last move (16 of 16).
+- The Drought: nothing refills, so extra moves do not help a player who runs out
+  of chains; its budget is best + 6 = 12.
+- Harvest and do-the-obvious: lose on every board (reported only). "Proxy wins at
+  +6": none.
 
 ## What changed from v2 (PDL-040)
 
@@ -85,9 +193,12 @@ parts, let alone three (the same reason the cap never binds on the parts
 tier, below). So this build keeps the spec's any-order, part-per-fill and
 cap clauses and replaces "every later order needs a part" with "D needs two
 parts". A and C both make 64, D wants four 64s including two parts, B makes a
-32. Filling A, B, C in list order makes three parts, so C is refused; strict
-list order can still win only by spending B's part in a throwaway chain, which
-costs moves. The witness fills A and C first, then D, then B. This is a rule
+32. Filling A, B, C in list order makes three parts, so C is refused. On the
+shipped seed (17) strict list order still ties the best line (5 moves, found
+with chains up to 8; the earlier claim that it is slower held only for chains
+up to 7). Any-order play is a freedom there, not a speed-up. Seeds 1 to 3 do
+make list order slower, but the ordinary player loses all three. The witness
+fills A and C first, then D, then B. This is a rule
 change the owner has not seen; treat it as a candidate.
 
 ### Forecast check (See It Coming)
@@ -158,8 +269,8 @@ tile; gravity; seeded refills. `model.js` adds:
   the tile the last one made (●).
 - **Exact** (`exact`: make one tile of the target), **Connect** (`connect`: one
   chain through every ★).
-- **Forecast**: each column has its own refill queue; the next two show above
-  it in the NEXT TILES strip.
+- **Forecast**: each column has its own refill queue; the next three show above
+  it in the NEXT TILES strip. Three covers any chain with up to four tiles stacked in one column; a straight line of five or six in one column can still deal a tile the strip does not show (rare; reported, not prevented).
 - **Boss** (`boss`, with `refill:false`): a banner names the boss and what it
   changes until the first move.
 - **Stone** walls and a **gate**: a stone cell that opens when a chain whose sum
@@ -201,64 +312,63 @@ forecast-blind players. These are design claims; owner play decides.
 The first move where each proxy leaves the best known line, from the opening
 board unless a move number is given. Rows count from the top, columns from the
 left. Produced by a scratch script (`diverge3.js`) that plays each proxy and
-the witness side by side at the v3 budgets; a proxy standing in for the owner
+the witness side by side at the v4 budgets; a proxy standing in for the owner
 is still a design claim, not his behaviour.
 
 | Board | Baseline move that loses | Witness move instead |
 |---|---|---|
-| Make It Here | Move 1: harvest and obvious both take an 18-tile 192 chain of 4s, 8s and 16s ending in the top row, col 5, spending most of A's 16s | 4+4+8+8+8+8+8+16 = 64 ending in the top row, col 2: a mixed chain that builds a 64 for B before filling A |
-| Feed the Next | Harvest, move 1: a 560 chain through the 64s. Obvious, move 3: the biggest 64 chain (512) instead of filling B | Move 1 fills A with four 16s ending in the 5th row, col 2; move 3 is 8+8+16+32+64+64+64 = 256 through the part, filling B |
-| Feed the Next — Advanced | Harvest, move 1: a 136 chain. Obvious and in-order greedy, move 2: fill B (four 8s) at once, which uses up the second part slot before C | 4+4+8 = 16 in the 4th row, col 4; the witness fills A, then C, then D with both 64 parts, and B last |
+| Make It Here | Move 1: harvest and obvious both take an 18-tile 192 chain of 4s, 8s and 16s ending in the top row, col 5 | 4+4+8+16+16+16 = 64 ending in the 3rd row, col 1: a mixed chain that builds a 64 for B before filling A |
+| Feed the Next | Harvest, move 1: a 560 chain through the 64s. Obvious fills A at once like the witness (a different four 16s) and then loses | Move 1 fills A with four 16s ending in the 5th row, col 1 |
+| Feed the Next — Advanced | Harvest, move 1: a 136 chain. Obvious and in-order greedy fill A at once (a different four 16s) and run out of moves or chains | Fills A, then C, then D with both ● 64s, then B |
 | Shared Material | Harvest, move 1: a 4s-to-32 chain of 84. Obvious fills A on move 1 like the witness, then takes that 84 chain on move 2 | Move 1 fills A with four 3s ending in the 4th row, col 4; move 2 is a small 4+4+8 = 16 in the top row |
-| Three Separate | Control board. Harvest, move 1: a 1216 chain through the 64s and 128s; obvious fills the 512 order with different 128s than the witness and runs out of moves later | (control, no dependency) |
+| Three Separate | Control board. Harvest, move 1: a 1216 chain; obvious fills the 512 order first with the same 128s and runs out of chains | (control, no dependency) |
 | See It Coming | Move 1: harvest, obvious and the forecast-blind re-planner (seed 101) all take a 78 chain of 2s to 16s ending in the 6th row, col 3 | 2+2+2+4+4+8+8 = 30 ending in the top row, col 2, where the next tiles land |
 | The Drought | Move 1: 16+16+16+32 = 80 ending in the 4th row, col 5; with no refills both proxies have no chains left after move 2 | 4+4+4+4+8+8 = 32 ending in the 3rd row, col 4 |
 | Through the Gate | Move 1: 64+64+64 = 192 in the bottom-right corner; both proxies run out of moves | 2+2+4+4+4 = 16 ending in the 5th row, col 3, in the left room |
 
 ## Screening
 
-`search.js`: a beam solver, an exhaustive short-win check, the proxies, and
-twist checks. Proxies are screens, not the owner's behaviour (AGENTS.md), and
-passing them is not evidence. `model.test.js` checks every board:
+`search.js`: a beam solver, an exhaustive short-win check, the proxies, the
+ordinary-player baseline, and twist checks. Screens are not evidence (AGENTS.md).
+`model.test.js` checks every board:
 
-- **No win in 3 moves or fewer, proven.** `exhaustive()` tries every legal
-  chain of any length. Its only pruning cannot skip a win: one move closes at
-  most one goal step (an order, a relay stage, the exact tile, opening the
-  gate, the connection; no chain can open the gate and pass through it in the
-  same move), so states with more open steps than moves left are dropped, and
-  when they are equal only chains that close a step are tried, drawn from
-  every chain with that step's exact sum (`chainsWithSum`, checked against
-  brute force on every board).
-- **Budget = best known + 4**, where best known is the shortest line the
-  beams find (beam 1000 with chains up to 8 tiles; beam 200 with up to 7).
-  Best known is a witness, not a proof that nothing shorter than it exists
-  above 3 moves.
-- At least 60 legal opening chains of up to 8 tiles; harvest and obvious lose.
+- **No win in 3 moves or fewer, proven** by `exhaustive()` (every legal chain of
+  any length; pruning that cannot skip a win: one move closes at most one goal
+  step, so states with more open steps than moves left are dropped, and when
+  they are equal only chains that close a step, drawn from `chainsWithSum`,
+  are tried; `chainsWithSum` is checked against brute force on every board).
+- **Budget = best known + 6, floor 3 per order + 4**, capped at 3 times best
+  where the ordinary-player screen raised it. `level.best` is the shortest line
+  the beams find (beam 1000 / chains up to 8 and beam 200 / up to 7); the test
+  re-finds it and checks that no beam finds a shorter one. Best known is a
+  witness, not a proof that nothing shorter than it exists above 3 moves.
+- At least 60 legal opening chains of up to 8 tiles.
+- Every refilling board shows the Next tiles; the Drought has none.
 - Twist checks: spot (the plan that wins with the spots removed fails with
-  them); forecast (no win with useless refills; on See It Coming the blind plan
-  and blind re-planner lose); Advanced (strict list order cannot win in the
-  best known number of moves, and the in-order greedy player loses; the best
-  known line fills out of list order).
-- Standing rules: one spawn list, powers of two, the first 200 refills, the
-  boss flag, the 7 × 6 gate board, no rust, Make It Here's two-sentence rule
-  and one-order-at-a-time flag, and unit tests for spots, parts, any-order
-  parts, the gate, and the exhaustive check (a planted 2-move win, and v2
-  Drought's 3-move win that the v2 beam missed).
+  them); Through the Gate and See It Coming need the refills (no win with
+  useless ones); See It Coming: forecast-blind whole plans and forecast-blind
+  re-planners lose (whole-plan check on seeds 55, 11, 22; re-planner on 101, 55, 11, 22 — the `necessity()` defaults); Advanced: the in-order greedy player loses (strict list order ties the best line on seed 17; see the Advanced section), a
+  plan made without the cap fails.
+- The ordinary player wins at the budget on Feed the Next and Three Separate
+  (the rest reported; see "Limits").
+- Standing rules: one spawn list, powers of two, the first 200 refills, the boss
+  flag, the 7 × 6 gate board, no rust, Make It Here's two-sentence rule, unit
+  tests for spots, parts, any-order parts, the gate and the exhaustive check.
 
-Boards came from seeded generation (pools and filters per kind; scratch
-`gen4.js`), keeping only boards that pass every screen.
+| # | Board | Seed | Best line | Budget | Exhaustive ≤ 3 | Opening chains | Harvest / obvious (reported) | Ordinary player |
+|---|---|---|---|---|---|---|---|---|
+| 1 | Make It Here: [16] × 4 on ◎, then [64] × 4 on ◎ | 42 (re-picked) | 6 | 12 | no win | 4708 | lose / lose | wins in 6 |
+| 2 | Feed the Next (parts) | 38 | 4 | 13 (floor) | no win | 630 | lose / lose | wins in 5 |
+| 3 | Feed the Next — Advanced (proposed rule) | 17 (re-picked) | 5 | 16 (floor) | no win | 640 | lose / lose | wins in 16 |
+| 4 | Shared Material | 64 | 5 | 15 (raised) | no win | 163 | lose / lose | loses |
+| 5 | Three Separate | 2 | 6 | 17 (raised) | no win | 457 | lose / stuck | wins in 16 |
+| 6 | See It Coming (256, then 512 using it) | 4 | 4 | 12 (raised) | no win | 1221 | lose / lose | loses |
+| 7 | The Drought | 59 | 6 | 12 | no win | 396 | stuck / stuck | stuck |
+| 8 | Through the Gate (128 or more) | 3 | 4 | 12 (raised) | no win | 303 | lose / lose | loses |
 
-| # | Board | Kind + layer | Seed | Budget | Best line | Exhaustive ≤ 3 | Opening chains | Harvest / obvious | Twist check |
-|---|---|---|---|---|---|---|---|---|---|
-| 1 | Make It Here | Recipe on the spot: [16] × 4 on ◎, then [64] × 4 on ◎; four start values | 3 (new) | 8 | 4 | no win | 4708 | lose / lose | spot-blind plan fails |
-| 2 | Feed the Next | Parts: [16] × 4, [64] × 4, [256] × 4, each later one with a part | 38 | 8 | 4 | no win | 630 | lose / lose | (parts tier, unchanged) |
-| 3 | Feed the Next — Advanced | Any order, cap of two parts, D needs two parts (proposed rule) | 3 (new) | 9 | 5 | no win (4 orders) | 640 | lose / lose | in-order greedy loses; strict order needs 7 |
-| 4 | Shared Material | Two orders want the same nine green 3s (eight needed) | 64 | 8 | 4 | no win | 163 | lose / lose | — |
-| 5 | Three Separate | Control: [8] × 4, [64] × 4, [128] × 4 | 2 | 9 | 5 | no win | 457 | lose / lose | (control) |
-| 6 | See It Coming | Forecast + relay: 256, then 512 using it | 4 (new) | 8 | 4 | no win | 1221 | lose / lose | refills needed; the one blind plan that exists and 4 blind re-planners lose |
-| 7 | The Drought | Boss: no refills, make one 512 | 59 (new) | 10 | 6 | no win | 396 | stuck / stuck | — |
-| 8 | Through the Gate | 7 × 6 rooms, gate at 128 or more, forecast, link both ★ | 3 (gate 64 → 128) | 8 | 4 | no win | 303 | lose / lose | refills needed |
-
-Lose = out of moves; stuck = no legal chain left. A browser check at 390 and
-1280 px plays the best known line on every board to a win, with no page errors
-and no horizontal scroll.
+Lose = out of moves; stuck = no legal chain left. "Raised" = best + 6 (or the
+floor) was raised 2 at a time toward an ordinary-player win, up to the cap; it
+did not win. A browser check at 390 and 1280 px plays the best known line on
+every board to a win with no page errors and no horizontal scroll, and a fit
+check measures that the board, chips and strip sit in the first screen at 390 ×
+844 and 1280 × 720.

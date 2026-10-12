@@ -3,7 +3,7 @@
 (function(){
   'use strict';
   const rules=window.SamplerRules,levels=window.SamplerLevels,$=id=>document.getElementById(id);
-  const STUDY='kinds-sampler-v3',LS='kindsSampler.v3';
+  const STUDY='kinds-sampler-v4',LS='kindsSampler.v4';
   const COLORS=['#c03a7a','#3d7fb8','#7a4fc0','#2f7d6b'],LETTERS='ABCD',RINGS=['ing-a','ing-b','ing-c','ing-d'];
   let local={current:0,played:{}};
   try{Object.assign(local,JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){/* storage unavailable */}
@@ -24,7 +24,10 @@
   // `oneAtATime` boards (Make It Here, v3) show only the first unfinished order in full; later orders stay greyed and
   // small, and their ingredient rings are hidden, until the orders before them are filled.
   const active=(s,i)=>!level.oneAtATime||s.done.indexOf(false)===i;
-  const partsLabel=i=>{const n=goal().parts?rules.partsNeeded(level,i):0;return n===1?', with a part':n===2?', with two parts':n?`, with ${n} parts`:'';};
+  // Chip wording: in-turn parts say "with a part"; any-order boards (Advanced) say which of the tiles must be ●.
+  const partsLabel=i=>{const n=goal().parts?rules.partsNeeded(level,i):0;if(!n)return '';
+    if(goal().anyOrder)return n===1?', one of them ●':n===2?', two of them ●':`, ${n} of them ●`;
+    return n===1?', with a part':n===2?', with two parts':`, with ${n} parts`;};
   // Colour family: the 2 line (2, 4, 8 ...) uses the main palette; the 3 line (3, 6, 12, 24 ...) is green, so the page
   // shows how scarce those tiles are (CONTEXT.md: a family is one doubling progression shown by one colour).
   const family=v=>{let n=v;while(n%2===0)n/=2;return n===1?'two':n===3?'three':'other';};
@@ -47,15 +50,16 @@
     if(g.type==='exact')return [chip(['Make one ',g.make],COLORS[0],shown.done[0])];
     if(g.type==='relay')return g.stages.map((v,i)=>chip(i?['then ',v,', using it']:['Make ',v],COLORS[i],shown.done[i]));
     if(g.type==='leftover')return [chip(`Leave ${g.max} tile${g.max>1?'s':''}`,COLORS[0],rules.goalMet(level,shown))];
-    return [chip('One chain through both ★',COLORS[0],shown.done[0])];
+    const link=chip('One chain through both ★',COLORS[0],shown.done[0]);
+    return level.gate?[chip([`Gate: a chain adding up to ${fmt(level.gate.sum)}+, ending beside it`],COLORS[1],shown.gateOpen),link]:[link];
   }
   function progressText(shown){
     const g=goal();
     // One line per ingredient (two orders can share one).
     if(g.type==='orders')return g.orders.filter((o,i)=>active(shown,i)&&g.orders.findIndex(q=>q.from===o.from)===i).map(o=>`${o.from}s ${Math.min(ingredientCount(shown,o),o.make/o.from)}/${o.make/o.from}`)
-      .concat(g.parts?[`parts: ${rules.partCount(shown)}/${rules.MAX_PARTS}`]:[]).join('\n');
+      .join(matchMedia('(max-width:760px)').matches?' · ':'\n');
     if(g.type==='leftover')return `${rules.tileCount(shown)} tiles`;
-    if(level.gate)return shown.gateOpen?'gate open':'gate shut';
+    if(level.gate)return '';
     return '—';
   }
 
@@ -79,13 +83,17 @@
         const fits=g.orders.map((q,i)=>!state.done[i]&&q.from===o.from&&q.make===o.make?i:-1).filter(i=>i>=0);
         const short=fits.filter(i=>rules.partsIn(state,selection)<rules.partsNeeded(level,i));
         if(g.parts&&short.length===fits.length){const n=rules.partsNeeded(level,short[0]);return {text:`Right recipe, but ${g.anyOrder?'order '+LETTERS[short[0]]+'’s':'the'} chain has to include ${n===1?'a part':n===2?'two parts':n+' parts'} (●).`,tone:'warn'};}
-        if(g.parts&&rules.partsAfter(state,selection)>rules.MAX_PARTS)return {text:`That would make a third part, so it does not fill the order. The tiles would still merge and use a move. At most ${rules.MAX_PARTS} parts at once.`,tone:'warn'};
+        if(g.parts&&rules.partsAfter(state,selection)>rules.MAX_PARTS){
+          const big=g.orders.findIndex((q,i)=>!state.done[i]&&rules.partsNeeded(level,i)>0);
+          if(g.anyOrder&&big>=0)return {text:`Two ● are already on the board. Use them up first (${LETTERS[big]}’s chain uses two) before filling another order.`,tone:'warn'};
+          return {text:`That would make a third part, so it does not fill the order. The tiles would still merge and use a move. At most ${rules.MAX_PARTS} parts at once.`,tone:'warn'};
+        }
         return {text:'Right recipe, but it does not fill an order here.',tone:'warn'};
       }
       for(const [i,o] of g.orders.entries()){
         if(state.done[i]||!active(state,i))continue;
         const used=values.filter(v=>v===o.from).length;
-        if(sum===o.make&&used<values.length)return {text:`${base} The chain mixes values, so it doesn't count.`,tone:'warn'};
+        if(sum===o.make&&used<values.length)return {text:`${base} The chain mixes values: every tile in the chain must show ${o.from}.`,tone:'warn'};
         if(used>0)return {text:`${base} Uses ${used} of your ${o.from}s (${ingredientCount(state,o)-used} left).`,tone:'warn'};
       }
     }
@@ -99,8 +107,12 @@
       if(i>0&&sum===g.stages[i])return {text:`${base} Right sum, but it has to include the ${fmt(g.stages[i-1])} you made (●).`,tone:'warn'};
       if(sum>g.stages[i])return {text:`${base} Over ${fmt(g.stages[i])}.`,tone:'warn'};
     }
-    if(level.gate&&!state.gateOpen&&rules.opensGate(level,sum)&&Math.max(Math.abs(selection.at(-1)[0]-level.gate.at[0]),Math.abs(selection.at(-1)[1]-level.gate.at[1]))===1)
-      return {text:`${base} Ends beside the gate with ${fmt(level.gate.sum)} or more: opens it.`,tone:'good'};
+    if(level.gate&&!state.gateOpen){
+      const beside=Math.max(Math.abs(selection.at(-1)[0]-level.gate.at[0]),Math.abs(selection.at(-1)[1]-level.gate.at[1]))===1,big=rules.opensGate(level,sum);
+      if(big&&beside)return {text:`${base} Adds up to ${fmt(sum)} (${fmt(level.gate.sum)} or more) and ends beside the gate: opens it.`,tone:'good'};
+      if(big)return {text:`${base} Adds up to ${fmt(sum)}, which is ${fmt(level.gate.sum)} or more, but the chain has to end on a tile beside the gate to open it.`,tone:'warn'};
+      if(beside)return {text:`${base} Ends beside the gate, but it adds up to ${fmt(sum)}: it has to add up to ${fmt(level.gate.sum)} or more.`,tone:'warn'};
+    }
     if(g.type==='connect'){
       if(rules.connects(level,selection))return {text:`${base} Goes through both ★: wins.`,tone:'good'};
       const hit=g.marks.filter(m=>selection.some(p=>same(p,m))).length;
@@ -116,25 +128,31 @@
     $('orders').replaceChildren(...goalChips(shown));
     $('progress-k').textContent=goal().type==='orders'?'INGREDIENTS':goal().type==='leftover'?'ON BOARD':'';
     $('ingredients').textContent=progressText(shown);
+    // Live ● counter (boards with parts); warning-coloured when the board is full.
+    const dots=$('dots'),dotsOn=!!goal().parts;dots.hidden=!dotsOn;
+    if(dotsOn){const n=rules.partCount(shown);dots.textContent=`● ${n} of ${rules.MAX_PARTS}`;dots.classList.toggle('full',n>=rules.MAX_PARTS);
+      dots.setAttribute('aria-label',`${n} of ${rules.MAX_PARTS} dots on the board`);}
+    const how=$('howto');how.hidden=!level.howto;how.textContent=level.howto||'';
+    $('rule-extra').hidden=goal().type!=='orders';
     $('moves').textContent=`${shown.maxMoves-shown.moves} / ${shown.maxMoves}`;
-    // Forecast strip (v3: labelled, larger, high contrast): the next two tiles that drop into each column, nearest at
+    // Forecast strip (v3: labelled, larger, high contrast): the next three tiles that drop into each column (a chain of four stacked in one column uses three), nearest at
     // the bottom, right above its column. A stone column shows nothing.
     const fc=$('forecast');fc.hidden=!level.forecast;
-    if(level.forecast){const row=$('forecast-row');row.style.gridTemplateColumns=`repeat(${shown.gridWidth},1fr)`;
+    if(level.forecast){const row=$('forecast-row');row.style.gridTemplateColumns=`repeat(${shown.gridWidth},minmax(0,1fr))`;
       row.replaceChildren(...Array.from({length:shown.gridWidth},(_,x)=>{const d=document.createElement('div');d.className='next';
         if(Array.from({length:shown.gridHeight},(_,y)=>rules.isStone(shown,x,y)).every(Boolean)&&!(level.gate&&shown.gateOpen&&level.gate.at[0]===x)){d.classList.add('wall');return d;}
-        const [a,b]=rules.upcoming(level,shown,x,2);
-        for(const v of [b,a]){const t=miniTile(v);t.classList.add('ftile');d.append(t);}
-        d.setAttribute('aria-label',`Column ${x+1}: next ${a}, then ${b}`);return d;}));}
+        const [a,b,c]=rules.upcoming(level,shown,x,3);
+        for(const v of [c,b,a]){const t=miniTile(v);t.classList.add('ftile');d.append(t);}
+        d.setAttribute('aria-label',`Column ${x+1}: next ${a}, then ${b}, then ${c}`);return d;}));}
     // board
     const boss=$('boss');boss.hidden=!(level.boss&&state.moves===0);
     if(level.boss){$('boss-title').textContent=level.boss.title;$('boss-text').textContent=level.boss.text;}
     $('shell').style.setProperty('--aspect',String(shown.gridHeight/shown.gridWidth));
-    const board=$('board');board.style.gridTemplateColumns=`repeat(${shown.gridWidth},1fr)`;board.replaceChildren();
+    const board=$('board');board.style.gridTemplateColumns=`repeat(${shown.gridWidth},minmax(0,1fr))`;board.replaceChildren();
     const spots=orders().map((o,i)=>o.at?{at:o.at,i,done:shown.done[i]}:null).filter(Boolean),marks=goal().type==='connect'?goal().marks:[];
     for(let y=0;y<shown.gridHeight;y++)for(let x=0;x<shown.gridWidth;x++){
       const tile=shown.grid[y][x],cell=document.createElement('button');cell.type='button';cell.dataset.x=x;cell.dataset.y=y;
-      if(level.gate&&!shown.gateOpen&&same(level.gate.at,[x,y])){cell.className='tile stone gate';cell.disabled=true;cell.textContent='≥'+fmt(level.gate.sum);cell.setAttribute('aria-label',`Gate: opens with a chain of ${level.gate.sum} or more ending beside it`);board.append(cell);continue;}
+      if(level.gate&&!shown.gateOpen&&same(level.gate.at,[x,y])){cell.className='tile stone gate';cell.disabled=true;cell.textContent=fmt(level.gate.sum)+'+';cell.setAttribute('aria-label',`Gate wall: opens when a chain adding up to ${level.gate.sum} or more ends on a tile beside it`);board.append(cell);continue;}
       if(rules.isStone(shown,x,y)){cell.className='tile stone';cell.disabled=true;cell.setAttribute('aria-label',`Column ${x+1}, row ${y+1}: wall`);board.append(cell);continue;}
       if(!tile){cell.className='tile empty';cell.disabled=true;cell.setAttribute('aria-label',`Column ${x+1}, row ${y+1}: empty`);board.append(cell);continue;}
       cell.className=tileClasses(tile.value).join(' ');
@@ -142,6 +160,7 @@
       orders().forEach((o,i)=>{if(tile.value===o.from&&!shown.done[i]&&active(shown,i))cell.classList.add(RINGS[i]);});
       const spot=spots.find(s=>same(s.at,[x,y]));if(spot&&!spot.done){cell.classList.add('spot');cell.classList.add('spot-'+'ab'[spot.i]);if(!active(shown,spot.i))cell.classList.add('spot-later');}
       if(marks.some(m=>same(m,[x,y])))cell.classList.add('mark');
+      if(level.gate&&!shown.gateOpen&&Math.max(Math.abs(x-level.gate.at[0]),Math.abs(y-level.gate.at[1]))===1)cell.classList.add('gate-next');
       if(tile.made)cell.classList.add('made');
       const order=selection.findIndex(([sx,sy])=>sx===x&&sy===y);
       if(order>=0&&!previewing){cell.classList.add('sel');const tag=document.createElement('span');tag.className='ord';tag.textContent=order+1;cell.append(tag);}
@@ -191,7 +210,7 @@
     shell.style.width='';
     const room=shell.parentElement.clientWidth,top=shell.getBoundingClientRect().top+window.scrollY;
     const fc=$('forecast'),fcH=fc.hidden?0:fc.offsetHeight+6;
-    const below=phone?$('actions-bar').offsetHeight+8:12;
+    const below=phone?$('actions-bar').offsetHeight+8:$('actions-bar').offsetHeight+$('status').offsetHeight+22;
     const tallest=(window.innerHeight-top-below-fcH-2*PAD-(rows-1)*GAP)/rows;
     const tile=Math.max(MIN_TILE,Math.min(phone?48:40,tallest,(room-2*PAD-(cols-1)*GAP)/cols));
     shell.style.width=Math.floor(tile*cols+(cols-1)*GAP+2*PAD)+'px';
