@@ -12,15 +12,19 @@
   const store={get(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch{return null;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}};
   function resetSelection(){selection=[];preview=false;removing=false;dragging=false;retryArmed=false;}
   function newId(){try{return crypto.randomUUID();}catch{return 'a'+Date.now().toString(36)+Math.random().toString(36).slice(2);}}
-  async function save(final){
+  // Writes run one at a time, each with a snapshot of the attempt as it was, so a slow write never lands last.
+  let writes=Promise.resolve();
+  function save(final){
     if(!actions.length)return;
     const id=attemptId;
     const doc={study:STUDY,levelId:level.id,levelName:level.name,attemptId:id,startedAt,updatedAt:new Date().toISOString(),
-      outcome:state.outcome,completed:state.completed,moves:state.moves,budget:level.moves,actions,note:$('feedback').value||''};
+      outcome:state.outcome,completed:state.completed,moves:state.moves,budget:level.moves,actions:JSON.parse(JSON.stringify(actions)),note:$('feedback').value||''};
     const shown=text=>{if(id===attemptId)$('save').textContent=text;};
-    try{const db=await database();if(!db)throw new Error();await db.collection('runs').doc(id).set(doc);
-      shown(final?'Saved. Thanks for playing this one.':'Progress saved.');}
-    catch{shown('Not saved here (open the page while signed in to keep plays).');}
+    writes=writes.then(async()=>{
+      try{const db=await database();if(!db)throw new Error();await db.collection('runs').doc(id).set(doc);
+        shown(final?'Saved. Thanks for playing this one.':'Progress saved.');}
+      catch{shown('Not saved here (open the page while signed in to keep plays).');}
+    });
   }
   function picker(){
     const wins=store.get('relayWins')||{};
@@ -48,7 +52,7 @@
       const tile=shown.grid[y][x],cell=document.createElement('button');cell.type='button';
       cell.className=`cx-tile ${tile.value>128?'cx-built':'cx-v'+tile.value}`;cell.dataset.x=x;cell.dataset.y=y;
       cell.append(document.createTextNode(tile.value.toLocaleString()));if(tile.value>=1000)cell.classList.add('cx-long');
-      const endpoint=goal?.ends.findIndex(([gx,gy])=>gx===x&&gy===y)??-1;
+      const endpoint=shown.objective?.ends.findIndex(([gx,gy])=>gx===x&&gy===y)??-1;
       if(endpoint>=0){const tag=document.createElement('span');tag.className='cx-endpoint';tag.textContent=endpoint?'②':'①';cell.append(tag);cell.classList.add('cx-marked');}
       const order=selection.findIndex(([sx,sy])=>sx===x&&sy===y);
       if(order>=0&&!preview){cell.classList.add('cx-selected');const tag=document.createElement('span');tag.className='cx-order';tag.textContent=order+1;cell.append(tag);}

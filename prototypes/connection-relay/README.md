@@ -3,7 +3,7 @@
 Six new finite Connection puzzles (2026-10-18), asked for by the owner as "more new
 connection run puzzles". Playtest only: nothing here changes the shipped game.
 Private Artifact: https://claude.ai/artifact/PNBxjsFMGsZpJPRaKoJcL9 (finished and
-in-progress attempts save to its db collection `runs`, study `connection-relay-v1`).
+in-progress attempts save to its db collection `runs`, study `connection-relay-v2`).
 
 ## Same rules as the shipped Connection puzzles
 
