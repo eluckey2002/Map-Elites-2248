@@ -14,7 +14,7 @@ and the page loads only this study's answers.
 ## v5: the final round (owner's final review, 2026-10-18)
 
 The owner reviewed every kind and picked what stays
-(`reviews/2026-10-18-final-review-decisions.md`, project files). v5 is one board per
+([`prototypes/reviews/2026-10-18-final-review-decisions.md`](../reviews/2026-10-18-final-review-decisions.md)). v5 is one board per
 keeper, in this order: Feed the Next, Make It Here (revised), Shared Material, See It
 Coming, Through the Gate, The Drought (boss, last). Dropped: Feed the Next — Advanced
 and its two-part cap (BL-0032), and the Three Separate control.
@@ -45,6 +45,11 @@ the owner's ask for looser limits.
 | Through the Gate | 0/30 | — | 21/30 | 5 / 5 | 13 |
 | The Drought | 0/1 | — | 0/1 at chains ≤ 7; wins in 2 at chains ≤ 12 | — | 10 |
 
+The percentiles count only the draws a player won. A draw the beam did not win within 20 moves
+(beam 60) is left out, so for See It Coming (16/30) and the boards at 21/30 the limit covers
+the winnable draws, not every draw; the unwon draws need more than 20 moves or a wider search.
+`calibrate.js` also prints the beam P90 over all draws, counting a loss as over 20.
+
 Shared Material, See It Coming and Through the Gate are the hard ones: a player who
 does not plan loses most draws (the ordinary player does steer toward the gate and the ★ through its heuristic, but it
 looks only one move ahead).
@@ -63,7 +68,7 @@ element that adds "puzzle brain strategy". Each board here pairs one kind from
 makes its steps depend on each other. Three Separate is the control: three
 orders that share nothing.
 
-## What changed from v3 (evan's v3 notes)
+## Archive: what changed from v3 to v4 (superseded by v5 above)
 
 Evan played v3: "so, again, too few moves." / "you have to few moves. I don't
 want to have to undo and hunt for an answer." / "I don't think I am making bad

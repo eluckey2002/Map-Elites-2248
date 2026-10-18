@@ -17,5 +17,5 @@ for(const base of levels){
     if(seed===base.seed)home.beam=b?b.moves:null;
   }
   console.log(JSON.stringify({id:base.id,seeds:seeds.length,ordinaryWins:ord.length,ordinaryP50:q(ord,.5),ordinaryP80:q(ord,.8),ordinaryMax:q(ord,1),
-    beamWins:beam.length,beamP50:q(beam,.5),beamP90:q(beam,.9),beamMax:q(beam,1),home}));
+    beamWins:beam.length,beamP50:q(beam,.5),beamP90:q(beam,.9),beamMax:q(beam,1),beamP90AllDraws:(()=>{const v=q([...beam,...Array(beamLoss).fill(Infinity)],.9);return v===Infinity?'>20':v;})(),home}));
 }

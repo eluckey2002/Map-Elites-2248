@@ -1264,8 +1264,7 @@ design result:
   on the final review page (private Artifact, db collection `decisions`), after
   the kinds sampler rounds, the Shared Material search (RESULT-0085) and the
   Combo Run prototypes. Every pick matched the page's recommendation; no note
-  was left. Record: `reviews/2026-10-18-final-review-decisions.md` (project
-  files).
+  was left. Record: [`prototypes/reviews/2026-10-18-final-review-decisions.md`](reviews/2026-10-18-final-review-decisions.md).
 - **Captured play:** none new. This is an owner decision on earlier play
   (PDL-038 to PDL-040, sampler v3 and v4 runs), not a playtest.
 - **Decision:** per kind:
