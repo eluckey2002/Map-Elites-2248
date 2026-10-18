@@ -13,18 +13,23 @@
   function resetSelection(){selection=[];preview=false;removing=false;dragging=false;retryArmed=false;}
   function newId(){try{return crypto.randomUUID();}catch{return 'a'+Date.now().toString(36)+Math.random().toString(36).slice(2);}}
   // Writes run one at a time, each with a snapshot of the attempt as it was, so a slow write never lands last.
-  let writes=Promise.resolve();
+  let writes=Promise.resolve();const saveSerial={};
   function save(final){
     if(!actions.length)return;
     const id=attemptId;
     const doc={study:STUDY,levelId:level.id,levelName:level.name,attemptId:id,startedAt,updatedAt:new Date().toISOString(),
       outcome:state.outcome,completed:state.completed,moves:state.moves,budget:level.moves,actions:JSON.parse(JSON.stringify(actions)),note:$('feedback').value||''};
     const shown=text=>{if(id===attemptId)$('save').textContent=text;};
-    writes=writes.then(async()=>{
+    // A failed write is tried again a few times, unless a newer save for this attempt has been queued.
+    const serial=++saveSerial[id]||(saveSerial[id]=1);
+    const attempt=async tries=>{
       try{const db=await database();if(!db)throw new Error();await db.collection('runs').doc(id).set(doc);
         shown(final?'Saved. Thanks for playing this one.':'Progress saved.');}
-      catch{shown('Not saved here (open the page while signed in to keep plays).');}
-    });
+      catch{
+        if(tries<3&&saveSerial[id]===serial){await new Promise(r=>setTimeout(r,2000*(tries+1)));if(saveSerial[id]===serial)return attempt(tries+1);}
+        else if(tries>=3)shown('Not saved here (open the page while signed in to keep plays).');}
+    };
+    writes=writes.then(()=>attempt(0));
   }
   function picker(){
     const wins=store.get('relayWins')||{};

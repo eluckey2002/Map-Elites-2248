@@ -42,11 +42,12 @@ and the never-locks case.
   convenient merge. In Connection play (PDL-014 to PDL-016) each goal was built on its
   own; nothing carried from one goal to the next.
 - **Exact state:** Keep Growing after witness move 2 (connection 1 done). ① is the 32
-  just made, fourth column, fourth row from the top; goal 2 is 128. The biggest chain on
-  the board (448, eight tiles) can run through that 32 or through another 32 two columns to its left.
-  Build-and-harvest has no reason to prefer either. Through ① it spends the made tile:
-  goal 2 falls back to an ordinary fixed-place goal on whatever drops in, and the 32
-  head start is gone. The other route keeps the relay. `relay-play.test.js` replays this state.
+  just made, fourth column, fourth row from the top; goal 2 is 128. The biggest legal
+  chain on the board is 512 (17 routes of 10 or 11 tiles), and every one of them runs
+  through that 32. The biggest chain that leaves it alone is 480. So build-and-harvest
+  spends the made tile: goal 2 falls back to an ordinary fixed-place goal on whatever
+  drops in, and the 32 head start is gone. Keeping the relay costs 32 points of merge
+  here. `relay-play.test.js` checks these numbers by full enumeration.
 - **Open:** whether the owner notices or cares. Owner play decides; nothing here is a
   difficulty or enjoyment claim.
 

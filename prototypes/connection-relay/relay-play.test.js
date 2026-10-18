@@ -75,3 +75,15 @@ test('merging a made tile into another chain leaves its marker in place, so the 
   assert.deepStrictEqual(after.objective.ends[0],one);
   assert.strictEqual(after.relay.made[0].fixed,true);
 });
+
+test('at the named baseline state, every biggest merge spends the made tile',()=>{
+  const level=levels.find(l=>l.id==='keep-growing'),{actions}=witnesses.find(w=>w.id===level.id);
+  let state=relay.create(level);
+  for(const action of actions){state=relay.move(state,action.chain);if(state.completed===1)break;}
+  const one=state.objective.ends[0],sum=c=>c.reduce((t,[x,y])=>t+state.grid[y][x].value,0);
+  const {chains,truncated}=rules.enumerateChains(state,5e6);assert.strictEqual(truncated,false);
+  const uses=c=>c.some(p=>p[0]===one[0]&&p[1]===one[1]),max=Math.max(...chains.map(sum));
+  assert.strictEqual(max,512);
+  assert.ok(chains.filter(c=>sum(c)===max).every(uses));
+  assert.strictEqual(Math.max(...chains.filter(c=>!uses(c)).map(sum)),480);
+});
