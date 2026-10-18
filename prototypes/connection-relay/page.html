@@ -1,0 +1,77 @@
+<title>Connection Relay</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one phone column, board in the first screen; the game's own Connection puzzle look (PDL-032), tokenized for dark mode. */
+:root{--bg:#f3f2ec;--ink:#203b34;--muted:#5f6f66;--line:#dcded6;--panel:#e6eadc;--panel-line:#c7d1be;--shell:#d4dcce;--primary:#285941;--on-primary:#fff;--sel:#ed9757;--mark:#e7ad65;--mark-bg:#fff0d3;--mark-ink:#60421f;--good:#2f6b3f;--power:#f8f0db;--power-line:#ccb988;--power-ink:#604d29;
+--t2:#f8f7f0;--t4:#e5eace;--t8:#d3dfb3;--t16:#afc997;--t32:#7da789;--t64:#36694f;--t128:#225442;--tile-ink:#304636;--tile-shadow:#b8c4ad;
+--display:"Inter",ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151d19;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#1f2a25;--panel-line:#34443b;--shell:#27342e;--primary:#4f9a74;--on-primary:#0e1a14;--good:#7cc290;--power:#2c2618;--power-line:#5b4e2c;--power-ink:#e4d2a6;--tile-shadow:#0d1411;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151d19;--ink:#e3ebe4;--muted:#a6b5ab;--line:#2d3a33;--panel:#1f2a25;--panel-line:#34443b;--shell:#27342e;--primary:#4f9a74;--on-primary:#0e1a14;--good:#7cc290;--power:#2c2618;--power-line:#5b4e2c;--power-ink:#e4d2a6;--tile-shadow:#0d1411;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--display);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 28px}
+.cx-app{max-width:520px;margin:0 auto}
+button,textarea{font:inherit}button{cursor:pointer;min-height:44px}button:disabled{cursor:default;opacity:.45}
+:focus-visible{outline:3px solid var(--sel);outline-offset:3px}
+.cx-header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-block:10px;border-bottom:1px solid var(--line)}
+.cx-mark{font-weight:850;font-size:18px;white-space:nowrap;letter-spacing:-.5px}.cx-mark small{font-size:10px;letter-spacing:2px;margin-left:6px;font-weight:600;color:var(--muted)}
+#cx-levels{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+#cx-levels button{width:34px;height:34px;min-height:34px;padding:0;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-weight:700;position:relative}
+#cx-levels button.on{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+#cx-levels button.won::after{content:'✓';position:absolute;right:-3px;bottom:-3px;width:15px;height:15px;border-radius:50%;background:var(--good);color:var(--bg);font-size:9px;line-height:15px}
+.cx-intro{margin:8px 0 4px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}.cx-intro h1{font-size:22px;letter-spacing:-.8px;margin:0;text-wrap:balance}.cx-intro p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.cx-stats{display:flex;justify-content:space-between;padding:2px 4px 6px}.cx-stats>div{display:flex;flex-direction:column;gap:4px}.cx-stats>div:last-child{text-align:right}
+.cx-stats span{font-size:9px;letter-spacing:1.5px;color:var(--muted)}.cx-stats strong{font-size:20px;font-variant-numeric:tabular-nums;font-weight:650}
+.cx-objective{background:var(--panel);border:1px solid var(--panel-line);border-radius:10px;padding:10px 14px;margin-bottom:10px}
+.cx-eyebrow{font-size:10px;letter-spacing:1.6px;font-weight:700;color:var(--muted);margin:0}
+.cx-objective h2{font-size:19px;letter-spacing:-.4px;margin:4px 0}.cx-objective p{font-size:12.5px;line-height:1.45;margin:0}
+.cx-math{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;border-top:1px solid var(--panel-line);padding-top:7px;margin-top:8px}.cx-math p{font-size:14px;font-weight:650;font-variant-numeric:tabular-nums;margin:0;flex:1;min-width:0}
+#cx-combinations-toggle{border-radius:6px;border:1px solid var(--panel-line);background:var(--bg);color:var(--ink);padding:0 12px;font-size:12.5px}
+.cx-objective button{min-height:34px}.cx-objective ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}.cx-objective li{padding:6px 10px;background:var(--bg);border-radius:6px;font-size:12px;overflow-wrap:anywhere}
+.cx-chain-total{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;padding:5px 14px;background:var(--primary);color:var(--on-primary);border-radius:9px}
+.cx-chain-total>span{font-size:13px;font-weight:600}.cx-chain-total small{display:block;margin-top:2px;font-size:12px;font-weight:400}.cx-chain-total strong{font-size:22px;font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.cx-board-shell{position:relative;background:var(--shell);border-radius:13px;padding:7px;max-width:100%;width:min(100%,max(300px,40svh));margin:0 auto}
+#cx-board{display:grid;gap:5px;user-select:none}
+#cx-path{position:absolute;inset:7px;width:calc(100% - 14px);height:calc(100% - 14px);pointer-events:none;overflow:visible}
+.cx-line{fill:none;stroke:var(--sel);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.cx-tile{aspect-ratio:1;max-width:100%;min-width:0;min-height:0;padding:0;border-radius:8px;position:relative;display:grid;place-items:center;border:0;background:var(--t2);color:var(--tile-ink);font-size:clamp(15px,5vw,22px);font-weight:700;font-variant-numeric:tabular-nums;box-shadow:0 2px 0 var(--tile-shadow)}
+.cx-tile.cx-long{font-size:clamp(12px,3.6vw,17px)}.cx-tile:disabled{opacity:1}
+.cx-v4{background:var(--t4)}.cx-v8{background:var(--t8)}.cx-v16{background:var(--t16)}.cx-v32{background:var(--t32);color:#fff}.cx-v64,.cx-built{background:var(--t64);color:#fff}.cx-v128{background:var(--t128);color:#fff}
+.cx-marked{box-shadow:inset 0 0 0 3px var(--mark),0 2px 0 var(--tile-shadow)}
+.cx-endpoint{position:absolute;right:3px;bottom:2px;background:var(--mark-bg);color:var(--mark-ink);border-radius:50%;width:19px;height:19px;font-size:14px;display:grid;place-items:center}
+.cx-selected{outline:3px solid var(--sel);outline-offset:-3px;transform:scale(.93)}
+.cx-order{position:absolute;top:2px;left:4px;font-size:10px;color:#8c4b1a;background:#fff3dc;padding:0 4px;border-radius:4px}
+.cx-previewing .cx-board-shell{outline:3px solid var(--sel);outline-offset:3px}.cx-removing .cx-tile{outline:2px solid #9c542e;outline-offset:-2px}
+.cx-selection{min-height:2.9em;margin:9px 2px;font-size:13px;line-height:1.45;color:var(--muted)}
+.cx-actions{display:flex;gap:8px}.cx-actions button{border-radius:8px;padding:0 14px;font-size:13px;font-weight:600;border:1px solid var(--panel-line);background:var(--panel);color:var(--ink)}
+#cx-merge{flex:1;background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.cx-minor{display:flex;justify-content:space-between;margin-top:6px}.cx-minor button{border:0;background:none;color:var(--muted);font-size:13px}
+.cx-result{margin-top:12px;padding:14px;background:var(--panel);border:1px solid var(--panel-line);border-radius:9px}.cx-result h2{font-size:20px;margin:0}.cx-result p{font-size:13px;line-height:1.5;margin:6px 0 10px}
+.cx-result div{display:flex;gap:8px}.cx-result button{flex:1;border-radius:8px;border:1px solid var(--panel-line);background:var(--bg);color:var(--ink);font-weight:600}
+.cx-result #cx-next{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.cx-powerup{border:1px solid var(--power-line);background:var(--power);color:var(--power-ink);border-radius:10px;padding:12px 14px;margin-top:18px}
+.cx-powerup h2{font-size:16px;margin:0;color:var(--ink)}.cx-powerup p{font-size:12px;line-height:1.5;margin:6px 0}
+.cx-powerup button{width:100%;border-radius:6px;border:1px solid var(--power-line);background:var(--bg);color:var(--ink)}
+.cx-rule{border-top:1px solid var(--line);padding-top:12px;margin-top:16px}.cx-rule h2{font-size:17px;margin:0}.cx-rule p{font-size:13px;line-height:1.6;margin:6px 0;color:var(--muted);max-width:65ch}
+label{display:block;font-size:13px;margin-top:16px}textarea{width:100%;margin:8px 0 0;padding:10px;border:1px solid var(--panel-line);border-radius:6px;background:var(--panel);color:var(--ink);resize:vertical}
+.cx-note{font-size:12px;line-height:1.5;color:var(--muted);margin:6px 0 0}
+@media (prefers-reduced-motion:reduce){.cx-selected{transform:none}}
+</style>
+<main class="cx-app">
+  <header class="cx-header"><div class="cx-mark">2248<small>RELAY</small></div><nav id="cx-levels" aria-label="Puzzles"></nav></header>
+  <section class="cx-intro"><h1 id="cx-title">Connection Relay</h1><p id="cx-subtitle"></p></section>
+  <div class="cx-stats"><div><span>CONNECTIONS</span><strong id="cx-progress">0 / 3</strong></div><div><span>MOVES LEFT</span><strong id="cx-moves"></strong></div><div><span>REMOVALS</span><strong id="cx-charges">0 / 3</strong></div></div>
+  <div class="cx-objective" aria-live="polite"><p id="cx-goal-number" class="cx-eyebrow"></p><h2 id="cx-goal-title"></h2><p id="cx-goal-hint"></p>
+    <div class="cx-math"><span class="cx-eyebrow">HALVES</span><p id="cx-halves"></p><button id="cx-combinations-toggle" type="button" aria-expanded="false" aria-controls="cx-combinations">Show combinations</button></div>
+    <div id="cx-combinations" hidden><p class="cx-note">Ways to add up to the number. Not paths; some tiles may need building.</p><ul id="cx-recipes"></ul></div></div>
+  <div class="cx-chain-total" role="status"><span>Chain sum<small id="cx-balance"></small></span><strong id="cx-sum">0</strong></div>
+  <div class="cx-board-shell"><div id="cx-board" aria-label="Tile board"></div><svg id="cx-path" aria-hidden="true"></svg></div>
+  <p id="cx-selection" class="cx-selection" role="status"></p>
+  <div class="cx-actions"><button id="cx-merge" type="button">Merge chain</button><button id="cx-preview" type="button">Preview</button><button id="cx-clear" type="button">Clear</button></div>
+  <div class="cx-minor"><button id="cx-undo" type="button">Undo</button><button id="cx-retry" type="button">Start over</button></div>
+  <section id="cx-result" class="cx-result" aria-live="polite" hidden><h2 id="cx-result-title"></h2><p id="cx-result-detail"></p><div><button id="cx-again" type="button">Play again</button><button id="cx-next" type="button">Next puzzle</button></div></section>
+  <section class="cx-powerup"><h2>Make room</h2><p>A merge that makes a tile of 2,048 or more earns one removal (bank up to 3). Removing a tile costs a move.</p><button id="cx-remove" type="button" aria-pressed="false">Remove a tile</button><p id="cx-powerup-status" role="status"></p></section>
+  <div class="cx-rule"><h2>How it works</h2><p>Each puzzle has three connections, one at a time. Start and end a chain on ① and ②, and make the exact sum.</p><p>The chain's last tile keeps the sum and stays where you end. In these puzzles the tile you make is part of what comes next.</p><p>Chains start with two equal tiles, then go equal or double, at least three tiles, diagonals count. New tiles are 2 to 128. Start over gives the same board and the same new tiles.</p></div>
+  <label for="cx-feedback">Note (optional)</label><textarea id="cx-feedback" rows="2" maxlength="1000" placeholder="What did you think of this one?"></textarea>
+  <p id="cx-save" class="cx-note" role="status"></p>
+</main>
