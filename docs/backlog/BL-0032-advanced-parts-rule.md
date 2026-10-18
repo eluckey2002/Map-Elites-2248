@@ -1,10 +1,10 @@
 ---
 id: BL-0032
 title: Confirm the proposed Advanced Feed the Next rule
-status: proposed
+status: dropped
 milestone: level-archetypes
 depends_on: [BL-0029]
-updated: 2026-10-11
+updated: 2026-10-18
 ---
 
 # BL-0032 — Confirm the proposed Advanced Feed the Next rule
@@ -35,3 +35,6 @@ how was this advanced?"), and the README labels it proposed.
 
 - 2026-10-11: opened from Codex review of PR #86, which asked that the unapproved
   rule be tracked rather than live without a record.
+- 2026-10-18: owner dropped the rule in the final review (PDL-041). Sampler v5
+  removes the Advanced board, refuses `anyOrder` boards, and has no default part
+  cap.

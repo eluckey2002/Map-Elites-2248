@@ -5,11 +5,58 @@ playtest screening, not evidence-ledger evidence.
 
 Build with `node prototypes/sampler/build.js <out.html>`. v1 was played as private
 Artifact https://claude.ai/artifact/SQuCNP6SQyC7m7dbSuN3YP (study `kinds-sampler-v1`).
-v2 was study `kinds-sampler-v2` (PDL-039), v3 `kinds-sampler-v3` (PDL-040). This
-is v4 (study `kinds-sampler-v4`, local-storage key `kindsSampler.v4`, the owner's
-notes on v3); runs and answers save to the Artifact's db with the same schema
-(`runs`, `answers`), answer ids `kinds-sampler-v4--<board>`, and the page loads
-only this study's answers.
+v2 was study `kinds-sampler-v2` (PDL-039), v3 `kinds-sampler-v3` (PDL-040). v4 was
+`kinds-sampler-v4`. This is v5, the final round (study `kinds-sampler-v5`,
+local-storage key `kindsSampler.v5`); runs and answers save to the Artifact's db
+with the same schema (`runs`, `answers`), answer ids `kinds-sampler-v5--<board>`,
+and the page loads only this study's answers.
+
+## v5: the final round (owner's final review, 2026-10-18)
+
+The owner reviewed every kind and picked what stays
+([`prototypes/reviews/2026-10-18-final-review-decisions.md`](../reviews/2026-10-18-final-review-decisions.md)). v5 is one board per
+keeper, in this order: Feed the Next, Make It Here (revised), Shared Material, See It
+Coming, Through the Gate, The Drought (boss, last). Dropped: Feed the Next — Advanced
+and its two-part cap (BL-0032), and the Three Separate control.
+
+Owner picks applied:
+
+- No Next-tiles strip on normal boards; they use the shared refill stream again.
+- See It Coming alone shows next tiles, one per column (`forecastShow: 1`).
+- The gate opens when a tile of 128 or more sits beside it after a move
+  (`gate: {at, tile}` in `model.js`; the old `gate.sum` rule is still supported).
+- Make It Here: two short rule sentences, no hint line, one order on screen.
+- The Drought is the round 2 board the owner won and liked.
+
+Move limits come from `calibrate.js`, not the solver's best line. Each board's start
+grid is played under 30 refill draws (its own seed and 29 others) by two players:
+`ordinary()` (no look-ahead) and a beam solver (beam 60, chains up to 7, 20 moves).
+The limit is the largest of beam P90 + 2, beam median + 8, and ordinary P80 + 2 where
+the ordinary player wins at least half the draws. The Drought has no refills, so it
+has one draw. Round 2 gave it 8 moves (the owner won in 4); v5 gives 10, two spare, in line with
+the owner's ask for looser limits.
+
+| Board | Ordinary wins | Ordinary P50 / P80 | Beam wins | Beam P50 / P90 | Limit |
+|---|---|---|---|---|---|
+| Feed the Next | 30/30 | 5 / 5 | 30/30 | 4 / 4 | 12 |
+| Make It Here | 17/30 | 7 / 9 | 21/30 | 7 / 16 | 18 |
+| Shared Material | 2/30 | 14 / 24 | 21/30 | 11 / 16 | 19 |
+| See It Coming | 8/30 | 22 / 30 | 16/30 | 13 / 20 | 22 |
+| Through the Gate | 0/30 | — | 21/30 | 5 / 5 | 13 |
+| The Drought | 0/1 | — | 0/1 at chains ≤ 7; wins in 2 at chains ≤ 12 | — | 10 |
+
+The percentiles count only the draws a player won. A draw the beam did not win within 20 moves
+(beam 60) is left out, so for See It Coming (16/30) and the boards at 21/30 the limit covers
+the winnable draws, not every draw; the unwon draws need more than 20 moves or a wider search.
+`calibrate.js` also prints the beam P90 over all draws, counting a loss as over 20.
+
+Shared Material, See It Coming and Through the Gate are the hard ones: a player who
+does not plan loses most draws (the ordinary player does steer toward the gate and the ★ through its heuristic, but it
+looks only one move ahead).
+That is the kind (scarce 3s, reading the strip, opening the gate),
+so the limits are generous rather than the boards changed. The owner decides after play.
+With 22 moves, a player who re-plans each move without looking at the strip can win See It
+Coming; the strip helps but is not required (model.test.js reports this, it no longer gates it).
 
 ## Why
 
@@ -21,7 +68,7 @@ element that adds "puzzle brain strategy". Each board here pairs one kind from
 makes its steps depend on each other. Three Separate is the control: three
 orders that share nothing.
 
-## What changed from v3 (evan's v3 notes)
+## Archive: what changed from v3 to v4 (superseded by v5 above)
 
 Evan played v3: "so, again, too few moves." / "you have to few moves. I don't
 want to have to undo and hunt for an answer." / "I don't think I am making bad
@@ -244,7 +291,7 @@ the first 200 refills of every board stay inside its spawn list. Added after the
 owner beat v1 Rust by scraping a few times and then making one long chain: a
 "scrape, then one long chain" proxy that must lose on Rust.
 
-## Rules
+## Rules (current, v5)
 
 Chains are unchanged (`solver/engine`): touching tiles, diagonals included, at
 least three, first two equal, then equal or double; the sum lands on the last
@@ -256,26 +303,27 @@ tile; gravity; seeded refills. `model.js` adds:
 
 - **Orders** (`orders`): one chain made only of the ingredient, four of them.
   Optional `at`: the chain must end on that cell (◎).
-- **Parts** (`parts`, v2 Feed the Next): orders fill in turn; the tile an order
+- **Parts** (`parts`, Feed the Next): orders fill in turn; the tile an order
   makes becomes a part (●); every later order's chain must include at least one
-  part (any part); an order fill that would leave a third part on the board is
-  not counted, with a status message; the tiles still merge and the move is spent. The page counts `parts: n/2`.
-- **Any-order parts** (`parts` + `anyOrder`, v3 Advanced, proposed): orders
-  fill in any order; every fill makes a part; an order needs `o.parts` parts in
-  its chain (D needs two); the same cap of two parts refuses a third. Two
-  screening-only flags exist for search.js: `strictTurn` (fill strictly in list
-  order) and `goal.cap` (change the cap).
+  part (any part). v5 has no part cap (PDL-041, BL-0032): a board may still set
+  `goal.cap`, and then a fill that would exceed it is not counted, with a status
+  message, and the page shows the ● counter. No v5 board sets one.
+- **Any-order parts** (`anyOrder`): dropped in v5 with the Advanced board
+  (PDL-041); `checkLevel()` refuses a board that asks for it. `strictTurn` stays
+  a screening-only flag for search.js.
 - **Relay** (`relay`): make each stage in turn; each later stage must include
   the tile the last one made (●).
 - **Exact** (`exact`: make one tile of the target), **Connect** (`connect`: one
   chain through every ★).
-- **Forecast**: each column has its own refill queue; the next three show above
-  it in the NEXT TILES strip. Three covers any chain with up to four tiles stacked in one column; a straight line of five or six in one column can still deal a tile the strip does not show (rare; reported, not prevented).
+- **Forecast** (`forecast`, See It Coming only): each column has its own refill
+  queue; `forecastShow` sets how many show above it in the NEXT TILES strip
+  (v5: one). No other board shows next tiles.
 - **Boss** (`boss`, with `refill:false`): a banner names the boss and what it
   changes until the first move.
-- **Stone** walls and a **gate**: a stone cell that opens when a chain whose sum
-  is at least `gate.sum` ends beside it. *The "at least" gate rule is proposed,
-  to be confirmed by owner play.*
+- **Stone** walls and a **gate**: a stone cell that opens when a tile of at
+  least `gate.tile` sits beside it (v5, PDL-041). The older `gate.sum` rule (a
+  chain whose sum is at least `gate.sum` ends beside it) is still accepted; a
+  gate sets exactly one of the two.
 - **Rust**: retired in v3 (PDL-040); a board that asks for it is refused.
 
 Two things the rules do not do, found while building v2:
