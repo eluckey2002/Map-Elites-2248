@@ -4,7 +4,7 @@ const fs=require('node:fs'),path=require('node:path');
 const read=file=>fs.readFileSync(path.join(__dirname,file),'utf8');
 const umd=(file,name)=>`(function(){var module={exports:{}};${read(file)}\nwindow.${name}=module.exports;})();`;
 const script=[
-  umd('../../solver/engine.js','ChainCore'),read('../../src/connection-rules.js'),read('../../src/connection-math.js'),
+  umd('../../solver/engine.js','ChainCore'),read('../../src/connection-rules.js'),read('../../src/connection-math.js'),read('relay-play.js'),
   read('levels.js'),read('app.js'),
 ].join('\n;\n').replace(/<\/script/gi,'<\\/script');
 const out=process.argv[2]||path.join(__dirname,'relay.html');

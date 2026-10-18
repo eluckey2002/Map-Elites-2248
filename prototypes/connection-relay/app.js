@@ -1,22 +1,26 @@
 /* Phone playtest page for the Relay connection puzzles. Game rules are
-   src/connection-rules.js unchanged; this file is only the view. */
+   src/connection-rules.js unchanged; relay-play.js moves a marker with the tile it sits on. */
 (function(){
   'use strict';
-  const rules=window.ConnectionRules,levels=window.RelayLevels,$=id=>document.getElementById('cx-'+id);
-  const STUDY='connection-relay-v1';
+  const rules=window.ConnectionRules,relay=window.RelayPlay,levels=window.RelayLevels,$=id=>document.getElementById('cx-'+id);
+  const STUDY='connection-relay-v2';
   let level,state,actions=[],history=[],selection=[],preview=false,removing=false,dragging=false;
   let attemptId,startedAt,saved=false,retryArmed=false,combinationsKey='',combinationsOpen=false,dbPromise=null;
-  const database=()=>(dbPromise||=(window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null)).catch(()=>null));
+  // A failed or empty answer is not kept, so the next save asks again.
+  const database=()=>(dbPromise||=(window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null)).catch(()=>null)
+    .then(db=>{if(!db)dbPromise=null;return db;}));
   const store={get(k){try{return JSON.parse(localStorage.getItem(k)||'null');}catch{return null;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch{}}};
   function resetSelection(){selection=[];preview=false;removing=false;dragging=false;retryArmed=false;}
   function newId(){try{return crypto.randomUUID();}catch{return 'a'+Date.now().toString(36)+Math.random().toString(36).slice(2);}}
   async function save(final){
     if(!actions.length)return;
-    const doc={study:STUDY,levelId:level.id,levelName:level.name,attemptId,startedAt,updatedAt:new Date().toISOString(),
+    const id=attemptId;
+    const doc={study:STUDY,levelId:level.id,levelName:level.name,attemptId:id,startedAt,updatedAt:new Date().toISOString(),
       outcome:state.outcome,completed:state.completed,moves:state.moves,budget:level.moves,actions,note:$('feedback').value||''};
-    try{const db=await database();if(!db)throw new Error();await db.collection('runs').doc(attemptId).set(doc);
-      $('save').textContent=final?'Saved. Thanks for playing this one.':'Progress saved.';}
-    catch{$('save').textContent='Not saved here (open the page while signed in to keep plays).';}
+    const shown=text=>{if(id===attemptId)$('save').textContent=text;};
+    try{const db=await database();if(!db)throw new Error();await db.collection('runs').doc(id).set(doc);
+      shown(final?'Saved. Thanks for playing this one.':'Progress saved.');}
+    catch{shown('Not saved here (open the page while signed in to keep plays).');}
   }
   function picker(){
     const wins=store.get('relayWins')||{};
@@ -27,7 +31,7 @@
   }
   function render(){
     const legal=!removing&&state.outcome==='playing'&&rules.valid(state,selection);
-    const predicted=legal?rules.preview(state,selection):null,shown=preview&&predicted?predicted:state;
+    const predicted=legal?relay.preview(state,selection):null,shown=preview&&predicted?predicted:state;
     const goal=state.objective,total=selection.reduce((sum,[x,y])=>sum+state.grid[y][x].value,0);
     $('progress').textContent=`${state.completed} / ${level.objectives.length}`;
     $('moves').textContent=String(state.maxMoves-state.moves);$('charges').textContent=`${state.charges} / ${rules.CAPACITY}`;
@@ -76,7 +80,7 @@
     $('combinations-toggle').setAttribute('aria-expanded',String(combinationsOpen));$('combinations').hidden=!combinationsOpen;
   }
   function apply(action){
-    const next=action.type==='move'?rules.move(state,action.chain):rules.remove(state,action.position);
+    const next=action.type==='move'?relay.move(state,action.chain):relay.remove(state,action.position);
     history.push(state);state=next;actions.push(action);resetSelection();render();
     if(state.outcome==='won'){const wins=store.get('relayWins')||{};wins[level.id]=true;store.set('relayWins',wins);picker();}
     save(state.outcome!=='playing');
@@ -91,7 +95,7 @@
   }
   function open(id){
     level=levels.find(item=>item.id===id)||levels[0];store.set('relayLevel',level.id);
-    state=rules.create(level);actions=[];history=[];attemptId=newId();startedAt=new Date().toISOString();
+    state=relay.create(level);actions=[];history=[];attemptId=newId();startedAt=new Date().toISOString();
     resetSelection();$('feedback').value='';$('save').textContent='';
     $('title').textContent=level.name;$('subtitle').textContent=level.focus;picker();render();
   }
