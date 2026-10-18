@@ -1,19 +1,19 @@
 /* Relay play: the shipped finite Connection rules, plus markers that follow a made tile.
    An objective end with a link {end, made} sits on the tile connection `made` produced and
-   moves down with it when gravity drops it. If that tile is merged into another chain or
-   removed, the marker stays where it was, as in the shipped fixed-place rules, so play
-   never locks. Nothing else changes; src/connection-rules.js still decides every move. */
+   moves down with it when gravity drops it. Once that tile is used in any chain (even as the
+   chain's last tile) or removed, the marker stays where it was, exactly as in the shipped
+   fixed-place rules. Nothing else changes; src/connection-rules.js still decides every move. */
 (function(root,factory){
   if(typeof module==='object'&&module.exports)module.exports=factory(require('../../src/connection-rules'));
   else root.RelayPlay=factory(root.ConnectionRules);
 })(typeof globalThis==='object'?globalThis:this,function(rules){
   'use strict';
   const same=(a,b)=>a[0]===b[0]&&a[1]===b[1];
-  // Where the tile at pos is after a chain (state before the move); null if the chain merged it away.
+  // Where the tile at pos is after a chain (state before the move); null once the chain uses it.
   // Gravity is a pure column drop; the chain's last tile is the one that stays.
   function followMove(chain,pos){
     const removed=chain.slice(0,-1);
-    if(removed.some(p=>same(p,pos)))return null;
+    if(chain.some(p=>same(p,pos)))return null;
     const [x,y]=pos;
     return [x,y+removed.filter(([rx,ry])=>rx===x&&ry>y).length];
   }
@@ -23,7 +23,8 @@
   }
   // A made tile is {at, fixed}; once its tile is gone the marker keeps its last place.
   const track=(made,step)=>made.map(m=>{if(m.fixed)return m;const at=step(m.at);return at?{at,fixed:false}:{at:m.at,fixed:true};});
-  // Rewrites linked ends to their tiles. A link that would land on the goal's other end keeps its last place.
+  // Rewrites linked ends to their tiles. A link that would land on the goal's other end keeps its last place
+  // (for example when the second made tile lands where the spent first one was), since one tile cannot be both ends.
   function sync(state){
     const made=state.relay.made;
     for(const goal of [...state.objectives,state.objective].filter(Boolean))for(const link of goal.follow||[]){

@@ -18,8 +18,10 @@ The owner's principle (core idea plus one element that makes steps depend on eac
 other; Recipe board 8) applied to Connections. The tile a connection makes is part of a
 later connection, and the marker on it follows that tile (`relay-play.js`): when gravity
 drops the tile, ① drops with it; when a finish lands somewhere else, ① is wherever it
-landed. If the tile is merged into some other chain or removed, the marker stays at its
-last place, as in the shipped fixed-place rules, so a puzzle never locks. This is the
+landed. Once the tile is used in some other chain (even as its last tile) or removed, the
+marker stays at its last place, exactly as in the shipped fixed-place rules; Undo takes the
+move back. If the second made tile lands where the spent first one sat, ② keeps its
+original place, because one tile cannot be both ends. This is the
 "moving-tile" goal the owner proposed in PDL-012; `src/connection-rules.js` still
 decides every move.
 
@@ -29,12 +31,12 @@ decides every move.
 | Meet in the Middle | reunion | 32 → 128 → 384 | 8 | 14 | 59/60 |
 | Big Finish | reunion | 64 → 256 → 960 | 7 | 20 | 50/60 |
 | Keep Growing | relay: the next goal starts on the tile just made | 32 → 128 → 384 | 8 | 14 | 60/60 |
-| Ladder Up | relay | 16 → 128 → 384 | 7 | 16 | 48/60 |
+| Ladder Up | relay | 16 → 128 → 384 | 7 | 14 | 52/60 |
 | Climb High | relay | 32 → 128 → 384 | 8 | 14 | 51/60 |
 
 Each goal shows a one-line hint naming the dependency. `relay-play.test.js` checks the
 followed positions against the engine, every witness, a finish in the other direction,
-and the never-locks case.
+and the spent-tile case.
 
 ## Baseline and the decision it should change (PDL rule)
 
@@ -62,7 +64,8 @@ and the never-locks case.
 - `finalize.js` checks every linked marker sits on its made tile along the witness,
   rejects a goal whose marked tile is already as big as its target when it appears,
   writes `levels.js` and `witnesses.json`, and sets the budget: at least 14, at least
-  witness + 6, and raised by 2 until a crude ordinary player wins 48 of 60 fresh tries.
+  witness + 6, and raised by 2 until a crude ordinary player wins 48 of 60 tries. That
+  screen reuses the policy seed the search used, so it is not held out.
 - The ordinary player: finishes the goal when it can; else makes a move after which
   it can (random among those); else a random merge that leaves the marked tiles and
   later-needed made tiles alone and stays at or under half the target. No undo, no
@@ -77,6 +80,7 @@ Plays save under study `connection-relay-v2` (v1 boards were replaced before any
 
 ## Limits
 
-The ordinary player and witness show the boards are winnable and forgiving for plain
-goal-seeking play; they say nothing about fun or difficulty for a person. Owner play
+The witness shows each board can be won. The ordinary-player counts are authoring
+diagnostics that set the move limits; no protocol was registered for them, so they support
+no claim about how forgiving, hard or fun the boards are. Owner play
 decides. The goal hints are new text on this page only.

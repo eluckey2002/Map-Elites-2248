@@ -16,7 +16,7 @@ test('followed positions match where the engine puts each tile',()=>{
     const [x,y]=[Math.floor(random()*5),Math.floor(random()*6)];
     state.grid[y][x].tag='watched';
     const next=rules.move(state,chain),at=relay.followMove(chain,[x,y]);
-    const merged=chain.slice(0,-1).some(p=>p[0]===x&&p[1]===y);
+    const merged=chain.some(p=>p[0]===x&&p[1]===y);
     if(merged)assert.strictEqual(at,null);
     else assert.strictEqual(next.grid[at[1]][at[0]].tag,'watched');
   }
@@ -63,17 +63,21 @@ test('finishing a connection the other way round moves the next marker with the 
   assert.ok(checked>0,'no reversed completion found on any board');
 });
 
-test('merging a made tile into another chain leaves its marker in place, so the puzzle never locks',()=>{
+test('using a made tile in another chain leaves its marker in place, as the fixed-place rules do',()=>{
   // Keep Growing after its first connection: ① is a 32. The biggest merge on the board can run through it.
   const level=levels.find(l=>l.id==='keep-growing'),{actions}=witnesses.find(w=>w.id===level.id);
   let state=relay.create(level);
   for(const action of actions){state=relay.move(state,action.chain);if(state.completed===1)break;}
   const one=state.objective.ends[0],{chains}=require('./search');
-  const through=chains(state,8,20000).find(c=>c.slice(0,-1).some(p=>p[0]===one[0]&&p[1]===one[1])&&!rules.matches(state,c));
-  assert.ok(through);
-  const after=relay.move(state,through);
-  assert.deepStrictEqual(after.objective.ends[0],one);
-  assert.strictEqual(after.relay.made[0].fixed,true);
+  const uses=c=>c.some(p=>p[0]===one[0]&&p[1]===one[1])&&!rules.matches(state,c);
+  const all=chains(state,8,20000),through=all.find(c=>uses(c)&&!(c.at(-1)[0]===one[0]&&c.at(-1)[1]===one[1]));
+  const ending=all.find(c=>uses(c)&&c.at(-1)[0]===one[0]&&c.at(-1)[1]===one[1]);
+  assert.ok(through&&ending);
+  for(const chain of [through,ending]){
+    const after=relay.move(state,chain);
+    assert.deepStrictEqual(after.objective.ends[0],one);
+    assert.strictEqual(after.relay.made[0].fixed,true);
+  }
 });
 
 test('at the named baseline state, every biggest merge spends the made tile',()=>{

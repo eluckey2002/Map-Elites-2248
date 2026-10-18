@@ -1,5 +1,5 @@
 /* Turns chosen drafts into levels.js: plain hints, move budgets, then re-screens each board
-   at its budget with fresh draws. ① is the marker that follows a made tile (relay-play.js).
+   at its budget (same policy seed as the search; not held out). ① is the marker that follows a made tile (relay-play.js).
    Usage: node finalize.js <drafts.jsonl> */
 const fs=require('node:fs'),path=require('node:path');
 const relay=require('./relay-play');
@@ -41,7 +41,7 @@ for(const pick of CHOSEN){
   const moves=Math.max(14,draft.witness.length+6,(row.p80??99)+4,row.p90!=null?row.p90+2:0);
   const level={id:pick.id,name:pick.name,focus:pick.focus,refillSeed:draft.refillSeed,moves,grid:draft.grid,objectives};
   const won=relay.replay(level,draft.witness);if(won.outcome!=='won')throw new Error('witness fails '+pick.id);
-  // Forgiving: raise the budget by 2 until the ordinary player wins at least 48 of 60 fresh tries.
+  // Budget rule: raise it by 2 until the ordinary player wins at least 48 of 60 tries.
   let check=screen(level,60,level.moves);
   while(check.wins<48&&level.moves<30){level.moves+=2;check=screen(level,60,level.moves);}
   report.push({id:pick.id,flavor,targets:objectives.map(g=>g.target),witness:draft.witness.length,budget:level.moves,ordinaryAtBudget:`${check.wins}/60`,median:check.median});

@@ -26,7 +26,7 @@
       try{const db=await database();if(!db)throw new Error();await db.collection('runs').doc(id).set(doc);
         shown(final?'Saved. Thanks for playing this one.':'Progress saved.');}
       catch{
-        if(tries<3&&saveSerial[id]===serial){await new Promise(r=>setTimeout(r,2000*(tries+1)));if(saveSerial[id]===serial)return attempt(tries+1);}
+        if(tries<3&&saveSerial[id]===serial&&id===attemptId){await new Promise(r=>setTimeout(r,2000*(tries+1)));if(saveSerial[id]===serial&&id===attemptId)return attempt(tries+1);}
         else if(tries>=3)shown('Not saved here (open the page while signed in to keep plays).');}
     };
     writes=writes.then(()=>attempt(0));
