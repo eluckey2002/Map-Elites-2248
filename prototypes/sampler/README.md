@@ -33,7 +33,8 @@ grid is played under 30 refill draws (its own seed and 29 others) by two players
 `ordinary()` (no look-ahead) and a beam solver (beam 60, chains up to 7, 20 moves).
 The limit is the largest of beam P90 + 2, beam median + 8, and ordinary P80 + 2 where
 the ordinary player wins at least half the draws. The Drought has no refills, so it
-has one draw, and keeps its round 2 limit of 10.
+has one draw. Round 2 gave it 8 moves (the owner won in 4); v5 gives 10, two spare, in line with
+the owner's ask for looser limits.
 
 | Board | Ordinary wins | Ordinary P50 / P80 | Beam wins | Beam P50 / P90 | Limit |
 |---|---|---|---|---|---|
@@ -45,7 +46,8 @@ has one draw, and keeps its round 2 limit of 10.
 | The Drought | 0/1 | — | 0/1 at chains ≤ 7; wins in 2 at chains ≤ 12 | — | 10 |
 
 Shared Material, See It Coming and Through the Gate are the hard ones: a player who
-does not plan loses most draws (the ordinary player never aims at the gate or the ★).
+does not plan loses most draws (the ordinary player does steer toward the gate and the ★ through its heuristic, but it
+looks only one move ahead).
 That is the kind (scarce 3s, reading the strip, opening the gate),
 so the limits are generous rather than the boards changed. The owner decides after play.
 With 22 moves, a player who re-plans each move without looking at the strip can win See It

@@ -189,7 +189,7 @@ test('See It Coming: the strip is shown, and a plan made without it fails on oth
   assert.ok(nec.blindPlanWins.includes(false),'no alt seed produced a replayable plan, so the check proves nothing');
   // v5: reported, not gated. With the generous 22-move limit (calibrate.js; owner: limits must survive unlucky draws) a
   // player who re-plans each move without the strip can still win; the strip makes the board easier, not possible.
-  assert.ok(Array.isArray(nec.blindReplanWins),'the re-planning check ran');
+  assert.ok(nec.blindReplanWins.includes(true),'no blind re-planner wins: update the README, which says one can');
 });
 
 test('Make It Here: one order on screen at a time, two short rule sentences, no hint line',()=>{
@@ -241,6 +241,7 @@ test('a tile gate opens when a tile of at least gate.tile sits beside it after a
   const base={id:'gt',seed:1,moves:9,refill:false,spawnValues:[2],stone:[[1,0],[1,1],[1,2]],gate:{at:[1,1],tile:16},goal:{type:'connect',marks:[[0,2],[2,2]]},
     grid:[[4,0,2],[4,0,2],[8,0,4]]};
   assert.throws(()=>rules.create({...base,gate:{at:[1,1],tile:16,sum:16}}),/Invalid/,'a gate takes a sum or a tile, not both');
+  assert.throws(()=>rules.create({...base,gate:{at:[1,1],tile:16,sum:null}}),/Invalid/,'an empty sum next to a tile is refused too');
   assert.ok(!rules.opensGate(base,999),'a tile gate never opens on a chain sum');
   const big=rules.move(base,rules.create(base),[[0,0],[0,1],[0,2]]);
   assert.equal(big.grid[2][0].value,16);

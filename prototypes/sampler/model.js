@@ -41,7 +41,7 @@
       (g.type!=='exact'||positive(g.make))&&(g.type!=='leftover'||positive(g.max))&&
       (g.type!=='connect'||Array.isArray(g.marks)&&g.marks.length>=2&&g.marks.every(p=>cell(p)&&!stone.has(String(p))))&&
       (g.type!=='relay'||Array.isArray(g.stages)&&g.stages.length>1&&g.stages.every(positive))&&
-      (level.gate===undefined||cell(level.gate.at)&&stone.has(String(level.gate.at))&&(positive(level.gate.sum)!==positive(level.gate.tile)))&&
+      (level.gate===undefined||cell(level.gate.at)&&stone.has(String(level.gate.at))&&(('sum' in level.gate)!==('tile' in level.gate))&&positive('sum' in level.gate?level.gate.sum:level.gate.tile))&&
       (level.stone===undefined||Array.isArray(level.stone)&&level.stone.every(cell))&&
       // Rust was retired in v3 (PDL-040) and any-order parts in v5 (PDL-041); a board that still asks for either is refused
       // rather than silently ignored.
