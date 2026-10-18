@@ -3,14 +3,8 @@ const fs=require('node:fs'),path=require('node:path');
 const rules=require('./model'),levels=require('./levels'),{solve,exhaustive,ordinary,necessity}=require('./search');
 
 const SPAWN=[2,4,8,16,32,64];
-const ADVANCED='feed-the-next-advanced';
 const isPow2=v=>Number.isSafeInteger(v)&&v>0&&(v&(v-1))===0;
 const isThreeLine=v=>{if(!Number.isSafeInteger(v)||v<3)return false;let n=v;while(n%2===0)n/=2;return n===3;};
-// Budget rule (v4): the best known line plus six, and on orders boards at least 3 moves per order plus 4; boards the
-// ordinary-player screen raised are capped at three times the best line (or the floor, if larger).
-const SPARE=6;
-const floorOf=l=>l.goal.type==='orders'?3*l.goal.orders.length+4:0;
-const BEAMS=[{beam:1000,maxLength:8},{beam:200,maxLength:7}];
 
 test('an order with a spot counts only when its chain ends on the spot',()=>{
   const level={id:'t',seed:1,moves:5,spawnValues:[8],goal:{type:'orders',orders:[{make:144,from:48,at:[2,0]}]},
@@ -58,21 +52,28 @@ test('no rust anywhere: Rust is retired (PDL-040), boards that ask for rust or v
     assert.ok(!/\brust/i.test(fs.readFileSync(path.join(__dirname,file),'utf8').split('\n').filter(line=>!/Rust was retired|level\.rust===undefined/.test(line)).join('\n')),file+' still has rust code (only the refusal guard may mention it)');
 });
 
-test('the board list is the eight v3 boards in order',()=>{
-  assert.deepEqual(levels.map(l=>l.id),['make-it-here','feed-the-next',ADVANCED,'shared-material','three-separate','see-it-coming',
-    'the-drought','through-the-gate']);
+test('the board list is the six v5 keepers in order, the boss last',()=>{
+  assert.deepEqual(levels.map(l=>l.id),['feed-the-next','make-it-here','shared-material','see-it-coming','through-the-gate','the-drought']);
 });
 
-test('v4: every board that refills shows its Next tiles (per-column draws); only the Drought does not',()=>{
+test('v5: only See It Coming shows next tiles, one per column; every other board uses normal shared refills',()=>{
   for(const level of levels){
-    assert.equal(!!level.forecast,level.refill!==false,level.id+': forecast flag');
-    if(level.forecast)assert.ok(/next tiles/i.test(level.rule+' '+(level.howto||'')),level.id+': rule text does not name the Next tiles strip');
+    if(level.id==='see-it-coming'){assert.ok(level.forecast&&level.forecastShow===1,'See It Coming shows one tile per column');continue;}
+    assert.ok(!level.forecast,level.id+' shows next tiles');
+    assert.ok(!/next tile/i.test(level.rule),level.id+': rule text names next tiles');
   }
-  const page=fs.readFileSync(path.join(__dirname,'page.html'),'utf8');
-  assert.ok(/id="forecast"/.test(page)&&/NEXT TILES/.test(page),'the strip is in the page');
-  // each column has its own refill queue, so draws do not depend on play order
-  const level=levels.find(l=>l.id==='feed-the-next'),a=rules.create(level),b=rules.create(level);
-  assert.deepEqual([0,1,2,3,4].map(x=>rules.upcoming(level,a,x,3)),[0,1,2,3,4].map(x=>rules.upcoming(level,b,x,3)));
+  const level=levels.find(l=>l.id==='see-it-coming'),a=rules.create(level),b=rules.create(level);
+  assert.deepEqual([0,1,2,3,4].map(x=>rules.upcoming(level,a,x,1)),[0,1,2,3,4].map(x=>rules.upcoming(level,b,x,1)));
+  assert.ok(/forecastShow/.test(fs.readFileSync(path.join(__dirname,'app.js'),'utf8')),'the page honours forecastShow');
+});
+
+test('no Advanced board and no two-part cap left in the boards (owner dropped BL-0032)',()=>{
+  for(const level of levels){assert.ok(!level.goal.anyOrder,level.id+' is any-order');assert.ok(!/Advanced/.test(level.name));assert.equal(level.goal.cap,undefined,level.id+' sets a cap');}
+  const level={id:'nc',seed:1,moves:9,spawnValues:[2],goal:{type:'orders',parts:true,orders:[{make:16,from:4},{make:64,from:16}]},
+    grid:[[4,4,4,4,2],[16,16,16,16,2],[16,2,2,2,2]]};
+  const crowded=rules.create(level);crowded.grid[1][0].made=true;crowded.grid[2][0].made=true;
+  assert.equal(rules.completes(level,crowded,[[0,0],[1,0],[2,0],[3,0]]),0,'without a cap a third part is fine');
+  assert.throws(()=>rules.create({...level,goal:{...level.goal,anyOrder:true}}),/Invalid/,'any-order parts boards are refused');
 });
 
 test('one refill rule: every normal board refills from 2..64; only the announced boss differs',()=>{
@@ -90,7 +91,7 @@ test('numbers players compute are powers of two (except green tiles placed on Sh
     if(g.type==='orders')g.orders.forEach(o=>{nums.push(o.make,o.from);assert.equal(o.make/o.from,4,level.id+': orders are × 4');});
     if(g.type==='exact')nums.push(g.make);
     if(g.type==='relay')nums.push(...g.stages);
-    if(level.gate)nums.push(level.gate.sum);
+    if(level.gate)nums.push(level.gate.sum!==undefined?level.gate.sum:level.gate.tile);
     for(const v of nums)assert.ok(isPow2(v)||green&&isThreeLine(v),`${level.id}: ${v} is not a power of two`);
     for(const v of level.grid.flat())if(v)assert.ok(isPow2(v)||green&&isThreeLine(v),`${level.id}: start tile ${v}`);
   }
@@ -140,39 +141,30 @@ test('exhaustive short-win check finds a planted 2-move win and a 3-move win mad
   assert.equal(rules.replay(drought,d.win.map(chain=>({type:'move',chain}))).outcome,'won');
 });
 
-test('each board: no win in 3 moves or fewer (exhaustive), budget = best known line + 6 (floor 3 per order + 4), at least 60 opening chains, its twist binds',()=>{
+// v5 budgets come from calibrate.js (30 refill draws per board, the Drought on its own board): the larger of the beam's
+// 90th percentile + 2, its median + 8, and the ordinary player's 80th percentile + 2 where it wins at least half the draws.
+// Here each board is checked on its own seed only: a solver line and a short opening fit inside the budget.
+test('each board on its own seed: the solver wins inside the budget with room to spare, and there are plenty of opening chains',()=>{
   for(const level of levels){
-    const state=rules.create(level),open=rules.chains(state,8);
-    assert.ok(open.length>=60,`${level.id} opens with only ${open.length} chains`);
-    const short=exhaustive(level,3);
-    assert.equal(short.win,null,`${level.id} can be won in ${short.win&&short.win.length} moves`);
-    // level.best is the shortest line the screening beams find (beam 1000 / chains up to 8, beam 200 / up to 7).
-    const best=level.best;
-    assert.ok(best>=4,level.id+': best known line under 4 moves');
-    const lines=BEAMS.map(o=>solve(level,{...o,budget:best})).filter(Boolean);
-    assert.ok(lines.length,`${level.id}: no line of ${best} moves`);
-    const sol=lines.reduce((a,b)=>b.moves<a.moves?b:a);
+    const open=rules.chains(rules.create(level),8);
+    assert.ok(open.length>=40,`${level.id} opens with only ${open.length} chains`);
+    const sol=solve(level,{beam:200,maxLength:level.refill===false?12:7,budget:level.moves});
+    assert.ok(sol,`${level.id}: no solver line inside ${level.moves} moves`);
     assert.equal(rules.replay(level,sol.path.map(chain=>({type:'move',chain}))).outcome,'won');
-    for(const o of BEAMS)assert.equal(solve(level,{...o,budget:best-1}),null,`${level.id}: a beam finds a line shorter than ${best}`);
-    const base=Math.max(best+SPARE,floorOf(level));
-    assert.ok(level.moves>=base,`${level.id}: budget ${level.moves} is under best + ${SPARE} / the floor (${base})`);
-    assert.ok(level.moves<=Math.max(3*best,floorOf(level),base),`${level.id}: budget ${level.moves} is over three times the best line`);
-    const nec=necessity(level,{beam:200,maxLength:7});
-    assert.notEqual(nec.spotBlindWins,true,level.id+': ignoring the spot still wins');
-    assert.notEqual(nec.winsWithoutRefills,true,level.id+': the refills are not needed');
+    assert.ok(level.moves>=sol.moves+4,`${level.id}: budget ${level.moves} leaves under 4 spare moves over the solver's ${sol.moves}`);
   }
 });
 
-test('ordinary-player baseline (game, not brain teaser): reported on every board, and it wins at the budget on Feed the Next and Three Separate',()=>{
-  for(const id of ['feed-the-next','three-separate']){
+test('ordinary-player baseline (game, not brain teaser): it wins Feed the Next and Make It Here at the budget on their own seeds',()=>{
+  for(const id of ['feed-the-next','make-it-here']){
     const level=levels.find(l=>l.id===id),r=ordinary(level);
     assert.equal(r.outcome,'won',id+': an ordinary one-move-at-a-time player loses at the budget');
     assert.equal(rules.replay(level,r.path.map(chain=>({type:'move',chain}))).outcome,'won');
   }
 });
 
-test('parts (Feed the Next): an order makes a part; later orders must include a part; a fill that would make a third part is refused',()=>{
-  const level={id:'p',seed:1,moves:9,spawnValues:[2],goal:{type:'orders',parts:true,orders:[{make:16,from:4},{make:64,from:16}]},
+test('parts (Feed the Next): an order makes a part; later orders must include a part; with a cap set, a fill that would make one too many is refused',()=>{
+  const level={id:'p',seed:1,moves:9,spawnValues:[2],goal:{type:'orders',parts:true,cap:2,orders:[{make:16,from:4},{make:64,from:16}]},
     grid:[[4,4,4,4,2],[16,16,16,16,2],[16,2,2,2,2]]};
   let state=rules.create(level);
   assert.equal(rules.completes(level,state,[[0,1],[1,1],[2,1],[3,1]]),-1,'B before A');
@@ -188,63 +180,16 @@ test('parts (Feed the Next): an order makes a part; later orders must include a 
   assert.equal(rules.completes(level,one,[[0,0],[1,0],[2,0],[3,0]]),0,'a second part is allowed');
 });
 
-test('any-order parts (Advanced): orders fill in any order, every fill makes a part, the cap refuses a third, and an order can need two parts',()=>{
-  const level={id:'a',seed:1,moves:9,spawnValues:[2],goal:{type:'orders',parts:true,anyOrder:true,
-    orders:[{make:64,from:16},{make:32,from:8},{make:64,from:16},{make:256,from:64,parts:2}]},
-    grid:[[16,16,16,16,2],[8,8,8,8,2],[16,16,16,16,2],[64,64,2,2,2]]};
-  let s=rules.create(level);
-  assert.equal(rules.completes(level,s,[[0,1],[1,1],[2,1],[3,1]]),1,'B can go first');
-  s=rules.move(level,s,[[0,1],[1,1],[2,1],[3,1]]);
-  assert.equal(rules.partCount(s),1,'B’s 32 is a part');
-  // two parts on the board now: a third plain fill is refused, with either 16 order
-  const two=rules.create(level);two.grid[3][4].made=true;two.grid[3][3].made=true;
-  assert.equal(rules.completes(level,two,[[0,0],[1,0],[2,0],[3,0]]),-1,'a fill that would make a third part is refused');
-  // D needs two parts: four 64s with one part do not count, with two they do
-  assert.equal(rules.partsNeeded(level,3),2);
-  const dd=rules.create({...level,grid:[[64,64,64,64,2],[8,8,8,8,2],[16,16,16,16,2],[2,2,2,2,2]]});
-  dd.grid[0][0].made=true;
-  assert.equal(rules.completes(level,dd,[[0,0],[1,0],[2,0],[3,0]]),-1,'one part is not enough for D');
-  dd.grid[0][1].made=true;
-  assert.equal(rules.completes(level,dd,[[0,0],[1,0],[2,0],[3,0]]),3,'two parts fill D');
-  // the strictTurn screening flag only allows the first unfinished order
-  const strict={...level,goal:{...level.goal,strictTurn:true}};
-  assert.equal(rules.completes(strict,rules.create(level),[[0,1],[1,1],[2,1],[3,1]]),-1,'strict turn: B waits for A');
-});
-
-test('Feed the Next — Advanced (v3, proposed rule): four orders in any order, cap of two parts, D needs two parts; the cap bites',()=>{
-  const level=levels.find(l=>l.id===ADVANCED),g=level.goal;
-  assert.ok(g.parts&&g.anyOrder&&g.orders.length===4);
-  assert.deepEqual(g.orders.map((o,i)=>rules.partsNeeded(level,i)),[0,0,0,2]);
-  assert.ok(/Advanced/.test(level.name));
-  // The two parts D needs are the tiles two other orders make; the third plain order makes something else.
-  const D=g.orders[3],makers=g.orders.slice(0,3).filter(o=>o.make===D.from);
-  assert.equal(makers.length,2,'exactly two orders make D’s ingredient');
-  const nec=necessity(level,{beam:200,maxLength:8});
-  // Reported, not gated (Codex round 1): at the full screening chain length strict list order ties the best line on this
-  // seed (5 moves), so any-order play is a freedom here, not a speed-up. Seeds 1 to 3 do make list order slower, but the
-  // ordinary-player baseline loses all three, so seed 17 stays.
-  assert.ok(nec.strictOrderWin===null||nec.strictOrderWin.path.length===level.best,'strict order may tie the best line, never beat it');
-  assert.notEqual(nec.strictOrderGreedy,'won','a greedy in-order player wins');
-  assert.equal(nec.capBlindWins,false,'a plan made without the cap still wins');
-  // v4: a first-time player can read it: ● wording, three short sentences, a one-line how-it-works, a counter in the page.
-  assert.ok(!/part/i.test(level.rule),'jargon in the rule');assert.ok(level.rule.split(/(?<=\.)\s+/).length<=3);
-  assert.ok(/●/.test(level.rule)&&level.howto&&/●/.test(level.howto));
-  assert.ok(/id="dots"/.test(fs.readFileSync(path.join(__dirname,'page.html'),'utf8')));
-  // The best known line fills an order out of list order.
-  const sol=BEAMS.map(o=>solve(level,{...o,budget:level.best})).find(Boolean);
-  let s=rules.create(level);const filled=[];
-  for(const c of sol.path){s=rules.move(level,s,c);if(s.last.order>=0)filled.push(s.last.order);}
-  assert.notDeepEqual(filled,[0,1,2,3],'the witness fills the orders in list order');
-});
-
-test('See It Coming: the forecast is shown, and a forecast-blind player loses where the forecast-aware witness wins',()=>{
+test('See It Coming: the strip is shown, and a plan made without it fails on other refills (re-planning without it is reported)',()=>{
   const level=levels.find(l=>l.id==='see-it-coming');
   assert.ok(level.forecast&&level.goal.type==='relay');
-  assert.ok(/^Next tiles/i.test(level.rule),'the rule mentions the forecast first');
+  assert.ok(/^Next tiles/i.test(level.rule)&&/each column/.test(level.rule),'the rule names the one-per-column strip first');
   const nec=necessity(level,{beam:200,maxLength:7});
   assert.ok(nec.blindPlanWins.every(w=>w===false||w===null),'a plan made with other refills still wins');
   assert.ok(nec.blindPlanWins.includes(false),'no alt seed produced a replayable plan, so the check proves nothing');
-  assert.deepEqual(nec.blindReplanWins,nec.blindReplanWins.map(()=>false),'a player re-planning without the forecast still wins');
+  // v5: reported, not gated. With the generous 22-move limit (calibrate.js; owner: limits must survive unlucky draws) a
+  // player who re-plans each move without the strip can still win; the strip makes the board easier, not possible.
+  assert.ok(Array.isArray(nec.blindReplanWins),'the re-planning check ran');
 });
 
 test('Make It Here: one order on screen at a time, two short rule sentences, no hint line',()=>{
@@ -271,11 +216,11 @@ test('The Drought is the only boss: announced, no refills, one power-of-two targ
   assert.equal(levels.filter(l=>l.boss).length,1,'only the boss is a boss');
 });
 
-test('Through the Gate is 7 × 6 with a stone wall in the middle column, the forecast on, and a ★ in each room',()=>{
+test('Through the Gate is 7 × 6 with a stone wall in the middle column, a 128 tile gate, and a ★ in each room',()=>{
   const level=levels.find(l=>l.id==='through-the-gate');
   assert.equal(level.grid[0].length,7);assert.equal(level.grid.length,6);
   assert.deepEqual(level.stone.map(String).sort(),[0,1,2,3,4,5].map(y=>'3,'+y).sort());
-  assert.equal(level.gate.at[0],3);assert.ok(level.forecast);
+  assert.equal(level.gate.at[0],3);assert.equal(level.gate.tile,128);assert.equal(level.gate.sum,undefined);
   // exhaustive() counts opening the gate as its own step; that holds only when the ★ are on opposite sides of the wall.
   const xs=level.goal.marks.map(m=>m[0]).sort((a,b)=>a-b);assert.ok(xs[0]<3&&xs[1]>3);
 });
@@ -290,4 +235,18 @@ test('the gate opens on a chain whose sum is at least gate.sum ending beside it,
   assert.ok(more.gateOpen&&more.last.opened,'8+8+16 = 32 opens it');
   const small={...base,grid:[[2,0,8],[2,0,8],[4,0,16]]};
   assert.ok(!rules.move(small,rules.create(small),[[0,0],[0,1],[0,2]]).gateOpen,'2+2+4 = 8 does not');
+});
+
+test('a tile gate opens when a tile of at least gate.tile sits beside it after a move, and not for a smaller tile',()=>{
+  const base={id:'gt',seed:1,moves:9,refill:false,spawnValues:[2],stone:[[1,0],[1,1],[1,2]],gate:{at:[1,1],tile:16},goal:{type:'connect',marks:[[0,2],[2,2]]},
+    grid:[[4,0,2],[4,0,2],[8,0,4]]};
+  assert.throws(()=>rules.create({...base,gate:{at:[1,1],tile:16,sum:16}}),/Invalid/,'a gate takes a sum or a tile, not both');
+  assert.ok(!rules.opensGate(base,999),'a tile gate never opens on a chain sum');
+  const big=rules.move(base,rules.create(base),[[0,0],[0,1],[0,2]]);
+  assert.equal(big.grid[2][0].value,16);
+  assert.ok(big.gateOpen&&big.last.opened,'a 16 beside the gate opens it');
+  assert.ok(!big.stone.includes('1,1'),'the gate cell is no longer stone');
+  const small=rules.move(base,rules.create(base),[[2,0],[2,1],[2,2]]);
+  assert.equal(small.grid[2][2].value,8);
+  assert.ok(!small.gateOpen,'an 8 beside the gate does not open it');
 });

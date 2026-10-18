@@ -32,6 +32,11 @@ function heuristic(level,state){
       const useful=tiles.filter(t=>t.value<=target).map(t=>t.value).sort((a,b)=>b-a);h+=(useful[0]||0)*2+(useful[1]||0);}
   }
   if(level.gate&&state.gateOpen)h+=400;
+  else if(level.gate&&level.gate.tile){
+    // Tile gate (v5): reward big tiles close to the gate cell, up to the gate value.
+    const best=Math.max(0,...tiles.filter(t=>near([t.x,t.y],level.gate.at,2)).map(t=>Math.min(t.value,level.gate.tile)));
+    h+=best*2;
+  }
   if(g.type==='connect'){
     if(state.done[0])return 1e6;
     for(const m of g.marks){const t=state.grid[m[1]][m[0]];if(!t)continue;

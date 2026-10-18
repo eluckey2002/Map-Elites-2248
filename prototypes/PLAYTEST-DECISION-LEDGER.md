@@ -1257,3 +1257,37 @@ design result:
 - **Sources:** Artifact `runs` (9 rows) and `answers` (8 rows), study
   `kinds-sampler-v2`; owner message "done with comments"; prototypes/sampler/
   README.md. Task: BL-0029.
+
+### PDL-041 — Final review: the keepers, the gate rule, and the Advanced cap dropped
+
+- **Reported:** 2026-10-18, 02:14–02:18 UTC. The owner answered all 14 questions
+  on the final review page (private Artifact, db collection `decisions`), after
+  the kinds sampler rounds, the Shared Material search (RESULT-0085) and the
+  Combo Run prototypes. Every pick matched the page's recommendation; no note
+  was left. Record: `reviews/2026-10-18-final-review-decisions.md` (project
+  files).
+- **Captured play:** none new. This is an owner decision on earlier play
+  (PDL-038 to PDL-040, sampler v3 and v4 runs), not a playtest.
+- **Decision:** per kind:
+  - Recipe on its own: RETIRE as a kind; its orders stay as the base goal
+    inside other kinds.
+  - Feed the Next (parts, in turn): KEEP as the entry board.
+  - Feed the Next — Advanced and its two-part cap: RETIRE (BL-0032 dropped).
+  - Make It Here: REVISE (calmer screen, looser moves) and play once more.
+  - Shared Material: KEEP.
+  - See It Coming with one next tile per column: KEEP. No other board shows
+    next tiles.
+  - The Drought as an announced boss: KEEP, built like the round 2 board.
+  - Through the Gate: KEEP, with a new gate rule: the gate opens when a 128
+    tile sits beside it, not on a chain that adds up to 128.
+  - Combo Run: continue with variant C. Daily puzzle (BL-0031): parked. Night
+    Kitchen: prototype it.
+- **Limits:** One owner, answering recommendations; a pick is a direction, not
+  play evidence. Sampler v5 (one board per keeper, budgets from 30 refill draws
+  per board, `prototypes/sampler/calibrate.js`) is the final round he plays
+  before the level pack.
+- **Next recommendation:** owner plays sampler v5; one short review; he decides
+  what goes into the level pack.
+- **Sources:** final review page db `decisions` (14 docs); prototypes/sampler/
+  README.md (v5 section).
+

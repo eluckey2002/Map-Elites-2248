@@ -3,7 +3,7 @@
 (function(){
   'use strict';
   const rules=window.SamplerRules,levels=window.SamplerLevels,$=id=>document.getElementById(id);
-  const STUDY='kinds-sampler-v4',LS='kindsSampler.v4';
+  const STUDY='kinds-sampler-v5',LS='kindsSampler.v5';
   const COLORS=['#c03a7a','#3d7fb8','#7a4fc0','#2f7d6b'],LETTERS='ABCD',RINGS=['ing-a','ing-b','ing-c','ing-d'];
   let local={current:0,played:{}};
   try{Object.assign(local,JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){/* storage unavailable */}
@@ -51,7 +51,7 @@
     if(g.type==='relay')return g.stages.map((v,i)=>chip(i?['then ',v,', using it']:['Make ',v],COLORS[i],shown.done[i]));
     if(g.type==='leftover')return [chip(`Leave ${g.max} tile${g.max>1?'s':''}`,COLORS[0],rules.goalMet(level,shown))];
     const link=chip('One chain through both ★',COLORS[0],shown.done[0]);
-    return level.gate?[chip([`Gate: a chain adding up to ${fmt(level.gate.sum)}+, ending beside it`],COLORS[1],shown.gateOpen),link]:[link];
+    return level.gate?[chip(level.gate.tile?['Gate: get a ',level.gate.tile,' next to it']:[`Gate: a chain adding up to ${fmt(level.gate.sum)}+, ending beside it`],COLORS[1],shown.gateOpen),link]:[link];
   }
   function progressText(shown){
     const g=goal();
@@ -83,10 +83,10 @@
         const fits=g.orders.map((q,i)=>!state.done[i]&&q.from===o.from&&q.make===o.make?i:-1).filter(i=>i>=0);
         const short=fits.filter(i=>rules.partsIn(state,selection)<rules.partsNeeded(level,i));
         if(g.parts&&short.length===fits.length){const n=rules.partsNeeded(level,short[0]);return {text:`Right recipe, but ${g.anyOrder?'order '+LETTERS[short[0]]+'’s':'the'} chain has to include ${n===1?'a part':n===2?'two parts':n+' parts'} (●).`,tone:'warn'};}
-        if(g.parts&&rules.partsAfter(state,selection)>rules.MAX_PARTS){
+        if(g.parts&&g.cap!==undefined&&rules.partsAfter(state,selection)>g.cap){
           const big=g.orders.findIndex((q,i)=>!state.done[i]&&rules.partsNeeded(level,i)>0);
           if(g.anyOrder&&big>=0)return {text:`Two ● are already on the board. Use them up first (${LETTERS[big]}’s chain uses two) before filling another order.`,tone:'warn'};
-          return {text:`That would make a third part, so it does not fill the order. The tiles would still merge and use a move. At most ${rules.MAX_PARTS} parts at once.`,tone:'warn'};
+          return {text:`That would make a third part, so it does not fill the order. The tiles would still merge and use a move. At most ${g.cap} parts at once.`,tone:'warn'};
         }
         return {text:'Right recipe, but it does not fill an order here.',tone:'warn'};
       }
@@ -107,7 +107,11 @@
       if(i>0&&sum===g.stages[i])return {text:`${base} Right sum, but it has to include the ${fmt(g.stages[i-1])} you made (●).`,tone:'warn'};
       if(sum>g.stages[i])return {text:`${base} Over ${fmt(g.stages[i])}.`,tone:'warn'};
     }
-    if(level.gate&&!state.gateOpen){
+    if(level.gate&&!state.gateOpen&&level.gate.tile){
+      const after=rules.preview(level,state,selection);
+      if(after&&after.gateOpen)return {text:`${base} Leaves a ${fmt(level.gate.tile)} or bigger next to the gate: opens it.`,tone:'good'};
+    }
+    if(level.gate&&!state.gateOpen&&level.gate.sum!==undefined){
       const beside=Math.max(Math.abs(selection.at(-1)[0]-level.gate.at[0]),Math.abs(selection.at(-1)[1]-level.gate.at[1]))===1,big=rules.opensGate(level,sum);
       if(big&&beside)return {text:`${base} Adds up to ${fmt(sum)} (${fmt(level.gate.sum)} or more) and ends beside the gate: opens it.`,tone:'good'};
       if(big)return {text:`${base} Adds up to ${fmt(sum)}, which is ${fmt(level.gate.sum)} or more, but the chain has to end on a tile beside the gate to open it.`,tone:'warn'};
@@ -129,9 +133,9 @@
     $('progress-k').textContent=goal().type==='orders'?'INGREDIENTS':goal().type==='leftover'?'ON BOARD':'';
     $('ingredients').textContent=progressText(shown);
     // Live ● counter (boards with parts); warning-coloured when the board is full.
-    const dots=$('dots'),dotsOn=!!goal().parts;dots.hidden=!dotsOn;
-    if(dotsOn){const n=rules.partCount(shown);dots.textContent=`● ${n} of ${rules.MAX_PARTS}`;dots.classList.toggle('full',n>=rules.MAX_PARTS);
-      dots.setAttribute('aria-label',`${n} of ${rules.MAX_PARTS} dots on the board`);}
+    const dots=$('dots'),dotsOn=!!goal().parts&&goal().cap!==undefined;dots.hidden=!dotsOn;
+    if(dotsOn){const n=rules.partCount(shown);dots.textContent=`● ${n} of ${goal().cap}`;dots.classList.toggle('full',n>=goal().cap);
+      dots.setAttribute('aria-label',`${n} of ${goal().cap} dots on the board`);}
     const how=$('howto');how.hidden=!level.howto;how.textContent=level.howto||'';
     $('rule-extra').hidden=goal().type!=='orders';
     $('moves').textContent=`${shown.maxMoves-shown.moves} / ${shown.maxMoves}`;
@@ -141,9 +145,10 @@
     if(level.forecast){const row=$('forecast-row');row.style.gridTemplateColumns=`repeat(${shown.gridWidth},minmax(0,1fr))`;
       row.replaceChildren(...Array.from({length:shown.gridWidth},(_,x)=>{const d=document.createElement('div');d.className='next';
         if(Array.from({length:shown.gridHeight},(_,y)=>rules.isStone(shown,x,y)).every(Boolean)&&!(level.gate&&shown.gateOpen&&level.gate.at[0]===x)){d.classList.add('wall');return d;}
-        const [a,b,c]=rules.upcoming(level,shown,x,3);
-        for(const v of [c,b,a]){const t=miniTile(v);t.classList.add('ftile');d.append(t);}
-        d.setAttribute('aria-label',`Column ${x+1}: next ${a}, then ${b}, then ${c}`);return d;}));}
+        // v5 (owner pick): See It Coming shows one tile per column (`forecastShow`), other boards show no strip.
+        const n=level.forecastShow||3,next=rules.upcoming(level,shown,x,n);
+        for(const v of next.slice().reverse()){const t=miniTile(v);t.classList.add('ftile');d.append(t);}
+        d.setAttribute('aria-label',`Column ${x+1}: next ${next.join(', then ')}`);return d;}));}
     // board
     const boss=$('boss');boss.hidden=!(level.boss&&state.moves===0);
     if(level.boss){$('boss-title').textContent=level.boss.title;$('boss-text').textContent=level.boss.text;}
@@ -152,7 +157,7 @@
     const spots=orders().map((o,i)=>o.at?{at:o.at,i,done:shown.done[i]}:null).filter(Boolean),marks=goal().type==='connect'?goal().marks:[];
     for(let y=0;y<shown.gridHeight;y++)for(let x=0;x<shown.gridWidth;x++){
       const tile=shown.grid[y][x],cell=document.createElement('button');cell.type='button';cell.dataset.x=x;cell.dataset.y=y;
-      if(level.gate&&!shown.gateOpen&&same(level.gate.at,[x,y])){cell.className='tile stone gate';cell.disabled=true;cell.textContent=fmt(level.gate.sum)+'+';cell.setAttribute('aria-label',`Gate wall: opens when a chain adding up to ${level.gate.sum} or more ends on a tile beside it`);board.append(cell);continue;}
+      if(level.gate&&!shown.gateOpen&&same(level.gate.at,[x,y])){cell.className='tile stone gate';cell.disabled=true;cell.textContent=level.gate.tile?fmt(level.gate.tile):fmt(level.gate.sum)+'+';cell.setAttribute('aria-label',level.gate.tile?`Gate wall: opens when a ${level.gate.tile} tile or bigger sits next to it`:`Gate wall: opens when a chain adding up to ${level.gate.sum} or more ends on a tile beside it`);board.append(cell);continue;}
       if(rules.isStone(shown,x,y)){cell.className='tile stone';cell.disabled=true;cell.setAttribute('aria-label',`Column ${x+1}, row ${y+1}: wall`);board.append(cell);continue;}
       if(!tile){cell.className='tile empty';cell.disabled=true;cell.setAttribute('aria-label',`Column ${x+1}, row ${y+1}: empty`);board.append(cell);continue;}
       cell.className=tileClasses(tile.value).join(' ');

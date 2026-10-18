@@ -5,11 +5,51 @@ playtest screening, not evidence-ledger evidence.
 
 Build with `node prototypes/sampler/build.js <out.html>`. v1 was played as private
 Artifact https://claude.ai/artifact/SQuCNP6SQyC7m7dbSuN3YP (study `kinds-sampler-v1`).
-v2 was study `kinds-sampler-v2` (PDL-039), v3 `kinds-sampler-v3` (PDL-040). This
-is v4 (study `kinds-sampler-v4`, local-storage key `kindsSampler.v4`, the owner's
-notes on v3); runs and answers save to the Artifact's db with the same schema
-(`runs`, `answers`), answer ids `kinds-sampler-v4--<board>`, and the page loads
-only this study's answers.
+v2 was study `kinds-sampler-v2` (PDL-039), v3 `kinds-sampler-v3` (PDL-040). v4 was
+`kinds-sampler-v4`. This is v5, the final round (study `kinds-sampler-v5`,
+local-storage key `kindsSampler.v5`); runs and answers save to the Artifact's db
+with the same schema (`runs`, `answers`), answer ids `kinds-sampler-v5--<board>`,
+and the page loads only this study's answers.
+
+## v5: the final round (owner's final review, 2026-10-18)
+
+The owner reviewed every kind and picked what stays
+(`reviews/2026-10-18-final-review-decisions.md`, project files). v5 is one board per
+keeper, in this order: Feed the Next, Make It Here (revised), Shared Material, See It
+Coming, Through the Gate, The Drought (boss, last). Dropped: Feed the Next — Advanced
+and its two-part cap (BL-0032), and the Three Separate control.
+
+Owner picks applied:
+
+- No Next-tiles strip on normal boards; they use the shared refill stream again.
+- See It Coming alone shows next tiles, one per column (`forecastShow: 1`).
+- The gate opens when a tile of 128 or more sits beside it after a move
+  (`gate: {at, tile}` in `model.js`; the old `gate.sum` rule is still supported).
+- Make It Here: two short rule sentences, no hint line, one order on screen.
+- The Drought is the round 2 board the owner won and liked.
+
+Move limits come from `calibrate.js`, not the solver's best line. Each board's start
+grid is played under 30 refill draws (its own seed and 29 others) by two players:
+`ordinary()` (no look-ahead) and a beam solver (beam 60, chains up to 7, 20 moves).
+The limit is the largest of beam P90 + 2, beam median + 8, and ordinary P80 + 2 where
+the ordinary player wins at least half the draws. The Drought has no refills, so it
+has one draw, and keeps its round 2 limit of 10.
+
+| Board | Ordinary wins | Ordinary P50 / P80 | Beam wins | Beam P50 / P90 | Limit |
+|---|---|---|---|---|---|
+| Feed the Next | 30/30 | 5 / 5 | 30/30 | 4 / 4 | 12 |
+| Make It Here | 17/30 | 7 / 9 | 21/30 | 7 / 16 | 18 |
+| Shared Material | 2/30 | 14 / 24 | 21/30 | 11 / 16 | 19 |
+| See It Coming | 8/30 | 22 / 30 | 16/30 | 13 / 20 | 22 |
+| Through the Gate | 0/30 | — | 21/30 | 5 / 5 | 13 |
+| The Drought | 0/1 | — | 0/1 at chains ≤ 7; wins in 2 at chains ≤ 12 | — | 10 |
+
+Shared Material, See It Coming and Through the Gate are the hard ones: a player who
+does not plan loses most draws (the ordinary player never aims at the gate or the ★).
+That is the kind (scarce 3s, reading the strip, opening the gate),
+so the limits are generous rather than the boards changed. The owner decides after play.
+With 22 moves, a player who re-plans each move without looking at the strip can win See It
+Coming; the strip helps but is not required (model.test.js reports this, it no longer gates it).
 
 ## Why
 
