@@ -291,7 +291,7 @@ the first 200 refills of every board stay inside its spawn list. Added after the
 owner beat v1 Rust by scraping a few times and then making one long chain: a
 "scrape, then one long chain" proxy that must lose on Rust.
 
-## Rules
+## Rules (current, v5)
 
 Chains are unchanged (`solver/engine`): touching tiles, diagonals included, at
 least three, first two equal, then equal or double; the sum lands on the last
@@ -303,26 +303,27 @@ tile; gravity; seeded refills. `model.js` adds:
 
 - **Orders** (`orders`): one chain made only of the ingredient, four of them.
   Optional `at`: the chain must end on that cell (◎).
-- **Parts** (`parts`, v2 Feed the Next): orders fill in turn; the tile an order
+- **Parts** (`parts`, Feed the Next): orders fill in turn; the tile an order
   makes becomes a part (●); every later order's chain must include at least one
-  part (any part); an order fill that would leave a third part on the board is
-  not counted, with a status message; the tiles still merge and the move is spent. The page counts `parts: n/2`.
-- **Any-order parts** (`parts` + `anyOrder`, v3 Advanced, proposed): orders
-  fill in any order; every fill makes a part; an order needs `o.parts` parts in
-  its chain (D needs two); the same cap of two parts refuses a third. Two
-  screening-only flags exist for search.js: `strictTurn` (fill strictly in list
-  order) and `goal.cap` (change the cap).
+  part (any part). v5 has no part cap (PDL-041, BL-0032): a board may still set
+  `goal.cap`, and then a fill that would exceed it is not counted, with a status
+  message, and the page shows the ● counter. No v5 board sets one.
+- **Any-order parts** (`anyOrder`): dropped in v5 with the Advanced board
+  (PDL-041); `checkLevel()` refuses a board that asks for it. `strictTurn` stays
+  a screening-only flag for search.js.
 - **Relay** (`relay`): make each stage in turn; each later stage must include
   the tile the last one made (●).
 - **Exact** (`exact`: make one tile of the target), **Connect** (`connect`: one
   chain through every ★).
-- **Forecast**: each column has its own refill queue; the next three show above
-  it in the NEXT TILES strip. Three covers any chain with up to four tiles stacked in one column; a straight line of five or six in one column can still deal a tile the strip does not show (rare; reported, not prevented).
+- **Forecast** (`forecast`, See It Coming only): each column has its own refill
+  queue; `forecastShow` sets how many show above it in the NEXT TILES strip
+  (v5: one). No other board shows next tiles.
 - **Boss** (`boss`, with `refill:false`): a banner names the boss and what it
   changes until the first move.
-- **Stone** walls and a **gate**: a stone cell that opens when a chain whose sum
-  is at least `gate.sum` ends beside it. *The "at least" gate rule is proposed,
-  to be confirmed by owner play.*
+- **Stone** walls and a **gate**: a stone cell that opens when a tile of at
+  least `gate.tile` sits beside it (v5, PDL-041). The older `gate.sum` rule (a
+  chain whose sum is at least `gate.sum` ends beside it) is still accepted; a
+  gate sets exactly one of the two.
 - **Rust**: retired in v3 (PDL-040); a board that asks for it is refused.
 
 Two things the rules do not do, found while building v2:
