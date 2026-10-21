@@ -47,3 +47,4 @@ The owner plays a few elites from different cells of RESULT-0085 and a PDL entry
 - 2026-10-11 — Proposed from the owner's remark in the kinds sampler thread.
 - 2026-10-11 — Updated after PDL-039.
 - 2026-10-12 — RESULT-0085 ran the registered search; see the ledger record and `experiments/RESULT-0085/report.md` for what it filled. Owner play of a few elites is next.
+- 2026-10-21 — The squash merge of PR #88 erased RESULT-0085's registration order from main and turned the experiment gate red; DECISION-0016 reads the order from the kept branch `evidence/result-0085-pr88`. RESULT-0085 itself is unchanged.

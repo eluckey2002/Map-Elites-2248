@@ -519,6 +519,119 @@ function frozenTreeEntry(id) {
   return entry;
 }
 
+// DECISION-0016. A squash merge replaces a branch's commits with one commit,
+// so protocol.md and report.md are first added by the same commit on main and
+// the ordering the branch recorded is gone from HEAD's history. The branch
+// itself is kept on origin under evidence/ (where citations already resolve,
+// see assessLedgerCitations). SQUASHED_REGISTRATIONS lists such results. This
+// is not a grandfather: the entry must cite an owner decision naming the
+// result, this table, the squash commit and the evidence branch; it applies
+// only while both files are still first added by that squash commit; on the
+// branch the protocol must be added strictly before the report; and the
+// squash commit must hold byte-identical protocol.md and report.md to the
+// branch head, so main carries exactly what the branch registered and
+// reported. The branch's registration commit then stands in for every later
+// check (ordering, drift, version freeze). Like FROZEN_TREE_POLICY it lives in
+// this file so only a reviewed edit to the gate can add an entry.
+const SQUASHED_REGISTRATIONS = {
+  'RESULT-0085': {
+    decision: 'DECISION-0016',
+    squash: '646d0e04aadabfc0e921a2aeaad89f918bd708f6',
+    evidence_branch: 'evidence/result-0085-pr88',
+  },
+};
+
+const defaultSquashGit = {
+  head(ref) {
+    try {
+      return execFileSync('git', ['rev-parse', '--verify', '--quiet', `${ref}^{commit}`], {
+        cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+      }).trim() || null;
+    } catch { return null; }
+  },
+  oldestAdd(ref, relPath) {
+    try {
+      const out = execFileSync('git', ['log', '--diff-filter=A', '--format=%H', ref, '--', relPath], {
+        cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+      }).trim().split('\n').filter(Boolean);
+      return out.length ? out[out.length - 1] : null;
+    } catch { return null; }
+  },
+  blob(commit, relPath) {
+    try {
+      return execFileSync('git', ['rev-parse', '--verify', '--quiet', `${commit}:${gitObjectPath(relPath)}`], {
+        cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+      }).trim() || null;
+    } catch { return null; }
+  },
+  isStrictAncestor: (a, b) => isStrictAncestor(a, b),
+  reachableFromHead: (sha) => reachableFromHead(sha),
+};
+
+// The registration and report commits to use for `id`, or the problems that
+// stop the entry from applying. `mainProtocol` and `mainReport` are addedIn()
+// of protocol.md and report.md on HEAD.
+function squashedRegistration(id, entry, { mainProtocol, mainReport, ledgerText, git = defaultSquashGit }) {
+  const problems = [];
+  const protoRel = `experiments/${id}/protocol.md`;
+  const reportRel = `experiments/${id}/report.md`;
+  if (!entry || typeof entry !== 'object') return { problems: [`${id} squashed-registration entry is not an object`] };
+  if (typeof entry.squash !== 'string' || !/^[0-9a-f]{40}$/.test(entry.squash)) {
+    problems.push(`${id} squashed-registration entry must name the squash commit as a full sha`);
+  }
+  if (typeof entry.evidence_branch !== 'string' || !/^evidence\/[A-Za-z0-9._-]+$/.test(entry.evidence_branch)) {
+    problems.push(`${id} squashed-registration entry must name a branch under evidence/`);
+  }
+  if (!/^DECISION-\d{4}$/.test(entry.decision || '')) {
+    problems.push(`${id} squashed-registration entry must cite a ledger decision`);
+  } else if (!problems.length) {
+    const start = ledgerText.search(new RegExp(`^### ${entry.decision} `, 'm'));
+    if (start < 0) {
+      problems.push(`${id} squashed-registration entry cites ${entry.decision}, which is not in the ledger`);
+    } else {
+      const rest = ledgerText.slice(start + 4);
+      const end = rest.search(/^#{2,3} /m);
+      const body = end < 0 ? rest : rest.slice(0, end);
+      const named = [id, 'SQUASHED_REGISTRATIONS', `\`${entry.squash}\``, `\`${entry.evidence_branch}\``];
+      if (!named.every((s) => body.includes(s)) || !/\*\*proof_class:\*\* `owner_decision`/.test(body)) {
+        problems.push(`${id} squashed-registration entry cites ${entry.decision}, which is not an owner decision naming ${id}, SQUASHED_REGISTRATIONS, the squash commit and the evidence branch`);
+      }
+    }
+  }
+  if (problems.length) return { problems };
+
+  // Only the exact situation the decision describes: both files first added by
+  // the named squash commit, which is on HEAD's history.
+  if (mainProtocol !== entry.squash || mainReport !== entry.squash) {
+    const short = (sha) => (sha ? sha.slice(0, 8) : 'nothing');
+    return { problems: [`${id} squashed-registration entry names squash ${entry.squash.slice(0, 8)}, but protocol.md was first added by ${short(mainProtocol)} and report.md by ${short(mainReport)}; correct or remove the entry`] };
+  }
+  if (!git.reachableFromHead(entry.squash)) {
+    return { problems: [`${id} squash commit ${entry.squash.slice(0, 8)} is not reachable from HEAD`] };
+  }
+  const ref = `origin/${entry.evidence_branch}`;
+  const branchHead = git.head(ref);
+  if (!branchHead) {
+    return { problems: [`${id} evidence branch ${ref} is missing; fetch it (it holds the registration the squash merge dropped)`] };
+  }
+  const protocolCommit = git.oldestAdd(ref, protoRel);
+  const reportCommit = git.oldestAdd(ref, reportRel);
+  if (!protocolCommit || !reportCommit) {
+    return { problems: [`${id} evidence branch ${ref} does not add both ${protoRel} and ${reportRel}`] };
+  }
+  if (!git.isStrictAncestor(protocolCommit, reportCommit)) {
+    return { problems: [`${id}: on ${ref}, protocol.md (${protocolCommit.slice(0, 8)}) was not committed before report.md (${reportCommit.slice(0, 8)}). A protocol committed with or after its results is a reconstruction.`] };
+  }
+  for (const rel of [protoRel, reportRel]) {
+    const onMain = git.blob(entry.squash, rel);
+    if (!onMain || onMain !== git.blob(branchHead, rel)) {
+      problems.push(`${id}: ${rel} in squash ${entry.squash.slice(0, 8)} differs from ${ref}; main must carry exactly what the branch registered and reported`);
+    }
+  }
+  if (problems.length) return { problems };
+  return { problems: [], protocolCommit, reportCommit };
+}
+
 // Everything the recomputation reads must still be what the closure was
 // admitted against, because the recomputation itself runs on the admission
 // checkout and so cannot notice a later change on this tree. Immutable: the
@@ -1325,7 +1438,20 @@ function assessExperiments() {
     const hasReport = fs.existsSync(reportPath);
     problems.push(...assessProtocolLifecycle(result, front, hasReport));
     const protoRel = path.join('experiments', result.id, 'protocol.md');
-    const protoCommit = addedIn(protoRel);
+    let protoCommit = addedIn(protoRel);
+    let squashedReportCommit = null;
+    if (Object.prototype.hasOwnProperty.call(SQUASHED_REGISTRATIONS, result.id)) {
+      const squashed = squashedRegistration(result.id, SQUASHED_REGISTRATIONS[result.id], {
+        mainProtocol: protoCommit,
+        mainReport: addedIn(path.join('experiments', result.id, 'report.md')),
+        ledgerText,
+      });
+      problems.push(...squashed.problems);
+      if (!squashed.problems.length) {
+        protoCommit = squashed.protocolCommit;
+        squashedReportCommit = squashed.reportCommit;
+      }
+    }
     // A registration commit that holds an empty or unreadable protocol is a
     // defect, not a reason to skip: an empty placeholder committed first and
     // filled in after the data would otherwise fall back to the on-disk copy
@@ -1348,7 +1474,7 @@ function assessExperiments() {
       problems.push(...assessReportAnswers(result, protocol, report));
       // A protocol is a PRE-registration only if it was committed before the
       // report it justifies. Same commit means no ordering was ever recorded.
-      const reportCommit = addedIn(path.join('experiments', result.id, 'report.md'));
+      const reportCommit = squashedReportCommit || addedIn(path.join('experiments', result.id, 'report.md'));
       if (needs && !exempt.has(result.id)) {
         problems.push(...assessStampProvenance(result, opened, reportCommit));
       }
@@ -1386,5 +1512,5 @@ module.exports = {
   assessArtifactIdentity, assessCitationsResolve, assessClosedEvidenceImmutability,
   assessClosureReceipt, assessReportAnswers, assessStampProvenance,
   assessProtocolDrift, assessProtocolLifecycle, assessVersionFreeze, canonicalJson, freezeProblem,
-  FROZEN_TREE_POLICY, committedVersions, frozenInputProblems, frozenTreeEntryProblems, gameRuleProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
+  FROZEN_TREE_POLICY, SQUASHED_REGISTRATIONS, squashedRegistration, committedVersions, frozenInputProblems, frozenTreeEntryProblems, gameRuleProblems, openCitedArtifacts, protocolDrift, reachableFromHead, reportSection, showAtCommit, utf8Text,
 };
