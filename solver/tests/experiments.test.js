@@ -295,6 +295,96 @@ test('frozen-tree recompute entries must cite a real decision and a reason', () 
   assert.match(frozenTreeEntryProblems('RESULT-0082', null, ledger)[0], /not an object/);
 });
 
+test('a squash-merged registration stands in only when the pinned branch commits prove the order and main matches them', () => {
+  const { squashedRegistration } = require('../../tools/verify-experiments.js');
+  const [SQUASH, HEAD, REG, REP, TIP] = ['a', 'b', 'c', 'd', 'e'].map((c) => c.repeat(40));
+  const entry = {
+    decision: 'DECISION-0016', squash: SQUASH, evidence_branch: 'evidence/r9-pr1', head: HEAD, registration: REG, report: REP,
+  };
+  const record = (over = {}) => [
+    '### DECISION-0016 — x',
+    `- **status:** ${over.status || 'provisional'}`,
+    `- **scope:** RESULT-0009 in SQUASHED_REGISTRATIONS; squash \`${SQUASH}\`, branch \`evidence/r9-pr1\`, head \`${HEAD}\`, registration \`${REG}\`, report \`${REP}\``,
+    `- **proof_class:** \`${over.proofClass || 'owner_decision'}\``,
+    `- **superseded_by:** ${over.supersededBy || '[]'}`,
+    `- **notes:** ${over.notes || 'none'}`, '',
+    '### DECISION-0002 — unrelated', '- **proof_class:** `owner_decision`', '',
+  ].join('\n');
+  // The branch tip TIP descends from the pinned HEAD; at HEAD, REG adds the
+  // protocol and REP the report; main's squash holds the same blobs as HEAD.
+  const fakeGit = (over = {}) => ({
+    head: (ref) => (ref === 'refs/remotes/origin/evidence/r9-pr1' ? TIP : null),
+    isAncestor: (a, b) => a === HEAD && b === TIP,
+    oldestAdd: (ref, rel) => (ref === HEAD ? (rel.endsWith('protocol.md') ? REG : REP) : null),
+    blob: (commit, rel) => `blob:${rel}`,
+    isStrictAncestor: (a, b) => a === REG && b === REP,
+    reachableFromHead: (sha) => sha === SQUASH,
+    ...over,
+  });
+  const run = (over = {}, e = entry, { main = { mainProtocol: SQUASH, mainReport: SQUASH }, ledgerText = record() } = {}) =>
+    squashedRegistration('RESULT-0009', e, { ...main, ledgerText, git: fakeGit(over) });
+
+  assert.deepEqual(run(), { problems: [], protocolCommit: REG, reportCommit: REP });
+
+  // The decision must be a standing owner decision naming the result, the
+  // table, the branch and every pinned commit.
+  assert.match(run({}, { ...entry, decision: 'DECISION-0002' }).problems[0], /not an owner decision naming RESULT-0009/);
+  assert.match(run({}, { ...entry, decision: 'DECISION-0099' }).problems[0], /not in the ledger/);
+  assert.match(run({}, entry, { ledgerText: record({ proofClass: 'direct_source' }) }).problems[0], /not an owner decision/,
+    'a decision that is not an owner ruling cannot authorize the entry');
+  assert.match(run({}, entry, { ledgerText: record({ proofClass: 'direct_source', notes: '- **proof_class:** `owner_decision` quoted' }) }).problems[0],
+    /not an owner decision/, 'a quoted proof_class in the notes is not the record\'s proof_class');
+  assert.match(run({}, entry, { ledgerText: record({ supersededBy: '[DECISION-0017]' }) }).problems[0], /superseded or rejected/);
+  assert.match(run({}, entry, { ledgerText: record({ status: 'rejected' }) }).problems[0], /superseded or rejected/);
+  for (const field of ['evidence_branch', 'head', 'registration', 'report']) {
+    const swapped = { ...entry, [field]: field === 'evidence_branch' ? 'evidence/other' : 'f'.repeat(40) };
+    assert.match(run({}, swapped).problems[0], /not an owner decision naming/, `a table edit alone cannot repoint ${field}`);
+  }
+  assert.match(run({}, { ...entry, evidence_branch: 'main' }).problems[0], /branch under evidence\//);
+  assert.match(run({}, { ...entry, squash: 'abc1234' }).problems[0], /squash as a full commit sha/);
+  assert.match(run({}, { ...entry, head: undefined }).problems[0], /head as a full commit sha/);
+  const { decision, ...undecided } = entry;
+  assert.match(run({}, undecided).problems[0], /must cite a ledger decision/);
+
+  // Only while both files are still first added by that squash.
+  assert.match(run({}, entry, { main: { mainProtocol: 'f'.repeat(40), mainReport: SQUASH } }).problems[0], /correct or remove the entry/);
+  assert.match(run({}, entry, { main: { mainProtocol: SQUASH, mainReport: null } }).problems[0], /correct or remove the entry/);
+  assert.match(run({ reachableFromHead: () => false }).problems[0], /not reachable from HEAD/);
+
+  // The branch must still exist and still contain the pinned head; the order
+  // is read from the pinned head, not from whatever the branch now holds.
+  assert.match(run({ head: () => null }).problems[0], /evidence branch .* is missing/);
+  assert.match(run({ head: (ref) => (ref === 'origin/evidence/r9-pr1' ? TIP : null) }).problems[0], /is missing/,
+    'only the remote-tracking ref counts, never a short name a tag could shadow');
+  assert.match(run({ isAncestor: () => false }).problems[0], /no longer contains the pinned head .* rewritten/,
+    'a force-pushed branch cannot supply a new history');
+  assert.match(run({ oldestAdd: (ref, rel) => (rel.endsWith('protocol.md') ? REG : 'f'.repeat(40)) }).problems[0], /not the pinned/);
+  assert.match(run({ oldestAdd: (ref, rel) => (rel.endsWith('protocol.md') ? REG : null) }).problems[0], /not the pinned/);
+  assert.match(run({ isStrictAncestor: () => false }).problems[0], /was not committed before report\.md/,
+    'a branch that wrote the report first is still a reconstruction');
+
+  // Main must carry exactly what the pinned head registered and reported.
+  const drifted = run({ blob: (commit, rel) => (commit === SQUASH && rel.endsWith('report.md') ? 'other' : `blob:${rel}`) });
+  assert.equal(drifted.protocolCommit, undefined);
+  assert.match(drifted.problems[0], /report\.md in squash .* differs from the pinned head/);
+  assert.match(run({ blob: () => null }).problems[0], /protocol\.md in squash .* differs/);
+});
+
+test('LIVE: every squash-merged registration entry resolves against the ledger and git', () => {
+  const { SQUASHED_REGISTRATIONS, squashedRegistration, addedIn } = require('../../tools/verify-experiments.js');
+  const ledgerText = fsx.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
+  for (const [id, entry] of Object.entries(SQUASHED_REGISTRATIONS)) {
+    const got = squashedRegistration(id, entry, {
+      mainProtocol: addedIn(`experiments/${id}/protocol.md`),
+      mainReport: addedIn(`experiments/${id}/report.md`),
+      ledgerText,
+    });
+    assert.deepEqual(got.problems, [], `${id}: ${got.problems.join('; ')}`);
+    assert.equal(got.protocolCommit, entry.registration);
+    assert.equal(got.reportCommit, entry.report);
+  }
+});
+
 test('LIVE: RESULT-0047 and RESULT-0049 exempt only the paths DECISION-0015 names', () => {
   const { FROZEN_TREE_POLICY, frozenTreeEntryProblems } = require('../../tools/verify-experiments.js');
   const ledger = fsx.readFileSync(path.join(ROOT, 'EVIDENCE_LEDGER.md'), 'utf8');
