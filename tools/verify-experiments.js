@@ -538,8 +538,14 @@ const SQUASHED_REGISTRATIONS = {
     decision: 'DECISION-0016',
     squash: '646d0e04aadabfc0e921a2aeaad89f918bd708f6',
     evidence_branch: 'evidence/result-0085-pr88',
+    // Pinned so a force-push of the branch cannot supply a different history.
+    head: '177e43b9bfb0c27752804355255d2f26ab96d798',
+    registration: 'e2613d497ec7af72247b053413e89ced8d5a9ebd',
+    report: 'c61c4fdca9c19a45bd47cfb5772d2b1bce876119',
   },
 };
+
+const SQUASH_SHA_FIELDS = ['squash', 'head', 'registration', 'report'];
 
 const defaultSquashGit = {
   head(ref) {
@@ -564,6 +570,12 @@ const defaultSquashGit = {
       }).trim() || null;
     } catch { return null; }
   },
+  isAncestor(a, b) {
+    try {
+      execFileSync('git', ['merge-base', '--is-ancestor', a, b], { cwd: ROOT, stdio: 'ignore' });
+      return true;
+    } catch { return false; }
+  },
   isStrictAncestor: (a, b) => isStrictAncestor(a, b),
   reachableFromHead: (sha) => reachableFromHead(sha),
 };
@@ -576,8 +588,10 @@ function squashedRegistration(id, entry, { mainProtocol, mainReport, ledgerText,
   const protoRel = `experiments/${id}/protocol.md`;
   const reportRel = `experiments/${id}/report.md`;
   if (!entry || typeof entry !== 'object') return { problems: [`${id} squashed-registration entry is not an object`] };
-  if (typeof entry.squash !== 'string' || !/^[0-9a-f]{40}$/.test(entry.squash)) {
-    problems.push(`${id} squashed-registration entry must name the squash commit as a full sha`);
+  for (const field of SQUASH_SHA_FIELDS) {
+    if (typeof entry[field] !== 'string' || !/^[0-9a-f]{40}$/.test(entry[field])) {
+      problems.push(`${id} squashed-registration entry must name ${field} as a full commit sha`);
+    }
   }
   if (typeof entry.evidence_branch !== 'string' || !/^evidence\/[A-Za-z0-9._-]+$/.test(entry.evidence_branch)) {
     problems.push(`${id} squashed-registration entry must name a branch under evidence/`);
@@ -592,9 +606,13 @@ function squashedRegistration(id, entry, { mainProtocol, mainReport, ledgerText,
       const rest = ledgerText.slice(start + 4);
       const end = rest.search(/^#{2,3} /m);
       const body = end < 0 ? rest : rest.slice(0, end);
-      const named = [id, 'SQUASHED_REGISTRATIONS', `\`${entry.squash}\``, `\`${entry.evidence_branch}\``];
-      if (!named.every((s) => body.includes(s)) || !/\*\*proof_class:\*\* `owner_decision`/.test(body)) {
-        problems.push(`${id} squashed-registration entry cites ${entry.decision}, which is not an owner decision naming ${id}, SQUASHED_REGISTRATIONS, the squash commit and the evidence branch`);
+      // Every value the entry trusts must be one the owner decision names, so a
+      // table edit alone cannot repoint it; and the decision must still stand.
+      const named = [id, 'SQUASHED_REGISTRATIONS', `\`${entry.evidence_branch}\``, ...SQUASH_SHA_FIELDS.map((f) => `\`${entry[f]}\``)];
+      if (!named.every((s) => body.includes(s)) || !/^- \*\*proof_class:\*\* `owner_decision`\s*$/m.test(body)) {
+        problems.push(`${id} squashed-registration entry cites ${entry.decision}, which is not an owner decision naming ${id}, SQUASHED_REGISTRATIONS, the evidence branch and every pinned commit`);
+      } else if (!/^- \*\*superseded_by:\*\* \[\]\s*$/m.test(body) || /^- \*\*status:\*\* `?(rejected|superseded|retracted)/m.test(body)) {
+        problems.push(`${id} squashed-registration entry cites ${entry.decision}, which has been superseded or rejected`);
       }
     }
   }
@@ -609,23 +627,29 @@ function squashedRegistration(id, entry, { mainProtocol, mainReport, ledgerText,
   if (!git.reachableFromHead(entry.squash)) {
     return { problems: [`${id} squash commit ${entry.squash.slice(0, 8)} is not reachable from HEAD`] };
   }
-  const ref = `origin/${entry.evidence_branch}`;
-  const branchHead = git.head(ref);
-  if (!branchHead) {
-    return { problems: [`${id} evidence branch ${ref} is missing; fetch it (it holds the registration the squash merge dropped)`] };
+  // The full ref, so a tag named origin/evidence/... cannot stand in for it.
+  const ref = `refs/remotes/origin/${entry.evidence_branch}`;
+  const tip = git.head(ref);
+  if (!tip) {
+    return { problems: [`${id} evidence branch origin/${entry.evidence_branch} is missing; fetch it (it holds the registration the squash merge dropped)`] };
   }
-  const protocolCommit = git.oldestAdd(ref, protoRel);
-  const reportCommit = git.oldestAdd(ref, reportRel);
-  if (!protocolCommit || !reportCommit) {
-    return { problems: [`${id} evidence branch ${ref} does not add both ${protoRel} and ${reportRel}`] };
+  if (!git.isAncestor(entry.head, tip)) {
+    return { problems: [`${id} evidence branch origin/${entry.evidence_branch} no longer contains the pinned head ${entry.head.slice(0, 8)}; it was rewritten`] };
+  }
+  // Read the order from the pinned head, never from whatever the branch now holds.
+  const protocolCommit = git.oldestAdd(entry.head, protoRel);
+  const reportCommit = git.oldestAdd(entry.head, reportRel);
+  if (protocolCommit !== entry.registration || reportCommit !== entry.report) {
+    const short = (sha) => (sha ? sha.slice(0, 8) : 'nothing');
+    return { problems: [`${id}: at ${entry.head.slice(0, 8)} protocol.md is first added by ${short(protocolCommit)} and report.md by ${short(reportCommit)}, not the pinned ${entry.registration.slice(0, 8)} and ${entry.report.slice(0, 8)}`] };
   }
   if (!git.isStrictAncestor(protocolCommit, reportCommit)) {
-    return { problems: [`${id}: on ${ref}, protocol.md (${protocolCommit.slice(0, 8)}) was not committed before report.md (${reportCommit.slice(0, 8)}). A protocol committed with or after its results is a reconstruction.`] };
+    return { problems: [`${id}: at ${entry.head.slice(0, 8)}, protocol.md (${protocolCommit.slice(0, 8)}) was not committed before report.md (${reportCommit.slice(0, 8)}). A protocol committed with or after its results is a reconstruction.`] };
   }
   for (const rel of [protoRel, reportRel]) {
     const onMain = git.blob(entry.squash, rel);
-    if (!onMain || onMain !== git.blob(branchHead, rel)) {
-      problems.push(`${id}: ${rel} in squash ${entry.squash.slice(0, 8)} differs from ${ref}; main must carry exactly what the branch registered and reported`);
+    if (!onMain || onMain !== git.blob(entry.head, rel)) {
+      problems.push(`${id}: ${rel} in squash ${entry.squash.slice(0, 8)} differs from the pinned head ${entry.head.slice(0, 8)}; main must carry exactly what the branch registered and reported`);
     }
   }
   if (problems.length) return { problems };
