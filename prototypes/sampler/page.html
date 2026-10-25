@@ -77,7 +77,7 @@ header .mark{font-weight:850;font-size:20px;letter-spacing:-.5px}header .mark sm
 .ord{position:absolute;top:3px;left:5px;font-size:10px;font-weight:700;color:#8c4b1a;background:#fff3dc;padding:0 4px;border-radius:4px}
 .landed{outline:3px dashed var(--sel);outline-offset:-3px}
 body.previewing .shell{outline:3px solid var(--sel);outline-offset:3px}
-.minor{display:flex;justify-content:space-between;margin-top:6px}.minor button{border:0;background:none;color:var(--muted);font-size:13px}
+.minor{display:flex;justify-content:space-between;margin-top:6px}.minor button{border:0;background:none;color:var(--muted);font-size:13px}.minor #giveup.armed{color:var(--warn);font-weight:600}
 aside .rule h2{font-size:20px;letter-spacing:-.4px}aside p,aside li{font-size:13px;line-height:1.6;color:var(--muted)}aside .rule p{margin-top:8px}
 aside h3{font-size:13px;margin-top:16px}
 .box{background:var(--panel);border-radius:10px;padding:14px;margin-top:16px}
@@ -120,7 +120,7 @@ aside h3{font-size:13px;margin-top:16px}
       <p id="status" role="status" aria-live="polite"></p>
       <div id="boss" role="note" hidden><strong id="boss-title"></strong><span id="boss-text"></span></div>
       <div class="shell" id="shell"><div id="forecast" hidden role="group" aria-label="Next tiles for each column"><div class="flabel">NEXT TILES<span>the next tile to drop into each column</span></div><div id="forecast-row"></div></div><div class="grid-wrap"><div id="board" aria-label="Tile board"></div><svg id="path" aria-hidden="true"></svg></div></div>
-      <div class="minor"><button id="undo">↶ Undo</button><button id="retry">↻ Same board again</button></div>
+      <div class="minor"><button id="undo">↶ Undo</button><button id="giveup" hidden>Give up</button><button id="retry">↻ Same board again</button></div>
     </section>
     <aside>
       <div class="rule"><h2 id="rule-title"></h2><p id="rule-body"></p>

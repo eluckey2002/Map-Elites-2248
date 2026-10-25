@@ -3,14 +3,15 @@
 (function(){
   'use strict';
   const rules=window.SamplerRules,levels=window.SamplerLevels,$=id=>document.getElementById(id);
-  const STUDY='kinds-sampler-v5',LS='kindsSampler.v5';
+  // A page built from another set (prototypes/grader-set/build.js) names its own study before this script runs.
+  const STUDY=window.SamplerStudy||'kinds-sampler-v5',LS=window.SamplerStorageKey||'kindsSampler.v5';
   const COLORS=['#c03a7a','#3d7fb8','#7a4fc0','#2f7d6b'],LETTERS='ABCD',RINGS=['ing-a','ing-b','ing-c','ing-d'];
   let local={current:0,played:{}};
   try{Object.assign(local,JSON.parse(localStorage.getItem(LS)||'{}'));}catch(e){/* storage unavailable */}
   const keep=()=>{try{localStorage.setItem(LS,JSON.stringify(local));}catch(e){/* fine */}};
   if(!(local.current in levels))local.current=0;
   if(!local.played||typeof local.played!=='object')local.played={};
-  let level,state,history,selection,previewing,run,answers={};
+  let level,state,history,selection,previewing,run,answers={},giveUpArmed=null;
   let dbPromise=null;
   // Only a database handle that was actually acquired is cached; a rejection or null is retried on the next save.
   const database=()=>(dbPromise||=(window.claude&&window.claude.use?window.claude.use('db'):Promise.resolve(null))
@@ -20,6 +21,8 @@
   const fmt=n=>n.toLocaleString('en-US');
   const goal=()=>level.goal,orders=()=>goal().type==='orders'?goal().orders:[];
   const same=(a,b)=>a&&b&&a[0]===b[0]&&a[1]===b[1];
+  // The reason a run is saved with once it is over: a give-up (grader set) stays a give-up.
+  const overReason=()=>state.outcome==='gave-up'?'gave-up':'finished';
   function ingredientCount(s,o){let n=0;for(const row of s.grid)for(const t of row)if(t&&t.value===o.from)n++;return n;}
   // `oneAtATime` boards (Make It Here, v3) show only the first unfinished order in full; later orders stay greyed and
   // small, and their ingredient rings are hidden, until the orders before them are filled.
@@ -181,7 +184,7 @@
       for(const [k,v] of Object.entries({points:selection.map(([x,y])=>`${x*100+50},${y*100+50}`).join(' '),fill:'none',stroke:good?COLORS[0]:'#8a8f86','stroke-width':'6','stroke-linecap':'round','stroke-linejoin':'round','vector-effect':'non-scaling-stroke'}))line.setAttribute(k,v);
       path.append(line);
     }
-    $('merge').disabled=!legal;$('preview').disabled=!legal;$('clear').disabled=!selection.length;$('undo').disabled=!history.length;
+    $('merge').disabled=!legal;$('preview').disabled=!legal;$('clear').disabled=!selection.length;$('undo').disabled=!history.length||state.outcome==='gave-up';
     $('preview').textContent=previewing?'Back to board':'Preview result';
     document.body.classList.toggle('previewing',previewing);
     const line=$('status');
@@ -190,7 +193,8 @@
       if(predicted.outcome==='won')bits.push('This wins.');
       if(predicted.last.opened)bits.push('Opens the gate.');
       line.textContent=`PREVIEW · nothing spent. ${bits.join(' ')}`;line.dataset.tone=predicted.outcome==='won'?'good':'';
-    }else{const d=describeSelection();line.textContent=d.text;line.dataset.tone=d.tone;}
+    }else if(state.outcome==='gave-up'){line.textContent=`Gave up after ${state.moves} move${state.moves===1?'':'s'}.`;line.dataset.tone='';}
+    else{const d=describeSelection();line.textContent=d.text;line.dataset.tone=d.tone;}
     $('boards').replaceChildren(...levels.map((l,i)=>{const b=document.createElement('button');b.type='button';b.textContent=i+1;b.title=l.name;
       b.className=(i===local.current?'on ':'')+(answers[l.id]&&answers[l.id].different&&answers[l.id].wantMore?'answered':'');b.setAttribute('aria-label',`Board ${i+1}: ${l.name}`);b.onclick=()=>switchBoard(i);return b;}));
     $('title').textContent=`${local.current+1}. ${level.name}`;$('focus').textContent=level.focus;
@@ -198,10 +202,13 @@
     const over=state.outcome!=='playing';
     $('result').hidden=!over;
     if(over){
-      $('result-title').textContent=state.outcome==='won'?'Done':'Attempt finished';
-      $('result-detail').textContent=state.outcome==='won'?`Done in ${state.moves} of ${state.maxMoves} moves.`:
+      $('result-title').textContent=state.outcome==='won'?'Done':state.outcome==='gave-up'?'Gave up':'Attempt finished';
+      $('result-detail').textContent=state.outcome==='won'?`Done in ${state.moves} of ${state.maxMoves} moves.`:state.outcome==='gave-up'?`Gave up after ${state.moves} move${state.moves===1?'':'s'}.`:
         `${state.outcome==='out-of-moves'?'Out of moves':'No legal chain left'}. Undo, or retry the same board.`;
     }
+    // Give up (grader set only): shown while the board is in play; the first tap arms it, a second tap within 3 seconds gives up.
+    const quit=$('giveup');quit.hidden=!window.SamplerGiveUp||over;
+    if(quit.hidden||!giveUpArmed){quit.textContent='Give up';quit.classList.remove('armed');}
     renderQuestions();
     fitBoard();
   }
@@ -274,7 +281,9 @@
     saveRun(state.outcome==='playing'?'active':'finished');
     render();
   }
+  function disarm(){if(giveUpArmed){clearTimeout(giveUpArmed);giveUpArmed=null;}}
   function select(x,y){
+    disarm();
     if(previewing||state.outcome!=='playing')return;
     const prior=selection.findIndex(([sx,sy])=>sx===x&&sy===y);
     if(prior>=0)selection=selection.slice(0,prior);
@@ -284,7 +293,7 @@
   }
   function switchBoard(i){
     if(i===local.current)return;
-    if(run.actions.length)saveRun(state.outcome==='playing'?'left-board':'finished');
+    if(run.actions.length)saveRun(state.outcome==='playing'?'left-board':overReason());
     local.current=i;keep();begin();
   }
   $('board').addEventListener('click',e=>{const cell=e.target.closest('button[data-x]');if(cell&&!cell.disabled)select(+cell.dataset.x,+cell.dataset.y);});
@@ -292,7 +301,15 @@
   $('preview').onclick=()=>{if(rules.valid(state,selection)){previewing=!previewing;if(previewing){run.previews++;run.actions.push({type:'preview',chain:selection.map(p=>[...p]),at:Date.now()});run.rev++;}render();}};
   $('clear').onclick=()=>{selection=[];previewing=false;render();};
   $('undo').onclick=()=>{if(!history.length)return;state=history.pop();run.undos++;run.actions.push({type:'undo',at:Date.now()});run.rev++;selection=[];previewing=false;saveRun('active');render();};
-  $('retry').onclick=()=>{if(run.actions.length)saveRun(state.outcome==='playing'?'retried':'finished');begin();};
+  $('giveup').onclick=()=>{
+    if(state.outcome!=='playing')return;
+    if(!giveUpArmed){giveUpArmed=setTimeout(()=>{giveUpArmed=null;render();},3000);const b=$('giveup');b.textContent='Tap again to give up';b.classList.add('armed');return;}
+    disarm();state=Object.assign({},state,{outcome:'gave-up'});selection=[];previewing=false;
+    run.actions.push({type:'give-up',moves:state.moves,at:Date.now()});run.rev++;local.played[level.id]=run.id;keep();
+    saveRun('gave-up');render();$('result').scrollIntoView({block:'nearest',behavior:'smooth'});
+  };
+  document.querySelectorAll('.actions button,#undo,#retry,#next').forEach(b=>b.addEventListener('click',()=>{if(giveUpArmed){disarm();render();}},true));
+  $('retry').onclick=()=>{if(run.actions.length)saveRun(state.outcome==='playing'?'retried':overReason());begin();};
   $('next').onclick=()=>switchBoard((local.current+1)%levels.length);
   document.querySelectorAll('#questions .chips').forEach(group=>group.addEventListener('click',e=>{
     const b=e.target.closest('button');if(!b||!local.played[level.id])return;
@@ -304,7 +321,7 @@
     const a=answers[level.id]=Object.assign({study:STUDY,board:level.id,kind:level.kind,number:local.current+1},answers[level.id]||{},{note:$('note').value.slice(0,500),noteRun:local.played[level.id],runId:local.played[level.id],savedAt:new Date().toISOString()});
     saveAnswer(a);render();
   });
-  window.addEventListener('pagehide',()=>{if(run&&run.actions.length)saveRun(state.outcome==='playing'?'closed':'finished');});
+  window.addEventListener('pagehide',()=>{if(run&&run.actions.length)saveRun(state.outcome==='playing'?'closed':overReason());});
   // Stored answers (this study only; v1 docs are keyed by bare board id) load in the background; a board answered locally in the meantime keeps its newer copy.
   (async()=>{try{const db=await database();if(!db)return;const snap=await db.collection('answers').get();
     (snap.docs||snap).forEach(d=>{const v=d.data?d.data():d;if(!v||v.study!==STUDY)return;/* other versions' answers stay out */if(v.board&&(!answers[v.board]||(answers[v.board].savedAt||'')<(v.savedAt||'')))answers[v.board]=v;if(v.board&&v.runId&&!local.played[v.board])local.played[v.board]=v.runId;});render();}catch(e){/* offline is fine */}})();
