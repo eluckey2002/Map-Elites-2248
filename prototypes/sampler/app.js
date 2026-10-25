@@ -39,6 +39,7 @@
   function miniTile(value){const t=document.createElement('span');t.className='mini '+tileClasses(value).slice(1).join(' ');t.textContent=fmt(value);return t;}
 
   function begin(fresh){
+    disarm();  // a Give up armed on another board or run never carries over
     level=levels[local.current];state=rules.create(level);history=[];selection=[];previewing=false;
     if(fresh!==false)run={id:`${level.id}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,6)}`,study:STUDY,board:level.id,
       kind:level.kind,number:local.current+1,startedAt:new Date().toISOString(),actions:[],rev:0,savedRev:0,previews:0,undos:0};
