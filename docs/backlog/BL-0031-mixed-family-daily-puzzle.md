@@ -55,3 +55,4 @@ None until the owner picks it up; 2248 level work comes first.
 ## History
 
 - 2026-10-11 — Proposed from the owner's remarks in the kinds sampler thread.
+- 2026-10-18 — Owner chose to keep it parked in the final review (PDL-041).
