@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Experiment gate: squash-merged registration — 2026-10-21
+
+Main's experiment gate was red from PR #88 (RESULT-0085) onward, and so was every new pull request's. The squash merge put RESULT-0085's protocol and report in one commit and dropped the registration commit from main's history. [DECISION-0016](EVIDENCE_LEDGER.md#decision-0016--read-result-0085s-preregistration-order-from-its-kept-branch-because-the-squash-merge-erased-it-from-main) (provisional, owner choice, check pending) keeps PR #88's branch on `evidence/result-0085-pr88` and adds a `SQUASHED_REGISTRATIONS` table to `tools/verify-experiments.js`. The gate reads that one result's order from the kept branch, and only while main's files match the branch byte for byte. RESULT-0085's standing is unchanged. Open: merging experiment pull requests by squash still erases the order. Preventing that (merge commits only, or a check before merge) is separate work.
+
 ## Kinds sampler — 2026-10-18
 
 Version 5 is the final round: one board per kind the owner kept in the final review (PDL-041): Feed the Next, Make It Here (revised), Shared Material, See It Coming (one next tile per column), Through the Gate (opens on a 128 tile beside it) and The Drought (boss, last). Feed the Next — Advanced and its part cap are dropped (BL-0032), and so is Three Separate. Move limits now come from 30 refill draws per board (`prototypes/sampler/calibrate.js`; table in the README), not the solver's best line. Owner play of version 5 is pending; after it, one short review, then he decides what goes into the level pack.

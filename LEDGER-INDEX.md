@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 99 (38 accepted, 24 narrowed, 3 open, 19 provisional, 4 stale, 11 superseded).
+Records: 100 (38 accepted, 24 narrowed, 3 open, 20 provisional, 4 stale, 11 superseded).
 
 ## Current records
 
@@ -31,6 +31,7 @@ Records: 99 (38 accepted, 24 narrowed, 3 open, 19 provisional, 4 stale, 11 super
 | DECISION-0012 | Offer the wider-search candidate as a selectable Nemesis opponent | provisional | owner_decision | The owner authorized adding a selectable Wider-search bot alongside the shipped bot after discussing how to play against the candidate from PR #62. | 1780 |
 | DECISION-0013 | Ship the Delivery puzzle family as a finite pack in the original game | provisional | owner_decision | On 2026-10-11 the owner answered "yes" to shipping Delivery as the second puzzle type beside Connections, then approved docs/plans/2026-10-11-delivery-and-level-map-elites-plan.md ("Both fresh run"). | 1829 |
 | DECISION-0015 | Keep src/game.js editable for browser-only fixes while RESULT-0047, RESULT-0049 and RESULT-0082 stay recomputable | provisional | owner_decision | The owner grants a second recorded exception to the rule that a red gate is never fixed by editing the gate (`AGENTS.md`, Landing changes on `main`), extending `DECISION-0011`. | 1845 |
+| DECISION-0016 | Read RESULT-0085's preregistration order from its kept branch, because the squash merge erased it from main | provisional | owner_decision | The owner grants a third recorded exception to the rule that a red gate is never fixed by editing the gate (`AGENTS.md`, Landing changes on `main`), after `DECISION-0011` and `DECISION-0015`. | 1895 |
 | RESULT-0001 | Accepted 12,336 score | narrowed | replayed_lower_bound | **Corrected by CORRECTION-0010 (RESULT-0001 and RESULT-0004 verifiers were deleted from the tree); the wording below may no longer hold.** A 32-move witness replays to 12,336 at spawn cursor 520. | 373 |
 | RESULT-0002 | Mass/cursor upper bound | accepted | proven_upper_bound | Complete enumeration of the mass/cursor relaxation proves a 326,390 upper bound. | 389 |
 | RESULT-0003 | Exact move-one envelope | accepted | exact_result | Complete position-aware enumeration finds 1,868,975 physical first moves and an exact move-one maximum of 430. | 403 |
