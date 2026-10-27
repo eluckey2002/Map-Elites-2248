@@ -34,3 +34,28 @@ boards above the best so far; a tie keeps the earlier one. No other settings and
 
 Agreement on the tuning boards after each round, the final settings, and the held-out agreement of the pre-grade and
 the final grader. With 11 tuning boards and all games won, the result is a direction at most.
+
+## Result of run 1 (2026-10-27)
+
+Raw output: `tune-run-1.txt` (`node prototypes/grader-set/tune.js <runs dir>`, the 14 owner runs of 2026-10-26).
+
+| Round | Kept | Agreement on 11 tuning boards (36 pairs) |
+|---|---|---|
+| Start (pre-grade) | greedy, 20% random, 40 moves, share lost | 26% |
+| 1 Move limit | 40 moves (board limit 25%) | 26% |
+| 2 Difficulty number | share lost (average limit used tied) | 26% |
+| 3 Random moves | 0% (10%: 25%, 30%: 31%) | 42% |
+| 4 Player | planner | 56% |
+
+Held-out: 3 played boards, 2 pairs; pre-grade and final grader both 25%. That decides nothing.
+
+Reading, plainly:
+
+- The pre-grade ran backwards on the tuning boards (26%): boards the noisy bot lost most were boards the owner found easy.
+- The final grader is no real gain. With 0% random moves every game on a board is the same, so it grades each board
+  only "planner wins" or "planner loses". It loses 4 of 14 boards, and most of its 56% comes from ties counting half.
+- All 14 games were won, so the owner's score rests on undos. Undos may be the owner trying moves out rather than
+  struggling.
+
+Next options (not run; each needs its own rules first): the owner plays the 4 unplayed boards, so the held-out check
+has pairs; or a planner with some random moves, which grades in steps instead of yes/no.

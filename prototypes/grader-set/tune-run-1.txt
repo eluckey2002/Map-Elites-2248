@@ -1,0 +1,19 @@
+tuning boards 11 held-out boards played 3
+baseline {"player":"greedy","epsilon":0.2,"limit":"40","measure":"winRate","beam":20} { agree: 9.5, pairs: 36, pct: 26.4 }
+  limit {"limit":"40"} { agree: 9.5, pairs: 36, pct: 26.4 }
+  limit {"limit":"board"} { agree: 9, pairs: 36, pct: 25 }
+after limit {"player":"greedy","epsilon":0.2,"limit":"40","measure":"winRate","beam":20} { agree: 9.5, pairs: 36, pct: 26.4 }
+  measure {"measure":"winRate"} { agree: 9.5, pairs: 36, pct: 26.4 }
+  measure {"measure":"movesUsed"} { agree: 9.5, pairs: 36, pct: 26.4 }
+after measure {"player":"greedy","epsilon":0.2,"limit":"40","measure":"winRate","beam":20} { agree: 9.5, pairs: 36, pct: 26.4 }
+  epsilon {"epsilon":0.2} { agree: 9.5, pairs: 36, pct: 26.4 }
+  epsilon {"epsilon":0} { agree: 15, pairs: 36, pct: 41.7 }
+  epsilon {"epsilon":0.1} { agree: 9, pairs: 36, pct: 25 }
+  epsilon {"epsilon":0.3} { agree: 11, pairs: 36, pct: 30.6 }
+after epsilon {"player":"greedy","epsilon":0,"limit":"40","measure":"winRate","beam":20} { agree: 15, pairs: 36, pct: 41.7 }
+  player {"player":"greedy"} { agree: 15, pairs: 36, pct: 41.7 }
+  player {"player":"planner","beam":20} { agree: 20, pairs: 36, pct: 55.6 }
+after player {"player":"planner","epsilon":0,"limit":"40","measure":"winRate","beam":20} { agree: 20, pairs: 36, pct: 55.6 }
+HELD-OUT baseline { agree: 0.5, pairs: 2, pct: 25 } final { agree: 0.5, pairs: 2, pct: 25 }
+ALL-14 (not a test: includes tuning boards) baseline { agree: 32, pairs: 64, pct: 50 } final { agree: 39, pairs: 64, pct: 60.9 }
+{"feed-the-next-a":{"owner":1,"base":0.35,"final":0},"feed-the-next-c":{"owner":0,"base":0.78,"final":0},"make-it-here-a":{"owner":2,"base":0.22,"final":0},"make-it-here-c":{"owner":0,"base":0.82,"final":1},"see-it-coming-a":{"owner":0,"base":0.85,"final":0},"see-it-coming-b":{"owner":1,"base":0.95,"final":1},"shared-material-a":{"owner":0,"base":0.5,"final":0},"shared-material-c":{"owner":0,"base":0.85,"final":0},"the-drought-a":{"owner":1,"base":0.4,"final":0},"the-drought-b":{"owner":2,"base":0.95,"final":1},"the-drought-c":{"owner":0,"base":1,"final":0},"through-the-gate-a":{"owner":1,"base":0.65,"final":0},"through-the-gate-b":{"owner":2,"base":0.9,"final":0},"through-the-gate-c":{"owner":2,"base":1,"final":1}}
