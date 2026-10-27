@@ -62,8 +62,9 @@ function limit(level){
   return {moves:Math.max(...parts),draws:seeds.length,ordinaryWins:ord.length,beamWins:beam.length};
 }
 
+module.exports={shaken,shuffled,limit,solveOpts,drought,LIGHT};
 const args=process.argv.slice(2);
-if(args[0]==='--kind'){
+if(require.main!==module){}else if(args[0]==='--kind'){
 const picked=[];
 levels.forEach((base,k)=>{if(base.id!==args[1])return;
   const rng=core.makeRng(9100+k),kept=[];
