@@ -1273,7 +1273,10 @@ class Game {
         if (tile.blocker === BLOCKER_TYPES.STONE) {
             ctx.fillStyle = '#4a4a5a';
         } else {
-            ctx.fillStyle = TILE_COLORS[tile.value] || '#3C3A32';
+            // Sums such as 384 or 640 are not in the table; give each its own
+            // hue from its size so built tiles stay tellable apart.
+            ctx.fillStyle = TILE_COLORS[tile.value]
+                || `hsl(${Math.round(Math.log2(tile.value) * 137.5) % 360}, 55%, 38%)`;
         }
 
         // Selection highlight
