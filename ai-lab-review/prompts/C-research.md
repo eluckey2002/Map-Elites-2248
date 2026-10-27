@@ -1,0 +1,4 @@
+Lens: RESEARCH ACCURACY. You are a game-AI researcher.
+Question: are the research targets and descriptions correct and fair to replicate? Check each: Robert Xiao's 2048 expectimax results (100 games: 100% reach 2048, 94% 16384, 36% 32768, from his 2014 blog post and repo); Szubert and Jaskowski CIG 2014 n-tuple TD learning ("over 97%" wins, no search); Jaskowski arXiv 1604.05085 (2016); AlphaZero (Silver et al., arXiv 1712.01815) scaled down for Connect Four with MCTS first; Connect Four being solved; Kuhn poker game value of -1/18 per hand for the first player and CFR (Zinkevich et al., NeurIPS 2007); the plain-words "How each bot learns" explanations; and the statistics (95% range of about 26% to 46% at 36% over 100 games; "borderline" rule; 400 games halving the range).
+If you can browse the web, verify against primary sources and cite URLs. If you cannot, say "from memory" next to each claim you check.
+Output file: output/review-C-research.md
