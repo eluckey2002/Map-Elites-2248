@@ -3,11 +3,10 @@
    prototype (prototypes/recipe/model.js). Each board has one goal and at most one twist:
      goal.type 'orders'   Recipe orders; an order with `at` counts only if its chain ends on that cell. With `parts` (v2)
                           orders fill in turn, the tile each order makes becomes a part, each later order's chain must
-                          include at least one part (any part), and a fill that would leave more than MAX_PARTS parts on
-                          the board is not allowed. With `parts` and `anyOrder` (v3 Feed the Next — Advanced, proposed)
+                          include at least one part (any part). v5: no limit on parts at once unless `goal.cap` is set
+                          (the owner dropped the two-part cap; MAX_PARTS = 2 was the v2 to v4 default). With `parts` and `anyOrder` (v3 Feed the Next — Advanced; retired in v5, PDL-041, and now refused)
                           orders fill in any order, every fill makes a part, an order's chain must include `o.parts`
-                          parts (default 0), and the MAX_PARTS cap still refuses a fill that would make a third part.
-                          `goal.cap` overrides MAX_PARTS (screening only: search.js removes the cap to test it binds).
+                          parts (default 0), and `goal.cap` refuses a fill that would make too many parts.
      goal.type 'exact'    make one tile of exactly goal.make (any values).
      goal.type 'leftover' end with at most goal.max tiles on the board.
      goal.type 'connect'  one chain must include every cell in goal.marks.
@@ -17,7 +16,9 @@
      refill: false        no refills (The Drought); empty cells stay empty.
      boss: {title, text}  a boss board: the page announces it before the first move.
      stone: [[x,y],...]   walls: no tile, nothing falls through, nothing chains across a diagonal between two walls.
-     gate: {at, sum}      a wall cell that opens once a chain whose sum is at least `sum` ends touching it. */
+     gate: {at, sum}      a wall cell that opens once a chain whose sum is at least `sum` ends touching it.
+     gate: {at, tile}     (v5, owner pick in the final review) a wall cell that opens once a tile of at least `tile`
+                          sits touching it after a move settles (made there, or fallen there). */
 (function(root,factory){
   if(typeof module==='object'&&module.exports)module.exports=factory(require('../../solver/engine'));
   else root.SamplerRules=factory(root.ChainCore);
@@ -40,10 +41,11 @@
       (g.type!=='exact'||positive(g.make))&&(g.type!=='leftover'||positive(g.max))&&
       (g.type!=='connect'||Array.isArray(g.marks)&&g.marks.length>=2&&g.marks.every(p=>cell(p)&&!stone.has(String(p))))&&
       (g.type!=='relay'||Array.isArray(g.stages)&&g.stages.length>1&&g.stages.every(positive))&&
-      (level.gate===undefined||cell(level.gate.at)&&stone.has(String(level.gate.at))&&positive(level.gate.sum))&&
+      (level.gate===undefined||cell(level.gate.at)&&stone.has(String(level.gate.at))&&(('sum' in level.gate)!==('tile' in level.gate))&&positive('sum' in level.gate?level.gate.sum:level.gate.tile))&&
       (level.stone===undefined||Array.isArray(level.stone)&&level.stone.every(cell))&&
-      // Rust was retired in v3 (PDL-040); a board that still asks for it is refused rather than silently ignored.
-      level.rust===undefined&&!(g&&g.feeds);
+      // Rust was retired in v3 (PDL-040) and any-order parts in v5 (PDL-041); a board that still asks for either is refused
+      // rather than silently ignored.
+      level.rust===undefined&&!(g&&g.feeds)&&!(g&&g.anyOrder);
     if(!ok)throw new Error('Invalid sampler board');
   }
   function create(level){
@@ -94,11 +96,11 @@
   // (in-turn parts), none with `anyOrder`.
   const partsNeeded=(level,i)=>{const o=level.goal.orders[i];return o.parts!==undefined?o.parts:level.goal.anyOrder||i===0?0:1;};
   const partsIn=(state,chain)=>chain.filter(([x,y])=>isPart(state.grid[y][x])).length;
-  // With `parts`: orders fill in turn (unless `anyOrder`); the chain includes the parts it needs; at most MAX_PARTS
-  // parts at once.
+  // With `parts`: orders fill in turn (unless `anyOrder`); the chain includes the parts it needs. v5: no cap on parts
+  // at once unless the board sets `cap` (the owner dropped the two-part cap in the final review; MAX_PARTS is the old value).
   function partsOk(level,state,chain,i){
     if(!level.goal.parts)return true;
-    const g=level.goal,cap=g.cap===undefined?MAX_PARTS:g.cap;
+    const g=level.goal,cap=g.cap===undefined?Infinity:g.cap;
     // `strictTurn` is a screening flag only (search.js): an any-order board played strictly in list order.
     return (g.anyOrder&&!g.strictTurn||state.done.indexOf(false)===i)&&partsIn(state,chain)>=partsNeeded(level,i)&&partsAfter(state,chain)<=cap;
   }
@@ -159,7 +161,15 @@
     }
     return placed;
   }
-  const opensGate=(level,sum)=>!!level.gate&&sum>=level.gate.sum;
+  const opensGate=(level,sum)=>!!level.gate&&level.gate.sum!==undefined&&sum>=level.gate.sum;
+  // Tile gates: the values of the tiles touching the gate cell.
+  function besideGate(level,state){
+    const [gx,gy]=level.gate.at,out=[];
+    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const x=gx+dx,y=gy+dy;
+      if((dx||dy)&&inside(state,x,y)&&state.grid[y][x])out.push(state.grid[y][x]);}
+    return out;
+  }
+  const tileOpensGate=(level,state)=>!!level.gate&&level.gate.tile!==undefined&&besideGate(level,state).some(t=>t.value>=level.gate.tile);
   function hasMove(state){
     let found=false;
     eachChain(state,state.minChain,()=>{found=true;return true;});
@@ -185,6 +195,9 @@
     }
     settle(state);
     const placed=refill(level,state);
+    if(level.gate&&!state.gateOpen&&tileOpensGate(level,state)){
+      state.gateOpen=true;opened=true;state.stone=state.stone.filter(k=>k!==String(level.gate.at));settle(state);placed.push(...refill(level,state));
+    }
     if(level.goal.type==='leftover')state.done[0]=goalMet(level,state);
     state.outcome=goalMet(level,state)?'won':state.moves>=state.maxMoves?'out-of-moves':!hasMove(state)?'no-chains':'playing';
     state.last={points,order,stage,opened,landing:{x:survivor.x,y:survivor.y,value:survivor.value},refill:placed};
@@ -260,5 +273,5 @@
     return out;
   }
   return {create,valid,completes,recipeOnly,relayStage,connects,move,preview,hasMove,replay,eachChain,chains,upcoming,tileCount,goalMet,
-    isStone,partCount,partsAfter,partsNeeded,partsIn,opensGate,chainsWithSum,MIN_CHAIN,MAX_PARTS};
+    isStone,partCount,partsAfter,partsNeeded,partsIn,opensGate,tileOpensGate,besideGate,chainsWithSum,MIN_CHAIN,MAX_PARTS};
 });

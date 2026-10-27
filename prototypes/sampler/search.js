@@ -32,6 +32,11 @@ function heuristic(level,state){
       const useful=tiles.filter(t=>t.value<=target).map(t=>t.value).sort((a,b)=>b-a);h+=(useful[0]||0)*2+(useful[1]||0);}
   }
   if(level.gate&&state.gateOpen)h+=400;
+  else if(level.gate&&level.gate.tile){
+    // Tile gate (v5): reward big tiles close to the gate cell, up to the gate value.
+    const best=Math.max(0,...tiles.filter(t=>near([t.x,t.y],level.gate.at,2)).map(t=>Math.min(t.value,level.gate.tile)));
+    h+=best*2;
+  }
   if(g.type==='connect'){
     if(state.done[0])return 1e6;
     for(const m of g.marks){const t=state.grid[m[1]][m[0]];if(!t)continue;
@@ -145,7 +150,7 @@ function obvious(level){
    spot; (3) the same for any later order; (4) the longest chain of small tiles (all below every open order's ingredient, sum a power of two so tiles stay
    in the 2 line), merging the biggest group it can. On other boards it takes the chain whose result scores best on the beam's progress
    heuristic. It is an acceptance screen (does an ordinary line win at the budget?), not a model of the owner. */
-function ordinary(level,{maxLength=8}={}){
+function ordinary(level,{maxLength=8,noise}={}){
   let state=rules.create(level);const path=[];
   const g=level.goal;
   const dist=(chain,o)=>o.at?Math.max(Math.abs(chain.at(-1)[0]-o.at[0]),Math.abs(chain.at(-1)[1]-o.at[1])):0;
@@ -166,6 +171,8 @@ function ordinary(level,{maxLength=8}={}){
       let bestH=-Infinity;
       for(const c of all){const next=rules.move(level,state,c);const h=next.outcome==='won'?1e9:heuristic(level,next);if(h>bestH){bestH=h;pick=c;}}
     }
+    // Optional noise {epsilon,rng} (grader set): with probability epsilon the move is a random legal chain instead.
+    if(noise&&all.length&&noise.rng()<noise.epsilon)pick=all[Math.floor(noise.rng()*all.length)];
     path.push(pick);state=rules.move(level,state,pick);
   }
   return {outcome:state.outcome,moves:state.moves,path};
