@@ -24,7 +24,7 @@ test('actual app entry and router load only the chosen controller in original or
   assert.match(html,/id="legacy-app"/);
   assert.match(html,/<script src="game-library.js"><\/script>/);
   assert.doesNotMatch(html,/<script src="game.js"><\/script>/,'legacy boot must be conditional');
-  for(const [search,expected]of [['?level=54&seed=1',['game.js','keeper-motion-prototype.js?v=alchemy-27']],['?mode=connections&puzzle=crosscurrent',['connection-levels.js','connection-core.js','connection-rules.js','connection-math.js','connection-game.js']]]){
+  for(const [search,expected]of [['?level=54&seed=1',['game.js','more-levels.js','keeper-motion-prototype.js?v=alchemy-27']],['?mode=connections&puzzle=crosscurrent',['connection-levels.js','connection-core.js','connection-rules.js','connection-math.js','connection-game.js']]]){
     const nodes=Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(([,id])=>[id,{hidden:false,children:[],append(child){this.children.push(child);},replaceChildren(){this.children=[];}}]));
     const scripts=[];
     const document={getElementById:id=>nodes[id],createElement:()=>({}),body:{classList:{add(){}}},head:{append(node){if(node.src){scripts.push(node.src);queueMicrotask(()=>node.onload());}}}};

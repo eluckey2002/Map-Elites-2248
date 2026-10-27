@@ -16,6 +16,7 @@ const STATIC_FILES = new Map([
   staticFile('/', 'text/html; charset=utf-8', '/index.html'),
   staticFile('/index.html', 'text/html; charset=utf-8'),
   staticFile('/game.js', 'text/javascript; charset=utf-8'),
+  staticFile('/more-levels.js', 'text/javascript; charset=utf-8'),
   staticFile('/keeper-motion-prototype.css', 'text/css; charset=utf-8'),
   staticFile('/keeper-motion-prototype.js', 'text/javascript; charset=utf-8'),
   staticFile('/assets/keeper-alchemy-lab.png', 'image/png'),

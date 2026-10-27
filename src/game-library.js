@@ -38,7 +38,7 @@
     try{
       if(resolveRoute(search,[]).mode==='legacy'){
         $('connections-entry').href=connectionsUrl(search);$('delivery-entry').href=deliveryUrl(search);
-        await load('game.js');await load('keeper-motion-prototype.js?v=alchemy-27');return;
+        await load('game.js');await load('more-levels.js');await load('keeper-motion-prototype.js?v=alchemy-27');return;
       }
       if(new URLSearchParams(search).get('mode')==='delivery')return await bootDelivery(root,load);
       $('legacy-app').hidden=true;$('connections-app').hidden=false;doc.body.classList.add('connection-mode');

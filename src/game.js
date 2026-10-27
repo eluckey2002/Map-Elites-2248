@@ -1090,7 +1090,7 @@ class Game {
 
         if (isValid) {
             text.className = 'chain-valid';
-            text.textContent = `${this.chain.length} tiles → ${sum} × ${multiplier} = ${Math.floor(sum * multiplier)}`;
+            text.textContent = `Sum ${sum.toLocaleString()} · Score +${Math.floor(sum * multiplier).toLocaleString()}`;
         } else {
             text.className = 'chain-invalid';
             if (this.chain.length < this.minChain) {

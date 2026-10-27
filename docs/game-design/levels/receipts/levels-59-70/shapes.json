@@ -1,0 +1,270 @@
+[
+ {
+  "level": 59,
+  "name": "square-stones",
+  "demand": 0.82,
+  "moves": 22,
+  "minChain": 3,
+  "gridW": 6,
+  "gridH": 6,
+  "blockers": [
+   {
+    "type": "stone",
+    "x": 1,
+    "y": 3
+   },
+   {
+    "type": "stone",
+    "x": 4,
+    "y": 3
+   }
+  ]
+ },
+ {
+  "level": 60,
+  "name": "scale-32-finale",
+  "demand": 0.86,
+  "moves": 26,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": [
+   {
+    "type": "stone",
+    "x": 1,
+    "y": 2
+   },
+   {
+    "type": "ice",
+    "x": 3,
+    "y": 3,
+    "duration": 3
+   },
+   {
+    "type": "bomb",
+    "x": 2,
+    "y": 5,
+    "timer": 8
+   }
+  ]
+ },
+ {
+  "level": 61,
+  "name": "bigger-tiles",
+  "demand": 0.78,
+  "moves": 26,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": []
+ },
+ {
+  "level": 62,
+  "name": "center-stone",
+  "demand": 0.8,
+  "moves": 26,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": [
+   {
+    "type": "stone",
+    "x": 2,
+    "y": 3
+   }
+  ]
+ },
+ {
+  "level": 63,
+  "name": "wide-run",
+  "demand": 0.82,
+  "moves": 20,
+  "minChain": 3,
+  "gridW": 6,
+  "gridH": 5,
+  "blockers": []
+ },
+ {
+  "level": 64,
+  "name": "narrow-pillars",
+  "demand": 0.82,
+  "moves": 24,
+  "minChain": 3,
+  "gridW": 4,
+  "gridH": 8,
+  "blockers": [
+   {
+    "type": "stone",
+    "x": 0,
+    "y": 4
+   },
+   {
+    "type": "stone",
+    "x": 3,
+    "y": 4
+   }
+  ]
+ },
+ {
+  "level": 65,
+  "name": "double-ice",
+  "demand": 0.86,
+  "moves": 26,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 8,
+  "blockers": [
+   {
+    "type": "ice",
+    "x": 1,
+    "y": 3,
+    "duration": 3
+   },
+   {
+    "type": "ice",
+    "x": 3,
+    "y": 5,
+    "duration": 4
+   }
+  ]
+ },
+ {
+  "level": 66,
+  "name": "stone-and-bomb",
+  "demand": 0.84,
+  "moves": 26,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": [
+   {
+    "type": "stone",
+    "x": 3,
+    "y": 2
+   },
+   {
+    "type": "bomb",
+    "x": 1,
+    "y": 4,
+    "timer": 8
+   }
+  ]
+ },
+ {
+  "level": 67,
+  "name": "square-frost",
+  "demand": 0.86,
+  "moves": 22,
+  "minChain": 3,
+  "gridW": 6,
+  "gridH": 6,
+  "blockers": [
+   {
+    "type": "stone",
+    "x": 0,
+    "y": 2
+   },
+   {
+    "type": "stone",
+    "x": 5,
+    "y": 2
+   },
+   {
+    "type": "ice",
+    "x": 2,
+    "y": 4,
+    "duration": 4
+   }
+  ]
+ },
+ {
+  "level": 68,
+  "name": "walled-timer",
+  "demand": 0.86,
+  "moves": 28,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 8,
+  "blockers": [
+   {
+    "type": "stone",
+    "x": 1,
+    "y": 2
+   },
+   {
+    "type": "stone",
+    "x": 3,
+    "y": 5
+   },
+   {
+    "type": "bomb",
+    "x": 2,
+    "y": 4,
+    "timer": 9
+   }
+  ]
+ },
+ {
+  "level": 69,
+  "name": "two-timers-and-ice",
+  "demand": 0.88,
+  "moves": 28,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 7,
+  "blockers": [
+   {
+    "type": "bomb",
+    "x": 1,
+    "y": 2,
+    "timer": 7
+   },
+   {
+    "type": "bomb",
+    "x": 3,
+    "y": 5,
+    "timer": 9
+   },
+   {
+    "type": "ice",
+    "x": 2,
+    "y": 3,
+    "duration": 3
+   }
+  ]
+ },
+ {
+  "level": 70,
+  "name": "scale-64-finale",
+  "demand": 0.9,
+  "moves": 30,
+  "minChain": 4,
+  "gridW": 5,
+  "gridH": 8,
+  "blockers": [
+   {
+    "type": "stone",
+    "x": 1,
+    "y": 3
+   },
+   {
+    "type": "ice",
+    "x": 3,
+    "y": 2,
+    "duration": 3
+   },
+   {
+    "type": "bomb",
+    "x": 1,
+    "y": 5,
+    "timer": 8
+   },
+   {
+    "type": "bomb",
+    "x": 3,
+    "y": 6,
+    "timer": 10
+   }
+  ]
+ }
+]

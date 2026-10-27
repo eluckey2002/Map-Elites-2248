@@ -242,6 +242,8 @@ body::before {
 .game-container {
     position: relative;
     z-index: 3;
+    /* Room under the board for the chain readout, so it never covers the bottom row. */
+    padding-bottom: 40px;
     filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.28));
 }
 
@@ -372,7 +374,7 @@ body::before {
 }
 
 .chain-indicator {
-    bottom: 7px;
+    bottom: 2px;
     z-index: 8;
     border: 1px solid rgba(111, 185, 188, 0.36);
     background: rgba(12, 13, 12, 0.9);

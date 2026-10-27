@@ -18,6 +18,7 @@ const {
 } = require('./engine');
 const { chooseMove } = require('./bot');
 const { resolveRecordedBoard } = require('./human-benchmark');
+const { moreLevelBoard } = require('../src/more-levels');
 
 const ROOT = path.join(__dirname, '..');
 const LOOKAHEAD_BASE = 987654321;
@@ -64,7 +65,7 @@ function main() {
   let candidate;
   if (recordingArg) {
     recording = JSON.parse(fs.readFileSync(recordingArg, 'utf8'));
-    const resolved = resolveRecordedBoard(recording);
+    const resolved = resolveRecordedBoard(recording) || moreLevelBoard(recording);
     candidate = resolved && resolved.candidate;
   } else {
     const dir = path.join(ROOT, 'pilots', 'HUMAN-PILOT-0002');
