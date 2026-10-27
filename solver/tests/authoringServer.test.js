@@ -78,7 +78,7 @@ test('serves only the game assets and exposes the bound candidate', async () => 
   const page = await fetch(`${base}/index.html`);
   assert.equal(page.status, 200);
   assert.match(page.headers.get('content-type'), /^text\/html/);
-  assert.match(await page.text(), /Keeper — The Apothecary Bench/);
+  assert.match(await page.text(), /<title>2248<\/title>/);
 
   const gameAssets = [
     ['/game.js', /^text\/javascript/],

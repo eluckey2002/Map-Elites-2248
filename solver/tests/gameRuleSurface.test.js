@@ -24,7 +24,7 @@ test('comments, whitespace and browser-only code are not game rules', () => {
   assert.equal(gameRuleSurface(edited('// Check lose (out of moves)', '// out of moves')), surface);
   assert.equal(gameRuleSurface(edited('intro: "Connect matching numbers!"', 'intro: "Match two equal tiles!"')), surface);
   assert.equal(gameRuleSurface(edited("const textColor = tile.value >= 8 ? '#fff' : '#776e65';", "const textColor = '#fff';")), surface);
-  assert.equal(gameRuleSurface(edited("2: '#EEE4DA',", "2: '#FFFFFF',")), surface);
+  assert.equal(gameRuleSurface(edited("2: '#e6e1d6',", "2: '#FFFFFF',")), surface);
   assert.equal(gameRuleSurface(edited('function formatTileValue(value) {\n    return String(value);\n}', 'function formatTileValue(value) {\n    return `${value}`;\n}')), surface);
   assert.equal(gameRuleSurface(edited('this.mergeTimer = setTimeout(() => {\n            this.mergeTimer = null;', 'setTimeout(() => {')), surface);
   // Calling initializeLevel directly, as main did before beginLevel existed, is the same rule.
@@ -163,7 +163,7 @@ test('a browser declaration that writes game state or calls rule code is bound l
   ]) {
     assert.ok(gameRuleSurface(into(method, line)) !== surface, `${method}: ${line}`);
   }
-  assert.notEqual(gameRuleSurface(edited("2: '#EEE4DA',", "get 2() { return '#EEE4DA'; },")), surface);
+  assert.notEqual(gameRuleSurface(edited("2: '#e6e1d6',", "get 2() { return '#EEE4DA'; },")), surface);
   assert.notEqual(gameRuleSurface(edited('    return String(value);', '    value.x = 1;\n    return String(value);')), surface);
 });
 

@@ -3,20 +3,27 @@
 // ============================================================================
 
 // Tile colors based on value
+// One clearly different color per value. Neighbouring values never share a
+// hue family, so a board of 128s, 256s and 512s reads at a glance.
 const TILE_COLORS = {
-    2: '#EEE4DA',
-    4: '#EDE0C8',
-    8: '#F2B179',
-    16: '#F59563',
-    32: '#F67C5F',
-    64: '#F65E3B',
-    128: '#EDCF72',
-    256: '#EDCC61',
-    512: '#EDC850',
-    1024: '#EDC53F',
-    2048: '#EDC22E',
-    4096: '#3C3A32',
-    8192: '#3C3A32'
+    2: '#e6e1d6',
+    4: '#d9c9a8',
+    8: '#b5838d',
+    16: '#9c6644',
+    32: '#588157',
+    64: '#2a9d8f',
+    128: '#e76f51',
+    256: '#3a86ff',
+    512: '#c77d14',
+    1024: '#8338ec',
+    2048: '#2b9348',
+    4096: '#d62828',
+    8192: '#1d3557',
+    16384: '#c2185b',
+    32768: '#6a4c93',
+    65536: '#0f766e',
+    131072: '#7f5539',
+    262144: '#111111'
 };
 
 const BLOCKER_TYPES = {
@@ -402,10 +409,19 @@ class Game {
 
     setupCanvas() {
         const updateSize = () => {
-            const maxWidth = Math.min(400, window.innerWidth - 40);
-            this.tileSize = Math.floor((maxWidth - this.tilePadding * (this.gridWidth + 1)) / this.gridWidth);
+            // Fit the board to both the width and the height left over by the
+            // header, the chain readout and the buttons, so a tall board never
+            // pushes the buttons off a phone screen.
+            const maxWidth = Math.min(400, window.innerWidth - 24);
+            const maxHeight = Math.max(200, window.innerHeight - 270);
+            this.tileSize = Math.max(24, Math.floor(Math.min(
+                (maxWidth - this.tilePadding * (this.gridWidth + 1)) / this.gridWidth,
+                (maxHeight - this.tilePadding * (this.gridHeight + 1)) / this.gridHeight,
+            )));
             const width = this.gridWidth * this.tileSize + this.tilePadding * (this.gridWidth + 1);
             const height = this.gridHeight * this.tileSize + this.tilePadding * (this.gridHeight + 1);
+            this.canvas.style.width = `${width}px`;
+            this.canvas.style.height = `${height}px`;
             // Draw at the screen's pixel density so tiles stay sharp. The
             // stylesheet sets the displayed size; drawing and input keep using
             // board units.
@@ -458,8 +474,12 @@ class Game {
 
     getGridPos(clientX, clientY) {
         const rect = this.canvas.getBoundingClientRect();
-        const x = clientX - rect.left;
-        const y = clientY - rect.top;
+        // Board units are CSS pixels at the board's own size; scale in case
+        // the page shows the canvas at a different size.
+        const boardWidth = this.gridWidth * this.tileSize + this.tilePadding * (this.gridWidth + 1);
+        const boardHeight = this.gridHeight * this.tileSize + this.tilePadding * (this.gridHeight + 1);
+        const x = (clientX - rect.left) * (rect.width ? boardWidth / rect.width : 1);
+        const y = (clientY - rect.top) * (rect.height ? boardHeight / rect.height : 1);
 
         const col = Math.floor((x - this.tilePadding) / (this.tileSize + this.tilePadding));
         const row = Math.floor((y - this.tilePadding) / (this.tileSize + this.tilePadding));

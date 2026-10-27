@@ -13,7 +13,7 @@ const { Game } = require('../../src/game.js');
 function sizedGame(devicePixelRatio) {
   const previousWindow = global.window;
   const transforms = [];
-  global.window = { innerWidth: 440, devicePixelRatio, addEventListener() {} };
+  global.window = { innerWidth: 440, innerHeight: 900, devicePixelRatio, addEventListener() {} };
   try {
     const game = Object.create(Game.prototype);
     Object.assign(game, {
@@ -31,11 +31,11 @@ function sizedGame(devicePixelRatio) {
   }
 }
 
-test('the board is drawn at the screen pixel density and its display size is left to the stylesheet', () => {
+test('the board is drawn at the screen pixel density and displayed at its board size', () => {
   const { game, transforms } = sizedGame(2);
   const boardWidth = 5 * game.tileSize + 6 * 6;
   const boardHeight = 8 * game.tileSize + 6 * 9;
-  assert.deepEqual(game.canvas.style, {});
+  assert.deepEqual(game.canvas.style, { width: `${boardWidth}px`, height: `${boardHeight}px` });
   assert.equal(game.canvas.width, boardWidth * 2);
   assert.equal(game.canvas.height, boardHeight * 2);
   assert.deepEqual(transforms.at(-1), [2, 0, 0, 2, 0, 0]);
@@ -43,6 +43,31 @@ test('the board is drawn at the screen pixel density and its display size is lef
   // A tap on an unscaled board: the centre of column 2, row 3.
   const centre = (index) => 6 + index * (game.tileSize + 6) + game.tileSize / 2;
   assert.deepEqual(game.getGridPos(centre(2), centre(3)), { col: 2, row: 3 });
+});
+
+test('a short screen shrinks the tiles so the whole board fits above the buttons', () => {
+  const previousWindow = global.window;
+  global.window = { innerWidth: 440, innerHeight: 600, devicePixelRatio: 1, addEventListener() {} };
+  try {
+    const game = Object.create(Game.prototype);
+    Object.assign(game, {
+      gridWidth: 5, gridHeight: 8, tilePadding: 6,
+      canvas: { style: {} }, ctx: { setTransform() {} }, render() {},
+    });
+    game.setupCanvas();
+    assert.ok(8 * game.tileSize + 6 * 9 <= 600 - 270);
+  } finally {
+    global.window = previousWindow;
+  }
+});
+
+test('a tap on a board shown smaller than its drawing size still lands on the right tile', () => {
+  const { game } = sizedGame(1);
+  const boardWidth = 5 * game.tileSize + 6 * 6;
+  const boardHeight = 8 * game.tileSize + 6 * 9;
+  game.canvas.getBoundingClientRect = () => ({ left: 0, top: 0, width: boardWidth / 2, height: boardHeight / 2 });
+  const centre = (index) => (6 + index * (game.tileSize + 6) + game.tileSize / 2) / 2;
+  assert.deepEqual(game.getGridPos(centre(4), centre(7)), { col: 4, row: 7 });
 });
 
 test('a screen without a pixel ratio draws one canvas pixel per CSS pixel', () => {
