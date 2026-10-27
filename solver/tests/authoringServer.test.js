@@ -82,6 +82,7 @@ test('serves only the game assets and exposes the bound candidate', async () => 
 
   const gameAssets = [
     ['/game.js', /^text\/javascript/],
+    ['/more-levels.js', /^text\/javascript/],
     ['/keeper-motion-prototype.css', /^text\/css/],
     ['/keeper-motion-prototype.js', /^text\/javascript/],
     ['/assets/keeper-alchemy-lab.png', /^image\/png/],
