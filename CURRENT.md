@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Connection Relay puzzles — 2026-10-18
+
+The owner asked for more connection puzzles. [`prototypes/connection-relay/`](prototypes/connection-relay/README.md) has six finite three-connection boards on a private Artifact (https://claude.ai/artifact/PNBxjsFMGsZpJPRaKoJcL9), not in the app. Each tile a connection makes is part of a later connection, and its marker follows that tile; `src/connection-rules.js` is unchanged. Plays save to the Artifact's db collection `runs`, study `connection-relay-v2`. Open: owner play. No ledger record; nothing here is a difficulty or enjoyment claim.
+
 ## Experiment gate: squash-merged registration — 2026-10-21
 
 Main's experiment gate was red from PR #88 (RESULT-0085) onward, and so was every new pull request's. The squash merge put RESULT-0085's protocol and report in one commit and dropped the registration commit from main's history. [DECISION-0016](EVIDENCE_LEDGER.md#decision-0016--read-result-0085s-preregistration-order-from-its-kept-branch-because-the-squash-merge-erased-it-from-main) (provisional, owner choice, check pending) keeps PR #88's branch on `evidence/result-0085-pr88` and adds a `SQUASHED_REGISTRATIONS` table to `tools/verify-experiments.js`. The gate reads that one result's order from the kept branch, and only while main's files match the branch byte for byte. RESULT-0085's standing is unchanged. Open: merging experiment pull requests by squash still erases the order. Preventing that (merge commits only, or a check before merge) is separate work.
