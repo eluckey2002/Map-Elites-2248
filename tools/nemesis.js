@@ -10,7 +10,8 @@ const path = require('node:path');
 
 const { playBot, resolveRecordedBoard } = require('../solver/human-benchmark');
 const { candidateIndex, replay } = require('../solver/recording-replay');
-const { LEVELS } = require('../src/game.js');
+const { allLevels, moreLevelBoard } = require('../src/more-levels.js');
+const LEVELS = allLevels(require('../src/game.js').LEVELS);
 
 const { play } = require('../solver/policy-lab/play');
 const { chooserFor } = require('../solver/policy-lab/chooser');
@@ -69,7 +70,7 @@ function humanAttempts(sources) {
     for (const name of fs.readdirSync(dir).filter((entry) => entry.endsWith('.json')).sort()) {
       let recording;
       try { recording = JSON.parse(fs.readFileSync(path.join(dir, name), 'utf8')); } catch { continue; }
-      const resolved = resolveRecordedBoard(recording, index);
+      const resolved = resolveRecordedBoard(recording, index) || moreLevelBoard(recording);
       if (!resolved || !playable(recording.candidateLevel, recording.seed)) continue;
       if (!sameBoard(resolved.candidate, shippedLevel(recording.candidateLevel))) continue;
       if (replay(resolved.candidate, recording).problems.length) continue;

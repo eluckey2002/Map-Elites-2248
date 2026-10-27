@@ -39,3 +39,14 @@ test('the browser appends the levels and replays a ?level jump past 58', () => {
   assert.equal(JSON.stringify(loads), JSON.stringify([[63, { seed: 7 }]]));
   assert.equal(game.unlockedLevel, 63);
 });
+
+test('Node tools that serve ordinary play know levels 59-70', () => {
+  const { moreLevelBoard } = require('../../src/more-levels.js');
+  const { oneChallenge } = require('../../tools/nemesis.js');
+  assert.equal(moreLevelBoard({ candidateIdentity: null, candidateLevel: 64 }).candidate.level, 64);
+  assert.equal(moreLevelBoard({ candidateIdentity: null, candidateLevel: 58 }), null);
+  assert.equal(moreLevelBoard({ candidateIdentity: 'a'.repeat(64), candidateLevel: 64 }), null);
+  const challenge = oneChallenge(59, 7, { sources: [] });
+  assert.equal(challenge.target, 100000);
+  assert.equal(oneChallenge(71, 7, { sources: [] }), null);
+});

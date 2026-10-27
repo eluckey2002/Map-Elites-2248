@@ -37,6 +37,15 @@ function allLevels(baseLevels) {
     return baseLevels.concat(MORE_LEVELS.filter((l) => !baseLevels.some((b) => b.level === l.level)));
 }
 
+// Ordinary play on levels 59+ for Node tools. solver/human-benchmark.js
+// resolves recordings against game.js only and is frozen by RESULT-0047, so
+// callers ask it first and fall back to this.
+function moreLevelBoard(recording) {
+    if (!recording || recording.candidateIdentity !== null) return null;
+    const level = MORE_LEVELS.find((l) => l.level === recording.candidateLevel);
+    return level ? { candidate: level, source: 'shipped-level' } : null;
+}
+
 // In the browser game.js has already built the game, and its `?level=N` jump
 // only knew about 58 levels, so a jump past 58 is replayed here.
 function addMoreLevels(levels, game, search) {
@@ -56,5 +65,5 @@ if (typeof document !== 'undefined' && typeof LEVELS !== 'undefined') {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { MORE_LEVELS, allLevels, addMoreLevels };
+    module.exports = { MORE_LEVELS, allLevels, addMoreLevels, moreLevelBoard };
 }

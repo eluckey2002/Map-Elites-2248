@@ -16,7 +16,8 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const { POLICIES } = require('./nemesis');
 const { createNemesisRunner } = require('./nemesis-worker');
-const { LEVELS } = require('../src/game');
+const { allLevels } = require('../src/more-levels');
+const LEVELS = allLevels(require('../src/game').LEVELS);
 const { createConnectionCapture } = require('./connection-capture');
 
 const ROOT = path.join(__dirname, '..');
