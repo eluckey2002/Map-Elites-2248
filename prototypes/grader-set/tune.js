@@ -44,7 +44,7 @@ function struggle(dir){
     if(!runs[d.board]||d.startedAt<runs[d.board].startedAt)runs[d.board]=d;}
   const out={};
   for(const [b,d] of Object.entries(runs)){const frac=d.movesUsed/d.budget;let s=null;
-    if(['gave-up','out-of-moves','no-moves'].includes(d.outcome))s=3;
+    if(['gave-up','out-of-moves','no-chains','no-moves'].includes(d.outcome))s=3;
     else if(d.outcome==='won')s=d.undos>=3?2:(d.undos>=1||frac>0.75)?1:0;
     if(s!==null)out[b]={s,frac};}
   return out;
