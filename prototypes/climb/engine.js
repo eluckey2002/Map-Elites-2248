@@ -173,7 +173,10 @@
       const gap = Math.round(goal.gap * scoreGapFactor(settings.pacing));
       return {kind: 'score', gap, at: goal.at + gap};
     }
-    const gap = Math.max(5, goal.gap + moveGapStep(settings.pacing));
+    // Speeding up stops at 5 moves, but never raises a shorter gap the
+    // player chose.
+    const step = moveGapStep(settings.pacing);
+    const gap = step < 0 ? Math.max(Math.min(5, goal.gap), goal.gap + step) : goal.gap + step;
     return {kind: 'moves', gap, at: goal.at + gap};
   }
 
@@ -490,6 +493,7 @@
 
     applyGravity(next.board);
     const dropped = refill(next, next.board, next.spawnCount, draw || seedDraw(next.seed));
+    for (const [, , v] of dropped) next.bestTile = Math.max(next.bestTile, v);
     const {warned, stoned} = checkStranded(next, next.board);
     next.stones += stoned.length;
     if (!hasLegalChain(next)) {

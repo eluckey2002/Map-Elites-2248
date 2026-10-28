@@ -179,7 +179,7 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
   // ---------- saving ----------
   const LOCAL = 'climb-games-v1';
   const readLocal = () => { try { return JSON.parse(localStorage.getItem(LOCAL) || '[]'); } catch (_) { return []; } };
-  const writeLocal = list => { try { localStorage.setItem(LOCAL, JSON.stringify(list.slice(-300))); } catch (_) { /* storage blocked */ } };
+  const writeLocal = list => { try { localStorage.setItem(LOCAL, JSON.stringify(list.slice(-300))); return true; } catch (_) { return false; } };
   let dbp = null;
   const database = () => (dbp ||= (window.claude && window.claude.use ? window.claude.use('db') : Promise.resolve(null)).catch(() => null));
   let games = readLocal();
@@ -187,17 +187,18 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
   async function saveGame(id, record) {
     const row = {id, record};
     games = games.filter(g => g.id !== id).concat([row]);
-    writeLocal(games);
+    const local = writeLocal(games);
+    const notSaved = 'Not saved: this page could not store the game. Use Export before leaving.';
     try {
       const db = await database();
-      if (!db) return 'Saved on this phone';
+      if (!db) return local ? 'Saved on this phone' : notSaved;
       await db.collection('games').doc(id).set({
         id, date: record.result.date, end: record.result.end, climbs: record.result.climbs,
         score: record.result.score, moves: record.result.moves, settingsKey: settingsKey(record.settings),
         engine: record.engine, record: JSON.stringify(record),
       });
       return 'Saved';
-    } catch (_) { return 'Saved on this phone only'; }
+    } catch (_) { return local ? 'Saved on this phone only' : notSaved; }
   }
 
   async function loadGames() {

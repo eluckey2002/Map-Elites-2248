@@ -120,6 +120,8 @@ test('slides: each pacing makes the gaps in the plan table', () => {
   assert.deepEqual(goals({slideTrigger: 'moves'}, 3), [15, 30, 45]);
   assert.deepEqual(goals({slideTrigger: 'moves', pacing: 'speeds-up'}, 7), [15, 28, 39, 48, 55, 60, 65]);
   assert.deepEqual(goals({slideTrigger: 'moves', pacing: 'slows-down'}, 3), [15, 32, 51]);
+  assert.deepEqual(goals({slideTrigger: 'moves', slideAmount: 3}, 3), [3, 6, 9], 'steady keeps a short gap');
+  assert.deepEqual(goals({slideTrigger: 'moves', slideAmount: 4, pacing: 'speeds-up'}, 3), [4, 8, 12], 'speeding up never lengthens a short gap');
   const mults = pacing => [0, 1, 2, 3, 4, 5, 6].map(k => E.tileMultiplier(E.normalizeSettings({pacing}), k));
   assert.deepEqual(mults('steady'), [8, 8, 8, 8, 8, 8, 8]);
   assert.deepEqual(mults('speeds-up'), [8, 8, 4, 4, 2, 2, 2]);
@@ -312,6 +314,17 @@ test('same result everywhere: a fixed game has a frozen fingerprint', () => {
 });
 
 const GOLDEN = require('./golden.json');
+
+test('best tile counts a bigger value that starts falling after a climb', () => {
+  const settings = E.normalizeSettings({slideTrigger: 'moves', slideAmount: 3, fallOdds: 'equal'});
+  let st = E.newGame(settings, 26);
+  for (let i = 0; i < 6 && !st.over; i++) {
+    st = E.applyMove(st, E.listChains(st, {limit: 1})[0]).state;
+    let max = 0;
+    for (const row of st.board) for (const c of row) if (!c.stone) max = Math.max(max, c.v);
+    assert.ok(st.bestTile >= max, `move ${i + 1}: bestTile ${st.bestTile} < ${max}`);
+  }
+});
 
 test('the engine does not touch the input state', () => {
   const s = E.newGame({}, 5);
