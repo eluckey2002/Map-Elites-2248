@@ -26,7 +26,7 @@
   const CHOICES = Object.freeze({
     poolSize: [4, 5, 6, 7],
     poolStart: [2, 4, 8],
-    fallOdds: ['halving', 'equal'],
+    fallOdds: ['halving', 'soft', 'gentle', 'equal'],
     slideTrigger: ['tile', 'score', 'moves'],
     pacing: ['steady', 'speeds-up', 'slows-down'],
   });
@@ -113,7 +113,13 @@
   function fallWeights(settings) {
     const w = [];
     for (let i = 0; i < settings.poolSize; i++) {
-      w.push(settings.fallOdds === 'halving' ? 2 ** (settings.poolSize - 1 - i) : 1);
+      const n = settings.poolSize;
+      // Whole-number weights, smallest value first. halving: each half the
+      // one below. soft: each 3/4 of the one below. gentle: n, n-1 ... 1.
+      if (settings.fallOdds === 'halving') w.push(2 ** (n - 1 - i));
+      else if (settings.fallOdds === 'soft') w.push(4 ** (n - 1 - i) * 3 ** i);
+      else if (settings.fallOdds === 'gentle') w.push(n - i);
+      else w.push(1);
     }
     return w;
   }

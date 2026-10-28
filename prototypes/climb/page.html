@@ -236,7 +236,8 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
   const SETTING_UI = [
     {key: 'poolSize', label: 'How many values fall', opts: [[4, '4'], [5, '5'], [6, '6'], [7, '7']]},
     {key: 'poolStart', label: 'Smallest value at the start', opts: [[2, '2'], [4, '4'], [8, '8']]},
-    {key: 'fallOdds', label: 'How often each value falls', opts: [['halving', 'Small ones more'], ['equal', 'All the same']]},
+    {key: 'fallOdds', label: 'How often each value falls', opts: [['gentle', 'Gentle'], ['soft', 'Softer'], ['halving', 'Halving'], ['equal', 'Equal']],
+      hint: {gentle: '5 values: 33, 27, 20, 13, 7%', soft: '5 values: 33, 25, 19, 14, 11%', halving: '5 values: 52, 26, 13, 6, 3%', equal: 'Every value equally often'}},
     {key: 'slideTrigger', label: 'What makes you climb', opts: [['tile', 'Tile made'], ['score', 'Score'], ['moves', 'Moves']]},
     {key: 'pacing', label: 'Pacing', opts: [['steady', 'Steady'], ['speeds-up', 'Speeds up'], ['slows-down', 'Slows down']],
       hint: {steady: 'Each climb needs the same step', 'speeds-up': 'Climbs come faster', 'slows-down': 'Climbs come slower'}},
