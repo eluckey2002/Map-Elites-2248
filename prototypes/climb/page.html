@@ -184,6 +184,7 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
   const database = () => (dbp ||= (window.claude && window.claude.use ? window.claude.use('db') : Promise.resolve(null)).catch(() => null));
   let games = readLocal();
 
+  const pending = new Map();
   async function saveGame(id, record) {
     const row = {id, record};
     games = games.filter(g => g.id !== id).concat([row]);
@@ -192,11 +193,15 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
     try {
       const db = await database();
       if (!db) return local ? 'Saved on this phone' : notSaved;
-      await db.collection('games').doc(id).set({
+      // One database write at a time per game, so a slow older save can
+      // never land after a newer one.
+      const write = (pending.get(id) || Promise.resolve()).catch(() => {}).then(() => db.collection('games').doc(id).set({
         id, date: record.result.date, end: record.result.end, climbs: record.result.climbs,
         score: record.result.score, moves: record.result.moves, settingsKey: settingsKey(record.settings),
         engine: record.engine, record: JSON.stringify(record),
-      });
+      }));
+      pending.set(id, write);
+      await write;
       return 'Saved';
     } catch (_) { return local ? 'Saved on this phone only' : notSaved; }
   }
