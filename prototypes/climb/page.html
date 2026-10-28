@@ -208,8 +208,12 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
       const snap = await db.collection('games').get();
       const remote = [];
       snap.forEach(d => { const x = d.data(); try { remote.push({id: x.id, record: JSON.parse(x.record)}); } catch (_) { /* skip a bad row */ } });
-      const ids = new Set(remote.map(g => g.id));
-      games = remote.concat(games.filter(g => !ids.has(g.id)));
+      // Keep whichever copy of a game was saved last: a later local save
+      // (after an undo) can be newer than a database row that failed to update.
+      const when = g => (g.record && g.record.result && g.record.result.date) || '';
+      const byId = new Map(games.map(g => [g.id, g]));
+      for (const g of remote) if (!byId.has(g.id) || when(g) >= when(byId.get(g.id))) byId.set(g.id, g);
+      games = [...byId.values()];
       showBest();
     } catch (_) { /* offline or not signed in: local copy only */ }
   }
