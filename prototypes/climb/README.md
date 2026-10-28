@@ -21,7 +21,7 @@ makes no claim about any bot.
   and the defaults check. They are not the bots evan will choose.
 - `check-defaults.js`: choice G. `node prototypes/climb/check-defaults.js 200`.
   `check-defaults.out.json` holds the run made for the first PR.
-- `page.html`: the phone page. It loads `engine.js` next to it. Finished and
+- `page.html`: the phone page source. `node prototypes/climb/build.js out.html` inlines `engine.js` into one file for the Artifact (a script file published next to the page did not load reliably). Finished and
   quit games are saved to the page's database (collection `games`, the record
   is a JSON string in `record`) and to the phone's own storage as a backup.
 
