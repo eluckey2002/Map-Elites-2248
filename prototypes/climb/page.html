@@ -68,6 +68,7 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
 .falling i { width: 26px; height: 26px; border-radius: 3px; font-style: normal; display: grid; place-items: center; font-size: 10px; font-weight: 700; }
 .status .msg { min-width: 0; }
 .status.flash .msg { font-weight: 600; }
+.status.chaining .msg { font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; }
 .boardbox { position: relative; }
 #board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; background: var(--board); padding: 5px; border-radius: 8px; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 .cell { aspect-ratio: 1; border: 0; border-radius: 6px; display: grid; place-items: center; font-weight: 700; font-size: clamp(14px, 4.6vw, 20px); position: relative; padding: 0; font-variant-numeric: tabular-nums; transition: transform .12s ease; }
@@ -156,6 +157,10 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
 (function () {
   'use strict';
   const E = window.ClimbEngine;
+  if (!E) {
+    document.getElementById('start').textContent = 'Climb could not load its rules. Please tell Claude.';
+    return;
+  }
   const $ = id => document.getElementById(id);
   const fmt = n => n.toLocaleString('en-US');
 
@@ -393,6 +398,15 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
       const sum = vals.reduce((a, b) => a + b, 0); const bonus = E.chainBonus(vals.length);
       $('chain').textContent = `${vals.map(fmt).join(' + ')} = ${fmt(sum)}${bonus > 1 ? `  ×${bonus}` : ''}  → +${fmt(Math.floor(sum * bonus))}`;
     } else $('chain').textContent = vals.length === 1 ? 'Tap a touching tile with the same number' : '';
+    // The running sum sits in the status row above the board, so it stays on
+    // screen however tall the phone's view is.
+    if (vals.length) {
+      const sum = vals.reduce((a, b) => a + b, 0); const bonus = E.chainBonus(vals.length);
+      $('msg').textContent = vals.length >= 2
+        ? `Sum ${fmt(sum)} · Score +${fmt(Math.floor(sum * bonus))}${bonus > 1 ? ` (×${bonus})` : ''}`
+        : `Sum ${fmt(sum)}`;
+    }
+    $('status').classList.toggle('chaining', vals.length > 0);
     $('merge').disabled = vals.length < 2;
     $('undo').disabled = !session.canUndo;
     $('newgame').textContent = quitArmed ? 'Tap again to quit this game' : 'New game';
