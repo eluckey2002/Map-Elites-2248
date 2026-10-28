@@ -1,0 +1,476 @@
+<title>Climb</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one phone column; header, status row, board, chain row, action bar. Board is the hero. */
+:root {
+  --bg-0: #FFFEFB; --bg-1: #F8F4F0; --bg-2: #ECEAE3;
+  --fg-0: #201515; --fg-1: #36342E; --fg-2: #605D52; --fg-3: #939084;
+  --line: #C5C0B1; --line-strong: #201515;
+  --accent: #FF4F00; --accent-deep: #E84800;
+  --button: #381933; --on-button: #FFFEFB;
+  --board: #ECEAE3; --empty: #DFDCD2;
+  --stone: #8C887E; --stone-grain: #7A766C;
+  --ring: #E84800;
+  --display: "Bricolage Grotesque", Inter, system-ui, sans-serif;
+  --body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg-0: #1B1716; --bg-1: #231E1C; --bg-2: #2C2624; --fg-0: #F4EFE8; --fg-1: #DCD5CB; --fg-2: #B3AB9F; --fg-3: #857E73;
+  --line: #4A433E; --line-strong: #F4EFE8; --accent: #FF6A26; --accent-deep: #FF7A3D; --button: #F4EFE8; --on-button: #201515;
+  --board: #2C2624; --empty: #362F2C; --stone: #5E5953; --stone-grain: #504B46; --ring: #FF7A3D; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg-0: #1B1716; --bg-1: #231E1C; --bg-2: #2C2624; --fg-0: #F4EFE8; --fg-1: #DCD5CB; --fg-2: #B3AB9F; --fg-3: #857E73;
+  --line: #4A433E; --line-strong: #F4EFE8; --accent: #FF6A26; --accent-deep: #FF7A3D; --button: #F4EFE8; --on-button: #201515;
+  --board: #2C2624; --empty: #362F2C; --stone: #5E5953; --stone-grain: #504B46; --ring: #FF7A3D; color-scheme: dark }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { background: var(--bg-0); color: var(--fg-0); font: 16px/1.5 var(--body); }
+.wrap { max-width: 440px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px 20px; display: flex; flex-direction: column; gap: 12px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, summary:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 2px; }
+h1 { font: 600 48px/1 var(--display); margin: 0; letter-spacing: -0.01em; }
+.primary { background: var(--button); color: var(--on-button); border: 0; border-radius: 0 0 6px 6px; padding: 14px 20px; font-weight: 500; font-size: 18px; width: 100%; }
+.primary:disabled { opacity: .4; cursor: default; }
+.quiet { background: none; border: 1px solid var(--line); border-radius: 4px; padding: 10px 14px; font-weight: 500; }
+.quiet:disabled { opacity: .4; cursor: default; }
+.link { background: none; border: 0; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; color: var(--fg-1); font-size: 14px; }
+.small { font-size: 14px; color: var(--fg-2); }
+
+/* Start */
+#start { gap: 16px; }
+.best { font-size: 18px; color: var(--fg-1); }
+.best b { font: 600 32px/1 var(--display); color: var(--fg-0); }
+details { border-top: 1px solid var(--line); padding-top: 10px; }
+summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
+.setting { display: grid; gap: 6px; margin-top: 14px; }
+.setting > span { font-size: 14px; font-weight: 500; }
+.setting .hint { font-size: 12px; color: var(--fg-2); }
+.seg { display: flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.seg button { flex: 1 1 0; min-width: 0; background: var(--bg-0); border: 0; border-right: 1px solid var(--line); padding: 9px 6px; font-size: 14px; }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--bg-2); box-shadow: inset 0 -3px 0 var(--accent-deep); font-weight: 600; }
+.amount { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.amount input { width: 96px; padding: 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg-0); color: var(--fg-0); font: inherit; }
+.rules { margin: 8px 0 0; padding-left: 18px; font-size: 14px; color: var(--fg-1); display: grid; gap: 4px; }
+.err { font-size: 14px; color: var(--fg-0); background: var(--bg-2); border-left: 4px solid #B3123A; padding: 8px 10px; }
+
+/* Play */
+.head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.climbs { display: flex; align-items: baseline; gap: 8px; }
+.climbs b { font: 600 40px/1 var(--display); font-variant-numeric: tabular-nums; }
+.climbs span { font-size: 14px; color: var(--fg-2); }
+.nums { text-align: right; font-size: 14px; color: var(--fg-1); font-variant-numeric: tabular-nums; line-height: 1.35; }
+.nums b { color: var(--fg-0); }
+.status { min-height: 40px; display: flex; align-items: center; gap: 10px; font-size: 14px; border-block: 1px solid var(--line); padding-block: 6px; }
+.falling { display: flex; gap: 3px; flex: none; }
+.falling i { width: 26px; height: 26px; border-radius: 3px; font-style: normal; display: grid; place-items: center; font-size: 10px; font-weight: 700; }
+.status .msg { min-width: 0; }
+.status.flash .msg { font-weight: 600; }
+.boardbox { position: relative; }
+#board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; background: var(--board); padding: 5px; border-radius: 8px; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.cell { aspect-ratio: 1; border: 0; border-radius: 6px; display: grid; place-items: center; font-weight: 700; font-size: clamp(14px, 4.6vw, 20px); position: relative; padding: 0; font-variant-numeric: tabular-nums; transition: transform .12s ease; }
+.cell.sel { box-shadow: 0 0 0 3px var(--ring); transform: scale(.94); }
+.cell.last { box-shadow: 0 0 0 5px var(--ring); }
+.cell .ord { position: absolute; top: 2px; left: 4px; font-size: 10px; font-weight: 600; }
+.cell.stranded::after { content: ""; position: absolute; inset: 3px; border: 2px solid currentColor; border-radius: 4px; opacity: .85; }
+.cell.risk::after { border-style: dashed; animation: pulse 1s ease-in-out infinite; }
+.cell.risk::before { content: "!"; position: absolute; top: 1px; right: 5px; font-size: 13px; font-weight: 700; }
+.cell.stone { background: repeating-linear-gradient(135deg, var(--stone) 0 6px, var(--stone-grain) 6px 12px); cursor: default; }
+@keyframes pulse { 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .cell { transition: none; } .cell.risk::after { animation: none; } }
+.chainrow { min-height: 24px; font-size: 15px; text-align: center; font-variant-numeric: tabular-nums; color: var(--fg-1); }
+.bar { display: flex; gap: 10px; }
+.bar .quiet { flex: 0 0 auto; }
+.bar .primary { flex: 1; border-radius: 0 0 6px 6px; }
+.foot { display: flex; justify-content: space-between; align-items: center; }
+
+/* End sheet */
+.sheet { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; background: color-mix(in srgb, var(--bg-0) 55%, transparent); border-radius: 8px; }
+.sheet .card { background: var(--bg-0); border: 1px solid var(--line); border-radius: 14px; margin: 8px; padding: 18px; width: 100%; display: grid; gap: 12px; box-shadow: 0 8px 30px rgb(0 0 0 / .18); }
+.sheet h2 { margin: 0; font-size: 20px; }
+.headline b { font: 600 44px/1 var(--display); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.stats div { display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+.row2 { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+</style>
+
+<main>
+  <section id="start" class="wrap">
+    <h1>Climb</h1>
+    <p class="best" id="best">Your best: <b>0</b> climbs</p>
+    <button class="primary" id="play">Play</button>
+    <details id="advanced">
+      <summary>Advanced</summary>
+      <div id="settings"></div>
+      <p class="err" id="settingsErr" hidden></p>
+    </details>
+    <details>
+      <summary>Rules</summary>
+      <ul class="rules">
+        <li>Tap touching tiles to make a chain. Start with two the same, then each next tile is the same or double.</li>
+        <li>Tap the last tile again, or Merge, to merge. Tap the tile before the last to step back.</li>
+        <li>The merged tile is the exact sum. Bonus: ×1.5 at 3 tiles, ×2 at 5, ×3 at 7, ×5 at 9 or more.</li>
+        <li>New tiles fall from the values shown in the strip. When you climb, the smallest value stops falling and a bigger one starts.</li>
+        <li>Tiles smaller than every falling value are outlined. If one can no longer merge, it gets a dashed outline and "!". One move later, if it still can't merge, it turns to stone.</li>
+        <li>Stone can't be chained and holds up the tiles above it.</li>
+        <li>Board 5 wide, 7 tall. Shortest chain 2. Undo goes back one move. The game ends when no chain is left.</li>
+      </ul>
+    </details>
+    <div class="row2"><button class="link" id="export">Export games</button><span class="small" id="saved"></span></div>
+  </section>
+
+  <section id="game" class="wrap" hidden>
+    <div class="head">
+      <div class="climbs"><b id="climbs">0</b><span id="climbWord">climbs</span></div>
+      <div class="nums"><div>Score <b id="score">0</b></div><div>Moves <b id="moves">0</b></div></div>
+    </div>
+    <div class="status" id="status"><div class="falling" id="falling" aria-label="Values falling now"></div><div class="msg" id="msg"></div></div>
+    <div class="boardbox">
+      <div id="board" role="grid" aria-label="Board"></div>
+      <div class="sheet" id="end" hidden>
+        <div class="card" role="dialog" aria-labelledby="endTitle">
+          <h2 id="endTitle">No chains left</h2>
+          <div class="headline"><b id="endClimbs">0</b> climbs <span class="small" id="endBest"></span></div>
+          <div class="stats">
+            <div><span>Score</span><b id="endScore">0</b></div>
+            <div><span>Moves</span><b id="endMoves">0</b></div>
+            <div><span>Best tile</span><b id="endTile">0</b></div>
+            <div><span>Stones</span><b id="endStones">0</b></div>
+          </div>
+          <button class="primary" id="again">Play again</button>
+          <div class="row2"><button class="quiet" id="endUndo">Undo last move</button><button class="link" id="change">Change settings</button></div>
+          <span class="small" id="endSaved"></span>
+        </div>
+      </div>
+    </div>
+    <div class="chainrow" id="chain" aria-live="polite"></div>
+    <div class="bar"><button class="quiet" id="undo">Undo</button><button class="primary" id="merge" disabled>Merge</button></div>
+    <div class="foot"><button class="link" id="newgame">New game</button><span class="small" id="setLine"></span></div>
+  </section>
+</main>
+
+<script src="engine.js"></script>
+<script>
+(function () {
+  'use strict';
+  const E = window.ClimbEngine;
+  const $ = id => document.getElementById(id);
+  const fmt = n => n.toLocaleString('en-US');
+
+  // ---------- tile colors: one fixed color per value, for life ----------
+  const POW = ['#E6E1D6', '#D9C9A8', '#B5838D', '#9C6644', '#588157', '#2A9D8F', '#E76F51', '#3A86FF', '#C77D14', '#8338EC', '#2B9348', '#D62828', '#1D3557', '#C2185B', '#6A4C93', '#0F766E', '#7F5539', '#111111'];
+  const ODD = ['#F2D7A6', '#E9B8C4', '#BFD8C0', '#B9CCE6', '#D8C3E8', '#F1C9A5', '#A9D6D2', '#E3D18A', '#C9B79C', '#9FB4C7', '#D7A9A0', '#A7B98A', '#C4A3BF', '#8FA9A3', '#B8A07A', '#9E9EC8', '#C08F6F'];
+  function lum(hex) {
+    const v = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255).map(c => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+  }
+  function tileLook(v) {
+    const k = Math.log2(v);
+    let bg; let heavy = false;
+    if (Number.isInteger(k)) { const i = k - 1; bg = POW[i % POW.length]; heavy = i >= POW.length; }
+    else { const j = Math.floor(Math.log2(v / 3)); bg = ODD[((j % ODD.length) + ODD.length) % ODD.length]; heavy = j >= ODD.length; }
+    const fg = lum(bg) > 0.22 ? '#201515' : '#FFFEFB';
+    return {bg, fg, heavy};
+  }
+  const short = v => (v >= 1e9 ? `${+(v / 1e9).toFixed(1)}B` : v >= 1e6 ? `${+(v / 1e6).toFixed(1)}M` : v >= 1e5 ? `${Math.round(v / 1e3)}K` : String(v));
+
+  // ---------- saving ----------
+  const LOCAL = 'climb-games-v1';
+  const readLocal = () => { try { return JSON.parse(localStorage.getItem(LOCAL) || '[]'); } catch (_) { return []; } };
+  const writeLocal = list => { try { localStorage.setItem(LOCAL, JSON.stringify(list.slice(-300))); } catch (_) { /* storage blocked */ } };
+  let dbp = null;
+  const database = () => (dbp ||= (window.claude && window.claude.use ? window.claude.use('db') : Promise.resolve(null)).catch(() => null));
+  let games = readLocal();
+
+  async function saveGame(id, record) {
+    const row = {id, record};
+    games = games.filter(g => g.id !== id).concat([row]);
+    writeLocal(games);
+    try {
+      const db = await database();
+      if (!db) return 'Saved on this phone';
+      await db.collection('games').doc(id).set({
+        id, date: record.result.date, end: record.result.end, climbs: record.result.climbs,
+        score: record.result.score, moves: record.result.moves, settingsKey: settingsKey(record.settings),
+        engine: record.engine, record: JSON.stringify(record),
+      });
+      return 'Saved';
+    } catch (_) { return 'Saved on this phone only'; }
+  }
+
+  async function loadGames() {
+    try {
+      const db = await database();
+      if (!db) return;
+      const snap = await db.collection('games').get();
+      const remote = [];
+      snap.forEach(d => { const x = d.data(); try { remote.push({id: x.id, record: JSON.parse(x.record)}); } catch (_) { /* skip a bad row */ } });
+      const ids = new Set(remote.map(g => g.id));
+      games = remote.concat(games.filter(g => !ids.has(g.id)));
+      showBest();
+    } catch (_) { /* offline or not signed in: local copy only */ }
+  }
+
+  // ---------- settings ----------
+  const settingsKey = s => [s.poolSize, s.poolStart, s.fallOdds, s.slideTrigger, s.slideAmount, s.pacing].join('/');
+  const DEFAULT_KEY = settingsKey(E.defaultSettings());
+  let settings = E.defaultSettings();
+
+  const SETTING_UI = [
+    {key: 'poolSize', label: 'How many values fall', opts: [[4, '4'], [5, '5'], [6, '6'], [7, '7']]},
+    {key: 'poolStart', label: 'Smallest value at the start', opts: [[2, '2'], [4, '4'], [8, '8']]},
+    {key: 'fallOdds', label: 'How often each value falls', opts: [['halving', 'Small ones more'], ['equal', 'All the same']]},
+    {key: 'slideTrigger', label: 'What makes you climb', opts: [['tile', 'Tile made'], ['score', 'Score'], ['moves', 'Moves']]},
+    {key: 'pacing', label: 'Pacing', opts: [['steady', 'Steady'], ['speeds-up', 'Speeds up'], ['slows-down', 'Slows down']],
+      hint: {steady: 'Each climb needs the same step', 'speeds-up': 'Climbs come faster', 'slows-down': 'Climbs come slower'}},
+  ];
+  const AMOUNT = {tile: ['Make a tile', 'times the biggest falling value'], score: ['First climb at', 'points'], moves: ['Climb every', 'moves']};
+
+  function renderSettings() {
+    const box = $('settings');
+    box.textContent = '';
+    for (const s of SETTING_UI) {
+      const wrap = document.createElement('div');
+      wrap.className = 'setting';
+      const label = document.createElement('span');
+      label.textContent = s.label;
+      const seg = document.createElement('div');
+      seg.className = 'seg';
+      seg.setAttribute('role', 'group');
+      seg.setAttribute('aria-label', s.label);
+      for (const [val, text] of s.opts) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.id = `set-${s.key}-${val}`;
+        b.textContent = text;
+        b.setAttribute('aria-pressed', String(settings[s.key] === val));
+        b.onclick = () => {
+          settings = {...settings, [s.key]: val};
+          if (s.key === 'slideTrigger' || s.key === 'poolStart') settings.slideAmount = E.defaultSlideAmount(settings.slideTrigger, settings.poolStart);
+          renderSettings(); showBest();
+        };
+        seg.append(b);
+      }
+      wrap.append(label, seg);
+      if (s.hint) { const h = document.createElement('span'); h.className = 'hint'; h.textContent = s.hint[settings[s.key]]; wrap.append(h); }
+      if (s.key === 'slideTrigger') {
+        const [before, after] = AMOUNT[settings.slideTrigger];
+        const row = document.createElement('label');
+        row.className = 'amount';
+        const input = document.createElement('input');
+        input.id = 'set-amount';
+        input.type = 'number';
+        input.inputMode = 'numeric';
+        input.value = settings.slideAmount;
+        input.onchange = () => { settings = {...settings, slideAmount: Number(input.value)}; checkSettings(); showBest(); };
+        row.append(before + ' ', input, ' ' + after);
+        wrap.append(row);
+      }
+      box.append(wrap);
+    }
+    const reset = document.createElement('button');
+    reset.className = 'link'; reset.type = 'button'; reset.textContent = 'Back to the usual settings';
+    reset.onclick = () => { settings = E.defaultSettings(); renderSettings(); showBest(); };
+    box.append(reset);
+    checkSettings();
+  }
+
+  function checkSettings() {
+    try { E.normalizeSettings(settings); $('settingsErr').hidden = true; $('play').disabled = false; return true; }
+    catch (e) { $('settingsErr').textContent = e.message; $('settingsErr').hidden = false; $('play').disabled = true; return false; }
+  }
+
+  function bestFor(key) {
+    let best = 0;
+    for (const g of games) if (g.record && g.record.result && settingsKey(g.record.settings) === key) best = Math.max(best, g.record.result.climbs);
+    return best;
+  }
+  function showBest() {
+    let key = DEFAULT_KEY;
+    try { key = settingsKey(E.normalizeSettings(settings)); } catch (_) { /* keep default */ }
+    const b = bestFor(key);
+    $('best').innerHTML = '';
+    $('best').append('Your best: ', Object.assign(document.createElement('b'), {textContent: b}), ` climb${b === 1 ? '' : 's'}${key === DEFAULT_KEY ? '' : ' with these settings'}`);
+    const done = games.filter(g => g.record && g.record.result).length;
+    $('saved').textContent = done ? `${done} game${done === 1 ? '' : 's'} saved` : '';
+  }
+
+  // ---------- game ----------
+  let session = null;
+  let gameId = null;
+  let chain = [];
+  let flashUntil = 0;
+  let flashText = '';
+  let quitArmed = null;
+
+  function newId() { return `climb-${Date.now().toString(36)}-${Math.floor(Math.random() * 1e6).toString(36)}`; }
+
+  function startGame() {
+    if (!checkSettings()) return;
+    const s = E.normalizeSettings(settings);
+    const seed = (Math.random() * 4294967296) >>> 0;
+    session = E.createSession(s, seed);
+    gameId = newId();
+    chain = [];
+    flashUntil = 0;
+    $('start').hidden = true; $('game').hidden = false; $('end').hidden = true;
+    $('setLine').textContent = settingsKey(s) === DEFAULT_KEY ? 'Usual settings' : 'Your settings';
+    render();
+    if (session.state.over) endGame();
+  }
+
+  function climbText(st) {
+    const g = st.slideGoal;
+    if (g.kind === 'tile') return `Next climb: make a ${fmt(E.tileNeeded(st))}`;
+    if (g.kind === 'score') return `Next climb at ${fmt(g.at)} points`;
+    const left = g.at - st.moves;
+    return `Next climb in ${left} move${left === 1 ? '' : 's'}`;
+  }
+
+  function chainValues() { return chain.map(([c, r]) => session.state.board[r][c].v); }
+
+  function render() {
+    const st = session.state;
+    $('climbs').textContent = st.slides;
+    $('climbWord').textContent = st.slides === 1 ? 'climb' : 'climbs';
+    $('score').textContent = fmt(st.score);
+    $('moves').textContent = st.moves;
+    const fall = $('falling');
+    fall.textContent = '';
+    for (const v of E.poolValues(st)) {
+      const i = document.createElement('i'); const look = tileLook(v);
+      i.style.background = look.bg; i.style.color = look.fg; i.textContent = short(v); fall.append(i);
+    }
+    const flashing = Date.now() < flashUntil;
+    $('status').classList.toggle('flash', flashing);
+    $('msg').textContent = flashing ? flashText : climbText(st);
+
+    const board = $('board');
+    board.textContent = '';
+    const order = new Map(chain.map(([c, r], i) => [c * 100 + r, i]));
+    for (let r = 0; r < E.FIXED.height; r++) {
+      for (let c = 0; c < E.FIXED.width; c++) {
+        const cell = st.board[r][c];
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'cell';
+        b.dataset.c = c; b.dataset.r = r;
+        if (cell.stone) {
+          b.classList.add('stone'); b.setAttribute('aria-label', 'Stone'); b.disabled = true;
+        } else {
+          const look = tileLook(cell.v);
+          b.style.background = look.bg; b.style.color = look.fg;
+          if (look.heavy) b.style.outline = `3px double ${look.fg}`;
+          b.textContent = short(cell.v);
+          const stranded = cell.v < st.poolBottom;
+          if (stranded) b.classList.add('stranded');
+          if (cell.risk) b.classList.add('risk');
+          b.setAttribute('aria-label', `${cell.v}${cell.risk ? ', turns to stone next move unless it can merge' : stranded ? ', no longer falls' : ''}`);
+          const k = c * 100 + r;
+          if (order.has(k)) {
+            b.classList.add('sel');
+            if (order.get(k) === chain.length - 1 && chain.length >= 2) b.classList.add('last');
+            const o = document.createElement('span'); o.className = 'ord'; o.textContent = order.get(k) + 1; b.append(o);
+          }
+        }
+        board.append(b);
+      }
+    }
+    const vals = chain.length ? chainValues() : [];
+    if (vals.length >= 2) {
+      const sum = vals.reduce((a, b) => a + b, 0); const bonus = E.chainBonus(vals.length);
+      $('chain').textContent = `${vals.map(fmt).join(' + ')} = ${fmt(sum)}${bonus > 1 ? `  ×${bonus}` : ''}  → +${fmt(Math.floor(sum * bonus))}`;
+    } else $('chain').textContent = vals.length === 1 ? 'Tap a touching tile with the same number' : '';
+    $('merge').disabled = vals.length < 2;
+    $('undo').disabled = !session.canUndo;
+    $('newgame').textContent = quitArmed ? 'Tap again to quit this game' : 'New game';
+  }
+
+  function tap(c, r) {
+    if (!session || session.state.over) return;
+    const st = session.state;
+    const cell = st.board[r][c];
+    if (!cell || cell.stone) return;
+    const idx = chain.findIndex(p => p[0] === c && p[1] === r);
+    if (idx !== -1) {
+      if (idx === chain.length - 1 && chain.length >= 2) return submit();
+      if (idx === chain.length - 2) chain.pop();
+      else if (chain.length === 1) chain = [];
+      return render();
+    }
+    if (!chain.length) { chain = [[c, r]]; return render(); }
+    const next = chain.concat([[c, r]]);
+    if (E.chainError(st, next) === null) chain = next;
+    else if (chain.length === 1) chain = [[c, r]];
+    render();
+  }
+
+  function submit() {
+    if (chain.length < 2 || E.chainError(session.state, chain) !== null) return;
+    const ev = session.move(chain);
+    chain = [];
+    if (ev.slid) { flashText = `Climbed! ${fmt(ev.slid.stopped)}s stopped falling, ${fmt(ev.slid.started)}s start.`; flashUntil = Date.now() + 2200; setTimeout(render, 2300); }
+    else if (ev.stoned.length) { flashText = `${ev.stoned.length} tile${ev.stoned.length === 1 ? '' : 's'} turned to stone.`; flashUntil = Date.now() + 2000; setTimeout(render, 2100); }
+    render();
+    if (session.state.over) endGame();
+  }
+
+  async function endGame() {
+    const st = session.state;
+    const key = settingsKey(st.settings);
+    const before = bestFor(key);
+    $('endClimbs').textContent = st.slides;
+    $('endBest').textContent = st.slides > before ? 'New best' : `Best: ${before}`;
+    $('endScore').textContent = fmt(st.score);
+    $('endMoves').textContent = st.moves;
+    $('endTile').textContent = fmt(st.bestTile);
+    $('endStones').textContent = st.stones;
+    $('endUndo').disabled = !session.canUndo;
+    $('end').hidden = false;
+    $('endSaved').textContent = 'Saving…';
+    $('endSaved').textContent = await saveGame(gameId, session.snapshot('no-chains'));
+    showBest();
+  }
+
+  function undo() {
+    if (!session || !session.undo()) return;
+    chain = [];
+    $('end').hidden = true;
+    render();
+  }
+
+  async function quit() {
+    if (!quitArmed) { quitArmed = setTimeout(() => { quitArmed = null; render(); }, 3000); return render(); }
+    clearTimeout(quitArmed); quitArmed = null;
+    if (session && session.state.moves > 0 && !session.state.over) await saveGame(gameId, session.snapshot('quit'));
+    goStart();
+  }
+
+  function goStart() { $('game').hidden = true; $('start').hidden = false; renderSettings(); showBest(); }
+
+  async function exportGames() {
+    const data = JSON.stringify({format: 'climb-export', engine: E.ENGINE_VERSION, games: games.map(g => g.record)}, null, 1);
+    try {
+      const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+      if (!dl) { $('saved').textContent = 'Export is not available here'; return; }
+      await dl.save({filename: `climb-games-${new Date().toISOString().slice(0, 10)}.json`, data: new Blob([data], {type: 'application/json'})});
+    } catch (_) { $('saved').textContent = 'Export did not finish'; }
+  }
+
+  $('board').addEventListener('click', e => { const b = e.target.closest('.cell'); if (b) tap(Number(b.dataset.c), Number(b.dataset.r)); });
+  $('merge').onclick = submit;
+  $('undo').onclick = undo;
+  $('endUndo').onclick = undo;
+  $('again').onclick = startGame;
+  $('change').onclick = goStart;
+  $('play').onclick = startGame;
+  $('newgame').onclick = quit;
+  $('export').onclick = exportGames;
+
+  renderSettings();
+  showBest();
+  loadGames();
+})();
+</script>

@@ -1,0 +1,22 @@
+[
+  {
+    "player": "random",
+    "games": 200,
+    "neverEnded": 0,
+    "moves": "moves: median 43, 10%-90% 28-60, max 87",
+    "climbs": "climbs: median 0, 10%-90% 0-0, max 1",
+    "stones": "stones: median 0, 10%-90% 0-0, max 2",
+    "oddTiles": "oddTiles: median 17, 10%-90% 14-20, max 22",
+    "msPerGame": 2.9
+  },
+  {
+    "player": "greedy (longest chain)",
+    "games": 100,
+    "neverEnded": 0,
+    "moves": "moves: median 33, 10%-90% 27-43, max 57",
+    "climbs": "climbs: median 0, 10%-90% 0-0, max 1",
+    "stones": "stones: median 0, 10%-90% 0-0, max 2",
+    "oddTiles": "oddTiles: median 21, 10%-90% 18-25, max 27",
+    "msPerGame": 30
+  }
+]
