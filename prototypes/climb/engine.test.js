@@ -42,9 +42,13 @@ test('settings: defaults, per-trigger amounts, and bad values refused', () => {
 });
 
 test('pool: halving odds match the plan, and 100,000 draws land within 1 point', () => {
-  const odds = E.fallOdds(E.normalizeSettings());
+  const odds = E.fallOdds(E.normalizeSettings({fallOdds: 'halving'}));
   assert.deepEqual(odds.map(x => Math.round(x * 100)), [52, 26, 13, 6, 3]);
-  for (const settings of [{}, {fallOdds: 'equal', poolSize: 7, poolStart: 4}]) {
+  const pct = f => E.fallOdds(E.normalizeSettings({fallOdds: f})).map(x => Math.round(x * 100));
+  assert.deepEqual(pct('gentle'), [33, 27, 20, 13, 7]);
+  assert.deepEqual(pct('soft'), [33, 25, 18, 14, 10]);
+  assert.deepEqual(pct('equal'), [20, 20, 20, 20, 20]);
+  for (const settings of [{fallOdds: 'halving'}, {fallOdds: 'gentle', poolSize: 6}, {fallOdds: 'soft'}, {fallOdds: 'equal', poolSize: 7, poolStart: 4}]) {
     const state = E.newGame(settings, 7);
     const want = E.fallOdds(state.settings);
     const pool = E.poolValues(state);
@@ -255,7 +259,7 @@ test('undo restores everything exactly, and the same move then gives the same ti
 test('replay: 50 random games with undos replay to the identical board and score', () => {
   for (let g = 0; g < 50; g++) {
     const settings = {
-      poolSize: 4 + (g % 4), poolStart: [2, 4, 8][g % 3], fallOdds: g % 2 ? 'equal' : 'halving',
+      poolSize: 4 + (g % 4), poolStart: [2, 4, 8][g % 3], fallOdds: ['halving', 'soft', 'gentle', 'equal'][g % 4],
       slideTrigger: ['tile', 'score', 'moves'][(g >> 1) % 3], pacing: ['steady', 'speeds-up', 'slows-down'][(g >> 2) % 3],
     };
     const {session} = playRandomGame(settings, 10000 + g, {undoEvery: 7});
@@ -308,7 +312,7 @@ test('bot views: fair hides the seed and needs its own randomness; future-seeing
 test('same result everywhere: a fixed game has a frozen fingerprint', () => {
   // Integer-only random numbers and exact sums. If this changes, saved games
   // from the phone no longer replay; bump ENGINE_VERSION instead.
-  const {session} = playRandomGame({}, 2248, {});
+  const {session} = playRandomGame({fallOdds: 'halving'}, 2248, {});
   assert.equal(E.fingerprint(session.state), GOLDEN.fp);
   assert.equal(session.state.score, GOLDEN.score);
 });
