@@ -21,6 +21,14 @@ makes no claim about any bot.
   and the defaults check. They are not the bots evan will choose.
 - `check-defaults.js`: choice G. `node prototypes/climb/check-defaults.js 200`.
   `check-defaults.out.json` holds the run made for the first PR.
+- `playout.js`: the play-out player (flat Monte Carlo). For each of up to 12
+  chains (the 8 best by points plus 4 random) it plays `plays` quick random
+  games to the end on its own random tiles and picks the chain whose games
+  scored most. It is fair: it never sees the seed. `playout.test.js` checks
+  that and that it only picks legal chains.
+- `odds-sweep.js`: plays it on every fall-odds and pool-size setting across
+  all cores. `node prototypes/climb/odds-sweep.js out.jsonl 30 8 32` made
+  `odds-sweep.out.jsonl` (30 seeds, strengths 8 and 32 play-outs, 960 games).
 - `page.html`: the phone page source. `node prototypes/climb/build.js out.html` inlines `engine.js` into one file for the Artifact (a script file published next to the page did not load reliably). Finished and
   quit games are saved to the page's database (collection `games`, the record
   is a JSON string in `record`) and to the phone's own storage as a backup.
