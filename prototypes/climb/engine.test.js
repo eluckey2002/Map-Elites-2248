@@ -26,7 +26,7 @@ function stateFrom(rows, overrides) {
 
 test('settings: defaults, per-trigger amounts, and bad values refused', () => {
   const d = E.normalizeSettings();
-  assert.deepEqual(d, {version: 1, poolSize: 5, poolStart: 2, fallOdds: 'halving', slideTrigger: 'tile', slideAmount: 8, pacing: 'steady'});
+  assert.deepEqual(d, {version: 1, poolSize: 5, poolStart: 2, fallOdds: 'equal', slideTrigger: 'tile', slideAmount: 8, pacing: 'steady'});
   assert.equal(E.normalizeSettings({slideTrigger: 'score'}).slideAmount, 1000);
   assert.equal(E.normalizeSettings({slideTrigger: 'score', poolStart: 4}).slideAmount, 2000);
   assert.equal(E.normalizeSettings({slideTrigger: 'score', poolStart: 8}).slideAmount, 4000);

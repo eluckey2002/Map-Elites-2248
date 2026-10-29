@@ -44,7 +44,7 @@
       version: SETTINGS_VERSION,
       poolSize: 5,
       poolStart: 2,
-      fallOdds: 'halving',
+      fallOdds: 'equal',
       slideTrigger: 'tile',
       slideAmount: 8,
       pacing: 'steady',
