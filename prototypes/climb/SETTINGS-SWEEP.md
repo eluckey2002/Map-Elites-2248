@@ -2,6 +2,8 @@
 
 Four fair bots (play-outs and look-ahead, each weak and strong) played 100 games on the usual settings and on each single change from them: 6,000 games. Every setting used the same 100 seeds, so each game is compared with the same seed on the usual settings. No game hit the 3,000-move cap.
 
+These are observations of these 6,000 bot games only. There was no registered protocol and there is no ledger record, so nothing here is a claim about human play or about other seeds.
+
 Each cell is the median game length (in brackets: the average change against the same seeds on the usual settings) and the median best tile (highest power of 2).
 
 | Setting | Play-outs weak | Play-outs strong | Look-ahead weak | Look-ahead strong |
@@ -22,7 +24,7 @@ Each cell is the median game length (in brackets: the average change against the
 | Pacing: slows down | 68 moves (+8), 1K | 85.5 moves (+14), 2K | 48 moves (+3), 768 | 75 moves (+19), 2K |
 | evan's settings (pool 7 from 8) | 57 moves (+2), 8K | 70 moves (-2), 32K | 48 moves (-0), 8K | 61 moves (+5), 32K |
 
-## What changes the game
+## What these games show
 
 1. **Fall odds is the biggest dial for game length.** Moving away from Equal makes games longer and best tiles much smaller. Halving adds about 17 to 39 moves, and the best tile drops to 256 to 512.
 2. **When the pool climbs is the second.** Climbing at 4x the top tile instead of 8x cuts 12 to 19 moves and makes much bigger tiles. Climbing on score also shortens games. Pacing "speeds up" shortens them and "slows down" lengthens them.
@@ -31,6 +33,6 @@ Each cell is the median game length (in brackets: the average change against the
 
 ## Where the bots disagree
 
-All four bots move the same way on fall odds, climb-at-4x, climb on score and both pacing settings. They disagree on "climb on moves" and on pool 6 and 7 (the strong bots get longer games, the weak look-ahead shorter), so those effects are small and depend on how well you play.
+All four bots move the same way on fall odds, climb-at-4x, climb on score and both pacing settings. They disagree on "climb on moves" and on pool 6 and 7 (the strong bots get longer games, the weak look-ahead shorter), so in these games those effects are small and differ by bot.
 
 Raw games: `settings-sweep.jsonl` (one line per game). Rerun: `node settings-sweep.js out.jsonl 100`.

@@ -104,8 +104,17 @@ console.log(`${jobs.length} games to play`);
 let left = jobs.length;
 for (let w = 0; w < Math.min(os.cpus().length, jobs.length); w++) {
   const child = fork(__filename, ['--worker']);
-  const next = () => child.send(jobs.shift() || null);
+  let current = null;
+  const next = () => child.send((current = jobs.shift() || null));
+  // A worker that dies mid-game loses that game: say so and exit non-zero,
+  // so a rerun (which skips finished games) fills the gap.
+  child.on('exit', code => {
+    if (!current) return;
+    console.error(`Worker stopped (code ${code}) during ${current.variant}|${current.bot}|${current.seed}; rerun to finish`);
+    process.exitCode = 1;
+  });
   child.on('message', g => {
+    current = null;
     fs.appendFileSync(out, JSON.stringify(g) + '\n');
     if (--left % 50 === 0) console.log(`${left} left`);
     next();
