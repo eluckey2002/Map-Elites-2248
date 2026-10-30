@@ -41,6 +41,13 @@ makes no claim about any bot.
   in `weights.bin.json`) every 5 min,
   and carries on from them if rerun. Training boards use seeds from 1,000,000
   so they never overlap the check boards (seeds 1 to 100).
+- `td6.js` / `train-td6.js`: the larger self-taught player (6-square tables,
+  each entry learning at its own pace), trained the same way into
+  `model.bin`; training seeds from 100,000,000. `td6.test.js` checks it.
+  `td6.leaf(w)` plugs its learned score into `lookaheadChooser` (`leaf`
+  option) in place of play-outs.
+- `check-bot.js`: plays one check board with the 3-deep look-ahead or the
+  6-square bots. Results: [`STEP2-6SQUARE.md`](STEP2-6SQUARE.md).
 - `page.html`: the phone page source. `node prototypes/climb/build.js out.html` inlines `engine.js` into one file for the Artifact (a script file published next to the page did not load reliably). Finished and
   quit games are saved to the page's database (collection `games`, the record
   is a JSON string in `record`) and to the phone's own storage as a backup.
