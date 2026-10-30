@@ -25,6 +25,8 @@ const VARIANTS = {
   'climb-at-4x': {slideAmount: 4},
   'pacing-speeds-up': {pacing: 'speeds-up'},
   'pacing-slows-down': {pacing: 'slows-down'},
+  // The settings evan plays (2026-10-30): equal odds, 7 values from 8 to 512.
+  'evan-pool-7-start-8': {poolSize: 7, poolStart: 8},
 };
 
 // Two kinds of bot, each at two strengths. Both are fair.
