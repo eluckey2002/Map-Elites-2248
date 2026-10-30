@@ -29,6 +29,15 @@ makes no claim about any bot.
 - `odds-sweep.js`: plays it on every fall-odds and pool-size setting across
   all cores. `node prototypes/climb/odds-sweep.js out.jsonl 30 8 32` made
   `odds-sweep.out.jsonl` (30 seeds, strengths 8 and 32 play-outs, 960 games).
+- `td.js`: the self-taught player (TD(0) learning on after-move boards with
+  an n-tuple network). It learns a board score by playing itself; no
+  hand-written strategy. `td.test.js` checks fairness, the after-move board,
+  the tile tokens, that learning changes the tables, and legal play.
+- `train-td.js`: trains it on every core (shared tables, no locks) on evan's
+  usual settings. `node prototypes/climb/train-td.js outDir minutes [threads]
+  [alpha]` writes `progress.jsonl` every 30 s and `weights.bin` every 5 min,
+  and carries on from them if rerun. Training boards use seeds from 1,000,000
+  so they never overlap the check boards (seeds 1 to 100).
 - `page.html`: the phone page source. `node prototypes/climb/build.js out.html` inlines `engine.js` into one file for the Artifact (a script file published next to the page did not load reliably). Finished and
   quit games are saved to the page's database (collection `games`, the record
   is a JSON string in `record`) and to the phone's own storage as a backup.
