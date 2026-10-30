@@ -50,8 +50,16 @@ if (process.argv[2] === '--worker') {
   process.on('message', job => {
     if (!job) return process.exit(0);
     const t0 = Date.now();
-    const {state, capped} = playRandomGame(VARIANTS[job.variant], job.seed, {chooser: chooserFor(BOTS[job.bot]), maxMoves: 3000});
-    process.send({...job, ...E.summary(state), capped, ms: Date.now() - t0});
+    // Best tile counts powers of 2 only (evan, 2026-10-30): an odd sum such
+    // as 9,437,184 is not a tile anyone is aiming for.
+    const pow2 = v => (v > 0 && Number.isInteger(Math.log2(v)) ? v : 0);
+    let bestPow2 = 0;
+    for (const row of E.newGame(VARIANTS[job.variant], job.seed).board) for (const cell of row) if (cell) bestPow2 = Math.max(bestPow2, pow2(cell.v));
+    const onMove = (before, after, events) => {
+      bestPow2 = Math.max(bestPow2, pow2(events.sum), ...events.dropped.map(d => pow2(d[2])));
+    };
+    const {state, capped} = playRandomGame(VARIANTS[job.variant], job.seed, {chooser: chooserFor(BOTS[job.bot]), maxMoves: 3000, onMove});
+    process.send({...job, ...E.summary(state), bestPow2, capped, ms: Date.now() - t0});
   });
   return;
 }
