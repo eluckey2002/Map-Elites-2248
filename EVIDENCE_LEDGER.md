@@ -1925,3 +1925,20 @@ The proof track is parked, not closed. It resumes from the unresolved **12,336�
 - **written_by:** claude, project thread "Build the Climb game", branch claude/climb-td-bot
 - **checked_by:** pending
 - **notes:** Provisional, not self-accepted. Not a heuristic claim about self-taught methods in general: the run used one representation (58 four-square tuples), one learning rate and one seed range. The owner chose the pilot (about $1) on 2026-10-30 and then chose to build the combined player during the run.
+
+### RESULT-0087 — Climb: look-ahead 3 deep beats the 2-deep bot on most of 100 paired boards; the 6-square self-taught learner does not, alone or as a look-ahead leaf
+
+- **type:** result
+- **status:** provisional
+- **scope:** the Climb prototype (`prototypes/climb/`), evan's usual settings (7 values from 8, Equal odds); check seeds 1–100, each bot played once, paired by seed with the `lookahead-strong` games in `settings-sweep.jsonl` (variant `evan-pool-7-start-8`). Bots: `la3` (`lookaheadChooser` depth 3, widths 8/6/4, samples 4/2, 2 play-outs per leaf); `td6` (the 6-square learner after one `train-td6.js` run: 32-core Google Spot machine, 2026-10-30 17:55–20:46 UTC, alpha 1, 1,858,796 self-play games on seeds from 100,000,000); `td6-la3` (the `la3` search with the learned score as its leaf instead of play-outs)
+- **statement:** On these 100 boards, by highest power-of-2 tile reached: `la3` had median 131072 (72.5 moves) and beat the reference tile on 70 boards, lost on 22, tied 8 (its highest, 16777216); `td6` had median 4096 (51.5 moves), 4 higher / 87 lower / 9 same; `td6-la3` had median 4096 (53 moves), 12 / 79 / 9 (highest 65536); the reference had median 32768 (62 moves). During training the median game length rose from 25 to about 48 moves in the first 80 minutes and then stayed near 50; the median best tile of recent training games stayed 4096. These are the recorded games only; nothing is claimed about other settings, other search widths, longer training, or human play.
+- **evidence:** games [step2-checks.jsonl](prototypes/climb/step2-checks.jsonl) (SHA-256 `39fc632ec1eb5379eea413098dafa78f806e0f6e182f0634415495e63fc1d96c`), training log [td6-training.jsonl](prototypes/climb/td6-training.jsonl) (SHA-256 `8225da845c3fbe2b2e11488261ef3fa5344a05df1286b7d937f2cc579cb0c247`), report [STEP2-6SQUARE.md](prototypes/climb/STEP2-6SQUARE.md), reference games `prototypes/climb/settings-sweep.jsonl` (SHA-256 `beb777e6cd1022d4f1cbcbd1b2b268d5d88092d9e0479bac9660a589e561a7c6`); trained model `gs://ai-lab-compute-2248-results/climb-td/td6-run1/model.bin` (SHA-256 `66a8661d497ef866da357ad7aacaca67bcc888b826a1ecd670c417f5b1ec5912`, owner's Google Cloud project, not in git)
+- **proof_class:** `direct_source` for the recorded check games and their paired counts against the recorded reference games
+- **as_of:** 2026-10-30
+- **reverify:** Recount from the two JSONL files: for each bot in `step2-checks.jsonl`, take the median of `bestPow2` and `moves` and compare `bestPow2` seed by seed with the `lookahead-strong` rows of `settings-sweep.jsonl` whose variant is `evan-pool-7-start-8`; expect the counts above. `node prototypes/climb/check-bot.js <bot> <seed> [model.bin]` replays a row (the players and the game are seeded); training itself is not reproducible (lock-free shared updates).
+- **updated:** 2026-10-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude, project thread "Build the Climb game", branch claude/climb-td6
+- **checked_by:** pending
+- **notes:** Provisional, not self-accepted. Not a heuristic claim about search depth or self-taught methods in general: one search setting, one representation (38 six-square tuples), one learning rate, one training run. The owner set the goal (strongest bots) and chose "look-ahead first, then the paper's recipe" on 2026-10-30. Follows RESULT-0086.

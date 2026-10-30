@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Climb strongest bot, steps 1 and 2 — 2026-10-30
+
+The owner's goal is the strongest Climb bots. He chose deeper look-ahead first, then the paper-style self-taught learner. [RESULT-0087](EVIDENCE_LEDGER.md#result-0087--climb-look-ahead-3-deep-beats-the-2-deep-bot-on-most-of-100-paired-boards-the-6-square-self-taught-learner-does-not-alone-or-as-a-look-ahead-leaf) (provisional) records both checks: look-ahead 3 deep is the strongest bot so far; the 6-square learner did not beat the 2-deep bot, alone or as a look-ahead leaf. Code and report: `prototypes/climb/td6.js`, `train-td6.js`, `check-bot.js`, [`STEP2-6SQUARE.md`](prototypes/climb/STEP2-6SQUARE.md). Every run goes on the progress page (https://claude.ai/artifact/Nicxxqmiqo56WcSazAQ1LZ). Open: the owner's pick of a next step (deeper look-ahead, learning from the look-ahead's games, much longer self-play, or pause).
+
 ## Climb self-taught bot pilot — 2026-10-30
 
 The owner approved a small pilot: train a self-taught Climb player (learned board score, self-play) on Google Cloud on his usual settings and check it against the look-ahead bot. [RESULT-0086](EVIDENCE_LEDGER.md#result-0086--climb-self-taught-pilot-neither-self-taught-player-beats-the-look-ahead-bot-on-100-paired-boards) (provisional) records the check; neither the self-taught player nor it combined with a short look-ahead beat the look-ahead bot on those boards. Code and report: `prototypes/climb/td.js`, `train-td.js`, [`TD-PILOT.md`](prototypes/climb/TD-PILOT.md). Progress page: https://claude.ai/artifact/Nicxxqmiqo56WcSazAQ1LZ. Open: the owner's pick of a next step (a bigger board view, learning from the look-ahead bot, or stop).
