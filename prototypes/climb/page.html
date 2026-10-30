@@ -190,6 +190,8 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
   let games = readLocal();
 
   const pending = new Map();
+  const latest = new Map();
+  const sent = new WeakSet();
   async function saveGame(id, record) {
     const row = {id, record};
     games = games.filter(g => g.id !== id).concat([row]);
@@ -199,16 +201,29 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
       const db = await database();
       if (!db) return local ? 'Saved on this phone' : notSaved;
       // One database write at a time per game, so a slow older save can
-      // never land after a newer one.
-      const write = (pending.get(id) || Promise.resolve()).catch(() => {}).then(() => db.collection('games').doc(id).set({
-        id, date: record.result.date, end: record.result.end, climbs: record.result.climbs,
-        score: record.result.score, moves: record.result.moves, settingsKey: settingsKey(record.settings),
-        engine: record.engine, record: JSON.stringify(record),
-      }));
+      // never land after a newer one. A queued write sends the newest copy
+      // and skips if that copy is already sent, so fast moves don't pile up.
+      latest.set(id, record);
+      const write = (pending.get(id) || Promise.resolve()).catch(() => {}).then(() => {
+        const r = latest.get(id);
+        if (sent.has(r)) return;
+        sent.add(r);
+        return db.collection('games').doc(id).set({
+          id, date: r.result.date, end: r.result.end, climbs: r.result.climbs,
+          score: r.result.score, moves: r.result.moves, settingsKey: settingsKey(r.settings),
+          engine: r.engine, record: JSON.stringify(r),
+        }).catch(e => { sent.delete(r); throw e; });
+      });
       pending.set(id, write);
       await write;
       return 'Saved';
     } catch (_) { return local ? 'Saved on this phone only' : notSaved; }
+  }
+
+  // An unfinished game is saved after every move and undo, and when the page
+  // is hidden, marked "in-progress" until it ends or is quit.
+  function saveProgress() {
+    if (session && session.state.moves > 0 && !session.state.over) saveGame(gameId, session.snapshot('in-progress'));
   }
 
   async function loadGames() {
@@ -440,6 +455,7 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
     else if (ev.stoned.length) { flashText = `${ev.stoned.length} tile${ev.stoned.length === 1 ? '' : 's'} turned to stone.`; flashUntil = Date.now() + 2000; setTimeout(render, 2100); }
     render();
     if (session.state.over) endGame();
+    else saveProgress();
   }
 
   async function endGame() {
@@ -464,6 +480,7 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
     chain = [];
     $('end').hidden = true;
     render();
+    saveProgress();
   }
 
   async function quit() {
@@ -493,6 +510,8 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
   $('play').onclick = startGame;
   $('newgame').onclick = quit;
   $('export').onclick = exportGames;
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveProgress(); });
+  window.addEventListener('pagehide', saveProgress);
 
   renderSettings();
   showBest();
