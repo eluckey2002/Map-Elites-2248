@@ -33,6 +33,8 @@ makes no claim about any bot.
   an n-tuple network). It learns a board score by playing itself; no
   hand-written strategy. `td.test.js` checks fairness, the after-move board,
   the tile tokens, that learning changes the tables, and legal play.
+- `tdLookaheadChooser` in `td.js` adds a short look-ahead: the 8 chains the
+  learned score likes best, 4 imagined drops each, best next chain on each.
 - `train-td.js`: trains it on every core (shared tables, no locks) on evan's
   usual settings. `node prototypes/climb/train-td.js outDir minutes [threads]
   [alpha]` writes `progress.jsonl` every 30 s and `weights.bin` every 5 min,

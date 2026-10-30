@@ -60,3 +60,17 @@ test('self-taught player only picks legal chains and finishes a game', () => {
   }
   assert.ok(session.state.over);
 });
+
+test('learned score with look-ahead is fair and only picks legal chains', () => {
+  const w = td.newWeights(false);
+  for (let g = 0; g < 3; g++) td.trainGame(w, SETTINGS, 700 + g, 0.1);
+  const pick = td.tdLookaheadChooser(w, {width: 3, samples: 2});
+  const a = E.newGame(SETTINGS, 9);
+  assert.deepStrictEqual(pick(a, makeRng(1)), pick({...a, seed: 4242}, makeRng(1)));
+  const session = E.createSession(SETTINGS, 13);
+  for (let n = 0; n < 20 && !session.state.over; n++) {
+    const ch = pick(session.state, makeRng(n));
+    assert.strictEqual(E.chainError(session.state, ch), null);
+    session.move(ch);
+  }
+});

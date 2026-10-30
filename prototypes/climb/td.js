@@ -120,6 +120,43 @@ function tdChooser(weights) {
   return state => choose(weights, hide(state)).ch;
 }
 
+// Learned score plus a short look-ahead. For the `width` chains the learned
+// score likes best now, it imagines `samples` tile drops after each, and on
+// each imagined board takes the best next chain by points plus learned score.
+// A chain is worth its points plus the average of those best follow-ups (a
+// game that ends is worth nothing more). Imagined drops come from its own
+// random numbers, never the seed.
+function tdLookaheadChooser(weights, opts) {
+  const o = {width: 8, samples: 4, ...(opts || {})};
+  const rate = (state, ch) => {
+    const {after, points} = afterMove(state, ch);
+    return points + after.poolBottom * value(weights, indexes(encode(after)));
+  };
+  const bestNext = state => {
+    let best = 0;
+    for (const ch of uniqueChains(state)) best = Math.max(best, rate(state, ch));
+    return best;
+  };
+  return (state, rng) => {
+    const hidden = hide(state);
+    const ranked = uniqueChains(hidden).map(ch => ({ch, v: rate(hidden, ch)})).sort((a, b) => b.v - a.v);
+    if (ranked.length === 1) return ranked[0].ch;
+    let pick = ranked[0];
+    let pickValue = -Infinity;
+    for (const {ch} of ranked.slice(0, o.width)) {
+      const {points} = afterMove(hidden, ch);
+      let total = 0;
+      for (let s = 0; s < o.samples; s++) {
+        const next = E.applyMove(hidden, ch, () => rng()).state;
+        if (!next.over) total += bestNext(next);
+      }
+      const v = points + total / o.samples;
+      if (v > pickValue) { pickValue = v; pick = {ch}; }
+    }
+    return pick.ch;
+  };
+}
+
 // One self-play game with learning. `alpha` is the step per table entry.
 // Returns the finished state.
 function trainGame(weights, settings, seed, alpha, onMove) {
@@ -149,4 +186,4 @@ function trainGame(weights, settings, seed, alpha, onMove) {
   return state;
 }
 
-module.exports = {tdChooser, trainGame, newWeights, choose, afterMove, encode, indexes, value, token, TUPLES, SIZE};
+module.exports = {tdChooser, tdLookaheadChooser, trainGame, newWeights, choose, afterMove, encode, indexes, value, token, TUPLES, SIZE};
