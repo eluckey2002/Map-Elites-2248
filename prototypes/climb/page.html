@@ -221,9 +221,12 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
   }
 
   // An unfinished game is saved after every move and undo, and when the page
-  // is hidden, marked "in-progress" until it ends or is quit.
+  // is hidden, marked "in-progress" until it ends or is quit. A game undone
+  // back to its first board is still saved once it has a row, so the undo
+  // is kept.
   function saveProgress() {
-    if (session && session.state.moves > 0 && !session.state.over) saveGame(gameId, session.snapshot('in-progress'));
+    if (!session || session.state.over) return;
+    if (session.state.moves > 0 || games.some(g => g.id === gameId)) saveGame(gameId, session.snapshot('in-progress'));
   }
 
   async function loadGames() {
@@ -363,6 +366,7 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
   function chainValues() { return chain.map(([c, r]) => session.state.board[r][c].v); }
 
   function render() {
+    if (!session) return;
     const st = session.state;
     $('climbs').textContent = st.slides;
     $('climbWord').textContent = st.slides === 1 ? 'climb' : 'climbs';
@@ -490,7 +494,9 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
     goStart();
   }
 
-  function goStart() { $('game').hidden = true; $('start').hidden = false; renderSettings(); showBest(); }
+  // Leaving the game screen ends this session, so a later page hide can't
+  // overwrite its quit or finished record.
+  function goStart() { session = null; $('game').hidden = true; $('start').hidden = false; renderSettings(); showBest(); }
 
   async function exportGames() {
     const data = JSON.stringify({format: 'climb-export', engine: E.ENGINE_VERSION, games: games.map(g => g.record)}, null, 1);
