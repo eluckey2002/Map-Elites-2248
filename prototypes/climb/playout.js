@@ -62,4 +62,4 @@ function playoutChooser(opts) {
   };
 }
 
-module.exports = {playoutChooser, candidates, hide};
+module.exports = {playoutChooser, candidates, hide, playOut};
