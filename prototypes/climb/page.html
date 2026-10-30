@@ -248,14 +248,16 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
 
   // ---------- settings ----------
   const settingsKey = s => [s.poolSize, s.poolStart, s.fallOdds, s.slideTrigger, s.slideAmount, s.pacing].join('/');
-  const DEFAULT_KEY = settingsKey(E.defaultSettings());
-  let settings = E.defaultSettings();
+  // The usual settings (evan's pick, 2026-10-30): 7 values from 8, Equal odds.
+  const usualSettings = () => E.normalizeSettings({poolSize: 7, poolStart: 8, fallOdds: 'equal'});
+  const DEFAULT_KEY = settingsKey(usualSettings());
+  let settings = usualSettings();
 
   const SETTING_UI = [
     {key: 'poolSize', label: 'How many values fall', opts: [[4, '4'], [5, '5'], [6, '6'], [7, '7']]},
     {key: 'poolStart', label: 'Smallest value at the start', opts: [[2, '2'], [4, '4'], [8, '8']]},
     {key: 'fallOdds', label: 'How often each value falls', opts: [['equal', 'Equal'], ['gentle', 'Gentle'], ['soft', 'Softer'], ['halving', 'Halving']],
-      hint: {gentle: '5 values: 33, 27, 20, 13, 7%', soft: '5 values: 33, 25, 18, 14, 10%', halving: '5 values: 52, 26, 13, 6, 3%', equal: 'Every value equally often (5 values: 20% each)'}},
+      hint: {gentle: '5 values: 33, 27, 20, 13, 7%', soft: '5 values: 33, 25, 18, 14, 10%', halving: '5 values: 52, 26, 13, 6, 3%', equal: 'Every value equally often'}},
     {key: 'slideTrigger', label: 'What makes you climb', opts: [['tile', 'Tile made'], ['score', 'Score'], ['moves', 'Moves']]},
     {key: 'pacing', label: 'Pacing', opts: [['steady', 'Steady'], ['speeds-up', 'Speeds up'], ['slows-down', 'Slows down']],
       hint: {steady: 'Each climb needs the same step', 'speeds-up': 'Climbs come faster', 'slows-down': 'Climbs come slower'}},
@@ -306,7 +308,7 @@ summary { font-weight: 600; cursor: pointer; padding: 4px 0; }
     }
     const reset = document.createElement('button');
     reset.className = 'link'; reset.type = 'button'; reset.textContent = 'Back to the usual settings';
-    reset.onclick = () => { settings = E.defaultSettings(); renderSettings(); showBest(); };
+    reset.onclick = () => { settings = usualSettings(); renderSettings(); showBest(); };
     box.append(reset);
     checkSettings();
   }
