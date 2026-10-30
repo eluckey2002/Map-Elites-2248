@@ -1908,3 +1908,20 @@ The proof track is parked, not closed. It resumes from the unresolved **12,336�
 - **written_by:** claude, discovery-review session 46e9aeda, branch claude/result-0085-squash-registration
 - **checked_by:** pending
 - **notes:** Found by a Lean Discovery Playbook review (OPP-01) on 2026-10-13. Provisional until the owner or another agent checks it. Rejected alternatives: a ledger-only correction (the ordering check runs for every result with a protocol file, whatever its proof class); merging the branch head back into main (git's default history simplification still follows main's first parent to the squash); and rewriting main so its first parent is the branch head (blocked as possible audit tampering and not chosen by the owner).
+
+### RESULT-0086 — Climb self-taught pilot: neither self-taught player beats the look-ahead bot on 100 paired boards
+
+- **type:** result
+- **status:** provisional
+- **scope:** the Climb prototype (`prototypes/climb/`), evan's usual settings (7 values from 8, Equal odds); one training run of `train-td.js` (32-core Google Spot machine, 2026-10-30 15:03–17:03 UTC, alpha 0.1, 899,235 self-play games on seeds from 1,000,000); the finished tables played once on check seeds 1–100 by `tdChooser` and `tdLookaheadChooser`, paired by seed with the `lookahead-strong` games in `settings-sweep.jsonl` (variant `evan-pool-7-start-8`)
+- **statement:** On these 100 boards, by highest power-of-2 tile reached: the self-taught player alone had median 4096 (51 moves) and beat the look-ahead bot's tile on 2 boards, lost on 90, tied 8; the self-taught player with a short look-ahead had median 4096 (68 moves) and beat it on 9, lost on 78, tied 13 (its highest, 65536, on one board); `lookahead-strong` had median 32768 (62 moves). During training the median game length rose from 25 to about 50 moves in the first 20 minutes and then stayed near 50, and the median best tile of recent training games stayed 4096. These are the recorded games only; nothing is claimed about other settings, longer training, other representations, or human play.
+- **evidence:** games [td-pilot.jsonl](prototypes/climb/td-pilot.jsonl) (SHA-256 `819fe56c5e16724cbdd4cdac176e261fa9b43e4ae1c90c50cdaa1bbff33e9860`), report [TD-PILOT.md](prototypes/climb/TD-PILOT.md), reference games `prototypes/climb/settings-sweep.jsonl` (SHA-256 `beb777e6cd1022d4f1cbcbd1b2b268d5d88092d9e0479bac9660a589e561a7c6`); trained tables `gs://ai-lab-compute-2248-results/climb-td/pilot1/weights.bin` (SHA-256 `83f95a99d90bb4fa9130c19e7e61f092c21d33faf2f75a2efda2491b5fe4b2cc`, owner's Google Cloud project, not in git) with its training log (progress.jsonl) in the same bucket folder; pull request #109
+- **proof_class:** `direct_source` for the recorded check games and their paired counts against the recorded reference games
+- **as_of:** 2026-10-30
+- **reverify:** Recount from the two JSONL files: for each bot in `td-pilot.jsonl`, take the median of `bestPow2` and `moves` and compare `bestPow2` seed by seed with the `lookahead-strong` rows of `settings-sweep.jsonl` whose variant is `evan-pool-7-start-8`; expect the counts above. With the weights file, replaying a seed through `playRandomGame` with the same chooser reproduces its row (the players and the game are seeded); training itself is not reproducible (lock-free shared updates).
+- **updated:** 2026-10-30
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude, project thread "Build the Climb game", branch claude/climb-td-bot
+- **checked_by:** pending
+- **notes:** Provisional, not self-accepted. Not a heuristic claim about self-taught methods in general: the run used one representation (58 four-square tuples), one learning rate and one seed range. The owner chose the pilot (about $1) on 2026-10-30 and then chose to build the combined player during the run.

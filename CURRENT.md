@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Climb self-taught bot pilot — 2026-10-30
+
+The owner approved a small pilot: train a self-taught Climb player (learned board score, self-play) on Google Cloud on his usual settings and check it against the look-ahead bot. [RESULT-0086](EVIDENCE_LEDGER.md#result-0086--climb-self-taught-pilot-neither-self-taught-player-beats-the-look-ahead-bot-on-100-paired-boards) (provisional) records the check; neither the self-taught player nor it combined with a short look-ahead beat the look-ahead bot on those boards. Code and report: `prototypes/climb/td.js`, `train-td.js`, [`TD-PILOT.md`](prototypes/climb/TD-PILOT.md). Progress page: https://claude.ai/artifact/Nicxxqmiqo56WcSazAQ1LZ. Open: the owner's pick of a next step (a bigger board view, learning from the look-ahead bot, or stop).
+
 ## Classic levels 59-70 — 2026-10-27
 
 The owner asked for levels past 58 in the classic game. Twelve ship in `src/more-levels.js` (59-60 finish tile scale 32, 61-70 are tile scale 64), loaded after `src/game.js`, which is unchanged because its level list is frozen game-rule surface. Targets use the 51-58 rule; measurements and the reasons are in [`LEVELS-59-70.md`](docs/game-design/levels/receipts/LEVELS-59-70.md). Phone test page: https://claude.ai/artifact/MsZvBzfD8Fh2Dhy3Km7j7K. The same change moves the chain readout below the board (it covered the bottom row) and makes it read `Sum N · Score +M`; browser-only, `HUMAN-PILOT-0002` re-derived, replay unchanged. Open: owner play. No ledger record; bot win rates are not a difficulty claim for people.
