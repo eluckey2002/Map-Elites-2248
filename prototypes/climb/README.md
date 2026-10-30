@@ -37,7 +37,8 @@ makes no claim about any bot.
   learned score likes best, 4 imagined drops each, best next chain on each.
 - `train-td.js`: trains it on every core (shared tables, no locks) on evan's
   usual settings. `node prototypes/climb/train-td.js outDir minutes [threads]
-  [alpha]` writes `progress.jsonl` every 30 s and `weights.bin` every 5 min,
+  [alpha]` writes `progress.jsonl` every 30 s and `weights.bin` (with its game count
+  in `weights.bin.json`) every 5 min,
   and carries on from them if rerun. Training boards use seeds from 1,000,000
   so they never overlap the check boards (seeds 1 to 100).
 - `page.html`: the phone page source. `node prototypes/climb/build.js out.html` inlines `engine.js` into one file for the Artifact (a script file published next to the page did not load reliably). Finished and

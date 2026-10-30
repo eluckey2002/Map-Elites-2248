@@ -44,17 +44,22 @@ if (isMainThread) {
   const weights = td.newWeights(true);
   let games = 0;
   let seconds = 0;
+  // The game and time counters are saved beside the tables they belong to,
+  // so a run stopped between saves carries on from the saved tables' counts.
+  const mPath = wPath + '.json';
   if (fs.existsSync(wPath)) {
     weights.set(new Float32Array(fs.readFileSync(wPath).buffer.slice(0)));
-    const lines = fs.existsSync(pPath) ? fs.readFileSync(pPath, 'utf8').trim().split('\n').filter(Boolean) : [];
-    if (lines.length) ({games, seconds} = JSON.parse(lines[lines.length - 1]));
+    if (fs.existsSync(mPath)) ({games, seconds} = JSON.parse(fs.readFileSync(mPath, 'utf8')));
   }
-  const save = () => {
-    fs.writeFileSync(wPath + '.tmp', Buffer.from(weights.buffer));
-    fs.renameSync(wPath + '.tmp', wPath);
-  };
   const recent = [];
   const t0 = Date.now();
+  const save = () => {
+    const meta = JSON.stringify({games, seconds: seconds + Math.round((Date.now() - t0) / 1000)});
+    fs.writeFileSync(wPath + '.tmp', Buffer.from(weights.buffer));
+    fs.writeFileSync(mPath + '.tmp', meta);
+    fs.renameSync(wPath + '.tmp', wPath);
+    fs.renameSync(mPath + '.tmp', mPath);
+  };
   const startGames = games;
   const workers = [];
   for (let id = 0; id < threads; id++) {
