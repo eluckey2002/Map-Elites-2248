@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Climb strongest bot, round 3 — 2026-10-31
+
+The owner chose both a deeper look-ahead and the staged self-taught learner trained from strong-bot boards. [RESULT-0088](EVIDENCE_LEDGER.md#result-0088--climb-look-ahead-4-deep-beats-look-ahead-3-deep-on-60-of-100-paired-boards-the-staged-self-taught-learner-trained-from-strong-bot-boards-does-not-beat-the-2-deep-bot) (provisional) records both: look-ahead 4 deep is the strongest bot so far; the staged learner was stopped at 1 hour by its stop rule and did not beat the 2-deep bot. Code and report: `prototypes/climb/tds.js`, `train-tds.js`, `collect-boards.js`, [`ROUND3.md`](prototypes/climb/ROUND3.md). Progress page: https://claude.ai/artifact/Nicxxqmiqo56WcSazAQ1LZ. Open: the owner's pick of a next step.
+
 ## Climb strongest bot, steps 1 and 2 — 2026-10-30
 
 The owner's goal is the strongest Climb bots. He chose deeper look-ahead first, then the paper-style self-taught learner. [RESULT-0087](EVIDENCE_LEDGER.md#result-0087--climb-look-ahead-3-deep-beats-the-2-deep-bot-on-most-of-100-paired-boards-the-6-square-self-taught-learner-does-not-alone-or-as-a-look-ahead-leaf) (provisional) records both checks: look-ahead 3 deep is the strongest bot so far; the 6-square learner did not beat the 2-deep bot, alone or as a look-ahead leaf. Code and report: `prototypes/climb/td6.js`, `train-td6.js`, `check-bot.js`, [`STEP2-6SQUARE.md`](prototypes/climb/STEP2-6SQUARE.md). Every run goes on the progress page (https://claude.ai/artifact/Nicxxqmiqo56WcSazAQ1LZ). Open: the owner's pick of a next step (deeper look-ahead, learning from the look-ahead's games, much longer self-play, or pause).

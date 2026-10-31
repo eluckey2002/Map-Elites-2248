@@ -127,4 +127,4 @@ function leaf(w) {
   };
 }
 
-module.exports = {newModel, trainGame, tdChooser, leaf, choose, indexes, value, token, TUPLES, SIZE, TOKENS};
+module.exports = {newModel, trainGame, tdChooser, leaf, choose, indexes, value, token, uniqueChains, TUPLES, SIZE, TOKENS};
