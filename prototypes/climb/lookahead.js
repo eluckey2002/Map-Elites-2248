@@ -23,9 +23,9 @@ function chainPoints(state, ch) {
 
 // Points this chain earns plus what the board after it is worth, judged by
 // `leafPlays` quick random games (0: the chain's points only), or by
-// `leaf(state, chain)` when given (e.g. a learned board score).
+// `leaf(state, chain, rng)` when given (e.g. a learned board score).
 function leafValue(state, ch, rng, o) {
-  if (o.leaf) return o.leaf(state, ch);
+  if (o.leaf) return o.leaf(state, ch, rng);
   if (!o.leafPlays) return chainPoints(state, ch);
   let total = 0;
   for (let p = 0; p < o.leafPlays; p++) {
