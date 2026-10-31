@@ -1942,3 +1942,20 @@ The proof track is parked, not closed. It resumes from the unresolved **12,336�
 - **written_by:** claude, project thread "Build the Climb game", branch claude/climb-td6
 - **checked_by:** pending
 - **notes:** Provisional, not self-accepted. Not a heuristic claim about search depth or self-taught methods in general: one search setting, one representation (38 six-square tuples), one learning rate, one training run. The owner set the goal (strongest bots) and chose "look-ahead first, then the paper's recipe" on 2026-10-30. Follows RESULT-0086.
+
+### RESULT-0088 — Climb: look-ahead 4 deep beats look-ahead 3 deep on 60 of 100 paired boards; the staged self-taught learner trained from strong-bot boards does not beat the 2-deep bot
+
+- **type:** result
+- **status:** provisional
+- **scope:** the Climb prototype (`prototypes/climb/`), evan's usual settings (7 values from 8, Equal odds); check seeds 1–100, each bot played once, paired by seed with the `lookahead-strong` games in `settings-sweep.jsonl` (variant `evan-pool-7-start-8`) and the `la3` games in `step2-checks.jsonl`. Bots: `la4` (`lookaheadChooser` depth 4, widths 8/6/4/3, samples 4/2/2, 2 play-outs per leaf); `tds` (the staged learner's 1-hour save from one `train-tds.js` run: 16-core Google Spot machine, 2026-10-31 01:18–02:26 UTC, alpha 1, start share 0.5, about 1.06 million games on seeds from 200,000,000, starting boards from `collect-boards.js` on seeds 3,000,000–3,000,799)
+- **statement:** On these 100 boards, by highest power-of-2 tile reached: `la4` had median 262144 (74 moves), beat the 2-deep reference tile on 78 boards and lost on 11, and beat `la3` on 60 and lost on 35 (its highest, 33554432); `tds` had median 2048 (35.5 moves), beat the reference on 0 boards and lost on 95 (highest 8192). The `tds` run was stopped by a rule set before it started: its 20-board checks at 30 minutes and 1 hour were both median 2048. These are the recorded games only; nothing is claimed about other settings, other search widths, longer training, or human play.
+- **evidence:** games [round3-checks.jsonl](prototypes/climb/round3-checks.jsonl) (SHA-256 `72e2fd1b166d07a116548af5e7144f0e78bad434fb4f058c104890a90260c63a`), training log [tds-training.jsonl](prototypes/climb/tds-training.jsonl) (SHA-256 `133e0efc187aa6785c109d9e9e2f73c8e7147d55ba96ddf7c5ea67b3e13ab1df`), report [ROUND3.md](prototypes/climb/ROUND3.md), reference games `prototypes/climb/settings-sweep.jsonl` and `prototypes/climb/step2-checks.jsonl`; the `tds` weights are the first 1,815,478,272 bytes of `gs://ai-lab-compute-2248-results/climb-td/tds-run1/model.bin` (SHA-256 of those bytes `3f2d98302c9ece49cef7123162148a0553c98e953fd404e6880ecae960c7f359`), starting boards in `code.tgz` in the same folder (boards file SHA-256 `d5e6ee464bd598c6f29f73b7a96ed85bbb39ee593b5c0d4901b1cb735ff3c312`); owner's Google Cloud project, not in git
+- **proof_class:** `direct_source` for the recorded check games and their paired counts against the recorded reference games
+- **as_of:** 2026-10-31
+- **reverify:** Recount from the JSONL files: for each bot in `round3-checks.jsonl`, take the median of `bestPow2` and `moves` and compare `bestPow2` seed by seed with the `lookahead-strong` rows of `settings-sweep.jsonl` (variant `evan-pool-7-start-8`) and the `la3` rows of `step2-checks.jsonl`; expect the counts above. `node prototypes/climb/check-bot.js <la4|tds> <seed> [weights]` replays a row; training is not reproducible (lock-free shared updates).
+- **updated:** 2026-10-31
+- **supersedes:** []
+- **superseded_by:** []
+- **written_by:** claude, project thread "Build the Climb game", branch claude/climb-round3
+- **checked_by:** pending
+- **notes:** Provisional, not self-accepted. Not a heuristic claim about search depth or staged learning in general: one search setting, one stage split, one start share, one hour of training. The owner chose "both" (deeper look-ahead and the staged learner from strong-bot boards) on 2026-10-30. Follows RESULT-0087.

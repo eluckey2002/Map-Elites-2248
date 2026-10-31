@@ -46,8 +46,12 @@ makes no claim about any bot.
   `model.bin`; training seeds from 100,000,000. `td6.test.js` checks it.
   `td6.leaf(w)` plugs its learned score into `lookaheadChooser` (`leaf`
   option) in place of play-outs.
-- `check-bot.js`: plays one check board with the 3-deep look-ahead or the
-  6-square bots. Results: [`STEP2-6SQUARE.md`](STEP2-6SQUARE.md).
+- `check-bot.js`: plays one check board with the 3- or 4-deep look-ahead or
+  the self-taught bots. Results: [`STEP2-6SQUARE.md`](STEP2-6SQUARE.md),
+  [`ROUND3.md`](ROUND3.md).
+- `tds.js` / `train-tds.js`: the self-taught player in stages (one set of
+  6-square tables per pool climb), trained partly from boards a stronger bot
+  reached; `collect-boards.js` writes those boards. `tds.test.js` checks it.
 - `page.html`: the phone page source. `node prototypes/climb/build.js out.html` inlines `engine.js` into one file for the Artifact (a script file published next to the page did not load reliably). Finished and
   quit games are saved to the page's database (collection `games`, the record
   is a JSON string in `record`) and to the phone's own storage as a backup.
