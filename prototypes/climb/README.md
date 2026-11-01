@@ -46,9 +46,20 @@ makes no claim about any bot.
   `model.bin`; training seeds from 100,000,000. `td6.test.js` checks it.
   `td6.leaf(w)` plugs its learned score into `lookaheadChooser` (`leaf`
   option) in place of play-outs.
-- `check-bot.js`: plays one check board with the 3- or 4-deep look-ahead or
-  the self-taught bots. Results: [`STEP2-6SQUARE.md`](STEP2-6SQUARE.md),
+- `check-bot.js`: plays one check board with the 3-, 4- or 5-deep look-ahead,
+  the move habits or the self-taught bots. Results: [`STEP2-6SQUARE.md`](STEP2-6SQUARE.md),
   [`ROUND3.md`](ROUND3.md).
+- `heur.js`: a hand-made board score (tiles one chain from merging, equal
+  pairs, at-risk tiles, stones, game over) usable as a look-ahead leaf
+  (`h3`/`h4`/`h5` in `check-bot.js`). `heur.test.js` checks it.
+- `fastchains.js` / `fastplay.js`: the same chain list and quick random game
+  as the engine on flat arrays, same random numbers in the same order, so
+  the bots pick the same moves faster. `fastplay.test.js` checks them
+  against the engine.
+- Move habits in `lookaheadChooser`: `noOdd` (only power-of-2 chain sums),
+  `noStone` (skip moves that make stone) and `objective: 'moves'` (score
+  lines by moves survived). The rules do not change. `check-bot.js
+  la3-odd+stone+alive` and so on. Results: [`ROUND4.md`](ROUND4.md).
 - `tds.js` / `train-tds.js`: the self-taught player in stages (one set of
   6-square tables per pool climb), trained partly from boards a stronger bot
   reached; `collect-boards.js` writes those boards. `tds.test.js` checks it.
