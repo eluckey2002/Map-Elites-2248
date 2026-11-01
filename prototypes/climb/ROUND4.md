@@ -16,7 +16,13 @@ were his own idea, tested at his pick "Test both now (free)".
 chain from merging, equal neighbour pairs, at-risk tiles, stones, game
 over) instead of quick random games. `h3` is 3 deep with that score as the
 leaf (`check-bot.js h3 <seed> a`). It played fast but lost to plain 3 deep
-on almost every board, so it was dropped.
+on almost every board, so it was dropped. Review found that the deeper
+plies clipped a negative board score to zero (`bestLine` started its best
+value at 0); it now starts at minus infinity, a test in `lookahead.test.js`
+fails on the old start, and the `h3` games were replayed with the fix. The
+play-out bots never score a line below zero, so their moves are unchanged;
+the learned-score look-ahead bots of earlier rounds (`td6-la3`, `tds-la3`)
+can score below zero and may now play differently from their recorded games.
 
 ## Step 2: faster search, same moves
 
@@ -56,22 +62,15 @@ JavaScript does on 32 bits, so it was wrong for tiles past 2^32 and the
 habit stopped working in the biggest games. It now uses
 `Number.isInteger(Math.log2(sum))`, and a test in `lookahead.test.js`
 fails on the old check. All 200 games that use `noOdd` were replayed here
-with the fix; the rows below are the replays. 163 came out the same as
-before (including Google games, so the result does not depend on the
-machine) and 37 changed: 15 higher, 15 lower, 7 same tile with a different
-length. The medians and the paired counts did not change; the highest
-tiles did.
+with the fix; the committed rows are the replays. RESULT-0089 says how
+much changed.
 
 ## Check
 
-| Player | Median best tile | Median moves | vs 2 deep (higher / lower) | vs 3 deep (higher / lower) | vs 4 deep (higher / lower) | Highest |
-|---|---|---|---|---|---|---|
-| Hand-made score, 3 deep (`h3`) | 4096 | 43.5 | 7 / 85 | 2 / 91 | 0 / 97 | 65536 |
-| Look-ahead 5 deep (`la5`) | 524288 | 80 | 92 / 3 | 71 / 19 | 61 / 33 | 268435456 |
-| 3 deep + no odd tiles (`la3-odd`) | 33554432 | 138.5 | 99 / 0 | 96 / 2 | 93 / 6 | 1099511627776 |
-| 3 deep + no stones (`la3-stone`) | 131072 | 73.5 | 68 / 22 | 15 / 9 | 38 / 57 | 8388608 |
-| 3 deep + stay alive (`la3-alive`) | 131072 | 193.5 | 72 / 13 | 54 / 33 | 37 / 51 | 536870912 |
-| 3 deep + all three (`la3-odd+stone+alive`) | 268435456 | 380 | 99 / 1 | 98 / 1 | 94 / 4 | 2199023255552 |
+The medians, paired counts and highest tiles for every bot above are in
+RESULT-0089 in `EVIDENCE_LEDGER.md`; this report does not repeat them so
+they cannot drift apart. `reverify` there says how to recount them from
+`round4-checks.jsonl`.
 
 `seconds` in the rows mixes this machine's cores and Google's (about 3
 times slower per game), so it only gives a rough size: a 5-deep game took
@@ -82,5 +81,5 @@ here.
 
 On these boards, avoiding odd tiles did most of the work, and all three
 habits together was the strongest bot of the round. Searching deeper
-helped less. Nothing is claimed about other settings, other widths, other
+helped less (RESULT-0089). Nothing is claimed about other settings, other widths, other
 depths with habits, or human play.

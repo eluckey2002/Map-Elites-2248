@@ -67,7 +67,8 @@ function leafValue(state, ch, rng, o) {
 function bestLine(state, depth, ply, rng, o) {
   if (state.over || depth === 0) return 0;
   const list = dropStoning(state, candidates(state, rng, o.widths[ply], o.extra, keeper(state, o)), o);
-  let best = 0;
+  // -Infinity, not 0: a leaf score (heur.js) can be negative.
+  let best = list.length ? -Infinity : 0;
   for (const ch of list) {
     let v = depth === 1 ? leafValue(state, ch, rng, o) : gain(state, ch, o);
     if (depth > 1) {

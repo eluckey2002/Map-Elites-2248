@@ -91,3 +91,16 @@ test('noOdd habit judges tiles past 2^32 correctly', () => {
   const ch = pick(st, makeRng(1));
   assert.strictEqual(sumOf(st, ch), 2 ** 33);
 });
+
+test('a negative leaf score is kept, not clipped to zero', () => {
+  // The leaf takes off 10 times the points already scored, so a line is
+  // worth -9 x its first move's points: the best first move is the cheapest.
+  // Clipping the future at zero would pick the dearest instead.
+  const s = E.newGame({}, 9);
+  const pick = lookaheadChooser({depth: 2, widths: [6, 1], samples: [1], extra: 0,
+    leaf: after => -10 * after.score});
+  const ch = pick(s, makeRng(1));
+  const pts = require('./playout').candidates(s, makeRng(1), 6, 0).map(c => chainPoints(s, c));
+  assert.ok(pts[0] > pts[pts.length - 1], 'the test needs chains of different worth');
+  assert.strictEqual(chainPoints(s, ch), pts[pts.length - 1]);
+});
