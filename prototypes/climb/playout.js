@@ -26,13 +26,19 @@ function chainNum(ch) {
 
 // The chains worth trying: the best by points right now, plus a few random
 // others so a quiet set-up move can still win.
-function candidates(state, rng, top, extra) {
+// `keep(ch)`, when given, drops the chains it refuses, unless it refuses
+// them all.
+function candidates(state, rng, top, extra, keep) {
   const seen = new Map();
   for (const ch of F.listChains(state, {limit: 5000, maxLength: 12})) {
     const k = chainNum(ch);
     if (!seen.has(k)) seen.set(k, ch);
   }
-  const all = [...seen.values()];
+  let all = [...seen.values()];
+  if (keep) {
+    const kept = all.filter(keep);
+    if (kept.length) all = kept;
+  }
   // Points worked out once per chain; the stable sort keeps the same order.
   const pts = new Map(all.map(ch => [ch, Math.floor(ch.reduce((a, [c, r]) => a + state.board[r][c].v, 0) * E.chainBonus(ch.length))]));
   all.sort((a, b) => pts.get(b) - pts.get(a));

@@ -2,6 +2,10 @@
 
 This page is a bounded navigation record, not evidence. Read the [evidence ledger](EVIDENCE_LEDGER.md) for current proof standing and source-linked claims.
 
+## Climb strongest bot, round 4 — 2026-11-01
+
+The owner said "only look-ahead, no learning bot" and chose all three steps (hand-made board score, speed-up, 5 deep), then proposed move habits himself (no odd tiles, no stones, stay alive; the rules unchanged). [RESULT-0089](EVIDENCE_LEDGER.md#result-0089--climb-move-habits-no-odd-tiles-no-stones-stay-alive-on-look-ahead-3-deep-beat-plain-3-deep-on-98-of-100-paired-boards-look-ahead-5-deep-beats-4-deep-on-61-the-hand-made-board-score-loses) (provisional) records it: 3 deep with all three habits is now the strongest bot, far ahead of 5 deep; the hand-made score was dropped; the speed-up picks the same moves. Code and report: `prototypes/climb/heur.js`, `fastchains.js`, `fastplay.js`, habit options in `lookahead.js`, [`ROUND4.md`](prototypes/climb/ROUND4.md). Progress page: https://claude.ai/artifact/Nicxxqmiqo56WcSazAQ1LZ. Open: the owner's pick of a next step (for example habits on deeper search, or measuring his idea of clearing odd tiles when the pool climbs, which is a rule change and his call).
+
 ## Climb strongest bot, round 3 — 2026-10-31
 
 The owner chose both a deeper look-ahead and the staged self-taught learner trained from strong-bot boards. [RESULT-0088](EVIDENCE_LEDGER.md#result-0088--climb-look-ahead-4-deep-beats-look-ahead-3-deep-on-60-of-100-paired-boards-the-staged-self-taught-learner-trained-from-strong-bot-boards-does-not-beat-the-2-deep-bot) (provisional) records both: look-ahead 4 deep is the strongest bot so far; the staged learner was stopped at 1 hour by its stop rule and did not beat the 2-deep bot. Code and report: `prototypes/climb/tds.js`, `train-tds.js`, `collect-boards.js`, [`ROUND3.md`](prototypes/climb/ROUND3.md). Progress page: https://claude.ai/artifact/Nicxxqmiqo56WcSazAQ1LZ. Open: the owner's pick of a next step.

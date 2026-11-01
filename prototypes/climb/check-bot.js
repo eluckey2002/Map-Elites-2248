@@ -7,6 +7,7 @@
 //   node check-bot.js tds-la3 <seed> model.bin
 //   node check-bot.js la4 <seed>
 //   node check-bot.js la5 <seed>
+//   node check-bot.js la3-odd+stone+alive <seed>   (3 deep with habits)
 //   node check-bot.js h3 <seed> [weights a|b|c] [drops]   (hand-made board score, heur.js)
 //   node check-bot.js h4 / h5 <seed> [weights] [drops]
 const fs = require('fs');
@@ -34,6 +35,18 @@ function bestTile(s) {
 }
 
 const [bot, seedArg, model] = process.argv.slice(2);
+// la3-<habits>: 3 deep with habits joined by '+': odd (no odd tiles),
+// stone (no stones), alive (score lines by moves survived).
+function habits(list) {
+  const o = {};
+  for (const h of list.split('+')) {
+    if (h === 'odd') o.noOdd = true;
+    else if (h === 'stone') o.noStone = true;
+    else if (h === 'alive') o.objective = 'moves';
+    else throw new Error('habits are odd, stone, alive');
+  }
+  return o;
+}
 function heurLeaf() {
   const w = heur.WEIGHTS[model || 'b'];
   if (!w) throw new Error('weights must be ' + Object.keys(heur.WEIGHTS).join(', '));
@@ -47,6 +60,7 @@ const chooser = bot === 'la3' ? lookaheadChooser(LA3)
   : bot === 'tds-la3' ? lookaheadChooser({depth: 3, widths: [8, 6, 4], samples: [4, 2], leaf: tds.leaf(loadWeights(model, tds.STAGES * tds.N))})
   : bot === 'la4' ? lookaheadChooser({depth: 4, widths: [8, 6, 4, 3], samples: [4, 2, 2], leafPlays: 2})
   : bot === 'la5' ? lookaheadChooser({depth: 5, widths: [8, 6, 4, 3, 3], samples: [4, 2, 2, 2], leafPlays: 2})
+  : bot.startsWith('la3-') ? lookaheadChooser({...LA3, ...habits(bot.slice(4))})
   : bot === 'h3' ? lookaheadChooser({depth: 3, widths: [8, 6, 4], samples: [4, 2], leaf: heurLeaf()})
   : bot === 'h4' ? lookaheadChooser({depth: 4, widths: [8, 6, 4, 3], samples: [4, 2, 2], leaf: heurLeaf()})
   : bot === 'h5' ? lookaheadChooser({depth: 5, widths: [8, 6, 4, 3, 3], samples: [4, 2, 2, 2], leaf: heurLeaf()})

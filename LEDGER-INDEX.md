@@ -7,7 +7,7 @@ It is navigation only: before relying on a claim, open its record in
 [EVIDENCE_LEDGER.md](EVIDENCE_LEDGER.md) at the listed line and follow its evidence.
 A `narrowed` record must be read together with the correction that narrowed it; its row names that correction first.
 
-Records: 103 (38 accepted, 24 narrowed, 3 open, 23 provisional, 4 stale, 11 superseded).
+Records: 104 (38 accepted, 24 narrowed, 3 open, 24 provisional, 4 stale, 11 superseded).
 
 ## Current records
 
@@ -81,6 +81,7 @@ Records: 103 (38 accepted, 24 narrowed, 3 open, 23 provisional, 4 stale, 11 supe
 | RESULT-0086 | Climb self-taught pilot: neither self-taught player beats the look-ahead bot on 100 paired boards | provisional | direct_source | On these 100 boards, by highest power-of-2 tile reached: the self-taught player alone had median 4096 (51 moves) and beat the look-ahead bot's tile on 2 boards, lost on 90, tied 8; the self-taught player with a short lo… | 1912 |
 | RESULT-0087 | Climb: look-ahead 3 deep beats the 2-deep bot on most of 100 paired boards; the 6-square self-taught learner does not, alone or as a look-ahead leaf | provisional | direct_source | On these 100 boards, by highest power-of-2 tile reached: `la3` had median 131072 (72.5 moves) and beat the reference tile on 70 boards, lost on 22, tied 8 (its highest, 16777216); `td6` had median 4096 (51.5 moves), 4 h… | 1929 |
 | RESULT-0088 | Climb: look-ahead 4 deep beats look-ahead 3 deep on 60 of 100 paired boards; the staged self-taught learner trained from strong-bot boards does not beat the 2-deep bot | provisional | direct_source | On these 100 boards, by highest power-of-2 tile reached: `la4` had median 262144 (74 moves), beat the 2-deep reference tile on 78 boards and lost on 11, and beat `la3` on 60 and lost on 35 (its highest, 33554432); `tds`… | 1946 |
+| RESULT-0089 | Climb: move habits (no odd tiles, no stones, stay alive) on look-ahead 3 deep beat plain 3 deep on 98 of 100 paired boards; look-ahead 5 deep beats 4 deep on 61; the hand-made board score loses | provisional | direct_source | On these 100 boards, by highest power-of-2 tile reached: `la3-odd+stone+alive` had median 268435456 (380 moves), beat `la3` on 98 boards and lost on 1, beat `la4` on 94 and lost on 4 (highest 2199023255552); `la3-odd` m… | 1963 |
 | CORRECTION-0001 | Spawn values are scale-dependent | accepted | direct_source | Narrows `FACT-0003`. | 1431 |
 | CORRECTION-0002 | Level 26 configuration after the retune | accepted | direct_source | Supersedes `FACT-0004`. | 1445 |
 | CORRECTION-0003 | Candidate width saturates because of the generator, not the board | narrowed | direct_source, heuristic_observation | **Corrected by CORRECTION-0015 (The chain-coverage check needs more memory than Node's default); the wording below may no longer hold.** `RESULT-0010` explains the candidate cap's saturation with "boards offer a median of 15 legal chains and at most 30". | 1460 |
